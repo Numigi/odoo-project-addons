@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+<div t-name="InvoicePrepare">
+    <div t-foreach="widget.get('tasks')" t-as="task" t-att-data-task-id="task.id" class="project-invoice-preparation">
+        <div class="task-name">
+            <h2><t t-esc="task.name"/></h2>
+            <span style="flex:1;"/>
+            <button class="btn btn-amount-invoiced">
+                <div>Invoiced</div>
+                <div class="amount-invoiced"/>
+            </button>
+        </div>
+
+        <div class="invoice-mode">
+            <label>Invoicing Mode:</label>
+            <div class="o_checkbox">
+                <input type="checkbox" class="checkbox-real"/>
+                <span></span>
+            </div>
+            <span>Reel</span>
+            <div class="o_checkbox">
+                <input type="checkbox" class="checkbox-lump-sum"/>
+                <span></span>
+            </div>
+            <span>Lump Sum</span>
+        </div>
+        <table class="lump-sum-summary">
+            <tbody>
+                <tr>
+                    <td><label>Currency:</label></td>
+                    <td class="field-currency"></td>
+                </tr>
+                <tr>
+                    <td><label>Amount:</label></td>
+                    <td class="field-global-amount"></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <label class="description-label">Description</label>
+        <div class="field-description"/>
+        <div class="field-analytic-lines"/>
+    </div>
+    <button class="btn btn-primary btn-generate-invoice">
+        Generate Invoice(s)
+    </button>
+</div>
+
+</templates>
