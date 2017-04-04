@@ -450,10 +450,10 @@ var InvoicePrepare = common.FormWidget.extend({
     add_invoiced_amount_events: function(task){
         var self = this;
         var button = this.get_task_el(task, '.btn-amount-invoiced');
-        if(task.invoiced_amount){
-            button.on('click', function(task){
+        if(task.invoice_line_ids.length){
+            button.on('click', function(){
                 var model_data = new Model('project.task');
-                model_data.call('get_invoice_list_action', [[task.id], data, {}]).then(function(result) {
+                model_data.call('get_invoice_list_action', [[task.id], {}]).then(function(result) {
                     self.view.do_action(result);
                 });
             })

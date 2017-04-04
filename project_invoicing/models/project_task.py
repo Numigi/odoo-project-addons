@@ -16,6 +16,8 @@ class ProjectTask(models.Model):
         compute='_compute_invoiced_amount')
     invoice_line_ids = fields.One2many(
         'account.invoice.line', 'task_id', 'Invoice Lines')
+    project_partner = fields.Many2one(
+        'res.partner', 'Project Partner', related='project_id.partner_id')
 
     @api.multi
     def _compute_invoiced_amount(self):
@@ -39,12 +41,14 @@ class ProjectTask(models.Model):
             vals = {'invoicing_state': 'invoiced'}
 
             if 'partner_invoice_id' in values:
-                partner_id = int(values['partner_invoice_id'][0])
+                partner_id = values['partner_invoice_id']
+                partner_id = int(partner_id[0]) if partner_id else False
                 if partner_id != record.partner_invoice_id.id:
                     vals['partner_invoice_id'] = partner_id
 
             if 'final_price_currency_id' in values:
-                cur_id = int(values['final_price_currency_id'][0])
+                cur_id = values['final_price_currency_id']
+                cur_id = int(cur_id[0]) if cur_id else False
                 if cur_id != record.final_price_currency_id.id:
                     vals['final_price_currency_id'] = cur_id
 
@@ -60,7 +64,7 @@ class ProjectTask(models.Model):
     def get_invoice_list_action(self):
         self.ensure_one()
         action = self.env.ref('account.action_invoice_tree1')
-        invoice_ids = list(set(self.invoice_line_ids.mapped('invoice_id')))
+        invoice_ids = list(set(self.invoice_line_ids.mapped('invoice_id.id')))
         return {
             'name': action.name,
             'view_type': 'form',
@@ -74,5 +78,5 @@ class ProjectTask(models.Model):
             'context': action.context,
             'domain': [('id', 'in', invoice_ids)],
             'type': 'ir.actions.act_window',
-            'target': 'current',
+            'target': 'new',
         }
