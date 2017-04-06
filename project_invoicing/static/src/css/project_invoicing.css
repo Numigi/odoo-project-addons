@@ -1,0 +1,31 @@
+.project-invoice-preparation {
+    margin: 16px 0px;
+}
+
+.project-invoice-preparation td, .project-invoice-preparation th
+{
+    vertical-align: top;
+    padding: 8px 16px 8px 0px;
+}
+
+.project-invoice-preparation .invoice-mode td.field-many2one
+{
+    padding-right: 32px;
+}
+
+.project-invoice-preparation label {
+    white-space: nowrap;
+}
+
+.project-invoice-preparation .task-name {
+    display: flex;
+    align-items: baseline;
+}
+
+.project-invoice-preparation .description-label {
+    margin-top: 8px;
+}
+
+.project-invoice-preparation .invoice-mode div.o_checkbox {
+    margin-left: 16px;
+}

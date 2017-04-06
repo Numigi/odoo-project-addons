@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="project_view_form" model="ir.ui.view">
+            <field name="name">project.project.form</field>
+            <field name="model">project.project</field>
+            <field name="inherit_id" ref="project.edit_project"/>
+            <field name="arch" type="xml">
+                <notebook position="inside">
+                    <page name="invoice_prepare" string="Invoice Preparation">
+                        <field name="all_task_ids" invisible="1"/>
+                        <widget type="project_invoicing"></widget>
+                    </page>
+                </notebook>
+            </field>
+        </record>
+
+        <record id="project_invoicing_analytic_line_tree" model="ir.ui.view">
+            <field name="name">project.invoicing.analytic.line.tree</field>
+            <field name="model">account.analytic.line</field>
+            <field name="priority" eval="100"/>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="partner_invoice_id" attrs="{'readonly': [('invoicing_state', '!=', 'to_invoice')]}"/>
+                    <field name="user_id" readonly="1"/>
+                    <field name="product_id" readonly="1"/>
+                    <field name="date" readonly="1"/>
+                    <field name="unit_amount" readonly="1"/>
+                    <field name="amount" readonly="1"/>
+                    <field name="sale_price" readonly="1"/>
+                    <field name="final_price" attrs="{'readonly': [('invoicing_state', '!=', 'to_invoice')]}"/>
+                    <field name="final_price_currency_id" attrs="{'readonly': [('invoicing_state', '!=', 'to_invoice')]}"/>
+                    <field name="invoicing_state" readonly="1"/>
+                </tree>
+            </field>
+        </record>
+
+        <template id="assets_backend" name="project_invoicing_assets" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <script type="text/javascript" src="/project_invoicing/static/src/js/project_invoicing.js"></script>
+                <link rel="stylesheet" href="/project_invoicing/static/src/css/project_invoicing.css"/>
+            </xpath>
+        </template>
+
+    </data>
+</openerp>
