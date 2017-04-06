@@ -5,4 +5,3 @@
 from . import account_analytic_line
 from . import account_invoice_line
 from . import project_project
-from . import project_task

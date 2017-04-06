@@ -93,11 +93,6 @@ msgid "Invoicing State"
 msgstr "État de facturation"
 
 #. module: project_invoicing
-#: model:ir.model.fields,field_description:project_invoicing.field_account_analytic_line_is_timesheet
-msgid "Is Timesheet"
-msgstr "Est une feuille de temps"
-
-#. module: project_invoicing
 #. openerp-web
 #: code:addons/project_invoicing/static/src/xml/project_invoicing.xml:24
 #, python-format

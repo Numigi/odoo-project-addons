@@ -39,8 +39,6 @@ class AccountAnalyticLine(models.Model):
         'Final Price', currency_field='final_price_currency_id',
         compute='_compute_final_total')
 
-    is_timesheet = fields.Boolean(string="Is Timesheet")
-
     @api.depends('task_id')
     def _compute_partner_invoice_id(self):
         for line in self:
@@ -96,7 +94,3 @@ class AccountAnalyticLine(models.Model):
                 self.final_price_currency_id = (
                     self.env.user.company_id.currency_id)
             self.final_price = self.sale_price
-
-    @api.multi
-    def _check_state(self):
-        return True
