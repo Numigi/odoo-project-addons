@@ -22,7 +22,6 @@
     ],
     'data': [
         'views/project_project.xml',
-        'views/project_task.xml',
     ],
     'qweb': [
         'static/src/xml/project_invoicing.xml',
