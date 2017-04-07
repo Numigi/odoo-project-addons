@@ -12,13 +12,12 @@
     'category': 'Project',
     'summary': 'Prepare Invoices from Projects',
     'depends': [
-        'web',
         'account',
         'analytic_line_is_timesheet',
-        'project',
         'hr_timesheet_sheet',
+        'project',
         'sale_stock',
-        'sale_timesheet',
+        'web',
     ],
     'data': [
         'views/project_project.xml',
