@@ -55,7 +55,7 @@ class AccountAnalyticLine(models.Model):
             line.partner_invoice_id = line.project_id.partner_id
         return line
 
-    @api.model
+    @api.multi
     def write(self, vals):
         super(AccountAnalyticLine, self).write(vals)
         if vals.get('project_id'):
