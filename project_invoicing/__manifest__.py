@@ -22,6 +22,14 @@
     'data': [
         'views/project_project.xml',
     ],
+    'demo': [
+        'demo/product_product.xml',
+        'demo/hr_employee.xml',
+        'demo/res_users.xml',
+        'demo/project_project.xml',
+        'demo/project_task.xml',
+        'demo/account_analytic_line.xml',
+    ],
     'qweb': [
         'static/src/xml/project_invoicing.xml',
     ],

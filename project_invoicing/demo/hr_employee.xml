@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<openerp>
+    <data noupdate="1">
+
+        <record model="hr.employee" id="hr_employee_jack" >
+            <field name="name">Jack Gomez</field>
+            <field name="product_id" ref="product_product_consulting"/>
+        </record>
+
+        <record model="hr.employee" id="hr_employee_sophia" >
+            <field name="name">Sophia Cohen</field>
+            <field name="product_id" ref="product_product_consulting"/>
+        </record>
+
+    </data>
+</openerp>

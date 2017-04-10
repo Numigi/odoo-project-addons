@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<openerp>
+    <data noupdate="1">
+
+        <record model="project.project" id="project_project_website" >
+            <field name="name">Website for Accounting</field>
+            <field name="user_id" ref="res_users_jack"/>
+        </record>
+
+    </data>
+</openerp>
