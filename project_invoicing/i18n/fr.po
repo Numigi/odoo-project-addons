@@ -6,15 +6,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-22 20:24+0000\n"
-"PO-Revision-Date: 2017-03-22 16:28-0400\n"
+"POT-Creation-Date: 2017-04-07 15:19-0400\n"
+"PO-Revision-Date: 2017-04-07 15:23-0400\n"
 "Last-Translator: David Dufresne <david.dufresne@savoirfairelinux.com>\n"
 "Language-Team: \n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"Language: fr\n"
 "X-Generator: Poedit 1.8.7.1\n"
 
 #. module: project_invoicing
@@ -24,7 +24,7 @@ msgstr "Toutes les tâches"
 
 #. module: project_invoicing
 #. openerp-web
-#: code:addons/project_invoicing/static/src/xml/project_invoicing.xml:33
+#: code:addons/project_invoicing/static/src/xml/project_invoicing.xml:35
 #, python-format
 msgid "Amount:"
 msgstr "Montant :"
@@ -35,15 +35,19 @@ msgid "Analytic Line"
 msgstr "Ligne analytique"
 
 #. module: project_invoicing
-#. openerp-web
-#: code:addons/project_invoicing/static/src/js/project_invoicing.js:0
-#, python-format
+#: model:ir.model.fields,field_description:project_invoicing.field_account_analytic_line_cost
+msgid "Cost"
+msgstr "Coût"
+
+#. module: project_invoicing
+#: model:ir.model.fields,field_description:project_invoicing.field_project_task_company_currency_id
+#: model:ir.ui.view,arch_db:project_invoicing.project_invoicing_analytic_line_tree
 msgid "Currency"
 msgstr "Devise"
 
 #. module: project_invoicing
 #. openerp-web
-#: code:addons/project_invoicing/static/src/xml/project_invoicing.xml:29
+#: code:addons/project_invoicing/static/src/xml/project_invoicing.xml:31
 #, python-format
 msgid "Currency:"
 msgstr "Devise :"
@@ -52,8 +56,13 @@ msgstr "Devise :"
 #. openerp-web
 #: code:addons/project_invoicing/static/src/xml/project_invoicing.xml:42
 #, python-format
-msgid "Description:"
-msgstr "Description :"
+msgid "Description"
+msgstr "Description"
+
+#. module: project_invoicing
+#: selection:account.analytic.line,invoicing_state:0
+msgid "Draft Invoice"
+msgstr "Facture Brouillon"
 
 #. module: project_invoicing
 #: model:ir.model.fields,field_description:project_invoicing.field_account_analytic_line_final_price
@@ -62,13 +71,35 @@ msgstr "Prix final"
 
 #. module: project_invoicing
 #: model:ir.model.fields,field_description:project_invoicing.field_account_analytic_line_final_price_currency_id
-msgid "Final price currency"
+msgid "Final Price Currency"
 msgstr "Devise du prix final :"
 
 #. module: project_invoicing
-#: model:ir.model.fields,field_description:project_invoicing.field_account_analytic_line_invoice_id
+#. openerp-web
+#: code:addons/project_invoicing/static/src/xml/project_invoicing.xml:47
+#, python-format
+msgid "Generate Invoice(s)"
+msgstr "Générer Facture(s)"
+
+#. module: project_invoicing
+#: model:ir.model.fields,field_description:project_invoicing.field_account_analytic_line_generated_invoice_id
+msgid "Generated Invoice"
+msgstr "Facture Générée"
+
+#. module: project_invoicing
+#: model:ir.model,name:project_invoicing.model_account_invoice
 msgid "Invoice"
 msgstr "Facture"
+
+#. module: project_invoicing
+#: model:ir.model,name:project_invoicing.model_account_invoice_line
+msgid "Invoice Line"
+msgstr "Ligne de facture"
+
+#. module: project_invoicing
+#: model:ir.model.fields,field_description:project_invoicing.field_project_task_invoice_line_ids
+msgid "Invoice Lines"
+msgstr "Lignes de facture"
 
 #. module: project_invoicing
 #: model:ir.ui.view,arch_db:project_invoicing.project_view_form
@@ -76,13 +107,21 @@ msgid "Invoice Preparation"
 msgstr "Préparation de la facture"
 
 #. module: project_invoicing
+#. openerp-web
 #: selection:account.analytic.line,invoicing_state:0
+#: code:addons/project_invoicing/static/src/xml/project_invoicing.xml:10
+#, python-format
 msgid "Invoiced"
 msgstr "Facturé"
 
 #. module: project_invoicing
+#: model:ir.model.fields,field_description:project_invoicing.field_project_task_invoiced_amount
+msgid "Invoiced Amount"
+msgstr "Montant Facturé"
+
+#. module: project_invoicing
 #. openerp-web
-#: code:addons/project_invoicing/static/src/xml/project_invoicing.xml:13
+#: code:addons/project_invoicing/static/src/xml/project_invoicing.xml:16
 #, python-format
 msgid "Invoicing Mode:"
 msgstr "Mode de facturation :"
@@ -94,7 +133,7 @@ msgstr "État de facturation"
 
 #. module: project_invoicing
 #. openerp-web
-#: code:addons/project_invoicing/static/src/xml/project_invoicing.xml:24
+#: code:addons/project_invoicing/static/src/xml/project_invoicing.xml:26
 #, python-format
 msgid "Lump Sum"
 msgstr "Montant forfaitaire"
@@ -106,7 +145,7 @@ msgstr "Non facturable"
 
 #. module: project_invoicing
 #. openerp-web
-#: code:addons/project_invoicing/static/src/js/project_invoicing.js:129
+#: code:addons/project_invoicing/static/src/js/project_invoicing.js:148
 #, python-format
 msgid "Open: "
 msgstr "Ouvrir :"
@@ -122,8 +161,13 @@ msgid "Project"
 msgstr "Projet"
 
 #. module: project_invoicing
+#: model:ir.model.fields,field_description:project_invoicing.field_project_task_project_partner
+msgid "Project Partner"
+msgstr "Partenaire du projet"
+
+#. module: project_invoicing
 #. openerp-web
-#: code:addons/project_invoicing/static/src/xml/project_invoicing.xml:19
+#: code:addons/project_invoicing/static/src/xml/project_invoicing.xml:21
 #, python-format
 msgid "Reel"
 msgstr "Réel"
@@ -139,20 +183,65 @@ msgid "Show On Project Invoicing"
 msgstr "Apparaît dans la facturation de projet"
 
 #. module: project_invoicing
-#. openerp-web
-#: code:addons/project_invoicing/static/src/js/project_invoicing.js:0
-#, python-format
+#: model:ir.model.fields,field_description:project_invoicing.field_account_invoice_source_analytic_line_ids
+msgid "Source Analytic Lines"
+msgstr "Lignes analytiques sources"
+
+#. module: project_invoicing
+#: model:ir.ui.view,arch_db:project_invoicing.project_invoicing_analytic_line_tree
 msgid "State"
 msgstr "État"
 
 #. module: project_invoicing
-#. openerp-web
-#: code:addons/project_invoicing/static/src/xml/project_invoicing.xml:9
+#: model:ir.model,name:project_invoicing.model_project_task
+#: model:ir.model.fields,field_description:project_invoicing.field_account_invoice_line_task_id
+msgid "Task"
+msgstr "Tâche"
+
+#. module: project_invoicing
+#: code:addons/project_invoicing/models/project_task.py:43
 #, python-format
-msgid "Task Name:"
-msgstr "Nom de la tâche :"
+msgid ""
+"The analytic line %(line)s is already invoiced (%(invoice)s). It may not be "
+"invoiced twice."
+msgstr ""
+"La ligne analytique %(line)s est déjà facturée (%(invoice)s). Elle ne peut "
+"pas être facturé deux fois."
+
+#. module: project_invoicing
+#: code:addons/project_invoicing/models/project_project.py:109
+#, python-format
+msgid ""
+"The invoice could not be generated from the project %(project)s. The default "
+"income account is not set on the company %(company)s."
+msgstr ""
+"La facture ne peut pas être générée à partir du projet %(project)s. Le "
+"compte de produit par défaut n'est pas configuré pour la société %(company)s."
+
+#. module: project_invoicing
+#: code:addons/project_invoicing/models/project_project.py:63
+#, python-format
+msgid ""
+"The receivable account for the partner %(partner)s is not set. It is "
+"therefore not possible to generate an invoice for this partner."
+msgstr ""
+"Le compte reçevable n'est pas configuré sur la fiche du partenaire "
+"%(partner)s. Il n'est donc pas possible de générer une facture pour ce "
+"partenaire."
 
 #. module: project_invoicing
 #: selection:account.analytic.line,invoicing_state:0
 msgid "To Invoice"
 msgstr "À facturer"
+
+#. module: project_invoicing
+#: model:ir.model.fields,field_description:project_invoicing.field_account_analytic_line_final_total
+msgid "Total"
+msgstr "Total"
+
+#. module: project_invoicing
+#: code:addons/project_invoicing/models/project_project.py:0
+#, python-format
+msgid "You did not select any analytic line for task %(task)s."
+msgstr ""
+"Vous n'avez pas sélectionné de ligne analytique pour la tâche %(task)s."

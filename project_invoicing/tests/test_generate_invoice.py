@@ -13,7 +13,12 @@ class TestGenerateInvoice(TestAnalyticLineBase):
         cls.line_1 = cls.create_analytic_line(4, -120)
         cls.line_2 = cls.create_analytic_line(3, -180)
 
-    def test_01_generate_invoice_real(self):
+
+class TestGenerateInvoiceReal(TestGenerateInvoice):
+
+    def setUp(self):
+        super(TestGenerateInvoiceReal, self).setUp()
+
         lines = [
             {
                 'id': self.line_1.id,
@@ -40,12 +45,31 @@ class TestGenerateInvoice(TestAnalyticLineBase):
         })['domain'][0][2]
 
         self.assertEqual(len(invoice_ids), 1)
-        invoice = self.env['account.invoice'].browse(invoice_ids[0])
-        self.assertEqual(invoice.amount_total, 50 * 4 + 70 * 3)
-        self.assertEqual(invoice.account_id, self.receivable)
-        self.assertEqual(self.task.invoiced_amount, invoice.amount_total)
+        self.invoice = self.env['account.invoice'].browse(invoice_ids[0])
+        self.env.user.company_id = self.company
 
-    def test_02_generate_invoice_lump_sum(self):
+    def test_01_generate_invoice(self):
+        self.assertEqual(self.invoice.amount_total, 50 * 4 + 70 * 3)
+        self.assertEqual(self.invoice.account_id, self.receivable)
+        self.assertEqual(self.task.invoiced_amount, self.invoice.amount_total)
+        self.assertEqual(self.invoice.company_id, self.company)
+
+    def test_02_open_invoice(self):
+        self.assertEqual(self.line_1.invoicing_state, 'draft_invoice')
+        self.invoice.action_invoice_open()
+        self.assertEqual(self.line_1.invoicing_state, 'invoiced')
+
+    def test_03_cancel_invoice(self):
+        self.assertEqual(self.line_1.invoicing_state, 'draft_invoice')
+        self.invoice.action_invoice_cancel()
+        self.assertEqual(self.line_1.invoicing_state, 'to_invoice')
+        self.assertFalse(self.line_1.generated_invoice_id)
+
+
+class TestGenerateInvoiceLumpSum(TestGenerateInvoice):
+
+    def setUp(self):
+        super(TestGenerateInvoiceLumpSum, self).setUp()
         lines = [
             {
                 'id': self.line_1.id,
@@ -70,7 +94,10 @@ class TestGenerateInvoice(TestAnalyticLineBase):
         })['domain'][0][2]
 
         self.assertEqual(len(invoice_ids), 1)
-        invoice = self.env['account.invoice'].browse(invoice_ids[0])
-        self.assertEqual(invoice.amount_total, 500)
-        self.assertEqual(invoice.account_id, self.receivable)
-        self.assertEqual(self.task.invoiced_amount, invoice.amount_total)
+        self.invoice = self.env['account.invoice'].browse(invoice_ids[0])
+        self.env.user.company_id = self.company
+
+    def test_01_generate_invoice(self):
+        self.assertEqual(self.invoice.amount_total, 500)
+        self.assertEqual(self.invoice.account_id, self.receivable)
+        self.assertEqual(self.task.invoiced_amount, self.invoice.amount_total)

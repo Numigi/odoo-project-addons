@@ -16,9 +16,10 @@ class AccountAnalyticLine(models.Model):
 
     partner_invoice_id = fields.Many2one(
         'res.partner', 'Partner To Invoice',
-        domain=['|', ('customer', '=', True), ('supplier', '=', True)],
-        compute='_compute_partner_invoice_id', store=True)
-    invoice_id = fields.Many2one('account.invoice', 'Invoice')
+        domain=['|', ('customer', '=', True), ('supplier', '=', True)])
+
+    generated_invoice_id = fields.Many2one(
+        'account.invoice', 'Generated Invoice')
 
     show_on_project_invoicing = fields.Boolean(
         'Show On Project Invoicing',
@@ -26,9 +27,17 @@ class AccountAnalyticLine(models.Model):
 
     invoicing_state = fields.Selection([
         ('to_invoice', 'To Invoice'),
+        ('draft_invoice', 'Draft Invoice'),
         ('invoiced', 'Invoiced'),
         ('not_invoiceable', 'Not Invoiceable'),
     ], 'Invoicing State', default='to_invoice')
+
+    cost = fields.Monetary(
+        'Cost', currency_field='company_currency_id',
+        compute='_compute_cost')
+    company_currency_id = fields.Many2one(
+        'res.currency', 'Company Currency', related='company_id.currency_id',
+        readonly=True)
 
     sale_price = fields.Monetary('Sale Price', compute='_compute_sale_price')
     final_price = fields.Monetary(
@@ -36,16 +45,28 @@ class AccountAnalyticLine(models.Model):
     final_price_currency_id = fields.Many2one(
         'res.currency', 'Final Price Currency')
     final_total = fields.Monetary(
-        'Final Price', currency_field='final_price_currency_id',
+        'Total', currency_field='final_price_currency_id',
         compute='_compute_final_total')
 
-    @api.depends('task_id')
-    def _compute_partner_invoice_id(self):
-        for line in self:
-            if line.task_id:
-                line.partner_invoice_id = line.task_id.project_id.partner_id
-            else:
-                line.partner_invoice_id = None
+    @api.model
+    def create(self, vals):
+        line = super(AccountAnalyticLine, self).create(vals)
+        if line.project_id:
+            line.partner_invoice_id = line.project_id.partner_id
+        return line
+
+    @api.multi
+    def write(self, vals):
+        super(AccountAnalyticLine, self).write(vals)
+        if vals.get('project_id'):
+            project = self.env['project.project'].browse(vals['project_id'])
+            self.filtered(lambda l: l.invoicing_state == 'to_invoice').write({
+                'partner_invoice_id': project.partner_id.id,
+            })
+            for line in self:
+                if line.invoicing_state == 'to_invoice':
+                    line._onchange_partner_invoice_id()
+        return True
 
     @api.depends('amount', 'is_timesheet', 'sheet_id_computed.state')
     def _compute_show_on_project_invoicing(self):
@@ -84,6 +105,11 @@ class AccountAnalyticLine(models.Model):
         for line in self:
             line.final_total = line.unit_amount * line.final_price
 
+    @api.depends('amount')
+    def _compute_cost(self):
+        for line in self:
+            line.cost = -line.amount
+
     @api.onchange('partner_invoice_id')
     def _onchange_partner_invoice_id(self):
         if self.partner_invoice_id:
@@ -93,4 +119,6 @@ class AccountAnalyticLine(models.Model):
             else:
                 self.final_price_currency_id = (
                     self.env.user.company_id.currency_id)
-            self.final_price = self.sale_price
+
+            if self.sale_price:
+                self.final_price = self.sale_price

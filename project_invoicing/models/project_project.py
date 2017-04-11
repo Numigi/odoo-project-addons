@@ -4,7 +4,7 @@
 
 from collections import defaultdict
 from odoo import api, fields, models, _
-from odoo.exceptions import ValidationError
+from odoo.exceptions import ValidationError, Warning as UserError
 
 
 class ProjectProject(models.Model):
@@ -19,11 +19,21 @@ class ProjectProject(models.Model):
     def generate_invoices(self, data):
         self.ensure_one()
 
-        lines_by_partner = defaultdict(list)
+        self = self.with_context(
+            force_company=self.company_id.id,
+            company_id=self.company_id.id)
+
+        inv_lines = defaultdict(list)
+        analytic_line_ids = defaultdict(list)
 
         for task_id, values in data['tasks'].items():
             task = self.env['project.task'].browse(int(task_id))
             assert task.project_id == self
+
+            if not values['lines']:
+                raise UserError(_(
+                    "You did not select any analytic line for task %(task)s."
+                ) % task.name)
 
             task.prepare_analytic_lines(values['lines'])
 
@@ -33,20 +43,25 @@ class ProjectProject(models.Model):
                     partner_id = int(line['partner_invoice_id'][0])
                     line_vals = self._get_invoice_line_vals_real(line)
                     line_vals['name'] = values['description'] or '/'
-                    lines_by_partner[(partner_id, currency_id)].append(
+                    inv_lines[(partner_id, currency_id)].append(
                         line_vals)
+                    analytic_line_ids[(partner_id, currency_id)].append(
+                        int(line['id']))
 
             else:
                 currency_id = int(values['currency_id'])
                 partner_id = int(values['lines'][0]['partner_invoice_id'][0])
-                lines_by_partner[(partner_id, currency_id)].append(
+                lines = values['lines']
+                inv_lines[(partner_id, currency_id)].append(
                     self._get_invoice_line_vals_lump_sum(values))
+                for line in values['lines']:
+                    analytic_line_ids[(partner_id, currency_id)].append(
+                        int(line['id']))
 
         invoices = self.env['account.invoice']
-        inv_obj = self.env['account.invoice'].with_context(
-            type='out_invoice', company_id=self.company_id.id)
+        inv_obj = self.env['account.invoice'].with_context(type='out_invoice')
 
-        for (partner_id, currency_id), lines in lines_by_partner.items():
+        for (partner_id, currency_id), lines in inv_lines.items():
             partner = self.env['res.partner'].browse(partner_id)
 
             if not partner.property_account_receivable_id:
@@ -55,12 +70,15 @@ class ProjectProject(models.Model):
                     'is not set. It is therefore not possible to generate '
                     'an invoice for this partner.'))
 
+            aal_ids = analytic_line_ids[(partner_id, currency_id)]
+
             invoices |= inv_obj.create({
                 'partner_id': partner_id,
                 'currency_id': currency_id,
                 'company_id': self.company_id.id,
                 'account_id': partner.property_account_receivable_id.id,
                 'invoice_line_ids': [(0, 0, l) for l in lines],
+                'source_analytic_line_ids': [(6, 0, aal_ids)]
             })
 
         action = self.env.ref('account.action_invoice_tree1')
@@ -83,8 +101,7 @@ class ProjectProject(models.Model):
     @api.multi
     def _get_default_income_account(self):
         self.ensure_one()
-        property_obj = self.env['ir.property'].with_context(
-            force_company=self.company_id.id)
+        property_obj = self.env['ir.property']
 
         account = property_obj.get(
             'property_account_income_id', 'product.template')

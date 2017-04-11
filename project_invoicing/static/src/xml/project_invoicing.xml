@@ -38,8 +38,10 @@
             </tbody>
         </table>
 
-        <label class="description-label">Description</label>
-        <div class="field-description"/>
+        <div class="description">
+            <label>Description</label>
+            <div class="field-description"/>
+        </div>
         <div class="field-analytic-lines"/>
     </div>
     <button class="btn btn-primary btn-generate-invoice">

@@ -16,18 +16,23 @@ var ControlPanel = require('web.ControlPanel');
 var utils = require('web.utils');
 var ListView = require('web.ListView');
 var session = require('web.session');
+var CrashManager = require('web.CrashManager');
 
 var QWeb = core.qweb;
 var _t = core._t;
 
 var InvoicePrepareFieldManager = common.DefaultFieldManager.extend({
-    init: function() {
+    init: function(parent) {
         this._super(arguments);
         this.options = {};
+        this.parent = parent;
     },
     get_fields_values: function(){
         return {};
-    }
+    },
+    do_action: function(){
+        this.parent.do_action.apply(this.parent, arguments);
+    },
 });
 
 
@@ -43,6 +48,7 @@ var InvoicePrepareGroupType = ListView.Groups.extend({
     open: function () {
         if(!this.rendered){
             this._super.apply(this, arguments);
+            this.rendered = true;
         }
         else {
             $(this.elements).show();
@@ -84,16 +90,20 @@ var InvoicePrepareListView = core.one2many_view_registry.get('list').extend({
         this.options.GroupsType = InvoicePrepareGroupType;
         this.options.ListType = InvoicePrepareListType;
     },
+    load_list: function() {
+        var res = this._super.apply(this, arguments);
 
-    is_action_enabled: function(action) {
-        // Prevent creating an analytic line from the list view
-        if(action === 'create'){
-            return false;
-        }
-        var attrs = this.fields_view.arch.attrs;
-        return (action in attrs) ? JSON.parse(attrs[action]) : true;
+        var self = this;
+        this.$('thead .o_list_record_selector input').unbind('click').click(function() {
+            self.$('tbody .o_list_record_selector input').filter(function(){
+                return !$(this).prop('disabled');
+            }).prop('checked', $(this).prop('checked'));
+            var selection = self.groups.get_selection();
+            $(self.groups).trigger('selected', [selection.ids, selection.records]);
+        });
+
+        return res;
     },
-
     editable: function () {
         // Allow edition of the line in grouped mode
         return true;
@@ -234,7 +244,7 @@ var InvoicePrepare = common.FormWidget.extend({
         this.task_managers = {};
         this.task_managers_list = [];
         this.task_fields = {};
-        this.analytic_line_group_by = [];
+        this.analytic_line_group_by = ['product_id'];
         this.field_manager.on("field_changed:all_task_ids", this, this.query_tasks);
         this.on("change:tasks", this, this.reinitialize);
 
@@ -309,7 +319,7 @@ var InvoicePrepare = common.FormWidget.extend({
             Render a single task.
             Each task has its own field manager.
         */
-        var field_manager = new InvoicePrepareFieldManager(self);
+        var field_manager = new InvoicePrepareFieldManager(this);
         this.task_managers[task.id] = field_manager;
         this.task_managers_list.push(field_manager);
         this.task_fields[task.id] = {};
@@ -331,7 +341,6 @@ var InvoicePrepare = common.FormWidget.extend({
         this.render_global_amount(task);
         this.render_currency(task);
         this.render_description(task);
-        this.render_analytic_lines(task);
         this.add_checkbox_events(task);
         this.set_invoiced_amount_label(task);
         this.add_invoiced_amount_events(task);
@@ -381,6 +390,9 @@ var InvoicePrepare = common.FormWidget.extend({
     },
     render_analytic_lines: function(task){
         var self = this;
+        if(this.task_fields[task.id].analytic_line_ids){
+            return;
+        }
         var target = this.get_task_el(task, '.field-analytic-lines');
         var field = new InvoicePrepareList(this.task_managers[task.id], {
             attrs: {name: "analytic_line_ids", type: "one2many"},
@@ -393,11 +405,12 @@ var InvoicePrepare = common.FormWidget.extend({
         this.task_fields[task.id].analytic_line_ids = field;
     },
     add_checkbox_events: function(task){
+        var self = this;
         var checkbox_real = this.get_task_el(task, '.checkbox-real');
         var checkbox_lump_sum = this.get_task_el(task, '.checkbox-lump-sum');
         var lump_sum_summary = this.get_task_el(task, '.lump-sum-summary');
         var description = this.get_task_el(task, '.description');
-        var analytic_lines = this.get_task_el(task, '.analytic-lines');
+        var analytic_lines = this.get_task_el(task, '.field-analytic-lines');
 
         checkbox_real.prop('checked', false);
         checkbox_lump_sum.prop('checked', false);
@@ -410,6 +423,7 @@ var InvoicePrepare = common.FormWidget.extend({
                 lump_sum_summary.hide();
                 description.show();
                 analytic_lines.show();
+                self.render_analytic_lines(task);
                 checkbox_lump_sum.prop('checked', false);
             }
             else if(!checkbox_lump_sum.prop('checked')){
@@ -423,6 +437,7 @@ var InvoicePrepare = common.FormWidget.extend({
                 lump_sum_summary.show();
                 description.show();
                 analytic_lines.show();
+                self.render_analytic_lines(task);
                 checkbox_real.prop('checked', false);
             }
             else if(!checkbox_lump_sum.prop('checked')){
@@ -470,13 +485,6 @@ var InvoicePrepare = common.FormWidget.extend({
     get_task_data: function(task){
         var real = this.get_task_el(task, '.checkbox-real').prop('checked');
         var lines = this.get_selected_lines(task);
-        if(!lines.length){
-            // TODO: show an error message popup to the user
-            throw new Error(_t(
-                'You did not select any analytic line for task %(task)s.'
-            ).replace('%(task)s', task.name));
-        }
-
         var fields = this.task_fields[task.id];
         return {
             id: task.id,
