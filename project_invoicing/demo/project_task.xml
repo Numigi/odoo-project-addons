@@ -15,9 +15,9 @@
         </record>
 
         <record model="project.task" id="project_task_integration" >
-            <field name="name">Integration</field>
+            <field name="name">Integration and testing</field>
             <field name="project_id" ref="project_project_website"/>
-            <field name="user_id" ref="res_users_jack"/>
+            <field name="user_id" ref="res_users_sophia"/>
         </record>
 
     </data>

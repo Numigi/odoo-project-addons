@@ -13,7 +13,7 @@
     'summary': 'Prepare Invoices from Projects',
     'depends': [
         'account',
-        'analytic_line_is_timesheet',
+        'employee_product',
         'hr_timesheet_sheet',
         'project',
         'sale_stock',
@@ -28,7 +28,7 @@
         'demo/res_users.xml',
         'demo/project_project.xml',
         'demo/project_task.xml',
-        'demo/account_analytic_line.xml',
+        'demo/timesheet_account_analytic_line.xml',
     ],
     'qweb': [
         'static/src/xml/project_invoicing.xml',
