@@ -66,6 +66,37 @@ var InvoicePrepareListType = ListView.List.extend({
         The checkbox on a row is disabled if the analytic line is already invoiced
         or is not invoiceable.
     */
+    init: function() {
+        this._super.apply(this, arguments);
+        this.records.unbind('change');
+        var self = this;
+        this.records.bind('change', function (event, record, attribute, value, old_value) {
+            var $row;
+            if (attribute === 'id') {
+                if (old_value) {
+                    throw new Error(
+                        _.str.sprintf( _t("Setting 'id' attribute on existing record %s"),
+                        JSON.stringify(record.attributes) ));
+                }
+                self.dataset.add_ids([value], self.records.indexOf(record));
+                $row = self.$current.children('[data-id=false]');
+            } else {
+                $row = self.$current.children('[data-id=' + record.get('id') + ']');
+            }
+            var $newRow = $(self.render_record(record));
+
+            // This part was changed from the source code
+            var checkbox = $newRow.find('.o_list_record_selector input');
+            if(record.attributes.invoicing_state !== 'to_invoice'){
+                checkbox.prop('disabled', true);
+            }
+            else{
+                checkbox.prop('checked', !!$row.find('.o_list_record_selector input').prop('checked'));
+            }
+
+            $row.replaceWith($newRow);
+        });
+    },
     render: function () {
         this.records.records.forEach(function(record){
             if(record.attributes.invoicing_state === 'to_invoice') {
