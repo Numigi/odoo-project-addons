@@ -70,9 +70,15 @@ class TestAnalyticLineBase(common.SavepointCase):
             'email': 'root@localhost',
             'groups_id': [(6, 0, [(cls.env.ref('base.group_user')).id])]
         })
+        cls.product_service = cls.env['product.product'].create({
+            'name': 'Consultant',
+            'type': 'service',
+            'standard_price': 40,
+        })
         cls.employee = cls.env['hr.employee'].create({
             'name': 'My Employee',
             'user_id': cls.user.id,
+            'product_id': cls.product_service.id,
         })
         cls.product = cls.env['product.product'].create({
             'name': 'My Product',
