@@ -1,0 +1,107 @@
+<?xml version="1.0"?>
+<openerp>
+    <data noupdate="1">
+
+        <record model="hr_timesheet_sheet.sheet" id="hr_timesheet_sheet_jack_w1" >
+            <field name="name">Timesheet Jack Week 1</field>
+            <field name="date_from">2017-03-27</field>
+            <field name="date_to">2017-04-02</field>
+            <field name="employee_id" ref="hr_employee_jack"/>
+        </record>
+
+        <record model="hr_timesheet_sheet.sheet" id="hr_timesheet_sheet_sophia_w1" >
+            <field name="name">Timesheet Sophia Week 1</field>
+            <field name="date_from">2017-03-27</field>
+            <field name="date_to">2017-04-02</field>
+            <field name="employee_id" ref="hr_employee_sophia"/>
+        </record>
+
+        <record model="hr_timesheet_sheet.sheet" id="hr_timesheet_sheet_sophia_w2" >
+            <field name="name">Timesheet Sophia Week 2</field>
+            <field name="date_from">2017-04-03</field>
+            <field name="date_to">2017-04-09</field>
+            <field name="employee_id" ref="hr_employee_sophia"/>
+        </record>
+
+        <record model="account.analytic.line" id="account_analytic_line_project_planning" >
+            <field name="name">Project Planning</field>
+            <field name="date">2017-03-28</field>
+            <field name="user_id" ref="res_users_jack"/>
+            <field name="unit_amount">8</field>
+            <field name="project_id" ref="project_project_website"/>
+            <field name="task_id" ref="project_task_planning"/>
+            <field name="is_timesheet" eval="True"/>
+            <field name="sheet_id" ref="hr_timesheet_sheet_jack_w1" />
+            <field name="sheet_id_computed" ref="hr_timesheet_sheet_jack_w1" />
+        </record>
+
+        <record model="account.analytic.line" id="account_analytic_line_budget_planning" >
+            <field name="name">Budget Planning</field>
+            <field name="date">2017-03-29</field>
+            <field name="user_id" ref="res_users_jack"/>
+            <field name="unit_amount">8</field>
+            <field name="project_id" ref="project_project_website"/>
+            <field name="task_id" ref="project_task_planning"/>
+            <field name="is_timesheet" eval="True"/>
+            <field name="sheet_id" ref="hr_timesheet_sheet_jack_w1" />
+            <field name="sheet_id_computed" ref="hr_timesheet_sheet_jack_w1" />
+        </record>
+
+        <record model="account.analytic.line" id="account_analytic_line_dev_module_accounting" >
+            <field name="name">Develop module for accounting</field>
+            <field name="date">2017-03-30</field>
+            <field name="user_id" ref="res_users_sophia"/>
+            <field name="unit_amount">10</field>
+            <field name="project_id" ref="project_project_website"/>
+            <field name="task_id" ref="project_task_dev"/>
+            <field name="is_timesheet" eval="True"/>
+            <field name="sheet_id" ref="hr_timesheet_sheet_sophia_w1" />
+            <field name="sheet_id_computed" ref="hr_timesheet_sheet_sophia_w1" />
+        </record>
+
+        <record model="account.analytic.line" id="account_analytic_line_dev_module_sale" >
+            <field name="name">Develop module for sale management</field>
+            <field name="date">2017-04-04</field>
+            <field name="user_id" ref="res_users_sophia"/>
+            <field name="unit_amount">5</field>
+            <field name="project_id" ref="project_project_website"/>
+            <field name="task_id" ref="project_task_dev"/>
+            <field name="is_timesheet" eval="True"/>
+            <field name="sheet_id" ref="hr_timesheet_sheet_sophia_w2" />
+            <field name="sheet_id_computed" ref="hr_timesheet_sheet_sophia_w2" />
+        </record>
+
+        <record model="account.analytic.line" id="account_analytic_line_integration" >
+            <field name="name">Integration</field>
+            <field name="date">2017-04-05</field>
+            <field name="user_id" ref="res_users_sophia"/>
+            <field name="unit_amount">6</field>
+            <field name="project_id" ref="project_project_website"/>
+            <field name="task_id" ref="project_task_integration"/>
+            <field name="is_timesheet" eval="True"/>
+            <field name="sheet_id" ref="hr_timesheet_sheet_sophia_w2" />
+            <field name="sheet_id_computed" ref="hr_timesheet_sheet_sophia_w2" />
+        </record>
+
+        <record model="account.analytic.line" id="account_analytic_line_testing" >
+            <field name="name">Testing</field>
+            <field name="date">2017-04-08</field>
+            <field name="user_id" ref="res_users_sophia"/>
+            <field name="unit_amount">7</field>
+            <field name="project_id" ref="project_project_website"/>
+            <field name="task_id" ref="project_task_integration"/>
+            <field name="is_timesheet" eval="True"/>
+            <field name="sheet_id" ref="hr_timesheet_sheet_sophia_w2" />
+            <field name="sheet_id_computed" ref="hr_timesheet_sheet_sophia_w2" />
+        </record>
+
+        <function model="hr_timesheet_sheet.sheet" name="action_timesheet_confirm" eval="[ref('hr_timesheet_sheet_jack_w1')]"/>
+        <function model="hr_timesheet_sheet.sheet" name="action_timesheet_confirm" eval="[ref('hr_timesheet_sheet_sophia_w1')]"/>
+        <function model="hr_timesheet_sheet.sheet" name="action_timesheet_confirm" eval="[ref('hr_timesheet_sheet_sophia_w2')]"/>
+
+        <function model="hr_timesheet_sheet.sheet" name="action_timesheet_done" eval="[ref('hr_timesheet_sheet_jack_w1')]"/>
+        <function model="hr_timesheet_sheet.sheet" name="action_timesheet_done" eval="[ref('hr_timesheet_sheet_sophia_w1')]"/>
+        <function model="hr_timesheet_sheet.sheet" name="action_timesheet_done" eval="[ref('hr_timesheet_sheet_sophia_w2')]"/>
+
+    </data>
+</openerp>
