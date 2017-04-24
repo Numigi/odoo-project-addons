@@ -14,9 +14,8 @@
     'depends': ['project'],
     'data': [
         'views/project_stage.xml',
-        'views/project_project.xml',
         'views/project_task_type.xml',
-        ],
+    ],
     'installable': True,
     'application': False,
 }
