@@ -32,13 +32,24 @@ class ProjectProject(models.Model):
 
             if not values['lines']:
                 raise UserError(_(
-                    "You did not select any analytic line for task %(task)s."
-                ) % task.name)
+                    "You did not select any analytic line for the "
+                    "task %(task)s."
+                ) % {'task': task.name})
 
             task.prepare_analytic_lines(values['lines'])
 
             if values['mode'] == 'real':
                 for line in values['lines']:
+                    if(
+                        not line['final_price_currency_id'] or
+                        not line['partner_invoice_id']
+                    ):
+                        raise UserError(_(
+                            "You must select a partner to invoice and "
+                            "a currency for each line selected for invoicing "
+                            "in mode real."
+                        ))
+
                     currency_id = int(line['final_price_currency_id'][0])
                     partner_id = int(line['partner_invoice_id'][0])
                     line_vals = self._get_invoice_line_vals_real(line)

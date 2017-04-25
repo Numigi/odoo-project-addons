@@ -34,19 +34,22 @@ class AccountAnalyticLine(models.Model):
 
     cost = fields.Monetary(
         'Cost', currency_field='company_currency_id',
-        compute='_compute_cost')
+        compute='_compute_cost', store=True)
     company_currency_id = fields.Many2one(
         'res.currency', 'Company Currency', related='company_id.currency_id',
         readonly=True)
 
-    sale_price = fields.Monetary('Sale Price', compute='_compute_sale_price')
+    sale_price = fields.Monetary(
+        'PU (Price List)', compute='_compute_sale_price',
+        group_operator=None)
     final_price = fields.Monetary(
-        'Final Price', currency_field='final_price_currency_id')
+        'PU (Final)', currency_field='final_price_currency_id',
+        group_operator=None)
     final_price_currency_id = fields.Many2one(
         'res.currency', 'Final Price Currency')
     final_total = fields.Monetary(
         'Total', currency_field='final_price_currency_id',
-        compute='_compute_final_total')
+        compute='_compute_final_total', store=True)
 
     @api.model
     def create(self, vals):

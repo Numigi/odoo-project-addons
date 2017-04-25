@@ -66,8 +66,8 @@ msgstr "Facture Brouillon"
 
 #. module: project_invoicing
 #: model:ir.model.fields,field_description:project_invoicing.field_account_analytic_line_final_price
-msgid "Final Price"
-msgstr "Prix final"
+msgid "PU (Final)"
+msgstr "PU (Final)"
 
 #. module: project_invoicing
 #: model:ir.model.fields,field_description:project_invoicing.field_account_analytic_line_final_price_currency_id
@@ -174,8 +174,8 @@ msgstr "Réel"
 
 #. module: project_invoicing
 #: model:ir.model.fields,field_description:project_invoicing.field_account_analytic_line_sale_price
-msgid "Sale Price"
-msgstr "Prix de vente"
+msgid "PU (Price List)"
+msgstr "PU (Liste de prix)"
 
 #. module: project_invoicing
 #: model:ir.model.fields,field_description:project_invoicing.field_account_analytic_line_show_on_project_invoicing
@@ -242,6 +242,17 @@ msgstr "Total"
 #. module: project_invoicing
 #: code:addons/project_invoicing/models/project_project.py:0
 #, python-format
-msgid "You did not select any analytic line for task %(task)s."
+msgid "You did not select any analytic line for the task %(task)s."
 msgstr ""
 "Vous n'avez pas sélectionné de ligne analytique pour la tâche %(task)s."
+
+#. module: project_invoicing
+#: code:addons/project_invoicing/models/project_project.py:0
+#, python-format
+msgid ""
+"You must select a partner to invoice and "
+"a currency for each line selected for invoicing "
+"in mode real."
+msgstr ""
+"Vous devez inscrire un partenaire à facturer et une devise pour chaque ligne "
+"sélectionnée en mode de facturation réel."
