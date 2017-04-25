@@ -3,6 +3,7 @@
 Contributors
 ------------
 * Istvan Szalai (istvan.szalai@savoirfairelinux.com)
+* David Dufresne (david.dufresne@savoirfairelinux.com)
 
 More information
 ----------------
