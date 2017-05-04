@@ -21,6 +21,7 @@
     ],
     'data': [
         'views/project_project.xml',
+        'views/account_invoice.xml',
     ],
     'demo': [
         'demo/product_product.xml',
