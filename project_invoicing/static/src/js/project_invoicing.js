@@ -320,7 +320,6 @@ var InvoicePrepare = common.FormWidget.extend({
         this.analytic_line_deferral.then(function(){
             self.get('tasks').forEach(function(task){
                 self.render_task(task);
-                self.task_rendered(task);
             });
         });
     },
@@ -369,17 +368,16 @@ var InvoicePrepare = common.FormWidget.extend({
                 },
             },
         });
-        this.render_global_amount(task);
-        this.render_currency(task);
         this.add_checkbox_events(task);
         this.set_invoiced_amount_label(task);
         this.add_invoiced_amount_events(task);
     },
-    task_rendered: function(task){
-        var fields = this.task_fields[task.id];
-        if(task.company_currency_id){
-            fields.currency_id.set_value(task.company_currency_id[0]);
+    render_lump_sum_fields: function(task){
+        if(this.task_fields[task.id].currency_id){
+            return;
         }
+        this.render_global_amount(task);
+        this.render_currency(task);
     },
     get_task_el: function(task, el){
         return this.$('[data-task-id="' + task.id + '"]').find(el);
@@ -407,6 +405,9 @@ var InvoicePrepare = common.FormWidget.extend({
         field.on('change', this, function(){
             this.currency_changed(task, field.get_value());
         });
+        if(task.company_currency_id){
+            field.set_value(task.company_currency_id[0]);
+        }
     },
     currency_changed: function(task, new_currency){
         var fields = this.task_fields[task.id];
@@ -462,6 +463,7 @@ var InvoicePrepare = common.FormWidget.extend({
                 description.show();
                 analytic_lines.show();
                 self.render_analytic_lines(task);
+                self.render_lump_sum_fields(task);
                 checkbox_real.prop('checked', false);
             }
             else if(!checkbox_lump_sum.prop('checked')){
@@ -510,14 +512,17 @@ var InvoicePrepare = common.FormWidget.extend({
         var real = this.get_task_el(task, '.checkbox-real').prop('checked');
         var lines = this.get_selected_lines(task);
         var fields = this.task_fields[task.id];
-        return {
+        res = {
             id: task.id,
             mode: real ? 'real' : 'lump_sum',
             description: fields.description.get_value(),
             lines: lines,
-            global_amount: fields.global_amount.get_value(),
-            currency_id: fields.currency_id.get_value(),
         }
+        if(res.mode === 'lump_sum'){
+            res.currency_id = fields.currency_id.get_value();
+            res.global_amount = fields.global_amount.get_value();
+        }
+        return res;
     },
     generate_invoice: function(){
         var self = this;
