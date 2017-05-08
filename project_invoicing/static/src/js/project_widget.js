@@ -546,7 +546,7 @@ var InvoicePrepare = common.FormWidget.extend({
     },
 });
 
-core.form_custom_registry.add('project_widget', InvoicePrepare);
+core.form_custom_registry.add('project_invoicing', InvoicePrepare);
 
 return {
     InvoicePrepareGroupType,
