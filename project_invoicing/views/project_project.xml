@@ -8,7 +8,7 @@
             <field name="inherit_id" ref="project.edit_project"/>
             <field name="arch" type="xml">
                 <notebook position="inside">
-                    <page name="invoice_prepare" string="Invoice Preparation">
+                    <page name="invoice_prepare" string="Invoice Preparation" groups="project.group_project_manager">
                         <field name="all_task_ids" invisible="1"/>
                         <widget type="project_invoicing"></widget>
                     </page>
