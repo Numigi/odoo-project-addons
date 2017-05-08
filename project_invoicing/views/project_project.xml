@@ -10,7 +10,7 @@
                 <notebook position="inside">
                     <page name="invoice_prepare" string="Invoice Preparation" groups="project.group_project_manager">
                         <field name="all_task_ids" invisible="1"/>
-                        <widget type="project_invoicing"></widget>
+                        <widget type="project_widget"></widget>
                     </page>
                 </notebook>
             </field>
@@ -40,8 +40,8 @@
 
         <template id="assets_backend" name="project_invoicing_assets" inherit_id="web.assets_backend">
             <xpath expr="." position="inside">
-                <script type="text/javascript" src="/project_invoicing/static/src/js/project_invoicing.js"></script>
-                <link rel="stylesheet" href="/project_invoicing/static/src/css/project_invoicing.css"/>
+                <script type="text/javascript" src="/project_invoicing/static/src/js/project_widget.js"></script>
+                <link rel="stylesheet" href="/project_invoicing/static/src/css/project_widget.css"/>
             </xpath>
         </template>
 
