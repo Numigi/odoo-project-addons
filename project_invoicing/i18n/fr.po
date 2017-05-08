@@ -218,6 +218,12 @@ msgstr ""
 "La facture ne peut pas être générée à partir du projet %(project)s. Le "
 "compte de produit par défaut n'est pas configuré pour la société %(company)s."
 
+#. module: equipment_purchase
+#: code:addons/equipment_purchase/models/purchase_order_line.py:65
+#, python-format
+msgid "The invoice line (%(line)s) has a task (%(task)s) and the invoice has a project (%(invoice_project)s), but the task is bound to the project (%(task_project)s)."
+msgstr "La ligne de facture %(line)s a une tâche (%(task)s) et la facture a un projet (%(invoice_project)s), mais la tâche est liée au projet %(task_project)s."
+
 #. module: project_invoicing
 #: code:addons/project_invoicing/models/project_project.py:63
 #, python-format

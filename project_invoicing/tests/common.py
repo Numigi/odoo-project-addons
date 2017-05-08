@@ -71,7 +71,7 @@ class TestAnalyticLineBase(common.SavepointCase):
             'groups_id': [(6, 0, [(cls.env.ref('base.group_user')).id])]
         })
         cls.product_service = cls.env['product.product'].create({
-            'name': 'Consultant',
+            'name': 'My Service',
             'type': 'service',
             'standard_price': 40,
         })

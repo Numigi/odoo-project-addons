@@ -13,6 +13,8 @@ class AccountInvoice(models.Model):
         'account.analytic.line', 'generated_invoice_id',
         'Source Analytic Lines')
 
+    is_project_invoice = fields.Boolean(string="Project invoice")
+
     @api.multi
     def action_invoice_open(self):
         res = super(AccountInvoice, self).action_invoice_open()

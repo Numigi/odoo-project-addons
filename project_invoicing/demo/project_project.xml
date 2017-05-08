@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
 <openerp>
     <data>
-
-    	<record model="account.analytic.account" id="account_analytic_account_project">
-    		<field name="name">Analytic account for the Website project</field>
-    	</record>
+     
+        <record model="account.analytic.account" id="account_analytic_account_project">
+            <field name="name">Analytic account for the Website project</field>
+        </record>
 
         <record model="project.project" id="project_project_website" >
             <field name="name">Website for Accounting</field>

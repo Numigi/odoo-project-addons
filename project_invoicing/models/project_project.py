@@ -3,7 +3,8 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/LGPL).
 
 from collections import defaultdict
-from odoo import api, fields, models, _
+
+from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError, Warning as UserError
 
 
@@ -89,7 +90,8 @@ class ProjectProject(models.Model):
                 'company_id': self.company_id.id,
                 'account_id': partner.property_account_receivable_id.id,
                 'invoice_line_ids': [(0, 0, l) for l in lines],
-                'source_analytic_line_ids': [(6, 0, aal_ids)]
+                'source_analytic_line_ids': [(6, 0, aal_ids)],
+                'is_project_invoice': True,
             })
 
         action = self.env.ref('account.action_invoice_tree1')
