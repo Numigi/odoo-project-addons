@@ -371,7 +371,6 @@ var InvoicePrepare = common.FormWidget.extend({
         });
         this.render_global_amount(task);
         this.render_currency(task);
-        this.render_description(task);
         this.add_checkbox_events(task);
         this.set_invoiced_amount_label(task);
         this.add_invoiced_amount_events(task);
@@ -412,12 +411,6 @@ var InvoicePrepare = common.FormWidget.extend({
     currency_changed: function(task, new_currency){
         var fields = this.task_fields[task.id];
         fields.global_amount.set('currency', new_currency);
-    },
-    render_description: function(task){
-        var field = this._render_field(task, '.field-description', {
-            name: "description", type: "html",
-        });
-        field.set_value(task.description);
     },
     render_analytic_lines: function(task){
         var self = this;
