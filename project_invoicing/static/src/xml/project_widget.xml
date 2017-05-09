@@ -11,7 +11,6 @@
                 <div class="amount-invoiced"/>
             </button>
         </div>
-
         <div class="invoice-mode">
             <label>Invoicing Mode:</label>
             <div class="o_checkbox">
@@ -28,10 +27,14 @@
         <table class="lump-sum-summary">
             <tbody>
                 <tr>
-                    <td><label>Currency:</label></td>
-                    <td class="field-currency"></td>
+                    <td>Partner:</td>
+                    <td class="field-partner field-many2one"></td>
+                    <td>Currency:</td>
+                    <td class="field-currency field-many2one"></td>
                 </tr>
                 <tr>
+                    <td><label>Product:</label></td>
+                    <td class="field-global-amount-product field-many2one"></td>
                     <td><label>Amount:</label></td>
                     <td class="field-global-amount"></td>
                 </tr>

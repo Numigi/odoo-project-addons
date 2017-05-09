@@ -263,7 +263,6 @@ var InvoicePrepareList = core.form_widget_registry.get('one2many').extend({
 
 
 var analytic_line_arch = null;
-var currency_cache = {};
 
 var InvoicePrepare = common.FormWidget.extend({
     events: {
@@ -307,6 +306,7 @@ var InvoicePrepare = common.FormWidget.extend({
         }
 
         this.initialize_content();
+        this.default_global_product_callback = null;
     },
     reinitialize: function() {
         this.destroy_content();
@@ -357,6 +357,8 @@ var InvoicePrepare = common.FormWidget.extend({
         field_manager.extend_field_desc({
             global_amount: {type: 'monetary'},
             currency_id: {relation: 'res.currency', type: 'many2one'},
+            partner_id: {relation: 'res.partner', type: 'many2one'},
+            global_amount_product_id: {relation: 'product.product', type: 'many2one'},
             description: {type: 'html'},
             analytic_line_ids: {
                 relation: 'account.analytic.line',
@@ -378,6 +380,8 @@ var InvoicePrepare = common.FormWidget.extend({
         }
         this.render_global_amount(task);
         this.render_currency(task);
+        this.render_partner(task);
+        this.render_global_amount_product(task);
     },
     get_task_el: function(task, el){
         return this.$('[data-task-id="' + task.id + '"]').find(el);
@@ -398,6 +402,18 @@ var InvoicePrepare = common.FormWidget.extend({
             name: "global_amount", type: "monetary"
         });
     },
+    render_global_amount_product: function(task){
+        var field = this._render_field(task, '.field-global-amount-product', {
+            name: "global_amount_product_id", type: "many2one", modifiers: '{"required": true}'
+        });
+        if(!this.default_global_product_callback){
+            this.default_global_product_callback = new Model('ir.values').call(
+                'get_default', ['project_invoicing', 'invoicing_product_global_id'])
+        }
+        this.default_global_product_callback.then(function(product_id){
+            field.set_value(product_id);
+        });
+    },
     render_currency: function(task){
         var field = this._render_field(task, '.field-currency', {
             name: "currency_id", type: "many2one", modifiers: '{"required": true}'
@@ -407,6 +423,14 @@ var InvoicePrepare = common.FormWidget.extend({
         });
         if(task.company_currency_id){
             field.set_value(task.company_currency_id[0]);
+        }
+    },
+    render_partner: function(task){
+        var field = this._render_field(task, '.field-partner', {
+            name: "partner_id", type: "many2one", modifiers: '{"required": true}'
+        });
+        if(task.project_partner){
+            field.set_value(task.project_partner[0]);
         }
     },
     currency_changed: function(task, new_currency){
@@ -478,7 +502,7 @@ var InvoicePrepare = common.FormWidget.extend({
     },
     set_invoiced_amount_label: function(task){
         var currency_info = session.get_currency(task.company_currency_id[0]);
-        var value = String(task.invoiced_amount);
+        var value = (task.invoiced_amount).toFixed(currency_info.digits[1]);
         if(currency_info.position === 'before'){
             value = currency_info.symbol + ' ' + value;
         }
@@ -512,15 +536,17 @@ var InvoicePrepare = common.FormWidget.extend({
         var real = this.get_task_el(task, '.checkbox-real').prop('checked');
         var lines = this.get_selected_lines(task);
         var fields = this.task_fields[task.id];
-        res = {
+        var res = {
             id: task.id,
             mode: real ? 'real' : 'lump_sum',
             description: fields.description.get_value(),
             lines: lines,
         }
         if(res.mode === 'lump_sum'){
+            res.partner_id = fields.partner_id.get_value();
             res.currency_id = fields.currency_id.get_value();
             res.global_amount = fields.global_amount.get_value();
+            res.global_amount_product_id = fields.global_amount_product_id.get_value();
         }
         return res;
     },

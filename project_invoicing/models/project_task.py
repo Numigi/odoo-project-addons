@@ -27,9 +27,11 @@ class ProjectTask(models.Model):
             to_currency = task.company_currency_id
             for line in task.invoice_line_ids:
                 if line.invoice_id.state != 'cancel':
-                    total += line.invoice_id.currency_id.compute(
-                        line.price_subtotal, to_currency)
-            task.invoiced_amount = total
+                    invoice = line.invoice_id
+                    total += invoice.currency_id.with_context(
+                        date=invoice.date_invoice).compute(
+                            line.price_subtotal, to_currency)
+            task.invoiced_amount = to_currency.round(total)
 
     @api.multi
     def prepare_analytic_lines(self, lines):

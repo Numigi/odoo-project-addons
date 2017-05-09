@@ -7,3 +7,4 @@ from . import account_invoice
 from . import account_invoice_line
 from . import project_project
 from . import project_task
+from . import res_config_settings
