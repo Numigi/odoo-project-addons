@@ -16,6 +16,13 @@ class TestAnalyticLineBase(common.SavepointCase):
             'name': 'Test Company',
             'currency_id': cls.currency.id,
         })
+        cls.env['account.journal'].create({
+            'name': 'Sales Journal (CAD)',
+            'type': 'sale',
+            'code': 'SALE_CAD',
+            'company_id': cls.company.id,
+            'currency_id': cls.currency.id,
+        })
         cls.receivable = cls.env['account.account'].create({
             'company_id': cls.company.id,
             'name': 'Account Receivable',

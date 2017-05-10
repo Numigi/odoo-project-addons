@@ -115,17 +115,27 @@ class ProjectProject(models.Model):
             'is_project_invoice': True,
         }
 
-        if currency_id and currency_id != self.company_id.currency_id.id:
-            journal = self.env['account.journal'].search(
-                [('currency_id', '=', currency_id), ('type', '=', 'sale')],
-                limit=1)
+        if currency_id == self.company_id.currency_id.id:
+            journal = self.env['account.journal'].search([
+                '|',
+                ('currency_id', '=', False),
+                ('currency_id', '=', currency_id),
+                ('company_id', '=', self.company_id.id),
+                ('type', '=', 'sale'),
+            ], limit=1)
+        else:
+            journal = self.env['account.journal'].search([
+                ('currency_id', '=', currency_id),
+                ('company_id', '=', self.company_id.id),
+                ('type', '=', 'sale'),
+            ], limit=1)
 
-            if not journal:
-                raise UserError(_(
-                    'There is no available sale journal for the currency '
-                    '%s.'
-                ) % self.env['res.currency'].browse(currency_id).name)
-            vals['journal_id'] = journal.id
+        if not journal:
+            raise UserError(_(
+                'There is no available sale journal for the currency %s.'
+            ) % self.env['res.currency'].browse(currency_id).name)
+
+        vals['journal_id'] = journal.id
 
         return vals
 
