@@ -53,46 +53,32 @@ class ProjectProject(models.Model):
 
                     currency_id = int(line['final_price_currency_id'][0])
                     partner_id = int(line['partner_invoice_id'][0])
-                    line_vals = self._get_invoice_line_vals_real(line)
-                    line_vals['name'] = values['description'] or '/'
-                    inv_lines[(partner_id, currency_id)].append(
-                        line_vals)
-                    analytic_line_ids[(partner_id, currency_id)].append(
-                        int(line['id']))
+
+                    key = (partner_id, currency_id)
+                    inv_lines[key].append(
+                        self._get_invoice_line_vals_real(line))
+                    analytic_line_ids[key].append(int(line['id']))
 
             else:
                 currency_id = int(values['currency_id'])
-                partner_id = int(values['lines'][0]['partner_invoice_id'][0])
-                lines = values['lines']
-                inv_lines[(partner_id, currency_id)].append(
+                partner_id = int(values['partner_id'])
+                key = (partner_id, currency_id)
+                inv_lines[key].extend(
                     self._get_invoice_line_vals_lump_sum(values))
-                for line in values['lines']:
-                    analytic_line_ids[(partner_id, currency_id)].append(
-                        int(line['id']))
+                analytic_line_ids[key].extend([
+                    int(l['id']) for l in values['lines']
+                ])
 
         invoices = self.env['account.invoice']
         inv_obj = self.env['account.invoice'].with_context(type='out_invoice')
 
         for (partner_id, currency_id), lines in inv_lines.items():
-            partner = self.env['res.partner'].browse(partner_id)
-
-            if not partner.property_account_receivable_id:
-                raise ValidationError(_(
-                    'The receivable account for the partner %(partner)s '
-                    'is not set. It is therefore not possible to generate '
-                    'an invoice for this partner.'))
-
-            aal_ids = analytic_line_ids[(partner_id, currency_id)]
-
-            invoices |= inv_obj.create({
-                'partner_id': partner_id,
-                'currency_id': currency_id,
-                'company_id': self.company_id.id,
-                'account_id': partner.property_account_receivable_id.id,
-                'invoice_line_ids': [(0, 0, l) for l in lines],
-                'source_analytic_line_ids': [(6, 0, aal_ids)],
-                'is_project_invoice': True,
-            })
+            vals = self._get_invoice_vals(partner_id, currency_id)
+            vals['invoice_line_ids'] = [(0, 0, l) for l in lines]
+            vals['source_analytic_line_ids'] = [
+                (6, 0, analytic_line_ids[(partner_id, currency_id)])
+            ]
+            invoices |= inv_obj.create(vals)
 
         action = self.env.ref('account.action_invoice_tree1')
         return {
@@ -110,6 +96,48 @@ class ProjectProject(models.Model):
             'type': 'ir.actions.act_window',
             'target': 'current',
         }
+
+    def _get_invoice_vals(self, partner_id, currency_id):
+        partner = self.env['res.partner'].browse(partner_id)
+
+        if not partner.property_account_receivable_id:
+            raise ValidationError(_(
+                'The receivable account for the partner %(partner)s '
+                'is not set. It is therefore not possible to generate '
+                'an invoice for this partner.'))
+
+        vals = {
+            'partner_id': partner_id,
+            'currency_id': currency_id,
+            'company_id': self.company_id.id,
+            'account_id': partner.property_account_receivable_id.id,
+            'fiscal_position_id': partner.property_account_position_id.id,
+            'is_project_invoice': True,
+        }
+
+        if currency_id == self.company_id.currency_id.id:
+            journal = self.env['account.journal'].search([
+                '|',
+                ('currency_id', '=', False),
+                ('currency_id', '=', currency_id),
+                ('company_id', '=', self.company_id.id),
+                ('type', '=', 'sale'),
+            ], limit=1)
+        else:
+            journal = self.env['account.journal'].search([
+                ('currency_id', '=', currency_id),
+                ('company_id', '=', self.company_id.id),
+                ('type', '=', 'sale'),
+            ], limit=1)
+
+        if not journal:
+            raise UserError(_(
+                'There is no available sale journal for the currency %s.'
+            ) % self.env['res.currency'].browse(currency_id).name)
+
+        vals['journal_id'] = journal.id
+
+        return vals
 
     @api.multi
     def _get_default_income_account(self):
@@ -136,24 +164,23 @@ class ProjectProject(models.Model):
         return account
 
     @api.multi
+    def _get_income_account(self, partner, product):
+        fiscal_pos = partner.property_account_position_id
+        account = self.env['account.invoice.line'].get_invoice_line_account(
+            'out_invoice', product, fiscal_pos, self.company_id)
+        return account or self._get_default_income_account()
+
+    @api.multi
     def _get_invoice_line_vals_real(self, line_values):
         self.ensure_one()
         line = self.env['account.analytic.line'].browse(int(line_values['id']))
-
-        if line.product_id:
-            fiscal_pos = line.partner_invoice_id.property_account_position_id
-            invoice_line_obj = self.env['account.invoice.line']
-            account = invoice_line_obj.get_invoice_line_account(
-                'out_invoice', line.product_id, fiscal_pos, self.company_id)
-        else:
-            account = None
-
-        if not account:
-            account = self._get_default_income_account()
+        partner = line.partner_invoice_id
+        product = line.product_id
 
         return {
-            'account_id': account.id,
-            'product_id': line.product_id.id,
+            'name': line.name,
+            'account_id': self._get_income_account(partner, product).id,
+            'product_id': product.id,
             'quantity': line.unit_amount,
             'price_unit': line.final_price,
             'task_id': line.task_id.id,
@@ -163,12 +190,16 @@ class ProjectProject(models.Model):
     @api.multi
     def _get_invoice_line_vals_lump_sum(self, values):
         self.ensure_one()
+        product = self.env['product.product'].browse(
+            int(values['global_amount_product_id']))
+        partner = self.env['res.partner'].browse(int(values['partner_id']))
 
-        return {
-            'account_id': self._get_default_income_account().id,
-            'name': values['description'] or '/',
+        return [{
+            'account_id': self._get_income_account(partner, product).id,
+            'name': product.description_sale or '/',
             'quantity': 1,
             'price_unit': float(values['global_amount']),
             'task_id': int(values['id']),
             'account_analytic_id': self.analytic_account_id.id,
-        }
+            'product_id': product.id,
+        }]

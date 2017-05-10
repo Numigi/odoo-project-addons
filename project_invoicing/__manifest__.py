@@ -21,6 +21,7 @@
     ],
     'data': [
         'views/project_project.xml',
+        'views/project_config_settings.xml',
         'views/account_invoice.xml',
     ],
     'demo': [
@@ -32,7 +33,7 @@
         'demo/timesheet_account_analytic_line.xml',
     ],
     'qweb': [
-        'static/src/xml/project_invoicing.xml',
+        'static/src/xml/project_widget.xml',
     ],
     'installable': True,
     'application': True,

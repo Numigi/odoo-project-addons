@@ -71,24 +71,20 @@ class TestGenerateInvoiceLumpSum(TestGenerateInvoice):
     def setUp(self):
         super(TestGenerateInvoiceLumpSum, self).setUp()
         lines = [
-            {
-                'id': self.line_1.id,
-                'partner_invoice_id': self.customer.name_get()[0],
-            },
-            {
-                'id': self.line_2.id,
-                'partner_invoice_id': self.customer.name_get()[0],
-            },
+            {'id': self.line_1.id},
+            {'id': self.line_2.id},
         ]
         invoice_ids = self.project.generate_invoices({
             'tasks': {
                 self.task.id: {
                     'id': self.task.id,
+                    'partner_id': self.customer.id,
                     'currency_id': self.currency.id,
                     'mode': 'lump_sum',
                     'lines': lines,
                     'description': 'My task description',
                     'global_amount': 500,
+                    'global_amount_product_id': self.product_service.id,
                 }
             },
         })['domain'][0][2]
@@ -100,4 +96,7 @@ class TestGenerateInvoiceLumpSum(TestGenerateInvoice):
     def test_01_generate_invoice(self):
         self.assertEqual(self.invoice.amount_total, 500)
         self.assertEqual(self.invoice.account_id, self.receivable)
+        self.assertEqual(self.invoice.partner_id, self.customer)
         self.assertEqual(self.task.invoiced_amount, self.invoice.amount_total)
+        self.assertEqual(
+            self.task.invoice_line_ids[0].product_id, self.product_service)
