@@ -82,7 +82,6 @@ class TestGenerateInvoiceLumpSum(TestGenerateInvoice):
                     'currency_id': self.currency.id,
                     'mode': 'lump_sum',
                     'lines': lines,
-                    'description': 'My task description',
                     'global_amount': 500,
                     'global_amount_product_id': self.product_service.id,
                 }
