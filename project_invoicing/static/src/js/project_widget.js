@@ -359,7 +359,6 @@ var InvoicePrepare = common.FormWidget.extend({
             currency_id: {relation: 'res.currency', type: 'many2one'},
             partner_id: {relation: 'res.partner', type: 'many2one'},
             global_amount_product_id: {relation: 'product.product', type: 'many2one'},
-            description: {type: 'html'},
             analytic_line_ids: {
                 relation: 'account.analytic.line',
                 views: {
@@ -458,25 +457,21 @@ var InvoicePrepare = common.FormWidget.extend({
         var checkbox_real = this.get_task_el(task, '.checkbox-real');
         var checkbox_lump_sum = this.get_task_el(task, '.checkbox-lump-sum');
         var lump_sum_summary = this.get_task_el(task, '.lump-sum-summary');
-        var description = this.get_task_el(task, '.description');
         var analytic_lines = this.get_task_el(task, '.field-analytic-lines');
 
         checkbox_real.prop('checked', false);
         checkbox_lump_sum.prop('checked', false);
         lump_sum_summary.hide();
-        description.hide();
         analytic_lines.hide();
 
         checkbox_real.on('click', function(){
             if(checkbox_real.prop('checked')){
                 lump_sum_summary.hide();
-                description.show();
                 analytic_lines.show();
                 self.render_analytic_lines(task);
                 checkbox_lump_sum.prop('checked', false);
             }
             else if(!checkbox_lump_sum.prop('checked')){
-                description.hide();
                 analytic_lines.hide();
             }
         });
@@ -484,7 +479,6 @@ var InvoicePrepare = common.FormWidget.extend({
         checkbox_lump_sum.on('click', function(){
             if(checkbox_lump_sum.prop('checked')){
                 lump_sum_summary.show();
-                description.show();
                 analytic_lines.show();
                 self.render_analytic_lines(task);
                 self.render_lump_sum_fields(task);
@@ -492,7 +486,6 @@ var InvoicePrepare = common.FormWidget.extend({
             }
             else if(!checkbox_lump_sum.prop('checked')){
                 lump_sum_summary.hide();
-                description.hide();
                 analytic_lines.hide();
             }
             else{
@@ -527,7 +520,7 @@ var InvoicePrepare = common.FormWidget.extend({
             button.prop('disabled', true);
         }
     },
-    get_selected_lines(task){
+    get_selected_lines: function(task){
         var fields = this.task_fields[task.id];
         var groups = fields.analytic_line_ids.viewmanager.active_view.controller.groups;
         return groups.get_selection().records;
@@ -539,7 +532,6 @@ var InvoicePrepare = common.FormWidget.extend({
         var res = {
             id: task.id,
             mode: real ? 'real' : 'lump_sum',
-            description: fields.description.get_value(),
             lines: lines,
         }
         if(res.mode === 'lump_sum'){

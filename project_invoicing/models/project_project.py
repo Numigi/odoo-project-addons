@@ -19,7 +19,27 @@ class ProjectProject(models.Model):
     @api.multi
     def generate_invoices(self, data):
         self.ensure_one()
+        invoices = self._create_invoices(data)
+        action = self.env.ref('account.action_invoice_tree1')
+        return {
+            'name': action.name,
+            'view_type': 'form',
+            'view_mode': 'list,form',
+            'res_model': 'account.invoice',
+            'views': [
+                (self.env.ref('account.invoice_tree').id, 'list'),
+                (self.env.ref('account.invoice_form').id, 'form'),
+            ],
+            'search_view_id': action.search_view_id.id,
+            'context': action.context,
+            'domain': [('id', 'in', invoices.ids)],
+            'type': 'ir.actions.act_window',
+            'target': 'current',
+        }
 
+    @api.multi
+    def _create_invoices(self, data):
+        self.ensure_one()
         self = self.with_context(
             force_company=self.company_id.id,
             company_id=self.company_id.id)
@@ -80,24 +100,11 @@ class ProjectProject(models.Model):
             ]
             invoices |= inv_obj.create(vals)
 
-        action = self.env.ref('account.action_invoice_tree1')
-        return {
-            'name': action.name,
-            'view_type': 'form',
-            'view_mode': 'list,form',
-            'res_model': 'account.invoice',
-            'views': [
-                (self.env.ref('account.invoice_tree').id, 'list'),
-                (self.env.ref('account.invoice_form').id, 'form'),
-            ],
-            'search_view_id': action.search_view_id.id,
-            'context': action.context,
-            'domain': [('id', 'in', invoices.ids)],
-            'type': 'ir.actions.act_window',
-            'target': 'current',
-        }
+        return invoices
 
+    @api.multi
     def _get_invoice_vals(self, partner_id, currency_id):
+        self.ensure_one()
         partner = self.env['res.partner'].browse(partner_id)
 
         if not partner.property_account_receivable_id:
