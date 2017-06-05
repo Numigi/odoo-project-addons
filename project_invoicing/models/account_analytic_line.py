@@ -56,6 +56,7 @@ class AccountAnalyticLine(models.Model):
         line = super(AccountAnalyticLine, self).create(vals)
         if line.project_id:
             line.partner_invoice_id = line.project_id.partner_id
+            line._onchange_partner_invoice_id()
         return line
 
     @api.multi
