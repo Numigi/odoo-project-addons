@@ -6,5 +6,6 @@ from . import (
     test_account_invoice_line,
     test_analytic_line,
     test_generate_invoice,
+    test_project_task,
     test_timesheet_line,
 )
