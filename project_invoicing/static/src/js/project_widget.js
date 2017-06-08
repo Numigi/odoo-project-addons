@@ -319,7 +319,9 @@ var InvoicePrepare = common.FormWidget.extend({
         var self = this;
         this.analytic_line_deferral.then(function(){
             self.get('tasks').forEach(function(task){
-                self.render_task(task);
+                if (task.active){
+                    self.render_task(task);
+                }
             });
         });
     },
