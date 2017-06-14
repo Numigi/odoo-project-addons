@@ -14,7 +14,8 @@ class ProjectProject(models.Model):
 
     # The field task_ids only displays tasks that are not in a folded stage
     all_task_ids = fields.One2many(
-        'project.task', 'project_id', string='All Tasks')
+        'project.task', 'project_id', string='All Tasks',
+        domain=['|', ('active', '=', False), ('active', '=', True)])
 
     @api.multi
     def generate_invoices(self, data):
