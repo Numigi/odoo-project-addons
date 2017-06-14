@@ -25,8 +25,12 @@ class ProjectTask(models.Model):
         for task in self:
             total = 0
             to_currency = task.company_currency_id
+
             for line in task.invoice_line_ids:
-                if line.invoice_id.state != 'cancel':
+                if (
+                    line.invoice_id.type in ('out_invoice', 'out_refund') and
+                    line.invoice_id.state != 'cancel'
+                ):
                     invoice = line.invoice_id
                     total += invoice.currency_id.with_context(
                         date=invoice.date_invoice).compute(
@@ -77,8 +81,11 @@ class ProjectTask(models.Model):
     def get_invoice_list_action(self):
         self.ensure_one()
         action = self.env.ref('account.action_invoice_tree1')
-        invoice_ids = list(
-            set(self.invoice_line_ids.mapped('invoice_id.id')))
+
+        invoice_ids = list(set([
+            l.invoice_id.id for l in self.invoice_line_ids
+            if l.invoice_id.type in ('out_invoice', 'out_refund')]))
+
         return {
             'name': action.name,
             'view_type': 'form',
