@@ -271,6 +271,7 @@ var InvoicePrepare = common.FormWidget.extend({
     init: function(){
         this._super.apply(this, arguments);
         this.set({tasks: []});
+        this.active_tasks = [];
         this.task_managers = {};
         this.task_managers_list = [];
         this.task_fields = {};
@@ -314,6 +315,7 @@ var InvoicePrepare = common.FormWidget.extend({
         this.initialize_content();
     },
     initialize_content: function(){
+        this.active_tasks = this.get('tasks').filter(function(t){return t.active});
         this.$el.html(QWeb.render("InvoicePrepare", {widget: this}));
         var data_man = require('web.data_manager');
         var self = this;

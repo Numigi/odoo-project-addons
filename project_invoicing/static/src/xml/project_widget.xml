@@ -2,7 +2,7 @@
 <templates id="template" xml:space="preserve">
 
 <div t-name="InvoicePrepare">
-    <div t-foreach="widget.get('tasks')" t-as="task" t-att-data-task-id="task.id" class="project-invoice-preparation">
+    <div t-foreach="widget.active_tasks" t-as="task" t-att-data-task-id="task.id" class="project-invoice-preparation">
         <div class="task-name">
             <h2><t t-esc="task.name"/></h2>
             <span style="flex:1;"/>
