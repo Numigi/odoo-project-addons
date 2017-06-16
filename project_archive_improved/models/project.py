@@ -13,10 +13,6 @@ class Project(models.Model):
     def write(self, vals):
         super(Project, self).write(vals)
         if 'active' in vals:
-            if vals == {'active': True}:
-                self.mapped('tasks').write({
-                    'active': False,
-                })
             self.mapped('analytic_account_id').write({
                 'active': vals['active'],
             })
