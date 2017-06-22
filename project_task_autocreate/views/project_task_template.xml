@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="view_project_task_template_form" model="ir.ui.view">
+            <field name="name">project.task.template.form</field>
+            <field name="model">project.task.template</field>
+            <field name="arch" type="xml">
+                <form string="Task" class="o_form_project_tasks">
+                    <header>
+                        <button string="Create Task" type="object" name="action_create_task" class="btn btn-primary"/>
+                        <field name="stage_id" widget="statusbar" clickable="True" options="{'fold_field': 'fold'}"/>
+                    </header>
+                    <sheet string="Task Template">
+                        <div class="oe_button_box" name="button_box">
+                            <button name="toggle_active" type="object" groups="base.group_user" class="oe_stat_button" icon="fa-archive">
+                                <field name="active" widget="boolean_button" options='{"terminology": "archive"}'/>
+                            </button>
+                        </div>
+                        <group string="Template Settings">
+                            <field name="model_id"/>
+                        </group>
+                        <group>
+                            <div class="oe_title" colspan="2">
+                                <h1 class="o_row">
+                                    <field name="priority" widget="priority"/>
+                                    <field name="name" placeholder="Task Title..."/>
+                                </h1>
+                            </div>
+                        </group>
+                        <group string="Use Object Reference:">
+                            <group>
+                                <field name="use_relative_deadline" string="Deadline?"/>
+                                <field name="use_relative_project_id" string="Project?"/>
+                                <field name="use_relative_user_id" string="Assigned To?"/>
+                                <field name="use_relative_partner_id" string="Customer?"/>
+                            </group>
+                            <group>
+                                <field
+                                    colspan="2"
+                                    nolabel="1"
+                                    name="date_deadline"
+                                    attrs="{'invisible': [('use_relative_deadline', '=', True)]}"
+                                />
+                                <div colspan="2" class="address_format" attrs="{'invisible': [('use_relative_deadline', '=', False)]}">
+                                    <field
+                                        name="relative_deadline_delta"
+                                        style="width: 20%"
+                                        attrs="{'required': [('use_relative_deadline', '=', True)]}"
+                                    />
+                                    <field
+                                        name="relative_deadline_units"
+                                        style="width: 20%"
+                                        attrs="{'required': [('use_relative_deadline', '=', True)]}"
+                                    />
+                                    <field
+                                        name="relative_deadline_op"
+                                        style="width: 20%"
+                                        attrs="{'required': [('use_relative_deadline', '=', True)]}"
+                                    />
+                                    <field
+                                        name="relative_deadline"
+                                        style="width: 40%"
+                                        placeholder="today, object.delivery_date..."
+                                        attrs="{'required': [('use_relative_deadline', '=', True)]}"
+                                    />
+                                </div>
+                                <field
+                                    name="project_id"
+                                    domain="[('active', '=', True)]"
+                                    context="{'default_use_tasks':1}"
+                                    attrs="{'invisible': [('use_relative_project_id', '=', True)]}"
+                                />
+                                <field
+                                    name="relative_project_id"
+                                    placeholder="Example: {object.project_id}"
+                                    string="Project"
+                                    attrs="{'invisible': [('use_relative_project_id', '=', False)]}"
+                                />
+                                <field
+                                    name="user_id"
+                                    class="o_task_user_field"
+                                    options='{"no_open": True}'
+                                    attrs="{'invisible': [('use_relative_user_id', '=', True)]}"
+                                />
+                                <field
+                                    name="relative_user_id"
+                                    placeholder="Example: {object.user_id}"
+                                    string="Assigned To"
+                                    attrs="{'invisible': [('use_relative_user_id', '=', False)]}"
+                                />
+                                <field
+                                    name="partner_id"
+                                    attrs="{'invisible': [('use_relative_partner_id', '=', True)]}"
+                                />
+                                <field
+                                    name="relative_partner_id"
+                                    placeholder="Example: {object.partner_id}"
+                                    string="Customer"
+                                    attrs="{'invisible': [('use_relative_partner_id', '=', False)]}"
+                                />
+                            </group>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="tag_ids" widget="many2many_tags" options="{'no_create_edit': True}"/>
+                            </group>
+                            <group>
+                                <field name="sequence"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page name="description_page" string="Description">
+                                <field name="description" type="html"/>
+                                <div class="oe_clear"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_project_task_template_list" model="ir.ui.view">
+            <field name="name">project.task.template.list</field>
+            <field name="model">project.task.template</field>
+            <field name="arch" type="xml">
+                <tree string="Task Templates">
+                    <field name="name"/>
+                    <field name="model_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_project_task_template_filter" model="ir.ui.view">
+            <field name="name">project.task.template.filter</field>
+            <field name="model">project.task.template</field>
+            <field name="arch" type="xml">
+                <search string="Search Task Templates">
+                    <field name="name"/>
+                    <field name="model"/>
+                </search>
+            </field>
+        </record>
+
+    </data>
+</odoo>
