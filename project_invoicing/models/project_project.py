@@ -190,6 +190,7 @@ class ProjectProject(models.Model):
             'account_id': self._get_income_account(partner, product).id,
             'product_id': product.id,
             'quantity': line.unit_amount,
+            'uom_id': line.product_uom_id.id or product.uom_id.id,
             'price_unit': line.final_price,
             'task_id': line.task_id.id,
             'account_analytic_id': line.account_id.id,
@@ -210,4 +211,5 @@ class ProjectProject(models.Model):
             'task_id': int(values['id']),
             'account_analytic_id': self.analytic_account_id.id,
             'product_id': product.id,
+            'uom_id': product.uom_id.id,
         }]
