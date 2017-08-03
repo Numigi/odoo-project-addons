@@ -179,6 +179,13 @@ class ProjectProject(models.Model):
         return account or self._get_default_income_account()
 
     @api.multi
+    def _get_taxes(self, partner, product):
+        taxes = product.taxes_id
+        fiscal_pos = partner.property_account_position_id
+        taxes = fiscal_pos.map_tax(taxes, product, partner)
+        return taxes
+
+    @api.multi
     def _get_invoice_line_vals_real(self, line_values):
         self.ensure_one()
         line = self.env['account.analytic.line'].browse(int(line_values['id']))
@@ -194,6 +201,9 @@ class ProjectProject(models.Model):
             'price_unit': line.final_price,
             'task_id': line.task_id.id,
             'account_analytic_id': line.account_id.id,
+            'invoice_line_tax_ids': [
+                (4, t.id) for t in self._get_taxes(partner, product)
+            ],
         }
 
     @api.multi
@@ -212,4 +222,7 @@ class ProjectProject(models.Model):
             'account_analytic_id': self.analytic_account_id.id,
             'product_id': product.id,
             'uom_id': product.uom_id.id,
+            'invoice_line_tax_ids': [
+                (4, t.id) for t in self._get_taxes(partner, product)
+            ],
         }]
