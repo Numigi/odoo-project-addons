@@ -49,6 +49,11 @@ class TestAnalyticLineBase(common.SavepointCase):
             'res.partner', 'property_account_receivable_id',
             cls.receivable)
 
+        cls.env['ir.values'].search([
+            ('name', '=', 'taxes_id'),
+            ('model', '=', 'product.template'),
+        ]).unlink()
+
         cls.journal = cls.env['account.journal'].create({
             'company_id': cls.company.id,
             'type': 'sale',
