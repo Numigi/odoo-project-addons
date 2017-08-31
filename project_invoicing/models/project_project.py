@@ -94,8 +94,7 @@ class ProjectProject(models.Model):
         inv_obj = self.env['account.invoice'].with_context(type='out_invoice')
 
         for (partner_id, currency_id), lines in inv_lines.items():
-            vals = self._get_invoice_vals(partner_id, currency_id)
-            vals['invoice_line_ids'] = [(0, 0, l) for l in lines]
+            vals = self._get_invoice_vals(partner_id, currency_id, lines)
             vals['source_analytic_line_ids'] = [
                 (6, 0, analytic_line_ids[(partner_id, currency_id)])
             ]
@@ -104,7 +103,7 @@ class ProjectProject(models.Model):
         return invoices
 
     @api.multi
-    def _get_invoice_vals(self, partner_id, currency_id):
+    def _get_invoice_vals(self, partner_id, currency_id, lines):
         self.ensure_one()
         partner = self.env['res.partner'].browse(partner_id)
 
@@ -144,7 +143,7 @@ class ProjectProject(models.Model):
             ) % self.env['res.currency'].browse(currency_id).name)
 
         vals['journal_id'] = journal.id
-
+        vals['invoice_line_ids'] = [(0, 0, l) for l in lines]
         return vals
 
     @api.multi
