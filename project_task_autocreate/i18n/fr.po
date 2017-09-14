@@ -6,16 +6,56 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-06-22 16:40+0000\n"
-"PO-Revision-Date: 2017-06-22 12:45-0400\n"
-"Last-Translator: <>\n"
+"POT-Creation-Date: 2017-09-15 12:19-0400\n"
+"PO-Revision-Date: 2017-09-15 12:20-0400\n"
+"Last-Translator: Jérome Boisvert-Chouinard <jerome."
+"boisvertchouinard@savoirfairelinux.com>\n"
 "Language-Team: \n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"Language: fr\n"
 "X-Generator: Poedit 1.8.7.1\n"
+
+#. module: project_task_autocreate
+#: code:addons/project_task_autocreate/models/project_task_template.py:420
+#, python-format
+msgid "%(field)s is not a valid field on model %(model)s."
+msgstr "%(field)s n'est pas un champs valide du modèle %(model)s."
+
+#. module: project_task_autocreate
+#: code:addons/project_task_autocreate/models/project_task_template.py:428
+#, python-format
+msgid ""
+"%(relstr)s is not a field of type %(field_type)s.\n"
+"Expected a reference to a %(field_type)s field, like:\n"
+"%(examples)s"
+msgstr ""
+"%(relstr)s n'est pas une référence à un champs de type %(field_type)s.\n"
+"Une référence à un champs de type %(field_type)s était attendue, tel que:\n"
+"%(examples)s"
+
+#. module: project_task_autocreate
+#: code:addons/project_task_autocreate/models/project_task_rule.py:160
+#, python-format
+msgid ""
+"%(state)s is not a valid status on %(model)s. Valid statuses are:\n"
+"%(list_valid)s"
+msgstr ""
+"%(state)s n'est pas un statut valide sur %(model)s. Les status valides "
+"sont:\n"
+"%(list_valid)s"
+
+#. module: project_task_autocreate
+#: code:addons/project_task_autocreate/models/project_task_template.py:237
+#, python-format
+msgid ""
+"A task cannot be created from this template unless it is linked to a "
+"particular %(model)s."
+msgstr ""
+"Une tâche ne peut être créée à partir de cette tâche modèle que si elle est "
+"liés à un %(model)s spécifique."
 
 #. module: project_task_autocreate
 #: model:ir.model.fields,field_description:project_task_autocreate.field_project_task_rule_active
@@ -33,15 +73,10 @@ msgid "All conditions must be met (AND)"
 msgstr "Toutes les conditions doivent être remplies (ET)"
 
 #. module: project_task_autocreate
-#: code:addons/project_task_autocreate/models/project_task_template.py:301
+#: code:addons/project_task_autocreate/models/project_task_template.py:166
 #, python-format
-msgid "All fields of the deadline must be set."
+msgid "All fields of the relative deadline must be set."
 msgstr "Vous devez remplir tous les champs de la date d'échéance."
-
-#. module: project_task_autocreate
-#: model:ir.ui.view,arch_db:project_task_autocreate.view_project_task_template_form
-msgid "Applicable Rules"
-msgstr "Règles applicables"
 
 #. module: project_task_autocreate
 #: model:ir.ui.view,arch_db:project_task_autocreate.view_project_task_rule_form
@@ -69,13 +104,19 @@ msgid "At least one condition must be met (OR)"
 msgstr "Au moins une condition doit être remplie (OU)"
 
 #. module: project_task_autocreate
+#: code:addons/project_task_autocreate/models/project_task_rule.py:150
+#, python-format
+msgid "At least one of the 'From' or 'To' trigger status must be set."
+msgstr "Au moins un des statuts doit être défini."
+
+#. module: project_task_autocreate
 #: model:ir.ui.view,arch_db:project_task_autocreate.view_project_task_rule_condition_wizard_form
 #: model:ir.ui.view,arch_db:project_task_autocreate.view_project_task_rule_condition_wizard_form_2
 msgid "Cancel"
 msgstr "Annuler"
 
 #. module: project_task_autocreate
-#: code:addons/project_task_autocreate/wizards/project_task_rule_condition_wizard.py:196
+#: code:addons/project_task_autocreate/wizards/project_task_rule_condition_wizard.py:201
 #, python-format
 msgid "Choose Condition Field"
 msgstr "Choisir le champs de condition"
@@ -86,7 +127,7 @@ msgid "Choose Field"
 msgstr "Choisir le champs"
 
 #. module: project_task_autocreate
-#: code:addons/project_task_autocreate/wizards/project_task_rule_condition_wizard.py:214
+#: code:addons/project_task_autocreate/wizards/project_task_rule_condition_wizard.py:219
 #, python-format
 msgid "Choose Field Value"
 msgstr "Choisir la valeur du champs"
@@ -102,24 +143,17 @@ msgid "Condition"
 msgstr "Condition"
 
 #. module: project_task_autocreate
-#: model:ir.model.fields,field_description:project_task_autocreate.field_project_task_rule_condition_field_id
-msgid "Condition Field"
-msgstr "Champs de condition"
-
-#. module: project_task_autocreate
 #: model:ir.model.fields,field_description:project_task_autocreate.field_project_task_rule_condition_ids
 #: model:ir.ui.view,arch_db:project_task_autocreate.view_project_task_rule_form
 msgid "Conditions"
 msgstr "Conditions"
 
 #. module: project_task_autocreate
-#: model:ir.model.fields,field_description:project_task_autocreate.field_project_task_rule_id
-#: model:ir.model.fields,field_description:project_task_autocreate.field_project_task_template_rule_id
-msgid "Created From Rule"
-msgstr "Créé depuis la règle"
+#: model:ir.ui.view,arch_db:project_task_autocreate.view_project_task_template_form
+msgid "Create Task"
+msgstr "Créer une tâche"
 
 #. module: project_task_autocreate
-#: model:ir.model.fields,field_description:project_task_autocreate.field_ir_model_state_create_uid
 #: model:ir.model.fields,field_description:project_task_autocreate.field_project_task_rule_condition_create_uid
 #: model:ir.model.fields,field_description:project_task_autocreate.field_project_task_rule_condition_wizard_create_uid
 #: model:ir.model.fields,field_description:project_task_autocreate.field_project_task_rule_create_uid
@@ -128,7 +162,6 @@ msgid "Created by"
 msgstr "Créé par"
 
 #. module: project_task_autocreate
-#: model:ir.model.fields,field_description:project_task_autocreate.field_ir_model_state_create_date
 #: model:ir.model.fields,field_description:project_task_autocreate.field_project_task_rule_condition_create_date
 #: model:ir.model.fields,field_description:project_task_autocreate.field_project_task_rule_condition_wizard_create_date
 #: model:ir.model.fields,field_description:project_task_autocreate.field_project_task_rule_create_date
@@ -158,29 +191,46 @@ msgid "Description"
 msgstr "Description"
 
 #. module: project_task_autocreate
-#: model:ir.model.fields,field_description:project_task_autocreate.field_ir_model_state_display_name
 #: model:ir.model.fields,field_description:project_task_autocreate.field_project_task_rule_condition_display_name
 #: model:ir.model.fields,field_description:project_task_autocreate.field_project_task_rule_condition_wizard_display_name
 #: model:ir.model.fields,field_description:project_task_autocreate.field_project_task_rule_display_name
-#: model:ir.model.fields,field_description:project_task_autocreate.field_project_task_rule_mixin_display_name
 #: model:ir.model.fields,field_description:project_task_autocreate.field_project_task_template_display_name
 msgid "Display Name"
 msgstr "Nom affiché"
 
 #. module: project_task_autocreate
-#: code:addons/project_task_autocreate/models/project_task_template.py:252
+#: model:ir.model.fields,field_description:project_task_autocreate.field_project_task_rule_domain
+msgid "Domain"
+msgstr "Domaine"
+
+#. module: project_task_autocreate
+#: code:addons/project_task_autocreate/models/project_task_rule.py:135
+#, python-format
+msgid "Error in domain expression: %s"
+msgstr "Erreur dans l'expression de domaine: %s"
+
+#. module: project_task_autocreate
+#: code:addons/project_task_autocreate/models/project_task_template.py:370
 #, python-format
 msgid ""
-"Error on field %(field_name)s: %(field)s is not a %(field_type)s field on %(model)s. You may use one of the following fields for %(field_name)s: \n"
+"Error on field %(field_name)s: %(field)s is not a %(field_type)s field on "
+"%(model)s. You may use one of the following fields for %(field_name)s: \n"
 " %(examples)s"
 msgstr ""
-"Erreur sur le champs %(field_name)s: %(field)s n'est pas un champs de type %(field_type)s sur %(model)s. Vous pouvez utiliser un des champs suivant pour %(field_name)s: \n"
+"Erreur sur le champs %(field_name)s: %(field)s n'est pas un champs de type "
+"%(field_type)s sur %(model)s. Vous pouvez utiliser un des champs suivant "
+"pour %(field_name)s: \n"
 " %(examples)s"
 
 #. module: project_task_autocreate
 #: model:ir.ui.view,arch_db:project_task_autocreate.view_project_task_template_form
 msgid "Example: {object.partner_id}"
 msgstr "Exemple: {object.partner_id}"
+
+#. module: project_task_autocreate
+#: model:ir.ui.view,arch_db:project_task_autocreate.view_project_task_template_form
+msgid "Example: {object.project_id}"
+msgstr "Exemple: {object.project_id}"
 
 #. module: project_task_autocreate
 #: model:ir.ui.view,arch_db:project_task_autocreate.view_project_task_template_form
@@ -194,27 +244,63 @@ msgid "Field"
 msgstr "Champ"
 
 #. module: project_task_autocreate
-#: model:ir.model.fields,field_description:project_task_autocreate.field_ir_model_state_id
+#: model:ir.ui.view,arch_db:project_task_autocreate.view_project_task_rule_form
+msgid "From Status"
+msgstr "Du statut"
+
+#. module: project_task_autocreate
 #: model:ir.model.fields,field_description:project_task_autocreate.field_project_task_rule_condition_id
 #: model:ir.model.fields,field_description:project_task_autocreate.field_project_task_rule_condition_wizard_id
-#: model:ir.model.fields,field_description:project_task_autocreate.field_project_task_rule_id_2674
-#: model:ir.model.fields,field_description:project_task_autocreate.field_project_task_rule_mixin_id
+#: model:ir.model.fields,field_description:project_task_autocreate.field_project_task_rule_id
 #: model:ir.model.fields,field_description:project_task_autocreate.field_project_task_template_id
 msgid "ID"
 msgstr "ID"
 
 #. module: project_task_autocreate
-#: model:ir.model.fields,field_description:project_task_autocreate.field_ir_model_state___last_update
+#: model:ir.model.fields,help:project_task_autocreate.field_project_task_rule_on_state
+msgid ""
+"If checked, the rule will be applied when a record of the selected model "
+"changes status."
+msgstr ""
+"Si coché, la règle sera appliquée lors d'un changement de statut sur un "
+"enregistrement du modèle sélectionné."
+
+#. module: project_task_autocreate
+#: model:ir.model.fields,help:project_task_autocreate.field_project_task_rule_on_create
+msgid ""
+"If checked, the rule will be applied when a record of the selected model is "
+"created."
+msgstr ""
+"Si coché, la règle sera appliquée lors de la création d'un enregistrement du "
+"modèle sélectionné."
+
+#. module: project_task_autocreate
+#: model:ir.model.fields,help:project_task_autocreate.field_project_task_rule_on_unlink
+msgid ""
+"If checked, the rule will be applied when a record of the selected model is "
+"deleted."
+msgstr ""
+"Si coché, la règle sera appliquée lors de la suppression d'un enregistrement "
+"du modèle sélectionné."
+
+#. module: project_task_autocreate
+#: model:ir.model.fields,help:project_task_autocreate.field_project_task_rule_on_write
+msgid ""
+"If checked, the rule will be applied when a record of the selected model is "
+"updated."
+msgstr ""
+"Si coché, la règle sera appliquée lors de la modification d'un "
+"enregistrement du modèle sélectionné."
+
+#. module: project_task_autocreate
 #: model:ir.model.fields,field_description:project_task_autocreate.field_project_task_rule___last_update
 #: model:ir.model.fields,field_description:project_task_autocreate.field_project_task_rule_condition___last_update
 #: model:ir.model.fields,field_description:project_task_autocreate.field_project_task_rule_condition_wizard___last_update
-#: model:ir.model.fields,field_description:project_task_autocreate.field_project_task_rule_mixin___last_update
 #: model:ir.model.fields,field_description:project_task_autocreate.field_project_task_template___last_update
 msgid "Last Modified on"
 msgstr "Dernière Modification le"
 
 #. module: project_task_autocreate
-#: model:ir.model.fields,field_description:project_task_autocreate.field_ir_model_state_write_uid
 #: model:ir.model.fields,field_description:project_task_autocreate.field_project_task_rule_condition_wizard_write_uid
 #: model:ir.model.fields,field_description:project_task_autocreate.field_project_task_rule_condition_write_uid
 #: model:ir.model.fields,field_description:project_task_autocreate.field_project_task_rule_write_uid
@@ -223,7 +309,6 @@ msgid "Last Updated by"
 msgstr "Dernière mise à jour par"
 
 #. module: project_task_autocreate
-#: model:ir.model.fields,field_description:project_task_autocreate.field_ir_model_state_write_date
 #: model:ir.model.fields,field_description:project_task_autocreate.field_project_task_rule_condition_wizard_write_date
 #: model:ir.model.fields,field_description:project_task_autocreate.field_project_task_rule_condition_write_date
 #: model:ir.model.fields,field_description:project_task_autocreate.field_project_task_rule_write_date
@@ -231,17 +316,14 @@ msgid "Last Updated on"
 msgstr "Dernière mise à jour le"
 
 #. module: project_task_autocreate
-#: model:ir.model.fields,field_description:project_task_autocreate.field_ir_model_state_model
 #: model:ir.model.fields,field_description:project_task_autocreate.field_project_task_rule_condition_wizard_model
+#: model:ir.model.fields,field_description:project_task_autocreate.field_project_task_rule_condition_wizard_model_id
 #: model:ir.model.fields,field_description:project_task_autocreate.field_project_task_rule_model
+#: model:ir.model.fields,field_description:project_task_autocreate.field_project_task_rule_model_id
 #: model:ir.model.fields,field_description:project_task_autocreate.field_project_task_template_model
+#: model:ir.model.fields,field_description:project_task_autocreate.field_project_task_template_model_id
 msgid "Model"
 msgstr "Modèle"
-
-#. module: project_task_autocreate
-#: model:ir.model,name:project_task_autocreate.model_ir_model_state
-msgid "Model State"
-msgstr "État du modèle"
 
 #. module: project_task_autocreate
 #: model:ir.ui.view,arch_db:project_task_autocreate.view_project_task_rule_condition_wizard_form
@@ -254,10 +336,21 @@ msgid "OK"
 msgstr "OK"
 
 #. module: project_task_autocreate
-#: code:addons/project_task_autocreate/models/project_task_template.py:224
+#: code:addons/project_task_autocreate/models/project_task_template.py:342
+#: code:addons/project_task_autocreate/models/project_task_template.py:387
 #, python-format
-msgid "Object references cannot be used on templates without a model set. Please choose a model or uncheck Use Object Reference for the field: %(field_name)s"
-msgstr "Une référence à l'objet lié ne peut être utiliséé sur une tâche modèle qui n'a pas de type d'objet défini. Définissez d'abord le type d'objet, ou décochez l'option 'Référencé l'objet lié' pour le champs: %(field_name)s"
+msgid ""
+"Object references cannot be used on templates without a model set. Please "
+"choose a model or uncheck 'Use Relative %(field_name)s?'."
+msgstr ""
+"Une référence à l'objet lié ne peut être utilisée sur une tâche modèle qui "
+"n'a pas de type d'objet défini. Définissez d'abord le type d'objet, ou "
+"décochez l'option '%(field_name)s Référencé?'."
+
+#. module: project_task_autocreate
+#: model:ir.model.fields,field_description:project_task_autocreate.field_project_task_rule_on_create_rule_id
+msgid "On Create Rule"
+msgstr "Règle à l'écriture"
 
 #. module: project_task_autocreate
 #: model:ir.model.fields,field_description:project_task_autocreate.field_project_task_rule_on_create
@@ -265,9 +358,19 @@ msgid "On Creation?"
 msgstr "Création?"
 
 #. module: project_task_autocreate
-#: model:ir.model.fields,field_description:project_task_autocreate.field_project_task_rule_on_delete
+#: model:ir.model.fields,field_description:project_task_autocreate.field_project_task_rule_on_unlink_rule_id
+msgid "On Delete Rule"
+msgstr "Règle à la suppression"
+
+#. module: project_task_autocreate
+#: model:ir.model.fields,field_description:project_task_autocreate.field_project_task_rule_on_unlink
 msgid "On Deletion?"
 msgstr "Suppression?"
+
+#. module: project_task_autocreate
+#: model:ir.model.fields,field_description:project_task_autocreate.field_project_task_rule_on_state_rule_id
+msgid "On State Rule"
+msgstr "Règle sur changement de statut"
 
 #. module: project_task_autocreate
 #: model:ir.model.fields,field_description:project_task_autocreate.field_project_task_rule_on_state
@@ -278,6 +381,11 @@ msgstr "Changement d'état?"
 #: model:ir.model.fields,field_description:project_task_autocreate.field_project_task_rule_on_write
 msgid "On Update?"
 msgstr "Modification?"
+
+#. module: project_task_autocreate
+#: model:ir.model.fields,field_description:project_task_autocreate.field_project_task_rule_on_write_rule_id
+msgid "On Write Rule"
+msgstr "Règle à la modification"
 
 #. module: project_task_autocreate
 #: model:ir.model.fields,field_description:project_task_autocreate.field_project_task_rule_condition_operator
@@ -301,16 +409,9 @@ msgid "Operator Type"
 msgstr "Type d'opérateur"
 
 #. module: project_task_autocreate
-#: model:ir.model,name:project_task_autocreate.model_project_project
 #: model:ir.ui.view,arch_db:project_task_autocreate.view_project_task_template_form
 msgid "Project"
 msgstr "Projet"
-
-#. module: project_task_autocreate
-#: model:ir.model.fields,field_description:project_task_autocreate.field_project_task_rule_mixin_template_project_id
-#: model:ir.model.fields,field_description:project_task_autocreate.field_sale_order_template_project_id
-msgid "Project For Tasks From Templates"
-msgstr "Projet pour tâches automatisées"
 
 #. module: project_task_autocreate
 #: model:ir.ui.view,arch_db:project_task_autocreate.view_project_task_template_form
@@ -318,13 +419,20 @@ msgid "Project?"
 msgstr "Projet?"
 
 #. module: project_task_autocreate
+#: model:ir.ui.view,arch_db:project_task_autocreate.view_project_task_rule_form
+msgid "Read Odoo Documentation on Domains"
+msgstr "Lire la documentation Odoo sur les domaines"
+
+#. module: project_task_autocreate
 #: model:ir.model.fields,help:project_task_autocreate.field_project_task_template_relative_deadline
 msgid ""
-"Reference to a date field on the related object, like {object.delivery_date}.\n"
-"Use {today} to set a deadline relative to the task creation day."
+"Reference to a date field on the related object, like object.delivery_date.\n"
+"Use \"today\" to set a deadline relative to the task creation day."
 msgstr ""
-"Référence à un champs de type date sur l'objet lié, par exemple {object.delivery_date}.\n"
-"Utiliser {today} pour définir une date d'échéance relative au jour de création de la tâche."
+"Référence à un champs de type date sur l'objet lié, par exemple object."
+"delivery_date.\n"
+"Utiliser \"today\" pour définir une date d'échéance relative au jour de "
+"création de la tâche."
 
 #. module: project_task_autocreate
 #: model:ir.model.fields,field_description:project_task_autocreate.field_project_task_template_relative_user_id
@@ -342,14 +450,14 @@ msgid "Relative Deadline"
 msgstr "Échéance (référencée)"
 
 #. module: project_task_autocreate
+#: model:ir.model.fields,field_description:project_task_autocreate.field_project_task_template_relative_deadline_delta
+msgid "Relative Deadline Delta"
+msgstr "Différentiel de l'échéance"
+
+#. module: project_task_autocreate
 #: model:ir.model.fields,field_description:project_task_autocreate.field_project_task_template_relative_project_id
 msgid "Relative Project"
 msgstr "Projet (référencé)"
-
-#. module: project_task_autocreate
-#: model:ir.model.fields,field_description:project_task_autocreate.field_project_task_template_relative_deadline_delta
-msgid "Relative deadline delta"
-msgstr "Différence de l'échéance"
 
 #. module: project_task_autocreate
 #: model:ir.model.fields,field_description:project_task_autocreate.field_project_task_template_relative_deadline_op
@@ -388,27 +496,10 @@ msgid "Source Document"
 msgstr "Document d'origine"
 
 #. module: project_task_autocreate
-#: model:ir.model.fields,field_description:project_task_autocreate.field_ir_model_state_name
-#: model:ir.model.fields,field_description:project_task_autocreate.field_ir_model_state_state
-#: model:ir.model.fields,field_description:project_task_autocreate.field_project_task_rule_state_ids
-msgid "State"
-msgstr "État"
-
-#. module: project_task_autocreate
-#: model:ir.ui.view,arch_db:project_task_autocreate.view_project_task_rule_form
-msgid "States"
-msgstr "États"
-
-#. module: project_task_autocreate
 #: model:ir.model,name:project_task_autocreate.model_project_task
 #: model:ir.ui.view,arch_db:project_task_autocreate.view_project_task_template_form
 msgid "Task"
 msgstr "Tâche"
-
-#. module: project_task_autocreate
-#: model:ir.model,name:project_task_autocreate.model_project_task_rule_mixin
-msgid "Task Creation Mixin"
-msgstr "Mixin de création de tâche"
 
 #. module: project_task_autocreate
 #: model:ir.actions.act_window,name:project_task_autocreate.action_view_project_task_rule
@@ -458,36 +549,125 @@ msgid "Task Title..."
 msgstr "Titre de la tâche..."
 
 #. module: project_task_autocreate
+#: code:addons/project_task_autocreate/models/project_task_template.py:189
+#, python-format
+msgid ""
+"Task creation cannot be triggered for multiple templates with different "
+"models at the same time."
+msgstr ""
+"La création de tâches ne peut être effectuée sur plusieurs modèles de tâches "
+"étant associés à des modèles d'objet différents."
+
+#. module: project_task_autocreate
+#: code:addons/project_task_autocreate/models/project_task_rule.py:16
+#: sql_constraint:project.task.rule:0
+#, python-format
+msgid "Task rule names must be unique."
+msgstr "Les noms de règle de création de tâche doivent être uniques."
+
+#. module: project_task_autocreate
 #: model:ir.ui.view,arch_db:project_task_autocreate.view_project_task_template_form
 msgid "Template Settings"
 msgstr "Configurer tâches modèles"
 
 #. module: project_task_autocreate
-#: model:ir.model.fields,field_description:project_task_autocreate.field_project_project_template_project_id
-msgid "Template project id"
-msgstr "Template project id"
-
-#. module: project_task_autocreate
-#: code:addons/project_task_autocreate/models/project_task_template.py:313
+#: code:addons/project_task_autocreate/models/project_task_template.py:177
 #, python-format
 msgid "Templates with rules must have a model set."
-msgstr "Les tâches modèles qui ont des règles doivent avoir un type d'objet défini."
+msgstr ""
+"Les tâches modèles qui ont des règles doivent avoir un type d'objet défini."
 
 #. module: project_task_autocreate
-#: code:addons/project_task_autocreate/models/project_task_template.py:237
+#: code:addons/project_task_autocreate/models/project_task_template.py:348
+#: code:addons/project_task_autocreate/models/project_task_template.py:398
 #, python-format
 msgid "The field %(field)s is required."
 msgstr "Vous devez remplir le champs %(field)s."
 
 #. module: project_task_autocreate
-#: code:addons/project_task_autocreate/models/project_task_template.py:241
+#: model:ir.model.fields,help:project_task_autocreate.field_project_task_rule_condition_wizard_model_id
+#: model:ir.model.fields,help:project_task_autocreate.field_project_task_rule_model_id
+msgid "The model to which the rule applies."
+msgstr "Le modèle auquel la règle s'applique."
+
+#. module: project_task_autocreate
+#: code:addons/project_task_autocreate/models/project_task_template.py:404
 #, python-format
 msgid ""
-"The reference for field %(field_name)s has the wrong format. Expected a reference to a %(field_type)s field, like:\n"
+"The reference for %(field_name)s has the wrong format.\n"
+"Expected a reference to a %(field_type)s field, like:\n"
 "%(examples)s"
 msgstr ""
-"La référence pour le champs %(field_name)s à un format invalide. Il doit contenir une référence à un champs de type %(field_type)s, tel que:\n"
+"La référence pour le champs %(field_name)s à un format invalide.\n"
+"Il doit contenir une référence à un champs de type %(field_type)s, tel que:\n"
 "%(examples)s"
+
+#. module: project_task_autocreate
+#: code:addons/project_task_autocreate/models/project_task_template.py:358
+#, python-format
+msgid ""
+"The reference for field %(field_name)s has the wrong format. Expected a "
+"reference to a %(field_type)s field, like:\n"
+"%(examples)s"
+msgstr ""
+"La référence pour le champs %(field_name)s à un format invalide. Il doit "
+"contenir une référence à un champs de type %(field_type)s, tel que:\n"
+"%(examples)s"
+
+#. module: project_task_autocreate
+#: model:ir.model.fields,help:project_task_autocreate.field_project_task_rule_state
+msgid "The rule will be applied when a record enters this status."
+msgstr "La règle sera appliquée lorsqu'un enregistrement atteint ce statut."
+
+#. module: project_task_autocreate
+#: model:ir.model.fields,help:project_task_autocreate.field_project_task_rule_state_from
+msgid "The rule will be applied when a record leaves this status."
+msgstr "La règle sera appliquée lorsqu'un enregistrement quitte ce statut."
+
+#. module: project_task_autocreate
+#: code:addons/project_task_autocreate/models/project_task_template.py:219
+#, python-format
+msgid ""
+"The template '%(template)s' can only be used with %(expected_model)s, not "
+"with %(model)s."
+msgstr ""
+"Le modèle de tâche '%(template)s' ne peut être utilisé qu'avec des "
+"enregistrements de type %(expected_model)s, pas %(model)s."
+
+#. module: project_task_autocreate
+#: code:addons/project_task_autocreate/models/project_task_rule.py:145
+#, python-format
+msgid ""
+"This model cannot have an On Status rule since it does not have a status "
+"field."
+msgstr ""
+"Ce type d'objet ne peut avoir une règle sur changement de statut puisqu'il "
+"n'a pas de champs de statut."
+
+#. module: project_task_autocreate
+#: model:ir.ui.view,arch_db:project_task_autocreate.view_project_task_rule_form
+msgid "To Status"
+msgstr "Vers le statut"
+
+#. module: project_task_autocreate
+#: model:ir.model.fields,field_description:project_task_autocreate.field_project_task_rule_state_from
+msgid "Trigger Origin Status"
+msgstr "Statut d'origine déclencheur"
+
+#. module: project_task_autocreate
+#: model:ir.model.fields,field_description:project_task_autocreate.field_project_task_rule_state
+msgid "Trigger Status"
+msgstr "Statut déclencheur"
+
+#. module: project_task_autocreate
+#: model:ir.model.fields,field_description:project_task_autocreate.field_project_task_template_trigger_record_id
+msgid "Trigger Task Creation For Record"
+msgstr "Déclencher la création de tâche sur l'enregistrement"
+
+#. module: project_task_autocreate
+#: model:ir.model.fields,field_description:project_task_autocreate.field_project_task_rule_use_domain
+msgid "Use Custom Domain?"
+msgstr "Utiliser un domaine technique?"
 
 #. module: project_task_autocreate
 #: model:ir.ui.view,arch_db:project_task_autocreate.view_project_task_template_form
@@ -537,13 +717,13 @@ msgid "Value Type"
 msgstr "Type de valeur"
 
 #. module: project_task_autocreate
-#: model:ir.ui.view,arch_db:project_task_autocreate.view_project_task_rule_condition_wizard_form
+#: model:ir.model.fields,help:project_task_autocreate.field_project_task_template_trigger_record_id
 msgid ""
-"You can skip this dialog if you select a field on the form before\n"
-"                            clicking on 'Add Condition'."
+"Writing to this field triggers the creation of a task linked to the record "
+"with the given ID. For system use only."
 msgstr ""
-"Vous pouvez sélectionner le champs sur le formulaire avant de cliquer sur 'Ajouter condition'\n"
-"pour sauter cette page."
+"La modification de ce champs déclenche la création de tâche automatique. "
+"Pour utilisation système seulement."
 
 #. module: project_task_autocreate
 #: model:ir.model.fields,help:project_task_autocreate.field_project_task_template_description
@@ -662,14 +842,14 @@ msgstr "inférieur à"
 #. module: project_task_autocreate
 #: selection:project.task.rule.condition.wizard,operator_ord:0
 msgid "less than or equal"
-msgstr "Inférieur ou égal à"
+msgstr "inférieur ou égal à"
+
+#. module: project_task_autocreate
+#: model:ir.ui.view,arch_db:project_task_autocreate.view_project_task_template_form
+msgid "today, object.delivery_date..."
+msgstr "today, object.delivery_date..."
 
 #. module: project_task_autocreate
 #: selection:project.task.template,relative_deadline_units:0
 msgid "weeks"
 msgstr "semaines"
-
-#. module: project_task_autocreate
-#: model:ir.ui.view,arch_db:project_task_autocreate.view_project_task_template_form
-msgid "{today}, {object.delivery_date}..."
-msgstr "{today}, {object.delivery_date}..."
