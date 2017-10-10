@@ -82,7 +82,7 @@ class TestTaskTemplate(SavepointCase):
         })
         task = self.template.create_tasks_from_records(self.project)
         date_start = fields.Date.from_string(self.project.date_start)
-        expected = fields.Datetime.to_string(date_start + timedelta(days=3))
+        expected = fields.Date.to_string(date_start + timedelta(days=3))
         self.assertEqual(task.date_deadline, expected)
 
     def test_deadline_relative_to_today(self):
@@ -94,7 +94,7 @@ class TestTaskTemplate(SavepointCase):
             'relative_deadline': 'today',
         })
         task = self.template.create_tasks_from_records(self.project)
-        expected = fields.Datetime.to_string(date.today() - timedelta(weeks=2))
+        expected = fields.Date.to_string(date.today() - timedelta(weeks=2))
         self.assertEqual(task.date_deadline, expected)
 
     def test_create_multiple_tasks_from_record(self):
