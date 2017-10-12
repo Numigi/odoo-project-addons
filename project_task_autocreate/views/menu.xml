@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="action_view_project_task_template" model="ir.actions.act_window">
+            <field name="name">Task Template</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">project.task.template</field>
+            <field name="view_type">form</field>
+            <field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'tree', 'view_id': ref('view_project_task_template_list')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('view_project_task_template_form')})]"/>
+            <field name="search_view_id" ref="view_project_task_template_filter"/>
+        </record>
+
+        <menuitem
+            id="menu_project_task_template"
+            action="action_view_project_task_template"
+            name="Task Templates"
+            parent="project.menu_project_config"
+            sequence="10"
+            groups="project.group_project_manager"
+        />
+
+        <record id="action_view_project_task_rule" model="ir.actions.act_window">
+            <field name="name">Task Creation Rule</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">project.task.rule</field>
+            <field name="view_type">form</field>
+            <field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'tree', 'view_id': ref('view_project_task_rule_list')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('view_project_task_rule_form')})]"/>
+            <field name="search_view_id" ref="view_project_task_rule_filter"/>
+        </record>
+
+        <menuitem
+            id="menu_project_task_rule"
+            action="action_view_project_task_rule"
+            name="Task Creation Rules"
+            parent="project.menu_project_config"
+            sequence="11"
+            groups="project.group_project_manager"
+        />
+
+    </data>
+</odoo>
