@@ -37,6 +37,11 @@ class ProjectTaskTemplate(models.Model):
         default=False,
         required=False,
     )
+    team_id = fields.Many2one(
+        comodel_name='crm.team',
+        default=False,
+        required=False,
+    )
     model_id = fields.Many2one(
         string='Model',
         comodel_name='ir.model',
@@ -74,6 +79,13 @@ class ProjectTaskTemplate(models.Model):
     )
     relative_user_id = fields.Char(
         string='Relative Assigned To',
+    )
+    use_relative_team_id = fields.Boolean(
+        string='Use Relative Team?',
+        default=False,
+    )
+    relative_team_id = fields.Char(
+        string='Relative Team',
     )
     use_relative_deadline = fields.Boolean(
         string='Use Relative Deadline?',
@@ -150,6 +162,18 @@ class ProjectTaskTemplate(models.Model):
                 continue
             relstr = rec.relative_user_id
             rec._check_relative_field_rel(relstr, 'Assigned To', 'res.users')
+
+    @api.constrains(
+        'model_id',
+        'relative_team_id',
+        'use_relative_team_id',
+    )
+    def _check_relative_team_id(self):
+        for rec in self:
+            if not rec.use_relative_team_id:
+                continue
+            relstr = rec.relative_team_id
+            rec._check_relative_field_rel(relstr, 'Team', 'crm.team')
 
     @api.constrains(
         'model_id', 'use_relative_deadline',
@@ -271,6 +295,7 @@ class ProjectTaskTemplate(models.Model):
             'tag_ids': [(6, 0, self.tag_ids.ids)],
             'date_deadline': self._get_deadline(record),
             'user_id': self._get_user_id(record).id,
+            'team_id': self._get_team_id(record).id,
             'partner_id': self._get_partner_id(record).id,
             'project_id': self._get_project_id(record).id,
         }
@@ -301,6 +326,14 @@ class ProjectTaskTemplate(models.Model):
             return self._get_relative_value(self.relative_user_id, record)
         else:
             return self.user_id
+
+    @api.multi
+    def _get_team_id(self, record=None):
+        self.ensure_one()
+        if self.use_relative_team_id and record:
+            return self._get_relative_value(self.relative_team_id, record)
+        else:
+            return self.team_id
 
     @api.multi
     def _get_project_id(self, record=None):
