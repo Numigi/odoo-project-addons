@@ -33,6 +33,7 @@
                                 <field name="use_relative_deadline" string="Deadline?"/>
                                 <field name="use_relative_project_id" string="Project?"/>
                                 <field name="use_relative_user_id" string="Assigned To?"/>
+                                <field name="use_relative_team_id" string="Team?"/>
                                 <field name="use_relative_partner_id" string="Customer?"/>
                             </group>
                             <group>
@@ -88,6 +89,17 @@
                                     placeholder="Example: {object.user_id}"
                                     string="Assigned To"
                                     attrs="{'invisible': [('use_relative_user_id', '=', False)]}"
+                                />
+                                <field
+                                    name="team_id"
+                                    options='{"no_open": True}'
+                                    attrs="{'invisible': [('use_relative_team_id', '=', True)]}"
+                                />
+                                <field
+                                    name="relative_team_id"
+                                    placeholder="Example: {object.team_id}"
+                                    string="Team"
+                                    attrs="{'invisible': [('use_relative_team_id', '=', False)]}"
                                 />
                                 <field
                                     name="partner_id"
