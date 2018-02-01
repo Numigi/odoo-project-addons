@@ -286,7 +286,7 @@ class ProjectTaskTemplate(models.Model):
         """
         description = self.description
         if description:
-            description = description.format(object=record)
+            description = unicode(description).format(object=record)
         vals = {
             'name': self.name.format(object=record),
             'description': description,
@@ -294,10 +294,10 @@ class ProjectTaskTemplate(models.Model):
             'priority': self.priority,
             'tag_ids': [(6, 0, self.tag_ids.ids)],
             'date_deadline': self._get_deadline(record),
-            'user_id': self._get_user_id(record).id,
-            'team_id': self._get_team_id(record).id,
-            'partner_id': self._get_partner_id(record).id,
-            'project_id': self._get_project_id(record).id,
+            'user_id': self._get_user_id(record),
+            'team_id': self._get_team_id(record),
+            'partner_id': self._get_partner_id(record),
+            'project_id': self._get_project_id(record),
         }
         if record:
             vals['origin_id'] = '%s,%d' % (record._name, record.id)
@@ -315,33 +315,36 @@ class ProjectTaskTemplate(models.Model):
     def _get_partner_id(self, record=None):
         self.ensure_one()
         if self.use_relative_partner_id and record:
-            return self._get_relative_value(self.relative_partner_id, record)
+            return self._get_relative_value(
+                self.relative_partner_id, record).id
         else:
-            return self.partner_id
+            return self.partner_id.id or False
 
     @api.multi
     def _get_user_id(self, record=None):
         self.ensure_one()
-        if self.use_relative_user_id and record:
-            return self._get_relative_value(self.relative_user_id, record)
+        if self.use_relative_user_id and record and self._get_relative_value(
+                self.relative_user_id, record):
+            return self._get_relative_value(self.relative_user_id, record).id
         else:
-            return self.user_id
+            return self.user_id.id or False
 
     @api.multi
     def _get_team_id(self, record=None):
         self.ensure_one()
         if self.use_relative_team_id and record:
-            return self._get_relative_value(self.relative_team_id, record)
+            return self._get_relative_value(self.relative_team_id, record).id
         else:
-            return self.team_id
+            return self.team_id.id or False
 
     @api.multi
     def _get_project_id(self, record=None):
         self.ensure_one()
         if self.use_relative_project_id and record:
-            return self._get_relative_value(self.relative_project_id, record)
+            return self._get_relative_value(
+                self.relative_project_id, record).id
         else:
-            return self.project_id
+            return self.project_id.id or False
 
     @api.multi
     def _get_deadline(self, record=None):
