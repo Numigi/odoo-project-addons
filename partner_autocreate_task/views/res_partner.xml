@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="view_partner_form" model="ir.ui.view">
+            <field name="name">res.partner.form</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="model">res.partner</field>
+            <field name="arch" type="xml">
+                <notebook position="inside">
+                    <page string="Follow-up Preferences">
+                        <group>
+                            <field name="partner_task_autocreate_ids" nolabel="1">
+                                <tree editable="top">
+                                    <field name="task_id"/>
+                                    <field name="interval_number"/>
+                                    <field name="interval_type"/>
+                                    <field name="last_created"/>
+                                    <field name="nextcall"/>
+                                </tree>
+                            </field>
+                        </group>
+                    </page>
+                </notebook>
+            </field>
+        </record>
+
+    </data>
+</odoo>
