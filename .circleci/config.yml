@@ -1,0 +1,37 @@
+jobs:
+  odoo:
+    machine: true
+    steps:
+       - checkout
+
+       - run:
+          name: Login to Quay.io
+          command: docker login quay.io -u "${QUAY_USER}" -p "${QUAY_TOKEN}"
+
+       - run:
+          name: Build -- Init Database
+          command: docker-compose run --rm odoo odoo --stop-after-init -i main
+
+       - run:
+          name: Setup Log Folder For Reports
+          command: sudo mkdir -p .log && sudo chmod 777 .log
+
+       - run:
+          name: Run Test
+          command: docker-compose run --rm odoo run_pytest.sh
+
+       - run:
+          name: Codacy Coverage
+          command: |
+            pip install codacy-coverage==1.3.10
+            python-codacy-coverage -r .log/coverage.xml
+
+       - store_test_results:
+          path: .log
+
+workflows:
+  version: 2
+  basic-odoo-test:
+    jobs:
+      - odoo:
+          context: quay.io

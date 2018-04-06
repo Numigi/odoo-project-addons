@@ -1,13 +1,13 @@
-# Project Stage No Quick Create
+Project Stage No Quick Create
+=============================
+
+This module prevents the quick creation of project stages.
 
 Contributors
 ------------
+* Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 * Istvan Szalai (istvan.szalai@savoirfairelinux.com)
-* David Dufresne (david.dufresne@savoirfairelinux.com)
 
 More information
 ----------------
-
-* Module developed and tested with Odoo version 10.0
-* For questions, please contact our support services
-(support@savoirfairelinux.com)
+* Meet us at https://bit.ly/numigi-com
