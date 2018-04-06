@@ -14,6 +14,7 @@
     'summary': 'Disable project stage quick create',
     'depends': ['project'],
     'data': [
+        'views/project_project.xml',
         'views/project_task.xml',
         'views/project_task_type.xml',
     ],
