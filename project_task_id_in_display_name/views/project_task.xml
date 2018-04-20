@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo noupdate="1">
+
+    <record id="view_task_form_with_display_name_in_read_mode" model="ir.ui.view">
+        <field name="name">Task Form With Display Name In Read Mode</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_form2"/>
+        <field name="arch" type="xml">
+            <field name="name" position="before">
+                <field name="display_name" class="oe_read_only"/>
+            </field>
+            <field name="name" position="attributes">
+                <attribute name="class">oe_edit_only</attribute>
+            </field>
+        </field>
+    </record>
+
+    <record id="view_task_kanban_with_sequence" model="ir.ui.view">
+        <field name="name">Task Kanban With Display Name Instead Of Name</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_kanban"/>
+        <field name="arch" type="xml">
+            <field name="name" position="before">
+                <field name="display_name"/>
+            </field>
+            <field name="name" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+        </field>
+    </record>
+
+    <record id="view_task_search_with_id_searched_in_name" model="ir.ui.view">
+        <field name="name">Task Search With ID Searched In Name</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_search_form"/>
+        <field name="arch" type="xml">
+            <field name="name" position="attributes">
+                <attribute name="filter_domain">['|', ('id', '=', self), ('name', 'ilike', self)]</attribute>
+            </field>
+        </field>
+    </record>
+
+</odoo>
