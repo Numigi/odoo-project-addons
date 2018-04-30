@@ -4,7 +4,7 @@
 
 {
     'name': 'Project Task ID In Display Name',
-    'version': '1.0.0',
+    'version': '1.1.0',
     'author': 'Numigi',
     'maintainer': 'Numigi',
     'license': 'LGPL-3',
@@ -15,4 +15,5 @@
         'views/project_task.xml',
     ],
     'installable': True,
+    'post_init_hook': 'post_init_hook',
 }

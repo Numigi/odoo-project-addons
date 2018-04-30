@@ -35,3 +35,6 @@ class TestProjectTaskWithIdInDisplayName(common.SavepointCase):
     def test_display_name(self):
         expected_name = '[{id}] {name}'.format(id=self.task_a.id, name=self.task_a.name)
         self.assertEqual(self.task_a.display_name, expected_name)
+
+    def test_compute_id_string(self):
+        self.assertEqual(self.task_a.id, str(self.task_a.id))
