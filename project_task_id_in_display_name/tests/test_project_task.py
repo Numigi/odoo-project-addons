@@ -37,4 +37,4 @@ class TestProjectTaskWithIdInDisplayName(common.SavepointCase):
         self.assertEqual(self.task_a.display_name, expected_name)
 
     def test_compute_id_string(self):
-        self.assertEqual(self.task_a.id, str(self.task_a.id))
+        self.assertEqual(self.task_a.id_string, str(self.task_a.id))
