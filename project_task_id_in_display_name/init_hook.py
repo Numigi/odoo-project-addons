@@ -10,7 +10,7 @@ from odoo.api import Environment
 _logger = logging.getLogger(__name__)
 
 
-def post_init_hook(cr):
+def post_init_hook(cr, pool):
     setup_task_id_string(cr)
 
 
