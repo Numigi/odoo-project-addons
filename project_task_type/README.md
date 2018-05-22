@@ -10,7 +10,7 @@ A task type can be a scenario, a bug issue, a milestone, etc.
 
 The task types are editable under Project / Settings / Task Types.
 
-![Task Type List](static/description/task_type_form.png?raw=true)
+![Task Type List](static/description/task_type_list.png?raw=true)
 
 Contributors
 ------------
