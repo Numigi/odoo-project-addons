@@ -16,6 +16,8 @@
         'project_task_full_text_search',
         'project_task_id_in_display_name',
         'project_task_time_range',
+        'project_task_type',
+        'project_type',
     ],
     'installable': True,
 }

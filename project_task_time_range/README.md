@@ -6,11 +6,11 @@ These fields contain the minimum and maximum time initialy estimated on the task
 
 The field `Initially Planned Hours` is renamed `Ideal`.
 
-![Task Form](static/description/task_form.png?raw=true)
+![Task Form](static/description/form_view.png?raw=true)
 
 The fields are also added to the list view of tasks.
 
-![Task List](static/description/task_form.png?raw=true)
+![Task List](static/description/list_view.png?raw=true)
 
 Contributors
 ------------

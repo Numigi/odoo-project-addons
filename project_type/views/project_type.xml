@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="view_project_type_form" model="ir.ui.view">
+        <field name="name">Project Type Form</field>
+        <field name="model">project.type</field>
+        <field name="arch" type="xml">
+            <form string="Project Type">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="description"/>
+                        <field name="sequence"/>
+                        <field name="active"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_project_type_tree" model="ir.ui.view">
+        <field name="name">Project Type List</field>
+        <field name="model">project.type</field>
+        <field name="arch" type="xml">
+            <tree string="Project Types">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="active"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_project_type_search" model="ir.ui.view">
+        <field name="name">Project Type Search</field>
+        <field name="model">project.type</field>
+        <field name="arch" type="xml">
+            <search string="Project Types">
+                <field name="name" string="Project Types"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="project_type_action" model="ir.actions.act_window">
+        <field name="name">Project Types</field>
+        <field name="res_model">project.type</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem action="project_type_action" id="project_type_menu" parent="project.menu_project_config"/>
+
+</odoo>
