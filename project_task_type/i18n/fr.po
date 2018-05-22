@@ -86,13 +86,13 @@ msgstr "Tâche"
 #: model:ir.model,name:project_task_type.model_task_type
 #: model:ir.ui.view,arch_db:project_task_type.view_task_search_form_with_group_by_task_type_id
 #: model:ir.ui.view,arch_db:project_task_type.view_task_type_form
-#: model:ir.ui.view,arch_db:project_task_type.view_task_type_tree
 msgid "Task Type"
 msgstr "Type de tâche"
 
 #. module: project_task_type
 #: model:ir.actions.act_window,name:project_task_type.task_type_action
 #: model:ir.ui.menu,name:project_task_type.task_type_menu
+#: model:ir.ui.view,arch_db:project_task_type.view_task_type_tree
 #: model:ir.ui.view,arch_db:project_task_type.view_task_type_search
 msgid "Task Types"
 msgstr "Types de tâches"

@@ -22,7 +22,7 @@
         <field name="name">Task Type List</field>
         <field name="model">task.type</field>
         <field name="arch" type="xml">
-            <tree string="Task Type">
+            <tree string="Task Types">
                 <field name="sequence" widget="handle"/>
                 <field name="name"/>
                 <field name="active"/>

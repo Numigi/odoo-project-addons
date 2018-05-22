@@ -4,11 +4,10 @@
 from odoo import fields, models
 
 
-class TaskType(models.Model):
+class ProjectType(models.Model):
 
-    # project.task.type is already used to designate a workflow stage for a task.
-    _name = 'task.type'
-    _description = 'Task Type'
+    _name = 'project.type'
+    _description = 'Project Type'
     _order = 'sequence'
 
     name = fields.Char(required=True, translate=True)
