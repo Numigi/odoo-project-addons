@@ -13,11 +13,11 @@ class TestProjectTask(common.SavepointCase):
         cls.deadline = '2018-06-01'
         cls.project_with_no_deadline = cls.env['project.project'].create({
             'name': 'Project With No Deadline',
-            'date_deadline': False,
+            'date': False,
         })
         cls.project_with_deadline = cls.env['project.project'].create({
             'name': 'Project With Deadline',
-            'date_deadline': cls.deadline,
+            'date': cls.deadline,
         })
         cls.task = cls.env['project.task'].create({'name': 'Task 1'})
 

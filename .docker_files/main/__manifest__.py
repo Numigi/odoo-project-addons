@@ -11,6 +11,7 @@
     'category': 'Other',
     'summary': 'Install all addons required for testing.',
     'depends': [
+        'project_form_with_dates',
         'project_stage_no_quick_create',
         'project_task_date_planned',
         'project_task_deadline_from_project',

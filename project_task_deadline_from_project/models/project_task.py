@@ -25,8 +25,8 @@ class ProjectTaskWithDeadlineFromProject(models.Model):
 
     def _get_deadline_from_project_id(self, project_id):
         project = self.env['project.project'].browse(project_id)
-        return project.date_deadline
+        return project.date
 
     @api.onchange('project_id')
     def _onchange_project_propagate_deadline(self):
-        self.date_deadline = self.project_id.date_deadline
+        self.date_deadline = self.project_id.date
