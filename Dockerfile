@@ -8,6 +8,7 @@ RUN pip3 install -r requirements.txt
 
 USER odoo
 
+COPY project_accurate_time_spent /mnt/extra-addons/project_accurate_time_spent
 COPY project_form_with_dates /mnt/extra-addons/project_form_with_dates
 COPY project_stage_no_quick_create /mnt/extra-addons/project_stage_no_quick_create
 COPY project_task_date_planned /mnt/extra-addons/project_task_date_planned
