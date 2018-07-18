@@ -22,6 +22,6 @@
         'views/menu.xml',
         'wizards/project_task_rule_condition_wizard.xml',
     ],
-    'installable': True,
+    'installable': False,
     'application': False,
 }

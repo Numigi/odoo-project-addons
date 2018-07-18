@@ -6,6 +6,7 @@
     'version': '1.0.0',
     'author': 'Numigi',
     'maintainer': 'Numigi',
+    'website': 'https://bit.ly/numigi-com',
     'license': 'LGPL-3',
     'category': 'Project',
     'summary': 'Add a field for typing projects.',

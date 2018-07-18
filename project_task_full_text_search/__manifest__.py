@@ -7,7 +7,7 @@
     'version': '11.0.1.0.0',
     'author': 'Numigi',
     'maintainer': 'Numigi',
-    'website': 'http://www.savoirfairelinux.com',
+    'website': 'https://bit.ly/numigi-com',
     'license': 'LGPL-3',
     'category': 'Project',
     'depends': ['project'],

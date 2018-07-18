@@ -22,6 +22,6 @@
         'views/res_partner.xml',
         'data/ir_cron.xml',
     ],
-    'installable': True,
+    'installable': False,
     'application': False,
 }
