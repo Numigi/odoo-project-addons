@@ -15,21 +15,30 @@ class TestProjectTask(SavepointCase):
             'project_id': cls.project.id,
             'name': 'Task 1',
             'planned_hours': 20,
+<<<<<<< HEAD
             'max_hours': 20,
+=======
+>>>>>>> 5ac60eb... Add module project_accurate_time_spent (#15)
         })
         cls.sub_task_1 = cls.env['project.task'].create({
             'project_id': cls.project.id,
             'parent_id': cls.task.id,
             'name': 'Sub-task 1',
             'planned_hours': 5,
+<<<<<<< HEAD
             'max_hours': 5,
+=======
+>>>>>>> 5ac60eb... Add module project_accurate_time_spent (#15)
         })
         cls.sub_task_2 = cls.env['project.task'].create({
             'project_id': cls.project.id,
             'parent_id': cls.task.id,
             'name': 'Sub-task 2',
             'planned_hours': 10,
+<<<<<<< HEAD
             'max_hours': 10,
+=======
+>>>>>>> 5ac60eb... Add module project_accurate_time_spent (#15)
         })
 
     def _add_timesheet_line(self, task, hours):
@@ -74,17 +83,24 @@ class TestProjectTask(SavepointCase):
         self.assertEqual(self.task.total_hours_spent, 9)
         self.assertEqual(self.task.remaining_hours, 11)
 
+<<<<<<< HEAD
     def test_ifTimeSpentOnSubTasks_thenProgressIsUpdatedOnTask(self):
+=======
+    def test_ifTimeSpentOnSubTasks_thenProgressisUpdatedOnTask(self):
+>>>>>>> 5ac60eb... Add module project_accurate_time_spent (#15)
         self.assertEqual(self.task.progress, 0)
         self._add_timesheet_line(self.sub_task_2, 10)
         self.assertEqual(self.task.progress, 50)  # 100 * time_spent (10) / estimated (20)
 
+<<<<<<< HEAD
     def test_ifTimeSpentOnTaskAndSubTasks_thenProgressIsUpdatedOnTask(self):
         self.assertEqual(self.task.progress, 0)
         self._add_timesheet_line(self.task, 5)
         self._add_timesheet_line(self.sub_task_2, 10)
         self.assertEqual(self.task.progress, 75)  # 100 * time_spent (5 + 10) / estimated (20)
 
+=======
+>>>>>>> 5ac60eb... Add module project_accurate_time_spent (#15)
     def test_ifTaskIsArchived_thenProgressIs100(self):
         self.assertEqual(self.task.progress, 0)
         self.task.stage_id = self.env['project.task.type'].search([('fold', '=', True)], limit=1)
