@@ -6,16 +6,31 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-03 20:05+0000\n"
-"PO-Revision-Date: 2018-05-03 16:07-0400\n"
+"POT-Creation-Date: 2018-07-18 13:35-0400\n"
+"PO-Revision-Date: 2018-07-18 13:35-0400\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"Language: fr\n"
 "X-Generator: Poedit 1.8.7.1\n"
+
+#. module: project_task_time_range
+#: model:ir.ui.view,arch_db:project_task_time_range.portal_my_task_with_time_range
+msgid "<strong>Ideal:</strong>"
+msgstr "<strong>Idéal:</strong>"
+
+#. module: project_task_time_range
+#: model:ir.ui.view,arch_db:project_task_time_range.portal_my_task_with_time_range
+msgid "<strong>Max:</strong>"
+msgstr "<strong>Max:</strong>"
+
+#. module: project_task_time_range
+#: model:ir.ui.view,arch_db:project_task_time_range.portal_my_task_with_time_range
+msgid "<strong>Min:</strong>"
+msgstr "<strong>Min:</strong>"
 
 #. module: project_task_time_range
 #: model:ir.ui.view,arch_db:project_task_time_range.task_form_with_planned_hours_renamed
