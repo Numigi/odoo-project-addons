@@ -12,6 +12,10 @@ The fields are also added to the list view of tasks.
 
 ![Task List](static/description/list_view.png?raw=true)
 
+The fields are also added to the portal view of a task.
+
+![Portal Task](static/description/portal_task.png?raw=true)
+
 Contributors
 ------------
 * Numigi (tm) and all its contributors (https://bit.ly/numigiens)
