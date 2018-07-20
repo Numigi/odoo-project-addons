@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <template id="portal_my_task_with_parent_task" inherit_id="project.portal_my_task">
+        <xpath expr="//a[@t-field='task.project_id.name']/.." position="after">
+            <div class="mb8" t-if="task.sudo().parent_id">
+                <strong>Parent Task:</strong>
+                <a t-attf-href="/my/task/#{task.sudo().parent_id.id}" t-field="task.sudo().parent_id.display_name"/>
+            </div>
+        </xpath>
+    </template>
+
+</odoo>
