@@ -7,6 +7,7 @@
     'version': '1.1.0',
     'author': 'Numigi',
     'maintainer': 'Numigi',
+    'website': 'https://bit.ly/numigi-com',
     'license': 'LGPL-3',
     'category': 'Project',
     'summary': 'Add the ID of a task to its displayed name.',

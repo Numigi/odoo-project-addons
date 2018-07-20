@@ -1,3 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_partner_task_autocreate,access_partner_task_autocreate,model_partner_task_autocreate,,1,0,0,0
-access_partner_task_autocreate_group_partner_manager,access_partner_task_autocreate_group_partner_manager,model_partner_task_autocreate,base.group_partner_manager,1,1,1,1
