@@ -71,10 +71,16 @@ class TestProjectTask(SavepointCase):
         self.assertEqual(self.task.total_hours_spent, 9)
         self.assertEqual(self.task.remaining_hours, 11)
 
-    def test_ifTimeSpentOnSubTasks_thenProgressisUpdatedOnTask(self):
+    def test_ifTimeSpentOnSubTasks_thenProgressIsUpdatedOnTask(self):
         self.assertEqual(self.task.progress, 0)
         self._add_timesheet_line(self.sub_task_2, 10)
         self.assertEqual(self.task.progress, 50)  # 100 * time_spent (10) / estimated (20)
+
+    def test_ifTimeSpentOnTaskAndSubTasks_thenProgressIsUpdatedOnTask(self):
+        self.assertEqual(self.task.progress, 0)
+        self._add_timesheet_line(self.task, 5)
+        self._add_timesheet_line(self.sub_task_2, 10)
+        self.assertEqual(self.task.progress, 75)  # 100 * time_spent (5 + 10) / estimated (20)
 
     def test_ifTaskIsArchived_thenProgressIs100(self):
         self.assertEqual(self.task.progress, 0)
