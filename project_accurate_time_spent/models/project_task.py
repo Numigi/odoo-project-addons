@@ -36,7 +36,7 @@ class Task(models.Model):
             if task.stage_id and task.stage_id.fold:
                 task.progress = 100.0
             elif task.planned_hours > 0.0:
-                progress_ratio = task.effective_hours + task.children_hours / task.planned_hours
+                progress_ratio = (task.effective_hours + task.children_hours) / task.planned_hours
                 task.progress = round(100.0 * progress_ratio, 2)
             else:
                 task.progress = 0.0
