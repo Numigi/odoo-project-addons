@@ -1,6 +1,7 @@
 # © 2018 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
+from datetime import date
 from odoo.tests import common
 
 
@@ -9,7 +10,7 @@ class TestProjectTask(common.SavepointCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.deadline = '2018-06-01'
+        cls.deadline = date(2018, 6, 1)
         cls.project_with_no_deadline = cls.env['project.project'].create({
             'name': 'Project With No Deadline',
             'date': False,
