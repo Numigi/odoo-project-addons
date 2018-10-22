@@ -1,4 +1,4 @@
-FROM quay.io/numigi/odoo-public:11.0
+FROM quay.io/numigi/odoo-public:12.0
 MAINTAINER numigi <contact@numigi.com>
 
 USER root
@@ -8,7 +8,6 @@ RUN pip3 install -r requirements.txt
 
 USER odoo
 
-COPY project_accurate_time_spent /mnt/extra-addons/project_accurate_time_spent
 COPY project_form_with_dates /mnt/extra-addons/project_form_with_dates
 COPY project_portal_parent_task /mnt/extra-addons/project_portal_parent_task
 COPY project_stage_no_quick_create /mnt/extra-addons/project_stage_no_quick_create

@@ -23,17 +23,4 @@
         </field>
     </record>
 
-    <record id="view_task_search_with_planned_date" model="ir.ui.view">
-        <field name="name">Task Search With Planned Date</field>
-        <field name="model">project.task</field>
-        <field name="inherit_id" ref="project.view_task_search_form"/>
-        <field name="arch" type="xml">
-            <filter name="activities_my" position="before">
-                <filter string="Planned Today" name="planned_today"
-                    domain="[('date_planned', '=', context_today().strftime('%Y-%m-%d'))]"/>
-                <separator/>
-            </filter>
-        </field>
-    </record>
-
 </odoo>
