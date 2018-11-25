@@ -6,12 +6,12 @@ from odoo.tests import common
 from odoo.exceptions import ValidationError
 
 
-class TestProjectTaskWithContrainsOnMinMax(common.SavepointCase):
+class TestProjectWithMinMax(common.SavepointCase):
 
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.project_a = cls.env['project.project'].create({'name': 'Task A'})
+        cls.project_a = cls.env['project.project'].create({'name': 'Project A'})
 
     def test_ifIdealDifferent0_thenMinHasToBeLesserThanIdeal(self):
         with self.assertRaises(ValidationError):
