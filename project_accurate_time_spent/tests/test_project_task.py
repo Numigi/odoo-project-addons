@@ -15,18 +15,21 @@ class TestProjectTask(SavepointCase):
             'project_id': cls.project.id,
             'name': 'Task 1',
             'planned_hours': 20,
+            'max_hours': 20,
         })
         cls.sub_task_1 = cls.env['project.task'].create({
             'project_id': cls.project.id,
             'parent_id': cls.task.id,
             'name': 'Sub-task 1',
             'planned_hours': 5,
+            'max_hours': 5,
         })
         cls.sub_task_2 = cls.env['project.task'].create({
             'project_id': cls.project.id,
             'parent_id': cls.task.id,
             'name': 'Sub-task 2',
             'planned_hours': 10,
+            'max_hours': 10,
         })
 
     def _add_timesheet_line(self, task, hours):
