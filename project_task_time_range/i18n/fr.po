@@ -1,21 +1,19 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* project_task_time_range
+#	* project_task_time_range
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 11.0+e\n"
+"Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-16 11:40-0400\n"
-"PO-Revision-Date: 2018-10-16 11:44-0400\n"
+"POT-Creation-Date: 2018-11-25 02:15+0000\n"
+"PO-Revision-Date: 2018-11-25 02:15+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
-"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
+"Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
-"X-Generator: Poedit 2.0.6\n"
 
 #. module: project_task_time_range
 #: model_terms:ir.ui.view,arch_db:project_task_time_range.portal_my_task_with_time_range
@@ -63,7 +61,13 @@ msgid "Max"
 msgstr "Max"
 
 #. module: project_task_time_range
-#: model:ir.model.fields,field_description:project_task_time_range.field_project_task__max_hours
+#: code:addons/project_task_time_range/models/project_task.py:43
+#, python-format
+msgid "Max Hours must be greater than the planned hours."
+msgstr "Les heures Max doivent être supérieures aux heures idéales."
+
+#. module: project_task_time_range
+#: model:ir.model.fields,field_description:project_task_time_range.field_project_task_max_hours
 msgid "Maximum Planned Hours"
 msgstr "Heures maximales plannifiées"
 
@@ -74,7 +78,13 @@ msgid "Min"
 msgstr "Min"
 
 #. module: project_task_time_range
-#: model:ir.model.fields,field_description:project_task_time_range.field_project_task__min_hours
+#: code:addons/project_task_time_range/models/project_task.py:39
+#, python-format
+msgid "Min Hours must be lesser than the planned hours."
+msgstr "Les heures Min doivent être inférieures aux heures idéales."
+
+#. module: project_task_time_range
+#: model:ir.model.fields,field_description:project_task_time_range.field_project_task_min_hours
 msgid "Minimum Planned Hours"
 msgstr "Heures minimales plannifiées"
 
@@ -82,3 +92,4 @@ msgstr "Heures minimales plannifiées"
 #: model:ir.model,name:project_task_time_range.model_project_task
 msgid "Task"
 msgstr "Tâche"
+
