@@ -20,5 +20,6 @@ COPY project_task_time_range /mnt/extra-addons/project_task_time_range
 COPY project_task_type /mnt/extra-addons/project_task_type
 COPY project_type /mnt/extra-addons/project_type
 
+
 COPY .docker_files/main /mnt/extra-addons/main
 COPY .docker_files/odoo.conf /etc/odoo
