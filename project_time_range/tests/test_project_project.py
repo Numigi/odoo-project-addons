@@ -45,8 +45,8 @@ class TestProjectWithMinMax(common.SavepointCase):
     def test_idealCanBeNone(self):
         """ Just checking that the case where planned_hours is None does not
         raise an error."""
-        self.task_a.write({
+        self.project_a.write({
             'planned_hours': None
         })
-        assert self.task_a.max_hours == 0
-        assert self.task_a.min_hours == 0
+        assert self.project_a.max_hours == 0
+        assert self.project_a.min_hours == 0
