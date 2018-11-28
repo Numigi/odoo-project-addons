@@ -1,4 +1,4 @@
-# Project Task Time Range
+# Project Time Range
 
 This module adds the fields `Min` and `Ideal` and `Max` under the `Management` tab of a project.
 These fields contain the minimum and maximum time initialy estimated on the task.
