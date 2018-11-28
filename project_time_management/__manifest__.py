@@ -9,7 +9,7 @@
     'website': 'https://bit.ly/numigi-com',
     'license': 'LGPL-3',
     'category': 'Project',
-    'summary': 'Add fields Min and Max on project.',
+    'summary': 'Add calculated fields to project to have a view on hours of parent tasks.',
     'depends': [
         'project_time_range',
         'project_task_time_range',

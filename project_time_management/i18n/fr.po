@@ -18,7 +18,7 @@ msgstr ""
 #. module: project_time_management
 #: model:ir.ui.view,arch_db:project_time_management.project_calculated_time_fields
 msgid "calculated"
-msgstr "calculés"
+msgstr "Calculés"
 
 #. module: project_time_management
 #: model:ir.model.fields,field_description:project_time_management.field_project_project_calculated_effective_hours
