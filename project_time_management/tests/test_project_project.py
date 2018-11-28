@@ -2,9 +2,11 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 from odoo.tests import common
+from ddt import data, ddt, unpack
 
 
-class TestProjectWithMinMax(common.SavepointCase):
+@ddt
+class TestProjectWithCalculatedHoursFields(common.SavepointCase):
 
     @classmethod
     def setUpClass(cls):
@@ -67,18 +69,26 @@ class TestProjectWithMinMax(common.SavepointCase):
             'project_id': cls.project_b.id,
         })
 
-    def test_caseOfSingleTask(self):
+    @data(
+        ['calculated_min_hours', 1.0],
+        ['calculated_max_hours', 4.0],
+        ['calculated_planned_hours', 3.0],
+        ['calculated_remaining_hours', 2.0],
+        ['calculated_effective_hours', 1.0],
+    )
+    @unpack
+    def test_caseOfSingleTask(self, field, expected_value):
         """ Project with a single task assigned to it."""
-        assert 1.0 == self.project_a.calculated_min_hours
-        assert 4.0 == self.project_a.calculated_max_hours
-        assert 3.0 == self.project_a.calculated_planned_hours
-        assert 2.0 == self.project_a.calculated_remaining_hours
-        assert 1.0 == self.project_a.calculated_effective_hours
+        assert expected_value == self.project_a.__getattribute__(field)
 
-    def test_caseMultipleTasks(self):
+    @data(
+        ['calculated_min_hours', 3.0],
+        ['calculated_max_hours', 12.0],
+        ['calculated_planned_hours', 9.0],
+        ['calculated_remaining_hours', 2.0],
+        ['calculated_effective_hours', 7.0],
+    )
+    @unpack
+    def test_caseMultipleTasks(self, field, expected_value):
         """ Project with several tasks assigned to it, with a sub task."""
-        assert 3.0 == self.project_b.calculated_min_hours
-        assert 12.0 == self.project_b.calculated_max_hours
-        assert 9.0 == self.project_b.calculated_planned_hours
-        assert 2.0 == self.project_b.calculated_remaining_hours
-        assert 7.0 == self.project_b.calculated_effective_hours
+        assert expected_value == self.project_b.__getattribute__(field)
