@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="project_calculated_time_fields" model="ir.ui.view">
+        <field name="name">Project With Calculated Time Fields</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project_time_range.project_with_min_max_hours"/>
+        <field name="arch" type="xml">
+            <group name="left" position="after">
+                <group name="right" string="Calculated">
+                    <field name="calculated_min_hours" string="Min" widget="float_time"/>
+                    <field name="calculated_planned_hours" widget="float_time"/>
+                    <field name="calculated_max_hours" string="Max" widget="float_time"/>
+                    <field name="calculated_remaining_hours" widget="float_time"/>
+                    <field name="calculated_effective_hours" widget="float_time"/>
+                </group>
+            </group>
+        </field>
+    </record>
+
+</odoo>
