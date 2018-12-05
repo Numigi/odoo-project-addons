@@ -65,5 +65,5 @@ msgstr "Projet"
 #. module: project_time_range
 #: model:ir.ui.view,arch_db:project_time_range.project_with_min_max_hours
 msgid "Estimated"
-msgstr "´Estimés"
+msgstr "Èstimés"
 
