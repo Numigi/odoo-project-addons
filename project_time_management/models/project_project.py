@@ -37,9 +37,9 @@ class ProjectTaskWithMinAndMaxHours(models.Model):
         for record in self:
             record.calculated_remaining_hours = record.calculate_sumed_time('remaining_hours')
 
-    def compute_calculated_effective_hours(self):
+    def compute_calculated_total_hours_spent(self):
         for record in self:
-            record.calculated_effective_hours = record.calculate_sumed_time('effective_hours')
+            record.calculated_total_hours_spent = record.calculate_sumed_time('total_hours_spent')
 
     calculated_min_hours = fields.Float('Calculated Min', compute='compute_calculated_min_hours')
     calculated_max_hours = fields.Float('Calculated Max', compute='compute_calculated_max_hours')
@@ -47,6 +47,6 @@ class ProjectTaskWithMinAndMaxHours(models.Model):
     calculated_remaining_hours = fields.Float(
         'Calculated Remaining Hours', compute='compute_calculated_remaining_hours'
     )
-    calculated_effective_hours = fields.Float(
-        'Calculated Effective Hours', compute='compute_calculated_effective_hours'
+    calculated_total_hours_spent = fields.Float(
+        'Calculated Total Hours Spent', compute='compute_calculated_total_hours_spent'
     )

@@ -74,7 +74,7 @@ class TestProjectWithCalculatedHoursFields(common.SavepointCase):
         ['calculated_max_hours', 4.0],
         ['calculated_planned_hours', 3.0],
         ['calculated_remaining_hours', 2.0],
-        ['calculated_effective_hours', 1.0],
+        ['calculated_total_hours_spent', 1.0],
     )
     @unpack
     def test_caseOfSingleTask(self, field, expected_value):
@@ -86,7 +86,7 @@ class TestProjectWithCalculatedHoursFields(common.SavepointCase):
         ['calculated_max_hours', 12.0],
         ['calculated_planned_hours', 9.0],
         ['calculated_remaining_hours', 2.0],
-        ['calculated_effective_hours', 7.0],
+        ['calculated_total_hours_spent', 7.0],
     )
     @unpack
     def test_caseMultipleTasks(self, field, expected_value):
