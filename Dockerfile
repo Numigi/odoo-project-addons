@@ -1,4 +1,4 @@
-FROM quay.io/numigi/odoo-public:12.0
+FROM quay.io/numigi/odoo-public:12.latest
 MAINTAINER numigi <contact@numigi.com>
 
 USER root
@@ -16,6 +16,7 @@ COPY project_task_date_planned /mnt/extra-addons/project_task_date_planned
 COPY project_task_deadline_from_project /mnt/extra-addons/project_task_deadline_from_project
 COPY project_task_full_text_search /mnt/extra-addons/project_task_full_text_search
 COPY project_task_id_in_display_name /mnt/extra-addons/project_task_id_in_display_name
+COPY project_task_subtask_time_range /mnt/extra-addons/project_task_subtask_time_range
 COPY project_task_time_range /mnt/extra-addons/project_task_time_range
 COPY project_time_management /mnt/extra-addons/project_time_management
 COPY project_time_range /mnt/extra-addons/project_time_range
