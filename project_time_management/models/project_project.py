@@ -19,7 +19,7 @@ class ProjectTaskWithMinAndMaxHours(models.Model):
         return project_tasks.filtered(lambda t: not t.parent_id)
 
     def calculate_sumed_time(self, field_name):
-        return round(sum(self.get_parent_tasks().mapped(field_name)), 2)
+        return sum(self.get_parent_tasks().mapped(field_name))
 
     def compute_calculated_min_hours(self):
         for record in self:
