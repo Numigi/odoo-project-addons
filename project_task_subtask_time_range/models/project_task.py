@@ -11,7 +11,7 @@ class ProjectTaskSubtaskHours(models.Model):
 
     @api.model
     def calculate_summed_time(self, field_name):
-        return round(sum(self.child_ids.mapped(field_name)), 2)
+        return sum(self.child_ids.mapped(field_name))
 
     @api.one
     def compute_calculated_min_hours(self):
