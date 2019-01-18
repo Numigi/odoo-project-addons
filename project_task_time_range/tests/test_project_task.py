@@ -59,8 +59,8 @@ class TestProjectTaskWithContrainsOnMinMax(common.SavepointCase):
         assert self.task_a.max_hours == 0
         assert self.task_a.min_hours == 0
 
-    def test_whenIdealIsZero_thenAreStillApplied(self):
-        """ TA#7407 """
+    def test_whenIdealIsZero_thenConstrainsAreStillApplied(self):
+        """ Check that we don't omit the case of planned_hours == 0 and we skip only when it is None."""
         with self.assertRaises(ValidationError):
             self.task_a.write({
                 'min_hours': 4,
@@ -69,7 +69,6 @@ class TestProjectTaskWithContrainsOnMinMax(common.SavepointCase):
             })
 
     def test_negativeNumbersAreNotAllowed(self):
-        """ TA#7407 """
         with self.assertRaises(ValidationError):
             self.task_a.write({
                 'min_hours': -10,
