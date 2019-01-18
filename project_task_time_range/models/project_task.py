@@ -32,12 +32,19 @@ class ProjectTaskWithMinAndMaxConstraints(models.Model):
 
     @api.one
     @api.constrains('planned_hours', 'min_hours', 'max_hours')
-    def _check_description(self):
-        # Case where planned_hours is different from 0 or None
-        if self.planned_hours:
-            if self.min_hours > self.planned_hours:
+    def _check_hours(self):
+        # Case where planned_hours is different from None to avoid comparing oranges and pandas
+        # Bare in mind we want to check the case where planned_hours is 0
+        if self.planned_hours is not None:
+            if any(h < 0 for h in [self.min_hours, self.planned_hours, self.max_hours]):
+                raise ValidationError(
+                    _("Hours must be positive numbers.")
+                )
+
+            elif self.min_hours > self.planned_hours:
                 raise ValidationError(
                     _("Min Hours must be lesser than the planned hours.")
+
                 )
             elif self.max_hours < self.planned_hours:
                 raise ValidationError(
