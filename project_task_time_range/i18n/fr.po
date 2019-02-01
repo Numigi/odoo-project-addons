@@ -81,3 +81,8 @@ msgstr "Heures minimales plannifiées"
 msgid "Task"
 msgstr "Tâche"
 
+#. module: project_task_time_range
+#: code:addons/project_task_time_range/models/project_task.py:66
+#, python-format
+msgid "Hours must be positive numbers."
+msgstr "Les heures doivent être des nombres positives."
