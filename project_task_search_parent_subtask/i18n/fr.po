@@ -1,0 +1,27 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* project_task_search_parent_subtask
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 11.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-02-12 21:36+0000\n"
+"PO-Revision-Date: 2019-02-12 21:36+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: project_task_search_parent_subtask
+#: model:ir.ui.view,arch_db:project_task_search_parent_subtask.odoo_studio_project__bb23f46b-24f1-4c20-8dfd-700150397828
+msgid "Parent Tasks"
+msgstr "Tâches parentes"
+
+#. module: project_task_search_parent_subtask
+#: model:ir.ui.view,arch_db:project_task_search_parent_subtask.odoo_studio_project__bb23f46b-24f1-4c20-8dfd-700150397828
+msgid "Subtasks"
+msgstr "Sous-tâches"
+
