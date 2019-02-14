@@ -29,6 +29,34 @@
         </field>
     </record>
 
+    <record id="view_task_list_with_sequence" model="ir.ui.view">
+        <field name="name">Task List: Display Name Instead Of Name</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_tree2"/>
+        <field name="arch" type="xml">
+            <field name="name" position="before">
+                <field name="display_name"/>
+            </field>
+            <field name="name" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+        </field>
+    </record>
+
+    <record id="view_task_activities_list_with_sequence" model="ir.ui.view">
+        <field name="name">Task Next Activities List: Display Name Instead Of Name</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.project_task_view_tree_activity"/>
+        <field name="arch" type="xml">
+            <field name="name" position="before">
+                <field name="display_name"/>
+            </field>
+            <field name="name" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+        </field>
+    </record>
+
     <record id="view_task_search_with_id_searched_in_name" model="ir.ui.view">
         <field name="name">Task Search With ID Searched In Name</field>
         <field name="model">project.task</field>
