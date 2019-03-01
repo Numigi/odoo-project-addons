@@ -36,6 +36,12 @@ jobs:
     steps:
       - checkout
       - run:
+          name: Get commit message
+          command: |
+            echo 'export GITHUB_COMMIT_MESSAGE=$(curl -fL http://gcloud.functions.numigi.org/github_commit_message?github_user=${GITHUB_USER}\&github_password=${GITHUB_PASSWORD}\&repo=${CIRCLE_PROJECT_REPONAME}\&commit=${CIRCLE_SHA1})' > $BASH_ENV
+            source $BASH_ENV
+            echo "github commit message (sha: ${CIRCLE_SHA1}): ${GITHUB_COMMIT_MESSAGE}"
+      - run:
           name: Get next tag
           command: |
             echo 'export GITHUB_NEXT_TAG=$(curl -fL http://gcloud.functions.numigi.org/github_next_tag?github_user=${GITHUB_USER}\&github_password=${GITHUB_PASSWORD}\&repo=odoo-base\&filter=${CIRCLE_BRANCH/\.0/})' > $BASH_ENV
@@ -47,7 +53,8 @@ jobs:
             echo repo: odoo-base
             echo branch: ${CIRCLE_BRANCH}
             echo tag: ${GITHUB_NEXT_TAG}
-            echo github_create_tag $(curl -fL http://gcloud.functions.numigi.org/github_create_tag?github_user=${GITHUB_USER}\&github_password=${GITHUB_PASSWORD}\&repo=odoo-base\&branch=${CIRCLE_BRANCH}\&tag=${GITHUB_NEXT_TAG})
+           echo github_create_tag $(curl -fL http://gcloud.functions.numigi.org/github_create_tag?github_user=${GITHUB_USER}\&github_password=${GITHUB_PASSWORD}\&repo=${CIRCLE_PROJECT_REPONAME}\&branch=${CIRCLE_BRANCH}\&tag=${GITHUB_NEXT_TAG}\&details=${GITHUB_COMMIT_MESSAGE})
+
 workflows:
   version: 2
   odoo:
