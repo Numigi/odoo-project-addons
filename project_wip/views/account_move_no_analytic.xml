@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+	<record id="account_move_with_no_analytic" model="ir.ui.view">
+		<field name="name">Account Move Form: add field no_analytic_lines</field>
+		<field name="model">account.move</field>
+		<field name="inherit_id" ref="account.view_move_form"/>
+		<field name="arch" type="xml">
+			<field name="ref" position="after">
+				<field name="no_analytic_lines" attrs="{'readonly': [('state', '=', 'posted')]}"/>
+			</field>
+		</field>
+	</record>
+
+</odoo>

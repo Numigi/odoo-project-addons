@@ -26,6 +26,7 @@
         'project_time_range',
         'project_task_type',
         'project_type',
+        'project_wip',
     ],
     'installable': True,
 }
