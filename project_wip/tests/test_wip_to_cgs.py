@@ -218,3 +218,20 @@ class TestWIPTrasferToCGS(common.SavepointCase):
         self.project.action_wip_to_cgs()
         transfer_move = self._find_wip_to_cgs_move()
         assert len(transfer_move) == 1
+
+    def test_wip_to_cgs_wizard__costs_to_transfer(self):
+        wizard = self.env['project.wip.transfer'].create({
+            'project_id': self.project.id,
+        })
+        wizard._onchange_project_compute_costs_to_transfer()
+        assert wizard.costs_to_transfer == self.raw_material_amount
+
+    def test_wip_to_cgs_wizard_date_propagated_to_account_move(self):
+        specific_date = datetime.now().date() + timedelta(30)
+        wizard = self.env['project.wip.transfer'].create({
+            'project_id': self.project.id,
+            'accounting_date': specific_date,
+        })
+        wizard.validate()
+        transfer_move = self._find_wip_to_cgs_move()
+        assert transfer_move.date == fields.Date.to_string(specific_date)
