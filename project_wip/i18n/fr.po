@@ -1,0 +1,36 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* project_wip
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 11.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-03-06 15:19+0000\n"
+"PO-Revision-Date: 2019-03-06 15:19+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: project_wip
+#: model:ir.model,name:project_wip.model_account_move
+msgid "Account Entry"
+msgstr ""
+
+#. module: project_wip
+#: model:ir.model.fields,help:project_wip.field_account_move_no_analytic_lines
+msgid "If checked, analytic lines will not be generated when posting this journal entry."
+msgstr "Si coché, aucune ligne analytique ne sera générée à la comptabilisation de cette pièce comptable."
+
+#. module: project_wip
+#: model:ir.model,name:project_wip.model_account_move_line
+msgid "Journal Item"
+msgstr ""
+
+#. module: project_wip
+#: model:ir.model.fields,field_description:project_wip.field_account_move_no_analytic_lines
+msgid "No Analytic Lines"
+msgstr "Ne pas générer les lignes analytiques"
