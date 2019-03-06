@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="action_wip_to_cgs_wizard" model="ir.actions.act_window">
+        <field name="name">Transfer WIP to CGS</field>
+        <field name="res_model">project.wip.transfer</field>
+        <field name="view_mode">form</field>
+        <field name="context">{'default_project_id': active_id}</field>
+        <field name="target_id">new</field>
+    </record>
+
+    <record id="project_form_with_wip_to_cgs_button" model="ir.ui.view">
+        <field name="name">Project Form: add WIP to CGS button</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.edit_project"/>
+        <field name="arch" type="xml">
+            <sheet position="before">
+                <header>
+                    <button name="%(action_wip_to_cgs_wizard)d"
+                            string="Transfer WIP to CGS"
+                            class="oe_highlight"
+                            type="action"
+                            groups="account.group_account_invoice"
+                            />
+                </header>
+            </sheet>
+        </field>
+    </record>
+
+</odoo>
