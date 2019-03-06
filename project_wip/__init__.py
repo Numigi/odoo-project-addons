@@ -3,4 +3,5 @@
 
 from . import (
     account_move_no_analytic,
+    wip_to_cgs,
 )
