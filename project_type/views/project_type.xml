@@ -13,6 +13,7 @@
                         <field name="sequence"/>
                         <field name="active"/>
                     </group>
+                    <notebook/>
                 </sheet>
             </form>
         </field>
