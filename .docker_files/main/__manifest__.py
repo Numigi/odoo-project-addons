@@ -11,6 +11,8 @@
     'category': 'Other',
     'summary': 'Install all addons required for testing.',
     'depends': [
+        'stock_account',  # required for testing project_wip
+
         'project_accurate_time_spent',
         'project_form_with_dates',
         'project_portal_parent_task',
