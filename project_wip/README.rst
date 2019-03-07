@@ -52,6 +52,89 @@ The analytic account field is still used to filter the general ledger by project
 
 .. image:: static/description/general_ledger_filtered_by_analytic_lines.png
 
+Transfering WIP To CGS
+----------------------
+As member of the group `Project / Manager`, I go to `Project / Configuration / Projects`, then I select my project.
+
+.. image:: static/description/project_form.png
+
+In the field `Type`, I click on `Create and Edit`.
+
+.. image:: static/description/project_type_field.png
+
+I create a new `Project Type` named `Manufacturing`.
+
+.. image:: static/description/project_type_form.png
+
+In the `Accounting` tab, I fill the following fields:
+
+* WIP To CGS Journal: This journal will be used when transfering WIP journal items into CGS.
+* WIP Account: This account will be used to cumulate Work In Progress.
+* CGS Account: This account will be used to cumulate Costs of Goods Sold.
+
+Back to the project form, I click on `Save`.
+
+.. image:: static/description/project_form_save.png
+
+Now, In the `Accounting` application, we are going to post three accounting entries.
+
+One entry for raw materials.
+
+.. image:: static/description/raw_material_entry.png
+
+One entry for direct labour.
+
+.. image:: static/description/direct_labour_entry.png
+
+One entry for outsourcing.
+
+.. image:: static/description/outsourcing_entry.png
+
+In the general ledger, I filter for the WIP account. The balance of the account is $ 300.00.
+
+.. image:: static/description/general_ledger_before_wip_to_cgs.png
+
+Back to the form view of my project, I click on `Transfer WIP To CGS`.
+
+.. image:: static/description/project_wip_to_cgs_button.png
+
+A wizard is appears.
+
+It allows me to select a specific accounting date for the transfer.
+By default, the current date is selected.
+
+.. image:: static/description/wip_to_cgs_wizard.png
+
+I click on `Validate`.
+
+Back to the general ledger, I notice that the balance of the WIP account is null.
+
+.. image:: static/description/general_ledger_after_wip_to_cgs.png
+
+Every debit in the WIP account is reconciled with its related credit.
+
+In the `Cost of Goods Sold` account, I notice 3 journal items.
+
+.. image:: static/description/general_ledger_cgs_account.png
+
+Repeating the Operation
+-----------------------
+The operation can be repeated multiple times. Each time, only the new WIP entries will be transfered to CGS.
+
+If I go back to the project form and click on the button. The wizard will show $ 0.00 to transfer.
+
+.. image:: static/description/wip_to_cgs_wizard_2nd_time.png
+
+Analytic Entries
+----------------
+I go to `Accounting / Adviser / Analytic Entries`.
+
+I see 3 analytic entries. These are the analytic entries of my initial WIP journal entries.
+
+.. image:: static/description/project_analytic_entries.png
+
+The transfers from WIP to CGS did not create extra analytic entries.
+
 Contributors
 ------------
 * Numigi (tm) and all its contributors (https://bit.ly/numigiens)
