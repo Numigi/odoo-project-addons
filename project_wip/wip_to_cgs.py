@@ -34,6 +34,26 @@ class ProjectType(models.Model):
                 )
 
 
+def _reconcile_wip_move_lines(wip_line, wip_reversal_line):
+    """Reconcile a WIP journal item with its reversal.
+
+    :param wip_line: the initial wip account.move.line
+    :param wip_reversal_line: the wip reversal account.move.line
+    :raises: ValidationError if the lines could not be reconciled.
+    """
+    unreconciled_line = (wip_line | wip_reversal_line).auto_reconcile_lines()
+    if unreconciled_line:
+        raise ValidationError(
+            _('The WIP entry {wip_line} ({amount}) could not be reconciled when transfering '
+              'the amount into Costs of Goods Sold. '
+              'You should verify if the WIP entry is partially reconciled.')
+            .format(
+                wip_line=wip_line.display_name,
+                amount=wip_line.balance,
+            )
+        )
+
+
 class Project(models.Model):
 
     _inherit = 'project.project'
@@ -120,25 +140,6 @@ class Project(models.Model):
             ]
         })
 
-    def _reconcile_wip_move_lines(self, wip_line, wip_reversal_line):
-        """Reconcile a WIP journal item with its reversal.
-
-        :param wip_line: the initial wip account.move.line
-        :param wip_reversal_line: the wip reversal account.move.line
-        :raises: ValidationError if the lines could not be reconciled.
-        """
-        unreconciled_line = (wip_line | wip_reversal_line).auto_reconcile_lines()
-        if unreconciled_line:
-            raise ValidationError(
-                _('The WIP entry {wip_line} ({amount}) could not be reconciled when transfering '
-                  'the amount into Costs of Goods Sold. '
-                  'You should verify if the WIP entry is partially reconciled.')
-                .format(
-                    wip_line=wip_line.display_name,
-                    amount=wip_line.balance,
-                )
-            )
-
     def _action_wip_to_cgs_single(self, accounting_date=None):
         """Run the wip to cgs process for a single project."""
         self._check_project_type_has_wip_journal()
@@ -155,7 +156,7 @@ class Project(models.Model):
 
             wip_reversal_line = move.line_ids.filtered(
                 lambda l: l.account_id == self.project_type_id.wip_account_id)
-            self._reconcile_wip_move_lines(wip_line, wip_reversal_line)
+            _reconcile_wip_move_lines(wip_line, wip_reversal_line)
 
             move.post()
 
