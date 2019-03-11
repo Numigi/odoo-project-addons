@@ -93,6 +93,7 @@ class Warehouse(models.Model):
             'picking_type_id': self.consu_type_id.id,
             'action': 'move',
             'active': True,
+            'company_id': self.company_id.id,
         }
 
     def _get_consumption_route_values(self):

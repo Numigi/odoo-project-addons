@@ -16,6 +16,7 @@
         'stock',
     ],
     'data': [
+        'views/warehouse.xml',
     ],
     'post_init_hook': '_update_warehouses_consumption_routes',
     'installable': True,
