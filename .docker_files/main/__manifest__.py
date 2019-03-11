@@ -29,6 +29,7 @@
         'project_task_type',
         'project_type',
         'project_wip',
+        'project_wip_material',
     ],
     'installable': True,
 }
