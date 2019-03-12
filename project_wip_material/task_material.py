@@ -104,7 +104,7 @@ class TaskMaterialLine(models.Model):
                 lambda m: m.state == 'done' and m.picking_code == 'consumption')
             consumed_qty = sum(consumed_moves.mapped('product_uom_qty'))
             return_moves = line.move_ids.filtered(
-                lambda m: m.state == 'done' and m.picking_code != 'consumption')
+                lambda m: m.state == 'done' and m.picking_code == 'consumption_return')
             returned_qty = sum(return_moves.mapped('product_uom_qty'))
             line.consumed_qty = consumed_qty - returned_qty
 

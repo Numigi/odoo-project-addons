@@ -11,7 +11,10 @@ class StockPickingType(models.Model):
 
     _inherit = 'stock.picking.type'
 
-    code = fields.Selection(selection_add=[('consumption', 'Consumption')])
+    code = fields.Selection(selection_add=[
+        ('consumption', 'Consumption'),
+        ('consumption_return', 'Consumption Return'),
+    ])
 
 
 class Warehouse(models.Model):
@@ -39,6 +42,11 @@ class Warehouse(models.Model):
         ondelete='restrict',
     )
 
+    consu_return_type_id = fields.Many2one(
+        'stock.picking.type', 'Consumption Return Picking Type',
+        ondelete='restrict',
+    )
+
     consu_route_id = fields.Many2one(
         'stock.location.route', 'Consumption Route',
         ondelete='restrict',
@@ -46,7 +54,14 @@ class Warehouse(models.Model):
 
     def _get_consumption_sequence_values(self):
         return {
-            'name': '{}: Consumption Picking Type'.format(self.name),
+            'name': '{}: Consumption'.format(self.name),
+            'prefix': '{}/CO/'.format(self.code),
+            'padding': 5,
+        }
+
+    def _get_consumption_return_sequence_values(self):
+        return {
+            'name': '{}: Consumption Return'.format(self.name),
             'prefix': '{}/CO/'.format(self.code),
             'padding': 5,
         }
@@ -55,9 +70,22 @@ class Warehouse(models.Model):
         vals = self._get_consumption_sequence_values()
         return self.env['ir.sequence'].create(vals)
 
+    def _create_consumption_return_sequence(self):
+        vals = self._get_consumption_return_sequence_values()
+        return self.env['ir.sequence'].create(vals)
+
     def _get_consumption_picking_type_values(self):
         return {
             'code': 'consumption',
+            'default_location_src_id': self.lot_stock_id.id,
+            'default_location_dest_id': self.consu_location_id.id,
+        }
+
+    def _get_consumption_return_picking_type_values(self):
+        return {
+            'code': 'consumption_return',
+            'default_location_src_id': self.consu_location_id.id,
+            'default_location_dest_id': self.lot_stock_id.id,
         }
 
     def _get_consumption_picking_type_create_values(self):
@@ -71,19 +99,44 @@ class Warehouse(models.Model):
         })
         return vals
 
-    def _create_consumption_picking_type(self):
+    def _get_consumption_return_picking_type_create_values(self):
+        vals = self._get_consumption_return_picking_type_values()
+        vals.update({
+            'name': _('Consumption Return'),
+            'use_create_lots': False,
+            'use_existing_lots': False,
+            'sequence': 101,
+            'sequence_id': self._create_consumption_return_sequence().id,
+        })
+        return vals
+
+    def _bind_consumption_picking_types(self):
+        self.consu_type_id.return_picking_type_id = self.consu_return_type_id
+        self.consu_return_type_id.return_picking_type_id = self.consu_type_id
+
+    def _create_consumption_picking_types(self):
         vals = self._get_consumption_picking_type_create_values()
         self.consu_type_id = self.env['stock.picking.type'].create(vals)
 
-    def _update_consumption_picking_type(self):
+        vals = self._get_consumption_return_picking_type_create_values()
+        self.consu_return_type_id = self.env['stock.picking.type'].create(vals)
+
+        self._bind_consumption_picking_types()
+
+    def _update_consumption_picking_types(self):
         vals = self._get_consumption_picking_type_values()
         self.consu_type_id.write(vals)
 
-    def _create_or_update_consumption_picking_type(self):
+        vals = self._get_consumption_return_picking_type_values()
+        self.consu_return_type_id.write(vals)
+
+        self._bind_consumption_picking_types()
+
+    def _create_or_update_consumption_picking_types(self):
         if self.consu_type_id:
-            self._update_consumption_picking_type()
+            self._update_consumption_picking_types()
         else:
-            self._create_consumption_picking_type()
+            self._create_consumption_picking_types()
 
     def _get_consumption_pull_values(self):
         return {
@@ -131,7 +184,7 @@ class Warehouse(models.Model):
     @api.model
     def create(self, vals):
         warehouse = super().create(vals)
-        warehouse._create_consumption_picking_type()
+        warehouse._create_consumption_picking_types()
         warehouse._create_consumption_route()
         return warehouse
 
@@ -140,7 +193,7 @@ class Warehouse(models.Model):
         super().write(vals)
         if 'consu_steps' in vals:
             for warehouse in self:
-                warehouse._create_or_update_consumption_picking_type()
+                warehouse._create_or_update_consumption_picking_types()
                 warehouse._create_or_update_consumption_route()
         return True
 
@@ -150,5 +203,5 @@ def _update_warehouses_consumption_routes(cr, registry):
     env = api.Environment(cr, SUPERUSER_ID, {})
     warehouses = env['stock.warehouse'].search([])
     for warehouse in warehouses:
-        warehouse._create_or_update_consumption_picking_type()
+        warehouse._create_or_update_consumption_picking_types()
         warehouse._create_or_update_consumption_route()

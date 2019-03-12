@@ -178,7 +178,48 @@ class TestGenerateProcurementsFromTask(common.SavepointCase):
         self._force_transfer_move(line.move_ids, 7)
         assert line.consumed_qty == 7
 
+    def _return_stock_move(self, move_to_return, returned_qty):
+        """Return the given stock move.
+
+        :param move_to_return: the stock move to return
+        :param returned_qty: the quantity to return
+        """
+        wizard_fields = [
+            'product_return_moves',
+            'move_dest_exists',
+            'parent_location_id',
+            'original_location_id',
+            'location_id',
+        ]
+        wizard_cls = self.env['stock.return.picking'].with_context(
+            active_id=move_to_return.picking_id.id
+        )
+        wizard_defaults = wizard_cls.default_get(wizard_fields)
+        wizard = wizard_cls.create(wizard_defaults)
+
+        for product_return in wizard.product_return_moves:
+            if product_return.move_id == move_to_return:
+                product_return.quantity = returned_qty
+
+        return_picking_id = wizard.create_returns()['res_id']
+        return_picking = self.env['stock.picking'].browse(return_picking_id)
+        self._force_transfer_move(return_picking.move_lines)
+        return return_picking.move_lines
+
+    def test_return_stock_move(self):
+        """Test the _return_stock_move utility method."""
+        move = self._create_material_line(initial_qty=10).move_ids
+        self._force_transfer_move(move, 10)
+        return_move = self._return_stock_move(move, 7)
+        assert return_move.state == 'done'
+        assert return_move.product_uom_qty == 7
+        assert return_move.location_id == self.warehouse.consu_location_id
+        assert return_move.location_dest_id == self.warehouse.lot_stock_id
+        assert return_move.picking_code == 'consumption_return'
+
     def test_returned_moves_substracted_from_consumed_quantity(self):
         line = self._create_material_line(initial_qty=10)
-        self._force_transfer_move(line.move_ids, 7)
-        assert line.consumed_qty == 7
+        move = line.move_ids
+        self._force_transfer_move(move, 7)
+        self._return_stock_move(move, 2)
+        assert line.consumed_qty == 5  # 7 - 2
