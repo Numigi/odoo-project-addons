@@ -62,7 +62,7 @@ class Warehouse(models.Model):
     def _get_consumption_return_sequence_values(self):
         return {
             'name': '{}: Consumption Return'.format(self.name),
-            'prefix': '{}/CO/'.format(self.code),
+            'prefix': '{}/COR/'.format(self.code),
             'padding': 5,
         }
 
