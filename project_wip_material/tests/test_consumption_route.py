@@ -21,6 +21,9 @@ class TestConsumptionRoute(common.SavepointCase):
             ('company_id', '=', cls.new_company.id),
         ], limit=1)
 
+    def test_default_consumption_location(self):
+        assert self.new_warehouse.consu_location_id == self.env.ref('stock.location_production')
+
     def test_main_warehouse_has_consumption_route(self):
         assert self.main_warehouse.consu_route_id
 

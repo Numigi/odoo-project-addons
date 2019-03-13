@@ -1,7 +1,7 @@
 # © 2019 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
-from odoo import api, fields, models, _
+from odoo import models, _
 from odoo.exceptions import ValidationError
 
 
@@ -45,14 +45,14 @@ class StockMove(models.Model):
     def _generate_consumption_account_move(self):
         self._check_project_has_wip_account()
         wip_account = self._get_wip_account()
-        journal_id, acc_src, acc_dest, acc_valuation = self._get_accounting_data_for_valuation()
+        journal_id, dummy, dummy, acc_valuation = self._get_accounting_data_for_valuation()
         self._create_account_move_line(
             debit_account_id=wip_account.id, credit_account_id=acc_valuation, journal_id=journal_id)
 
     def _generate_consumption_return_account_move(self):
         self._check_project_has_wip_account()
         wip_account = self._get_wip_account()
-        journal_id, acc_src, acc_dest, acc_valuation = self._get_accounting_data_for_valuation()
+        journal_id, dummy, dummy, acc_valuation = self._get_accounting_data_for_valuation()
         self._create_account_move_line(
             debit_account_id=acc_valuation, credit_account_id=wip_account.id, journal_id=journal_id)
 

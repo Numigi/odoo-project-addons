@@ -23,7 +23,7 @@ class Warehouse(models.Model):
     _inherit = 'stock.warehouse'
 
     def _get_default_consumption_location_id(self):
-        return self.env.ref('stock.location_production', raise_if_not_found=False).id,
+        return self.env.ref('stock.location_production', raise_if_not_found=False).id
 
     consu_steps = fields.Selection([
         ('one_step', ONE_STEP_DESCRIPTION),
