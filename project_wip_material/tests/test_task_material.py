@@ -141,3 +141,25 @@ class TestGenerateProcurementsFromTask(TaskMaterialCase):
         self._force_transfer_move(move, 7)
         self._return_stock_move(move, 2)
         assert line.consumed_qty == 5  # 7 - 2
+
+    def test_if_move_not_done__material_line_can_be_deleted(self):
+        line = self._create_material_line()
+        line.unlink()
+        assert not line.exists()
+
+    def test_if_material_line_deleted__stock_move_cancelled(self):
+        line = self._create_material_line()
+        move = line.move_ids
+        line.unlink()
+        assert move.state == 'cancel'
+
+    def test_if_any_move_done__material_line_can_not_be_deleted(self):
+        line = self._create_material_line(initial_qty=10)
+        self._force_transfer_move(line.move_ids, 1)
+        with pytest.raises(ValidationError):
+            line.unlink()
+
+    def test_if_product_can_not_be_changed_on_existing_line(self):
+        line = self._create_material_line()
+        with pytest.raises(ValidationError):
+            line.product_id = self.product_b

@@ -75,24 +75,55 @@ class TaskMaterialCase(common.SavepointCase):
             'standard_price': cls.product_b_value,
             'categ_id': cls.product_category.id,
         })
+        cls.project_user = cls.env['res.users'].create({
+            'name': 'Project User',
+            'login': 'project_user',
+            'email': 'project_user@test.com',
+            'group_id': [(4, cls.env.ref('project.group_project_user').id)],
+            'company_id': cls.company.id,
+            'company_ids': [(4, cls.company.id)],
+        })
+        cls.stock_user = cls.env['res.users'].create({
+            'name': 'Stock User',
+            'login': 'stock_user',
+            'email': 'stock_user@test.com',
+            'group_id': [(4, cls.env.ref('stock.group_stock_user').id)],
+            'company_id': cls.company.id,
+            'company_ids': [(4, cls.company.id)],
+        })
 
     @classmethod
     def _create_material_line(cls, task=None, product=None, initial_qty=1):
-        return cls.env['project.task.material'].create({
+        """Create a new material line.
+
+        Use project user to create the line to verify that no access error is raised.
+        Return the material lines with sudo priviledges for assertions.
+        """
+        new_line = cls.env['project.task.material'].sudo(cls.project_user).create({
             'task_id': task.id if task else cls.task.id,
             'product_id': product.id if product else cls.product_a.id,
             'initial_qty': initial_qty,
         })
+        return new_line.sudo()
 
     @classmethod
     def _force_transfer_move(cls, move, quantity=None):
-        move.move_line_ids |= cls.env['stock.move.line'].create(dict(
-            move._prepare_move_line_vals(), qty_done=quantity or move.product_uom_qty))
+        """Force the transfer of a stock move.
+
+        Use stock user to transfer the move to verify that no access error is raised.
+        """
+        move.move_line_ids |= (
+            cls.env['stock.move.line'].sudo(cls.stock_user)
+            .create(dict(move._prepare_move_line_vals(), qty_done=quantity or move.product_uom_qty))
+        )
         move.picking_id.action_done()
 
     @classmethod
     def _return_stock_move(cls, move_to_return, returned_qty):
         """Return the given stock move.
+
+        Use stock user to transfer the move to verify that no access error is raised.
+        Return the stock moves with sudo priviledges for assertions.
 
         :param move_to_return: the stock move to return
         :param returned_qty: the quantity to return
@@ -104,7 +135,7 @@ class TaskMaterialCase(common.SavepointCase):
             'original_location_id',
             'location_id',
         ]
-        wizard_cls = cls.env['stock.return.picking'].with_context(
+        wizard_cls = cls.env['stock.return.picking'].sudo(cls.stock_user).with_context(
             active_id=move_to_return.picking_id.id
         )
         wizard_defaults = wizard_cls.default_get(wizard_fields)
@@ -115,6 +146,6 @@ class TaskMaterialCase(common.SavepointCase):
                 product_return.quantity = returned_qty
 
         return_picking_id = wizard.create_returns()['res_id']
-        return_picking = cls.env['stock.picking'].browse(return_picking_id)
+        return_picking = cls.env['stock.picking'].sudo(cls.stock_user).browse(return_picking_id)
         cls._force_transfer_move(return_picking.move_lines)
-        return return_picking.move_lines
+        return return_picking.move_lines.sudo()

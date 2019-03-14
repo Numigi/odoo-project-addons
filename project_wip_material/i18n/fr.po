@@ -1,0 +1,298 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* project_wip_material
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 11.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-03-15 17:01+0000\n"
+"PO-Revision-Date: 2019-03-15 13:13-0400\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"Language: fr\n"
+"X-Generator: Poedit 2.0.6\n"
+
+#. module: project_wip_material
+#: code:addons/project_wip_material/task_material.py:122
+#, python-format
+msgid "Before adding material to the task, you must set a planned date."
+msgstr "Avant d'ajouter du matériel à consommer sur la tâche, vous devez entrer une date prévue."
+
+#. module: project_wip_material
+#: code:addons/project_wip_material/task_material.py:143
+#, python-format
+msgid "Before adding products to consume on a task, a warehouse must be defined on the project ({project})."
+msgstr "Avant d'ajouter du matériel à consommer sur la tâche, l'entrepôt doit être défini sur le projet ({project})."
+
+#. module: project_wip_material
+#: model:ir.model.fields,field_description:project_wip_material.field_project_task_material_company_id
+msgid "Company"
+msgstr "Société"
+
+#. module: project_wip_material
+#: model:ir.model.fields,field_description:project_wip_material.field_stock_warehouse_consu_steps
+msgid "Consu Steps"
+msgstr "Étapes de consommation"
+
+#. module: project_wip_material
+#: model:ir.model.fields,field_description:project_wip_material.field_project_task_material_consumed_qty
+msgid "Consumed Quantity"
+msgstr "Quantités consommées"
+
+#. module: project_wip_material
+#: code:addons/project_wip_material/consumption_route.py:96
+#: model:ir.ui.view,arch_db:project_wip_material.task_form_with_material
+#: model:ir.ui.view,arch_db:project_wip_material.warehouse_form_with_consumption_steps
+#, python-format
+msgid "Consumption"
+msgstr "Consommation"
+
+#. module: project_wip_material
+#: model:ir.model.fields,field_description:project_wip_material.field_stock_warehouse_consu_location_id
+msgid "Consumption Location"
+msgstr "Emplacement de consommation"
+
+#. module: project_wip_material
+#: model:ir.model.fields,field_description:project_wip_material.field_stock_warehouse_consu_type_id
+msgid "Consumption Picking Type"
+msgstr "Type d'opération de consommation"
+
+#. module: project_wip_material
+#: code:addons/project_wip_material/consumption_route.py:107
+#, python-format
+msgid "Consumption Return"
+msgstr "Retour de consommation"
+
+#. module: project_wip_material
+#: model:ir.model.fields,field_description:project_wip_material.field_stock_warehouse_consu_return_type_id
+msgid "Consumption Return Picking Type"
+msgstr "Type d'opération de retour consommation"
+
+#. module: project_wip_material
+#: model:ir.model.fields,field_description:project_wip_material.field_stock_warehouse_consu_route_id
+msgid "Consumption Route"
+msgstr "Route de consommation"
+
+#. module: project_wip_material
+#: model:ir.model.fields,field_description:project_wip_material.field_project_task_material_create_uid
+msgid "Created by"
+msgstr "Créé par"
+
+#. module: project_wip_material
+#: model:ir.model.fields,field_description:project_wip_material.field_project_task_material_create_date
+msgid "Created on"
+msgstr "Créé le"
+
+#. module: project_wip_material
+#: model:ir.model.fields,help:project_wip_material.field_project_task_material_product_uom_id
+msgid "Default Unit of Measure used for all stock operation."
+msgstr ""
+
+#. module: project_wip_material
+#: selection:stock.warehouse,consu_steps:0
+msgid "Direct consumption from stocks (1 step)"
+msgstr "Consommation directe depuis les stocks (1 étape)"
+
+#. module: project_wip_material
+#: model:ir.model.fields,field_description:project_wip_material.field_project_task_material_display_name
+msgid "Display Name"
+msgstr "Nom affiché"
+
+#. module: project_wip_material
+#: model:ir.model.fields,field_description:project_wip_material.field_project_task_material_id
+msgid "ID"
+msgstr "ID"
+
+#. module: project_wip_material
+#: model:ir.model.fields,field_description:project_wip_material.field_project_task_material_initial_qty
+msgid "Initial Quantity"
+msgstr "Quantité initiale"
+
+#. module: project_wip_material
+#: model:ir.model.fields,field_description:project_wip_material.field_project_task_material___last_update
+msgid "Last Modified on"
+msgstr "Dernière modification le"
+
+#. module: project_wip_material
+#: model:ir.model.fields,field_description:project_wip_material.field_project_task_material_write_uid
+msgid "Last Updated by"
+msgstr "Dernière mise à jour par"
+
+#. module: project_wip_material
+#: model:ir.model.fields,field_description:project_wip_material.field_project_task_material_write_date
+msgid "Last Updated on"
+msgstr "Dernière mise à jour le"
+
+#. module: project_wip_material
+#: model:ir.model.fields,field_description:project_wip_material.field_project_task_material_line_ids
+msgid "Material"
+msgstr "Matériel"
+
+#. module: project_wip_material
+#: model:ir.model.fields,field_description:project_wip_material.field_stock_move_material_line_id
+msgid "Material Line"
+msgstr "Ligne de matériel"
+
+#. module: project_wip_material
+#: code:addons/project_wip_material/wip_journal_entries.py:100
+#, python-format
+msgid "Material can not be added to the task because the project type {} has no WIP account."
+msgstr "Le matériel ne peut pas être ajouté à la tâche, car le type de projet {} n'a pas de compte de TEC."
+
+#. module: project_wip_material
+#: code:addons/project_wip_material/wip_journal_entries.py:94
+#, python-format
+msgid "Material can not be added to the task because the project {} has no project type."
+msgstr "Le matériel ne peut pas être ajouté à la tâche, car le projet {} n'a pas de type de projet."
+
+#. module: project_wip_material
+#: code:addons/project_wip_material/task_material.py:129
+#, python-format
+msgid "Material consumption lines can not have an initial quantity below zero. The line {line} has a quantity of {qty}."
+msgstr "Les lignes de consommation de matériel ne peuvent pas avoir une quantité initiale inférieure à zéro. La ligne {line} a une quantité de {qty}."
+
+#. module: project_wip_material
+#: model:ir.model.fields,field_description:project_wip_material.field_project_task_picking_count
+msgid "Picking Count"
+msgstr "Nombre de pickings"
+
+#. module: project_wip_material
+#: model:ir.model.fields,field_description:project_wip_material.field_project_task_picking_ids
+msgid "Pickings"
+msgstr "Pickings"
+
+#. module: project_wip_material
+#: model:ir.model.fields,field_description:project_wip_material.field_project_task_procurement_group_id
+msgid "Procurement Group"
+msgstr "Groupe d'approvisionnement"
+
+#. module: project_wip_material
+#: model:ir.model,name:project_wip_material.model_procurement_group
+msgid "Procurement Requisition"
+msgstr ""
+
+#. module: project_wip_material
+#: model:ir.model,name:project_wip_material.model_procurement_rule
+msgid "Procurement Rule"
+msgstr ""
+
+#. module: project_wip_material
+#: model:ir.model.fields,field_description:project_wip_material.field_project_task_material_product_id
+msgid "Product"
+msgstr "Article"
+
+#. module: project_wip_material
+#: model:ir.ui.view,arch_db:project_wip_material.task_form_with_material
+msgid "Products"
+msgstr "Articles"
+
+#. module: project_wip_material
+#: model:ir.model,name:project_wip_material.model_project_project
+#: model:ir.model.fields,field_description:project_wip_material.field_procurement_group_project_id
+#: model:ir.model.fields,field_description:project_wip_material.field_stock_move_project_id
+#: model:ir.model.fields,field_description:project_wip_material.field_stock_picking_project_id
+msgid "Project"
+msgstr "Projet"
+
+#. module: project_wip_material
+#: model:ir.model,name:project_wip_material.model_stock_move
+msgid "Stock Move"
+msgstr "Mouvement d'inventaire"
+
+#. module: project_wip_material
+#: model:ir.model.fields,field_description:project_wip_material.field_project_task_material_move_ids
+msgid "Stock Moves"
+msgstr "Mouvements d'inventaire"
+
+#. module: project_wip_material
+#: model:ir.ui.view,arch_db:project_wip_material.task_form_with_picking_smart_button
+msgid "Stock Picking"
+msgstr "Stock Picking"
+
+#. module: project_wip_material
+#: model:ir.model,name:project_wip_material.model_project_task
+#: model:ir.model.fields,field_description:project_wip_material.field_procurement_group_task_id
+#: model:ir.model.fields,field_description:project_wip_material.field_project_task_material_task_id
+#: model:ir.model.fields,field_description:project_wip_material.field_stock_move_task_id
+#: model:ir.model.fields,field_description:project_wip_material.field_stock_picking_task_id
+msgid "Task"
+msgstr "Tâche"
+
+#. module: project_wip_material
+#: model:ir.model,name:project_wip_material.model_project_task_material
+msgid "Task Material Consumption"
+msgstr "Consommation matériel sur tâche"
+
+#. module: project_wip_material
+#: code:addons/project_wip_material/task_material.py:326
+#, python-format
+msgid "The material line {line} can not be deleted because it is bound to stock moves with the status done."
+msgstr "La ligne de matériel {line} ne peut pas être supprimée car elle est liée à un (des) mouvement(s) de stock au statut terminé."
+
+#. module: project_wip_material
+#: model:ir.model,name:project_wip_material.model_stock_picking_type
+msgid "The operation type determines the picking view"
+msgstr ""
+
+#. module: project_wip_material
+#: code:addons/project_wip_material/task_material.py:246
+#, python-format
+msgid ""
+"The quantity on the material line {line} can not be reduced to {new_quantity} (it can not be lower than the delivered quantity).\n"
+"\n"
+"The line may only be reduced to a minimum {minimum_qty} {uom}."
+msgstr ""
+"La quantité sur la ligne de matériel {line} ne peut pas être réduite à {new_quantity} (elle ne peut pas être plus petite que la quantité livrée).\n"
+"\n"
+"La ligne peut seulement être réduite à un minimum de {minimum_qty} {uom}."
+
+#. module: project_wip_material
+#: code:addons/project_wip_material/wip_journal_entries.py:31
+#, python-format
+msgid "The transfer {picking} can not be processed because the project type {project_type} has no WIP account."
+msgstr "Le transfert {picking} ne peut pas être traité car le type de projet {project_type} n'a pas de compte de TEC."
+
+#. module: project_wip_material
+#: code:addons/project_wip_material/wip_journal_entries.py:22
+#, python-format
+msgid "The transfer {picking} can not be processed because the project {project} has no project type."
+msgstr "Le transfert {picking} ne peut pas être traité car le projet {project} n'a pas de type de projet."
+
+#. module: project_wip_material
+#: code:addons/project_wip_material/task_material.py:152
+#, python-format
+msgid "The warehouse {warehouse} does not have a consumption location."
+msgstr "L'entrepôt {warehouse} n'a pas d'emplacement de consommation."
+
+#. module: project_wip_material
+#: code:addons/project_wip_material/task_material.py:160
+#, python-format
+msgid "The warehouse {warehouse} does not have a consumption route."
+msgstr "L'entrepôt {warehouse} n'a pas de route de consommation."
+
+#. module: project_wip_material
+#: model:ir.model,name:project_wip_material.model_stock_picking
+msgid "Transfer"
+msgstr "Transfert"
+
+#. module: project_wip_material
+#: model:ir.model.fields,field_description:project_wip_material.field_project_task_material_product_uom_id
+msgid "Unit of Measure"
+msgstr "Unité de mesure"
+
+#. module: project_wip_material
+#: model:ir.model,name:project_wip_material.model_stock_warehouse
+#: model:ir.model.fields,field_description:project_wip_material.field_project_project_warehouse_id
+msgid "Warehouse"
+msgstr "Entrepôt"
+
+#. module: project_wip_material
+#: code:addons/project_wip_material/task_material.py:308
+#, python-format
+msgid "You may not change the product on an existing material line. Instead of changing the product, you may delete the line and create a new one."
+msgstr "Vous ne pouvez pas modifier l'article sur une ligne de matériel existante. Au lieu de modifier l'article, vous pouvez supprimer la ligne et en créer une nouvelle."

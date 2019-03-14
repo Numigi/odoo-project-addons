@@ -46,12 +46,34 @@ After saving, a new smart button `Stock Pickings` appears.
 
 .. image:: static/description/task_stock_picking_smart_button.png
 
+Consumption Stock Picking
+-------------------------
 After clicking on the button, I see the form view of a stock picking.
 
 .. image:: static/description/stock_picking_form.png
 
 1- The project and task were propagated to the picking.
 2- The planned date from the task was propagatted to the scheduled date of the picking.
+
+I validate the stock picking.
+
+.. image:: static/description/stock_picking_form_done.png
+
+Back to the task, I notice that the consumed quantities were updated.
+
+.. image:: static/description/task_with_consumed_qty.png
+
+Journal Items
+-------------
+In the general ledger, I filter the journal items to see only items related to my project:
+
+.. image:: static/description/general_ledger_analytic_filter.png
+
+I notice that 2 debit entries were posted in the `Work in Progress` account, one for each product consumed.
+
+In the analytic lines list, I also find 2 entries for the consumed products.
+
+.. image:: static/description/analytic_line_list.png
 
 Contributors
 ------------

@@ -59,8 +59,14 @@ class Project(models.Model):
 
     _inherit = 'project.project'
 
+    def _get_default_warehouse(self):
+        company = self.env.user.company_id
+        warehouse = self.env['stock.warehouse'].search([('company_id', '=', company.id)], limit=1)
+        return warehouse
+
     warehouse_id = fields.Many2one(
         'stock.warehouse', 'Warehouse', ondelete='restrict',
+        default=_get_default_warehouse,
     )
 
 
@@ -284,17 +290,56 @@ class TaskMaterialLine(models.Model):
 
     @api.model
     def create(self, vals):
+        """Generate procurements when adding a new material line.
+
+        The sudo is required, because project users do not have access to stock objects.
+        """
         line = super().create(vals)
-        line._generate_procurements()
+        line.sudo()._generate_procurements()
         return line
 
     @api.multi
     def write(self, vals):
+        """Adjust procurements when modifying the quantity on a material line.
+
+        The sudo is required, because project users do not have access to stock objects.
+        """
+        if 'product_id' in vals:
+            raise ValidationError(_(
+                'You may not change the product on an existing material line. '
+                'Instead of changing the product, you may '
+                'delete the line and create a new one.'
+            ))
+
         super().write(vals)
-        if 'product_id' in vals or 'initial_qty' in vals:
+
+        if 'initial_qty' in vals:
             for line in self:
-                line._generate_procurements()
+                line.sudo()._generate_procurements()
+
         return True
+
+    def _cancel_procurements_for_line_to_delete(self):
+        any_stock_move_done = any((m.state == 'done' for m in self.move_ids))
+
+        if any_stock_move_done:
+            raise ValidationError(_(
+                'The material line {line} can not be deleted because '
+                'it is bound to stock moves with the status done.'
+            ).format(line=self.product_id.display_name))
+
+        self.move_ids._action_cancel()
+        self.move_ids.write({'material_line_id': False})
+
+    @api.multi
+    def unlink(self):
+        """Cancel procurements when deleting material line.
+
+        The sudo is required, because project users do not have access to stock objects.
+        """
+        for line in self:
+            line.sudo()._cancel_procurements_for_line_to_delete()
+        return super().unlink()
 
 
 class Task(models.Model):
@@ -310,6 +355,7 @@ class Task(models.Model):
 
     procurement_group_id = fields.Many2one(
         'procurement.group', 'Procurement Group',
+        copy=False,
     )
 
     def _get_reference_for_procurements(self):
