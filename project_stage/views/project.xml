@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="view_project_form_with_project_stage" model="ir.ui.view">
+        <field name="name">Project Form With Stage</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.edit_project"/>
+        <field name="arch" type="xml">
+            <data>
+                <sheet position="before">
+                    <header>
+                        <field name="stage_id" widget="statusbar" clickable="True"
+                            options="{'fold_field': 'fold'}"/>
+                    </header>
+                </sheet>
+            </data>
+        </field>
+    </record>
+    <record id="project_stage_search" model="ir.ui.view">
+        <field eval="True" name="active"/>
+        <field name="arch" type="xml">
+            <data>
+                <xpath expr="//field[@name='partner_id']" position="after">
+                    <field name="stage_id"/>
+                </xpath>
+                <xpath expr="//filter[@name='Partner']" position="after">
+                    <filter context="{'group_by': 'stage_id'}" name="stage_id" string="Stage"/>
+                </xpath>
+            </data>
+        </field>
+        <field ref="project.view_project_project_filter" name="inherit_id"/>
+        <field name="mode">extension</field>
+        <field name="model">project.project</field>
+        <field name="name">Project Search: Stages</field>
+        <field name="priority">99</field>
+        <field name="type">search</field>
+    </record>
+
+
+</odoo>
