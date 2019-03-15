@@ -13,67 +13,16 @@ class TaskMaterialCase(common.SavepointCase):
         cls.company = cls.env['res.company'].create({
             'name': 'Test Company',
         })
-        cls.warehouse = cls.env['stock.warehouse'].search([
-            ('company_id', '=', cls.company.id),
-        ], limit=1)
-        cls.route = cls.warehouse.consu_route_id
-
-        cls.journal = cls.env['account.journal'].create({
-            'name': 'Stock Journal',
-            'type': 'general',
-            'code': 'STOCK',
-        })
-
-        cls.stock_account = cls.env['account.account'].create({
-            'name': 'Raw Material Stocks',
-            'code': '130101',
-            'user_type_id': cls.env.ref('account.data_account_type_non_current_assets').id,
-        })
-
-        cls.wip_account = cls.env['account.account'].create({
-            'name': 'Work In Progress',
-            'code': '140101',
-            'user_type_id': cls.env.ref('account.data_account_type_non_current_assets').id,
-            'reconcile': True,
-        })
-
-        cls.product_category = cls.env['product.category'].create({
-            'name': 'Category 1',
-            'property_valuation': 'real_time',
-            'property_cost_method': 'standard',
-            'property_stock_journal': cls.journal.id,
-            'property_stock_valuation_account_id': cls.stock_account.id,
-        })
-
-        cls.project_type = cls.env['project.type'].create({
-            'name': 'Trailer Refurb',
-            'wip_account_id': cls.wip_account.id,
-        })
-
-        cls.project = cls.env['project.project'].create({
-            'name': 'Job 123',
-            'warehouse_id': cls.warehouse.id,
-            'project_type_id': cls.project_type.id,
-        })
-        cls.task = cls.env['project.task'].create({
-            'name': 'Task 450',
-            'project_id': cls.project.id,
-            'date_planned': datetime.now(),
-        })
-
-        cls.product_a_value = 50
-        cls.product_a = cls.env['product.product'].create({
-            'name': 'Product A',
-            'type': 'product',
-            'standard_price': cls.product_a_value,
-            'categ_id': cls.product_category.id,
-        })
-        cls.product_b_value = 100
-        cls.product_b = cls.env['product.product'].create({
-            'name': 'Product B',
-            'type': 'product',
-            'standard_price': cls.product_b_value,
-            'categ_id': cls.product_category.id,
+        cls.manager = cls.env['res.users'].create({
+            'name': 'Manager',
+            'login': 'manager',
+            'email': 'manager@test.com',
+            'group_id': [
+                (4, cls.env.ref('project.group_project_manager').id),
+                (4, cls.env.ref('stock.group_stock_manager').id),
+            ],
+            'company_id': cls.company.id,
+            'company_ids': [(4, cls.company.id)],
         })
         cls.project_user = cls.env['res.users'].create({
             'name': 'Project User',
@@ -90,6 +39,92 @@ class TaskMaterialCase(common.SavepointCase):
             'group_id': [(4, cls.env.ref('stock.group_stock_user').id)],
             'company_id': cls.company.id,
             'company_ids': [(4, cls.company.id)],
+        })
+        cls.env = cls.env(user=cls.manager, context={'force_company': cls.company.id})
+
+        cls.warehouse = cls.env['stock.warehouse'].search([
+            ('company_id', '=', cls.company.id),
+        ], limit=1)
+        cls.route = cls.warehouse.consu_route_id
+
+        cls.journal = cls.env['account.journal'].create({
+            'name': 'Stock Journal',
+            'type': 'general',
+            'code': 'STOCK',
+            'company_id': cls.company.id,
+        })
+
+        cls.stock_account = cls.env['account.account'].create({
+            'name': 'Raw Material Stocks',
+            'code': '130101',
+            'user_type_id': cls.env.ref('account.data_account_type_non_current_assets').id,
+            'company_id': cls.company.id,
+        })
+
+        cls.input_account = cls.env['account.account'].create({
+            'name': 'Stock Received / Not Invoiced',
+            'code': '230102',
+            'user_type_id': cls.env.ref('account.data_account_type_non_current_assets').id,
+            'company_id': cls.company.id,
+        })
+
+        cls.output_account = cls.env['account.account'].create({
+            'name': 'Stock Delivered / Not Invoiced',
+            'code': '130102',
+            'user_type_id': cls.env.ref('account.data_account_type_non_current_assets').id,
+            'company_id': cls.company.id,
+        })
+
+        cls.wip_account = cls.env['account.account'].create({
+            'name': 'Work In Progress',
+            'code': '140101',
+            'user_type_id': cls.env.ref('account.data_account_type_non_current_assets').id,
+            'reconcile': True,
+            'company_id': cls.company.id,
+        })
+
+        cls.product_category = cls.env['product.category'].create({
+            'name': 'Category 1',
+            'property_valuation': 'real_time',
+            'property_cost_method': 'standard',
+            'property_stock_journal': cls.journal.id,
+            'property_stock_valuation_account_id': cls.stock_account.id,
+            'property_stock_account_input_categ_id': cls.input_account.id,
+            'property_stock_account_output_categ_id': cls.output_account.id,
+            'company_id': cls.company.id,
+        })
+
+        cls.project_type = cls.env['project.type'].create({
+            'name': 'Trailer Refurb',
+            'wip_account_id': cls.wip_account.id,
+        })
+
+        cls.project = cls.env['project.project'].create({
+            'name': 'Job 123',
+            'warehouse_id': cls.warehouse.id,
+            'project_type_id': cls.project_type.id,
+            'company_id': cls.company.id,
+        })
+        cls.task = cls.env['project.task'].create({
+            'name': 'Task 450',
+            'project_id': cls.project.id,
+            'company_id': cls.company.id,
+            'date_planned': datetime.now(),
+        })
+
+        cls.product_a_value = 50
+        cls.product_a = cls.env['product.product'].create({
+            'name': 'Product A',
+            'type': 'product',
+            'categ_id': cls.product_category.id,
+            'standard_price': cls.product_a_value,
+        })
+        cls.product_b_value = 100
+        cls.product_b = cls.env['product.product'].create({
+            'name': 'Product B',
+            'type': 'product',
+            'categ_id': cls.product_category.id,
+            'standard_price': cls.product_b_value,
         })
 
     @classmethod

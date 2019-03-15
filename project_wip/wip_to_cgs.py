@@ -11,15 +11,18 @@ class ProjectType(models.Model):
 
     cgs_journal_id = fields.Many2one(
         'account.journal', 'WIP To CGS Journal',
-        help="Accounting journal used when transfering WIP journal items into CGS."
+        company_dependent=True,
+        help="Accounting journal used when transfering WIP journal items into CGS.",
     )
     wip_account_id = fields.Many2one(
         'account.account', 'WIP Account',
-        help="Account used to cumulate Work In Progress for this project type."
+        company_dependent=True,
+        help="Account used to cumulate Work In Progress for this project type.",
     )
     cgs_account_id = fields.Many2one(
         'account.account', 'CGS Account',
-        help="Account used to cumulate Costs of Goods Sold for this project type."
+        company_dependent=True,
+        help="Account used to cumulate Costs of Goods Sold for this project type.",
     )
 
     @api.constrains('wip_account_id')
