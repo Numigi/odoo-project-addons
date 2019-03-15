@@ -52,8 +52,8 @@ After clicking on the button, I see the form view of a stock picking.
 
 .. image:: static/description/stock_picking_form.png
 
-1- The project and task were propagated to the picking.
-2- The planned date from the task was propagatted to the scheduled date of the picking.
+* The project and task were propagated to the picking.
+* The planned date from the task was propagatted to the scheduled date of the picking.
 
 I validate the stock picking.
 
