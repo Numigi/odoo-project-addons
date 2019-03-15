@@ -1,7 +1,10 @@
 # © 2019 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
+from datetime import timedelta
+
 import pytest
+from odoo import fields
 from odoo.exceptions import ValidationError
 from .common import TaskMaterialCase
 
@@ -12,6 +15,20 @@ class TestGenerateProcurementsFromTask(TaskMaterialCase):
         self.task.date_planned = False
         with pytest.raises(ValidationError):
             self._create_material_line()
+
+    def test_date_planned_on_task_propagated_to_stock_move(self):
+        line = self._create_material_line()
+        expected_date = fields.Date.from_string(self.task.date_planned)
+        move_date = fields.Datetime.from_string(line.move_ids.date_expected).date()
+        assert move_date == expected_date
+
+    def test_change_date_planned_on_task__date_propagated_to_stock_move(self):
+        new_date = fields.Date.from_string(self.task.date_planned) + timedelta(2)
+        line = self._create_material_line()
+        self.task.date_planned = new_date
+
+        move_date = fields.Datetime.from_string(line.move_ids.date_expected).date()
+        assert move_date == new_date
 
     def test_if_no_warehouse_on_project__raise_exception(self):
         self.project.warehouse_id = False

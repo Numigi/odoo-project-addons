@@ -368,3 +368,18 @@ class Task(models.Model):
                 'task_id': self.id,
             })
         return self.procurement_group_id
+
+    def _propagate_planned_date_to_stock_moves(self):
+        moves_to_update = self.mapped('material_line_ids.move_ids').filtered(
+            lambda m: m.state not in ('done', 'cancel'))
+        moves_to_update.write({'date_expected': self.date_planned})
+
+    def write(self, vals):
+        """When changing the planned date, propagate the new value to stock moves."""
+        super().write(vals)
+
+        if 'date_planned' in vals:
+            for task in self:
+                task._propagate_planned_date_to_stock_moves()
+
+        return True
