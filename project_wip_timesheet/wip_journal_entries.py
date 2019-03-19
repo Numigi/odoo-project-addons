@@ -117,11 +117,40 @@ class TimesheetLine(models.Model):
         self.salary_account_move_id.write(vals)
         self.salary_account_move_id.post()
 
-    def _create_or_update_wip_account_move(self):
-        if self.salary_account_move_id:
+    def _reverse_salary_account_move_for_updated_timesheet(self):
+        if self._is_wip_account_move_reconciled():
+            raise ValidationError(_(
+                'The timesheet line {description} (task: {task}) can not '
+                'be updated because the work in progress entry ({move_name}) would be '
+                'reversed. This journal entry was already transfered into '
+                'the cost of goods sold.'
+            ).format(
+                description=self.name,
+                task=str(self.task_id.id),
+                move_name=self.salary_account_move_id.name,
+            ))
+        self.salary_account_move_id.reverse_moves()
+        self.salary_account_move_id = False
+
+    def _create_update_or_reverse_wip_account_move(self):
+        must_update_salary_move = (
+            self._requires_wip_salary_move() and self.salary_account_move_id
+        )
+        must_create_salary_move = (
+            self._requires_wip_salary_move() and not self.salary_account_move_id
+        )
+        must_reverse_salary_move = (
+            not self._requires_wip_salary_move() and self.salary_account_move_id
+        )
+
+        if must_update_salary_move:
             self._update_wip_account_move()
-        else:
+
+        elif must_create_salary_move:
             self._create_wip_account_move()
+
+        elif must_reverse_salary_move:
+            self._reverse_salary_account_move_for_updated_timesheet()
 
     @api.model
     def create(self, vals):
@@ -134,7 +163,7 @@ class TimesheetLine(models.Model):
         return {
             'name',
             'amount',
-            'product',
+            'unit_amount',
             'date',
             'project_id',
         }
@@ -145,13 +174,12 @@ class TimesheetLine(models.Model):
 
         fields_to_check = self._get_salary_move_dependent_fields()
         if fields_to_check.intersection(vals):
-            timesheet_lines = self.filtered(lambda l: l._requires_wip_salary_move())
-            for line in timesheet_lines:
-                line.sudo()._create_or_update_wip_account_move()
+            for line in self:
+                line.sudo()._create_update_or_reverse_wip_account_move()
 
         return True
 
-    def _reverse_salary_account_move(self):
+    def _reverse_salary_account_move_for_deleted_timesheet(self):
         if self._is_wip_account_move_reconciled():
             raise ValidationError(_(
                 'The timesheet line {description} (task: {task}) can not '
@@ -169,5 +197,5 @@ class TimesheetLine(models.Model):
         """Reverse the salary account move entry when a timesheet line is deleted."""
         lines_with_moves = self.filtered(lambda l: l.salary_account_move_id)
         for line in lines_with_moves:
-            line.sudo()._reverse_salary_account_move()
+            line.sudo()._reverse_salary_account_move_for_deleted_timesheet()
         return super().unlink()

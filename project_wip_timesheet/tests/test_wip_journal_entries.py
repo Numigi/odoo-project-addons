@@ -103,6 +103,15 @@ class TestWIPJournalEntries(common.SavepointCase):
         timesheet_line = self._create_timesheet()
         assert timesheet_line.salary_account_move_id
 
+    def test_on_create_timesheet__account_move_is_posted(self):
+        timesheet_line = self._create_timesheet()
+        assert timesheet_line.salary_account_move_id.state == 'posted'
+
+    def test_after_timesheet_write__account_move_is_posted(self):
+        timesheet_line = self._create_timesheet()
+        timesheet_line.amount = -100
+        assert timesheet_line.salary_account_move_id.state == 'posted'
+
     def test_account_move_has_no_analytic_lines(self):
         timesheet_line = self._create_timesheet()
         assert not timesheet_line.salary_account_move_id.mapped('line_ids.analytic_line_ids')
@@ -145,6 +154,13 @@ class TestWIPJournalEntries(common.SavepointCase):
         wip_line = self._get_wip_move_line(timesheet_line)
         assert wip_line.debit == expected_amount
 
+    def test_on_change_timesheet_quantity__move_quantity_updated(self):
+        timesheet_line = self._create_timesheet()
+        expected_quantity = 5
+        timesheet_line.sudo(self.timesheet_user).unit_amount = expected_quantity
+        wip_line = self._get_wip_move_line(timesheet_line)
+        assert wip_line.quantity == expected_quantity
+
     def test_on_change_timesheet_a_date__account_move_date_updated(self):
         timesheet_line = self._create_timesheet()
         new_date = fields.Date.to_string(datetime.now().date() + timedelta(30))
@@ -160,3 +176,21 @@ class TestWIPJournalEntries(common.SavepointCase):
         self.project_type.salary_account_id = False
         timesheet_line = self._create_timesheet()
         assert not timesheet_line.salary_account_move_id
+
+    def test_if_timesheet_deleted__account_move_reversed(self):
+        timesheet_line = self._create_timesheet()
+        wip_line = self._get_wip_move_line(timesheet_line)
+        timesheet_line.unlink()
+        assert wip_line.reconciled
+
+    def test_if_new_project_requires_no_timesheet__account_move_reversed(self):
+        timesheet_line = self._create_timesheet()
+        new_project = self.project.copy({'project_type_id': False})
+        new_task = self.task.copy({'project_id': new_project.id})
+
+        wip_line = self._get_wip_move_line(timesheet_line)
+        timesheet_line.sudo(self.timesheet_user).write({
+            'project_id': new_project.id,
+            'task_id': new_task.id,
+        })
+        assert wip_line.reconciled
