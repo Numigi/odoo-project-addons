@@ -22,6 +22,9 @@ class ProjectStage(models.Model):
 class ProjectWithStage(models.Model):
     _inherit = 'project.project'
 
+    def compute_default_stage(self):
+        return self.env['project.stage'].search([('fold', '=', False)], order='sequence', limit=1).id
+
     stage_id = fields.Many2one(
-        'project.stage', 'Stage', ondelete='restrict', index=True,
+        'project.stage', 'Stage', ondelete='restrict', index=True, default=compute_default_stage,
         track_visibility='onchange')
