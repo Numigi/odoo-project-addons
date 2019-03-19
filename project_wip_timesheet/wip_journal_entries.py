@@ -64,9 +64,10 @@ class TimesheetLine(models.Model):
         return {
             'account_id': self._get_wip_account().id,
             'name': self.name,
-            'debit': self.amount if self.amount < 0 else 0,
+            'debit': -self.amount if self.amount < 0 else 0,
             'credit': self.amount if self.amount > 0 else 0,
             'quantity': self.unit_amount,
+            'analytic_account_id': self.project_id.analytic_account_id.id,
         }
 
     def _get_salary_move_line_vals(self):
@@ -74,7 +75,7 @@ class TimesheetLine(models.Model):
             'account_id': self._get_salary_account().id,
             'name': self.name,
             'debit': self.amount if self.amount > 0 else 0,
-            'credit': self.amount if self.amount < 0 else 0,
+            'credit': -self.amount if self.amount < 0 else 0,
             'quantity': self.unit_amount,
         }
 
@@ -83,6 +84,7 @@ class TimesheetLine(models.Model):
             'company_id': self.company_id.id,
             'journal_id': self._get_salary_journal().id,
             'date': self.date,
+            'no_analytic_lines': True,
             'line_ids': [
                 (5, 0),
                 (0, 0, self._get_wip_move_line_vals()),
@@ -126,7 +128,6 @@ class TimesheetLine(models.Model):
         line = super().create(vals)
         if line._requires_wip_salary_move():
             line.sudo()._create_wip_account_move()
-
         return line
 
     def _get_salary_move_dependent_fields(self):
@@ -169,4 +170,4 @@ class TimesheetLine(models.Model):
         lines_with_moves = self.filtered(lambda l: l.salary_account_move_id)
         for line in lines_with_moves:
             line.sudo()._reverse_salary_account_move()
-        super().write()
+        return super().unlink()
