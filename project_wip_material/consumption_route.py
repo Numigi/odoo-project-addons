@@ -76,6 +76,7 @@ class Warehouse(models.Model):
 
     def _get_consumption_picking_type_values(self):
         return {
+            'warehouse_id': self.id,
             'code': 'consumption',
             'default_location_src_id': self.lot_stock_id.id,
             'default_location_dest_id': self.consu_location_id.id,
@@ -83,6 +84,7 @@ class Warehouse(models.Model):
 
     def _get_consumption_return_picking_type_values(self):
         return {
+            'warehouse_id': self.id,
             'code': 'consumption_return',
             'default_location_src_id': self.consu_location_id.id,
             'default_location_dest_id': self.lot_stock_id.id,
@@ -155,25 +157,37 @@ class Warehouse(models.Model):
                 warehouse=self.name,
                 description=_(ONE_STEP_DESCRIPTION),
             ),
-            'pull_ids': [
-                (5, 0),
-                (0, 0, self._get_consumption_pull_values()),
-            ],
             'active': True,
             'company_id': self.company_id.id,
             'product_categ_selectable': True,
             'warehouse_selectable': True,
             'product_selectable': False,
             'sequence': 10,
+            'warehouse_ids': [(4, self.id)],
         }
 
     def _create_consumption_route(self):
         vals = self._get_consumption_route_values()
+        vals['pull_ids'] = [
+            (0, 0, self._get_consumption_pull_values()),
+        ]
         self.consu_route_id = self.env['stock.location.route'].create(vals)
+
+    def _update_consumption_pull(self):
+        consu_pull_values = self._get_consumption_pull_values()
+        existing_consu_pull = self.consu_route_id.pull_ids.filtered(
+            lambda p: p.location_id == self.consu_location_id)
+
+        if existing_consu_pull:
+            existing_consu_pull.write(consu_pull_values)
+        else:
+            self.consu_route_id.write({'pull_ids': [(0, 0, self._get_consumption_pull_values())]})
 
     def _update_consumption_route(self):
         vals = self._get_consumption_route_values()
         self.consu_route_id.write(vals)
+        self.consu_route_id.pull_ids.write({'active': False})
+        self._update_consumption_pull()
 
     def _create_or_update_consumption_route(self):
         if self.consu_route_id:
@@ -183,18 +197,26 @@ class Warehouse(models.Model):
 
     @api.model
     def create(self, vals):
+        """When creating a new warehouse, create the consumption route.
+
+        Use sudo to prevent errors related to access rights.
+        """
         warehouse = super().create(vals)
-        warehouse._create_consumption_picking_types()
-        warehouse._create_consumption_route()
+        warehouse.sudo()._create_consumption_picking_types()
+        warehouse.sudo()._create_consumption_route()
         return warehouse
 
     @api.multi
     def write(self, vals):
+        """When changing the consumation steps, update the consumption route.
+
+        Use sudo to prevent errors related to access rights.
+        """
         super().write(vals)
         if 'consu_steps' in vals:
             for warehouse in self:
-                warehouse._create_or_update_consumption_picking_types()
-                warehouse._create_or_update_consumption_route()
+                warehouse.sudo()._create_or_update_consumption_picking_types()
+                warehouse.sudo()._create_or_update_consumption_route()
         return True
 
 

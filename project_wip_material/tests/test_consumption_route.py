@@ -30,6 +30,18 @@ class TestConsumptionRoute(common.SavepointCase):
     def test_main_warehouse_has_consumption_picking_type(self):
         assert self.main_warehouse.consu_type_id
 
+    def test_main_warehouse_has_consumption_return_picking_type(self):
+        assert self.main_warehouse.consu_return_type_id
+
+    def test_warehouse_field_set_on_consumption_route(self):
+        assert self.main_warehouse.consu_route_id.warehouse_ids == self.main_warehouse
+
+    def test_warehouse_field_set_on_picking_type(self):
+        assert self.main_warehouse.consu_type_id.warehouse_id == self.main_warehouse
+
+    def test_warehouse_field_set_on_return_picking_type(self):
+        assert self.main_warehouse.consu_return_type_id.warehouse_id == self.main_warehouse
+
     def test_main_warehouse_has_consumption_location(self):
         assert self.main_warehouse.consu_location_id
 
@@ -70,9 +82,21 @@ class TestConsumptionRoute(common.SavepointCase):
         assert self.main_warehouse.consu_route_id == route_1
         assert self.new_warehouse.consu_route_id == route_2
 
-    def test_after_warehouse_write__warehouse_has_one_pull(self):
+    def test_after_warehouse_write__pull_are_not_recreated(self):
+        pull_1 = self.main_warehouse.consu_route_id.pull_ids
+        pull_2 = self.new_warehouse.consu_route_id.pull_ids
         warehouses = (self.main_warehouse | self.new_warehouse)
         warehouses.write({'consu_steps': 'one_step'})
         warehouses.refresh()
-        assert len(self.main_warehouse.consu_route_id.pull_ids) == 1
-        assert len(self.new_warehouse.consu_route_id.pull_ids) == 1
+        assert self.main_warehouse.consu_route_id.pull_ids == pull_1
+        assert self.new_warehouse.consu_route_id.pull_ids == pull_2
+
+    def test_after_warehouse_write__if_pull_is_deleted__pull_is_recreated(self):
+        initial_pull = self.main_warehouse.consu_route_id.pull_ids
+        initial_pull.unlink()
+        self.main_warehouse.write({'consu_steps': 'one_step'})
+        self.main_warehouse.refresh()
+
+        new_pull = self.main_warehouse.consu_route_id.pull_ids
+        assert len(new_pull) == 1
+        assert new_pull != initial_pull
