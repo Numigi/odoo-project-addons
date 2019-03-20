@@ -1,7 +1,10 @@
 # © 2019 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
+from datetime import timedelta
+
 import pytest
+from odoo import fields
 from odoo.exceptions import ValidationError
 from .common import TaskMaterialCase
 
@@ -12,6 +15,20 @@ class TestGenerateProcurementsFromTask(TaskMaterialCase):
         self.task.date_planned = False
         with pytest.raises(ValidationError):
             self._create_material_line()
+
+    def test_date_planned_on_task_propagated_to_stock_move(self):
+        line = self._create_material_line()
+        expected_date = fields.Date.from_string(self.task.date_planned)
+        move_date = fields.Datetime.from_string(line.move_ids.date_expected).date()
+        assert move_date == expected_date
+
+    def test_change_date_planned_on_task__date_propagated_to_stock_move(self):
+        new_date = fields.Date.from_string(self.task.date_planned) + timedelta(2)
+        line = self._create_material_line()
+        self.task.date_planned = new_date
+
+        move_date = fields.Datetime.from_string(line.move_ids.date_expected).date()
+        assert move_date == new_date
 
     def test_if_no_warehouse_on_project__raise_exception(self):
         self.project.warehouse_id = False
@@ -141,3 +158,25 @@ class TestGenerateProcurementsFromTask(TaskMaterialCase):
         self._force_transfer_move(move, 7)
         self._return_stock_move(move, 2)
         assert line.consumed_qty == 5  # 7 - 2
+
+    def test_if_move_not_done__material_line_can_be_deleted(self):
+        line = self._create_material_line()
+        line.unlink()
+        assert not line.exists()
+
+    def test_if_material_line_deleted__stock_move_cancelled(self):
+        line = self._create_material_line()
+        move = line.move_ids
+        line.unlink()
+        assert move.state == 'cancel'
+
+    def test_if_any_move_done__material_line_can_not_be_deleted(self):
+        line = self._create_material_line(initial_qty=10)
+        self._force_transfer_move(line.move_ids, 1)
+        with pytest.raises(ValidationError):
+            line.unlink()
+
+    def test_if_product_can_not_be_changed_on_existing_line(self):
+        line = self._create_material_line()
+        with pytest.raises(ValidationError):
+            line.product_id = self.product_b
