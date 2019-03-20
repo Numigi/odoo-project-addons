@@ -31,6 +31,7 @@
         'project_type',
         'project_wip',
         'project_wip_material',
+        'project_wip_timesheet',
     ],
     'installable': True,
 }

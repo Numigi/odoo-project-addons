@@ -8,7 +8,7 @@ from odoo.tests import common
 from odoo.exceptions import ValidationError
 
 
-class TestWIPJournalEntries(common.SavepointCase):
+class WIPJournalEntriesCase(common.SavepointCase):
 
     @classmethod
     def setUpClass(cls):
@@ -45,6 +45,14 @@ class TestWIPJournalEntries(common.SavepointCase):
             'company_id': cls.company.id,
         })
 
+        cls.cgs_journal = cls.env['account.journal'].create({
+            'name': 'Work in Progress',
+            'code': 'WIP',
+            'update_posted': True,
+            'type': 'general',
+            'company_id': cls.company.id,
+        })
+
         cls.wip_account = cls.env['account.account'].create({
             'name': 'Work In Progress',
             'code': '140101',
@@ -53,9 +61,16 @@ class TestWIPJournalEntries(common.SavepointCase):
             'company_id': cls.company.id,
         })
 
+        cls.cgs_account = cls.env['account.account'].create({
+            'name': 'Cost of Goods Sold',
+            'code': '510101',
+            'user_type_id': cls.env.ref('account.data_account_type_expenses').id,
+            'company_id': cls.company.id,
+        })
+
         cls.salary_account = cls.env['account.account'].create({
             'name': 'Salary',
-            'code': '510101',
+            'code': '510201',
             'user_type_id': cls.env.ref('account.data_account_type_expenses').id,
             'company_id': cls.company.id,
         })
@@ -72,6 +87,8 @@ class TestWIPJournalEntries(common.SavepointCase):
             'wip_account_id': cls.wip_account.id,
             'salary_journal_id': cls.salary_journal.id,
             'salary_account_id': cls.salary_account.id,
+            'cgs_account_id': cls.cgs_account.id,
+            'cgs_journal_id': cls.cgs_journal.id,
         })
 
         cls.project = cls.env['project.project'].create({
@@ -86,18 +103,30 @@ class TestWIPJournalEntries(common.SavepointCase):
             'company_id': cls.company.id,
         })
 
-    def _create_timesheet(self, description="/", quantity=1, amount=-50, date_=None):
-        line = self.env['account.analytic.line'].sudo(self.timesheet_user).create({
-            'company_id': self.company.id,
-            'project_id': self.project.id,
-            'task_id': self.task.id,
-            'user_id': self.timesheet_user.id,
+    @classmethod
+    def _create_timesheet(cls, description="/", quantity=1, amount=-50, date_=None):
+        line = cls.env['account.analytic.line'].sudo(cls.timesheet_user).create({
+            'company_id': cls.company.id,
+            'project_id': cls.project.id,
+            'task_id': cls.task.id,
+            'user_id': cls.timesheet_user.id,
             'name': description,
             'date': date_ or datetime.now().date(),
             'quantity': quantity,
             'amount': amount,
         })
         return line.sudo()
+
+
+class TestWIPJournalEntries(WIPJournalEntriesCase):
+
+    def test_if_salary_account_filled__salary_journal_must_be_filled(self):
+        with pytest.raises(ValidationError):
+            self.project_type.salary_journal_id = False
+
+    def test_if_salary_account_filled__wip_account_must_be_filled(self):
+        with pytest.raises(ValidationError):
+            self.project_type.wip_account_id = False
 
     def test_on_create_timesheet__account_move_created(self):
         timesheet_line = self._create_timesheet()
@@ -194,3 +223,42 @@ class TestWIPJournalEntries(common.SavepointCase):
             'task_id': new_task.id,
         })
         assert wip_line.reconciled
+
+    def test_timesheet_amount_can_be_changed_twice(self):
+        timesheet_line = self._create_timesheet()
+        expected_amount = 25
+        timesheet_line.sudo(self.timesheet_user).amount = -20
+        timesheet_line.sudo(self.timesheet_user).amount = -expected_amount
+        wip_line = self._get_wip_move_line(timesheet_line)
+        assert wip_line.debit == expected_amount
+
+
+class TestTimesheetEntryTransferedToWip(WIPJournalEntriesCase):
+    """Test the cases where the WIP entries are already transfered to CGS."""
+
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.timesheet_line = cls._create_timesheet()
+        cls.project.sudo().action_wip_to_cgs()
+
+    def test_timesheet_amount_can_not_be_changed(self):
+        with pytest.raises(ValidationError):
+            self.timesheet_line.sudo(self.timesheet_user).amount = -100
+
+    def test_timesheet_quantity_can_not_be_changed(self):
+        with pytest.raises(ValidationError):
+            self.timesheet_line.sudo(self.timesheet_user).unit_amount = 10
+
+    def test_project_with_no_type_can_not_be_set(self):
+        new_project = self.project.copy({'project_type_id': False})
+        new_task = self.task.copy({'project_id': new_project.id})
+        with pytest.raises(ValidationError):
+            self.timesheet_line.sudo(self.timesheet_user).write({
+                'project_id': new_project.id,
+                'task_id': new_task.id,
+            })
+
+    def test_timesheet_can_not_be_deleted(self):
+        with pytest.raises(ValidationError):
+            self.timesheet_line.sudo(self.timesheet_user).unlink()
