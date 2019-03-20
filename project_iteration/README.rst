@@ -16,7 +16,7 @@ In the form view of a project, I see 2 new elements:
 
 .. image:: static/description/project_form.png
 
-If I select a parent project, the smart button disapears.
+If I select a parent project, the smart button disappears.
 
 .. image:: static/description/project_form_with_parent_project.png
 
