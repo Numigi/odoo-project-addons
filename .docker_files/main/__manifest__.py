@@ -12,6 +12,7 @@
     'summary': 'Install all addons required for testing.',
     'depends': [
         'project_form_with_dates',
+        'project_iteration',
         'project_portal_parent_task',
         'project_stage_no_quick_create',
         'project_task_date_planned',
