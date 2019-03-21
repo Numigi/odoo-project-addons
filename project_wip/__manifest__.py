@@ -16,6 +16,7 @@
         'project_type',
     ],
     'data': [
+        'security/ir.model.access.csv',
         'views/account_move_no_analytic.xml',
         'views/project_type.xml',
         'views/project_wip_to_cgs.xml',
