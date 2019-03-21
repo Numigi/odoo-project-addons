@@ -13,6 +13,7 @@
     'depends': [
         'project_wip',
         'hr_timesheet',
+        'sale_timesheet',
     ],
     'data': [
         'views/project_type.xml',

@@ -49,18 +49,44 @@ class TimesheetLine(models.Model):
     )
 
     def _get_salary_journal(self):
+        """Get the journal to use for wip entry.
+
+        :rtype: account.journal
+        """
         return self.project_id.project_type_id.salary_journal_id
 
     def _get_salary_account(self):
+        """Get the account to use for the salary move line.
+
+        :rtype: account.account
+        """
         return self.project_id.project_type_id.salary_account_id
 
     def _get_wip_account(self):
+        """Get the account to use for the wip move line.
+
+        :rtype: account.account
+        """
         return self.project_id.project_type_id.wip_account_id
 
     def _requires_wip_salary_move(self):
+        """Evaluate whether the timesheet line requires a wip journal entry.
+
+        If the account.analytic.line has a value in the field project_id,
+        it is a timesheet line.
+
+        If the project type has a salary account, then the line requires
+        a salary account move.
+
+        :rtype: bool
+        """
         return bool(self._get_salary_account())
 
     def _get_wip_move_line_vals(self):
+        """Get the values for the wip account move line (usually the debit).
+
+        :rtype: dict
+        """
         return {
             'account_id': self._get_wip_account().id,
             'name': self.name,
@@ -71,6 +97,10 @@ class TimesheetLine(models.Model):
         }
 
     def _get_salary_move_line_vals(self):
+        """Get the values for the salary account move line (usually the credit).
+
+        :rtype: dict
+        """
         return {
             'account_id': self._get_salary_account().id,
             'name': self.name,
@@ -80,6 +110,10 @@ class TimesheetLine(models.Model):
         }
 
     def _get_wip_account_move_vals(self):
+        """Get the values for the wip account move.
+
+        :rtype: dict
+        """
         return {
             'company_id': self.company_id.id,
             'journal_id': self._get_salary_journal().id,
@@ -93,14 +127,20 @@ class TimesheetLine(models.Model):
         }
 
     def _create_wip_account_move(self):
+        """Create the wip journal entry."""
         vals = self._get_wip_account_move_vals()
         self.salary_account_move_id = self.env['account.move'].create(vals)
         self.salary_account_move_id.post()
 
     def _is_wip_account_move_reconciled(self):
+        """Evaluate whether the wip journal entry is reconciled or not.
+
+        :rtype: bool
+        """
         return any(l.full_reconcile_id for l in self.salary_account_move_id.line_ids)
 
     def _update_wip_account_move(self):
+        """Update the wip journal entry."""
         if self._is_wip_account_move_reconciled():
             raise ValidationError(_(
                 'The timesheet line {description} (task: {task}) can not '
@@ -118,6 +158,7 @@ class TimesheetLine(models.Model):
         self.salary_account_move_id.post()
 
     def _reverse_salary_account_move_for_updated_timesheet(self):
+        """Reverse the wip journal entry in the context of an updated timesheet."""
         if self._is_wip_account_move_reconciled():
             raise ValidationError(_(
                 'The timesheet line {description} (task: {task}) can not '
@@ -133,33 +174,47 @@ class TimesheetLine(models.Model):
         self.salary_account_move_id = False
 
     def _create_update_or_reverse_wip_account_move(self):
-        must_update_salary_move = (
-            self._requires_wip_salary_move() and self.salary_account_move_id
-        )
+        """Create / Update / Reverse the wip account move.
+
+        Depending on the status of the timesheet line,
+        the wip move is either created, updated or reversed.
+        """
         must_create_salary_move = (
             self._requires_wip_salary_move() and not self.salary_account_move_id
+        )
+        must_update_salary_move = (
+            self._requires_wip_salary_move() and self.salary_account_move_id
         )
         must_reverse_salary_move = (
             not self._requires_wip_salary_move() and self.salary_account_move_id
         )
 
-        if must_update_salary_move:
-            self._update_wip_account_move()
-
-        elif must_create_salary_move:
+        if must_create_salary_move:
             self._create_wip_account_move()
+
+        elif must_update_salary_move:
+            self._update_wip_account_move()
 
         elif must_reverse_salary_move:
             self._reverse_salary_account_move_for_updated_timesheet()
 
     @api.model
     def create(self, vals):
+        """On timesheet create, create or update the wip journal entry.
+
+        Because the creation of a timesheet is complex, the journal entry
+        may be created by a write before the return of super().create(vals).
+        """
         line = super().create(vals)
         if line._requires_wip_salary_move():
-            line.sudo()._create_wip_account_move()
+            line.sudo()._create_update_or_reverse_wip_account_move()
         return line
 
     def _get_salary_move_dependent_fields(self):
+        """Get the fields that trigger an update of the wip entry.
+
+        :rtype: Set
+        """
         return {
             'name',
             'amount',
@@ -170,6 +225,11 @@ class TimesheetLine(models.Model):
 
     @api.multi
     def write(self, vals):
+        """When updating an analytic line, create / update / delete the wip entry.
+
+        Whether the wip entry must be created / updated / deleted depends
+        on which field is written to. This prevents an infinite loop.
+        """
         super().write(vals)
 
         fields_to_check = self._get_salary_move_dependent_fields()
@@ -180,6 +240,7 @@ class TimesheetLine(models.Model):
         return True
 
     def _reverse_salary_account_move_for_deleted_timesheet(self):
+        """Reverse the wip journal entry in the context of a deleted timesheet."""
         if self._is_wip_account_move_reconciled():
             raise ValidationError(_(
                 'The timesheet line {description} (task: {task}) can not '

@@ -38,6 +38,11 @@ class WIPJournalEntriesCase(common.SavepointCase):
             'company_ids': [(4, cls.company.id)],
         })
 
+        cls.employee = cls.env['hr.employee'].create({
+            'name': 'Timesheet User',
+            'user_id': cls.timesheet_user.id,
+        })
+
         cls.salary_journal = cls.env['account.journal'].create({
             'name': 'Salary To WIP',
             'code': 'SALARY',
@@ -104,16 +109,16 @@ class WIPJournalEntriesCase(common.SavepointCase):
         })
 
     @classmethod
-    def _create_timesheet(cls, description="/", quantity=1, amount=-50, date_=None):
+    def _create_timesheet(cls, description="/", quantity=1, amount=50, date_=None):
+        cls.employee.timesheet_cost = amount
         line = cls.env['account.analytic.line'].sudo(cls.timesheet_user).create({
             'company_id': cls.company.id,
             'project_id': cls.project.id,
             'task_id': cls.task.id,
-            'user_id': cls.timesheet_user.id,
+            'employee_id': cls.employee.id,
             'name': description,
             'date': date_ or datetime.now().date(),
-            'quantity': quantity,
-            'amount': amount,
+            'unit_amount': quantity,
         })
         return line.sudo()
 
@@ -160,7 +165,7 @@ class TestWIPJournalEntries(WIPJournalEntriesCase):
 
     def test_wip_move_line_with_positive_timesheet__has_debit(self):
         expected_amount = 100
-        timesheet_line = self._create_timesheet(amount=-expected_amount)
+        timesheet_line = self._create_timesheet(amount=expected_amount)
         wip_line = self._get_wip_move_line(timesheet_line)
         assert wip_line.debit == expected_amount
 
