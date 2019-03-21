@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="project_type_form_with_salary_account" model="ir.ui.view">
+        <field name="name">Project Type Form: add salary account</field>
+        <field name="model">project.type</field>
+        <field name="inherit_id" ref="project_type.view_project_type_form"/>
+        <field name="arch" type="xml">
+            <field name="cgs_account_id" position="inside">
+                <field name="salary_account_id"/>
+                <field name="salary_journal_id"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>
