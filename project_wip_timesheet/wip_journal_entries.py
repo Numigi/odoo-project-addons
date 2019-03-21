@@ -114,11 +114,16 @@ class TimesheetLine(models.Model):
 
         :rtype: dict
         """
+        reference = "{project} / TA#{task}".format(
+            project=self.project_id.display_name,
+            task=self.task_id.id
+        )
         return {
             'company_id': self.company_id.id,
             'journal_id': self._get_salary_journal().id,
             'date': self.date,
             'no_analytic_lines': True,
+            'ref': reference,
             'line_ids': [
                 (5, 0),
                 (0, 0, self._get_wip_move_line_vals()),
@@ -221,6 +226,7 @@ class TimesheetLine(models.Model):
             'unit_amount',
             'date',
             'project_id',
+            'task_id',
         }
 
     @api.multi

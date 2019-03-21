@@ -237,6 +237,30 @@ class TestWIPJournalEntries(WIPJournalEntriesCase):
         wip_line = self._get_wip_move_line(timesheet_line)
         assert wip_line.debit == expected_amount
 
+    def test_move_ref_contains_task_id(self):
+        timesheet_line = self._create_timesheet()
+        assert str(self.task.id) in timesheet_line.salary_account_move_id.ref
+
+    def test_after_change_task_on_timesheet__move_ref_contains_task_id(self):
+        timesheet_line = self._create_timesheet()
+        new_task = self.task.copy()
+        timesheet_line.sudo(self.timesheet_user).task_id = new_task
+        assert str(new_task.id) in timesheet_line.salary_account_move_id.ref
+
+    def test_move_ref_contains_project_name(self):
+        timesheet_line = self._create_timesheet()
+        assert self.project.name in timesheet_line.salary_account_move_id.ref
+
+    def test_after_change_project_on_timesheet__move_ref_contains_project_name(self):
+        timesheet_line = self._create_timesheet()
+        new_project = self.project.copy()
+        new_task = self.task.copy({'project_id': new_project.id})
+        timesheet_line.sudo(self.timesheet_user).write({
+            'project_id': new_project.id,
+            'task_id': new_task.id,
+        })
+        assert new_project.name in timesheet_line.salary_account_move_id.ref
+
 
 class TestTimesheetEntryTransferedToWip(WIPJournalEntriesCase):
     """Test the cases where the WIP entries are already transfered to CGS."""
