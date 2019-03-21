@@ -15,6 +15,7 @@
                                 <field name="initial_qty"/>
                                 <field name="consumed_qty"/>
                                 <field name="product_uom_id"/>
+                                <field name="unit_cost"/>
                             </tree>
                         </field>
                     </group>
