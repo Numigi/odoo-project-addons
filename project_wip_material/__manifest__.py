@@ -16,6 +16,11 @@
         'stock',
     ],
     'data': [
+        'security/ir.model.access.csv',
+        'views/project_with_warehouse.xml',
+        'views/stock_picking_with_task.xml',
+        'views/task_picking_smart_button.xml',
+        'views/task_material_tab.xml',
         'views/warehouse.xml',
     ],
     'post_init_hook': '_update_warehouses_consumption_routes',

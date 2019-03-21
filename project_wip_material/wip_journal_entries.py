@@ -16,6 +16,14 @@ class StockMove(models.Model):
     def _is_consumption_return(self):
         return self.picking_code == 'consumption_return'
 
+    def _is_in(self):
+        """Use the same valuation as incoming moves for consumption return."""
+        return super()._is_in() or self._is_consumption_return()
+
+    def _is_out(self):
+        """Use the same valuation as outgoing moves for consumptions."""
+        return super()._is_out() or self._is_consumption()
+
     def _check_project_has_wip_account(self):
         project = self.project_id
         if not project.project_type_id:
@@ -46,14 +54,14 @@ class StockMove(models.Model):
         self._check_project_has_wip_account()
         wip_account = self._get_wip_account()
         journal_id, dummy, dummy, acc_valuation = self._get_accounting_data_for_valuation()
-        self._create_account_move_line(
+        self.with_context(force_company=self.project_id.company_id.id)._create_account_move_line(
             debit_account_id=wip_account.id, credit_account_id=acc_valuation, journal_id=journal_id)
 
     def _generate_consumption_return_account_move(self):
         self._check_project_has_wip_account()
         wip_account = self._get_wip_account()
         journal_id, dummy, dummy, acc_valuation = self._get_accounting_data_for_valuation()
-        self._create_account_move_line(
+        self.with_context(force_company=self.project_id.company_id.id)._create_account_move_line(
             debit_account_id=acc_valuation, credit_account_id=wip_account.id, journal_id=journal_id)
 
     def _account_entry_move(self):
