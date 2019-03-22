@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-06 21:39+0000\n"
-"PO-Revision-Date: 2019-03-06 16:49-0500\n"
+"POT-Creation-Date: 2019-03-22 14:24+0000\n"
+"PO-Revision-Date: 2019-03-22 10:25-0400\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -65,6 +65,11 @@ msgstr "Compte CMV"
 #: model:ir.ui.view,arch_db:project_wip.wip_to_cgs_wizard
 msgid "Cancel"
 msgstr "Annuler"
+
+#. module: project_wip
+#: model:ir.ui.view,arch_db:project_wip.project_type_form_with_accounting_tab
+msgid "Cost of Goods Sold"
+msgstr "Coût des marchandises vendues"
 
 #. module: project_wip
 #: model:ir.model.fields,field_description:project_wip.field_project_wip_transfer_costs_to_transfer
@@ -147,7 +152,8 @@ msgid "Project WIP To CGS Wizard"
 msgstr "Assistant de transfert des TEC vers CMV"
 
 #. module: project_wip
-#: code:addons/project_wip/wip_to_cgs.py:133
+#: code:addons/project_wip/wip_to_cgs.py:47
+#: code:addons/project_wip/wip_to_cgs.py:50
 #, python-format
 msgid ""
 "The WIP entry {wip_line} ({amount}) could not be reconciled when transfering "
@@ -159,7 +165,8 @@ msgstr ""
 "l'écriture de TEC n'est pas partiellement lettrée."
 
 #. module: project_wip
-#: code:addons/project_wip/wip_to_cgs.py:70
+#: code:addons/project_wip/wip_to_cgs.py:90
+#: code:addons/project_wip/wip_to_cgs.py:93
 #, python-format
 msgid "The project type {} has no CGS (Cost of Goods Sold) account defined."
 msgstr ""
@@ -167,14 +174,16 @@ msgstr ""
 "vendues) défini."
 
 #. module: project_wip
-#: code:addons/project_wip/wip_to_cgs.py:59
+#: code:addons/project_wip/wip_to_cgs.py:79
+#: code:addons/project_wip/wip_to_cgs.py:82
 #, python-format
 msgid "The project type {} has no WIP (Work In Progress) account defined."
 msgstr ""
 "Le type de projet {} n'a pas de compte de TEC (travaux en cours) défini."
 
 #. module: project_wip
-#: code:addons/project_wip/wip_to_cgs.py:48
+#: code:addons/project_wip/wip_to_cgs.py:68
+#: code:addons/project_wip/wip_to_cgs.py:71
 #, python-format
 msgid "The project type {} has no WIP journal defined."
 msgstr ""
@@ -182,6 +191,7 @@ msgstr ""
 
 #. module: project_wip
 #: code:addons/project_wip/wip_to_cgs.py:32
+#: code:addons/project_wip/wip_to_cgs.py:35
 #, python-format
 msgid "The selected WIP account ({}) must allow reconciliation."
 msgstr "Le compte de TEC sélectionné ({}) doit autoriser le lettrage."
