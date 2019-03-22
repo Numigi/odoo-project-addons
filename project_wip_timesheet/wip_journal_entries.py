@@ -10,16 +10,20 @@ class ProjectType(models.Model):
 
     _inherit = 'project.type'
 
-    salary_account_id = fields.Many2one(
-        'account.account',
-        'Salary Account',
-        company_dependent=True,
-    )
-
     salary_journal_id = fields.Many2one(
         'account.journal',
         'Salary Journal',
         company_dependent=True,
+        help='Journal used for transfering salaries into work in progress '
+        'when creating or updating a timesheet entry.',
+    )
+
+    salary_account_id = fields.Many2one(
+        'account.account',
+        'Salary Account',
+        company_dependent=True,
+        help='Account used for the salaries (usually the credit part) '
+        'when transfering salaries into work in progress.',
     )
 
     @api.constrains('salary_account_id', 'salary_journal_id', 'wip_account_id')

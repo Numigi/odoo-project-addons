@@ -4,12 +4,14 @@
     <record id="project_type_form_with_salary_account" model="ir.ui.view">
         <field name="name">Project Type Form: add salary account</field>
         <field name="model">project.type</field>
-        <field name="inherit_id" ref="project_type.view_project_type_form"/>
+        <field name="inherit_id" ref="project_wip.project_type_form_with_accounting_tab"/>
         <field name="arch" type="xml">
-            <field name="cgs_account_id" position="inside">
-                <field name="salary_account_id"/>
-                <field name="salary_journal_id"/>
-            </field>
+            <group name="wip_group" position="after">
+                <group name="salary_group" string="Direct Labour">
+                    <field name="salary_journal_id"/>
+                    <field name="salary_account_id"/>
+                </group>
+            </group>
         </field>
     </record>
 
