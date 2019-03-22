@@ -75,6 +75,7 @@ class TaskMaterialLine(models.Model):
 
     _name = 'project.task.material'
     _description = 'Task Material Consumption'
+    _order = 'product_id, id'
 
     company_id = fields.Many2one(related='task_id.company_id', store=True)
     task_id = fields.Many2one(
@@ -98,6 +99,11 @@ class TaskMaterialLine(models.Model):
         compute='_compute_consumed_qty',
     )
     product_uom_id = fields.Many2one(related='product_id.uom_id')
+    unit_cost = fields.Float(
+        related='product_id.standard_price',
+        string='Unit Cost',
+        readonly=True,
+    )
     move_ids = fields.One2many(
         'stock.move',
         'material_line_id',
