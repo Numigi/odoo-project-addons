@@ -8,9 +8,11 @@
         <field name="arch" type="xml">
             <notebook position="inside">
                 <page name="accounting_page" string="Accounting">
-                    <group>
-                        <field name="cgs_journal_id"/>
+                    <group name="wip_group">
                         <field name="wip_account_id"/>
+                    </group>
+                    <group name="cgs_group" string="Cost of Goods Sold">
+                        <field name="cgs_journal_id"/>
                         <field name="cgs_account_id"/>
                     </group>
                 </page>
