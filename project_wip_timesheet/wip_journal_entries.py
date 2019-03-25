@@ -43,6 +43,11 @@ class ProjectType(models.Model):
                 ))
 
 
+def _format_timesheet_line_description(timesheet_line):
+    task = _("(task: {})").format(timesheet_line.task_id.id)
+    return "{} {}".format(timesheet_line.name, task) if timesheet_line.name else task
+
+
 class TimesheetLine(models.Model):
 
     _inherit = 'account.analytic.line'
@@ -152,12 +157,11 @@ class TimesheetLine(models.Model):
         """Update the wip journal entry."""
         if self._is_wip_account_move_reconciled():
             raise ValidationError(_(
-                'The timesheet line {description} (task: {task}) can not '
+                'The timesheet line {description} can not '
                 'be updated because the work in progress entry ({move_name}) is already '
                 'transfered into the cost of goods sold.'
             ).format(
-                description=self.name,
-                task=str(self.task_id.id),
+                description=_format_timesheet_line_description(self),
                 move_name=self.salary_account_move_id.name,
             ))
 
@@ -170,13 +174,12 @@ class TimesheetLine(models.Model):
         """Reverse the wip journal entry in the context of an updated timesheet."""
         if self._is_wip_account_move_reconciled():
             raise ValidationError(_(
-                'The timesheet line {description} (task: {task}) can not '
+                'The timesheet line {description} can not '
                 'be updated because the work in progress entry ({move_name}) would be '
                 'reversed. This journal entry was already transfered into '
                 'the cost of goods sold.'
             ).format(
-                description=self.name,
-                task=str(self.task_id.id),
+                description=_format_timesheet_line_description(self),
                 move_name=self.salary_account_move_id.name,
             ))
         self.salary_account_move_id.reverse_moves()
@@ -253,12 +256,11 @@ class TimesheetLine(models.Model):
         """Reverse the wip journal entry in the context of a deleted timesheet."""
         if self._is_wip_account_move_reconciled():
             raise ValidationError(_(
-                'The timesheet line {description} (task: {task}) can not '
+                'The timesheet line {description} can not '
                 'be deleted because the work in progress entry ({move_name}) is already '
                 'transfered into the cost of goods sold.'
             ).format(
-                description=self.name,
-                task=str(self.task_id.id),
+                description=_format_timesheet_line_description(self),
                 move_name=self.salary_account_move_id.name,
             ))
         self.salary_account_move_id.reverse_moves()
