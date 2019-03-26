@@ -72,17 +72,23 @@ msgstr "Pièce comptable de salaire"
 #. module: project_wip_timesheet
 #: code:addons/project_wip_timesheet/wip_journal_entries.py:255
 #, python-format
-msgid "The timesheet line {description} (task: {task}) can not be deleted because the work in progress entry ({move_name}) is already transfered into the cost of goods sold."
-msgstr "La ligne de temps {description} (task: {task}) ne peut pas être supprimée car l'écriture comptable de travaux en cours ({move_name}) est déjà transférée vers le coût des marchandises vendues."
+msgid "The timesheet line {description} can not be deleted because the work in progress entry ({move_name}) is already transfered into the cost of goods sold."
+msgstr "La ligne de temps {description} ne peut pas être supprimée car l'écriture comptable de travaux en cours ({move_name}) est déjà transférée vers le coût des marchandises vendues."
+
+#. module: project_wip_timesheet
+#: code:addons/project_wip_timesheet/wip_journal_entries.py:255
+#, python-format
+msgid "(task: {})"
+msgstr "(tâche: {})"
 
 #. module: project_wip_timesheet
 #: code:addons/project_wip_timesheet/wip_journal_entries.py:154
 #, python-format
-msgid "The timesheet line {description} (task: {task}) can not be updated because the work in progress entry ({move_name}) is already transfered into the cost of goods sold."
-msgstr "La ligne de temps {description} (task: {task}) ne peut pas être mise à jour car l'écriture comptable de travaux en cours ({move_name}) est déjà transférée vers le coût des marchandises vendues."
+msgid "The timesheet line {description} can not be updated because the work in progress entry ({move_name}) is already transfered into the cost of goods sold."
+msgstr "La ligne de temps {description} ne peut pas être mise à jour car l'écriture comptable de travaux en cours ({move_name}) est déjà transférée vers le coût des marchandises vendues."
 
 #. module: project_wip_timesheet
 #: code:addons/project_wip_timesheet/wip_journal_entries.py:172
 #, python-format
-msgid "The timesheet line {description} (task: {task}) can not be updated because the work in progress entry ({move_name}) would be reversed. This journal entry was already transfered into the cost of goods sold."
-msgstr "La ligne de temps {description} (task: {task}) ne peut pas être mise à jour car l'écriture comptable de travaux en cours ({move_name}) serait renversée. L'écriture comptable est déjà transférée vers le coût des marchandises vendues."
+msgid "The timesheet line {description} can not be updated because the work in progress entry ({move_name}) would be reversed. This journal entry was already transfered into the cost of goods sold."
+msgstr "La ligne de temps {description} ne peut pas être mise à jour car l'écriture comptable de travaux en cours ({move_name}) serait renversée. L'écriture comptable est déjà transférée vers le coût des marchandises vendues."
