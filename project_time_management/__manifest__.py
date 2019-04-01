@@ -13,7 +13,6 @@
     'depends': [
         'project_time_range',
         'project_task_time_range',
-        'project_accurate_time_spent',
     ],
     'data': [
         'views/project_project.xml',
