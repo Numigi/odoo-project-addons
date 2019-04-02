@@ -33,3 +33,19 @@ class TestOutsourcingPurchaseOrder(OutsourcingCase):
             'task_id': new_task.id,
         })
         assert self.order.order_line.account_analytic_id.project_ids == new_project
+
+    def test_on_purchase_confirm__if_no_project_type__error_raised(self):
+        self.project.project_type_id = False
+        order_sudo = self.order.sudo(self.purchase_user)
+        with pytest.raises(ValidationError):
+            order_sudo.button_confirm()
+
+    def test_on_purchase_confirm__if_no_wip_account__error_raised(self):
+        self.project_type.wip_account_id = False
+        order_sudo = self.order.sudo(self.purchase_user)
+        with pytest.raises(ValidationError):
+            order_sudo.button_confirm()
+
+    def test_on_purchase_confirm__if_project_and_wip_account__error_not_raised(self):
+        self.order.sudo(self.purchase_user).button_confirm()
+        assert self.order.state == 'purchase'

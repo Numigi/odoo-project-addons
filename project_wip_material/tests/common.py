@@ -20,6 +20,7 @@ class TaskMaterialCase(common.SavepointCase):
             'groups_id': [
                 (4, cls.env.ref('project.group_project_manager').id),
                 (4, cls.env.ref('stock.group_stock_manager').id),
+                (4, cls.env.ref('account.group_account_manager').id),
             ],
             'company_id': cls.company.id,
             'company_ids': [(4, cls.company.id)],

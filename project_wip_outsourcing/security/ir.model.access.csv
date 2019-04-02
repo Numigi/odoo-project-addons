@@ -1,4 +1,4 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_project_purchase_user,Project / User: read access to projects,project.model_project_project,project.group_purchase_user,1,0,0,0
-access_project_type_purchase_user,Project / User: read access to project types,project_type.model_project_type,project.group_purchase_user,1,0,0,0
-access_project_task_purchase_user,Project / User: read access to tasks,project.model_project_task,project.group_purchase_user,1,0,0,0
+access_project_purchase_user,Project / User: read access to projects,project.model_project_project,purchase.group_purchase_user,1,0,0,0
+access_project_type_purchase_user,Project / User: read access to project types,project_type.model_project_type,purchase.group_purchase_user,1,0,0,0
+access_project_task_purchase_user,Project / User: read access to tasks,project.model_project_task,purchase.group_purchase_user,1,0,0,0

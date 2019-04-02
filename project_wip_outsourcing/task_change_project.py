@@ -39,6 +39,6 @@ class ProjectTask(models.Model):
         super().write(vals)
         if 'project_id' in vals:
             for task in self:
-                task._check_no_confirmed_outsourcing_to_update()
-                task._propagate_project_to_outsourcing_orders()
+                task.sudo()._check_no_confirmed_outsourcing_to_update()
+                task.sudo()._propagate_project_to_outsourcing_orders()
         return True
