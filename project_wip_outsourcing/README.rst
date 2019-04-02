@@ -48,12 +48,12 @@ It allows only to select a task from the selected project.
 
 Analytic Account
 ----------------
-I notice that the analytic account on the PO lines is readonly.
+I notice that the analytic account on the PO lines is invisible.
 This is because the `Outsourcing` box is checked.
 
 .. image:: static/description/po_analytic_account.png
 
-The analytic account is automatically set based on the selected project.
+Behind the scene, the analytic account is automatically set based on the selected project.
 
 Stockable Products
 ------------------
@@ -101,6 +101,18 @@ If you try to change this account manually, an error message will be raised.
 .. image:: static/description/vendor_bill_wrong_account_message.png
 
 Also, if you try to set an analytic account different from the PO, an error message will be raised as well.
+
+Changing The Project
+--------------------
+If a task is moved from a project to another, any outsourcing PO linked to the task will be moved to the destination project.
+
+.. image:: static/description/task_with_new_project.png
+
+.. image:: static/description/purchase_order_with_new_project.png
+
+If any PO is already confirmed, a blocking message will be displayed.
+
+.. image:: static/description/task_change_project_error_message.png
 
 Contributors
 ------------

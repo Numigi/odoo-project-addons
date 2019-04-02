@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="purchase_order_form_with_outsourcing" model="ir.ui.view">
+        <field name="name">Purchase Order Form: add outsourcing fields</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+            <field name="currency_id" position="after">
+                <field name="is_outsourcing"/>
+                <field name="project_id"
+                       attrs="{'invisible': [('is_outsourcing', '=', False)],
+                               'required': [('is_outsourcing', '=', True)]}"
+                       options="{'no_create': True}"/>
+                <field name="task_id"
+                       attrs="{'invisible': [('is_outsourcing', '=', False)],
+                               'required': [('is_outsourcing', '=', True)]}"
+                       domain="[('project_id', '=', project_id)]"
+                       options="{'no_create': True}"/>
+            </field>
+
+            <!--
+                The analytic account is propagated from the project for an outsourcing PO.
+                Therefore, the analytic account should not be changeable manually.
+            -->
+            <xpath expr="//field[@name='order_line']//field[@name='account_analytic_id']" position="attributes">
+                <attribute name="attrs">{'column_invisible': [('parent.is_outsourcing', '=', True)]}</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="purchase_line_form_with_analytic_account_readonly" model="ir.ui.view">
+        <field name="name">Purchase Order Line Form: analytic account readonly if outsourcing</field>
+        <field name="model">purchase.order.line</field>
+        <field name="inherit_id" ref="purchase.purchase_order_line_form2"/>
+        <field name="arch" type="xml">
+            <form position="inside">
+                <field name="is_outsourcing" invisible="1"/>
+            </form>
+            <field name="account_analytic_id" position="attributes">
+                <attribute name="attrs">{'readonly': [('is_outsourcing', '=', True)]}</attribute>
+            </field>
+        </field>
+    </record>
+
+</odoo>
