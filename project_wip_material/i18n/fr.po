@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-22 16:33+0000\n"
-"PO-Revision-Date: 2019-03-22 12:34-0400\n"
+"POT-Creation-Date: 2019-04-03 16:39+0000\n"
+"PO-Revision-Date: 2019-04-03 12:39-0400\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -53,6 +53,7 @@ msgstr "Quantités consommées"
 #. module: project_wip_material
 #: code:addons/project_wip_material/consumption_route.py:96
 #: model:ir.ui.view,arch_db:project_wip_material.task_form_with_material
+#: model:ir.ui.view,arch_db:project_wip_material.task_form_with_picking_smart_button
 #: model:ir.ui.view,arch_db:project_wip_material.warehouse_form_with_consumption_steps
 #, python-format
 msgid "Consumption"
@@ -62,6 +63,13 @@ msgstr "Consommation"
 #: model:ir.model.fields,field_description:project_wip_material.field_stock_warehouse_consu_location_id
 msgid "Consumption Location"
 msgstr "Emplacement de consommation"
+
+#. module: project_wip_material
+#: model:ir.model.fields,field_description:project_wip_material.field_project_task_consumption_picking_count
+#, fuzzy
+#| msgid "Consumption Picking Type"
+msgid "Consumption Picking Count"
+msgstr "Nombre d'opérations de consommation"
 
 #. module: project_wip_material
 #: model:ir.model.fields,field_description:project_wip_material.field_stock_warehouse_consu_type_id
@@ -183,12 +191,7 @@ msgstr ""
 "initiale inférieure à zéro. La ligne {line} a une quantité de {qty}."
 
 #. module: project_wip_material
-#: model:ir.model.fields,field_description:project_wip_material.field_project_task_picking_count
-msgid "Picking Count"
-msgstr "Nombre de pickings"
-
-#. module: project_wip_material
-#: model:ir.model.fields,field_description:project_wip_material.field_project_task_picking_ids
+#: model:ir.model.fields,field_description:project_wip_material.field_project_task_consumption_picking_ids
 msgid "Pickings"
 msgstr "Pickings"
 
@@ -236,11 +239,6 @@ msgid "Stock Moves"
 msgstr "Mouvements d'inventaire"
 
 #. module: project_wip_material
-#: model:ir.ui.view,arch_db:project_wip_material.task_form_with_picking_smart_button
-msgid "Stock Picking"
-msgstr "Stock Picking"
-
-#. module: project_wip_material
 #: model:ir.model,name:project_wip_material.model_project_task
 #: model:ir.model.fields,field_description:project_wip_material.field_procurement_group_task_id
 #: model:ir.model.fields,field_description:project_wip_material.field_project_task_material_task_id
@@ -255,7 +253,7 @@ msgid "Task Material Consumption"
 msgstr "Consommation matériel sur tâche"
 
 #. module: project_wip_material
-#: code:addons/project_wip_material/task_material.py:332
+#: code:addons/project_wip_material/task_material.py:333
 #, python-format
 msgid ""
 "The material line {line} can not be deleted because it is bound to stock "
@@ -270,18 +268,18 @@ msgid "The operation type determines the picking view"
 msgstr ""
 
 #. module: project_wip_material
-#: code:addons/project_wip_material/task_material.py:252
+#: code:addons/project_wip_material/task_material.py:253
 #, python-format
 msgid ""
 "The quantity on the material line {line} can not be reduced to "
 "{new_quantity} (it can not be lower than the delivered quantity).\n"
 "\n"
-"The line may only be reduced to a minimum {minimum_qty} {uom}."
+"The line may not be reduced below a minimum of {minimum_qty} {uom}."
 msgstr ""
 "La quantité sur la ligne de matériel {line} ne peut pas être réduite à "
 "{new_quantity} (elle ne peut pas être plus petite que la quantité livrée).\n"
 "\n"
-"La ligne peut seulement être réduite à un minimum de {minimum_qty} {uom}."
+"La ligne ne peut pas être réduite en dessous de {minimum_qty} {uom}."
 
 #. module: project_wip_material
 #: code:addons/project_wip_material/wip_journal_entries.py:39
@@ -337,7 +335,7 @@ msgid "Warehouse"
 msgstr "Entrepôt"
 
 #. module: project_wip_material
-#: code:addons/project_wip_material/task_material.py:314
+#: code:addons/project_wip_material/task_material.py:315
 #, python-format
 msgid ""
 "You may not change the product on an existing material line. Instead of "

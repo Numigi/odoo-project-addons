@@ -220,6 +220,7 @@ class TaskMaterialLine(models.Model):
 
         if move_will_be_empty:
             move._action_cancel()
+            move.picking_id = False
         else:
             move.product_uom_qty -= reduced_qty
 
@@ -252,11 +253,11 @@ class TaskMaterialLine(models.Model):
             raise ValidationError(_(
                 'The quantity on the material line {line} can not be reduced to {new_quantity} '
                 '(it can not be lower than the delivered quantity).\n\n'
-                'The line may only be reduced to a minimum {minimum_qty} {uom}.'
+                'The line may not be reduced below a minimum of {minimum_qty} {uom}.'
             ).format(
                 line=self.product_id.display_name,
                 new_quantity=self.initial_qty,
-                minimum_qty=reducible_qty,
+                minimum_qty=total_move_qty - reducible_qty,
                 uom=self.product_uom_id.name,
             ))
 
