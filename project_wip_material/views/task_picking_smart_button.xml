@@ -8,12 +8,12 @@
         <field name="arch" type="xml">
             <button name="toggle_active" position="before">
                  <button
-                    name="open_picking_view_from_task" type="object" class="oe_stat_button"
+                    name="open_consumption_picking_view_from_task" type="object" class="oe_stat_button"
                     icon="fa-truck"
                     groups="stock.group_stock_user"
-                    attrs="{'invisible': [('picking_count', '=', 0)]}"
+                    attrs="{'invisible': [('consumption_picking_count', '=', 0)]}"
                     >
-                        <field name="picking_count" widget="statinfo" string="Stock Picking"/>
+                        <field name="consumption_picking_count" widget="statinfo" string="Consumption"/>
                 </button>
             </button>
         </field>
