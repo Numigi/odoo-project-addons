@@ -2,17 +2,19 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 {
-    'name': 'Project Task Time Range',
-    'version': '1.1.1',
+    'name': 'Project Task Subtask Time Range',
+    'version': '1.0.0',
     'author': 'Numigi',
     'maintainer': 'Numigi',
     'website': 'https://bit.ly/numigi-com',
     'license': 'LGPL-3',
     'category': 'Project',
-    'summary': 'Add fields Min and Max on project tasks.',
-    'depends': ['hr_timesheet'],
+    'summary': 'Add computed fields that sum time details from subtasks.',
+    'depends': [
+        'hr_timesheet',
+        'project_task_time_range'
+    ],
     'data': [
-        'views/portal.xml',
         'views/project_task.xml',
     ],
     'installable': True,

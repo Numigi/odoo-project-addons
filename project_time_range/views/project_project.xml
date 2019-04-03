@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="project_with_min_max_hours" model="ir.ui.view">
+        <field name="name">Project With Min/Max Hours</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.edit_project"/>
+        <field name="arch" type="xml">
+            <page name="settings" position="after">
+                <page name="Management" string="Management">
+                    <group>
+                        <group name="left" string="Estimated">
+                            <field name="min_hours" string="Min" widget="float_time"/>
+                            <field name="planned_hours" widget="float_time"/>
+                            <field name="max_hours" string="Max" widget="float_time"/>
+                        </group>
+                    </group>
+
+                </page>
+            </page>
+        </field>
+    </record>
+
+</odoo>

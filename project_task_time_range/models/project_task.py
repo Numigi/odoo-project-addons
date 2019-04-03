@@ -2,7 +2,8 @@
 # © 2018 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
-from odoo import fields, models
+from odoo import fields, models, api, _
+from odoo.exceptions import ValidationError
 
 
 class ProjectTaskWithMinAndMaxHours(models.Model):
@@ -20,3 +21,47 @@ class ProjectTaskWithPlannedHoursRenamed(models.Model):
     _inherit = 'project.task'
 
     planned_hours = fields.Float(string='Ideal Planned Hours')
+
+
+def is_planned_hours_not_none(func):
+    """ Case where planned_hours is different from None to avoid comparing oranges and pandas
+    Bare in mind we want to check the case where planned_hours is 0
+    """
+    def wrapper(self, *args, **kwargs):
+        if self.planned_hours is not None:
+            func(self, *args, **kwargs)
+    return wrapper
+
+
+class ProjectTaskWithMinAndMaxConstraints(models.Model):
+    """ Add constraints on min_hours and max_hours.
+    """
+    _inherit = 'project.task'
+    hours_fields = ('planned_hours', 'min_hours', 'max_hours')
+
+    @api.one
+    @api.constrains('planned_hours', 'min_hours', 'max_hours')
+    @is_planned_hours_not_none
+    def _check_max_hours(self):
+        if self.max_hours < self.planned_hours:
+            raise ValidationError(
+                _("Max Hours must be greater than the planned hours.")
+            )
+
+    @api.one
+    @api.constrains(*hours_fields)
+    @is_planned_hours_not_none
+    def _check_min_hours(self):
+        if self.min_hours > self.planned_hours:
+            raise ValidationError(
+                _("Min Hours must be lesser than the planned hours.")
+            )
+
+    @api.one
+    @api.constrains(*hours_fields)
+    @is_planned_hours_not_none
+    def _check_positive_hours(self):
+        if any(h < 0 for h in [self.min_hours, self.planned_hours, self.max_hours]):
+            raise ValidationError(
+                _("Hours must be positive numbers.")
+            )
