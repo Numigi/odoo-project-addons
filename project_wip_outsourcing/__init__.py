@@ -7,4 +7,5 @@ from . import (
     outsourcing_supplier_invoice,
     task_outsourcing_tab,
     task_change_project,
+    project_outsourcing_smart_button,
 )

@@ -20,38 +20,40 @@ The form view of a new PO is opened.
 
 The following fields are filled automatically.
 
-Outsourcing
-~~~~~~~~~~~
-This box is checked to indicate that the purchase order is an Outsourcing PO.
+* Outsourcing
 
-.. image:: static/description/po_outsourcing_field.png
+..
 
-Project
-~~~~~~~
-This field is visible because the `Outsourcing` box is checked.
+    This box is checked to indicate that the purchase order is an Outsourcing PO.
 
-It indicates which project is bound to the PO.
+* Project
 
-One outsourcing PO can not be bound to more than one project.
+..
 
-.. image:: static/description/po_project_field.png
+    This field is visible because the `Outsourcing` box is checked.
+    
+    It indicates which project is bound to the PO.
+    
+    One outsourcing PO can not be bound to more than one project.
 
-Task
-~~~~
-This field is visible because the `Outsourcing` box is checked.
+* Task
 
-It indicates which task is bound to the PO.
+..
 
-It allows only to select a task from the selected project.
+    This field is visible because the `Outsourcing` box is checked.
 
-.. image:: static/description/po_task_field.png
+    It indicates which task is bound to the PO.
+
+    It allows only to select a task from the selected project.
+
+I select my supplier, then I add a new line to the PO.
+
+.. image:: static/description/po_with_supplier_and_product.png
 
 Analytic Account
-----------------
+~~~~~~~~~~~~~~~~
 I notice that the analytic account on the PO lines is invisible.
 This is because the `Outsourcing` box is checked.
-
-.. image:: static/description/po_analytic_account.png
 
 Behind the scene, the analytic account is automatically set based on the selected project.
 
@@ -67,17 +69,25 @@ This is because the accounting is very different between outsourcing and materia
 PO lines with stockable products must never contain an analytic account.
 Otherwise, 2 analytic lines will be created (one at the supplier invoice and one at the consumption).
 
+List Of Purchase Lines
+----------------------
+Back to the task, in the outsourcing tab, I notice the new PO in the `Purchase Order` table and one line in the `Order Lines` table.
+
+.. image:: static/description/project_task_form_with_po.png
+
 Supplier Invoice
 ----------------
-As member of the group `Accounting / Billing`, I add a new vendor bill for the outsourcing PO.
-
-.. image:: static/description/po_vendor_bill_button.png
+As member of the group `Accounting / Billing`, I create a new vendor bill and select my PO in the field `Add Purchase Order`.
 
 .. image:: static/description/vendor_bill.png
 
-I notice that the WIP account was selected on the invoice line.
+I notice that the WIP account was automatically selected on the invoice line.
 
 .. image:: static/description/vendor_bill_wip_account.png
+
+I can not change the GL account or the analytic account.
+
+.. image:: static/description/vendor_bill_wip_account_read_only.png
 
 After validating the vendor bill, I go to the general ledger and filter to see only my project.
 
@@ -87,20 +97,15 @@ I find one WIP entry for the outsourcing.
 
 I go to the list of analytic lines. I find one analytic line for the outsourcing in my project.
 
-.. image:: static/description/general_ledger_filtered.png
+.. image:: static/description/analytic_lines_list.png
 
 How The Module Works
---------------------
-If you create a vendor bill without selecting a PO, the wip account will not be selected on the invoice lines.
+~~~~~~~~~~~~~~~~~~~~
+If you create a vendor bill without selecting a PO, the WIP account will not be selected on the invoice lines.
 
-If you select a PO which has not the box `Outsourcing` checked, the wip account will not be selected.
+If you select a PO which has not the box `Outsourcing` checked, the WIP account will not be selected either.
 
-If you select a PO with the box checked, the wip account from the project type will be set automatically on the invoice line.
-If you try to change this account manually, an error message will be raised.
-
-.. image:: static/description/vendor_bill_wrong_account_message.png
-
-Also, if you try to set an analytic account different from the PO, an error message will be raised as well.
+If you select a PO with the box checked, the WIP account from the project type will be set automatically on the invoice line.
 
 Changing The Project
 --------------------
@@ -113,6 +118,28 @@ If a task is moved from a project to another, any outsourcing PO linked to the t
 If any PO is already confirmed, a blocking message will be displayed.
 
 .. image:: static/description/task_change_project_error_message.png
+
+Project Smart Button
+--------------------
+When confirming a purchase order, journal entries are not created.
+The journal entries and analytic lines are only created when validating the supplier invoice.
+
+The supplier invoice for an outsourcing task may not be received before the job is finished.
+Therefore, that cost needs to be included in the customer invoice.
+
+For this purpose, a smart button is added on the project.
+
+.. image:: static/description/project_smart_button.png
+
+The button indicates the number of outsourcing purchase orders related to the project.
+
+When clicking on the button, the list of purchase orders is displayed.
+
+.. image:: static/description/outsourcing_po_list.png
+
+From this list I can filter to see only the orders awaiting a vendor bill.
+
+.. image:: static/description/outsourcing_po_list_awaiting_bill.png
 
 Contributors
 ------------

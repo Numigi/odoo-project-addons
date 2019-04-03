@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
 
+    <record id="purchase_order_list_with_outsourcing" model="ir.ui.view">
+        <field name="name">Purchase Order List: add outsourcing fields</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_tree"/>
+        <field name="arch" type="xml">
+            <field name="partner_id" position="after">
+                <field name="project_id"/>
+                <field name="task_id"/>
+            </field>
+        </field>
+    </record>
+
     <record id="purchase_order_form_with_outsourcing" model="ir.ui.view">
         <field name="name">Purchase Order Form: add outsourcing fields</field>
         <field name="model">purchase.order</field>
@@ -40,6 +52,22 @@
             <field name="account_analytic_id" position="attributes">
                 <attribute name="attrs">{'readonly': [('is_outsourcing', '=', True)]}</attribute>
             </field>
+        </field>
+    </record>
+
+    <record id="purchase_order_search_with_outsourcing" model="ir.ui.view">
+        <field name="name">Purchase Order Search: add outsourcing fields</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.view_purchase_order_filter"/>
+        <field name="arch" type="xml">
+            <field name="partner_id" position="after">
+                <field name="project_id"/>
+                <field name="task_id"/>
+            </field>
+            <group position="before">
+                <separator/>
+                <filter string="Outsourcing" name="is_outsourcing" domain="[('is_outsourcing', '=', True)]"/>
+            </group>
         </field>
     </record>
 

@@ -20,7 +20,7 @@ class PurchaseOrderLine(models.Model):
     _inherit = 'purchase.order.line'
 
     @api.constrains('is_outsourcing', 'product_id')
-    def _check_if_is_outsourcing__no_stockable_product(self):
+    def _check_if_is_outsourcing__product_is_service(self):
         outsourcing_lines = self.filtered(lambda l: l.is_outsourcing)
         for line in outsourcing_lines:
             if line.product_id.type != 'service':

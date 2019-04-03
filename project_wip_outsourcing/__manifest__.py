@@ -17,7 +17,8 @@
     'data': [
         'views/outsourcing_purchase_order.xml',
         'views/outsourcing_supplier_invoice.xml',
-        'views/project_task_outsourcing_tab.xml',
+        'views/project_outsourcing_smart_button.xml',
+        'views/task_outsourcing_tab.xml',
         'security/ir.model.access.csv',
     ],
     'installable': True,

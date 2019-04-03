@@ -104,8 +104,8 @@ class PurchaseOrderWithOutSourcing(models.Model):
     def button_confirm(self):
         outsourcing_orders = self.filtered(lambda o: o.is_outsourcing)
         for order in outsourcing_orders:
-            order._check_outsourcing_project_has_type()
-            order._check_outsourcing_project_type_has_wip_account()
+            order.sudo()._check_outsourcing_project_has_type()
+            order.sudo()._check_outsourcing_project_type_has_wip_account()
         return super().button_confirm()
 
 
