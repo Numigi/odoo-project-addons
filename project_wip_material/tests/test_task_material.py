@@ -92,6 +92,12 @@ class TestGenerateProcurementsFromTask(TaskMaterialCase):
         line.initial_qty = 0
         assert line.move_ids.state == 'cancel'
 
+    def test_if_delete_material_line__move_removed_from_stock_picking(self):
+        line = self._create_material_line(initial_qty=10)
+        line.initial_qty = 0
+        assert line.move_ids
+        assert not line.move_ids.picking_id
+
     def test_if_raise_initial_quantity__stock_move_is_increased(self):
         line = self._create_material_line(initial_qty=10)
         line.initial_qty = 20

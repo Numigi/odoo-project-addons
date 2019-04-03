@@ -9,8 +9,8 @@ class Task(models.Model):
 
     _inherit = 'project.task'
 
-    picking_count = fields.Integer(compute='_compute_consumption_pickings')
-    picking_ids = fields.One2many(
+    consumption_picking_count = fields.Integer(compute='_compute_consumption_pickings')
+    consumption_picking_ids = fields.One2many(
         'stock.picking', string='Pickings',
         compute='_compute_consumption_pickings')
 
@@ -19,11 +19,12 @@ class Task(models.Model):
         for task in tasks_with_procurement_group:
             pickings = self.env['stock.picking'].search([
                 ('group_id', '=', task.procurement_group_id.id),
+                ('picking_type_code', 'in', ('consumption', 'consumption_return')),
             ])
-            task.picking_ids = pickings
-            task.picking_count = len(pickings)
+            task.consumption_picking_ids = pickings
+            task.consumption_picking_count = len(pickings)
 
-    def open_picking_view_from_task(self):
+    def open_consumption_picking_view_from_task(self):
         """Open the view of stock pickings related to the task.
 
         If there are multiple pickings, open the list view.
@@ -36,12 +37,12 @@ class Task(models.Model):
         """
         action = self.env.ref('stock.action_picking_tree_all').read()[0]
 
-        if self.picking_count > 1:
-            action['domain'] = [('id', 'in', self.picking_ids.ids)]
+        if self.consumption_picking_count > 1:
+            action['domain'] = [('id', 'in', self.consumption_picking_ids.ids)]
 
         else:
             picking_form_view = self.env.ref('stock.view_picking_form')
             action['views'] = [(picking_form_view.id, 'form')]
-            action['res_id'] = self.picking_ids.id
+            action['res_id'] = self.consumption_picking_ids.id
 
         return action
