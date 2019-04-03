@@ -6,6 +6,13 @@ from odoo.exceptions import ValidationError
 
 
 class ProjectTask(models.Model):
+    """Propagate the project to outsourcing PO when changed on a task.
+
+    When changing the project on a task, the project is propagated to the PO.
+
+    If any PO is already confirmed, the change can not be done.
+    This prevents the case of an invoice accounted with the wrong analytic account.
+    """
 
     _inherit = 'project.task'
 

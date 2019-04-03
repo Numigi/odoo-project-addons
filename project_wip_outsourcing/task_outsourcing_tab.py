@@ -5,6 +5,7 @@ from odoo import api, fields, models
 
 
 class ProjectTask(models.Model):
+    """Add the fields contained in the outsourcing tab on the task."""
 
     _inherit = 'project.task'
 
@@ -29,7 +30,7 @@ class PurchaseOrder(models.Model):
         """Set the project if different from the task.
 
         If the PO is created from a task, the task_id will be propagated
-        with active_id.
+        with active_id context variable.
 
         In this case, the task is filled before the project.
         """
