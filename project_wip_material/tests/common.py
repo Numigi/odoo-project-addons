@@ -17,9 +17,10 @@ class TaskMaterialCase(common.SavepointCase):
             'name': 'Manager',
             'login': 'manager',
             'email': 'manager@test.com',
-            'group_id': [
+            'groups_id': [
                 (4, cls.env.ref('project.group_project_manager').id),
                 (4, cls.env.ref('stock.group_stock_manager').id),
+                (4, cls.env.ref('account.group_account_manager').id),
             ],
             'company_id': cls.company.id,
             'company_ids': [(4, cls.company.id)],
@@ -28,7 +29,7 @@ class TaskMaterialCase(common.SavepointCase):
             'name': 'Project User',
             'login': 'project_user',
             'email': 'project_user@test.com',
-            'group_id': [(4, cls.env.ref('project.group_project_user').id)],
+            'groups_id': [(4, cls.env.ref('project.group_project_user').id)],
             'company_id': cls.company.id,
             'company_ids': [(4, cls.company.id)],
         })
@@ -36,7 +37,7 @@ class TaskMaterialCase(common.SavepointCase):
             'name': 'Stock User',
             'login': 'stock_user',
             'email': 'stock_user@test.com',
-            'group_id': [(4, cls.env.ref('stock.group_stock_user').id)],
+            'groups_id': [(4, cls.env.ref('stock.group_stock_user').id)],
             'company_id': cls.company.id,
             'company_ids': [(4, cls.company.id)],
         })
