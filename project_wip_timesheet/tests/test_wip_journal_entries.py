@@ -20,7 +20,7 @@ class WIPJournalEntriesCase(common.SavepointCase):
             'name': 'Manager',
             'login': 'manager',
             'email': 'manager@test.com',
-            'group_id': [
+            'groups_id': [
                 (4, cls.env.ref('project.group_project_manager').id),
             ],
             'company_id': cls.company.id,
