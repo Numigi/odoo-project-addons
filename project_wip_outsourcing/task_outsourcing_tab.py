@@ -15,10 +15,15 @@ class ProjectTask(models.Model):
         'Outsourcing Purchase Orders',
     )
 
-    outsourcing_line_ids = fields.One2many(
-        related='outsourcing_po_ids.order_line',
+    outsourcing_line_ids = fields.Many2many(
+        'purchase.order.line',
+        compute='_compute_outsourcing_line_ids',
         string='Outsourcing Purchase Lines',
     )
+
+    def _compute_outsourcing_line_ids(self):
+        for task in self:
+            task.outsourcing_line_ids = task.mapped('outsourcing_po_ids.order_line')
 
 
 class PurchaseOrder(models.Model):
