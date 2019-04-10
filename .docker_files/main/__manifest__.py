@@ -14,6 +14,7 @@
         'stock_account',  # required for testing project_wip
 
         'project_accurate_time_spent',
+        'project_cost_smart_button',
         'project_form_with_dates',
         'project_portal_parent_task',
         'project_stage_no_quick_create',
