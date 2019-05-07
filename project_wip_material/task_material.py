@@ -98,7 +98,7 @@ class TaskMaterialLine(models.Model):
         digits=dp.get_precision('Product Unit of Measure'),
         compute='_compute_consumed_qty',
     )
-    product_uom_id = fields.Many2one(related='product_id.uom_id')
+    product_uom_id = fields.Many2one(related='product_id.uom_id', readonly=True)
     unit_cost = fields.Float(
         related='product_id.standard_price',
         string='Unit Cost',
