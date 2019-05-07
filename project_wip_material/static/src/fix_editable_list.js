@@ -20,10 +20,10 @@ odoo.define("project_wip_material.fix_editable_list", function(require) {
 "use strict";
 
 var dom = require("web.dom");
-var oldGetSelectionRange = dom.getSelectionRange
+var oldGetSelectionRange = dom.getSelectionRange;
 
 dom.getSelectionRange = function(node){
-    return node === undefined ? {start: 0, end: 0} : oldGetSelectionRange(node)
-}
+    return node === undefined ? {start: 0, end: 0} : oldGetSelectionRange(node);
+};
 
 });
