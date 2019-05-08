@@ -17,6 +17,7 @@
     ],
     'data': [
         'security/ir.model.access.csv',
+        'views/assets.xml',
         'views/project_with_warehouse.xml',
         'views/stock_picking_with_task.xml',
         'views/task_picking_smart_button.xml',
