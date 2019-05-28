@@ -90,6 +90,14 @@ I am able to group by task:
 
 .. image:: static/description/analytic_lines_group.png
 
+Constraints
+-----------
+Once a task is selected on an invoice or a journal entry, it is not possible to move the task to another project.
+
+Otherwise, when changing the project on the task, a blocking message is displayed.
+
+.. image:: static/description/task_change_project_constraint.png
+
 Limits
 ------
 

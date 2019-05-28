@@ -34,7 +34,7 @@
             </field>
             <filter name="account_id" position="after">
                 <filter string="Task" context="{'group_by': 'origin_task_id'}" name="origin_task_id"/>
-            </field>
+            </filter>
         </field>
     </record>
 
