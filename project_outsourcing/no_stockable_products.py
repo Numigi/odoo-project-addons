@@ -23,11 +23,11 @@ class PurchaseOrderLine(models.Model):
     def _check_if_is_outsourcing__product_is_service(self):
         outsourcing_lines = self.filtered(lambda l: l.is_outsourcing)
         for line in outsourcing_lines:
-            if line.product_id.type != 'service':
+            if line.product_id.type == 'product':
                 raise ValidationError(_(
                     'The product {product} can not be added to the outsourcing order '
-                    '{order} because it is not a service. '
-                    'Stockable and consumable products can not be used '
+                    '{order} because it is a stockable product. '
+                    'Stockable products can not be used '
                     'on an outsourcing PO.'
                 ).format(
                     product=line.product_id.display_name,

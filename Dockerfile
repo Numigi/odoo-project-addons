@@ -11,6 +11,7 @@ USER odoo
 COPY project_accurate_time_spent /mnt/extra-addons/project_accurate_time_spent
 COPY project_cost_smart_button /mnt/extra-addons/project_cost_smart_button
 COPY project_form_with_dates /mnt/extra-addons/project_form_with_dates
+COPY project_outsourcing /mnt/extra-addons/project_outsourcing
 COPY project_portal_parent_task /mnt/extra-addons/project_portal_parent_task
 COPY project_stage_no_quick_create /mnt/extra-addons/project_stage_no_quick_create
 COPY project_task_analytic_lines /mnt/extra-addons/project_task_analytic_lines

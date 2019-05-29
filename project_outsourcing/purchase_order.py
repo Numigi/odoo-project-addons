@@ -84,30 +84,6 @@ class PurchaseOrderWithOutSourcing(models.Model):
             for line in self.order_line:
                 line.account_analytic_id = self.project_id.analytic_account_id
 
-    def _check_outsourcing_project_has_type(self):
-        if not self.project_id.project_type_id:
-            raise ValidationError(_(
-                'The project {} has no type. '
-                'The project type must be set before confirming the '
-                'outsourcing purchase order.'
-            ).format(self.project_id.display_name))
-
-    def _check_outsourcing_project_type_has_wip_account(self):
-        project_type = self.project_id.project_type_id
-        if not project_type.wip_account_id:
-            raise ValidationError(_(
-                'The project type {} has no WIP account. '
-                'The WIP account must be set on the project type before confirming the '
-                'outsourcing purchase order.'
-            ).format(project_type.display_name))
-
-    def button_confirm(self):
-        outsourcing_orders = self.filtered(lambda o: o.is_outsourcing)
-        for order in outsourcing_orders:
-            order.sudo()._check_outsourcing_project_has_type()
-            order.sudo()._check_outsourcing_project_type_has_wip_account()
-        return super().button_confirm()
-
 
 class PurchaseOrderLine(models.Model):
 

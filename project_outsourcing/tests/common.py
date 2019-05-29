@@ -29,22 +29,8 @@ class OutsourcingCase(common.SavepointCase):
             'supplier': True,
         })
 
-        cls.wip_account = cls.env['account.account'].create({
-            'name': 'Work In Progress',
-            'code': '140102',
-            'user_type_id': cls.env.ref('account.data_account_type_non_current_assets').id,
-            'reconcile': True,
-            'company_id': cls.env.user.company_id.id,
-        })
-
-        cls.project_type = cls.env['project.type'].create({
-            'name': 'Trailer Refurb',
-            'wip_account_id': cls.wip_account.id,
-        })
-
         cls.project = cls.env['project.project'].create({
             'name': 'Job 123',
-            'project_type_id': cls.project_type.id,
         })
 
         cls.task = cls.env['project.task'].create({

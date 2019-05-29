@@ -25,4 +25,20 @@
         </field>
     </record>
 
+    <record id="invoice_line_form_with_task" model="ir.ui.view">
+        <field name="name">Invoice Line Form: add field task</field>
+        <field name="model">account.invoice.line</field>
+        <field name="inherit_id" ref="account.view_invoice_line_form"/>
+        <field name="arch" type="xml">
+            <field name="account_analytic_id" position="after">
+                <field name="task_id"
+                    attrs="{'readonly': [('account_analytic_id', '=', False)]}"
+                    force_save="1"
+                    domain="[('project_id.analytic_account_id', '=', account_analytic_id)]"
+                    groups="analytic.group_analytic_accounting"
+                    />
+            </field>
+        </field>
+    </record>
+
 </odoo>
