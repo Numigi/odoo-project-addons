@@ -18,6 +18,7 @@
         'project_form_with_dates',
         'project_portal_parent_task',
         'project_stage_no_quick_create',
+        'project_task_analytic_lines',
         'project_stage',
         'project_task_date_planned',
         'project_task_deadline_from_project',
