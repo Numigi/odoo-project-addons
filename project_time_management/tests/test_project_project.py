@@ -24,7 +24,6 @@ class TestProjectWithCalculatedHoursFields(common.SavepointCase):
         })
         analytic_line_pool.create({
             'name': 'line_task_a',
-            'account_id': 1,  # use demo account
             'unit_amount': 1.0,
             'task_id': task_a.id,
             'project_id': cls.project_a.id
@@ -40,7 +39,6 @@ class TestProjectWithCalculatedHoursFields(common.SavepointCase):
         })
         analytic_line_pool.create({
             'name': 'line_task_b1',
-            'account_id': 1,  # use demo account
             'unit_amount': 1.0,
             'task_id': task_b1.id,
             'project_id': cls.project_b.id
@@ -54,7 +52,6 @@ class TestProjectWithCalculatedHoursFields(common.SavepointCase):
         })
         analytic_line_pool.create({
             'name': 'line_task_b2',
-            'account_id': 1,  # use demo account
             'unit_amount': 6.0,
             'task_id': task_b2.id,
             'project_id': cls.project_b.id
