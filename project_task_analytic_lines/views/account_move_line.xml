@@ -25,7 +25,7 @@
             <xpath expr="//notebook/page[1]/group[1]" position="inside">
                 <group name="group_project" string="Project" groups="analytic.group_analytic_accounting">
                     <field name="task_id"
-                        attrs="{'readonly': [('analytic_account_id', '=', False)]}"
+                        attrs="{'readonly': ['|', ('analytic_account_id', '=', False), ('parent_state','=','posted')]}"
                         force_save="1"
                         domain="[('project_id.analytic_account_id', '=', analytic_account_id)]"
                         />

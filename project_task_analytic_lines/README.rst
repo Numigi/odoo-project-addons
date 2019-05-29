@@ -11,7 +11,7 @@ Therefore, if you need to generate a cost report, only the timesheet lines will 
 
 Summary
 -------
-This module adds a `Task` field on supplier invoices lines and journal entries.
+This module adds a `Task` field on supplier invoice lines and journal entries.
 
 The task is propagated:
 
