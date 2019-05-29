@@ -12,7 +12,7 @@
     'summary': 'Add a task on journal entries and vendor bills',
     'depends': [
         'account',
-        'project',
+        'hr_timesheet',
     ],
     'data': [
         'views/account_analytic_line.xml',

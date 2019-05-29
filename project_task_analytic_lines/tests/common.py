@@ -4,7 +4,7 @@
 from odoo.tests import common
 
 
-class TaskPropagationCase(common.SavepointCase):
+class AccountCase(common.SavepointCase):
 
     @classmethod
     def setUpClass(cls):
@@ -17,7 +17,11 @@ class TaskPropagationCase(common.SavepointCase):
         })
 
         cls.project = cls.env['project.project'].create({
-            'name': 'Job 123',
+            'name': 'Job 1',
+        })
+
+        cls.project_2 = cls.env['project.project'].create({
+            'name': 'Job 2',
         })
 
         cls.analytic_account = cls.project.analytic_account_id
@@ -41,7 +45,34 @@ class TaskPropagationCase(common.SavepointCase):
         ], limit=1)
 
 
-class TestTaskPropagationFromInvoice(TaskPropagationCase):
+class AccountMoveCase(AccountCase):
+
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.journal = cls.env['account.journal'].search([('type', '=', 'purchase')], limit=1)
+        cls.move = cls.env['account.move'].create({
+            'journal_id': cls.journal.id,
+            'line_ids': [
+                (0, 0, {
+                    'name': '/',
+                    'account_id': cls.expense_account.id,
+                    'analytic_account_id': cls.analytic_account.id,
+                    'task_id': cls.task.id,
+                    'debit': 100,
+                }),
+                (0, 0, {
+                    'name': '/',
+                    'account_id': cls.payable_account.id,
+                    'credit': 100,
+                }),
+            ]
+        })
+        cls.debit = cls.move.line_ids.filtered(lambda l: l.debit)
+        cls.credit = cls.move.line_ids.filtered(lambda l: l.credit)
+
+
+class InvoiceCase(AccountCase):
 
     @classmethod
     def setUpClass(cls):
@@ -89,50 +120,3 @@ class TestTaskPropagationFromInvoice(TaskPropagationCase):
 
     def _validate_invoice(self):
         self.invoice.sudo(self.account_user).action_invoice_open()
-
-    def test_task_propagated_to_expense_move_line(self):
-        self._validate_invoice()
-        move_line = self.invoice.move_id.line_ids.filtered(
-            lambda l: l.account_id == self.expense_account)
-        assert move_line.task_id == self.task
-
-    def test_task_not_propagated_to_payable_move_line(self):
-        self._validate_invoice()
-        move_line = self.invoice.move_id.line_ids.filtered(
-            lambda l: l.account_id == self.payable_account)
-        assert len(move_line) == 1
-        assert not move_line.task_id
-
-    def test_task_not_propagated_to_tax_move_line(self):
-        self._validate_invoice()
-        move_line = self.invoice.move_id.line_ids.filtered(
-            lambda l: l.account_id == self.tax_account)
-        assert len(move_line) == 1
-        assert not move_line.task_id
-
-    def test_if_tax_included_in_analytic_cost__task_propagated_to_tax_move_line(self):
-        self.tax.analytic = True
-        self.invoice.compute_taxes()
-        self._validate_invoice()
-        move_line = self.invoice.move_id.line_ids.filtered(
-            lambda l: l.account_id == self.tax_account)
-        assert move_line.task_id == self.task
-
-    def test_move_lines_are_grouped_per_task(self):
-        self.invoice.journal_id.group_invoice_lines = True
-
-        self.invoice.write({
-            'invoice_line_ids': [
-                (0, 0, self._get_invoice_line_vals(task_id=self.task.id)),
-                (0, 0, self._get_invoice_line_vals(task_id=self.task_2.id)),
-                (0, 0, self._get_invoice_line_vals(task_id=self.task_2.id)),
-                (0, 0, self._get_invoice_line_vals(task_id=self.task_2.id)),
-                (0, 0, self._get_invoice_line_vals(task_id=False)),
-                (0, 0, self._get_invoice_line_vals(task_id=False)),
-            ]
-        })
-
-        self._validate_invoice()
-        move_lines = self.invoice.move_id.line_ids.filtered(
-            lambda l: l.account_id == self.expense_account)
-        assert len(move_lines) == 3
