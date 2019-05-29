@@ -24,3 +24,13 @@ class TestTaskPropagationOnTimesheets(AccountCase):
         })
         line.task_id = self.task_2
         assert line.origin_task_id == self.task_2
+
+    def test_on_write_origin_task__task_propagated(self):
+        line = self.env['account.analytic.line'].create({
+            'name': '/',
+            'project_id': self.project.id,
+            'task_id': self.task.id,
+            'user_id': self.account_user.id,
+        })
+        line.origin_task_id = self.task_2
+        assert line.task_id == self.task_2

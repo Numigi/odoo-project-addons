@@ -68,6 +68,22 @@ In the list of analytic lines, I notice that the task was propagated.
 
 .. image:: static/description/supplier_invoice_analytic_lines.png
 
+Taxes Included In Cost
+----------------------
+The module supports taxes included in the analytic cost.
+
+In the form view of a tax, I check the field "Included in Analytic Cost".
+
+.. image:: static/description/tax_with_analytic.png
+
+On the invoice, when selecting the tax, the task is propagated along with the analytic account.
+
+.. image:: static/description/supplier_invoice_with_tax.png
+
+On the journal entry, the task is propagated from the invoice tax.
+
+.. image:: static/description/supplier_invoice_with_tax_move.png
+
 Analytic Lines
 --------------
 In the list of analytic lines, I see a new field `Task`.
@@ -89,6 +105,20 @@ I am able to search by task:
 I am able to group by task:
 
 .. image:: static/description/analytic_lines_group.png
+
+Journal Items
+-------------
+In the list view of journal items, I see a new field `Task`.
+
+.. image:: static/description/journal_items_task_column.png
+
+I am able to search by task:
+
+.. image:: static/description/journal_items_search.png
+
+I am able to group by task:
+
+.. image:: static/description/journal_items_group.png
 
 Constraints
 -----------

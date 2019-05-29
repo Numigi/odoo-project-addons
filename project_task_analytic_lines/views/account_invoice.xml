@@ -6,14 +6,22 @@
         <field name="model">account.invoice</field>
         <field name="inherit_id" ref="account.invoice_supplier_form"/>
         <field name="arch" type="xml">
-            <field name="account_analytic_id" position="after">
+            <xpath expr="//field[@name='invoice_line_ids']//field[@name='account_analytic_id']" position="after">
                 <field name="task_id"
                     attrs="{'readonly': [('account_analytic_id', '=', False)]}"
                     force_save="1"
                     domain="[('project_id.analytic_account_id', '=', account_analytic_id)]"
                     groups="analytic.group_analytic_accounting"
                     />
-            </field>
+            </xpath>
+            <xpath expr="//field[@name='tax_line_ids']//field[@name='account_analytic_id']" position="after">
+                <field name="task_id"
+                    attrs="{'readonly': [('account_analytic_id', '=', False)]}"
+                    force_save="1"
+                    domain="[('project_id.analytic_account_id', '=', account_analytic_id)]"
+                    groups="analytic.group_analytic_accounting"
+                    />
+            </xpath>
         </field>
     </record>
 

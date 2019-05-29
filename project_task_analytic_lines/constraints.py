@@ -160,7 +160,7 @@ class Task(models.Model):
                 'because it is already bound to a posted journal entry ({move}).'
             ).format(task=task.display_name, move=move.display_name))
 
-    @api.model
+    @api.multi
     def write(self, vals):
         if 'project_id' in vals:
             self._check_no_related_open_invoice()
