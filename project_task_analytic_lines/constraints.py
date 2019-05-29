@@ -6,6 +6,7 @@ from odoo.exceptions import ValidationError
 
 
 class AnalyticLine(models.Model):
+    """Prevent an analytic line with a task and analytic account that dont match."""
 
     _inherit = 'account.analytic.line'
 
@@ -134,7 +135,7 @@ class Task(models.Model):
 
     @api.multi
     def _check_no_related_open_invoice(self):
-        invoice_lines = self.env['account.invoice.line'].search([
+        invoice_lines = self.env['account.invoice.line'].sudo().search([
             ('task_id', 'in', self.ids),
             ('invoice_id.state', 'in', ('open', 'paid')),
         ])
@@ -148,7 +149,7 @@ class Task(models.Model):
 
     @api.multi
     def _check_no_related_journal_entry(self):
-        move_lines = self.env['account.move.line'].search([
+        move_lines = self.env['account.move.line'].sudo().search([
             ('task_id', 'in', self.ids),
             ('move_id.state', '=', 'posted'),
         ])
