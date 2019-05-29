@@ -12,6 +12,7 @@
     'summary': 'Generate WIP journal entries from purchase orders',
     'depends': [
         'project_wip',
+        'project_outsourcing',
         'purchase',
     ],
     'data': [
