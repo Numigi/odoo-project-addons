@@ -11,6 +11,7 @@
     'category': 'Project',
     'summary': 'Consume material on projects',
     'depends': [
+        'project_task_analytic_lines',
         'project_task_date_planned',
         'project_wip',
         'stock',
