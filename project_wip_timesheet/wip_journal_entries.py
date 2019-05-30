@@ -103,6 +103,7 @@ class TimesheetLine(models.Model):
             'credit': self.amount if self.amount > 0 else 0,
             'quantity': self.unit_amount,
             'analytic_account_id': self.project_id.analytic_account_id.id,
+            'task_id': self.task_id.id,
         }
 
     def _get_salary_move_line_vals(self):

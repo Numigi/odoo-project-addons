@@ -163,6 +163,11 @@ class TestWIPJournalEntries(WIPJournalEntriesCase):
         wip_line = self._get_wip_move_line(timesheet_line)
         assert wip_line.analytic_account_id == self.project.analytic_account_id
 
+    def test_wip_move_line_task_is_set(self):
+        timesheet_line = self._create_timesheet()
+        wip_line = self._get_wip_move_line(timesheet_line)
+        assert wip_line.task_id == self.task
+
     def test_wip_move_line_with_positive_timesheet__has_debit(self):
         expected_amount = 100
         timesheet_line = self._create_timesheet(amount=expected_amount)
@@ -180,6 +185,12 @@ class TestWIPJournalEntries(WIPJournalEntriesCase):
         salary_line = self._get_salary_move_line(timesheet_line)
         assert salary_line
         assert not salary_line.analytic_account_id
+
+    def test_salary_move_line_has_no_task(self):
+        timesheet_line = self._create_timesheet()
+        salary_line = self._get_salary_move_line(timesheet_line)
+        assert salary_line
+        assert not salary_line.task_id
 
     def test_on_change_timesheet_amount__debit_amount_updated(self):
         timesheet_line = self._create_timesheet()
@@ -216,6 +227,12 @@ class TestWIPJournalEntries(WIPJournalEntriesCase):
         wip_line = self._get_wip_move_line(timesheet_line)
         timesheet_line.unlink()
         assert wip_line.reconciled
+
+    def test_reversal_move_wip_line_has_task(self):
+        timesheet_line = self._create_timesheet()
+        wip_line = self._get_wip_move_line(timesheet_line)
+        timesheet_line.unlink()
+        assert wip_line.matched_credit_ids.credit_move_id.task_id == self.task
 
     def test_if_new_project_requires_no_timesheet__account_move_reversed(self):
         timesheet_line = self._create_timesheet()

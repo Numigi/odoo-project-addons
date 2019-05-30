@@ -12,6 +12,7 @@
     'summary': 'Generate WIP journal entries from timesheets',
     'depends': [
         'project_wip',
+        'project_task_analytic_lines',
         'hr_timesheet',
         'sale_timesheet',
     ],
