@@ -87,6 +87,7 @@ class StockMove(models.Model):
             )
             for line in lines_with_wip_account:
                 line[2]['analytic_account_id'] = analytic_account.id
+                line[2]['task_id'] = self.task_id.id
 
         return move_line_vals
 
