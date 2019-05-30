@@ -15,8 +15,5 @@
         'project_outsourcing',
         'purchase',
     ],
-    'data': [
-        'views/supplier_invoice.xml',
-    ],
     'installable': True,
 }
