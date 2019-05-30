@@ -52,8 +52,14 @@ class TestConsumptionJournalEntry(TaskMaterialCase):
     def test_debit_analytic_account_is_project(self):
         assert self.debit_line.analytic_account_id == self.project.analytic_account_id
 
+    def test_debit_task_is_set(self):
+        assert self.debit_line.task_id == self.task
+
     def test_credit_has_no_analytic_account(self):
         assert not self.credit_line.analytic_account_id
+
+    def test_credit_has_no_task(self):
+        assert not self.credit_line.task_id
 
     def test_product_propagated_to_account_move(self):
         assert self.debit_line.product_id == self.product_a
@@ -65,6 +71,9 @@ class TestConsumptionJournalEntry(TaskMaterialCase):
 
     def test_one_analytic_line_created_for_debit(self):
         assert len(self.debit_line.analytic_line_ids) == 1
+
+    def test_anayltic_line_has_origin_task(self):
+        assert self.debit_line.analytic_line_ids.origin_task_id == self.task
 
     def test_no_analytic_line_created_for_credit(self):
         assert not self.credit_line.analytic_line_ids
@@ -99,8 +108,14 @@ class TestConsumptionReturnJournalEntry(TaskMaterialCase):
     def test_credit_analytic_account_is_project(self):
         assert self.credit_line.analytic_account_id == self.project.analytic_account_id
 
+    def test_credit_task_is_set(self):
+        assert self.credit_line.task_id == self.task
+
     def test_debit_has_no_analytic_account(self):
         assert not self.debit_line.analytic_account_id
+
+    def test_debit_has_no_task(self):
+        assert not self.debit_line.task_id
 
     def test_product_propagated_to_account_move(self):
         assert self.credit_line.product_id == self.product_a
@@ -112,6 +127,9 @@ class TestConsumptionReturnJournalEntry(TaskMaterialCase):
 
     def test_one_analytic_line_created_for_credit(self):
         assert len(self.credit_line.analytic_line_ids) == 1
+
+    def test_anayltic_line_has_origin_task(self):
+        assert self.credit_line.analytic_line_ids.origin_task_id == self.task
 
     def test_no_analytic_line_created_for_debit(self):
         assert not self.debit_line.analytic_line_ids
