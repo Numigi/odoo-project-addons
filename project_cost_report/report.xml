@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="assets_backend" name="cost_report assets" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/project_cost_report/static/src/js/report_action.js"></script>
+            <link rel="stylesheet" type="text/css" href="/project_cost_report/static/src/css/cost_report.css"/>
+        </xpath>
+    </template>
+
+    <template id="cost_report_html">
+        <t t-call="project_cost_report.cost_report_body"/>
+    </template>
+
+    <template id="cost_report_pdf_assets" inherit_id="web.assets_common" active="True">
+        <xpath expr="." position="inside">
+            <link rel="stylesheet" type="text/css" href="/project_cost_report/static/src/css/cost_report.css"/>
+        </xpath>
+    </template>
+
+    <template id="cost_report_pdf">
+        <t t-raw="'&lt;base href=%s&gt;' % base_url"/>
+        <t t-call="web.html_container">
+            <t t-call-assets="project_cost_report.cost_report_pdf_assets" t-js="False"/>
+            <t t-call="project_cost_report.cost_report_body"/>
+        </t>
+    </template>
+
+    <template id="cost_report_body">
+        <div class="container o_project_cost_report">
+            <span class="text-left">
+                <h2 class="o_project_cost_report__title">Cost Report</h2>
+            </span>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr class="o_project_cost_report__level_1">
+                            <th colspan="5">Item</th>
+                            <th>Cost</th>
+                        </tr>
+                        <tr class="o_project_cost_report__level_3">
+                            <th class="o_project_cost_report__padding_column"></th>
+                            <th>Date</th>
+                            <th>Description</th>
+                            <th>Quantity</th>
+                            <th>UOM</th>
+                            <th>Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="o_project_cost_report__level_1">
+                            <td colspan="5">Products</td>
+                            <td>
+                                <t t-raw="product_total"/>
+                            </td>
+                        </tr>
+                        <t t-foreach="product_categories" t-as="category">
+                            <tr class="o_project_cost_report__level_2">
+                                <td colspan="5">
+                                    <a href="#" class="o_project_cost_report__product_category" t-att-data-id="category.id">
+                                        <i class="fa fa-caret-right" t-if="category.folded"></i>
+                                        <i class="fa fa-caret-down" t-if="not category.folded"></i>
+                                        <t t-raw="category.name"/>
+                                    </a>
+                                </td>
+                                <td>
+                                    <a href="#">
+                                        <t t-raw="category.total"/>
+                                    </a>
+                                </td>
+                            </tr>
+                            <t t-if="not category.folded">
+                                <tr t-foreach="category.lines" t-as="line" class="o_project_cost_report__level_3">
+                                    <td></td>
+                                    <td>
+                                        <t t-raw="line.date"/>
+                                    </td>
+                                    <td>
+                                        <t t-raw="line.name"/>
+                                    </td>
+                                    <td>
+                                        <t t-raw="line.unit_amount"/>
+                                    </td>
+                                    <td>
+                                        <t t-raw="line.product_uom_id.name"/>
+                                    </td>
+                                    <td>
+                                        <t t-raw="line.amount"/>
+                                    </td>
+                                </tr>
+                            </t>
+                        </t>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </template>
+</odoo>
