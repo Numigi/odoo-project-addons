@@ -26,6 +26,74 @@
         </t>
     </template>
 
+    <template id="cost_report_body__analytic_line_details">
+        <tr class="o_project_cost_report__level_3">
+            <td></td>
+            <td>
+                <t t-raw="line.date"/>
+            </td>
+            <td>
+                <t t-raw="line.name"/>
+            </td>
+            <td>
+                <t t-raw="line.unit_amount"/>
+            </td>
+            <td>
+                <t t-raw="line.product_uom_id.name"/>
+            </td>
+            <td>
+                <t t-raw="line.amount"/>
+            </td>
+        </tr>
+    </template>
+
+    <template id="cost_report_body__product_category">
+        <tr class="o_project_cost_report__level_2">
+            <td colspan="5">
+                <a href="#" class="o_project_cost_report__product_category" t-att-data-id="category.id">
+                    <i class="fa fa-caret-right" t-if="category.folded"></i>
+                    <i class="fa fa-caret-down" t-if="not category.folded"></i>
+                    <t t-raw="category.name"/>
+                </a>
+            </td>
+            <td>
+                <a href="#">
+                    <t t-raw="category.total"/>
+                </a>
+            </td>
+        </tr>
+        <t t-if="not category.folded">
+            <t t-foreach="category.lines" t-as="line">
+                <t t-call="project_cost_report.cost_report_body__analytic_line_details"/>
+            </t>
+        </t>
+    </template>
+
+    <template id="cost_report_body__time_category">
+        <tr class="o_project_cost_report__level_2">
+            <td colspan="3">
+                <a href="#" class="o_project_cost_report__time_category" t-att-data-id="category.id">
+                    <i class="fa fa-caret-right" t-if="category.folded"></i>
+                    <i class="fa fa-caret-down" t-if="not category.folded"></i>
+                    <t t-raw="category.name"/>
+                </a>
+            </td>
+            <td colspan="2">
+                <t t-raw="category.total_hours"/>
+            </td>
+            <td>
+                <a href="#">
+                    <t t-raw="category.total"/>
+                </a>
+            </td>
+        </tr>
+        <t t-if="not category.folded">
+            <t t-foreach="category.lines" t-as="line">
+                <t t-call="project_cost_report.cost_report_body__analytic_line_details"/>
+            </t>
+        </t>
+    </template>
+
     <template id="cost_report_body">
         <div class="container o_project_cost_report">
             <span class="text-left">
@@ -48,51 +116,31 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr class="o_project_cost_report__level_1">
+                        <tr class="o_project_cost_report__level_1" v-if="product_categories">
                             <td colspan="5">Products</td>
                             <td>
                                 <t t-raw="product_total"/>
                             </td>
                         </tr>
                         <t t-foreach="product_categories" t-as="category">
-                            <tr class="o_project_cost_report__level_2">
-                                <td colspan="5">
-                                    <a href="#" class="o_project_cost_report__product_category" t-att-data-id="category.id">
-                                        <i class="fa fa-caret-right" t-if="category.folded"></i>
-                                        <i class="fa fa-caret-down" t-if="not category.folded"></i>
-                                        <t t-raw="category.name"/>
-                                    </a>
-                                </td>
-                                <td>
-                                    <a href="#">
-                                        <t t-raw="category.total"/>
-                                    </a>
-                                </td>
-                            </tr>
-                            <t t-if="not category.folded">
-                                <tr t-foreach="category.lines" t-as="line" class="o_project_cost_report__level_3">
-                                    <td></td>
-                                    <td>
-                                        <t t-raw="line.date"/>
-                                    </td>
-                                    <td>
-                                        <t t-raw="line.name"/>
-                                    </td>
-                                    <td>
-                                        <t t-raw="line.unit_amount"/>
-                                    </td>
-                                    <td>
-                                        <t t-raw="line.product_uom_id.name"/>
-                                    </td>
-                                    <td>
-                                        <t t-raw="line.amount"/>
-                                    </td>
-                                </tr>
-                            </t>
+                            <t t-call="project_cost_report.cost_report_body__product_category"/>
+                        </t>
+                        <tr class="o_project_cost_report__level_1" v-if="time_categories">
+                            <td colspan="3">Time</td>
+                            <td colspan="2">
+                                <t t-raw="time_total_hours"/>
+                            </td>
+                            <td>
+                                <t t-raw="time_total"/>
+                            </td>
+                        </tr>
+                        <t t-foreach="time_categories" t-as="category">
+                            <t t-call="project_cost_report.cost_report_body__time_category"/>
                         </t>
                     </tbody>
                 </table>
             </div>
         </div>
     </template>
+
 </odoo>

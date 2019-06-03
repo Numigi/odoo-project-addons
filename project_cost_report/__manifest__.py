@@ -12,6 +12,7 @@
     'summary': 'Add a dynamic cost report to projects',
     'depends': [
         'project_task_analytic_lines',
+        'project_task_type',
     ],
     'data': [
         'report.xml',

@@ -23,6 +23,13 @@ class CostReportCategory:
         self.total = float_round(sum(l.amount for l in lines), 2)
 
 
+class TimeCategory(CostReportCategory):
+
+    def __init__(self, id_: int, name: str, lines: models.Model, folded: bool):
+        super().__init__(id_, name, lines, folded)
+        self.total_hours = float_round(sum(l.unit_amount for l in lines), 2)
+
+
 class ProjectCostReport(models.TransientModel):
 
     _name = 'project.cost.report'
@@ -51,13 +58,14 @@ class ProjectCostReport(models.TransientModel):
             grouped_lines[category] |= line
 
         sorted_categories = sorted(grouped_lines.keys(), key=lambda c: c.name)
-        unfolded_category_ids = report_context.get('unfolded_category_ids') or []
+        unfolded_categories = report_context.get('unfolded_categories') or {}
+        unfolded_product_categories = unfolded_categories.get('product') or []
         return [
             CostReportCategory(
                 id_=c.id,
                 name=c.name,
                 lines=grouped_lines.get(c),
-                folded=c.id not in unfolded_category_ids
+                folded=c.id not in unfolded_product_categories
             ) for c in sorted_categories
         ]
 
@@ -65,7 +73,8 @@ class ProjectCostReport(models.TransientModel):
         domain = self._get_product_analytic_line_domain(project)
         result = self.env['account.analytic.line'].read_group(
             domain=domain, fields=['account_id', 'amount'], groupby='account_id')
-        return result[0]['amount'] if result else 0
+        amount = result[0]['amount'] if result else 0
+        return float_round(amount, 2)
 
     def _get_rendering_variables(self, project, report_context):
         """Get the variables used for rendering the qweb report.
@@ -103,3 +112,67 @@ class ProjectCostReport(models.TransientModel):
         if not res:
             res = self.create({})
         return res._get_html(report_context)
+
+
+class ProjectCostReportWithTime(models.TransientModel):
+
+    _inherit = 'project.cost.report'
+
+    def _get_time_analytic_line_domain(self, project):
+        return [
+            ('account_id', '=', project.analytic_account_id.id),
+            ('task_id', '!=', False),
+        ]
+
+    def _get_time_categories(self, project, report_context):
+        """Get the task types for the TIME section.
+
+        :param project: the project.project record
+        :param report_context: the rendering context
+        :rtype: dict
+        """
+        domain = self._get_time_analytic_line_domain(project)
+        lines = self.env['account.analytic.line'].search(domain)
+
+        grouped_lines = {}
+        for line in lines:
+            category = line.task_id.task_type_id
+            if category not in grouped_lines:
+                grouped_lines[category] = self.env['account.analytic.line']
+            grouped_lines[category] |= line
+
+        sorted_categories = sorted(grouped_lines.keys(), key=lambda c: c.name or "")
+        unfolded_categories = report_context.get('unfolded_categories') or {}
+        unfolded_time_categories = unfolded_categories.get('time') or []
+        return [
+            TimeCategory(
+                id_=c.id,
+                name=c.name or None,
+                lines=grouped_lines.get(c),
+                folded=c.id not in unfolded_time_categories
+            ) for c in sorted_categories
+        ]
+
+    def _get_time_total(self, project):
+        domain = self._get_time_analytic_line_domain(project)
+        result = self.env['account.analytic.line'].read_group(
+            domain=domain, fields=['account_id', 'amount'], groupby='account_id')
+        amount = result[0]['amount'] if result else 0
+        return float_round(amount, 2)
+
+    def _get_time_total_hours(self, project):
+        domain = self._get_time_analytic_line_domain(project)
+        result = self.env['account.analytic.line'].read_group(
+            domain=domain, fields=['account_id', 'unit_amount'], groupby='account_id')
+        amount = result[0]['unit_amount'] if result else 0
+        return float_round(amount, 2)
+
+    def _get_rendering_variables(self, project, report_context):
+        """Add the variables related to the TIME section."""
+        res = super()._get_rendering_variables(project, report_context)
+        res.update({
+            'time_categories': self._get_time_categories(project, report_context),
+            'time_total': self._get_time_total(project),
+            'time_total_hours': self._get_time_total_hours(project),
+        })
+        return res

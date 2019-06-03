@@ -18,13 +18,17 @@ var QWeb = core.qweb;
 var ReportAction = Widget.extend(ControlPanelMixin, {
     events: {
         'click .o_project_cost_report__product_category': 'productCategoryClicked',
+        'click .o_project_cost_report__time_category': 'timeCategoryClicked',
     },
     init: function(parent, action) {
         this._super.apply(this, arguments);
         this.controller_url = action.context.url;
         this.reportContext = {
             active_id: action.context.active_id || action.params.active_id,
-            unfolded_category_ids: [],
+            unfolded_categories: {
+                'product': [],
+                'time': [],
+            },
         };
     },
     getHtml: function() {
@@ -75,27 +79,37 @@ var ReportAction = Widget.extend(ControlPanelMixin, {
         this._super();
         this.updateControlPanel();
     },
-    foldProductCategory(categoryId){
-        this.reportContext.unfolded_category_ids = (
-            this.reportContext.unfolded_category_ids.filter((c) => c != categoryId)
+    foldProductCategory(categoryId, categoryName){
+        this.reportContext.unfolded_categories[categoryName] = (
+            this.reportContext.unfolded_categories[categoryName].filter((c) => c != categoryId)
         );
         this.refresh();
     },
-    unfoldProductCategory(categoryId){
-        this.reportContext.unfolded_category_ids.push(categoryId);
+    unfoldProductCategory(categoryId, categoryName){
+        this.reportContext.unfolded_categories[categoryName].push(categoryId);
         this.refresh();
+    },
+    categoryClicked: function(categoryId, categoryName){
+        event.preventDefault();
+        var unfoldedIds = this.reportContext.unfolded_categories[categoryName];
+        var isUnfolded = unfoldedIds.indexOf(categoryId) !== -1;
+        if(isUnfolded){
+            this.foldProductCategory(categoryId, categoryName);
+        }
+        else{
+            this.unfoldProductCategory(categoryId, categoryName);
+        }
     },
     productCategoryClicked: function(event){
         event.preventDefault();
         var categoryId = parseInt(event.currentTarget.attributes['data-id'].nodeValue);
-        var unfoldedIds = this.reportContext.unfolded_category_ids;
-        var isUnfolded = unfoldedIds.indexOf(categoryId) !== -1;
-        if(isUnfolded){
-            this.foldProductCategory(categoryId);
-        }
-        else{
-            this.unfoldProductCategory(categoryId);
-        }
+        this.categoryClicked(categoryId, 'product');
+    },
+    timeCategoryClicked: function(event){
+        event.preventDefault();
+        var attributeNode = event.currentTarget.attributes['data-id'];
+        var categoryId = attributeNode ? parseInt(attributeNode.nodeValue) : false;
+        this.categoryClicked(categoryId, 'time');
     },
 });
 
