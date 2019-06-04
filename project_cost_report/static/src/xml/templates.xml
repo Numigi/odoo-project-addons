@@ -2,7 +2,15 @@
 <templates>
 
     <t t-name="projectCostReport.printButton">
-        <button type="button" class="btn btn-primary btn-sm">PRINT</button>
+        <button type="button" class="btn btn-primary btn-sm project_cost_report__control_panel_button">PRINT</button>
+    </t>
+
+    <t t-name="projectCostReport.unfoldButton">
+        <button type="button" class="btn btn-primary btn-sm project_cost_report__control_panel_button">UNFOLD</button>
+    </t>
+
+    <t t-name="projectCostReport.foldButton">
+        <button type="button" class="btn btn-primary btn-sm project_cost_report__control_panel_button">FOLD</button>
     </t>
 
 </templates>

@@ -36,6 +36,12 @@ class TestProjectCostReport(common.SavepointCase):
             'categ_id': cls.category_b.id,
         })
 
+        cls.service_a = cls.env['product.product'].create({
+            'name': 'Service A',
+            'type': 'service',
+            'categ_id': cls.category_a.id,
+        })
+
         cls.product_line_1 = cls.env['account.analytic.line'].create({
             'account_id': cls.analytic_account.id,
             'name': 'Line 1',
@@ -121,6 +127,24 @@ class TestProjectCostReport(common.SavepointCase):
             'amount': 700,
             'user_id': cls.env.user.id,
             'task_id': cls.task_3.id,
+        })
+
+        cls.outsourcing_line_1 = cls.env['account.analytic.line'].create({
+            'account_id': cls.analytic_account.id,
+            'name': 'Service Line 1',
+            'product_id': cls.service_a.id,
+            'unit_amount': 1,
+            'product_uom_id': cls.env.ref('product.product_uom_unit').id,
+            'amount': 800,
+        })
+
+        cls.outsourcing_line_2 = cls.env['account.analytic.line'].create({
+            'account_id': cls.analytic_account.id,
+            'name': 'Service Line 2',
+            'product_id': cls.service_a.id,
+            'unit_amount': 2,
+            'product_uom_id': cls.env.ref('product.product_uom_unit').id,
+            'amount': 900,
         })
 
         cls.report = cls.env['project.cost.report'].create({})
@@ -211,10 +235,6 @@ class TestProjectCostReport(common.SavepointCase):
         assert categories[1].name == self.task_type_1.name
         assert categories[2].name == self.task_type_2.name
 
-    def test_time_empty_category_name_is_none(self):
-        categories = self._get_time_categories()
-        assert categories[0].name is None
-
     def test_if_no_unfolded_category_given__then_all_time_categories_folded(self):
         categories = self._get_time_categories()
         assert categories[0].folded is True
@@ -231,7 +251,7 @@ class TestProjectCostReport(common.SavepointCase):
         assert categories[1].folded is False
         assert categories[2].folded is True
 
-    def test_if_false_in_folded_time_categories__then_empty_category_folded(self):
+    def test_if_false_in_folded_time_categories__then_empty_category_unfolded(self):
         categories = self._get_time_categories({
             'unfolded_categories': {
                 'time': [False],
@@ -254,3 +274,45 @@ class TestProjectCostReport(common.SavepointCase):
     def test_get_html_returns_bytestring(self):
         html = self.report.get_html({'active_id': self.project.id})
         assert isinstance(html, bytes)
+
+    def _get_outsourcing_categories(self, report_context=None):
+        return self.report._get_outsourcing_categories(self.project, report_context or {})
+
+    def test_empty_outsourcing_categories_found_in_report(self):
+        categories = self._get_outsourcing_categories()
+        assert len(categories) == 1
+        assert isinstance(categories[0], CostReportCategory)
+
+    def test_if_no_outsourcing_analytic_lines__then_no_categories(self):
+        self.outsourcing_line_1.unlink()
+        self.outsourcing_line_2.unlink()
+        categories = self._get_outsourcing_categories()
+        assert len(categories) == 0
+
+    def test_empty_outsourcing_category_id_is_false(self):
+        categories = self._get_outsourcing_categories()
+        assert categories[0].id is False
+
+    def test_all_outsourcing_analytic_lines_found_in_categories(self):
+        categories = self._get_outsourcing_categories()
+
+        assert len(categories[0].lines) == 2
+        assert self.outsourcing_line_1 in categories[0].lines
+        assert self.outsourcing_line_2 in categories[0].lines
+
+    def test_if_no_unfolded_category_given__then_all_outsourcing_categories_folded(self):
+        categories = self._get_outsourcing_categories()
+        assert categories[0].folded is True
+
+    def test_if_false_in_folded_outsourcing_categories__then_empty_category_unfolded(self):
+        categories = self._get_outsourcing_categories({
+            'unfolded_categories': {
+                'outsourcing': [False],
+            }
+        })
+        assert categories[0].folded is False
+
+    def test_outsourcing_total_is_sum_of_all_outsourcing_amounts(self):
+        total = self.report._get_outsourcing_total(self.project)
+        # 800 + 900 (sum of outsourcing_line_1 and outsourcing_line_2)
+        assert total == 1700
