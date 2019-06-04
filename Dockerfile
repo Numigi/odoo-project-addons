@@ -9,6 +9,7 @@ RUN pip3 install -r requirements.txt
 USER odoo
 
 COPY project_accurate_time_spent /mnt/extra-addons/project_accurate_time_spent
+COPY project_cost_report /mnt/extra-addons/project_cost_report
 COPY project_cost_smart_button /mnt/extra-addons/project_cost_smart_button
 COPY project_form_with_dates /mnt/extra-addons/project_form_with_dates
 COPY project_outsourcing /mnt/extra-addons/project_outsourcing
