@@ -152,9 +152,9 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <t t-call="cost_report_body__product_section"/>
-                        <t t-call="cost_report_body__time_section"/>
-                        <t t-call="cost_report_body__outsourcing_section"/>
+                        <t t-call="project_cost_report.cost_report_body__product_section"/>
+                        <t t-call="project_cost_report.cost_report_body__time_section"/>
+                        <t t-call="project_cost_report.cost_report_body__outsourcing_section"/>
                     </tbody>
                 </table>
             </div>
