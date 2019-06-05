@@ -30,7 +30,7 @@ The field is readonly if the analytic account is not filled.
 
 .. image:: static/description/journal_entry_task_readonly.png
 
-If a project is selected, I am able to select a task related to this project.
+If an analytic account is selected, I am able to select a task related to project of the analytic account.
 
 .. image:: static/description/journal_entry_task_selected.png
 
@@ -52,7 +52,7 @@ The field is readonly if the analytic account is not filled.
 
 .. image:: static/description/supplier_invoice_task_readonly.png
 
-If a project is selected, I am able to select a task related to this project.
+If an analytic account is selected, I am able to select a task related to project of the analytic account.
 
 .. image:: static/description/supplier_invoice_task_selected.png
 
