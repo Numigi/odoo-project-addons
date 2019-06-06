@@ -48,7 +48,7 @@ class TestProjectCostReport(common.SavepointCase):
             'product_id': cls.product_a.id,
             'unit_amount': 1,
             'product_uom_id': cls.env.ref('product.product_uom_unit').id,
-            'amount': 100,
+            'amount': -100,
         })
 
         cls.product_line_2 = cls.env['account.analytic.line'].create({
@@ -57,7 +57,7 @@ class TestProjectCostReport(common.SavepointCase):
             'product_id': cls.product_b.id,
             'unit_amount': 2,
             'product_uom_id': cls.env.ref('product.product_uom_unit').id,
-            'amount': 200,
+            'amount': -200,
         })
 
         cls.product_line_3 = cls.env['account.analytic.line'].create({
@@ -66,7 +66,7 @@ class TestProjectCostReport(common.SavepointCase):
             'product_id': cls.product_b.id,
             'unit_amount': 3,
             'product_uom_id': cls.env.ref('product.product_uom_unit').id,
-            'amount': 300,
+            'amount': -300,
         })
 
         cls.task_type_1 = cls.env['task.type'].create({'name': 'Type 1'})
@@ -89,12 +89,14 @@ class TestProjectCostReport(common.SavepointCase):
             'task_type_id': cls.task_type_2.id,
         })
 
+        cls.env.user.employee_ids.write({'timesheet_cost': 100})
+
         cls.time_line_1 = cls.env['account.analytic.line'].create({
             'project_id': cls.project.id,
             'name': 'Time 1',
             'product_uom_id': cls.env.ref('product.product_uom_hour').id,
             'unit_amount': 4,
-            'amount': 400,
+            'amount': -400,
             'user_id': cls.env.user.id,
             'task_id': cls.task_1.id,
         })
@@ -104,7 +106,7 @@ class TestProjectCostReport(common.SavepointCase):
             'name': 'Time 2',
             'product_uom_id': cls.env.ref('product.product_uom_hour').id,
             'unit_amount': 5,
-            'amount': 500,
+            'amount': -500,
             'user_id': cls.env.user.id,
             'task_id': cls.task_2.id,
         })
@@ -114,7 +116,7 @@ class TestProjectCostReport(common.SavepointCase):
             'name': 'Time 3',
             'product_uom_id': cls.env.ref('product.product_uom_hour').id,
             'unit_amount': 6,
-            'amount': 600,
+            'amount': -600,
             'user_id': cls.env.user.id,
             'task_id': cls.task_2.id,
         })
@@ -124,7 +126,7 @@ class TestProjectCostReport(common.SavepointCase):
             'name': 'Time 3',
             'product_uom_id': cls.env.ref('product.product_uom_hour').id,
             'unit_amount': 7,
-            'amount': 700,
+            'amount': -700,
             'user_id': cls.env.user.id,
             'task_id': cls.task_3.id,
         })
@@ -135,7 +137,7 @@ class TestProjectCostReport(common.SavepointCase):
             'product_id': cls.service_a.id,
             'unit_amount': 1,
             'product_uom_id': cls.env.ref('product.product_uom_unit').id,
-            'amount': 800,
+            'amount': -800,
         })
 
         cls.outsourcing_line_2 = cls.env['account.analytic.line'].create({
@@ -144,7 +146,7 @@ class TestProjectCostReport(common.SavepointCase):
             'product_id': cls.service_a.id,
             'unit_amount': 2,
             'product_uom_id': cls.env.ref('product.product_uom_unit').id,
-            'amount': 900,
+            'amount': -900,
         })
 
         cls.report = cls.env['project.cost.report'].create({})

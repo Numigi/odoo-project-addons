@@ -178,7 +178,7 @@ class CostReportCategory:
         self.name = name
         self.lines = lines
         self.folded = folded
-        self.total = float_round(sum(l.amount for l in lines), 2)
+        self.total = float_round(sum(-l.amount for l in lines), 2)
 
 
 class ProjectCostReportWithProducts(models.TransientModel):
@@ -228,7 +228,7 @@ class ProjectCostReportWithProducts(models.TransientModel):
         result = self.env['account.analytic.line'].read_group(
             domain=domain, fields=['account_id', 'amount'], groupby='account_id')
         amount = result[0]['amount'] if result else 0
-        return float_round(amount, 2)
+        return float_round(-amount, 2)
 
     def _get_rendering_variables(self, project, report_context):
         """Add the variables related to the PRODUCTS section."""
@@ -321,7 +321,7 @@ class ProjectCostReportWithTime(models.TransientModel):
         result = self.env['account.analytic.line'].read_group(
             domain=domain, fields=['account_id', 'amount'], groupby='account_id')
         amount = result[0]['amount'] if result else 0
-        return float_round(amount, 2)
+        return float_round(-amount, 2)
 
     def _get_time_total_hours(self, project):
         """Get the total hours (units) for the TIME section.
@@ -414,7 +414,7 @@ class ProjectCostReportWithOutsourcing(models.TransientModel):
         result = self.env['account.analytic.line'].read_group(
             domain=domain, fields=['account_id', 'amount'], groupby='account_id')
         amount = result[0]['amount'] if result else 0
-        return float_round(amount, 2)
+        return float_round(-amount, 2)
 
     def _get_rendering_variables(self, project, report_context):
         """Add the variables related to the OUTSOURCING section."""
