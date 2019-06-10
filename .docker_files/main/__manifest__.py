@@ -13,6 +13,7 @@
     'depends': [
         'stock_account',  # required for testing project_wip
 
+        'analytic_line_revenue',
         'project_accurate_time_spent',
         'project_cost_smart_button',
         'project_form_with_dates',
