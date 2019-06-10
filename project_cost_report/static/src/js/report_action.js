@@ -2,17 +2,16 @@
     © 2019 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
     License LGPL-3.0 or later (http://www.gnu.org/licenses/LGPL.html).
 */
-odoo.define('project_cost_report.ReportAction', function (require) {
-'use strict';
+odoo.define("project_cost_report.ReportAction", function (require) {
+"use strict";
 
-var core = require('web.core');
-var session = require('web.session');
-var Widget = require('web.Widget');
-var ControlPanelMixin = require('web.ControlPanelMixin');
-var session = require('web.session');
-var framework = require('web.framework');
-var crash_manager = require('web.crash_manager');
+var ControlPanelMixin = require("web.ControlPanelMixin");
+var core = require("web.core");
+var crashManager = require("web.crash_manager");
+var framework = require("web.framework");
 var rpc = require("web.rpc");
+var session = require("web.session");
+var Widget = require("web.Widget");
 
 var QWeb = core.qweb;
 var _t = core._t;
@@ -26,7 +25,7 @@ var _t = core._t;
  * @returns {Number} - the record ID
  */
 function getRecordIdFromEvent(event){
-    var attributeNode = event.currentTarget.attributes['data-id'];
+    var attributeNode = event.currentTarget.attributes["data-id"];
     return attributeNode ? parseInt(attributeNode.nodeValue) : false;
 }
 
@@ -39,20 +38,20 @@ function getRecordIdFromEvent(event){
  * @returns {String} - the record name
  */
 function getRecordNameFromEvent(event){
-    var attributeNode = event.currentTarget.attributes['data-name'];
+    var attributeNode = event.currentTarget.attributes["data-name"];
     return attributeNode ? attributeNode.nodeValue : false;
 }
 
 var ReportAction = Widget.extend(ControlPanelMixin, {
     events: {
-        'click .o_project_cost_report__analytic_line': 'analyticLineClicked',
-        'click .o_project_cost_report__product_category': 'productCategoryClicked',
-        'click .o_project_cost_report__product_total': 'productTotalClicked',
-        'click .o_project_cost_report__time_category': 'timeCategoryClicked',
-        'click .o_project_cost_report__time_total_hours': 'hourTotalClicked',
-        'click .o_project_cost_report__time_total': 'hourTotalClicked',
-        'click .o_project_cost_report__outsourcing_category': 'outsourcingCategoryClicked',
-        'click .o_project_cost_report__outsourcing_total': 'outsourcingTotalClicked',
+        "click .o_project_cost_report__analytic_line": "analyticLineClicked",
+        "click .o_project_cost_report__product_category": "productCategoryClicked",
+        "click .o_project_cost_report__product_total": "productTotalClicked",
+        "click .o_project_cost_report__time_category": "timeCategoryClicked",
+        "click .o_project_cost_report__time_total_hours": "hourTotalClicked",
+        "click .o_project_cost_report__time_total": "hourTotalClicked",
+        "click .o_project_cost_report__outsourcing_category": "outsourcingCategoryClicked",
+        "click .o_project_cost_report__outsourcing_total": "outsourcingTotalClicked",
     },
     init(parent, action) {
         this._super.apply(this, arguments);
@@ -61,9 +60,9 @@ var ReportAction = Widget.extend(ControlPanelMixin, {
         this.reportContext = {
             active_id: this.projectId,
             unfolded_categories: {
-                'product': [],
-                'time': [],
-                'outsourcing': [],
+                "product": [],
+                "time": [],
+                "outsourcing": [],
             },
         };
         this.unfolded = false;
@@ -73,8 +72,8 @@ var ReportAction = Widget.extend(ControlPanelMixin, {
      */
     async updateHtml(){
         var html = await this._rpc({
-            model: 'project.cost.report',
-            method: 'get_html',
+            model: "project.cost.report",
+            method: "get_html",
             args: [this.reportContext],
         });
         this.$el.html(html);
@@ -86,7 +85,7 @@ var ReportAction = Widget.extend(ControlPanelMixin, {
      */
     renderPrintButton(){
         var button = $(QWeb.render("projectCostReport.printButton", {}));
-        button.bind('click', () => this.downloadPDF());
+        button.bind("click", () => this.downloadPDF());
         return button;
     },
     /**
@@ -96,7 +95,7 @@ var ReportAction = Widget.extend(ControlPanelMixin, {
      */
     renderFoldButton(){
         var button = $(QWeb.render("projectCostReport.foldButton", {}));
-        button.bind('click', () => this.fold());
+        button.bind("click", () => this.fold());
         return button;
     },
     /**
@@ -106,7 +105,7 @@ var ReportAction = Widget.extend(ControlPanelMixin, {
      */
     renderUnfoldButton(){
         var button = $(QWeb.render("projectCostReport.unfoldButton", {}));
-        button.bind('click', () => this.unfold());
+        button.bind("click", () => this.unfold());
         return button;
     },
     /**
@@ -142,13 +141,13 @@ var ReportAction = Widget.extend(ControlPanelMixin, {
     updateFoldButtonVisibility(){
         if(this.unfolded){
             this.foldButton.show();
-            this.foldButton.css('display', 'inline-block');
+            this.foldButton.css("display", "inline-block");
             this.unfoldButton.hide();
         }
         else {
             this.foldButton.hide();
             this.unfoldButton.show();
-            this.unfoldButton.css('display', 'inline-block');
+            this.unfoldButton.css("display", "inline-block");
         }
     },
     /**
@@ -180,7 +179,7 @@ var ReportAction = Widget.extend(ControlPanelMixin, {
             url: "/web/project_cost_report/" + this.projectId,
             data: {report_context: JSON.stringify(this.reportContext)},
             complete: framework.unblockUI,
-            error: crash_manager.rpc_error.bind(crash_manager),
+            error: crashManager.rpc_error.bind(crashManager),
         });
     },
     /**
@@ -188,9 +187,9 @@ var ReportAction = Widget.extend(ControlPanelMixin, {
      */
     fold(){
         this.reportContext.unfolded_categories = {
-            'product': [],
-            'time': [],
-            'outsourcing': [],
+            "product": [],
+            "time": [],
+            "outsourcing": [],
         };
         this.unfolded = false;
         this.refresh();
@@ -200,8 +199,8 @@ var ReportAction = Widget.extend(ControlPanelMixin, {
      */
     async unfold(){
         this.reportContext.unfolded_categories = await this._rpc({
-            model: 'project.cost.report',
-            method: 'get_foldable_categories',
+            model: "project.cost.report",
+            method: "get_foldable_categories",
             args: [this.projectId],
         });
         this.unfolded = true;
@@ -215,7 +214,7 @@ var ReportAction = Widget.extend(ControlPanelMixin, {
      */
     foldCategory(categoryId, sectionName){
         this.reportContext.unfolded_categories[sectionName] = (
-            this.reportContext.unfolded_categories[sectionName].filter((c) => c != categoryId)
+            this.reportContext.unfolded_categories[sectionName].filter((c) => c !== categoryId)
         );
         this.unfolded = false;
         this.refresh();
@@ -274,7 +273,7 @@ var ReportAction = Widget.extend(ControlPanelMixin, {
     productCategoryClicked(event){
         event.preventDefault();
         var categoryId = getRecordIdFromEvent(event);
-        this.categoryClicked(categoryId, 'product');
+        this.categoryClicked(categoryId, "product");
     },
     /**
      * Handle a click on the total of a product category.
@@ -308,7 +307,7 @@ var ReportAction = Widget.extend(ControlPanelMixin, {
     timeCategoryClicked(event){
         event.preventDefault();
         var categoryId = getRecordIdFromEvent(event);
-        this.categoryClicked(categoryId, 'time');
+        this.categoryClicked(categoryId, "time");
     },
     /**
      * Handle a click on the total of a time category.
@@ -342,7 +341,7 @@ var ReportAction = Widget.extend(ControlPanelMixin, {
     outsourcingCategoryClicked(event){
         event.preventDefault();
         var categoryId = getRecordIdFromEvent(event);
-        this.categoryClicked(categoryId, 'outsourcing');
+        this.categoryClicked(categoryId, "outsourcing");
     },
     /**
      * Handle a click on the total of an outsourcing category.
