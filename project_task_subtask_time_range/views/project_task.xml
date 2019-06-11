@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="task_form_with_calculated_hour_fields" model="ir.ui.view">
+        <field name="name">Project task: Calculated hour fields</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project_task_time_range.task_form_with_planned_hours_label"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='planned_hours']/.." position="after">
+               <group string="Subtasks Planned Hours" name="subtasks_planned_hours" attrs="{'invisible': [('subtask_count', '=', 0)]}">
+                   <field name="calculated_min_hours" string="Min" widget="float_time"/>
+                   <field name="calculated_planned_hours" string="Ideal" widget="float_time"/>
+                   <field name="calculated_max_hours" string="Max" widget="float_time"/>
+               </group>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
