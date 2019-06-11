@@ -11,6 +11,7 @@
     'category': 'Other',
     'summary': 'Install all addons required for testing.',
     'depends': [
+        'project_chatter',
         'project_form_with_dates',
         'project_iteration',
         'project_portal_parent_task',
