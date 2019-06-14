@@ -14,8 +14,10 @@ class Invoice(models.Model):
         result = super().invoice_line_move_line_get()
 
         for line_vals in result:
-            invoice_line = self.env['account.invoice.line'].browse(line_vals['invl_id'])
-            line_vals['task_id'] = invoice_line.task_id.id
+            invoice_line_id = line_vals.get('invl_id')
+            if invoice_line_id:
+                invoice_line = self.env['account.invoice.line'].browse(invoice_line_id)
+                line_vals['task_id'] = invoice_line.task_id.id
 
         return result
 
