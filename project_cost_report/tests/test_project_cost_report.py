@@ -149,6 +149,29 @@ class TestProjectCostReport(common.SavepointCase):
             'amount': -900,
         })
 
+        # Add revenue analytic lines
+        # These amounts must be excluded from cost categories
+        # (Outsourcing, Products, Time)
+        cls.revenue_line_1 = cls.env['account.analytic.line'].create({
+            'account_id': cls.analytic_account.id,
+            'name': 'Revenue Line 1',
+            'product_id': cls.service_a.id,
+            'unit_amount': 1,
+            'product_uom_id': cls.env.ref('product.product_uom_unit').id,
+            'amount': 100,
+            'revenue': True,
+        })
+
+        cls.revenue_line_2 = cls.env['account.analytic.line'].create({
+            'account_id': cls.analytic_account.id,
+            'name': 'Revenue Line 2',
+            'product_id': cls.product_a.id,
+            'unit_amount': 1,
+            'product_uom_id': cls.env.ref('product.product_uom_unit').id,
+            'amount': 200,
+            'revenue': True,
+        })
+
         cls.report = cls.env['project.cost.report'].create({})
 
     def _get_product_categories(self, report_context=None):

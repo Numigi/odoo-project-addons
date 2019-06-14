@@ -296,6 +296,7 @@ var ReportAction = Widget.extend(ControlPanelMixin, {
                 ["account_id.project_ids", "=", this.projectId],
                 ["product_id.type", "in", ["consu", "product"]],
                 ["product_id.categ_id", "=", categoryId],
+                ["revenue", "=", false],
             ],
         });
     },
@@ -330,6 +331,7 @@ var ReportAction = Widget.extend(ControlPanelMixin, {
                 ["account_id.project_ids", "=", this.projectId],
                 ["task_id.task_type_id", "=", taskTypeId],
                 ["task_id", "!=", false],
+                ["revenue", "=", false],
             ],
         });
     },
@@ -364,6 +366,7 @@ var ReportAction = Widget.extend(ControlPanelMixin, {
                 ["account_id.project_ids", "=", this.projectId],
                 ["task_id", "=", false],
                 ["product_id.type", "=", "service"],
+                ["revenue", "=", false],
             ],
         });
     },
