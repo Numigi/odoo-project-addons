@@ -194,6 +194,7 @@ class ProjectCostReportWithProducts(models.TransientModel):
         return [
             ('account_id', '=', project.analytic_account_id.id),
             ('product_id.type', 'in', ('product', 'consu')),
+            ('revenue', '=', False),
         ]
 
     def _get_product_categories(self, project, report_context):
@@ -287,6 +288,7 @@ class ProjectCostReportWithTime(models.TransientModel):
         return [
             ('account_id', '=', project.analytic_account_id.id),
             ('task_id', '!=', False),
+            ('revenue', '=', False),
         ]
 
     def _get_time_categories(self, project, report_context):
@@ -378,6 +380,7 @@ class ProjectCostReportWithOutsourcing(models.TransientModel):
             ('account_id', '=', project.analytic_account_id.id),
             ('task_id', '=', False),
             ('product_id.type', '=', 'service'),
+            ('revenue', '=', False),
         ]
 
     def _get_outsourcing_categories(self, project, report_context):
