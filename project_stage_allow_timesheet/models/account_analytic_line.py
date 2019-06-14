@@ -8,25 +8,26 @@ from odoo.exceptions import ValidationError
 class AccountAnalyticLine(models.Model):
     _inherit = 'account.analytic.line'
 
-    @api.one
     @api.constrains('task_id')
     def _check_task_project_allow_timesheet(self):
         error_message = _(
             "You can't link a time sheet line to a task if its project's stage does not allow it. "
-            "(Task: %s, Project: %s, Project Stage: %s)"
+            "(Task: {}, Project: {}, Project Stage: {})"
         )
-
-        task = self.task_id
-        project = self.project_id
-        stage = project.stage_id
-        if task and project and stage and not stage.allow_timesheet:
-            raise ValidationError(error_message % (task.display_name, project.display_name, stage.display_name))
+        for rec in self:
+            task = rec.task_id
+            project = rec.project_id
+            stage = project.stage_id
+            if task and project and stage and not stage.allow_timesheet:
+                message = error_message.format(
+                    rec.display_name, project.display_name, stage.display_name
+                )
+                raise ValidationError(message)
 
 
 class ProjectTask(models.Model):
     _inherit = 'project.task'
 
-    @api.one
     @api.constrains('project_id')
     def _check_project_move_allow_timesheet(self):
         """ Check if a line is moved to another project, the target project must allow time sheet """
@@ -35,12 +36,13 @@ class ProjectTask(models.Model):
             "(Task: {}, Project: {}, Project Stage: {})"
         )
 
-        project = self.project_id
-        time_sheets = self.timesheet_ids
+        for rec in self:
+            project = rec.project_id
+            time_sheets = rec.timesheet_ids
 
-        if time_sheets and project and not project.allow_timesheets:
-            stage = project.stage_id
-            message = error_message.format(
-                self.display_name, project.display_name, stage.display_name
-            )
-            raise ValidationError(message)
+            if time_sheets and project and not project.allow_timesheets:
+                stage = project.stage_id
+                message = error_message.format(
+                    rec.display_name, project.display_name, stage.display_name
+                )
+                raise ValidationError(message)
