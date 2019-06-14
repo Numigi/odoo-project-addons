@@ -52,3 +52,15 @@ class TestTaskPropagationFromInvoice(InvoiceCase):
         move_lines = self.invoice.move_id.line_ids.filtered(
             lambda l: l.account_id == self.expense_account)
         assert len(move_lines) == 3
+
+
+class TestTaskPropagationFromCustomerInvoice(TestTaskPropagationFromInvoice):
+    """Run the same tests with a customer invoice.
+
+    The behavior should be the same.
+    """
+
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.invoice.type = 'out_invoice'
