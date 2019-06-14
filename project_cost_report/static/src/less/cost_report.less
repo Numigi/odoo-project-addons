@@ -1,9 +1,14 @@
 .o_project_cost_report table {
     width: 100%;
+    margin-bottom: 32px;
 }
 
-.o_project_cost_report__title {
-    font-weight: 600;
+.o_project_cost_report h1 {
+
+}
+
+.o_project_cost_report h2 {
+    margin: 0.5em 0;
 }
 
 .o_project_cost_report__level_1 {
@@ -57,4 +62,15 @@
 
 .project_cost_report__control_panel_button {
     margin-right: 4px;
+}
+
+/**
+ * Add borders around the total cost amount
+ */
+.o_project_cost_report__total_cost {
+    td:last-child {
+        border: 1px black solid;
+        padding: 8px;
+        width: 200px;
+    }
 }
