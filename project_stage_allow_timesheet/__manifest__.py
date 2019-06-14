@@ -6,7 +6,6 @@
     'summary': """
         Allows to tell that a project stage is opened for timesheets.""",
     'version': '1.0.0',
-    'license': 'AGPL-3',
     'author': 'Numigi',
     'maintainer': 'Numigi',
     'website': 'https://bit.ly/numigi-com',
