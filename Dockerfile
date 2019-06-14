@@ -14,6 +14,7 @@ COPY project_iteration /mnt/extra-addons/project_iteration
 COPY project_portal_parent_task /mnt/extra-addons/project_portal_parent_task
 COPY project_stage_no_quick_create /mnt/extra-addons/project_stage_no_quick_create
 COPY project_stage /mnt/extra-addons/project_stage
+COPY project_stage_allow_timesheet /mnt/extra-addons/project_stage_allow_timesheet
 COPY project_task_date_planned /mnt/extra-addons/project_task_date_planned
 COPY project_task_deadline_from_project /mnt/extra-addons/project_task_deadline_from_project
 COPY project_task_full_text_search /mnt/extra-addons/project_task_full_text_search
