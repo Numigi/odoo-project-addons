@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!--
+        Increase the priority of the standard analytic line views.
+        This prevents the views of timesheet lines from being used by default.
+    -->
+    <record id="analytic.view_account_analytic_line_form" model="ir.ui.view">
+        <field name="priority">0</field>
+    </record>
+    <record id="analytic.view_account_analytic_line_tree" model="ir.ui.view">
+        <field name="priority">0</field>
+    </record>
+    <record id="analytic.view_account_analytic_line_graph" model="ir.ui.view">
+        <field name="priority">0</field>
+    </record>
+    <record id="analytic.view_account_analytic_line_pivot" model="ir.ui.view">
+        <field name="priority">0</field>
+    </record>
+    <record id="analytic.view_account_analytic_line_kanban" model="ir.ui.view">
+        <field name="priority">0</field>
+    </record>
+    <record id="analytic.view_account_analytic_line_filter" model="ir.ui.view">
+        <field name="priority">0</field>
+    </record>
+
+</odoo>

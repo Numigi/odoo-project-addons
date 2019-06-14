@@ -14,6 +14,7 @@
         'stock_account',  # required for testing project_wip
 
         'analytic_line_revenue',
+        'analytic_line_views_prioritized',
         'project_accurate_time_spent',
         'project_cost_report',
         'project_cost_smart_button',
