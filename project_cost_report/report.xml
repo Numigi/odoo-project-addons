@@ -135,35 +135,107 @@
         </t>
     </template>
 
+    <!-- Total of costs -->
+    <template id="cost_report_body__cost_total">
+        <tr class="o_project_cost_report__level_1 o_project_cost_report__total_cost">
+            <td colspan="5"></td>
+            <td>
+                <span>Total</span>
+                <span style="float: right"
+                    t-raw="total_cost" t-options='{"widget": "monetary", "display_currency": currency}'/>
+            </td>
+        </tr>
+    </template>
+
+    <template id="cost_report_body__header">
+        <table>
+            <tr>
+                <td>
+                    <h1>Cost Report</h1>
+                    <div>
+                        <span>Printed on</span>
+                        <span t-raw="print_date"/>
+                    </div>
+                </td>
+                <td style="width: 200px">
+                    <div t-raw="project.partner_id.display_name"></div>
+                    <h2 t-raw="project.name"></h2>
+                    <div t-raw="project.project_type_id.display_name"></div>
+                </td>
+            </tr>
+        </table>            
+    </template>
+
+    <template id="cost_report_body__costs">
+        <table>
+            <thead>
+                <tr class="o_project_cost_report__level_1">
+                    <th colspan="5">Item</th>
+                    <th class="text-right">Cost</th>
+                </tr>
+                <tr class="o_project_cost_report__level_3">
+                    <th class="o_project_cost_report__padding_column"></th>
+                    <th>Date</th>
+                    <th>Description</th>
+                    <th class="text-right">Quantity</th>
+                    <th class="text-right">Unit Cost</th>
+                    <th class="text-right">Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+                <t t-call="project_cost_report.cost_report_body__product_section"/>
+                <t t-call="project_cost_report.cost_report_body__time_section"/>
+                <t t-call="project_cost_report.cost_report_body__outsourcing_section"/>
+                <t t-call="project_cost_report.cost_report_body__cost_total"/>
+            </tbody>
+        </table>
+    </template>
+
+    <template id="cost_report_body__waiting_purchase_orders">
+        <table>
+            <tr class="o_project_cost_report__level_1" v-if="outsourcing_categories">
+                <td colspan="5">Waiting For Invoices</td>
+                <td class="text-right">
+                    <span t-raw="waiting_purchase_order_total" t-options='{"widget": "monetary", "display_currency": currency}'/>
+                </td>
+            </tr>
+            <tr class="o_project_cost_report__level_3">
+                <th class="o_project_cost_report__padding_column"></th>
+                <th>Date</th>
+                <th>Reference</th>
+                <th colspan="2">Supplier</th>
+                <th class="text-right">Amount</th>
+            </tr>
+            <tr t-foreach="waiting_purchase_orders" t-as="po"
+                class="o_project_cost_report__level_3">
+                <td></td>
+                <td>
+                    <span t-field="po.date_order"/>
+                </td>
+                <td>
+                    <span t-field="po.name"
+                        class="o_project_cost_report__purchase_order_name o_project_cost_report__link"
+                        t-att-data-id="po.id"
+                        />
+                </td>
+                <td colspan="2">
+                    <span t-field="po.partner_id.display_name"/>
+                </td>
+                <td class="text-right">
+                    <span t-raw="get_waiting_for_invoice_total(po, project)"
+                        t-options='{"widget": "monetary", "display_currency": po.currency_id}'
+                        />
+                </td>
+            </tr>
+        </table>
+    </template>
+
     <!-- Main report body -->
     <template id="cost_report_body">
         <div class="container o_project_cost_report">
-            <span class="text-left">
-                <h2 class="o_project_cost_report__title">Cost Report</h2>
-            </span>
-            <div class="table-responsive">
-                <table>
-                    <thead>
-                        <tr class="o_project_cost_report__level_1">
-                            <th colspan="5">Item</th>
-                            <th class="text-right">Cost</th>
-                        </tr>
-                        <tr class="o_project_cost_report__level_3">
-                            <th class="o_project_cost_report__padding_column"></th>
-                            <th>Date</th>
-                            <th>Description</th>
-                            <th class="text-right">Quantity</th>
-                            <th class="text-right">Unit Cost</th>
-                            <th class="text-right">Amount</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <t t-call="project_cost_report.cost_report_body__product_section"/>
-                        <t t-call="project_cost_report.cost_report_body__time_section"/>
-                        <t t-call="project_cost_report.cost_report_body__outsourcing_section"/>
-                    </tbody>
-                </table>
-            </div>
+            <t t-call="project_cost_report.cost_report_body__header"/>
+            <t t-call="project_cost_report.cost_report_body__costs"/>
+            <t t-call="project_cost_report.cost_report_body__waiting_purchase_orders"/>
         </div>
     </template>
 
