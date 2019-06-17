@@ -456,8 +456,8 @@ class ProjectCostReportWithTotalCost(models.TransientModel):
         return res
 
 
-def purchase_line_is_pending_invoice(line: models.Model) -> bool:
-    """Determine whether a purchase line is pending an invoice.
+def purchase_line_is_waiting_invoice(line: models.Model) -> bool:
+    """Determine whether a purchase line is waiting an invoice.
 
     :param line: a purchase.order.line singleton
     """
@@ -468,8 +468,8 @@ def purchase_line_is_pending_invoice(line: models.Model) -> bool:
     return less_units_invoiced_than_purchased
 
 
-def get_purchase_line_pending_qty(line: models.Model) -> float:
-    """Get the quantity of units pending invoices from a purchase line.
+def get_purchase_line_waiting_qty(line: models.Model) -> float:
+    """Get the quantity of units waiting invoices from a purchase line.
 
     :param line: a purchase.order.line singleton
     """
@@ -477,34 +477,30 @@ def get_purchase_line_pending_qty(line: models.Model) -> float:
     return float_round(line.product_qty - line.qty_invoiced, precision_digits=precision)
 
 
-class PendingPurchaseOrder:
-    """Represents a purchase order in the cost report.
+def get_waiting_for_invoice_total(order: models.Model, project: models.Model):
+    """Get the total amount waiting for invoices for a purchase order.
 
-    This object is used to display the share of amount pending invoice
-    that is bound to the current project.
-
-    :param order: the purchase order represented.
+    :param order: the purchase order record.
     :param project: the project for which to render the report.
+    :return: the amount waiting for invoices
     """
+    lines_waiting_invoices = order.order_line.filtered(
+        lambda l: purchase_line_is_waiting_invoice(l) and
+        l.account_analytic_id == project.analytic_account_id
+    )
 
-    def __init__(self, order: models.Model, project: models.Model):
-        self.order = order
-        self.lines_pending_invoices = order.order_line.filtered(
-            lambda l: purchase_line_is_pending_invoice(l) and
-            l.account_analytic_id == project.analytic_account_id
-        )
-        self.total = float_round(
-            sum(l.price_unit * get_purchase_line_pending_qty(l)
-                for l in self.lines_pending_invoices),
-            2
-        )
+    return float_round(
+        sum(l.price_unit * get_purchase_line_waiting_qty(l)
+            for l in lines_waiting_invoices),
+        2
+    )
 
 
-class ProjectCostReportWithPendingInvoices(models.TransientModel):
+class ProjectCostReportWithWaitingInvoices(models.TransientModel):
 
     _inherit = 'project.cost.report'
 
-    def _get_pending_purchase_order_lines(self, project):
+    def _get_waiting_purchase_order_lines(self, project):
         """Get the purchase order lines with unreceived invoices.
 
         :param project: the project.project record
@@ -515,24 +511,24 @@ class ProjectCostReportWithPendingInvoices(models.TransientModel):
             ('order_id.state', 'in', ('purchase', 'done')),
         ]
         lines = self.env['purchase.order.line'].search(domain)
-        return lines.filtered(lambda l: purchase_line_is_pending_invoice(l))
+        return lines.filtered(lambda l: purchase_line_is_waiting_invoice(l))
 
-    def _get_pending_purchase_orders(self, project):
+    def _get_waiting_purchase_orders(self, project):
         """Get the purchase orders with unreceived invoices.
 
         :param project: the project.project record
-        :rtype: List[PendingPurchaseOrder]
+        :rtype: List[waitingPurchaseOrder]
         """
-        lines = self._get_pending_purchase_order_lines(project)
-        orders = lines.mapped('order_id').sorted(key=lambda o: o.name)
-        return [PendingPurchaseOrder(o, project) for o in orders]
+        lines = self._get_waiting_purchase_order_lines(project)
+        return lines.mapped('order_id').sorted(key=lambda o: o.name)
 
     def _get_rendering_variables(self, project, report_context):
-        """Add pending purchase orders to the rendering context."""
+        """Add waiting purchase orders to the rendering context."""
         result = super()._get_rendering_variables(project, report_context)
-        orders = self._get_pending_purchase_orders(project)
-        result['pending_purchase_orders'] = orders
-        result['pending_purchase_order_total'] = float_round(
-            sum(o.total for o in orders), 2
+        orders = self._get_waiting_purchase_orders(project)
+        result['waiting_purchase_orders'] = orders
+        result['waiting_purchase_order_total'] = float_round(
+            sum(get_waiting_for_invoice_total(o, project) for o in orders), 2
         )
+        result['get_waiting_for_invoice_total'] = get_waiting_for_invoice_total
         return result

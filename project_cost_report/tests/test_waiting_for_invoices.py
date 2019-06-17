@@ -48,41 +48,48 @@ class TestWaitingForInvoices(common.SavepointCase):
         cls.po.order_line.account_analytic_id = cls.analytic_account
         cls.po.button_confirm()
 
-    def get_pending_purchase_orders(self):
-        return self.report._get_rendering_variables(self.project, {})['pending_purchase_orders']
+    def _get_waiting_purchase_orders(self):
+        return self.report._get_rendering_variables(self.project, {})['waiting_purchase_orders']
 
     def test_if_invoice_not_received__po_in_section(self):
-        pending_orders = self.get_pending_purchase_orders()
-        assert len(pending_orders) == 1
-        assert pending_orders[0].order == self.po
+        waiting_orders = self._get_waiting_purchase_orders()
+        assert waiting_orders == self.po
 
     def _set_invoiced_qty(self, qty):
         self.po.order_line.qty_invoiced = qty
 
     def test_if_po_draft__po_not_in_section(self):
         self.po.state = 'draft'
-        pending_orders = self.get_pending_purchase_orders()
-        assert len(pending_orders) == 0
+        waiting_orders = self._get_waiting_purchase_orders()
+        assert len(waiting_orders) == 0
 
     def test_if_po_done__po_in_section(self):
         self.po.state = 'done'
-        pending_orders = self.get_pending_purchase_orders()
-        assert len(pending_orders) == 1
+        waiting_orders = self._get_waiting_purchase_orders()
+        assert len(waiting_orders) == 1
 
     def test_if_po_paid__po_not_in_section(self):
         self._set_invoiced_qty(self.ordered_quantity)
-        pending_orders = self.get_pending_purchase_orders()
-        assert len(pending_orders) == 0
+        waiting_orders = self._get_waiting_purchase_orders()
+        assert len(waiting_orders) == 0
 
     def test_if_po_partially_paid__po_in_section(self):
         self._set_invoiced_qty(self.ordered_quantity - 1)
-        pending_orders = self.get_pending_purchase_orders()
-        assert len(pending_orders) == 1
+        waiting_orders = self._get_waiting_purchase_orders()
+        assert len(waiting_orders) == 1
+
+    def _get_waiting_order_amount(self):
+        return self.report._get_rendering_variables(
+            self.project, {})['waiting_purchase_order_total']
 
     def test_if_displayed_amount_is_based_on_quantity_to_invoice(self):
         invoiced_qty = 6
         self._set_invoiced_qty(invoiced_qty)
-        pending_orders = self.get_pending_purchase_orders()
 
         expected_amount = 200  # (ordered_quantity - invoiced_qty) * price_unit
-        assert pending_orders[0].total == expected_amount
+        assert self._get_waiting_order_amount() == expected_amount
+
+    def test_get_html_returns_bytestring(self):
+        """Test rendering the report with awaiting purchase orders."""
+        html = self.report.get_html({'active_id': self.project.id})
+        assert isinstance(html, bytes)

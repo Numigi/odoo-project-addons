@@ -191,12 +191,12 @@
         </table>
     </template>
 
-    <template id="cost_report_body__pending_purchase_orders">
+    <template id="cost_report_body__waiting_purchase_orders">
         <table>
             <tr class="o_project_cost_report__level_1" v-if="outsourcing_categories">
                 <td colspan="5">Waiting For Invoices</td>
                 <td class="text-right">
-                    <span t-raw="pending_purchase_order_total" t-options='{"widget": "monetary", "display_currency": currency}'/>
+                    <span t-raw="waiting_purchase_order_total" t-options='{"widget": "monetary", "display_currency": currency}'/>
                 </td>
             </tr>
             <tr class="o_project_cost_report__level_3">
@@ -206,24 +206,24 @@
                 <th colspan="2">Supplier</th>
                 <th class="text-right">Amount</th>
             </tr>
-            <tr t-foreach="pending_purchase_orders" t-as="po"
+            <tr t-foreach="waiting_purchase_orders" t-as="po"
                 class="o_project_cost_report__level_3">
                 <td></td>
                 <td>
-                    <span t-field="po.order.date_order"/>
+                    <span t-field="po.date_order"/>
                 </td>
                 <td>
-                    <span t-field="po.order.name"
+                    <span t-field="po.name"
                         class="o_project_cost_report__purchase_order_name o_project_cost_report__link"
-                        t-att-data-id="po.order.id"
+                        t-att-data-id="po.id"
                         />
                 </td>
                 <td colspan="2">
-                    <span t-field="po.order.partner_id.display_name"/>
+                    <span t-field="po.partner_id.display_name"/>
                 </td>
                 <td class="text-right">
-                    <span t-raw="po.total"
-                        t-options='{"widget": "monetary", "display_currency": po.order.currency_id}'
+                    <span t-raw="get_waiting_for_invoice_total(po, project)"
+                        t-options='{"widget": "monetary", "display_currency": po.currency_id}'
                         />
                 </td>
             </tr>
@@ -235,7 +235,7 @@
         <div class="container o_project_cost_report">
             <t t-call="project_cost_report.cost_report_body__header"/>
             <t t-call="project_cost_report.cost_report_body__costs"/>
-            <t t-call="project_cost_report.cost_report_body__pending_purchase_orders"/>
+            <t t-call="project_cost_report.cost_report_body__waiting_purchase_orders"/>
         </div>
     </template>
 
