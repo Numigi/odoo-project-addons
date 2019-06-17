@@ -1,8 +1,10 @@
 # © 2019 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
-from odoo import api, models, _
-from odoo.tools.float_utils import float_round
+import babel.dates
+from datetime import datetime
+from odoo import api, fields, models, _
+from odoo.tools.float_utils import float_round, float_compare
 from odoo.exceptions import ValidationError
 from typing import Callable, Mapping
 
@@ -63,9 +65,12 @@ class ProjectCostReport(models.TransientModel):
         :param report_context: the rendering context
         :rtype: dict
         """
+        lang = self._context.get('lang') or 'en_US'
+        now = fields.Datetime.context_timestamp(self, datetime.now())
         return {
             'project': project,
             'currency': project.company_id.currency_id,
+            'print_date': babel.dates.format_date(now, 'long', locale=lang)
         }
 
     def get_project_from_report_context(self, report_context):
@@ -113,10 +118,7 @@ class ProjectCostReport(models.TransientModel):
             values=rendering_variables,
         )
         header = self.env['ir.actions.report'].render_template(
-            "web.internal_layout", values=rendering_variables
-        )
-        header = self.env['ir.actions.report'].render_template(
-            "web.minimal_layout", values=dict(rendering_variables, subst=True, body=header)
+            "web.minimal_layout", values=rendering_variables
         )
         return self.env['ir.actions.report']._run_wkhtmltopdf(
             [body],
@@ -437,3 +439,96 @@ class ProjectCostReportWithOutsourcing(models.TransientModel):
         res = super().get_foldable_categories(project_id)
         res['outsourcing'] = [False]
         return res
+
+
+class ProjectCostReportWithTotalCost(models.TransientModel):
+
+    _inherit = 'project.cost.report'
+
+    def _get_rendering_variables(self, project, report_context):
+        """Add the total of costs to the rendering variables."""
+        res = super()._get_rendering_variables(project, report_context)
+        res.update({
+            'total_cost': float_round(
+                res['product_total'] + res['time_total'] + res['outsourcing_total'], 2
+            )
+        })
+        return res
+
+
+def purchase_line_is_waiting_invoice(line: models.Model) -> bool:
+    """Determine whether a purchase line is waiting an invoice.
+
+    :param line: a purchase.order.line singleton
+    """
+    precision = line.env['decimal.precision'].precision_get('Product Unit of Measure')
+    less_units_invoiced_than_purchased = (
+        float_compare(line.qty_invoiced, line.product_qty, precision_digits=precision) == -1
+    )
+    return less_units_invoiced_than_purchased
+
+
+def get_purchase_line_waiting_qty(line: models.Model) -> float:
+    """Get the quantity of units waiting invoices from a purchase line.
+
+    :param line: a purchase.order.line singleton
+    """
+    precision = line.env['decimal.precision'].precision_get('Product Unit of Measure')
+    return float_round(line.product_qty - line.qty_invoiced, precision_digits=precision)
+
+
+def get_waiting_for_invoice_total(order: models.Model, project: models.Model):
+    """Get the total amount waiting for invoices for a purchase order.
+
+    :param order: the purchase order record.
+    :param project: the project for which to render the report.
+    :return: the amount waiting for invoices
+    """
+    lines_waiting_invoices = order.order_line.filtered(
+        lambda l: purchase_line_is_waiting_invoice(l) and
+        l.account_analytic_id == project.analytic_account_id
+    )
+
+    return float_round(
+        sum(l.price_unit * get_purchase_line_waiting_qty(l)
+            for l in lines_waiting_invoices),
+        2
+    )
+
+
+class ProjectCostReportWithWaitingInvoices(models.TransientModel):
+
+    _inherit = 'project.cost.report'
+
+    def _get_waiting_purchase_order_lines(self, project):
+        """Get the purchase order lines with unreceived invoices.
+
+        :param project: the project.project record
+        :rtype: purchase.order.line
+        """
+        domain = [
+            ('account_analytic_id', '=', project.analytic_account_id.id),
+            ('order_id.state', 'in', ('purchase', 'done')),
+        ]
+        lines = self.env['purchase.order.line'].search(domain)
+        return lines.filtered(lambda l: purchase_line_is_waiting_invoice(l))
+
+    def _get_waiting_purchase_orders(self, project):
+        """Get the purchase orders with unreceived invoices.
+
+        :param project: the project.project record
+        :rtype: List[waitingPurchaseOrder]
+        """
+        lines = self._get_waiting_purchase_order_lines(project)
+        return lines.mapped('order_id').sorted(key=lambda o: o.name)
+
+    def _get_rendering_variables(self, project, report_context):
+        """Add waiting purchase orders to the rendering context."""
+        result = super()._get_rendering_variables(project, report_context)
+        orders = self._get_waiting_purchase_orders(project)
+        result['waiting_purchase_orders'] = orders
+        result['waiting_purchase_order_total'] = float_round(
+            sum(get_waiting_for_invoice_total(o, project) for o in orders), 2
+        )
+        result['get_waiting_for_invoice_total'] = get_waiting_for_invoice_total
+        return result

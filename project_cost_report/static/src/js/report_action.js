@@ -52,6 +52,7 @@ var ReportAction = Widget.extend(ControlPanelMixin, {
         "click .o_project_cost_report__time_total": "hourTotalClicked",
         "click .o_project_cost_report__outsourcing_category": "outsourcingCategoryClicked",
         "click .o_project_cost_report__outsourcing_total": "outsourcingTotalClicked",
+        "click .o_project_cost_report__purchase_order_name": "purchaseOrderNameClicked",
     },
     init(parent, action) {
         this._super.apply(this, arguments);
@@ -75,6 +76,7 @@ var ReportAction = Widget.extend(ControlPanelMixin, {
             model: "project.cost.report",
             method: "get_html",
             args: [this.reportContext],
+            context: this.getSession().user_context,
         });
         this.$el.html(html);
     },
@@ -368,6 +370,23 @@ var ReportAction = Widget.extend(ControlPanelMixin, {
                 ["product_id.type", "=", "service"],
                 ["revenue", "=", false],
             ],
+        });
+    },
+    /**
+     * Handle a click on the name of a purchase order (POXXXXX)
+     *
+     * The form view of the PO is opened.
+     *
+     * @param {jQuery.Event} - the click event
+     */
+    purchaseOrderNameClicked(event){
+        event.preventDefault();
+        var orderId = getRecordIdFromEvent(event);
+        this.do_action({
+            res_model: "purchase.order",
+            views: [[false, "form"]],
+            type: "ir.actions.act_window",
+            res_id: orderId,
         });
     },
     /**
