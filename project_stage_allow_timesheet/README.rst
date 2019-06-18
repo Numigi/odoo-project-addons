@@ -6,6 +6,7 @@ With this implementation, the field allow_timesheets on project is now readonly 
 is driven by the stage the project is in.
 
 
+
 *I go on the project stage configuration. I find an option to* ``Allow Timesheet`` *on tasks in this stage.*
 
 .. image:: static/description/project_stage_form.png
