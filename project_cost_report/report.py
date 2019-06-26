@@ -7,6 +7,7 @@ from odoo import api, fields, models, _
 from odoo.tools.float_utils import float_round, float_compare
 from odoo.exceptions import ValidationError
 from typing import Callable, Mapping
+from .tools import adjust_analytic_line_amount_sign
 
 
 class ProjectCostReport(models.TransientModel):
@@ -70,7 +71,8 @@ class ProjectCostReport(models.TransientModel):
         return {
             'project': project,
             'currency': project.company_id.currency_id,
-            'print_date': babel.dates.format_date(now, 'long', locale=lang)
+            'print_date': babel.dates.format_date(now, 'long', locale=lang),
+            'adjust_analytic_line_amount_sign': adjust_analytic_line_amount_sign,
         }
 
     def get_project_from_report_context(self, report_context):
