@@ -1,19 +1,21 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* project_cost_report
+# 	* project_cost_report
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-14 20:31+0000\n"
-"PO-Revision-Date: 2019-06-14 20:31+0000\n"
+"POT-Creation-Date: 2019-06-26 15:50+0000\n"
+"PO-Revision-Date: 2019-06-26 11:50-0400\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: \n"
+"Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
+"X-Generator: Poedit 2.0.6\n"
 
 #. module: project_cost_report
 #: model:ir.ui.view,arch_db:project_cost_report.cost_report_body__header
@@ -27,7 +29,7 @@ msgstr "<span>Total</span>"
 
 #. module: project_cost_report
 #: model:ir.ui.view,arch_db:project_cost_report.cost_report_body__costs
-#: model:ir.ui.view,arch_db:project_cost_report.cost_report_body__pending_purchase_orders
+#: model:ir.ui.view,arch_db:project_cost_report.cost_report_body__waiting_purchase_orders
 msgid "Amount"
 msgstr "Montant"
 
@@ -38,9 +40,9 @@ msgstr "Ligne analytique"
 
 #. module: project_cost_report
 #. openerp-web
-#: code:addons/project_cost_report/static/src/js/report_action.js:290
-#: code:addons/project_cost_report/static/src/js/report_action.js:325
-#: code:addons/project_cost_report/static/src/js/report_action.js:360
+#: code:addons/project_cost_report/static/src/js/report_action.js:291
+#: code:addons/project_cost_report/static/src/js/report_action.js:326
+#: code:addons/project_cost_report/static/src/js/report_action.js:361
 #, python-format
 msgid "Analytic Lines ({category})"
 msgstr "Lignes analytiques ({category})"
@@ -69,7 +71,7 @@ msgstr ""
 
 #. module: project_cost_report
 #: model:ir.ui.view,arch_db:project_cost_report.cost_report_body__costs
-#: model:ir.ui.view,arch_db:project_cost_report.cost_report_body__pending_purchase_orders
+#: model:ir.ui.view,arch_db:project_cost_report.cost_report_body__waiting_purchase_orders
 msgid "Date"
 msgstr "Date"
 
@@ -101,7 +103,7 @@ msgid "Item"
 msgstr "Poste"
 
 #. module: project_cost_report
-#: code:addons/project_cost_report/report.py:282
+#: code:addons/project_cost_report/report.py:284
 #, python-format
 msgid "Labour"
 msgstr "Main d'œuvre"
@@ -122,7 +124,7 @@ msgid "Last Updated on"
 msgstr ""
 
 #. module: project_cost_report
-#: code:addons/project_cost_report/report.py:373
+#: code:addons/project_cost_report/report.py:375
 #: model:ir.ui.view,arch_db:project_cost_report.cost_report_body__outsourcing_section
 #, python-format
 msgid "Outsourcing"
@@ -151,17 +153,17 @@ msgid "Quantity"
 msgstr "Quantité"
 
 #. module: project_cost_report
-#: model:ir.ui.view,arch_db:project_cost_report.cost_report_body__pending_purchase_orders
+#: model:ir.ui.view,arch_db:project_cost_report.cost_report_body__waiting_purchase_orders
 msgid "Reference"
 msgstr "Référence"
 
 #. module: project_cost_report
-#: model:ir.ui.view,arch_db:project_cost_report.cost_report_body__pending_purchase_orders
+#: model:ir.ui.view,arch_db:project_cost_report.cost_report_body__waiting_purchase_orders
 msgid "Supplier"
 msgstr "Fournisseur"
 
 #. module: project_cost_report
-#: code:addons/project_cost_report/report.py:85
+#: code:addons/project_cost_report/report.py:87
 #, python-format
 msgid "The cost report was triggered without a project ID in context."
 msgstr "Le rapport de coûts a été déclenché sans passer un ID de projet en contexte."
@@ -185,6 +187,6 @@ msgid "Unit Cost"
 msgstr "Coût unitaire"
 
 #. module: project_cost_report
-#: model:ir.ui.view,arch_db:project_cost_report.cost_report_body__pending_purchase_orders
+#: model:ir.ui.view,arch_db:project_cost_report.cost_report_body__waiting_purchase_orders
 msgid "Waiting For Invoices"
 msgstr "En attente de factures"
