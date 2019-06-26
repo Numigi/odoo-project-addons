@@ -17,12 +17,12 @@
 
                 <!-- Display units as float for other types of analytic lines -->
                 <t t-if="not line.task_id">
-                    <span t-field="line.unit_amount"/>
+                    <span t-raw="adjust_analytic_line_amount_sign(line, line.unit_amount)" t-options="{'widget': 'float', 'precision': 2}"/>
                     <span t-field="line.product_uom_id.name"/>
                 </t>
             </td>
             <td class="text-right">
-                <span t-field="line.unit_cost" t-options='{"widget": "monetary", "display_currency": currency}'/>
+                <span t-raw="adjust_analytic_line_amount_sign(line, line.unit_cost)" t-options='{"widget": "monetary", "display_currency": currency}'/>
             </td>
             <td class="text-right">
                 <span t-raw="-line.amount" t-options='{"widget": "monetary", "display_currency": currency}'/>
