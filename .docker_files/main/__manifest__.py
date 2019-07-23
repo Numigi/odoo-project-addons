@@ -14,6 +14,7 @@
         'project_chatter',
         'project_form_with_dates',
         'project_iteration',
+        'project_portal_hide_timesheets',
         'project_portal_parent_task',
         'project_stage_no_quick_create',
         'project_stage',
