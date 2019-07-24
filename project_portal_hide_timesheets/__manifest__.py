@@ -2,7 +2,7 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 {
-    'name': 'Project Portal Parent Task',
+    'name': 'Project Portal Hide Timesheets',
     'version': '12.0.0',
     'author': 'Numigi',
     'maintainer': 'Numigi',
