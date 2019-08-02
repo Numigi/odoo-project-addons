@@ -13,6 +13,7 @@
     'depends': [
         'project_chatter',
         'project_form_with_dates',
+        'project_hide_create_sale_order',
         'project_iteration',
         'project_portal_hide_timesheets',
         'project_portal_parent_task',
