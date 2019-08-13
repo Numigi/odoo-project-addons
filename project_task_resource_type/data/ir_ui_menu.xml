@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<odoo>
+  <record model="ir.ui.menu" id="project_resources_4f795376-bd9b-41c8-941b-0081820d5edc">
+    <field ref="resources_9bc6bf12-dcbc-466d-8908-78796947d830" name="action"/>
+    <field name="active" eval="True"/>
+    <field name="groups_id" eval="[(6, 0, [])]"/>
+    <field name="name">resources</field>
+    <field ref="project.menu_project_config" name="parent_id"/>
+    <field name="sequence">2</field>
+    <field name="web_icon" eval="False"/>
+  </record>
+</odoo>
