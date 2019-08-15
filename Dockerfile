@@ -35,6 +35,7 @@ COPY project_type /mnt/extra-addons/project_type
 COPY project_wip /mnt/extra-addons/project_wip
 COPY project_wip_material /mnt/extra-addons/project_wip_material
 COPY project_wip_outsourcing /mnt/extra-addons/project_wip_outsourcing
+COPY project_wip_supply_cost /mnt/extra-addons/project_wip_supply_cost
 COPY project_wip_timesheet /mnt/extra-addons/project_wip_timesheet
 
 COPY .docker_files/main /mnt/extra-addons/main
