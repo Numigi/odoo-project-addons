@@ -38,12 +38,11 @@ msgstr "Dépends si l'étape du projet permet les feuilles de temps"
 #. module: project_stage_allow_timesheet
 #: code:addons/project_stage_allow_timesheet/models/account_analytic_line.py:14
 #, python-format
-msgid "You can't link a time sheet line to a task if its project's stage does not allow it. (Task: %s, Project: %s, Project Stage: %s)"
-msgstr "Vous ne pouvez pas lier une ligne de feuille de temps à une tâche si l’étape de son projet ne le permet pas. (Tâche:  %s; Projet: %s; Étape projet: %s)"
+msgid "You can't link a time sheet line to a task if its project's stage does not allow it. (Task: {}, Project: {}, Project Stage: {})"
+msgstr "Vous ne pouvez pas lier une ligne de feuille de temps à une tâche si l’étape de son projet ne le permet pas. (Tâche:  {}; Projet: {}; Étape projet: {})"
 
 #. module: project_stage_allow_timesheet
 #: code:addons/project_stage_allow_timesheet/models/account_analytic_line.py:33
 #, python-format
 msgid "You cannot move a task linked to a timesheet line in a project if its stage does not allow it. (Task: {}, Project: {}, Project Stage: {})"
-msgstr "Vous ne pouvez déplacer une tâche liée à une ligne de feuille de temps dans un projet si son étape ne le permet pas. (Tâche: %s; Projet: %s; Étape projet: %s)"
-
+msgstr "Vous ne pouvez déplacer une tâche liée à une ligne de feuille de temps dans un projet si son étape ne le permet pas. (Tâche: {}; Projet: {}; Étape projet: {})"
