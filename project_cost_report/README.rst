@@ -75,6 +75,12 @@ The first subdivision `Labour` contains every timesheet line from tasks with no 
 
 .. image:: static/description/report_section_time.png
 
+Employee Column
+***************
+Since version 1.1.0 of the module, the ``Employee`` is shown in the ``Time`` section.
+
+.. image:: static/description/report_employee_column.png
+
 Outsourcing
 ~~~~~~~~~~~
 This section contains analytic lines with products of type service that are not timesheets.

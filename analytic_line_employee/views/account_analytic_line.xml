@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="analytic_line_form_with_employee" model="ir.ui.view">
+        <field name="name">Analytic Line Form: Add Employee</field>
+        <field name="model">account.analytic.line</field>
+        <field name="inherit_id" ref="analytic.view_account_analytic_line_form"/>
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                <field name="employee_id" readonly="1"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="analytic_line_list_with_employee" model="ir.ui.view">
+        <field name="name">Analytic Line List: Add Employee</field>
+        <field name="model">account.analytic.line</field>
+        <field name="inherit_id" ref="analytic.view_account_analytic_line_tree"/>
+        <field name="arch" type="xml">
+            <field name="ref" position="after">
+                <field name="employee_id"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>
