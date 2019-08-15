@@ -10,7 +10,7 @@ Configuration
 -------------
 As member of the group ``Project / Manager``, I go to the form view of a project type.
 
-I notice a new section ``Indirect Costs`` with 2 fields:
+I notice a new section ``Indirect Costs`` with the following fields:
 
 * Expense Account
 
