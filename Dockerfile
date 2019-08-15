@@ -8,6 +8,7 @@ RUN pip3 install -r requirements.txt
 
 USER odoo
 
+COPY analytic_line_employee /mnt/extra-addons/analytic_line_employee
 COPY analytic_line_revenue /mnt/extra-addons/analytic_line_revenue
 COPY analytic_line_views_prioritized /mnt/extra-addons/analytic_line_views_prioritized
 COPY project_accurate_time_spent /mnt/extra-addons/project_accurate_time_spent
