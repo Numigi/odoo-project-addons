@@ -1,0 +1,119 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* project_wip_supply_cost
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 11.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-08-13 19:32+0000\n"
+"PO-Revision-Date: 2019-08-13 15:39-0400\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"Language: fr\n"
+"X-Generator: Poedit 2.0.6\n"
+
+#. module: project_wip_supply_cost
+#: code:addons/project_wip_supply_cost/models/account_analytic_line.py:9
+#, python-format
+msgid "(task: {})"
+msgstr "(tâche: {})"
+
+#. module: project_wip_supply_cost
+#: model:ir.model.fields,help:project_wip_supply_cost.field_project_type_shop_supply_account_id
+msgid "Account used as counter-part (usually the credit part) in shop supply entries."
+msgstr "Compte comme contre-partie (habituellement au crédit) dans les écritures de shop supply."
+
+#. module: project_wip_supply_cost
+#: model:ir.model,name:project_wip_supply_cost.model_account_analytic_line
+msgid "Analytic Line"
+msgstr ""
+
+#. module: project_wip_supply_cost
+#: model:ir.ui.view,arch_db:project_wip_supply_cost.project_type_form_with_shop_supply
+msgid "Expense Account"
+msgstr "Compte de dépense"
+
+#. module: project_wip_supply_cost
+#: model:ir.ui.view,arch_db:project_wip_supply_cost.project_type_form_with_shop_supply
+msgid "Hourly Rate"
+msgstr "Taux horaire"
+
+#. module: project_wip_supply_cost
+#: code:addons/project_wip_supply_cost/models/project_type.py:45
+#, python-format
+msgid "If the shop supply account is filled for a project type, the salary journal must be filled as well."
+msgstr "Si le compte de shop supply est saisi sur le type de projet le journal de shop supply doit être saisi également."
+
+#. module: project_wip_supply_cost
+#: code:addons/project_wip_supply_cost/models/project_type.py:39
+#, python-format
+msgid "If the shop supply account is filled for a project type, the work in progress account must be filled as well."
+msgstr "Si le compte de shop supply est saisi sur le type de projet le compte de travaux en cours doit être saisi également."
+
+#. module: project_wip_supply_cost
+#: model:ir.ui.view,arch_db:project_wip_supply_cost.project_type_form_with_shop_supply
+msgid "Journal"
+msgstr "Journal"
+
+#. module: project_wip_supply_cost
+#: model:ir.model.fields,help:project_wip_supply_cost.field_project_type_shop_supply_journal_id
+msgid "Journal used for reporting shop supply entries."
+msgstr "Journal utilisé pour reporter les écritures de shop supply."
+
+#. module: project_wip_supply_cost
+#: model:ir.model,name:project_wip_supply_cost.model_project_type
+msgid "Project Type"
+msgstr "Type de projet"
+
+#. module: project_wip_supply_cost
+#: model:ir.ui.view,arch_db:project_wip_supply_cost.project_type_form_with_shop_supply
+msgid "Shop Supply"
+msgstr "Shop Supply"
+
+#. module: project_wip_supply_cost
+#: model:ir.model.fields,field_description:project_wip_supply_cost.field_project_type_shop_supply_account_id
+msgid "Shop Supply Account"
+msgstr "Compte de shop supply"
+
+#. module: project_wip_supply_cost
+#: model:ir.model.fields,field_description:project_wip_supply_cost.field_account_analytic_line_shop_supply_account_move_id
+msgid "Shop Supply Entry"
+msgstr "Entrée comptable de shop supply"
+
+#. module: project_wip_supply_cost
+#: model:ir.model.fields,field_description:project_wip_supply_cost.field_project_type_shop_supply_journal_id
+msgid "Shop Supply Journal"
+msgstr "Journal de shop supply"
+
+#. module: project_wip_supply_cost
+#: model:ir.model.fields,field_description:project_wip_supply_cost.field_project_type_shop_supply_rate
+msgid "Shop Supply Rate"
+msgstr "Taux de shop supply"
+
+#. module: project_wip_supply_cost
+#: model:ir.model.fields,help:project_wip_supply_cost.field_project_type_shop_supply_rate
+msgid "The rate to apply for shop supply entries."
+msgstr "Le taux à appliquer pour les écritures de shop supply."
+
+#. module: project_wip_supply_cost
+#: code:addons/project_wip_supply_cost/models/account_analytic_line.py:237
+#, python-format
+msgid "The timesheet line {description} can not be deleted because the shop supply entry ({move_name}) is already transfered into the cost of goods sold."
+msgstr "La ligne de feuille de temps {description} ne peut pas être supprimée, car l'écriture de shop supply ({move_name}) est déjà transférée dans le coût des marchandises vendues."
+
+#. module: project_wip_supply_cost
+#: code:addons/project_wip_supply_cost/models/account_analytic_line.py:139
+#, python-format
+msgid "The timesheet line {description} can not be updated because the shop supply entry ({move_name}) is already transfered into the cost of goods sold."
+msgstr "La ligne de feuille de temps {description} ne peut pas être mise à jour, car l'écriture de shop supply ({move_name}) est déjà transférée dans le coût des marchandises vendues."
+
+#. module: project_wip_supply_cost
+#: code:addons/project_wip_supply_cost/models/account_analytic_line.py:156
+#, python-format
+msgid "The timesheet line {description} can not be updated because the shop supply entry ({move_name}) would be reversed. This journal entry was already transfered into the cost of goods sold."
+msgstr "La ligne de feuille de temps {description} ne peut pas être mise à jour, car l'écriture de shop supply ({move_name}) serait renversée. Cette écriture est déjà transférée dans le coût des marchandises vendues."
