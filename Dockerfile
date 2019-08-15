@@ -9,6 +9,7 @@ RUN pip3 install -r requirements.txt
 USER odoo
 
 COPY project_chatter /mnt/extra-addons/project_chatter
+COPY project_default_task_stage /mnt/extra-addons/project_default_task_stage
 COPY project_form_with_dates /mnt/extra-addons/project_form_with_dates
 COPY project_hide_create_sale_order /mnt/extra-addons/project_hide_create_sale_order
 COPY project_iteration /mnt/extra-addons/project_iteration

@@ -12,6 +12,7 @@
     'summary': 'Install all addons required for testing.',
     'depends': [
         'project_chatter',
+        'project_default_task_stage',
         'project_form_with_dates',
         'project_hide_create_sale_order',
         'project_iteration',
