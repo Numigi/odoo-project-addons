@@ -373,7 +373,7 @@ var ReportAction = Widget.extend(ControlPanelMixin, {
             ["task_id", "=", false],
             ["product_id.type", "=", "service"],
             ["revenue", "=", false],
-        ]
+        ];
     },
     /**
      * Handle a click on the total of an outsourcing category.
@@ -428,6 +428,6 @@ return {
     ReportAction,
     getRecordIdFromEvent,
     getRecordNameFromEvent,
-}
+};
 
 });

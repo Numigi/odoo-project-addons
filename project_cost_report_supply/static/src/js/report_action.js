@@ -8,10 +8,10 @@ odoo.define("project_cost_report_supply.ReportAction", function (require) {
 var core = require("web.core");
 var _t = core._t;
 
-var project_cost_report = require("project_cost_report");
-var ReportAction = project_cost_report.ReportAction;
-var getRecordIdFromEvent = project_cost_report.getRecordIdFromEvent;
-var getRecordNameFromEvent = project_cost_report.getRecordNameFromEvent;
+var projectCostReport = require("project_cost_report");
+var ReportAction = projectCostReport.ReportAction;
+var getRecordIdFromEvent = projectCostReport.getRecordIdFromEvent;
+var getRecordNameFromEvent = projectCostReport.getRecordNameFromEvent;
 
 ReportAction.include({
     events: _.extend({}, ReportAction.prototype.events, {
