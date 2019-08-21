@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- SHOP SUPPLY -->
+    <template id="cost_report_body__shop_supply_category">
+        <tr class="o_project_cost_report__level_2">
+            <td colspan="6">
+                <span class="o_project_cost_report__shop_supply_category o_project_cost_report__link" t-att-data-id="category.id">
+                    <i class="fa fa-caret-right" t-if="category.folded"></i>
+                    <i class="fa fa-caret-down" t-if="not category.folded"></i>
+                    <span t-raw="category.name"/>
+                </span>
+            </td>
+            <td class="o_project_cost_report__shop_supply_total text-right" t-att-data-id="category.id" t-att-data-name="category.name">
+                <span class="o_project_cost_report__link" t-raw="category.total" t-options='{"widget": "monetary", "display_currency": currency}'/>
+            </td>
+        </tr>
+        <t t-if="not category.folded">
+            <t t-foreach="category.lines" t-as="line">
+                <t t-call="project_cost_report.cost_report_body__analytic_line_details"/>
+            </t>
+        </t>
+    </template>
+
+    <template id="cost_report_body__shop_supply_section">
+        <tr class="o_project_cost_report__level_1" v-if="shop_supply_categories">
+            <td colspan="6">Shop Supply</td>
+            <td class="text-right">
+                <span t-raw="shop_supply_total" t-options='{"widget": "monetary", "display_currency": currency}'/>
+            </td>
+        </tr>
+        <t t-foreach="shop_supply_categories" t-as="category">
+            <t t-call="project_cost_report_supply.cost_report_body__shop_supply_category"/>
+        </t>
+    </template>
+
+    <template id="cost_report_body__costs" name="cost_report_body__costs" inherit_id="project_cost_report.cost_report_body__costs">
+        <xpath expr="//t[@t-call='project_cost_report.cost_report_body__product_section']" position="before">
+            <t t-call="project_cost_report_supply.cost_report_body__shop_supply_section"/>
+        </xpath>
+    </template>
+
+    <template id="assets_backend" name="cost_report assets" inherit_id="project_cost_report.assets_backend">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/project_cost_report_supply/static/src/js/report_action.js"></script>
+        </xpath>
+    </template>
+
+</odoo>
