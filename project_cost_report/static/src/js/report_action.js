@@ -330,7 +330,7 @@ var ReportAction = Widget.extend(ControlPanelMixin, {
             ["task_id.task_type_id", "=", taskTypeId],
             ["task_id", "!=", false],
             ["revenue", "=", false],
-        ]
+        ];
     },
     /**
      * Handle a click on the total of a time category.
