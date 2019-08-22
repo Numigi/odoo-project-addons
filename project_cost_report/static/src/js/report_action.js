@@ -286,7 +286,7 @@ var ReportAction = Widget.extend(ControlPanelMixin, {
             ["product_id.type", "in", ["consu", "product"]],
             ["product_id.categ_id", "=", categoryId],
             ["revenue", "=", false],
-        ]
+        ];
     },
     /**
      * Handle a click on the total of a product category.
