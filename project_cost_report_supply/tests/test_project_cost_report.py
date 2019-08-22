@@ -1,11 +1,11 @@
 # © 2019 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
-from odoo.addons.project_cost_report.tests.test_project_cost_report import TestProjectCostReport
+from odoo.addons.project_cost_report.tests.test_project_cost_report import ProjectCostReportCase
 from odoo.addons.project_cost_report.report import CostReportCategory
 
 
-class TestProjectCostReportWithShopSupply(TestProjectCostReport):
+class TestProjectCostReportWithShopSupply(ProjectCostReportCase):
     """Test the report with shop supply entries.
 
     The test class is inherited directly to make sure this module does not break existing sections

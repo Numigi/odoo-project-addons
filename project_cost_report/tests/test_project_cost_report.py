@@ -5,7 +5,7 @@ from odoo.tests import common
 from ..report import CostReportCategory
 
 
-class TestProjectCostReport(common.SavepointCase):
+class ProjectCostReportCase(common.SavepointCase):
 
     @classmethod
     def setUpClass(cls):
@@ -173,6 +173,9 @@ class TestProjectCostReport(common.SavepointCase):
         })
 
         cls.report = cls.env['project.cost.report'].create({})
+
+
+class TestProjectCostReport(ProjectCostReportCase):
 
     def _get_product_categories(self, report_context=None):
         return self.report._get_product_categories(self.project, report_context or {})
