@@ -14,6 +14,7 @@
         'analytic_line_revenue',
         'project_task_analytic_lines',
         'project_task_type',
+        'project_type',
         'purchase',
     ],
     'data': [

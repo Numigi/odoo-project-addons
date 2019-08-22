@@ -2,7 +2,7 @@
     © 2019 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
     License LGPL-3.0 or later (http://www.gnu.org/licenses/LGPL.html).
 */
-odoo.define("project_cost_report.ReportAction", function (require) {
+odoo.define("project_cost_report", function (require) {
 "use strict";
 
 var ControlPanelMixin = require("web.ControlPanelMixin");
@@ -54,18 +54,18 @@ var ReportAction = Widget.extend(ControlPanelMixin, {
         "click .o_project_cost_report__outsourcing_total": "outsourcingTotalClicked",
         "click .o_project_cost_report__purchase_order_name": "purchaseOrderNameClicked",
     },
+    getCategoryNames(){
+        return ["product", "time", "outsourcing"];
+    },
     init(parent, action) {
         this._super.apply(this, arguments);
         this.controllerURL = action.context.url;
         this.projectId = action.context.active_id || action.params.active_id;
         this.reportContext = {
             active_id: this.projectId,
-            unfolded_categories: {
-                "product": [],
-                "time": [],
-                "outsourcing": [],
-            },
+            unfolded_categories: {},
         };
+        this.getCategoryNames().forEach((c) => this.reportContext.unfolded_categories[c] = []);
         this.unfolded = false;
     },
     /**
@@ -188,11 +188,7 @@ var ReportAction = Widget.extend(ControlPanelMixin, {
      * Fold all report categories.
      */
     fold(){
-        this.reportContext.unfolded_categories = {
-            "product": [],
-            "time": [],
-            "outsourcing": [],
-        };
+        this.getCategoryNames().forEach((c) => this.reportContext.unfolded_categories[c] = []);
         this.unfolded = false;
         this.refresh();
     },
@@ -278,6 +274,21 @@ var ReportAction = Widget.extend(ControlPanelMixin, {
         this.categoryClicked(categoryId, "product");
     },
     /**
+     * Get the domain of analytic lines for a product category.
+     *
+     * @param {jQuery.Event} - the click event
+     * @returns {Array} - the domain
+     */
+    getProductCategoryDomain(event){
+        var categoryId = getRecordIdFromEvent(event);
+        return [
+            ["account_id.project_ids", "=", this.projectId],
+            ["product_id.type", "in", ["consu", "product"]],
+            ["product_id.categ_id", "=", categoryId],
+            ["revenue", "=", false],
+        ];
+    },
+    /**
      * Handle a click on the total of a product category.
      *
      * The list of analytic lines contained in the category is opened.
@@ -286,7 +297,6 @@ var ReportAction = Widget.extend(ControlPanelMixin, {
      */
     productTotalClicked(event){
         event.preventDefault();
-        var categoryId = getRecordIdFromEvent(event);
         var categoryName = getRecordNameFromEvent(event);
         var actionName = _t("Analytic Lines ({category})").replace("{category}", categoryName);
         this.do_action({
@@ -294,12 +304,7 @@ var ReportAction = Widget.extend(ControlPanelMixin, {
             res_model: "account.analytic.line",
             views: [[false, "list"], [false, "form"]],
             type: "ir.actions.act_window",
-            domain: [
-                ["account_id.project_ids", "=", this.projectId],
-                ["product_id.type", "in", ["consu", "product"]],
-                ["product_id.categ_id", "=", categoryId],
-                ["revenue", "=", false],
-            ],
+            domain: this.getProductCategoryDomain(event),
         });
     },
     /**
@@ -311,6 +316,21 @@ var ReportAction = Widget.extend(ControlPanelMixin, {
         event.preventDefault();
         var categoryId = getRecordIdFromEvent(event);
         this.categoryClicked(categoryId, "time");
+    },
+    /**
+     * Get the domain of analytic lines for a time category.
+     *
+     * @param {jQuery.Event} - the click event
+     * @returns {Array} - the domain
+     */
+    getTimeCategoryDomain(event){
+        var taskTypeId = getRecordIdFromEvent(event);
+        return [
+            ["account_id.project_ids", "=", this.projectId],
+            ["task_id.task_type_id", "=", taskTypeId],
+            ["task_id", "!=", false],
+            ["revenue", "=", false],
+        ];
     },
     /**
      * Handle a click on the total of a time category.
@@ -329,16 +349,11 @@ var ReportAction = Widget.extend(ControlPanelMixin, {
             res_model: "account.analytic.line",
             views: [[false, "list"], [false, "form"]],
             type: "ir.actions.act_window",
-            domain: [
-                ["account_id.project_ids", "=", this.projectId],
-                ["task_id.task_type_id", "=", taskTypeId],
-                ["task_id", "!=", false],
-                ["revenue", "=", false],
-            ],
+            domain: this.getTimeCategoryDomain(event),
         });
     },
     /**
-     * Handle a click on the label of an uotsourcing category.
+     * Handle a click on the label of an outsourcing category.
      *
      * @param {jQuery.Event} - the click event
      */
@@ -346,6 +361,19 @@ var ReportAction = Widget.extend(ControlPanelMixin, {
         event.preventDefault();
         var categoryId = getRecordIdFromEvent(event);
         this.categoryClicked(categoryId, "outsourcing");
+    },
+    /**
+     * Get the domain of analytic lines for outsourcing.
+     *
+     * @returns {Array} - the domain
+     */
+    getOutsourcingCategoryDomain(){
+        return [
+            ["account_id.project_ids", "=", this.projectId],
+            ["task_id", "=", false],
+            ["product_id.type", "=", "service"],
+            ["revenue", "=", false],
+        ];
     },
     /**
      * Handle a click on the total of an outsourcing category.
@@ -356,7 +384,6 @@ var ReportAction = Widget.extend(ControlPanelMixin, {
      */
     outsourcingTotalClicked(event){
         event.preventDefault();
-        var categoryId = getRecordIdFromEvent(event);
         var categoryName = getRecordNameFromEvent(event);
         var actionName = _t("Analytic Lines ({category})").replace("{category}", categoryName);
         this.do_action({
@@ -364,12 +391,7 @@ var ReportAction = Widget.extend(ControlPanelMixin, {
             res_model: "account.analytic.line",
             views: [[false, "list"], [false, "form"]],
             type: "ir.actions.act_window",
-            domain: [
-                ["account_id.project_ids", "=", this.projectId],
-                ["task_id", "=", false],
-                ["product_id.type", "=", "service"],
-                ["revenue", "=", false],
-            ],
+            domain: this.getOutsourcingCategoryDomain(),
         });
     },
     /**
@@ -402,6 +424,10 @@ var ReportAction = Widget.extend(ControlPanelMixin, {
 });
 
 core.action_registry.add("project_cost_report", ReportAction);
-return ReportAction;
+return {
+    ReportAction,
+    getRecordIdFromEvent,
+    getRecordNameFromEvent,
+};
 
 });
