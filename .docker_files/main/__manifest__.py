@@ -18,6 +18,7 @@
         'analytic_line_views_prioritized',
         'project_accurate_time_spent',
         'project_cost_report',
+        'project_cost_report_supply',
         'project_cost_smart_button',
         'project_form_with_dates',
         'project_portal_parent_task',
