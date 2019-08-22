@@ -42,6 +42,13 @@ def _map_wip_account(timesheet_line: models.Model) -> models.Model:
     return timesheet_line.project_id.project_type_id.wip_account_id
 
 
+class AnalyticLineWithIsShopSupply(models.Model):
+
+    _inherit = 'account.analytic.line'
+
+    is_shop_supply = fields.Boolean()
+
+
 class TimesheetLine(models.Model):
 
     _inherit = 'account.analytic.line'
@@ -81,6 +88,7 @@ class TimesheetLine(models.Model):
             'credit': -amount if amount < 0 else 0,
             'quantity': self.unit_amount,
             'analytic_account_id': self.project_id.analytic_account_id.id,
+            'is_shop_supply': True,
             'task_id': self.task_id.id,
         }
 
@@ -98,21 +106,23 @@ class TimesheetLine(models.Model):
             'quantity': self.unit_amount,
         }
 
+    def _get_shop_supply_move_reference(self):
+        return _("{project} / TA#{task} (Shop Supply)").format(
+            project=self.project_id.display_name,
+            task=self.task_id.id
+        )
+
     def _get_shop_supply_move_vals(self):
         """Get the values for the wip account move.
 
         :rtype: dict
         """
-        reference = "{project} / TA#{task}".format(
-            project=self.project_id.display_name,
-            task=self.task_id.id
-        )
         return {
             'company_id': self.company_id.id,
             'journal_id': _map_shop_supply_journal(self).id,
             'date': self.date,
             'no_analytic_lines': False,
-            'ref': reference,
+            'ref': self._get_shop_supply_move_reference(),
             'line_ids': [
                 (5, 0),
                 (0, 0, self._get_shop_supply_wip_move_line_vals()),

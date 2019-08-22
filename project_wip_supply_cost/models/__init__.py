@@ -3,5 +3,6 @@
 
 from . import (
     account_analytic_line,
+    account_move_line,
     project_type,
 )

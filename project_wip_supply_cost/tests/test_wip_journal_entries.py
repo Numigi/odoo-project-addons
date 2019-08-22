@@ -153,6 +153,12 @@ class TestWIPJournalEntries(WIPJournalEntriesCase):
         shop_supply_move = timesheet_line.shop_supply_account_move_id
         assert shop_supply_move.mapped('line_ids.analytic_line_ids')
 
+    def test_analytic_line_is_shop_supply(self):
+        timesheet_line = self._create_timesheet()
+        shop_supply_move = timesheet_line.shop_supply_account_move_id
+        shop_supply_analytic_line = shop_supply_move.mapped('line_ids.analytic_line_ids')
+        assert shop_supply_analytic_line.is_shop_supply
+
     def _get_wip_move_line(self, timesheet_line):
         return timesheet_line.shop_supply_account_move_id.line_ids.filtered(
             lambda l: l.account_id == self.wip_account)
