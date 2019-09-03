@@ -28,6 +28,11 @@ class TestProjectTask(common.SavepointCase):
         })
         self.assertEqual(task.date_deadline, self.deadline)
 
+    def test_when_creating_task_with_default_project_then_deadline_is_propagated(self):
+        task = self.env['project.task'].with_context(
+            default_project_id=self.project_with_deadline.id).create({'name': 'Task 2'})
+        self.assertEqual(task.date_deadline, self.deadline)
+
     def test_when_creating_task_if_project_has_no_deadline_then_deadline_is_empty(self):
         task = self.env['project.task'].create({
             'name': 'Task 2',
