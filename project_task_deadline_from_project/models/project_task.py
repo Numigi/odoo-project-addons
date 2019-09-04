@@ -11,21 +11,19 @@ class ProjectTaskWithDeadlineFromProject(models.Model):
 
     @api.model
     def create(self, vals):
-        should_propagate_deadline = vals.get('project_id') and 'date_deadline' not in vals
+        task = super().create(vals)
+        should_propagate_deadline = task.project_id and 'date_deadline' not in vals
         if should_propagate_deadline:
-            vals['date_deadline'] = self._get_deadline_from_project_id(vals['project_id'])
-        return super().create(vals)
+            task.date_deadline = task.project_id.date
+        return task
 
     @api.multi
     def write(self, vals):
         should_propagate_deadline = vals.get('project_id') and 'date_deadline' not in vals
         if should_propagate_deadline:
-            vals['date_deadline'] = self._get_deadline_from_project_id(vals['project_id'])
+            project = self.env['project.project'].browse(vals['project_id'])
+            vals['date_deadline'] = project.date
         return super().write(vals)
-
-    def _get_deadline_from_project_id(self, project_id):
-        project = self.env['project.project'].browse(project_id)
-        return project.date
 
     @api.onchange('project_id')
     def _onchange_project_propagate_deadline(self):
