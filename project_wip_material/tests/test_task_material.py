@@ -30,6 +30,10 @@ class TestGenerateProcurementsFromTask(TaskMaterialCase):
         move_date = fields.Datetime.from_string(line.move_ids.date_expected).date()
         assert move_date == new_date
 
+    def test_product_display_name_propagated_to_stock_move(self):
+        line = self._create_material_line()
+        assert line.move_ids.name == self.product_a.display_name
+
     def test_if_no_warehouse_on_project__raise_exception(self):
         self.project.warehouse_id = False
         with pytest.raises(ValidationError):
