@@ -116,6 +116,7 @@ class TaskMaterialCase(common.SavepointCase):
         cls.product_a_value = 50
         cls.product_a = cls.env['product.product'].create({
             'name': 'Product A',
+            'default_code': 'PROD_A',
             'type': 'product',
             'categ_id': cls.product_category.id,
             'standard_price': cls.product_a_value,
@@ -123,6 +124,7 @@ class TaskMaterialCase(common.SavepointCase):
         cls.product_b_value = 100
         cls.product_b = cls.env['product.product'].create({
             'name': 'Product B',
+            'default_code': 'PROD_B',
             'type': 'product',
             'categ_id': cls.product_category.id,
             'standard_price': cls.product_b_value,
