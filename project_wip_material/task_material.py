@@ -193,7 +193,7 @@ class TaskMaterialLine(models.Model):
             missing_qty,
             self.product_uom_id,
             self._get_consumption_location(),
-            self.product_id.name,
+            self.product_id.display_name,
             self.task_id._get_reference_for_procurements(),
             self._get_procurement_values(),
         )
