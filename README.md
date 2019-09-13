@@ -1,2 +1,3 @@
 # project-addons
-Odoo project related addons
+
+This repository adds Odoo modules related to the ``Project`` application.
