@@ -159,6 +159,9 @@ class Warehouse(models.Model):
             'active': True,
             'company_id': self.company_id.id,
             'sequence': 1,
+            'propagate': True,
+            'procure_method': 'make_to_stock',
+            'group_propagation_option': 'propagate',
         }
 
     def _get_consumption_route_values(self):
@@ -356,6 +359,9 @@ class WarehouseWithPickingStep(models.Model):
             'active': True,
             'company_id': self.company_id.id,
             'sequence': 2,
+            'propagate': True,
+            'procure_method': 'make_to_stock',
+            'group_propagation_option': 'propagate',
         }
 
     def _create_consumption_route(self):

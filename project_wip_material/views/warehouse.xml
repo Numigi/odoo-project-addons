@@ -8,6 +8,9 @@
         <field name="arch" type="xml">
             <field name="delivery_steps" position="after">
                 <field name="consu_steps" string="Consumption" widget="radio"/>
+                <field name="consu_prep_location_id" string="Preparation Location"
+                    attrs="{'required': [('consu_steps', '=', 'two_steps')],
+                            'invisible': [('consu_steps', '!=', 'two_steps')]}"/>
             </field>
         </field>
     </record>

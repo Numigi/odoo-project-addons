@@ -58,6 +58,18 @@ class TestConsumptionStep(ConsumptionRouteCase):
         pull = self.main_warehouse.consu_route_id.pull_ids
         assert pull.action == 'move'
 
+    def test_consumption_pull_propagate_is_true(self):
+        pull = self.main_warehouse.consu_route_id.pull_ids
+        assert pull.propagate is True
+
+    def test_consumption_pull_procure_method_is_make_to_stock(self):
+        pull = self.main_warehouse.consu_route_id.pull_ids
+        assert pull.procure_method == 'make_to_stock'
+
+    def test_consumption_pull_propagate_group_is_set(self):
+        pull = self.main_warehouse.consu_route_id.pull_ids
+        assert pull.group_propagation_option == 'propagate'
+
     def test_consumption_route_is_warehouse_selectable(self):
         route = self.main_warehouse.consu_route_id
         assert route.warehouse_selectable
@@ -130,6 +142,15 @@ class TestPreperationStep(ConsumptionRouteCase):
 
     def test_preparation_pull_action_is_move(self):
         assert self.preparation_pull.action == 'move'
+
+    def test_preparation_pull_propagate_is_true(self):
+        assert self.preparation_pull.propagate is True
+
+    def test_preparation_pull_procure_method_is_make_to_stock(self):
+        assert self.preparation_pull.procure_method == 'make_to_stock'
+
+    def test_preparation_pull_propagate_group_is_set(self):
+        assert self.preparation_pull.group_propagation_option == 'propagate'
 
     def test_preparation_pull_company_properly_set(self):
         assert self.preparation_pull.company_id == self.new_company
