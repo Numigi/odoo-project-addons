@@ -146,6 +146,9 @@ class TestPreperationStep(ConsumptionRouteCase):
     def test_preparation_pull_propagate_is_true(self):
         assert self.preparation_pull.propagate is True
 
+    def test_consumption_pull_procure_method_is_make_to_order(self):
+        assert self.consumption_pull.procure_method == 'make_to_order'
+
     def test_preparation_pull_procure_method_is_make_to_stock(self):
         assert self.preparation_pull.procure_method == 'make_to_stock'
 

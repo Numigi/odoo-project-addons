@@ -150,8 +150,9 @@ class Warehouse(models.Model):
         source_location = (
             self.lot_stock_id if self.consu_steps == 'one_step' else self.consu_prep_location_id
         )
+        procure_method = 'make_to_stock' if self.consu_steps == 'one_step' else 'make_to_order'
         return {
-            'name': self._format_rulename(source_location, self.consu_location_id, 'Production'),
+            'name': self._format_rulename(source_location, self.consu_location_id, ''),
             'location_src_id': source_location.id,
             'location_id': self.consu_location_id.id,
             'picking_type_id': self.consu_type_id.id,
@@ -160,15 +161,19 @@ class Warehouse(models.Model):
             'company_id': self.company_id.id,
             'sequence': 1,
             'propagate': True,
-            'procure_method': 'make_to_stock',
+            'procure_method': procure_method,
             'group_propagation_option': 'propagate',
         }
 
     def _get_consumption_route_values(self):
+        description = (
+            ONE_STEP_DESCRIPTION
+            if self.consu_steps == 'one_step' else TWO_STEPS_DESCRIPTION
+        )
         return {
             'name': "{warehouse}: {description}".format(
                 warehouse=self.name,
-                description=_(ONE_STEP_DESCRIPTION),
+                description=_(description),
             ),
             'active': True,
             'company_id': self.company_id.id,
@@ -350,8 +355,7 @@ class WarehouseWithPickingStep(models.Model):
 
     def _get_consumption_prep_pull_values(self):
         return {
-            'name': self._format_rulename(
-                self.lot_stock_id, self.consu_prep_location_id, 'Preparation'),
+            'name': self._format_rulename(self.lot_stock_id, self.consu_prep_location_id, ''),
             'location_src_id': self.lot_stock_id.id,
             'location_id': self.consu_prep_location_id.id,
             'picking_type_id': self.consu_prep_type_id.id,
