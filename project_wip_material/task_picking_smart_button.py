@@ -68,7 +68,8 @@ def _is_preparation_return_picking(picking: 'StockPicking'):
     type defined as the preparation return type on the warehouse.
     """
     picking_type = picking.picking_type_id
-    return picking_type == picking_type.warehouse_id.consu_prep_return_type_id
+    return_type_on_warehouse = picking_type.warehouse_id.consu_prep_return_type_id
+    return picking_type == return_type_on_warehouse
 
 
 class TaskWithPreparationPickingSmartButton(models.Model):
