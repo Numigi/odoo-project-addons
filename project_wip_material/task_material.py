@@ -176,7 +176,6 @@ class TaskMaterialLine(models.Model):
             'group_id': self.task_id._get_procurement_group(),
             'date_planned': datetime_planned_str,
             'warehouse_id': self.task_id.project_id.warehouse_id,
-            'route_ids': self._get_consumption_route(),
             'material_line_id': self.id,
         }
 
