@@ -46,6 +46,11 @@ class TaskMaterialCase(common.SavepointCase):
         cls.warehouse = cls.env['stock.warehouse'].search([
             ('company_id', '=', cls.company.id),
         ], limit=1)
+        cls.warehouse.consu_prep_location_id = cls.env['stock.location'].create({
+            'name': 'Preparation',
+            'usage': 'internal',
+            'location_id': cls.warehouse.view_location_id.id,
+        })
         cls.route = cls.warehouse.consu_route_id
 
         cls.journal = cls.env['account.journal'].create({
