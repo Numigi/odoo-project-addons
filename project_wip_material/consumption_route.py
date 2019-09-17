@@ -3,8 +3,13 @@
 
 from odoo import api, fields, models, SUPERUSER_ID, _
 
+
+ONE_STEP_KEY = "one_step"
 ONE_STEP_DESCRIPTION = _("Direct consumption from stocks (1 step)")
-TWO_STEPS_DESCRIPTION = _("Prepare the stock before consumption (2 steps)")
+
+
+def _has_one_step_consumption(warehouse: 'StockWarehouse'):
+    return warehouse.consu_steps == ONE_STEP_KEY
 
 
 class StockPickingType(models.Model):
@@ -27,8 +32,8 @@ class Warehouse(models.Model):
         return self.env.ref('stock.location_production', raise_if_not_found=False).id
 
     consu_steps = fields.Selection([
-        ('one_step', ONE_STEP_DESCRIPTION),
-    ], default='one_step')
+        (ONE_STEP_KEY, ONE_STEP_DESCRIPTION),
+    ], default=ONE_STEP_KEY)
 
     consu_location_id = fields.Many2one(
         'stock.location', 'Consumption Location',
@@ -79,7 +84,7 @@ class Warehouse(models.Model):
             'warehouse_id': self.id,
             'code': 'consumption',
             'default_location_src_id': (
-                self.lot_stock_id.id if self.consu_steps == 'one_step' else
+                self.lot_stock_id.id if _has_one_step_consumption(self) else
                 self.consu_prep_location_id.id
             ),
             'default_location_dest_id': self.consu_location_id.id,
@@ -91,7 +96,7 @@ class Warehouse(models.Model):
             'code': 'consumption_return',
             'default_location_src_id': self.consu_location_id.id,
             'default_location_dest_id': (
-                self.lot_stock_id.id if self.consu_steps == 'one_step' else
+                self.lot_stock_id.id if _has_one_step_consumption(self) else
                 self.consu_prep_location_id.id
             ),
         }
@@ -148,9 +153,9 @@ class Warehouse(models.Model):
 
     def _get_consumption_pull_values(self):
         source_location = (
-            self.lot_stock_id if self.consu_steps == 'one_step' else self.consu_prep_location_id
+            self.lot_stock_id if _has_one_step_consumption(self) else self.consu_prep_location_id
         )
-        procure_method = 'make_to_stock' if self.consu_steps == 'one_step' else 'make_to_order'
+        procure_method = 'make_to_stock' if _has_one_step_consumption(self) else 'make_to_order'
         return {
             'name': self._format_rulename(source_location, self.consu_location_id, ''),
             'location_src_id': source_location.id,
@@ -165,15 +170,14 @@ class Warehouse(models.Model):
             'group_propagation_option': 'propagate',
         }
 
+    def _get_consumption_route_description(self):
+        return _(ONE_STEP_DESCRIPTION)
+
     def _get_consumption_route_values(self):
-        description = (
-            ONE_STEP_DESCRIPTION
-            if self.consu_steps == 'one_step' else TWO_STEPS_DESCRIPTION
-        )
         return {
             'name': "{warehouse}: {description}".format(
                 warehouse=self.name,
-                description=_(description),
+                description=self._get_consumption_route_description(),
             ),
             'active': True,
             'company_id': self.company_id.id,
@@ -237,12 +241,20 @@ class Warehouse(models.Model):
         return True
 
 
+TWO_STEPS_KEY = "two_steps"
+TWO_STEPS_DESCRIPTION = _("Prepare the stock before consumption (2 steps)")
+
+
+def _has_two_steps_consumption(warehouse: 'StockWarehouse'):
+    return warehouse.consu_steps == TWO_STEPS_KEY
+
+
 class WarehouseWithPickingStep(models.Model):
     """Add picking step to the consumption route."""
 
     _inherit = 'stock.warehouse'
 
-    consu_steps = fields.Selection(selection_add=[('two_steps', TWO_STEPS_DESCRIPTION)])
+    consu_steps = fields.Selection(selection_add=[(TWO_STEPS_KEY, TWO_STEPS_DESCRIPTION)])
 
     consu_prep_location_id = fields.Many2one(
         'stock.location', 'Preparation Picking Location',
@@ -259,6 +271,12 @@ class WarehouseWithPickingStep(models.Model):
         'stock.picking.type', 'Preparation Return Picking Type',
         ondelete='restrict',
     )
+
+    def _get_consumption_route_description(self):
+        return (
+            _(TWO_STEPS_DESCRIPTION) if _has_two_steps_consumption(self) else
+            super()._get_consumption_route_description()
+        )
 
     def _get_consumption_prep_sequence_values(self):
         return {
@@ -345,7 +363,7 @@ class WarehouseWithPickingStep(models.Model):
     def _create_or_update_consumption_picking_types(self):
         super()._create_or_update_consumption_picking_types()
 
-        require_prep_type = self.consu_steps == 'two_steps'
+        require_prep_type = _has_two_steps_consumption(self)
 
         if require_prep_type and self.consu_prep_type_id:
             self._update_consumption_prep_picking_types()
@@ -370,7 +388,7 @@ class WarehouseWithPickingStep(models.Model):
 
     def _create_consumption_route(self):
         super()._create_consumption_route()
-        if self.consu_steps == 'two_steps':
+        if _has_two_steps_consumption(self):
             self.consu_route_id.write({
                 'pull_ids': [(0, 0, self._get_consumption_prep_pull_values())],
             })
@@ -379,7 +397,7 @@ class WarehouseWithPickingStep(models.Model):
         existing_pull = self.consu_route_id.pull_ids.filtered(
             lambda p: p.location_id == self.consu_prep_location_id)
 
-        pull_required = self.consu_steps == 'two_steps'
+        pull_required = _has_two_steps_consumption(self)
 
         if existing_pull and pull_required:
             existing_pull.write(self._get_consumption_prep_pull_values())
