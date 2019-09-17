@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-04-03 16:39+0000\n"
-"PO-Revision-Date: 2019-04-03 12:39-0400\n"
+"POT-Creation-Date: 2019-09-13 16:53+0000\n"
+"PO-Revision-Date: 2019-09-13 12:57-0400\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -51,7 +51,7 @@ msgid "Consumed Quantity"
 msgstr "Quantités consommées"
 
 #. module: project_wip_material
-#: code:addons/project_wip_material/consumption_route.py:96
+#: code:addons/project_wip_material/consumption_route.py:102
 #: model:ir.ui.view,arch_db:project_wip_material.task_form_with_material
 #: model:ir.ui.view,arch_db:project_wip_material.task_form_with_picking_smart_button
 #: model:ir.ui.view,arch_db:project_wip_material.warehouse_form_with_consumption_steps
@@ -66,8 +66,6 @@ msgstr "Emplacement de consommation"
 
 #. module: project_wip_material
 #: model:ir.model.fields,field_description:project_wip_material.field_project_task_consumption_picking_count
-#, fuzzy
-#| msgid "Consumption Picking Type"
 msgid "Consumption Picking Count"
 msgstr "Nombre d'opérations de consommation"
 
@@ -77,7 +75,12 @@ msgid "Consumption Picking Type"
 msgstr "Type d'opération de consommation"
 
 #. module: project_wip_material
-#: code:addons/project_wip_material/consumption_route.py:107
+#: model:ir.model.fields,field_description:project_wip_material.field_project_task_consumption_picking_ids
+msgid "Consumption Pickings"
+msgstr "Opérations de consommation"
+
+#. module: project_wip_material
+#: code:addons/project_wip_material/consumption_route.py:113
 #, python-format
 msgid "Consumption Return"
 msgstr "Retour de consommation"
@@ -116,7 +119,9 @@ msgid "Default Unit of Measure used for all stock operation."
 msgstr ""
 
 #. module: project_wip_material
+#: code:addons/project_wip_material/consumption_route.py:6
 #: selection:stock.warehouse,consu_steps:0
+#, python-format
 msgid "Direct consumption from stocks (1 step)"
 msgstr "Consommation directe depuis les stocks (1 étape)"
 
@@ -161,7 +166,7 @@ msgid "Material Line"
 msgstr "Ligne de matériel"
 
 #. module: project_wip_material
-#: code:addons/project_wip_material/wip_journal_entries.py:108
+#: code:addons/project_wip_material/wip_journal_entries.py:109
 #, python-format
 msgid ""
 "Material can not be added to the task because the project type {} has no WIP "
@@ -171,7 +176,7 @@ msgstr ""
 "pas de compte de TEC."
 
 #. module: project_wip_material
-#: code:addons/project_wip_material/wip_journal_entries.py:102
+#: code:addons/project_wip_material/wip_journal_entries.py:103
 #, python-format
 msgid ""
 "Material can not be added to the task because the project {} has no project "
@@ -191,9 +196,73 @@ msgstr ""
 "initiale inférieure à zéro. La ligne {line} a une quantité de {qty}."
 
 #. module: project_wip_material
-#: model:ir.model.fields,field_description:project_wip_material.field_project_task_consumption_picking_ids
-msgid "Pickings"
-msgstr "Pickings"
+#: code:addons/project_wip_material/consumption_route.py:304
+#, python-format
+msgid "Preparation"
+msgstr "Préparation"
+
+#. module: project_wip_material
+#: model:ir.ui.view,arch_db:project_wip_material.warehouse_form_with_consumption_steps
+msgid "Preparation Location"
+msgstr "Emplacement de préparation"
+
+#. module: project_wip_material
+#: model:ir.model.fields,field_description:project_wip_material.field_project_task_preparation_picking_count
+msgid "Preparation Picking Count"
+msgstr "Nombre d'opérations de préparation"
+
+#. module: project_wip_material
+#: model:ir.model.fields,field_description:project_wip_material.field_stock_warehouse_consu_prep_location_id
+msgid "Preparation Picking Location"
+msgstr "Emplacement de préparation"
+
+#. module: project_wip_material
+#: model:ir.model.fields,field_description:project_wip_material.field_stock_warehouse_consu_prep_type_id
+msgid "Preparation Picking Type"
+msgstr "Type d'opération de préparation"
+
+#. module: project_wip_material
+#: model:ir.model.fields,field_description:project_wip_material.field_project_task_preparation_picking_ids
+msgid "Preparation Pickings"
+msgstr "Préparations"
+
+#. module: project_wip_material
+#: code:addons/project_wip_material/consumption_route.py:315
+#, python-format
+msgid "Preparation Return"
+msgstr "Retour de préparation"
+
+#. module: project_wip_material
+#: model:ir.model.fields,field_description:project_wip_material.field_project_task_preparation_return_picking_count
+msgid "Preparation Return Picking Count"
+msgstr "Nombre de retours de préparation"
+
+#. module: project_wip_material
+#: model:ir.model.fields,field_description:project_wip_material.field_stock_warehouse_consu_prep_return_type_id
+msgid "Preparation Return Picking Type"
+msgstr "Type d'opération de retour de préparation"
+
+#. module: project_wip_material
+#: model:ir.model.fields,field_description:project_wip_material.field_project_task_preparation_return_picking_ids
+msgid "Preparation Return Pickings"
+msgstr "Retours de préparation"
+
+#. module: project_wip_material
+#: model:ir.ui.view,arch_db:project_wip_material.task_form_with_picking_smart_button
+msgid "Preparation Returns"
+msgstr "Retours de préparation"
+
+#. module: project_wip_material
+#: model:ir.ui.view,arch_db:project_wip_material.task_form_with_picking_smart_button
+msgid "Preparations"
+msgstr "Préparations"
+
+#. module: project_wip_material
+#: code:addons/project_wip_material/consumption_route.py:7
+#: selection:stock.warehouse,consu_steps:0
+#, python-format
+msgid "Prepare the stock before consumption (2 steps)"
+msgstr "Préparer le stock avant la consommation (2 étapes)"
 
 #. module: project_wip_material
 #: model:ir.model.fields,field_description:project_wip_material.field_project_task_procurement_group_id

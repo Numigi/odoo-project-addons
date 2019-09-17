@@ -4,7 +4,7 @@
 from odoo.tests import common
 
 
-class TestConsumptionRoute(common.SavepointCase):
+class ConsumptionRouteCase(common.SavepointCase):
 
     @classmethod
     def setUpClass(cls):
@@ -20,6 +20,9 @@ class TestConsumptionRoute(common.SavepointCase):
         cls.new_warehouse = cls.env['stock.warehouse'].search([
             ('company_id', '=', cls.new_company.id),
         ], limit=1)
+
+
+class TestConsumptionStep(ConsumptionRouteCase):
 
     def test_default_consumption_location(self):
         assert self.new_warehouse.consu_location_id == self.env.ref('stock.location_production')
@@ -54,6 +57,18 @@ class TestConsumptionRoute(common.SavepointCase):
     def test_consumption_pull_action_is_move(self):
         pull = self.main_warehouse.consu_route_id.pull_ids
         assert pull.action == 'move'
+
+    def test_consumption_pull_propagate_is_true(self):
+        pull = self.main_warehouse.consu_route_id.pull_ids
+        assert pull.propagate is True
+
+    def test_consumption_pull_procure_method_is_make_to_stock(self):
+        pull = self.main_warehouse.consu_route_id.pull_ids
+        assert pull.procure_method == 'make_to_stock'
+
+    def test_consumption_pull_propagate_group_is_set(self):
+        pull = self.main_warehouse.consu_route_id.pull_ids
+        assert pull.group_propagation_option == 'propagate'
 
     def test_consumption_route_is_warehouse_selectable(self):
         route = self.main_warehouse.consu_route_id
@@ -100,3 +115,74 @@ class TestConsumptionRoute(common.SavepointCase):
         new_pull = self.main_warehouse.consu_route_id.pull_ids
         assert len(new_pull) == 1
         assert new_pull != initial_pull
+
+
+class TestPreperationStep(ConsumptionRouteCase):
+
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.prep_location = cls.env['stock.location'].create({
+            'name': 'Preparation Location',
+            'usage': 'internal',
+            'location_id': cls.new_warehouse.view_location_id.id,
+        })
+        cls.new_warehouse.write({
+            'consu_steps': 'two_steps',
+            'consu_prep_location_id': cls.prep_location.id,
+        })
+        cls.consumption_pull = cls.new_warehouse.consu_route_id.pull_ids[0]
+        cls.preparation_pull = cls.new_warehouse.consu_route_id.pull_ids[1]
+
+    def test_preparation_pull_is_from_stock_location(self):
+        assert self.preparation_pull.location_src_id == self.new_warehouse.lot_stock_id
+
+    def test_preparation_pull_is_to_preparation_location(self):
+        assert self.preparation_pull.location_id == self.prep_location
+
+    def test_preparation_pull_action_is_move(self):
+        assert self.preparation_pull.action == 'move'
+
+    def test_preparation_pull_propagate_is_true(self):
+        assert self.preparation_pull.propagate is True
+
+    def test_consumption_pull_procure_method_is_make_to_order(self):
+        assert self.consumption_pull.procure_method == 'make_to_order'
+
+    def test_preparation_pull_procure_method_is_make_to_stock(self):
+        assert self.preparation_pull.procure_method == 'make_to_stock'
+
+    def test_preparation_pull_propagate_group_is_set(self):
+        assert self.preparation_pull.group_propagation_option == 'propagate'
+
+    def test_preparation_pull_company_properly_set(self):
+        assert self.preparation_pull.company_id == self.new_company
+
+    def test_preparation_picking_is_internal(self):
+        assert self.preparation_pull.picking_type_id.code == 'internal'
+
+    def test_preparation_return_picking_is_internal(self):
+        assert self.preparation_pull.picking_type_id.return_picking_type_id.code == 'internal'
+
+    def test_preparation_picking_types_are_bound_together(self):
+        preperation_type = self.preparation_pull.picking_type_id
+        return_type = preperation_type.return_picking_type_id
+        assert return_type.return_picking_type_id == preperation_type
+
+    def test_consumption_pull_is_from_preparation_location(self):
+        assert self.consumption_pull.location_src_id == self.prep_location
+
+    def test_consumption_pull_is_to_consumption_location(self):
+        assert self.consumption_pull.location_id == self.new_warehouse.consu_location_id
+
+    def test_if_route_set_to_one_step__consu_pull_deactivated(self):
+        self.new_warehouse.consu_steps = 'one_step'
+        assert self.preparation_pull.active is False
+
+    def test_if_route_reset_to_two_steps__consu_pull_reactivated(self):
+        self.new_warehouse.consu_steps = 'one_step'
+        self.new_warehouse.consu_steps = 'two_steps'
+        assert self.preparation_pull.active is True
+        assert self.new_warehouse.consu_route_id.pull_ids == (
+            self.consumption_pull | self.preparation_pull
+        )
