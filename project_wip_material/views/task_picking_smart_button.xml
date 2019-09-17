@@ -7,6 +7,22 @@
         <field name="inherit_id" ref="project.view_task_form2"/>
         <field name="arch" type="xml">
             <button name="toggle_active" position="before">
+                <button
+                    name="open_preparation_picking_view_from_task" type="object" class="oe_stat_button"
+                    icon="fa-truck"
+                    groups="stock.group_stock_user"
+                    attrs="{'invisible': [('preparation_picking_count', '=', 0)]}"
+                    >
+                        <field name="preparation_picking_count" widget="statinfo" string="Preparations"/>
+                </button>
+                <button
+                    name="open_preparation_return_picking_view_from_task" type="object" class="oe_stat_button"
+                    icon="fa-truck"
+                    groups="stock.group_stock_user"
+                    attrs="{'invisible': [('preparation_return_picking_count', '=', 0)]}"
+                    >
+                        <field name="preparation_return_picking_count" widget="statinfo" string="Preparation Returns"/>
+                </button>
                  <button
                     name="open_consumption_picking_view_from_task" type="object" class="oe_stat_button"
                     icon="fa-truck"
