@@ -248,7 +248,6 @@ class Warehouse(models.Model):
         self.consu_mto_pull_id.write(vals)
 
     def _create_or_update_consumption_mto_pull(self):
-        vals = self._get_consumption_mto_pull_vals()
         if self.consu_mto_pull_id:
             self._update_consumption_mto_pull()
         else:
