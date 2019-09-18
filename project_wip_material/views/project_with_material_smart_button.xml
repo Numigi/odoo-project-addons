@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="task_material_from_project_action" model="ir.actions.act_window">
+        <field name="name">Task Material</field>
+        <field name="res_model">project.task.material</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree</field>
+        <field name="context">{
+            'default_project_select_id': active_id,
+            'search_default_project_id': active_id,
+        }</field>
+        <field name="target">current</field>
+    </record>
+
+    <record id="project_form_with_material_smart_button" model="ir.ui.view">
+        <field name="name">Project Form: add material smart button</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.edit_project"/>
+        <field name="arch" type="xml">
+            <button name="toggle_active" position="before">
+                <button
+                    name="%(task_material_from_project_action)d" type="action" class="oe_stat_button"
+                    icon="fa-list"
+                    string="Material"
+                    />
+            </button>
+        </field>
+    </record>
+
+</odoo>
