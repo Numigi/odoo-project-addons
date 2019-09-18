@@ -444,7 +444,7 @@ class WarehouseWithPickingStep(models.Model):
             })
 
     def _update_consumption_prep_pull(self):
-        existing_pull = self.consu_route_id.pull_ids.filtered(
+        existing_pull = self.consu_route_id.with_context(active_test=False).pull_ids.filtered(
             lambda p: p.location_id == self.consu_prep_location_id)
 
         pull_required = _has_two_steps_consumption(self)
