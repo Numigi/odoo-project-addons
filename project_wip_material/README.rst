@@ -6,6 +6,8 @@ It enables to consume material (products) on a task.
 
 The consumed product costs are accruded in the WIP account.
 
+.. contents:: Table of Contents
+
 Warehouse Configuration
 -----------------------
 As member of the group ``Stock / Manager``, I go to the form view of my warehouse.
@@ -138,6 +140,36 @@ If products are returned from the preparation step, a new smart button is added 
 By clicking on ``Preparation Returns``, I am redirected to the form view of the return picking.
 
 .. image:: static/description/preparation_return_picking_form.png
+
+Material List View
+------------------
+Since version ``1.2.0`` of the module, a new list view of all task material is available.
+
+.. image:: static/description/global_material_list_view.png
+
+This list is available from both ``Inventory / Report`` and ``Project / Report`` menus.
+
+It allows to add new material lines or modify the initial quantity on existing lines.
+
+Deleting a Line
+~~~~~~~~~~~~~~~
+It however does not allow to delete a line.
+If you need to delete material, you must go to the form view of the task and delete it.
+
+Changing the Task
+~~~~~~~~~~~~~~~~~
+The task and project on an existing line are not modifiable.
+
+If you need to change the task of a material line, you may delete it or set its quantity to zero.
+Then, recreate it with the proper project and task.
+
+Project Smart Button
+~~~~~~~~~~~~~~~~~~~~
+From the form view of a project, a smart button allows to access the material related to this project.
+
+.. image:: static/description/project_material_smart_button.png
+
+.. image:: static/description/project_material_list.png
 
 Contributors
 ------------
