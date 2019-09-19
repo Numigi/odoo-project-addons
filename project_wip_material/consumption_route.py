@@ -57,6 +57,11 @@ class Warehouse(models.Model):
         ondelete='restrict',
     )
 
+    consu_mto_pull_id = fields.Many2one(
+        'procurement.rule', 'Consumption MTO Pull',
+        ondelete='restrict'
+    )
+
     def _get_consumption_sequence_values(self):
         return {
             'name': '{}: Consumption'.format(self.name),
@@ -216,6 +221,38 @@ class Warehouse(models.Model):
         else:
             self._create_consumption_route()
 
+    def _get_consumption_mto_pull_vals(self):
+        source_location = self.lot_stock_id
+        destination_location = self.consu_location_id
+        return {
+            'name': self._format_rulename(source_location, destination_location, 'MTO'),
+            'location_src_id': source_location.id,
+            'location_id': destination_location.id,
+            'picking_type_id': self.consu_type_id.id,
+            'action': 'move',
+            'active': True,
+            'company_id': self.company_id.id,
+            'sequence': 1,
+            'propagate': True,
+            'procure_method': 'make_to_order',
+            'group_propagation_option': 'propagate',
+            'route_id': self.env.ref('stock.route_warehouse0_mto').id,
+        }
+
+    def _create_consumption_mto_pull(self):
+        vals = self._get_consumption_mto_pull_vals()
+        self.consu_mto_pull_id = self.env['procurement.rule'].create(vals)
+
+    def _update_consumption_mto_pull(self):
+        vals = self._get_consumption_mto_pull_vals()
+        self.consu_mto_pull_id.write(vals)
+
+    def _create_or_update_consumption_mto_pull(self):
+        if self.consu_mto_pull_id:
+            self._update_consumption_mto_pull()
+        else:
+            self._create_consumption_mto_pull()
+
     @api.model
     def create(self, vals):
         """When creating a new warehouse, create the consumption route.
@@ -225,6 +262,7 @@ class Warehouse(models.Model):
         warehouse = super().create(vals)
         warehouse.sudo()._create_consumption_picking_types()
         warehouse.sudo()._create_consumption_route()
+        warehouse.sudo()._create_consumption_mto_pull()
         return warehouse
 
     @api.multi
@@ -238,6 +276,7 @@ class Warehouse(models.Model):
             for warehouse in self:
                 warehouse.sudo()._create_or_update_consumption_picking_types()
                 warehouse.sudo()._create_or_update_consumption_route()
+                warehouse.sudo()._create_or_update_consumption_mto_pull()
         return True
 
 
@@ -277,6 +316,16 @@ class WarehouseWithPickingStep(models.Model):
             _(TWO_STEPS_DESCRIPTION) if _has_two_steps_consumption(self) else
             super()._get_consumption_route_description()
         )
+
+    def _get_consumption_mto_pull_vals(self):
+        vals = super()._get_consumption_mto_pull_vals()
+
+        if _has_two_steps_consumption(self):
+            vals['location_src_id'] = self.lot_stock_id.id
+            vals['location_id'] = self.consu_prep_location_id.id
+            vals['picking_type_id'] = self.consu_prep_type_id.id
+
+        return vals
 
     def _get_consumption_prep_sequence_values(self):
         return {
@@ -394,7 +443,7 @@ class WarehouseWithPickingStep(models.Model):
             })
 
     def _update_consumption_prep_pull(self):
-        existing_pull = self.consu_route_id.pull_ids.filtered(
+        existing_pull = self.consu_route_id.with_context(active_test=False).pull_ids.filtered(
             lambda p: p.location_id == self.consu_prep_location_id)
 
         pull_required = _has_two_steps_consumption(self)

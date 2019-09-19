@@ -106,16 +106,6 @@ class TestConsumptionStep(ConsumptionRouteCase):
         assert self.main_warehouse.consu_route_id.pull_ids == pull_1
         assert self.new_warehouse.consu_route_id.pull_ids == pull_2
 
-    def test_after_warehouse_write__if_pull_is_deleted__pull_is_recreated(self):
-        initial_pull = self.main_warehouse.consu_route_id.pull_ids
-        initial_pull.unlink()
-        self.main_warehouse.write({'consu_steps': 'one_step'})
-        self.main_warehouse.refresh()
-
-        new_pull = self.main_warehouse.consu_route_id.pull_ids
-        assert len(new_pull) == 1
-        assert new_pull != initial_pull
-
 
 class TestPreperationStep(ConsumptionRouteCase):
 

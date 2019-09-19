@@ -34,7 +34,7 @@ class TaskWithConsumptionPickingSmartButton(models.Model):
         """
         action = self.env.ref('stock.action_picking_tree_all').read()[0]
 
-        if self.preparation_picking_count > 1:
+        if len(pickings) > 1:
             action['domain'] = [('id', 'in', pickings.ids)]
 
         else:

@@ -12,6 +12,7 @@
     'summary': 'Install all addons required for testing.',
     'depends': [
         'stock_account',  # required for testing project_wip
+        'purchase',  # required for testing project_wip_material
 
         'analytic_line_employee',
         'analytic_line_revenue',

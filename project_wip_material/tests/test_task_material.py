@@ -1,14 +1,16 @@
 # © 2019 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
-from datetime import timedelta
-
 import pytest
+
+from datetime import timedelta
+from ddt import data, ddt
 from odoo import fields
 from odoo.exceptions import ValidationError
 from .common import TaskMaterialCase
 
 
+@ddt
 class TestGenerateProcurementsFromTask(TaskMaterialCase):
 
     def test_if_no_date_planned_on_task__raise_exception(self):
@@ -59,10 +61,6 @@ class TestGenerateProcurementsFromTask(TaskMaterialCase):
         })
         line = self._create_material_line()
         assert line.move_ids.product_uom == uom
-
-    def test_warehouse_route_propagated_to_stock_move(self):
-        line = self._create_material_line()
-        assert line.move_ids.route_ids == self.route
 
     def test_stock_move_source_location_is_stock(self):
         line = self._create_material_line()
@@ -190,3 +188,19 @@ class TestGenerateProcurementsFromTask(TaskMaterialCase):
         line = self._create_material_line()
         with pytest.raises(ValidationError):
             line.product_id = self.product_b
+
+    def _get_po_line(self, product):
+        return self.env['purchase.order.line'].search([('product_id', '=', product.id)])
+
+    def test_if_product_is_not_mto__purchase_order_not_generated(self):
+        self._create_material_line()
+        po_line = self._get_po_line(self.product_a)
+        assert not po_line
+
+    @data('one_step', 'two_steps')
+    def test_if_product_is_mto__purchase_order_generated(self, steps):
+        self.warehouse.consu_steps = steps
+        self.product_a.route_ids |= self.env.ref('stock.route_warehouse0_mto')
+        self._create_material_line()
+        po_line = self._get_po_line(self.product_a)
+        assert po_line
