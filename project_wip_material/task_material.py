@@ -78,6 +78,12 @@ class TaskMaterialLine(models.Model):
     _order = 'product_id, id'
 
     company_id = fields.Many2one(related='task_id.company_id', store=True)
+    project_id = fields.Many2one(
+        'project.project',
+        related='task_id.project_id',
+        store=True,
+        readonly=True,
+    )
     task_id = fields.Many2one(
         'project.task', 'Task',
         index=True, required=True,
@@ -346,6 +352,31 @@ class TaskMaterialLine(models.Model):
         for line in self:
             line.sudo()._cancel_procurements_for_line_to_delete()
         return super().unlink()
+
+
+class TaskMaterialWithProjectSelect(models.Model):
+    """Add a technical computed field to allow constrain the domain when selecting the task.
+
+    This field is not stored and only used as a helper in the global list view of material.
+    """
+
+    _inherit = 'project.task.material'
+
+    project_select_id = fields.Many2one(
+        'project.project',
+        'Project Select',
+        compute='_compute_project_select',
+        inverse=lambda self: None,
+    )
+
+    def _compute_project_select(self):
+        for material in self:
+            material.project_select_id = material.project_id
+
+    @api.onchange('project_select_id')
+    def _onchange_project_select_reset_task(self):
+        if self.project_select_id != self.task_id.project_id:
+            self.task_id = False
 
 
 class Task(models.Model):
