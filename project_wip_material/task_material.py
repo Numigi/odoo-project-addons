@@ -249,7 +249,11 @@ class TaskMaterialLine(models.Model):
         self.move_ids
 
         moves = self.move_ids
+
+        # Limit the recursion depth stock.move chains.
+        # A chain of more than 3 moves is unlikely.
         limit = 10
+
         while moves and limit:
             moves_with_zero_qty = moves.filtered(lambda m: m.product_qty == 0)
             moves = moves_with_zero_qty.mapped('move_orig_ids')
