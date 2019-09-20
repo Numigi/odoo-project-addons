@@ -111,6 +111,6 @@ class TaskMaterialLine(models.Model):
                 'the project type {} has no WIP account.'
             ).format(project.project_type_id.display_name))
 
-    def _generate_procurements(self):
+    def _run_procurements(self):
         self._check_project_has_wip_account()
-        return super()._generate_procurements()
+        return super()._run_procurements()

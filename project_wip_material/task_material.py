@@ -185,7 +185,7 @@ class TaskMaterialLine(models.Model):
             'material_line_id': self.id,
         }
 
-    def _generate_missing_procurements(self):
+    def _update_procurement_quantities(self):
         """Launch a procurement for the missing quantity on stock moves.
 
         This method assumes that the initial quantity field is greater than
@@ -203,34 +203,6 @@ class TaskMaterialLine(models.Model):
             self._get_procurement_values(),
         )
 
-    def _reduce_stock_move(self, move, quantity):
-        """Reduce a given stock move by the given quantity.
-
-        If the quantity after the reduction is 0, the stock move is cancelled.
-
-        Otherwise, the move state is unchanged, but the quantity is changed.
-        A mecanism is implemented in Odoo when the quantity of a stock move
-        changes.
-
-        :param stock.move move: the stock move to reduce
-        :param float quantity: the quantity to reduce
-        :return: the reduced quantity
-        :rtype: float
-        """
-        reduced_qty = min(move.product_uom_qty, quantity)
-
-        precision = self._get_uom_precision()
-        move_will_be_empty = float_compare(
-            move.product_uom_qty, quantity, precision_digits=precision) <= 0
-
-        if move_will_be_empty:
-            move._action_cancel()
-            move.picking_id = False
-        else:
-            move.product_uom_qty -= reduced_qty
-
-        return reduced_qty
-
     def _find_reducible_stock_moves(self):
         """Find reducible stock moves related to the material line.
 
@@ -241,8 +213,8 @@ class TaskMaterialLine(models.Model):
             m.picking_code == 'consumption'
         ))
 
-    def _reduce_consumption_moves(self):
-        """Reduce the stock moves quantities until equal to initial qty on task lines."""
+    def _check_quantity_can_be_reduced(self):
+        """Check that the initial_qty can be reduced to the new value."""
         total_move_qty = self._get_consumption_stock_move_qty()
 
         reducible_moves = self._find_reducible_stock_moves()
@@ -266,15 +238,31 @@ class TaskMaterialLine(models.Model):
                 uom=self.product_uom_id.name,
             ))
 
-        while float_compare(quantity_to_reduce, 0, precision_digits=precision) > 0:
-            next_move = reducible_moves[0]
-            reduced_qty = self._reduce_stock_move(next_move, quantity_to_reduce)
-            quantity_to_reduce -= reduced_qty
-            reducible_moves -= next_move
+    def _cancel_moves_with_zero_quantity(self):
+        """Cancel the stock moves related to this line with zero quantity.
 
-        return True
+        Also unlink these stock moves from their respective picking.
+        This allows when removing a material line, to hide stock moves
+        with zero quantity. Otherwise, stock moves with zero quantity
+        would appear in pickings and create confusion among users.
+        """
+        self.move_ids
 
-    def _generate_procurements(self):
+        moves = self.move_ids
+
+        # Limit the recursion depth stock.move chains.
+        # A chain of more than 3 moves is unlikely.
+        limit = 10
+
+        while moves and limit:
+            moves_with_zero_qty = moves.filtered(lambda m: m.product_qty == 0)
+            moves = moves_with_zero_qty.mapped('move_orig_ids')
+
+            moves_with_zero_qty._action_cancel()
+            moves_with_zero_qty.write({'picking_id': False})
+            limit -= 1
+
+    def _run_procurements(self):
         """Generate procurements for the material line.
 
         Generate any required stock move (using procurements).
@@ -288,17 +276,17 @@ class TaskMaterialLine(models.Model):
         precision = self._get_uom_precision()
 
         move_qty = self._get_consumption_stock_move_qty()
-        lesser_move_qty_than_required = (
-            float_compare(move_qty, self.initial_qty, precision_digits=precision) < 0
-        )
         more_move_qty_than_required = (
             float_compare(move_qty, self.initial_qty, precision_digits=precision) > 0
         )
 
-        if lesser_move_qty_than_required:
-            self._generate_missing_procurements()
-        elif more_move_qty_than_required:
-            self._reduce_consumption_moves()
+        if more_move_qty_than_required:
+            self._check_quantity_can_be_reduced()
+
+        self._update_procurement_quantities()
+
+        if more_move_qty_than_required:
+            self._cancel_moves_with_zero_quantity()
 
     @api.model
     def create(self, vals):
@@ -307,7 +295,7 @@ class TaskMaterialLine(models.Model):
         The sudo is required, because project users do not have access to stock objects.
         """
         line = super().create(vals)
-        line.sudo()._generate_procurements()
+        line.sudo()._run_procurements()
         return line
 
     @api.multi
@@ -327,7 +315,7 @@ class TaskMaterialLine(models.Model):
 
         if 'initial_qty' in vals:
             for line in self:
-                line.sudo()._generate_procurements()
+                line.sudo()._run_procurements()
 
         return True
 
@@ -340,7 +328,8 @@ class TaskMaterialLine(models.Model):
                 'it is bound to stock moves with the status done.'
             ).format(line=self.product_id.display_name))
 
-        self.move_ids._action_cancel()
+        self.initial_qty = 0
+        self._run_procurements()
         self.move_ids.write({'material_line_id': False})
 
     @api.multi
