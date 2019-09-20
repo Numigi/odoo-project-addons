@@ -258,7 +258,7 @@ class TaskMaterialLine(models.Model):
             moves_with_zero_qty.write({'picking_id': False})
             limit -= 1
 
-    def _generate_procurements(self):
+    def _run_procurements(self):
         """Generate procurements for the material line.
 
         Generate any required stock move (using procurements).
@@ -291,7 +291,7 @@ class TaskMaterialLine(models.Model):
         The sudo is required, because project users do not have access to stock objects.
         """
         line = super().create(vals)
-        line.sudo()._generate_procurements()
+        line.sudo()._run_procurements()
         return line
 
     @api.multi
@@ -311,7 +311,7 @@ class TaskMaterialLine(models.Model):
 
         if 'initial_qty' in vals:
             for line in self:
-                line.sudo()._generate_procurements()
+                line.sudo()._run_procurements()
 
         return True
 
@@ -325,7 +325,7 @@ class TaskMaterialLine(models.Model):
             ).format(line=self.product_id.display_name))
 
         self.initial_qty = 0
-        self._generate_procurements()
+        self._run_procurements()
         self.move_ids.write({'material_line_id': False})
 
     @api.multi
