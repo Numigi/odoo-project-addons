@@ -204,3 +204,27 @@ class TestGenerateProcurementsFromTask(TaskMaterialCase):
         self._create_material_line()
         po_line = self._get_po_line(self.product_a)
         assert po_line
+
+
+class TestPreparationStep(TaskMaterialCase):
+
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.warehouse.consu_steps = 'two_steps'
+        cls.initial_qty = 10
+        cls.line = cls._create_material_line(initial_qty=cls.initial_qty)
+        cls.preparation_move = cls.line.move_ids.move_orig_ids
+
+    def test_qty_reduced_on_preparation(self):
+        new_qty = 9
+        self.line.initial_qty = new_qty
+        assert self.preparation_move.product_qty == new_qty
+
+    def test_if_qty_reduced_to_zero__preparation_cancelled(self):
+        self.line.initial_qty = 0
+        assert self.preparation_move.state == 'cancel'
+
+    def test_if_qty_reduced_to_zero__preparation_unlinked_from_picking(self):
+        self.line.initial_qty = 0
+        assert not self.preparation_move.picking_id
