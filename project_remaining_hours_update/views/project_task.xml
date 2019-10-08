@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="task_form_with_" model="ir.ui.view">
+        <field name="name">Task Form: </field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="hr_timesheet.view_task_form2_inherited"/>
+        <field name="arch" type="xml">
+            <xpath expr="//" position="">
+            </xpath>
+        </field>
+    </record>
+
+
+</odoo>
