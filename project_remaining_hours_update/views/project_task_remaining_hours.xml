@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="view_task_remaining_hours_tree" model="ir.ui.view">
+        <field name="name">Task Remaining Hours List</field>
+        <field name="model">project.task.remaining.hours</field>
+        <field name="arch" type="xml">
+            <tree string="Task Remaining Hours" create="0" edit="0" delete="0">
+                <field name="project_id"/>
+                <field name="task_id"/>
+                <field name="create_date" string="Date and Time"/>
+                <field name="planned_hours" widget="float_time"/>
+                <field name="total_hours_spent" widget="float_time"/>
+                <field name="remaining_hours" widget="float_time"/>
+                <field name="user_id" string="Updated By"/>
+                <field name="comment"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_task_remaining_hours_search" model="ir.ui.view">
+        <field name="name">Task Remaining Hours Search</field>
+        <field name="model">project.task.remaining.hours</field>
+        <field name="arch" type="xml">
+            <search string="Task Remaining Hours">
+                <field name="project_id"/>
+                <field name="task_id"/>
+                <field name="user_id"/>
+                <field name="comment"/>
+                <filter name="group_by_project_id" string="Project" context="{'group_by': 'project_id'}"/>
+                <filter name="group_by_task_id" string="Task" context="{'group_by': 'task_id'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="task_remaining_hours_action" model="ir.actions.act_window">
+        <field name="name">Task Remaining Hours</field>
+        <field name="res_model">project.task.remaining.hours</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem action="task_remaining_hours_action" id="task_remaining_hours_menu" parent="project.menu_project_report"/>
+
+</odoo>
