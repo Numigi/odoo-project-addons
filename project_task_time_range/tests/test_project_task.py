@@ -11,7 +11,12 @@ class TestProjectTaskWithContrainsOnMinMax(common.SavepointCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.task_a = cls.env['project.task'].create({'name': 'Task A'})
+        testing_context = {
+            'enable_task_max_hours_constraint': True,
+        }
+        cls.task_a = cls.env['project.task'].with_context(**testing_context).create({
+            'name': 'Task A',
+        })
 
     def test_defaulValues(self):
         """ Keep in mind the default case to be sure it passes."""

@@ -2,6 +2,7 @@
 # © 2018 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
+import threading
 from odoo import fields, models, api, _
 from odoo.exceptions import ValidationError
 
@@ -33,6 +34,10 @@ def is_planned_hours_not_none(func):
     return wrapper
 
 
+def _is_testing(env):
+    return getattr(threading.currentThread(), 'testing', False)
+
+
 class ProjectTaskWithMinAndMaxConstraints(models.Model):
     """ Add constraints on min_hours and max_hours.
     """
@@ -43,6 +48,15 @@ class ProjectTaskWithMinAndMaxConstraints(models.Model):
     @api.constrains('planned_hours', 'min_hours', 'max_hours')
     @is_planned_hours_not_none
     def _check_max_hours(self):
+        """Verify that max hours are greater than min hours.
+
+        This constraint breaks the standard behavior of Odoo.
+        Therefore, to prevent breaking unit tests of other project related
+        modules, the constraint is by default deactivated when testing.
+        """
+        if _is_testing(self.env) and not self._context.get('enable_task_max_hours_constraint'):
+            return
+
         if self.max_hours < self.planned_hours:
             raise ValidationError(
                 _("Max Hours must be greater than the planned hours.")
