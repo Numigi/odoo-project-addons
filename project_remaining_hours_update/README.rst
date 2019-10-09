@@ -6,7 +6,7 @@ This module allows to update the remaining hours on a task.
 
 Context
 -------
-In vanilla Odoo, the remaining hours on a task is computed based on the time spent and the estimated hours.
+In vanilla Odoo, the remaining hours on a task is computed based on the time spent and the planned hours.
 
 .. image:: static/description/vanilla_odoo_task.png
 
@@ -54,7 +54,7 @@ Global History List
 -------------------
 The remaining hours history can be accessed globally for all projects / tasks.
 
-This list is available from ``Project / Report / Remaining Hours``.
+This list is available from ``Project / Reporting / Task Remaining Hours``.
 
 .. image:: static/description/global_history_list.png
 

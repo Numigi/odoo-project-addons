@@ -42,7 +42,8 @@
         <field name="arch" type="xml">
             <button name="toggle_active" position="before">
                 <button class="oe_stat_button" string="Remaining Hours"
-                    name="%(action_open_remaining_hours_history)d" type="action" icon="fa-history"/>
+                    name="%(action_open_remaining_hours_history)d" type="action" icon="fa-history"
+                    attrs="{'invisible': [('allow_timesheets', '=', False)]}"/>
             </button>
         </field>
     </record>

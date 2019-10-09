@@ -15,20 +15,21 @@ COPY project_hide_create_sale_order /mnt/extra-addons/project_hide_create_sale_o
 COPY project_iteration /mnt/extra-addons/project_iteration
 COPY project_portal_hide_timesheets /mnt/extra-addons/project_portal_hide_timesheets
 COPY project_portal_parent_task /mnt/extra-addons/project_portal_parent_task
-COPY project_stage_no_quick_create /mnt/extra-addons/project_stage_no_quick_create
+COPY project_remaining_hours_update /mnt/extra-addons/project_remaining_hours_update
 COPY project_stage /mnt/extra-addons/project_stage
 COPY project_stage_allow_timesheet /mnt/extra-addons/project_stage_allow_timesheet
+COPY project_stage_no_quick_create /mnt/extra-addons/project_stage_no_quick_create
 COPY project_task_date_planned /mnt/extra-addons/project_task_date_planned
 COPY project_task_deadline_from_project /mnt/extra-addons/project_task_deadline_from_project
 COPY project_task_full_text_search /mnt/extra-addons/project_task_full_text_search
 COPY project_task_id_in_display_name /mnt/extra-addons/project_task_id_in_display_name
 COPY project_task_resource_type /mnt/extra-addons/project_task_resource_type
-COPY project_task_subtask_time_range /mnt/extra-addons/project_task_subtask_time_range
 COPY project_task_subtask_same_project /mnt/extra-addons/project_task_subtask_same_project
+COPY project_task_subtask_time_range /mnt/extra-addons/project_task_subtask_time_range
 COPY project_task_time_range /mnt/extra-addons/project_task_time_range
+COPY project_task_type /mnt/extra-addons/project_task_type
 COPY project_time_management /mnt/extra-addons/project_time_management
 COPY project_time_range /mnt/extra-addons/project_time_range
-COPY project_task_type /mnt/extra-addons/project_task_type
 COPY project_type /mnt/extra-addons/project_type
 
 COPY .docker_files/main /mnt/extra-addons/main
