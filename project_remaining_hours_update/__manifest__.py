@@ -11,6 +11,12 @@
     'category': 'Project',
     'summary': 'Update the remaining hours on tasks',
     'depends': ['hr_timesheet'],
-    'data': [],
+    'data': [
+        'security/ir.model.access.csv',
+        'views/project_task.xml',
+        'views/project_task_remaining_hours.xml',
+        'wizard/project_task_remaining_hours_update.xml',
+    ],
     'installable': True,
+    'post_init_hook': 'post_init_hook',
 }

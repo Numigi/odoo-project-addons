@@ -3,4 +3,5 @@
 
 from . import (
     project_task,
+    project_task_remaining_hours,
 )
