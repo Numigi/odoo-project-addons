@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-09 15:31+0000\n"
-"PO-Revision-Date: 2019-10-09 11:36-0400\n"
+"POT-Creation-Date: 2019-10-09 17:11+0000\n"
+"PO-Revision-Date: 2019-10-09 13:13-0400\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -120,6 +120,12 @@ msgid "Remaining Hours History on Tasks"
 msgstr "Historique des heures restantes sur tâches"
 
 #. module: project_remaining_hours_update
+#: code:addons/project_remaining_hours_update/wizard/project_task_remaining_hours_update.py:23
+#, python-format
+msgid "Remaining hours updated from {previous} to {new}."
+msgstr "Heures restantes modifiées de {previous} à {new}."
+
+#. module: project_remaining_hours_update
 #: model:ir.model,name:project_remaining_hours_update.model_project_task
 #: model:ir.model.fields,field_description:project_remaining_hours_update.field_project_task_remaining_hours__task_id
 #: model:ir.model.fields,field_description:project_remaining_hours_update.field_project_task_remaining_hours_update__task_id
@@ -156,7 +162,7 @@ msgstr "Heures consommées"
 #: model_terms:ir.ui.view,arch_db:project_remaining_hours_update.remaining_hours_wizard_form
 #: model_terms:ir.ui.view,arch_db:project_remaining_hours_update.task_form_with_update_remaining_hours_button
 msgid "Update Remaining Hours"
-msgstr "Mise à jour heures restantes"
+msgstr "Mettre à jour heures restantes"
 
 #. module: project_remaining_hours_update
 #: model_terms:ir.ui.view,arch_db:project_remaining_hours_update.view_task_remaining_hours_tree
