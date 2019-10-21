@@ -5,7 +5,7 @@ Project Task Stage External Mail
 
 Context
 -------
-In Odoo, you are able to atach an email template to a task stage.
+In Odoo, you are able to attach an email template to a task stage.
 
 .. image:: static/description/vanilla_odoo_task_stage.png
 
