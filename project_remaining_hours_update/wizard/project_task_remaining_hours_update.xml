@@ -9,7 +9,7 @@
                 <sheet>
                     <group>
                         <field name="task_id" readonly="1"/>
-                        <field name="new_remaining_hours" required="1"/>
+                        <field name="new_remaining_hours" widget="float_time" required="1"/>
                         <field name="comment"/>
                     </group>
                 </sheet>
