@@ -1,7 +1,8 @@
 # © 2018 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
-
+import pytest
+from odoo.exceptions import ValidationError
 from odoo.tests import common
 
 
@@ -45,3 +46,24 @@ class TestProjectTaskSubTaskSameProject(common.SavepointCase):
 
         assert self.subtask_1.project_id == self.project_b
         assert self.subtask_2.project_id == self.project_b
+
+    def test_onSubTaskAction_noProjectFilterApplied(self):
+        res = self.task_parent.action_subtask()
+        assert 'search_default_project_id' not in res['context']
+
+    def test_onSubTaskAction_noParentProjectFilterApplied(self):
+        """Prevent parent project filter on subtask kanban view.
+
+        The parent project filter is added by the module project_iteration.
+        This unit test is added even if this module does not depend on project_iteration.
+        Creating a binding module only for this case would be overkill.
+        """
+        parent_task = self.task_parent.with_context(
+            search_default_parent_project_ids=[self.project_a.id]
+        )
+        res = parent_task.action_subtask()
+        assert 'search_default_parent_project_ids' not in res['context']
+
+    def test_onUpdateSubtask_ifNotSameProject_raiseError(self):
+        with pytest.raises(ValidationError):
+            self.subtask_1.project_id = self.project_b

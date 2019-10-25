@@ -12,6 +12,7 @@
     'summary': 'Constrain a subtask to be on the same project that its parent.',
     'depends': ['project'],
     'data': [
+        'views/project.xml',
         'views/project_task.xml',
     ],
     'installable': True,
