@@ -48,4 +48,19 @@
         </field>
     </record>
 
+    <record id="task_form_with_remaining_hours_field" model="ir.ui.view">
+        <field name="name">Task Form: add remaining hours field (invisible)</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="hr_timesheet.view_task_form2_inherited"/>
+        <field name="arch" type="xml">
+            <form position="inside">
+                <!--
+                    This field is necessary, because otherwise, when an onchange is triggered,
+                    the computation of remaining_hours ignores remaining_hours_ids.
+                -->
+                <field name="remaining_hours_ids" invisible="1"/>
+            </form>
+        </field>
+    </record>
+
 </odoo>
