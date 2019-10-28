@@ -32,6 +32,7 @@
         'project_task_subtask_time_range',
         'project_task_time_range',
         'project_task_type',
+        'project_template',
         'project_time_management',
         'project_time_range',
         'project_type',

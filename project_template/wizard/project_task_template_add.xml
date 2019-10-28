@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="project_task_template_add_form" model="ir.ui.view">
+        <field name="name">Task Template Selection Wizard</field>
+        <field name="model">project.task.template.add</field>
+        <field name="arch" type="xml">
+            <form string="Add Task Templates">
+                <sheet>
+                    <group>
+                        <field name="project_id" readonly="1"/>
+                    </group>
+                    <label for="task_template_ids" string="Tasks"/>
+                    <field name="task_template_ids" nolabel="1"
+                        domain="[('project_id', '=', False), ('is_template', '=', True)]"/>
+                </sheet>
+                <footer>
+                    <button name="validate" class="oe_highlight" string="Validate" type="object"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+</odoo>
