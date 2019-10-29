@@ -5,7 +5,7 @@
 odoo.define("project_template.hidden_fields", function(require) {
 "use strict";
 
-var Domain = require('web.Domain');
+var Domain = require("web.Domain");
 
 function isNodeInvisibleOnTemplate(node){
     var invisibleAttribute = node.attrs.invisible_on_template;
@@ -14,7 +14,7 @@ function isNodeInvisibleOnTemplate(node){
 
 function isProjectOrTask(state){
     var model = state.model;
-    return model == "project.project" || model == "project.task";
+    return model === "project.project" || model === "project.task";
 }
 
 require("web.FormRenderer").include({
