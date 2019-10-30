@@ -32,6 +32,7 @@ class ProjectTaskTemplateAdd(models.TransientModel):
             template.copy({
                 'project_id': self.project_id.id,
                 'name': template.name,  # prevent `(copy)` in task name
+                'stage_id': False,
             })
 
         return True
