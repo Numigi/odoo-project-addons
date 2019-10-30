@@ -1,5 +1,5 @@
 FROM node:9.11.2-stretch
-LABEL maintainer="dufresne.david.2@gmail.com"
+LABEL maintainer="contact@numigi.com"
 
 RUN npm install -g testcafe@0.23.2
 
