@@ -9,7 +9,7 @@ import { Selector } from 'testcafe'
 import { login, openAllTaskKanban, openAnyKabanRecord, clickEditButton } from './common'
 
 fixture `Test the project_template module`
-    .page `odoo:8069/web`;
+    .page `odoo.localtest.me:8069/web`;
 
 function openExtraInfoTab(t){
     var tab = Selector("a[role='tab']").withText("Extra Info")

@@ -2,7 +2,7 @@
 set -e
 
 get_odoo_response_code(){
-    echo $(curl -o /dev/null --silent --head --write-out '%{http_code}\n' odoo:8069/)
+    echo $(curl -o /dev/null --silent --head --write-out '%{http_code}\n' odoo.localtest.me:8069/)
 }
 
 odoo_is_ready=$(get_odoo_response_code)
