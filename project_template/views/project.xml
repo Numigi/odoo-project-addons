@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="action_open_task_template_add_wizard" model="ir.actions.act_window">
+        <field name="name">Add Task Templates</field>
+        <field name="res_model">project.task.template.add</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="context">{
+            'default_project_id': active_id,
+        }</field>
+    </record>
+
+    <record id="project_form_with_task_template_add_button" model="ir.ui.view">
+        <field name="name">Project Form: add button to add task templates</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.edit_project"/>
+        <field name="arch" type="xml">
+            <button name="%(portal.portal_share_action)d" position="after">
+                <button name="%(action_open_task_template_add_wizard)d" type="action" string="Add Task Templates"/>
+            </button>
+        </field>
+    </record>
+
+</odoo>
