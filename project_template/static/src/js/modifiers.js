@@ -21,7 +21,7 @@ var Domain = require("web.Domain");
  * -> project.task.date_planned: added by `project_task_date_planned`
  */
 function isDateField(node){
-    return node.tag === "field" && (node.attrs.name || "").startsWith("date")
+    return node.tag === "field" && (node.attrs.name || "").startsWith("date");
 }
 
 function isNodeInvisibleOnTemplate(node){
