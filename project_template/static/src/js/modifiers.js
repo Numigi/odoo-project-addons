@@ -21,19 +21,24 @@ var Domain = require("web.Domain");
  * -> project.task.date_planned: added by `project_task_date_planned`
  */
 function isDateField(node){
-    var isDateField = node.tag === "field" && (node.attrs.name || "").startsWith("date")
+    return node.tag === "field" && (node.attrs.name || "").startsWith("date")
 }
 
 function isNodeInvisibleOnTemplate(node){
+    if(!node.attrs){
+        return false;
+    }
     var invisibleAttribute = node.attrs.invisible_on_template;
     return isDateField(node) || (
         invisibleAttribute && Boolean(eval(node.attrs.invisible_on_template))
     );
 }
 
-function isProjectOrTask(state){
-    var model = state.model;
-    return model === "project.project" || model === "project.task";
+function updateProjectInvisibleModifiers(node){
+    if(isNodeInvisibleOnTemplate(node)){
+        node.attrs.modifiers.project_template_invisible = "[('is_template', '=', True)]";
+    }
+    (node.children || []).forEach((c) => updateProjectInvisibleModifiers(c));
 }
 
 require("web.FormRenderer").include({
@@ -48,11 +53,9 @@ require("web.FormRenderer").include({
      * This improves the readability and prevents having to rewrite the whole attrs
      * for each node.
      */
-    _renderFieldWidget(node, state) {
-        if(isProjectOrTask(state) && isNodeInvisibleOnTemplate(node)){
-            node.attrs.modifiers.project_template_invisible = "[('is_template', '=', True)]";
-        }
-        return this._super.apply(this, arguments);
+    init() {
+        this._super.apply(this, arguments);
+        updateProjectInvisibleModifiers(this.arch);
     },
 });
 

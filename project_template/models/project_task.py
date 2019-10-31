@@ -56,6 +56,13 @@ class ProjectTask(models.Model):
             args = AND((args or [], [('is_template', '=', False)]))
         return super()._search(args, *args_, **kwargs)
 
+    @api.model
+    def read_group(self, domain, *args, **kwargs):
+        """Hide templates from grouped searches by default."""
+        if should_apply_default_template_filter(domain, self._context):
+            domain = AND((domain or [], [('is_template', '=', False)]))
+        return super().read_group(domain, *args, **kwargs)
+
 
 class ProjectTaskTemplatePropagationToSubtask(models.Model):
     """Integrate is_template with the concept of subtasks.
@@ -109,3 +116,46 @@ class ProjectTaskTemplatePropagationToSubtask(models.Model):
         task = super().create(vals)
         task._update_is_template_from_parent_task()
         return task
+
+
+class ProjectTaskWithOriginTaskLink(models.Model):
+    """Link a task with its origin template.
+
+    This link allows to keep track of which template defined
+    inside a project has a relative `effective` task.
+
+    The relation is One2one. A task template on a project will
+    generate one and only one task.
+    """
+
+    _inherit = 'project.task'
+
+    origin_template_id = fields.Many2one(
+        'project.task', 'Origin Template',
+        index=True,
+    )
+    effective_task_ids = fields.One2many(
+        'project.task', 'origin_template_id', 'Generated Tasks',
+        context={'active_test': False}
+    )
+
+    _sql_constraints = [
+        ('name_origin_template_id', 'unique(origin_template_id)',
+            'Only one task can be generated per template.'),
+    ]
+
+
+class ProjectTaskWithPivotTableLabel(models.Model):
+    """Add a label to distinguish tasks from templates in the pivot view."""
+
+    _inherit = 'project.task'
+
+    template_or_task = fields.Selection([
+        ('1_template', 'Template'),
+        ('2_task', 'Task'),
+    ], 'Template / Task', compute='_compute_template_or_task', store=True)
+
+    @api.depends('is_template')
+    def _compute_template_or_task(self):
+        for task in self:
+            task.template_or_task = '1_template' if task.is_template else '2_task'

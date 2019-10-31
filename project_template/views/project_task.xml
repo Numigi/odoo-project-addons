@@ -53,7 +53,8 @@
         <field name="arch" type="xml">
             <xpath expr="//separator[last()]" position="after">
                 <filter string="Tasks" name="filter_not_template" domain="[('is_template', '=', False)]"/>
-                <filter string="Templates" name="filter_is_template" domain="[('is_template', '=', True)]"/>
+                <filter string="Templates" name="filter_is_template" domain="[('is_template', '=', True)]"
+                    context="{'show_task_templates': True}"/>
                 <separator/>
             </xpath>
         </field>

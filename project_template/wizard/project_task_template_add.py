@@ -25,14 +25,22 @@ class ProjectTaskTemplateAdd(models.TransientModel):
                 'The selected task {} is not a template.'
             ).format(normal_tasks[0].display_name))
 
+    def _copy_task_template(self, task):
+        return task.copy({
+            'project_id': self.project_id.id,
+            'name': task.name,  # prevent `(copy)` in task name
+            'stage_id': False,
+            'parent_id': False,
+        })
+
     def validate(self):
         self._check_only_task_template_selected()
 
-        for template in self.task_template_ids:
-            template.copy({
-                'project_id': self.project_id.id,
-                'name': template.name,  # prevent `(copy)` in task name
-                'stage_id': False,
-            })
+        for task in self.task_template_ids:
+            new_template = self._copy_task_template(task)
+
+            for subtask in task.child_ids:
+                new_subtask_template = self._copy_task_template(subtask)
+                new_subtask_template.parent_id = new_template
 
         return True

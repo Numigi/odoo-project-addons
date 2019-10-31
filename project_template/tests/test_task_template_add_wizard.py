@@ -66,3 +66,10 @@ class TestTaskTemplateAddWizard(common.SavepointCase):
         self.wizard.validate()
         new_task = self._get_new_generated_tasks()
         assert not new_task.stage_id
+
+    def test_template_subtasks_added_to_project(self):
+        self.template_b.parent_id = self.template_a
+        self.wizard.task_template_ids = self.template_a
+        self.wizard.validate()
+        new_tasks = self._get_new_generated_tasks()
+        assert len(new_tasks) == 2

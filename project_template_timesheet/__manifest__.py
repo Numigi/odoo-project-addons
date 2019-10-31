@@ -2,7 +2,7 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 {
-    'name': 'Project Template',
+    'name': 'Project Template / Timesheet',
     'version': '1.0.0',
     'author': 'Numigi',
     'maintainer': 'Numigi',
