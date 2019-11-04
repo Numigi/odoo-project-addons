@@ -41,15 +41,9 @@
         <field name="inherit_id" ref="hr_timesheet.view_task_form2_inherited"/>
         <field name="arch" type="xml">
             <button name="toggle_active" position="before">
-                <!--
-                    Regarding the attribute invisible_on_template, refer to module project_template.
-                    This button is not relevant on task templates.
-                -->
                 <button class="oe_stat_button" string="Remaining Hours"
                     name="%(action_open_remaining_hours_history)d" type="action" icon="fa-history"
-                    attrs="{'invisible': [('allow_timesheets', '=', False)]}"
-                    invisible_on_template="1"
-                    />
+                    attrs="{'invisible': [('allow_timesheets', '=', False)]}"/>
             </button>
         </field>
     </record>

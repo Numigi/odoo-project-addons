@@ -21,7 +21,7 @@ A warning message is displayed on the form view to signal that the task is a tem
 I save the template.
 
 Hidden Fields
-~~~~~~~~~~~~~
+-------------
 Multiple fields are hidden in the form of view of task templates including:
 
 * Assigned To
@@ -33,6 +33,28 @@ Multiple fields are hidden in the form of view of task templates including:
 These fields are not relevant for a template.
 
 Some irrelevant smart buttons are also hidden.
+
+Making a Field Invisible
+~~~~~~~~~~~~~~~~~~~~~~~~
+To make a field (or any other xml node) hidden only for task templates, you may inherit the form view and add a special attribute:
+
+.. code-block:: xml
+
+    <field name="my_task_field" position="attributes">
+        <attribute name="invisible_on_template">1</attribute>
+    </field>
+
+This is equivalent to:
+
+.. code-block:: xml
+
+    <field name="my_task_field" position="attributes">
+        <attribute name="attrs">{'invisible': [('is_template', '=', True)]}</attribute>
+    </field>
+
+One advantage of the ``invisible_on_template`` is to prevent conflicts with other modifiers.
+
+Also, when a field uses ``invisible_on_template="1"``. The field will never be required for a template.
 
 Search Filters
 ~~~~~~~~~~~~~~
