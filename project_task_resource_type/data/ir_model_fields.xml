@@ -31,7 +31,7 @@
   <record model="ir.model.fields" id="task_resource_proje_685d8a0c-f730-4fd4-aace-36331eaf5b7b">
     <field name="complete_name" eval="False"/>
     <field name="compute" eval="False"/>
-    <field name="copied" eval="False"/>
+    <field name="copied" eval="True"/>
     <field name="depends" eval="False"/>
     <field name="domain">[]</field>
     <field name="field_description">Resource</field>
