@@ -4,6 +4,7 @@
 import pytest
 from odoo.tests import common
 from odoo.exceptions import ValidationError
+from ..models.project_task import SHOW_TASK_TEMPLATES
 
 
 class TestTaskTemplateAddWizard(common.SavepointCase):
@@ -25,7 +26,7 @@ class TestTaskTemplateAddWizard(common.SavepointCase):
         cls.wizard = cls.env['project.task.template.add'].create({'project_id': cls.project.id})
 
     def _get_new_generated_tasks(self):
-        return self.env['project.task'].with_context(show_task_templates=True).search([
+        return self.env['project.task'].with_context(**{SHOW_TASK_TEMPLATES: True}).search([
             ('project_id', '=', self.project.id),
         ])
 
@@ -65,3 +66,10 @@ class TestTaskTemplateAddWizard(common.SavepointCase):
         self.wizard.validate()
         new_task = self._get_new_generated_tasks()
         assert not new_task.stage_id
+
+    def test_template_subtasks_added_to_project(self):
+        self.template_b.parent_id = self.template_a
+        self.wizard.task_template_ids = self.template_a
+        self.wizard.validate()
+        new_tasks = self._get_new_generated_tasks()
+        assert len(new_tasks) == 2

@@ -30,6 +30,7 @@ COPY project_task_subtask_time_range /mnt/extra-addons/project_task_subtask_time
 COPY project_task_time_range /mnt/extra-addons/project_task_time_range
 COPY project_task_type /mnt/extra-addons/project_task_type
 COPY project_template /mnt/extra-addons/project_template
+COPY project_template_timesheet /mnt/extra-addons/project_template_timesheet
 COPY project_time_management /mnt/extra-addons/project_time_management
 COPY project_time_range /mnt/extra-addons/project_time_range
 COPY project_type /mnt/extra-addons/project_type
