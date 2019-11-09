@@ -26,6 +26,7 @@
         'project_task_deadline_from_project',
         'project_task_full_text_search',
         'project_task_id_in_display_name',
+        'project_task_link',
         'project_task_resource_type',
         'project_task_stage_external_mail',
         'project_task_subtask_same_project',

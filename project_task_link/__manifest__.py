@@ -12,6 +12,12 @@
     'summary': 'Dynamically add links to tasks in the web interface.',
     'depends': [
         'project',
+
+        # required because of the HTML editor field.
+        'web_editor',
+    ],
+    'data': [
+        'views/assets.xml',
     ],
     'installable': True,
 }

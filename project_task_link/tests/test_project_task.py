@@ -1,7 +1,7 @@
 # © 2019 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
-from ddt import ddt, data
+from ddt import ddt, data, unpack
 from odoo.tests import common
 from urllib.parse import urljoin
 
@@ -15,9 +15,10 @@ class TestProjectTask(common.SavepointCase):
 
         cls.task = cls.env['project.task'].create({'name': 'My Task'})
         cls.referenced_task = cls.env['project.task'].create({'name': 'Some Other Task'})
+        cls.referenced_task_url = cls.referenced_task.get_portal_access_url()
         cls.task_ref = "TA#{}".format(cls.referenced_task.id)
         cls.task_link = "<a href=\"{url}\" target=\"_blank\">{task_ref}</a>".format(
-            url=cls.referenced_task.get_portal_access_url(),
+            url=cls.referenced_task_url,
             task_ref=cls.task_ref,
         )
 
@@ -71,3 +72,32 @@ class TestProjectTask(common.SavepointCase):
     def test_task_ref_in_similar_format(self, ref_format):
         self.task.write({'description': ref_format.format(self.referenced_task.id)})
         assert self.task_link in self.task.description
+
+    @data(
+        "<p><br>{task_ref}</p>",
+        "<p>{task_ref}",
+    )
+    def test_can_parse_broken_html(self, description):
+        self.task.write({'description': description.format(task_ref=self.task_ref)})
+        assert self.task_link in self.task.description
+
+    @data(
+        ("Refer to TI#{} for more detail.", r'TI#\d+', 'TI#{task_id}'),
+        ("Refer to TA{} for more detail.", r'TA\d+', 'Ticket ({task_id})'),
+        ("Refer to [st#{}] for more detail.", r'\[?[sS][tT]#?\d+\]?', '[ST#{task_id}]'),
+        ("Refer to [ST{}] for more detail.", r'\[?[sS][tT]#?\d+\]?', '[ST#{task_id}]'),
+        ("Refer to ST{} for more detail.", r'\[?[sS][tT]#?\d+\]?', '[ST#{task_id}]'),
+    )
+    @unpack
+    def test_links_with_custom_regex(self, description, regex, ref_format):
+        self.env['ir.config_parameter'].set_param('project_task_link.task_ref_regex', regex)
+        self.env['ir.config_parameter'].set_param('project_task_link.task_ref_format', ref_format)
+
+        self.task.write({'description': description.format(self.referenced_task.id)})
+
+        expected_link = "<a href=\"{url}\" target=\"_blank\">{task_ref}</a>".format(
+            url=self.referenced_task_url,
+            task_ref=ref_format.format(task_id=self.referenced_task.id),
+        )
+
+        assert expected_link in self.task.description
