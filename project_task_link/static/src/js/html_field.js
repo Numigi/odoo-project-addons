@@ -5,7 +5,7 @@
 odoo.define("project_task_link.html_field", function(require) {
 "use strict";
 
-var HtmlField = require('web_editor.backend').FieldTextHtmlSimple;
+var HtmlField = require("web_editor.backend").FieldTextHtmlSimple;
 
 var taskUrlRegex = /\/my\/task\/\d+$/;
 
@@ -32,7 +32,7 @@ HtmlField.include({
     _renderReadonly(){
         this._super.apply(this, arguments);
         var self = this;
-        var taskLinks = this.$('a').filter(function() {
+        var taskLinks = this.$("a").filter(function() {
             return this.href && this.href.match(taskUrlRegex);
         });
         taskLinks.each(function() {
