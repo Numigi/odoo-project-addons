@@ -59,10 +59,10 @@ class TestProjectTaskSubTaskSameProject(common.SavepointCase):
         Creating a binding module only for this case would be overkill.
         """
         parent_task = self.task_parent.with_context(
-            search_default_parent_project_ids=[self.project_a.id]
+            search_default_parent_project_id=[self.project_a.id]
         )
         res = parent_task.action_subtask()
-        assert 'search_default_parent_project_ids' not in res['context']
+        assert 'search_default_parent_project_id' not in res['context']
 
     def test_onUpdateSubtask_ifNotSameProject_raiseError(self):
         with pytest.raises(ValidationError):

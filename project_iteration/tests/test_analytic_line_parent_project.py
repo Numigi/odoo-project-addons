@@ -1,5 +1,4 @@
-# -*- coding: utf-8 -*-
-# © 2018 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+# © 2019 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 from .common import ProjectIterationCase
@@ -35,19 +34,19 @@ class TestAnalyticLineParentProjects(ProjectIterationCase):
         })
 
     def test_parent_project_inside_iteration(self):
-        self.assertEqual(self.line.parent_project_id, self.project_1)
+        assert self.line.parent_project_id == self.project_1
 
     def test_project_with_no_parent(self):
         self.line.write({
             'task_id': self.task_2.id,
             'project_id': self.project_2.id,
         })
-        self.assertEqual(self.line.parent_project_id, self.project_2)
+        assert not self.line.parent_project_id
 
     def test_parent_project_after_iteration_parent_changes(self):
         self.iteration_1.parent_id = self.project_2
-        self.assertEqual(self.line.parent_project_id, self.project_2)
+        assert self.line.parent_project_id == self.project_2
 
     def test_parent_project_after_iteration_parent_is_removed(self):
         self.iteration_1.parent_id = False
-        self.assertEqual(self.line.parent_project_id, self.iteration_1)
+        assert not self.line.parent_project_id

@@ -1,5 +1,4 @@
-# -*- coding: utf-8 -*-
-# © 2018 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+# © 2019 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 {
@@ -18,7 +17,6 @@
         'views/account_analytic_line.xml',
         'views/project_project.xml',
         'views/project_task.xml',
-        'views/search_input_many2many.xml',
     ],
     'installable': True,
 }

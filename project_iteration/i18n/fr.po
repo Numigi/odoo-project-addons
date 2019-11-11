@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-20 18:48+0000\n"
-"PO-Revision-Date: 2019-03-20 14:49-0400\n"
+"POT-Creation-Date: 2019-11-11 20:07+0000\n"
+"PO-Revision-Date: 2019-11-11 15:08-0500\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -47,8 +47,9 @@ msgstr "Lots"
 #. module: project_iteration
 #: model:ir.model.fields,field_description:project_iteration.field_account_analytic_line__parent_project_id
 #: model:ir.model.fields,field_description:project_iteration.field_project_project__parent_id
-#: model:ir.model.fields,field_description:project_iteration.field_project_task__parent_project_ids
+#: model:ir.model.fields,field_description:project_iteration.field_project_task__parent_project_id
 #: model_terms:ir.ui.view,arch_db:project_iteration.project_form_with_parent
+#: model_terms:ir.ui.view,arch_db:project_iteration.task_search_with_parent_projects
 msgid "Parent Project"
 msgstr "Projet parent"
 
@@ -68,7 +69,7 @@ msgid "Task"
 msgstr "Tâche"
 
 #. module: project_iteration
-#: code:addons/project_iteration/models/project_project.py:70
+#: code:addons/project_iteration/models/project_project.py:69
 #, python-format
 msgid ""
 "The project {project_1} can not be the child of {project_2} because "
@@ -78,7 +79,7 @@ msgstr ""
 "{project_2} est un enfant de {project_3}."
 
 #. module: project_iteration
-#: code:addons/project_iteration/models/project_project.py:56
+#: code:addons/project_iteration/models/project_project.py:55
 #, python-format
 msgid ""
 "The project {project_2} can not be the parent of {project_1} because "
@@ -88,10 +89,7 @@ msgstr ""
 "{project_2} est un enfant de {project_3}."
 
 #. module: project_iteration
-#: code:addons/project_iteration/models/project_project.py:83
+#: code:addons/project_iteration/models/project_project.py:82
 #, python-format
 msgid "The project {project} can not be its own parent."
 msgstr "Le projet {project} ne peut pas être son propre parent."
-
-#~ msgid "Search Iterations of..."
-#~ msgstr "Chercher parmi les lots de..."
