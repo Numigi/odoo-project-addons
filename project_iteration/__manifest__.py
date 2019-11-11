@@ -3,7 +3,7 @@
 
 {
     'name': 'Project Iteration',
-    'version': '1.0.0',
+    'version': '2.0.0',
     'author': 'Numigi',
     'maintainer': 'Numigi',
     'license': 'LGPL-3',
