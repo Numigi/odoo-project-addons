@@ -1,7 +1,7 @@
-# -*- coding: utf-8 -*-
-# © 2018 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+# © 2019 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
+import pytest
 from odoo.exceptions import AccessError
 from .common import ProjectIterationCase
 
@@ -25,5 +25,5 @@ class TestPortalAccessRights(ProjectIterationCase):
         self.iteration_1.sudo(self.portal_user).name_get()
 
     def test_ifHasNotAccessToIteration_thenCanReadTheIterationName(self):
-        with self.assertRaises(AccessError):
+        with pytest.raises(AccessError):
             self.iteration_1.sudo(self.portal_user).name_get()
