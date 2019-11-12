@@ -1,6 +1,6 @@
 Project Task Link
 =================
-This module allows to insert dynamic links in the descriptions of tasks.
+This module allows to insert dynamic links in the description of tasks.
 
 .. contents:: Table of Contents
 

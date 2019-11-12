@@ -66,11 +66,13 @@ class TestProjectTask(common.SavepointCase):
 
     @data(
         "TA{}",
-        "ta#{}",
+        "TA#{}",
         "ta{}",
+        "ta#{}",
     )
     def test_task_ref_in_similar_format(self, ref_format):
         self.task.write({'description': ref_format.format(self.referenced_task.id)})
+        assert False
         assert self.task_link in self.task.description
 
     @data(
@@ -82,22 +84,22 @@ class TestProjectTask(common.SavepointCase):
         assert self.task_link in self.task.description
 
     @data(
-        ("Refer to TI#{} for more detail.", r'TI#\d+', 'TI#{task_id}'),
-        ("Refer to TA{} for more detail.", r'TA\d+', 'Ticket ({task_id})'),
-        ("Refer to [st#{}] for more detail.", r'\[?[sS][tT]#?\d+\]?', '[ST#{task_id}]'),
-        ("Refer to [ST{}] for more detail.", r'\[?[sS][tT]#?\d+\]?', '[ST#{task_id}]'),
-        ("Refer to ST{} for more detail.", r'\[?[sS][tT]#?\d+\]?', '[ST#{task_id}]'),
+        ("Refer to TI#{} for more detail.", r'TI#(?P<id>\d+)', 'TI#{id}'),
+        ("Refer to TA{} for more detail.", r'TA(?P<id>\d+)', 'Ticket ({id})'),
+        ("Refer to [st#{}] for more detail.", r'\[?[sS][tT]#?(?P<id>\d+)\]?', '[ST#{id}]'),
+        ("Refer to [ST{}] for more detail.", r'\[?[sS][tT]#?(?P<id>\d+)\]?', '[ST#{id}]'),
+        ("Refer to ST{} for more detail.", r'\[?[sS][tT]#?(?P<id>\d+)\]?', '[ST#{id}]'),
     )
     @unpack
     def test_links_with_custom_regex(self, description, regex, ref_format):
-        self.env['ir.config_parameter'].set_param('project_task_link.task_ref_regex', regex)
-        self.env['ir.config_parameter'].set_param('project_task_link.task_ref_format', ref_format)
+        self.env['ir.config_parameter'].set_param('project_task_reference.regex', regex)
+        self.env['ir.config_parameter'].set_param('project_task_reference.format', ref_format)
 
         self.task.write({'description': description.format(self.referenced_task.id)})
 
         expected_link = "<a href=\"{url}\" target=\"_blank\">{task_ref}</a>".format(
             url=self.referenced_task_url,
-            task_ref=ref_format.format(task_id=self.referenced_task.id),
+            task_ref=ref_format.format(id=self.referenced_task.id),
         )
 
         assert expected_link in self.task.description
