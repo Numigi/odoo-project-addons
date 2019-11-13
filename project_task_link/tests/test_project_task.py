@@ -72,7 +72,6 @@ class TestProjectTask(common.SavepointCase):
     )
     def test_task_ref_in_similar_format(self, ref_format):
         self.task.write({'description': ref_format.format(self.referenced_task.id)})
-        assert False
         assert self.task_link in self.task.description
 
     @data(
