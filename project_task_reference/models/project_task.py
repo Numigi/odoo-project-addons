@@ -2,7 +2,7 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 import re
-from odoo import api, models, _
+from odoo import models, _
 from odoo.exceptions import MissingError
 from ..reference import TaskReference
 
