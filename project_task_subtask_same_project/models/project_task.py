@@ -24,7 +24,7 @@ class ProjectTaskSubtaskSameProject(models.Model):
 
         context_vars_to_remove = (
             'search_default_project_id',
-            'search_default_parent_project_ids',  # defined by the module project_iteration
+            'search_default_parent_project_id',  # defined by the module project_iteration
         )
 
         res['context'] = {
