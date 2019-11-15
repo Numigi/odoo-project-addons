@@ -14,12 +14,20 @@ class TestProjectTask(common.SavepointCase):
         super().setUpClass()
 
         cls.task = cls.env['project.task'].create({'name': 'My Task'})
-        cls.referenced_task = cls.env['project.task'].create({'name': 'Some Other Task'})
+        cls.referenced_task = cls.env['project.task'].create({'name': 'Some Referenced Task'})
         cls.referenced_task_url = cls.referenced_task.get_portal_access_url()
         cls.task_ref = "TA#{}".format(cls.referenced_task.id)
         cls.task_link = "<a href=\"{url}\" target=\"_blank\">{task_ref}</a>".format(
             url=cls.referenced_task_url,
             task_ref=cls.task_ref,
+        )
+
+        cls.referenced_task_2 = cls.env['project.task'].create({'name': 'Some Other Task'})
+        cls.referenced_task_url_2 = cls.referenced_task_2.get_portal_access_url()
+        cls.task_ref_2 = "TA#{}".format(cls.referenced_task_2.id)
+        cls.task_link_2 = "<a href=\"{url}\" target=\"_blank\">{task_ref}</a>".format(
+            url=cls.referenced_task_url_2,
+            task_ref=cls.task_ref_2,
         )
 
         cls.base_url = cls.env['ir.config_parameter'].get_param('web.base.url')
@@ -63,6 +71,20 @@ class TestProjectTask(common.SavepointCase):
     def test_if_task_ref_inside_link_node__no_link_node_added(self, description):
         self.task.write({'description': description.format(task_ref=self.task_ref)})
         assert self.task_link not in self.task.description
+
+    @data(
+        "{task_ref}{task_ref_2}",
+        "{task_ref}<br>{task_ref_2}",
+    )
+    def test_two_task_refs_in_same_descriptions(self, description):
+        self.task.write({
+            'description': description.format(
+                task_ref=self.task_ref,
+                task_ref_2=self.task_ref_2,
+            ),
+        })
+        assert self.task_link in self.task.description
+        assert self.task_link_2 in self.task.description
 
     @data(
         "TA{}",

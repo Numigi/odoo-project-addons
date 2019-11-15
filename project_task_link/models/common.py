@@ -11,8 +11,14 @@ def _find_task_references(env: 'Environment', text: str) -> List[TaskReference]:
 
 
 def _convert_text_to_html_with_task_links(env: 'Environment', text: str) -> str:
+    """Convert the given text into HTML containing task links.
+
+    The &#8291; character is an invisible separator.
+    It prevents a user (with large fingers) from inserting text inside an
+    existing link by accident.
+    """
     for reference in _find_task_references(env, text):
-        link = "<a href=\"{url}\" target=\"_blank\">{ref}</a>".format(
+        link = "&#8291;<a href=\"{url}\" target=\"_blank\">{ref}</a>&#8291;".format(
             url=reference.task.get_portal_access_url(),
             ref=reference.normalized_string,
         )
