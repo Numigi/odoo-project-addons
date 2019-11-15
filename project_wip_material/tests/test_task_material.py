@@ -184,11 +184,6 @@ class TestGenerateProcurementsFromTask(TaskMaterialCase):
         with pytest.raises(ValidationError):
             line.unlink()
 
-    def test_if_product_can_not_be_changed_on_existing_line(self):
-        line = self._create_material_line()
-        with pytest.raises(ValidationError):
-            line.product_id = self.product_b
-
     def _get_po_line(self, product):
         return self.env['purchase.order.line'].search([('product_id', '=', product.id)])
 
@@ -204,6 +199,52 @@ class TestGenerateProcurementsFromTask(TaskMaterialCase):
         self._create_material_line()
         po_line = self._get_po_line(self.product_a)
         assert po_line
+
+    def test_after_change_task__initial_stock_move_cancelled(self):
+        line = self._create_material_line()
+        move = line.move_ids
+        line.task_id = self.task_2
+        assert move.state == 'cancel'
+
+    def test_after_change_task__new_stock_move_created(self):
+        line = self._create_material_line()
+        initial_move = line.move_ids
+        assert len(initial_move) == 1
+
+        line.task_id = self.task_2
+
+        new_move = line.move_ids
+        assert len(new_move) == 1
+        assert new_move != initial_move
+
+    def test_after_change_product__initial_stock_move_cancelled(self):
+        line = self._create_material_line()
+        move = line.move_ids
+        line.product_id = self.product_b
+        assert move.state == 'cancel'
+
+    def test_after_change_product__new_stock_move_created(self):
+        line = self._create_material_line()
+        initial_move = line.move_ids
+        assert len(initial_move) == 1
+
+        line.product_id = self.product_b
+
+        new_move = line.move_ids
+        assert len(new_move) == 1
+        assert new_move != initial_move
+
+    def test_if_any_move_done__material_line_can_not_change_task(self):
+        line = self._create_material_line(initial_qty=10)
+        self._force_transfer_move(line.move_ids, 1)
+        with pytest.raises(ValidationError):
+            line.task_id = self.task_2
+
+    def test_if_any_move_done__material_line_can_not_change_product(self):
+        line = self._create_material_line(initial_qty=10)
+        self._force_transfer_move(line.move_ids, 1)
+        with pytest.raises(ValidationError):
+            line.product_id = self.product_b
 
 
 class TestPreparationStep(TaskMaterialCase):
