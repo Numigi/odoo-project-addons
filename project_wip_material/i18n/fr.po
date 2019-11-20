@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-09-13 16:53+0000\n"
-"PO-Revision-Date: 2019-09-13 12:57-0400\n"
+"POT-Creation-Date: 2019-11-15 16:49+0000\n"
+"PO-Revision-Date: 2019-11-15 11:54-0500\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -18,7 +18,7 @@ msgstr ""
 "X-Generator: Poedit 2.0.6\n"
 
 #. module: project_wip_material
-#: code:addons/project_wip_material/task_material.py:128
+#: code:addons/project_wip_material/task_material.py:134
 #, python-format
 msgid "Before adding material to the task, you must set a planned date."
 msgstr ""
@@ -26,7 +26,7 @@ msgstr ""
 "date prévue."
 
 #. module: project_wip_material
-#: code:addons/project_wip_material/task_material.py:149
+#: code:addons/project_wip_material/task_material.py:155
 #, python-format
 msgid ""
 "Before adding products to consume on a task, a warehouse must be defined on "
@@ -51,7 +51,7 @@ msgid "Consumed Quantity"
 msgstr "Quantités consommées"
 
 #. module: project_wip_material
-#: code:addons/project_wip_material/consumption_route.py:102
+#: code:addons/project_wip_material/consumption_route.py:112
 #: model:ir.ui.view,arch_db:project_wip_material.task_form_with_material
 #: model:ir.ui.view,arch_db:project_wip_material.task_form_with_picking_smart_button
 #: model:ir.ui.view,arch_db:project_wip_material.warehouse_form_with_consumption_steps
@@ -63,6 +63,11 @@ msgstr "Consommation"
 #: model:ir.model.fields,field_description:project_wip_material.field_stock_warehouse_consu_location_id
 msgid "Consumption Location"
 msgstr "Emplacement de consommation"
+
+#. module: project_wip_material
+#: model:ir.model.fields,field_description:project_wip_material.field_stock_warehouse_consu_mto_pull_id
+msgid "Consumption MTO Pull"
+msgstr ""
 
 #. module: project_wip_material
 #: model:ir.model.fields,field_description:project_wip_material.field_project_task_consumption_picking_count
@@ -80,7 +85,7 @@ msgid "Consumption Pickings"
 msgstr "Opérations de consommation"
 
 #. module: project_wip_material
-#: code:addons/project_wip_material/consumption_route.py:113
+#: code:addons/project_wip_material/consumption_route.py:123
 #, python-format
 msgid "Consumption Return"
 msgstr "Retour de consommation"
@@ -119,7 +124,7 @@ msgid "Default Unit of Measure used for all stock operation."
 msgstr ""
 
 #. module: project_wip_material
-#: code:addons/project_wip_material/consumption_route.py:6
+#: code:addons/project_wip_material/consumption_route.py:8
 #: selection:stock.warehouse,consu_steps:0
 #, python-format
 msgid "Direct consumption from stocks (1 step)"
@@ -157,6 +162,7 @@ msgstr "Dernière mise à jour le"
 
 #. module: project_wip_material
 #: model:ir.model.fields,field_description:project_wip_material.field_project_task_material_line_ids
+#: model:ir.ui.view,arch_db:project_wip_material.project_form_with_material_smart_button
 msgid "Material"
 msgstr "Matériel"
 
@@ -186,7 +192,7 @@ msgstr ""
 "type de projet."
 
 #. module: project_wip_material
-#: code:addons/project_wip_material/task_material.py:135
+#: code:addons/project_wip_material/task_material.py:141
 #, python-format
 msgid ""
 "Material consumption lines can not have an initial quantity below zero. The "
@@ -196,7 +202,7 @@ msgstr ""
 "initiale inférieure à zéro. La ligne {line} a une quantité de {qty}."
 
 #. module: project_wip_material
-#: code:addons/project_wip_material/consumption_route.py:304
+#: code:addons/project_wip_material/consumption_route.py:371
 #, python-format
 msgid "Preparation"
 msgstr "Préparation"
@@ -227,7 +233,7 @@ msgid "Preparation Pickings"
 msgstr "Préparations"
 
 #. module: project_wip_material
-#: code:addons/project_wip_material/consumption_route.py:315
+#: code:addons/project_wip_material/consumption_route.py:382
 #, python-format
 msgid "Preparation Return"
 msgstr "Retour de préparation"
@@ -258,7 +264,7 @@ msgid "Preparations"
 msgstr "Préparations"
 
 #. module: project_wip_material
-#: code:addons/project_wip_material/consumption_route.py:7
+#: code:addons/project_wip_material/consumption_route.py:284
 #: selection:stock.warehouse,consu_steps:0
 #, python-format
 msgid "Prepare the stock before consumption (2 steps)"
@@ -281,6 +287,7 @@ msgstr ""
 
 #. module: project_wip_material
 #: model:ir.model.fields,field_description:project_wip_material.field_project_task_material_product_id
+#: model:ir.ui.view,arch_db:project_wip_material.task_material_search
 msgid "Product"
 msgstr "Article"
 
@@ -292,9 +299,19 @@ msgstr "Articles"
 #. module: project_wip_material
 #: model:ir.model,name:project_wip_material.model_project_project
 #: model:ir.model.fields,field_description:project_wip_material.field_procurement_group_project_id
+#: model:ir.model.fields,field_description:project_wip_material.field_project_task_material_project_id
 #: model:ir.model.fields,field_description:project_wip_material.field_stock_move_project_id
 #: model:ir.model.fields,field_description:project_wip_material.field_stock_picking_project_id
+#: model:ir.ui.view,arch_db:project_wip_material.task_material_list_view
+#: model:ir.ui.view,arch_db:project_wip_material.task_material_search
 msgid "Project"
+msgstr "Projet"
+
+#. module: project_wip_material
+#: model:ir.model.fields,field_description:project_wip_material.field_project_task_material_project_select_id
+#, fuzzy
+#| msgid "Project"
+msgid "Project Select"
 msgstr "Projet"
 
 #. module: project_wip_material
@@ -313,8 +330,21 @@ msgstr "Mouvements d'inventaire"
 #: model:ir.model.fields,field_description:project_wip_material.field_project_task_material_task_id
 #: model:ir.model.fields,field_description:project_wip_material.field_stock_move_task_id
 #: model:ir.model.fields,field_description:project_wip_material.field_stock_picking_task_id
+#: model:ir.ui.view,arch_db:project_wip_material.task_material_search
 msgid "Task"
 msgstr "Tâche"
+
+#. module: project_wip_material
+#: model:ir.actions.act_window,name:project_wip_material.task_material_action
+#: model:ir.actions.act_window,name:project_wip_material.task_material_from_project_action
+#: model:ir.ui.menu,name:project_wip_material.task_material_inventory_menu
+#: model:ir.ui.menu,name:project_wip_material.task_material_project_menu
+#: model:ir.ui.view,arch_db:project_wip_material.task_material_list_view
+#: model:ir.ui.view,arch_db:project_wip_material.task_material_search
+#, fuzzy
+#| msgid "Material"
+msgid "Task Material"
+msgstr "Matériel"
 
 #. module: project_wip_material
 #: model:ir.model,name:project_wip_material.model_project_task_material
@@ -322,7 +352,7 @@ msgid "Task Material Consumption"
 msgstr "Consommation matériel sur tâche"
 
 #. module: project_wip_material
-#: code:addons/project_wip_material/task_material.py:333
+#: code:addons/project_wip_material/task_material.py:339
 #, python-format
 msgid ""
 "The material line {line} can not be deleted because it is bound to stock "
@@ -337,7 +367,7 @@ msgid "The operation type determines the picking view"
 msgstr ""
 
 #. module: project_wip_material
-#: code:addons/project_wip_material/task_material.py:253
+#: code:addons/project_wip_material/task_material.py:230
 #, python-format
 msgid ""
 "The quantity on the material line {line} can not be reduced to "
@@ -371,13 +401,13 @@ msgstr ""
 "pas de type de projet."
 
 #. module: project_wip_material
-#: code:addons/project_wip_material/task_material.py:158
+#: code:addons/project_wip_material/task_material.py:164
 #, python-format
 msgid "The warehouse {warehouse} does not have a consumption location."
 msgstr "L'entrepôt {warehouse} n'a pas d'emplacement de consommation."
 
 #. module: project_wip_material
-#: code:addons/project_wip_material/task_material.py:166
+#: code:addons/project_wip_material/task_material.py:172
 #, python-format
 msgid "The warehouse {warehouse} does not have a consumption route."
 msgstr "L'entrepôt {warehouse} n'a pas de route de consommation."
@@ -404,12 +434,19 @@ msgid "Warehouse"
 msgstr "Entrepôt"
 
 #. module: project_wip_material
-#: code:addons/project_wip_material/task_material.py:315
+#: code:addons/project_wip_material/task_material.py:312
 #, python-format
 msgid ""
-"You may not change the product on an existing material line. Instead of "
-"changing the product, you may delete the line and create a new one."
+"You may not change the product or the task on the material line {line} "
+"because it is bound to stock moves with the status done."
 msgstr ""
-"Vous ne pouvez pas modifier l'article sur une ligne de matériel existante. "
-"Au lieu de modifier l'article, vous pouvez supprimer la ligne et en créer "
-"une nouvelle."
+"Vous ne pouvez pas modifier l'article ou la tâche sur la ligne de matériel "
+"{line} car elle est liée à un (des) mouvement(s) de stock au statut terminé."
+
+#~ msgid ""
+#~ "You may not change the product on an existing material line. Instead of "
+#~ "changing the product, you may delete the line and create a new one."
+#~ msgstr ""
+#~ "Vous ne pouvez pas modifier l'article sur une ligne de matériel "
+#~ "existante. Au lieu de modifier l'article, vous pouvez supprimer la ligne "
+#~ "et en créer une nouvelle."

@@ -118,6 +118,13 @@ class TaskMaterialCase(common.SavepointCase):
             'date_planned': datetime.now(),
         })
 
+        cls.task_2 = cls.env['project.task'].create({
+            'name': 'Task 452',
+            'project_id': cls.project.id,
+            'company_id': cls.company.id,
+            'date_planned': datetime.now(),
+        })
+
         cls.vendor = cls.env['res.partner'].create({
             'name': 'Partner A',
             'supplier': True,
