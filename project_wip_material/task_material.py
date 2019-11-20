@@ -288,6 +288,15 @@ class TaskMaterialLine(models.Model):
         if more_move_qty_than_required:
             self._cancel_moves_with_zero_quantity()
 
+    def _has_any_stock_move_done(self):
+        """Return whether the material line has any stock move at the state done."""
+        return any((m.state == 'done' for m in self.mapped('move_ids')))
+
+    def _cancel_procurements(self):
+        self.initial_qty = 0
+        self._run_procurements()
+        self.move_ids.write({'material_line_id': False})
+
     @api.model
     def create(self, vals):
         """Generate procurements when adding a new material line.
@@ -298,39 +307,39 @@ class TaskMaterialLine(models.Model):
         line.sudo()._run_procurements()
         return line
 
+    def _check_can_change_product_or_task(self):
+        if self._has_any_stock_move_done():
+            raise ValidationError(_(
+                'You may not change the product or the task on '
+                'the material line {line} because '
+                'it is bound to stock moves with the status done.'
+            ).format(line=self.product_id.display_name))
+
     @api.multi
     def write(self, vals):
         """Adjust procurements when modifying the quantity on a material line.
 
         The sudo is required, because project users do not have access to stock objects.
         """
-        if 'product_id' in vals:
-            raise ValidationError(_(
-                'You may not change the product on an existing material line. '
-                'Instead of changing the product, you may '
-                'delete the line and create a new one.'
-            ))
+        if 'product_id' in vals or 'task_id' in vals:
+            for line in self:
+                line.sudo()._check_can_change_product_or_task()
+                line.sudo()._cancel_procurements()
 
         super().write(vals)
 
-        if 'initial_qty' in vals:
+        if 'product_id' in vals or 'task_id' in vals or 'initial_qty' in vals:
             for line in self:
                 line.sudo()._run_procurements()
 
         return True
 
-    def _cancel_procurements_for_line_to_delete(self):
-        any_stock_move_done = any((m.state == 'done' for m in self.move_ids))
-
-        if any_stock_move_done:
+    def _check_line_can_be_deleted(self):
+        if self._has_any_stock_move_done():
             raise ValidationError(_(
                 'The material line {line} can not be deleted because '
                 'it is bound to stock moves with the status done.'
             ).format(line=self.product_id.display_name))
-
-        self.initial_qty = 0
-        self._run_procurements()
-        self.move_ids.write({'material_line_id': False})
 
     @api.multi
     def unlink(self):
@@ -339,7 +348,8 @@ class TaskMaterialLine(models.Model):
         The sudo is required, because project users do not have access to stock objects.
         """
         for line in self:
-            line.sudo()._cancel_procurements_for_line_to_delete()
+            line.sudo()._check_line_can_be_deleted()
+            line.sudo()._cancel_procurements()
         return super().unlink()
 
 
