@@ -19,4 +19,19 @@
         </field>
     </record>
 
+    <record id="task_form_with_timesheet_tab_visible_on_templates" model="ir.ui.view">
+        <field name="name">Task Form: make Timesheet tab visible for task templates</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project_template.task_form_with_is_template"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='timesheet_ids']/.." position="attributes">
+                <attribute name="attrs">{'invisible': [('allow_timesheets', '=', False), ('is_template', '=', False)]}</attribute>
+            </xpath>
+            <!-- Do not display the warning message `You can not log timesheets on this project..` -->
+            <group name="timesheet_error" position="attributes">
+                <attribute name="invisible_on_template">1</attribute>
+            </group>
+        </field>
+    </record>
+
 </odoo>
