@@ -55,7 +55,9 @@ require("web.FormRenderer").include({
      */
     init() {
         this._super.apply(this, arguments);
-        updateProjectInvisibleModifiers(this.arch);
+        if (this.state.model === "project.task"){
+            updateProjectInvisibleModifiers(this.arch);
+        }
     },
 });
 
