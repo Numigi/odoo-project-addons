@@ -7,31 +7,12 @@ odoo.define("project_template.hidden_fields", function(require) {
 
 var Domain = require("web.Domain");
 
-/**
- * Define whether a node is a date field.
- *
- * All date fields should be invisible on templates.
- *
- * The reason for this special case is to prevent requiring multiple binding modules.
- * 
- * -> project.project.date: added by module `project_form_with_dates`
- * -> project.project.date_end: added by module `project_form_with_dates`
- * -> project.task.date_start: added by `https://github.com/OCA/project/tree/12.0/project_timeline`
- * -> project.task.date_end: added by `https://github.com/OCA/project/tree/12.0/project_timeline`
- * -> project.task.date_planned: added by `project_task_date_planned`
- */
-function isDateField(node){
-    return node.tag === "field" && (node.attrs.name || "").startsWith("date");
-}
-
 function isNodeInvisibleOnTemplate(node){
     if(!node.attrs){
         return false;
     }
     var invisibleAttribute = node.attrs.invisible_on_template;
-    return isDateField(node) || (
-        invisibleAttribute && Boolean(eval(node.attrs.invisible_on_template))
-    );
+    return invisibleAttribute && Boolean(eval(invisibleAttribute));
 }
 
 function updateProjectInvisibleModifiers(node){
@@ -55,7 +36,9 @@ require("web.FormRenderer").include({
      */
     init() {
         this._super.apply(this, arguments);
-        updateProjectInvisibleModifiers(this.arch);
+        if (this.state.model === "project.task"){
+            updateProjectInvisibleModifiers(this.arch);
+        }
     },
 });
 
