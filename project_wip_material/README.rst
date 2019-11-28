@@ -153,15 +153,17 @@ It allows to add new material lines or modify the initial quantity on existing l
 
 Deleting a Line
 ~~~~~~~~~~~~~~~
-It however does not allow to delete a line.
-If you need to delete material, you must go to the form view of the task and delete it.
+Deleting a Line is possible by selecting one or multiple lines and ``Action / Delete``.
+
 
 Changing the Task
 ~~~~~~~~~~~~~~~~~
-The task and project on an existing line are not modifiable.
+The project, task and product on an existing line are modifiable.
 
-If you need to change the task of a material line, you may delete it or set its quantity to zero.
-Then, recreate it with the proper project and task.
+If one of those fields is changed, the line quantity will reset to 0.
+
+On the list view, the same constraints are applied than with modifications on the task.
+
 
 Project Smart Button
 ~~~~~~~~~~~~~~~~~~~~
