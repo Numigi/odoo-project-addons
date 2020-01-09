@@ -3,10 +3,75 @@
 
 import pytest
 from odoo.exceptions import ValidationError
-from .common import TaskMaterialCase
+from odoo.addons.project_material.tests.common import TaskMaterialCase
 
 
-class TestConsumptionJournalEntryConstraints(TaskMaterialCase):
+class ProjectWIPMaterialCase(TaskMaterialCase):
+
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.manager.groups_id |= cls.env.ref('account.group_account_manager')
+
+        cls.journal = cls.env['account.journal'].create({
+            'name': 'Stock Journal',
+            'type': 'general',
+            'code': 'STOCK',
+            'company_id': cls.company.id,
+        })
+
+        cls.stock_account = cls.env['account.account'].create({
+            'name': 'Raw Material Stocks',
+            'code': '130101',
+            'user_type_id': cls.env.ref('account.data_account_type_non_current_assets').id,
+            'company_id': cls.company.id,
+        })
+
+        cls.input_account = cls.env['account.account'].create({
+            'name': 'Stock Received / Not Invoiced',
+            'code': '230102',
+            'user_type_id': cls.env.ref('account.data_account_type_non_current_assets').id,
+            'company_id': cls.company.id,
+        })
+
+        cls.output_account = cls.env['account.account'].create({
+            'name': 'Stock Delivered / Not Invoiced',
+            'code': '130102',
+            'user_type_id': cls.env.ref('account.data_account_type_non_current_assets').id,
+            'company_id': cls.company.id,
+        })
+
+        cls.wip_account = cls.env['account.account'].create({
+            'name': 'Work In Progress',
+            'code': '140101',
+            'user_type_id': cls.env.ref('account.data_account_type_non_current_assets').id,
+            'reconcile': True,
+            'company_id': cls.company.id,
+        })
+
+        cls.project_type = cls.env['project.type'].create({
+            'name': 'Trailer Refurb',
+            'wip_account_id': cls.wip_account.id,
+        })
+
+        cls.product_category = cls.env['product.category'].create({
+            'name': 'Category 1',
+            'property_valuation': 'real_time',
+            'property_cost_method': 'standard',
+            'property_stock_journal': cls.journal.id,
+            'property_stock_valuation_account_id': cls.stock_account.id,
+            'property_stock_account_input_categ_id': cls.input_account.id,
+            'property_stock_account_output_categ_id': cls.output_account.id,
+            'company_id': cls.company.id,
+        })
+
+        cls.project.project_type_id = cls.project_type
+
+        cls.product_a.categ_id = cls.product_category
+        cls.product_b.categ_id = cls.product_category
+
+
+class TestConsumptionJournalEntryConstraints(ProjectWIPMaterialCase):
 
     def test_if_project_has_no_type__constraint_raised_on_task_material(self):
         self.project.project_type_id = False
@@ -31,7 +96,7 @@ class TestConsumptionJournalEntryConstraints(TaskMaterialCase):
             self._force_transfer_move(self.move)
 
 
-class TestConsumptionJournalEntry(TaskMaterialCase):
+class TestConsumptionJournalEntry(ProjectWIPMaterialCase):
 
     @classmethod
     def setUpClass(cls):
@@ -82,7 +147,7 @@ class TestConsumptionJournalEntry(TaskMaterialCase):
         assert self.debit_line.analytic_line_ids.amount == -self.expected_value
 
 
-class TestConsumptionReturnJournalEntry(TaskMaterialCase):
+class TestConsumptionReturnJournalEntry(ProjectWIPMaterialCase):
     """Test the journal entry generated from a consumption return.
 
     The expected behavior is the opposite from a consumption journal entry.
