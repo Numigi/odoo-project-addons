@@ -17,6 +17,7 @@ COPY project_cost_report_supply /mnt/extra-addons/project_cost_report_supply
 COPY project_cost_smart_button /mnt/extra-addons/project_cost_smart_button
 COPY project_form_with_dates /mnt/extra-addons/project_form_with_dates
 COPY project_material /mnt/extra-addons/project_material
+COPY project_material_direct /mnt/extra-addons/project_material_direct
 COPY project_outsourcing /mnt/extra-addons/project_outsourcing
 COPY project_portal_parent_task /mnt/extra-addons/project_portal_parent_task
 COPY project_stage /mnt/extra-addons/project_stage
