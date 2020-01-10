@@ -1,7 +1,50 @@
-# © 2019 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+# © 2019 - today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
-from odoo import fields, models
+from odoo import api, fields, models
+
+
+class TaskWithMaterialLines(models.Model):
+    """Add material consumption to tasks."""
+
+    _inherit = 'project.task'
+
+    material_line_ids = fields.One2many(
+        'project.task.material',
+        'task_id',
+        'Material',
+    )
+
+    procurement_group_id = fields.Many2one(
+        'procurement.group', 'Procurement Group',
+        copy=False,
+    )
+
+    @api.multi
+    def write(self, vals):
+        super().write(vals)
+
+        if 'date_planned' in vals:
+            for task in self:
+                task._propagate_planned_date_to_stock_moves()
+
+        return True
+
+    def _propagate_planned_date_to_stock_moves(self):
+        moves_to_update = self.mapped('material_line_ids.move_ids').filtered(
+            lambda m: m.state not in ('done', 'cancel'))
+        moves_to_update.write({'date_expected': self.date_planned})
+
+    def _get_procurement_group(self):
+        if not self.procurement_group_id:
+            self.procurement_group_id = self.env['procurement.group'].create({
+                'name': self._get_reference_for_procurements(),
+                'task_id': self.id,
+            })
+        return self.procurement_group_id
+
+    def _get_reference_for_procurements(self):
+        return 'TA#{}'.format(str(self.id))
 
 
 class TaskWithConsumptionPickingSmartButton(models.Model):
@@ -24,6 +67,19 @@ class TaskWithConsumptionPickingSmartButton(models.Model):
             task.consumption_picking_ids = pickings
             task.consumption_picking_count = len(pickings)
 
+    def open_consumption_picking_view_from_task(self):
+        """Open the view of consumption pickings related to the task.
+
+        If there are multiple pickings, open the list view.
+        Otherwise, open the form view.
+
+        This method is inspired by the method action_view_delivery
+        of sale.order. This method can be found at
+
+        odoo/addons/sale_stock/models/sale_order.py
+        """
+        return self._open_stock_pickings_view_from_task(self.consumption_picking_ids)
+
     def _open_stock_pickings_view_from_task(self, pickings):
         """Open the view of pickings related to the task.
 
@@ -43,33 +99,6 @@ class TaskWithConsumptionPickingSmartButton(models.Model):
             action['res_id'] = pickings.id
 
         return action
-
-    def open_consumption_picking_view_from_task(self):
-        """Open the view of consumption pickings related to the task.
-
-        If there are multiple pickings, open the list view.
-        Otherwise, open the form view.
-
-        This method is inspired by the method action_view_delivery
-        of sale.order. This method can be found at
-
-        odoo/addons/sale_stock/models/sale_order.py
-        """
-        return self._open_stock_pickings_view_from_task(self.consumption_picking_ids)
-
-
-def _is_preparation_return_picking(picking: 'StockPicking'):
-    """Return whether the given stock picking is a return picking.
-
-    This function allows to partition `Preparation Pickings` from
-    `Preparation Return Pickings`.
-
-    The strategy is to check whether the picking type is the picking
-    type defined as the preparation return type on the warehouse.
-    """
-    picking_type = picking.picking_type_id
-    return_type_on_warehouse = picking_type.warehouse_id.consu_prep_return_type_id
-    return picking_type == return_type_on_warehouse
 
 
 class TaskWithPreparationPickingSmartButton(models.Model):
@@ -105,3 +134,17 @@ class TaskWithPreparationPickingSmartButton(models.Model):
 
     def open_preparation_return_picking_view_from_task(self):
         return self._open_stock_pickings_view_from_task(self.preparation_return_picking_ids)
+
+
+def _is_preparation_return_picking(picking: 'StockPicking'):
+    """Return whether the given stock picking is a return picking.
+
+    This function allows to partition `Preparation Pickings` from
+    `Preparation Return Pickings`.
+
+    The strategy is to check whether the picking type is the picking
+    type defined as the preparation return type on the warehouse.
+    """
+    picking_type = picking.picking_type_id
+    return_type_on_warehouse = picking_type.warehouse_id.consu_prep_return_type_id
+    return picking_type == return_type_on_warehouse

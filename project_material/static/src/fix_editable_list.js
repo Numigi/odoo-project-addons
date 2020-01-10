@@ -1,5 +1,5 @@
 /*
-    © 2019 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+    © 2019 - today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
     License LGPL-3.0 or later (http://www.gnu.org/licenses/LGPL.html).
 
     This code fixes a bug that happens when clicking on TAB
@@ -16,7 +16,7 @@
     However, Odoo does not prioritize bugs which can not be reproduced in a vanilla
     environment.
 */
-odoo.define("project_wip_material.fix_editable_list", function(require) {
+odoo.define("project_material.fix_editable_list", function(require) {
 "use strict";
 
 var dom = require("web.dom");

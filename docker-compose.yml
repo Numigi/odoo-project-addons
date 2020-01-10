@@ -7,6 +7,8 @@ services:
     volumes:
       - odoo-web-data:/var/lib/odoo
       - ./.log:/var/log/odoo
+      - ./project_material:/mnt/extra-addons/project_material
+      - ./project_wip_material:/mnt/extra-addons/project_wip_material
     ports:
       - "8069:8069"
       - "8071:8071"

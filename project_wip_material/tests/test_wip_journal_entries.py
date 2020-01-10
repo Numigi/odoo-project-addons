@@ -3,10 +3,10 @@
 
 import pytest
 from odoo.exceptions import ValidationError
-from .common import TaskMaterialCase
+from .common import ProjectWIPMaterialCase
 
 
-class TestConsumptionJournalEntryConstraints(TaskMaterialCase):
+class TestConsumptionJournalEntryConstraints(ProjectWIPMaterialCase):
 
     def test_if_project_has_no_type__constraint_raised_on_task_material(self):
         self.project.project_type_id = False
@@ -31,7 +31,7 @@ class TestConsumptionJournalEntryConstraints(TaskMaterialCase):
             self._force_transfer_move(self.move)
 
 
-class TestConsumptionJournalEntry(TaskMaterialCase):
+class TestConsumptionJournalEntry(ProjectWIPMaterialCase):
 
     @classmethod
     def setUpClass(cls):
@@ -82,7 +82,7 @@ class TestConsumptionJournalEntry(TaskMaterialCase):
         assert self.debit_line.analytic_line_ids.amount == -self.expected_value
 
 
-class TestConsumptionReturnJournalEntry(TaskMaterialCase):
+class TestConsumptionReturnJournalEntry(ProjectWIPMaterialCase):
     """Test the journal entry generated from a consumption return.
 
     The expected behavior is the opposite from a consumption journal entry.

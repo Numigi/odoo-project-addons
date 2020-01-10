@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
 
+    <record id="project_form_with_warehouse" model="ir.ui.view">
+        <field name="name">Project Form: add warehouse</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.edit_project"/>
+        <field name="arch" type="xml">
+            <field name="user_id" position="after">
+                <field name="warehouse_id" options="{'no_create': True}"/>
+            </field>
+        </field>
+    </record>
+
     <record id="task_material_from_project_action" model="ir.actions.act_window">
         <field name="name">Task Material</field>
         <field name="res_model">project.task.material</field>
