@@ -1,10 +1,7 @@
 # © 2019 - today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
-from odoo import api, fields, models, _
-from odoo.addons import decimal_precision as dp
-from odoo.exceptions import ValidationError
-from odoo.tools import float_compare
+from odoo import models
 
 
 class ProcurementRule(models.Model):
