@@ -1,11 +1,11 @@
 # © 2019 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
-from odoo.addons.project_wip_material.tests.common import TaskMaterialCase
+from odoo.addons.project_wip_material.tests.common import ProjectWIPMaterialCase
 from ..tools import adjust_analytic_line_amount_sign
 
 
-class TestStockMoveAnalyticLines(TaskMaterialCase):
+class TestStockMoveAnalyticLines(ProjectWIPMaterialCase):
     """This test uses the fixture from module project_wip_material.
 
     The reason is that project_wip_material defines a pattern for
