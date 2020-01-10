@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="task_form_with_material" model="ir.ui.view">
+        <field name="name">Task Form: add material consumption</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_form2"/>
+        <field name="arch" type="xml">
+            <notebook position="inside">
+                <page name="material_page" string="Consumption">
+                    <group name="material_group" string="Products">
+                        <field name="material_line_ids" nolabel="1" col="2">
+                            <tree editable="bottom">
+                                <field name="product_id"/>
+                                <field name="initial_qty"/>
+                                <field name="consumed_qty"/>
+                                <field name="product_uom_id"/>
+                                <field name="unit_cost"/>
+                            </tree>
+                        </field>
+                    </group>
+                </page>
+            </notebook>
+        </field>
+    </record>
+
+    <record id="task_form_with_picking_smart_button" model="ir.ui.view">
+        <field name="name">Task Form: add stock picking smart button</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_form2"/>
+        <field name="arch" type="xml">
+            <button name="toggle_active" position="before">
+                <button
+                    name="open_preparation_picking_view_from_task" type="object" class="oe_stat_button"
+                    icon="fa-truck"
+                    groups="stock.group_stock_user"
+                    attrs="{'invisible': [('preparation_picking_count', '=', 0)]}"
+                    >
+                        <field name="preparation_picking_count" widget="statinfo" string="Preparations"/>
+                </button>
+                <button
+                    name="open_preparation_return_picking_view_from_task" type="object" class="oe_stat_button"
+                    icon="fa-truck"
+                    groups="stock.group_stock_user"
+                    attrs="{'invisible': [('preparation_return_picking_count', '=', 0)]}"
+                    >
+                        <field name="preparation_return_picking_count" widget="statinfo" string="Preparation Returns"/>
+                </button>
+                 <button
+                    name="open_consumption_picking_view_from_task" type="object" class="oe_stat_button"
+                    icon="fa-truck"
+                    groups="stock.group_stock_user"
+                    attrs="{'invisible': [('consumption_picking_count', '=', 0)]}"
+                    >
+                        <field name="consumption_picking_count" widget="statinfo" string="Consumption"/>
+                </button>
+            </button>
+        </field>
+    </record>
+
+</odoo>
