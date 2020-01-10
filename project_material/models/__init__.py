@@ -5,6 +5,7 @@ from . import (
     procurement_group,
     procurement_rule,
     project_project,
+    project_select_mixin,
     project_task_material,
     project_task,
     stock_move,

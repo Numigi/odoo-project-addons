@@ -289,8 +289,6 @@ msgstr "Projet"
 
 #. module: project_material
 #: model:ir.model.fields,field_description:project_material.field_project_task_material_project_select_id
-#, fuzzy
-#| msgid "Project"
 msgid "Project Select"
 msgstr "Projet"
 
@@ -321,8 +319,6 @@ msgstr "Tâche"
 #: model:ir.ui.menu,name:project_material.task_material_project_menu
 #: model:ir.ui.view,arch_db:project_material.task_material_list_view
 #: model:ir.ui.view,arch_db:project_material.task_material_search
-#, fuzzy
-#| msgid "Material"
 msgid "Task Material"
 msgstr "Matériel"
 

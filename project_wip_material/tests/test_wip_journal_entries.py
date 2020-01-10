@@ -53,22 +53,18 @@ class ProjectWIPMaterialCase(TaskMaterialCase):
             'name': 'Trailer Refurb',
             'wip_account_id': cls.wip_account.id,
         })
+        cls.project.project_type_id = cls.project_type
 
-        cls.product_category = cls.env['product.category'].create({
-            'name': 'Category 1',
+        cls.product_category.write({
             'property_valuation': 'real_time',
-            'property_cost_method': 'standard',
             'property_stock_journal': cls.journal.id,
             'property_stock_valuation_account_id': cls.stock_account.id,
             'property_stock_account_input_categ_id': cls.input_account.id,
             'property_stock_account_output_categ_id': cls.output_account.id,
-            'company_id': cls.company.id,
         })
 
-        cls.project.project_type_id = cls.project_type
-
-        cls.product_a.categ_id = cls.product_category
-        cls.product_b.categ_id = cls.product_category
+        new_context = dict(cls.env.context, apply_project_wip_material_constraints=True)
+        cls.env = cls.env(context=new_context)
 
 
 class TestConsumptionJournalEntryConstraints(ProjectWIPMaterialCase):

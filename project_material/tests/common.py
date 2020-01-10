@@ -76,11 +76,19 @@ class TaskMaterialCase(common.SavepointCase):
             'supplier': True,
         })
 
+        cls.product_category = cls.env['product.category'].create({
+            'name': 'Category 1',
+            'property_valuation': 'manual_periodic',
+            'property_cost_method': 'standard',
+            'company_id': cls.company.id,
+        })
+
         cls.product_a_value = 50
         cls.product_a = cls.env['product.product'].create({
             'name': 'Product A',
             'default_code': 'PROD_A',
             'type': 'product',
+            'categ_id': cls.product_category.id,
             'standard_price': cls.product_a_value,
             'seller_ids': [(0, 0, {'name': cls.vendor.id})],
             'route_ids': [(4, cls.env.ref('purchase.route_warehouse0_buy').id)],
@@ -90,6 +98,7 @@ class TaskMaterialCase(common.SavepointCase):
             'name': 'Product B',
             'default_code': 'PROD_B',
             'type': 'product',
+            'categ_id': cls.product_category.id,
             'standard_price': cls.product_b_value,
             'seller_ids': [(0, 0, {'name': cls.vendor.id})],
             'route_ids': [(4, cls.env.ref('purchase.route_warehouse0_buy').id)],

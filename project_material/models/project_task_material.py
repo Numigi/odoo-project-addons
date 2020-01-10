@@ -12,6 +12,7 @@ class TaskMaterialLine(models.Model):
     _name = 'project.task.material'
     _description = 'Task Material Consumption'
     _order = 'product_id, id'
+    _inherit = 'project.select.mixin'
 
     company_id = fields.Many2one(related='task_id.company_id', store=True)
     project_id = fields.Many2one(
@@ -197,6 +198,7 @@ class TaskMaterialLine(models.Model):
             'date_planned': datetime_planned_str,
             'warehouse_id': self.task_id.project_id.warehouse_id,
             'material_line_id': self.id,
+            'task_id': self.task_id.id,
         }
 
     def _check_quantity_can_be_reduced(self):
@@ -279,28 +281,3 @@ class TaskMaterialLine(models.Model):
 
     def _get_uom_precision(self):
         return self.env['decimal.precision'].precision_get('Product Unit of Measure')
-
-
-class TaskMaterialWithProjectSelect(models.Model):
-    """Add a technical computed field to allow constrain the domain when selecting the task.
-
-    This field is not stored and only used as a helper in the global list view of material.
-    """
-
-    _inherit = 'project.task.material'
-
-    project_select_id = fields.Many2one(
-        'project.project',
-        'Project Select',
-        compute='_compute_project_select',
-        inverse=lambda self: None,
-    )
-
-    def _compute_project_select(self):
-        for material in self:
-            material.project_select_id = material.project_id
-
-    @api.onchange('project_select_id')
-    def _onchange_project_select_reset_task(self):
-        if self.project_select_id != self.task_id.project_id:
-            self.task_id = False

@@ -12,10 +12,10 @@ class ProcurementRule(models.Model):
         self, product_id, product_qty, product_uom,
         location_id, name, origin, values, group_id
     ):
-        """Propagate material_line_id from procurement rule to stock move."""
         result = super()._get_stock_move_values(
             product_id, product_qty, product_uom, location_id, name,
             origin, values, group_id,
         )
         result['material_line_id'] = values.get('material_line_id')
+        result['task_id'] = values.get('task_id')
         return result

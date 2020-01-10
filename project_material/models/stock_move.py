@@ -8,11 +8,21 @@ class StockMove(models.Model):
 
     _inherit = 'stock.move'
 
-    task_id = fields.Many2one(related='group_id.task_id', store=True)
-    project_id = fields.Many2one(related='group_id.project_id', store=True)
+    task_id = fields.Many2one(
+        'project.task',
+        index=True,
+        ondelete='restrict',
+        readonly=True,
+    )
+    project_id = fields.Many2one(related='task_id.project_id', store=True)
     material_line_id = fields.Many2one(
         'project.task.material',
         'Material Line',
         index=True,
         ondelete='restrict',
     )
+
+    def _get_new_picking_values(self):
+        vals = super()._get_new_picking_values()
+        vals['task_id'] = self.task_id.id
+        return vals
