@@ -33,7 +33,7 @@ class TaskMaterialLine(models.Model):
                     'The material line {} was created from a direct consumption. '
                     'It can not be manually edited.'
                 ).format(line.display_name))
-        return super()
+        return super().write(vals)
 
     @api.multi
     def unlink(self):
