@@ -4,7 +4,7 @@
 import pytest
 
 from datetime import timedelta
-from ddt import data, ddt
+from ddt import data, ddt, unpack
 from odoo import fields
 from odoo.exceptions import ValidationError
 from .common import TaskMaterialCase
@@ -83,6 +83,17 @@ class TestGenerateProcurementsFromTask(TaskMaterialCase):
     def test_project_propagated_to_stock_picking(self):
         line = self._create_material_line()
         assert line.move_ids.picking_id.project_id == self.project
+
+    @data(
+        ('task_readonly', True),
+        ('task_invisible', False),
+        ('task_required', False),
+    )
+    @unpack
+    def test_stock_picking_task_modifiers(self, modifier_field, value):
+        line = self._create_material_line()
+        picking = line.move_ids.picking_id
+        assert picking[modifier_field] is value
 
     def test_if_reduce_initial_qty__qty_propagated_to_stock_move(self):
         line = self._create_material_line(initial_qty=10)

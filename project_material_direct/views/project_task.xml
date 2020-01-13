@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="task_form_with_direct_material_consumption" model="ir.ui.view">
+        <field name="name">Task Form: add direct material consumption</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_form2"/>
+        <field name="arch" type="xml">
+            <group name="material_group" position="after">
+                <group name="direct_material_group" string="Direct Consumption">
+                    <field name="direct_material_line_ids" nolabel="1" col="2">
+                        <tree editable="bottom">
+                            <field name="product_id"/>
+                            <field name="consumed_qty" string="Quantity"/>
+                            <field name="product_uom_id"/>
+                            <field name="unit_cost"/>
+                        </tree>
+                        <form string="Direct Consumption">
+                            <group>
+                                <group>
+                                    <field name="product_id"/>
+                                    <field name="consumed_qty" string="Quantity"/>
+                                    <field name="product_uom_id"/>
+                                    <field name="unit_cost"/>
+                                </group>
+                                <group>
+                                    <field name="origin_stock_picking_id"/>
+                                    <field name="origin_stock_move_id"/>
+                                </group>
+                            </group>
+                        </form>
+                    </field>
+                </group>
+            </group>
+        </field>
+    </record>
+
+</odoo>

@@ -70,7 +70,8 @@ class TaskMaterialLine(models.Model):
         The sudo is required, because project users do not have access to stock objects.
         """
         line = super().create(vals)
-        line.sudo()._run_procurements()
+        if line._should_generate_procurement():
+            line.sudo()._run_procurements()
         return line
 
     @api.multi
@@ -87,7 +88,8 @@ class TaskMaterialLine(models.Model):
         super().write(vals)
 
         if 'product_id' in vals or 'task_id' in vals or 'initial_qty' in vals:
-            for line in self:
+            lines_with_procurement = self.filtered(lambda l: l._should_generate_procurement())
+            for line in lines_with_procurement:
                 line.sudo()._run_procurements()
 
         return True
@@ -102,6 +104,9 @@ class TaskMaterialLine(models.Model):
             line.sudo()._check_line_can_be_deleted()
             line.sudo()._cancel_procurements()
         return super().unlink()
+
+    def _should_generate_procurement(self):
+        return True
 
     def _cancel_procurements(self):
         self.initial_qty = 0
