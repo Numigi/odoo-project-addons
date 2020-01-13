@@ -16,11 +16,13 @@
     ],
     'data': [
         'security/ir.model.access.csv',
+        'security/ir_rule.xml',
         'views/assets.xml',
         'views/project_project.xml',
         'views/project_task_material.xml',
         'views/project_task.xml',
         'views/stock_picking.xml',
+        'views/stock_picking_type.xml',
         'views/stock_warehouse.xml',
     ],
     'post_init_hook': 'post_init_hook',

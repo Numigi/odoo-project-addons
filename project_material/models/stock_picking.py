@@ -13,6 +13,16 @@ class StockPicking(models.Model):
         'project.task',
         index=True,
         ondelete='restrict',
-        readonly=True,
     )
     project_id = fields.Many2one(related='task_id.project_id', store=True)
+
+    task_readonly = fields.Boolean(compute='_compute_task_modifiers')
+    task_invisible = fields.Boolean(compute='_compute_task_modifiers')
+    task_required = fields.Boolean(compute='_compute_task_modifiers')
+
+    def _compute_task_modifiers(self):
+        for picking in self:
+            picking_has_a_task = bool(picking.task_id)
+            picking.task_readonly = True
+            picking.task_invisible = False if picking_has_a_task else True
+            picking.task_required = False

@@ -14,6 +14,7 @@ class StockMove(models.Model):
         ondelete='restrict',
         readonly=True,
     )
+
     project_id = fields.Many2one(related='task_id.project_id', store=True)
     material_line_id = fields.Many2one(
         'project.task.material',
