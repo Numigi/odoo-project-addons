@@ -257,6 +257,20 @@ class TestGenerateProcurementsFromTask(TaskMaterialCase):
         with pytest.raises(ValidationError):
             line.product_id = self.product_b
 
+    def test_for_each_material_line__one_stock_move_generated(self):
+        """Test each material line generates an independant stock move.
+
+        By default, Odoo attempts to aggregate stock moves with common
+        values (group_id, product_id, etc).
+        """
+        line_1 = self._create_material_line()
+        line_2 = self._create_material_line()
+        move_1 = line_1.move_ids
+        move_2 = line_2.move_ids
+        assert move_1
+        assert move_2
+        assert move_1 != move_2
+
 
 class TestPreparationStep(TaskMaterialCase):
 
@@ -280,3 +294,21 @@ class TestPreparationStep(TaskMaterialCase):
     def test_if_qty_reduced_to_zero__preparation_unlinked_from_picking(self):
         self.line.initial_qty = 0
         assert not self.preparation_move.picking_id
+
+    def test_for_each_material_line__one_consumption_move_generated(self):
+        line_1 = self._create_material_line()
+        line_2 = self._create_material_line()
+        consumption_move_1 = line_1.move_ids
+        consumption_move_2 = line_2.move_ids
+        assert consumption_move_1
+        assert consumption_move_2
+        assert consumption_move_1 != consumption_move_2
+
+    def test_for_each_material_line__one_preparation_move_generated(self):
+        line_1 = self._create_material_line()
+        line_2 = self._create_material_line()
+        preparation_move_1 = line_1.move_ids.move_orig_ids
+        preparation_move_2 = line_2.move_ids.move_orig_ids
+        assert preparation_move_1
+        assert preparation_move_2
+        assert preparation_move_1 != preparation_move_2
