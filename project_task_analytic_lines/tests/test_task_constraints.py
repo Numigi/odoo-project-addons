@@ -70,6 +70,10 @@ class TestInvoiceValidationConstraints(InvoiceCase):
         with pytest.raises(ValidationError):
             self.task.project_id = self.project_2
 
+    def test_if_is_same_project__changing_project_not_blocked(self):
+        self._validate_invoice()
+        self.task.project_id = self.task.project_id
+
 
 class TestAccountMovePostConstraints(AccountMoveCase):
 
