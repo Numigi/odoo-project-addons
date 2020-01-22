@@ -15,7 +15,10 @@ class StockMove(models.Model):
         readonly=True,
     )
 
-    project_id = fields.Many2one(related='task_id.project_id', store=True)
+    project_id = fields.Many2one(
+        related='task_id.project_id', store=True,
+        readonly=True,
+    )
     material_line_id = fields.Many2one(
         'project.task.material',
         'Material Line',
