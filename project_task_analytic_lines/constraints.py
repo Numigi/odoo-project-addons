@@ -134,6 +134,18 @@ class Task(models.Model):
     _inherit = 'project.task'
 
     @api.multi
+    def write(self, vals):
+        if 'project_id' in vals:
+            tasks_with_changed_project = self.filtered(
+                lambda t: t.project_id.id != vals['project_id'])
+
+            for task in tasks_with_changed_project:
+                task._check_no_related_open_invoice()
+                task._check_no_related_journal_entry()
+
+        return super().write(vals)
+
+    @api.multi
     def _check_no_related_open_invoice(self):
         invoice_lines = self.env['account.invoice.line'].sudo().search([
             ('task_id', 'in', self.ids),
@@ -160,11 +172,3 @@ class Task(models.Model):
                 'The task {task} can not be moved to another project '
                 'because it is already bound to a posted journal entry ({move}).'
             ).format(task=task.display_name, move=move.display_name))
-
-    @api.multi
-    def write(self, vals):
-        if 'project_id' in vals:
-            self._check_no_related_open_invoice()
-            self._check_no_related_journal_entry()
-
-        return super().write(vals)
