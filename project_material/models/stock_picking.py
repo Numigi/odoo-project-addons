@@ -14,7 +14,10 @@ class StockPicking(models.Model):
         index=True,
         ondelete='restrict',
     )
-    project_id = fields.Many2one(related='task_id.project_id', store=True)
+    project_id = fields.Many2one(
+        related='task_id.project_id', store=True,
+        readonly=True,
+    )
 
     task_readonly = fields.Boolean(compute='_compute_task_modifiers')
     task_invisible = fields.Boolean(compute='_compute_task_modifiers')
