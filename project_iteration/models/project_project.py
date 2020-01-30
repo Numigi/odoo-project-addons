@@ -13,8 +13,14 @@ class ProjectWithParent(models.Model):
     parent_id = fields.Many2one(
         'project.project', 'Parent Project', ondelete='restrict', index=True)
     child_ids = fields.One2many('project.project', 'parent_id', 'Iterations')
-    children_count = fields.Integer('Iteration Count', compute='_compute_children_count')
-    is_parent = fields.Boolean('Is Parent', compute='_compute_is_parent', store=True)
+    children_count = fields.Integer(
+        'Iteration Count', compute='_compute_children_count',
+        compute_sudo=True,
+    )
+    is_parent = fields.Boolean(
+        'Is Parent', compute='_compute_is_parent', store=True,
+        compute_sudo=True,
+    )
 
     @api.multi
     def name_get(self):
