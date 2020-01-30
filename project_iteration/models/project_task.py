@@ -14,7 +14,9 @@ class ProjectTaskWithParentProject(models.Model):
 
     parent_project_id = fields.Many2one(
         'project.project', 'Parent Project',
-        compute='_compute_parent_project_id', store=True, index=True)
+        compute='_compute_parent_project_id', store=True, index=True,
+        compute_sudo=True,
+    )
 
     @api.depends('project_id', 'project_id.is_parent', 'project_id.parent_id')
     def _compute_parent_project_id(self):
