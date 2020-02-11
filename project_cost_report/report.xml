@@ -12,14 +12,17 @@
                 <span t-field="line.name"/>
             </td>
             <td>
+                <span t-if="is_outsourcing_line(line)" t-field="line.partner_id.display_name"/>
+            </td>
+            <td>
                 <span t-field="line.employee_id.name"/>
             </td>
             <td class="text-right">
                 <!-- Display hours for timesheets -->
-                <span t-if="line.task_id" t-field="line.unit_amount" t-options="{'widget': 'float_time'}"/>
+                <span t-if="is_timesheet_line(line)" t-field="line.unit_amount" t-options="{'widget': 'float_time'}"/>
 
                 <!-- Display units as float for other types of analytic lines -->
-                <t t-if="not line.task_id">
+                <t t-if="not is_timesheet_line(line)">
                     <span t-raw="adjust_analytic_line_amount_sign(line, line.unit_amount)" t-options="{'widget': 'float', 'precision': 2}"/>
                     <span t-field="line.product_uom_id.name"/>
                 </t>
@@ -36,7 +39,7 @@
     <!-- PRODUCTS -->
     <template id="cost_report_body__product_category">
         <tr class="o_project_cost_report__level_2">
-            <td colspan="6">
+            <td colspan="7">
                 <span class="o_project_cost_report__product_category o_project_cost_report__link" t-att-data-id="category.id">
                     <i class="fa fa-caret-right" t-if="category.folded"></i>
                     <i class="fa fa-caret-down" t-if="not category.folded"></i>
@@ -56,7 +59,7 @@
 
     <template id="cost_report_body__product_section">
         <tr class="o_project_cost_report__level_1" v-if="product_categories">
-            <td colspan="6">Products</td>
+            <td colspan="7">Products</td>
             <td class="text-right">
                 <span t-raw="product_total" t-options='{"widget": "monetary", "display_currency": currency}'/>
             </td>
@@ -69,7 +72,7 @@
     <!-- TIME -->
     <template id="cost_report_body__time_category">
         <tr class="o_project_cost_report__level_2">
-            <td colspan="4">
+            <td colspan="5">
                 <span class="o_project_cost_report__time_category o_project_cost_report__link" t-att-data-id="category.id">
                     <i class="fa fa-caret-right" t-if="category.folded"></i>
                     <i class="fa fa-caret-down" t-if="not category.folded"></i>
@@ -92,7 +95,7 @@
 
     <template id="cost_report_body__time_section">
         <tr class="o_project_cost_report__level_1" v-if="time_categories">
-            <td colspan="4">Time</td>
+            <td colspan="5">Time</td>
             <td class="text-right">
                 <span t-raw="time_total_hours" t-options="{'widget': 'float_time'}"/>
             </td>
@@ -108,7 +111,7 @@
     <!-- OUTSOURCING -->
     <template id="cost_report_body__outsourcing_category">
         <tr class="o_project_cost_report__level_2">
-            <td colspan="6">
+            <td colspan="7">
                 <span class="o_project_cost_report__outsourcing_category o_project_cost_report__link" t-att-data-id="category.id">
                     <i class="fa fa-caret-right" t-if="category.folded"></i>
                     <i class="fa fa-caret-down" t-if="not category.folded"></i>
@@ -128,7 +131,7 @@
 
     <template id="cost_report_body__outsourcing_section">
         <tr class="o_project_cost_report__level_1" v-if="outsourcing_categories">
-            <td colspan="6">Outsourcing</td>
+            <td colspan="7">Outsourcing</td>
             <td class="text-right">
                 <span t-raw="outsourcing_total" t-options='{"widget": "monetary", "display_currency": currency}'/>
             </td>
@@ -141,7 +144,7 @@
     <!-- Total of costs -->
     <template id="cost_report_body__cost_total">
         <tr class="o_project_cost_report__level_1 o_project_cost_report__total_cost">
-            <td colspan="6"></td>
+            <td colspan="7"></td>
             <td>
                 <span>Total</span>
                 <span style="float: right"
@@ -171,13 +174,14 @@
         <table>
             <thead>
                 <tr class="o_project_cost_report__level_1">
-                    <th colspan="6">Item</th>
+                    <th colspan="7">Item</th>
                     <th class="text-right">Cost</th>
                 </tr>
                 <tr class="o_project_cost_report__level_3">
                     <th class="o_project_cost_report__padding_column"></th>
                     <th>Date</th>
                     <th>Description</th>
+                    <th>Supplier</th>
                     <th>Employee</th>
                     <th class="text-right">Quantity</th>
                     <th class="text-right">Unit Cost</th>
@@ -195,7 +199,7 @@
 
     <template id="cost_report_body__waiting_purchase_orders">
         <table>
-            <tr class="o_project_cost_report__level_1" v-if="outsourcing_categories">
+            <tr class="o_project_cost_report__level_1">
                 <td colspan="5">Waiting For Invoices</td>
                 <td class="text-right">
                     <span t-raw="waiting_purchase_order_total" t-options='{"widget": "monetary", "display_currency": currency}'/>

@@ -4,7 +4,7 @@
     <!-- SHOP SUPPLY -->
     <template id="cost_report_body__shop_supply_category">
         <tr class="o_project_cost_report__level_2">
-            <td colspan="6">
+            <td colspan="7">
                 <span class="o_project_cost_report__shop_supply_category o_project_cost_report__link" t-att-data-id="category.id">
                     <i class="fa fa-caret-right" t-if="category.folded"></i>
                     <i class="fa fa-caret-down" t-if="not category.folded"></i>
@@ -24,7 +24,7 @@
 
     <template id="cost_report_body__shop_supply_section">
         <tr class="o_project_cost_report__level_1" v-if="shop_supply_categories">
-            <td colspan="6">Shop Supply</td>
+            <td colspan="7">Shop Supply</td>
             <td class="text-right">
                 <span t-raw="shop_supply_total" t-options='{"widget": "monetary", "display_currency": currency}'/>
             </td>
