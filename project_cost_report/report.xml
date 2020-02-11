@@ -151,22 +151,20 @@
     </template>
 
     <template id="cost_report_body__header">
-        <table>
-            <tr>
-                <td>
-                    <h1>Cost Report</h1>
-                    <div>
-                        <span>Printed on</span>
-                        <span t-raw="print_date"/>
-                    </div>
-                </td>
-                <td style="width: 200px">
-                    <div t-raw="project.partner_id.display_name"></div>
-                    <h2 t-raw="project.name"></h2>
-                    <div t-raw="project.project_type_id.display_name"></div>
-                </td>
-            </tr>
-        </table>            
+        <div class="o_project_cost_report__header">
+            <div class="o_project_cost_report__header__left">
+                <h1>Cost Report</h1>
+                <div>
+                    <span>Printed on</span>
+                    <span t-raw="print_date"/>
+                </div>
+            </div>
+            <div class="o_project_cost_report__header__right">
+                <div t-raw="project.partner_id.display_name"></div>
+                <h2 t-raw="project.name"></h2>
+                <div t-raw="project.project_type_id.display_name"></div>
+            </div>
+        </div>
     </template>
 
     <template id="cost_report_body__costs">
