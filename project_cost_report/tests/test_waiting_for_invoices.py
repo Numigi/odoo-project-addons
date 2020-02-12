@@ -49,7 +49,7 @@ class TestWaitingForInvoices(common.SavepointCase):
         cls.po.button_confirm()
 
     def _get_waiting_purchase_orders(self):
-        return self.report._get_rendering_variables(self.project, {})['waiting_purchase_orders']
+        return self.report.get_rendering_variables(self.project, {})['waiting_purchase_orders']
 
     def test_if_invoice_not_received__po_in_section(self):
         waiting_orders = self._get_waiting_purchase_orders()
@@ -79,7 +79,7 @@ class TestWaitingForInvoices(common.SavepointCase):
         assert len(waiting_orders) == 1
 
     def _get_waiting_order_amount(self):
-        return self.report._get_rendering_variables(
+        return self.report.get_rendering_variables(
             self.project, {})['waiting_purchase_order_total']
 
     def test_if_displayed_amount_is_based_on_quantity_to_invoice(self):
