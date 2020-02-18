@@ -36,6 +36,11 @@ class TaskMaterialLine(models.Model):
         required=True,
         default=1.0,
     )
+    prepared_qty = fields.Float(
+        string='Prepared Quantity',
+        digits=dp.get_precision('Product Unit of Measure'),
+        compute='_compute_prepared_qty',
+    )
     consumed_qty = fields.Float(
         string='Consumed Quantity',
         digits=dp.get_precision('Product Unit of Measure'),
@@ -52,6 +57,16 @@ class TaskMaterialLine(models.Model):
         'material_line_id',
         'Stock Moves',
     )
+
+    def _compute_prepared_qty(self):
+        for line in self:
+            preparation_moves = line.mapped('move_ids.move_orig_ids')
+            preparation_moves_done = preparation_moves.filtered(lambda m: m.state == 'done')
+            prepared_qty = sum(preparation_moves_done.mapped('product_uom_qty'))
+            return_moves = preparation_moves_done.returned_move_ids
+            return_moves_done = return_moves.filtered(lambda m: m.state == 'done')
+            returned_qty = sum(return_moves_done.mapped('product_uom_qty'))
+            line.prepared_qty = prepared_qty - returned_qty
 
     def _compute_consumed_qty(self):
         for line in self:

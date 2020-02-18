@@ -148,3 +148,25 @@ def _is_preparation_return_picking(picking: 'StockPicking'):
     picking_type = picking.picking_type_id
     return_type_on_warehouse = picking_type.warehouse_id.consu_prep_return_type_id
     return picking_type == return_type_on_warehouse
+
+
+class TaskWithPreparedQtyHidden(models.Model):
+    """Allow to hide the prepared qty if not relevant for this task.
+
+    If the warehouse is set to consume materials in one step,
+    the prepared qty on material lines is not relevant.
+    """
+
+    _inherit = 'project.task'
+
+    show_material_prepared_qty = fields.Boolean(compute='_compute_show_material_prepared_qty')
+
+    def _compute_show_material_prepared_qty(self):
+        for task in self:
+            task.show_material_prepared_qty = (
+                task._get_warehouse_consumption_steps() == 'two_steps'
+            )
+
+    def _get_warehouse_consumption_steps(self):
+        steps = self.mapped('project_id.warehouse_id.consu_steps')
+        return steps[0] if steps else None

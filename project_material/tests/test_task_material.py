@@ -312,3 +312,26 @@ class TestPreparationStep(TaskMaterialCase):
         assert preparation_move_1
         assert preparation_move_2
         assert preparation_move_1 != preparation_move_2
+
+    def test_if_move_not_done__no_prepared_quantity(self):
+        line = self._create_material_line(initial_qty=10)
+        assert not line.prepared_qty
+
+    def test_if_move_done__prepared_quantity_is_done_quantity(self):
+        line = self._create_material_line(initial_qty=10)
+        self._force_transfer_move(line.move_ids.move_orig_ids, 7)
+        assert line.prepared_qty == 7
+
+    def test_returned_moves_substracted_from_prepared_quantity(self):
+        line = self._create_material_line(initial_qty=10)
+        move = line.move_ids.move_orig_ids
+        self._force_transfer_move(move, 7)
+        self._return_stock_move(move, 2)
+        assert line.prepared_qty == 5  # 7 - 2
+
+    def test_on_task__if_2_steps__show_prepared_qty(self):
+        assert self.task.show_material_prepared_qty
+
+    def test_on_task__if_1_step__hide_prepared_qty(self):
+        self.warehouse.consu_steps = 'one_step'
+        assert not self.task.show_material_prepared_qty
