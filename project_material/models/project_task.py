@@ -164,9 +164,5 @@ class TaskWithPreparedQtyHidden(models.Model):
     def _compute_show_material_prepared_qty(self):
         for task in self:
             task.show_material_prepared_qty = (
-                task._get_warehouse_consumption_steps() == 'two_steps'
+                task.project_id.warehouse_id.consu_steps == 'two_steps'
             )
-
-    def _get_warehouse_consumption_steps(self):
-        steps = self.mapped('project_id.warehouse_id.consu_steps')
-        return steps[0] if steps else None
