@@ -12,7 +12,7 @@
                 <span t-field="line.name"/>
             </td>
             <td>
-                <span t-if="is_outsourcing_line(line)" t-field="line.partner_id.display_name"/>
+                <span t-if="is_outsourcing_line(line)" t-field="line.move_id.partner_id.display_name"/>
             </td>
             <td>
                 <span t-field="line.employee_id.name"/>
