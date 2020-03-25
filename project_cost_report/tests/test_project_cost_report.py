@@ -344,3 +344,9 @@ class TestProjectCostReport(ProjectCostReportCase):
         total = self.report._get_outsourcing_total(self.project)
         # 800 + 900 (sum of outsourcing_line_1 and outsourcing_line_2)
         assert total == 1700
+
+    def test_get_foldable_categories(self):
+        result = self.report.get_foldable_categories(self.project.id)
+        assert set(result['product']) == {self.category_a.id, self.category_b.id}
+        assert set(result['time']) == {False, self.task_type_1.id, self.task_type_2.id}
+        assert result['outsourcing'] == [False]
