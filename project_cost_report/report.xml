@@ -6,7 +6,7 @@
         <tr class="o_project_cost_report__level_3 o_project_cost_report__analytic_line" t-att-data-id="line.id">
             <td></td>
             <td>
-                <span t-field="line.date"/>
+                <span t-field="line.date" style="white-space: nowrap; margin-right: 8px;"/>
             </td>
             <td>
                 <span t-field="line.name"/>
