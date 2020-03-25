@@ -212,9 +212,8 @@ class ProjectCostReportWithProducts(models.TransientModel):
         """Add product categories to foldable categories."""
         res = super().get_foldable_categories(project_id)
         project = self.env['project.project'].browse(project_id)
-        domain = self._get_product_analytic_line_domain(project)
-        analytic_lines = self.env['account.analytic.line'].search(domain)
-        res['product'] = analytic_lines.mapped('product_id.categ_id.id')
+        lines = self._get_product_analytic_lines(project)
+        res['product'] = lines.mapped('product_id.categ_id.id')
         return res
 
     def _get_product_categories(self, project, report_context):
@@ -282,9 +281,8 @@ class ProjectCostReportWithTime(models.TransientModel):
         """Add time categories to foldable categories."""
         res = super().get_foldable_categories(project_id)
         project = self.env['project.project'].browse(project_id)
-        domain = self._get_time_analytic_line_domain(project)
-        analytic_lines = self.env['account.analytic.line'].search(domain)
-        res['time'] = analytic_lines.mapped('task_id.task_type_id.id')
+        lines = self._get_timesheet_analytic_lines(project)
+        res['time'] = lines.mapped('task_id.task_type_id.id')
         res['time'].append(False)  # Empty task type category (Labour)
         return res
 
