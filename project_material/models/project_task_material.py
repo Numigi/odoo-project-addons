@@ -63,7 +63,7 @@ class TaskMaterialLine(models.Model):
             preparation_moves = line.mapped('move_ids.move_orig_ids')
             preparation_moves_done = preparation_moves.filtered(lambda m: m.state == 'done')
             prepared_qty = sum(preparation_moves_done.mapped('product_uom_qty'))
-            return_moves = preparation_moves_done.returned_move_ids
+            return_moves = preparation_moves_done.mapped('returned_move_ids')
             return_moves_done = return_moves.filtered(lambda m: m.state == 'done')
             returned_qty = sum(return_moves_done.mapped('product_uom_qty'))
             line.prepared_qty = prepared_qty - returned_qty
