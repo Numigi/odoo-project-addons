@@ -31,6 +31,11 @@ class StockMove(models.Model):
         vals['task_id'] = self.task_id.id
         return vals
 
+    def _prepare_procurement_values(self):
+        vals = super()._prepare_procurement_values()
+        vals['task_id'] = self.task_id.id
+        return vals
+
 
 class StockMoveWithNoAggregation(models.Model):
     """Prevent the aggregation of stock moves generated from a material line.

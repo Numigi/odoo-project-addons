@@ -295,6 +295,12 @@ class TestPreparationStep(TaskMaterialCase):
         self.line.initial_qty = 0
         assert not self.preparation_move.picking_id
 
+    def test_task_propagated_to_stock_picking(self):
+        assert self.preparation_move.task_id == self.task
+
+    def test_project_propagated_to_stock_picking(self):
+        assert self.preparation_move.project_id == self.project
+
     def test_for_each_material_line__one_consumption_move_generated(self):
         line_1 = self._create_material_line()
         line_2 = self._create_material_line()
