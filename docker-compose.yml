@@ -7,12 +7,13 @@ services:
     volumes:
       - odoo-web-data:/var/lib/odoo
       - ./.log:/var/log/odoo
+      - ./project_iteration_parent_type_required:/mnt/extra-addons/project_iteration_parent_type_required
     ports:
       - "8069:8069"
       - "8071:8071"
     depends_on:
       - db
-    command: odoo
+    command: odoo --worker=0
     environment:
       - LOG_ODOO=/var/log/odoo
     networks:
