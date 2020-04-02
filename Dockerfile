@@ -13,6 +13,7 @@ COPY project_default_task_stage /mnt/extra-addons/project_default_task_stage
 COPY project_form_with_dates /mnt/extra-addons/project_form_with_dates
 COPY project_hide_create_sale_order /mnt/extra-addons/project_hide_create_sale_order
 COPY project_iteration /mnt/extra-addons/project_iteration
+COPY project_iteration_parent_only /mnt/extra-addons/project_iteration_parent_only
 COPY project_portal_hide_timesheets /mnt/extra-addons/project_portal_hide_timesheets
 COPY project_portal_parent_task /mnt/extra-addons/project_portal_parent_task
 COPY project_remaining_hours_update /mnt/extra-addons/project_remaining_hours_update
