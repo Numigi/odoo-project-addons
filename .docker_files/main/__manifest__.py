@@ -17,6 +17,7 @@
         'project_hide_create_sale_order',
         'project_iteration',
         'project_iteration_parent_only',
+        'project_iteration_parent_type_required',
         'project_portal_hide_timesheets',
         'project_portal_parent_task',
         'project_remaining_hours_update',
