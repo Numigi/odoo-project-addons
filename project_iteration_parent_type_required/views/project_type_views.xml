@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="project_type_is_parent_required_form" model="ir.ui.view">
+        <field name="name">Project Type: Is Parent Required</field>
+        <field name="model">project.type</field>
+        <field name="inherit_id" ref="project_type.view_project_type_form"/>
+        <field name="arch" type="xml">
+            <field name="active" position="after">
+                <field name="is_project_parent_required"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>
