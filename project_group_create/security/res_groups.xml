@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="group_project_manager_create" model="res.groups">
+        <field name="name">Manager with Create</field>
+        <field name="category_id" ref="base.module_category_project_management"/>
+        <field name="implied_ids" eval="[(4, ref('project.group_project_manager'))]"/>
+        <field name="users" eval="[(4, ref('base.user_admin'))]"/>
+        <field name="comment">Grants create permissions to projects.</field>
+    </record>
+
+</odoo>

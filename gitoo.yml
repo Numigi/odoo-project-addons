@@ -1,0 +1,4 @@
+- url: https://github.com/Numigi/odoo-base-addons
+  branch: "12.0"
+  includes:
+    - base_extended_security

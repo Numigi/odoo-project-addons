@@ -6,11 +6,17 @@ USER root
 COPY .docker_files/requirements.txt .
 RUN pip3 install -r requirements.txt
 
+ENV THIRD_PARTY_ADDONS /mnt/third-party-addons
+RUN mkdir -p "${THIRD_PARTY_ADDONS}" && chown -R odoo "${THIRD_PARTY_ADDONS}"
+COPY ./gitoo.yml /gitoo.yml
+RUN gitoo install-all --conf_file /gitoo.yml --destination "${THIRD_PARTY_ADDONS}"
+
 USER odoo
 
 COPY project_chatter /mnt/extra-addons/project_chatter
 COPY project_default_task_stage /mnt/extra-addons/project_default_task_stage
 COPY project_form_with_dates /mnt/extra-addons/project_form_with_dates
+COPY project_group_create /mnt/extra-addons/project_group_create
 COPY project_hide_create_sale_order /mnt/extra-addons/project_hide_create_sale_order
 COPY project_iteration /mnt/extra-addons/project_iteration
 COPY project_iteration_parent_only /mnt/extra-addons/project_iteration_parent_only
