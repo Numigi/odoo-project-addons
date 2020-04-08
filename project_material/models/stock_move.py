@@ -50,8 +50,10 @@ class StockMoveWithNoAggregation(models.Model):
         'project.task.material',
         'Destination Material Line',
         compute='_compute_destination_material_line_id',
+        store=True,
     )
 
+    @api.depends("material_line_id", "move_dest_ids")
     def _compute_destination_material_line_id(self):
         for move in self:
             move.destination_material_line_id = move._find_destination_material_line()
