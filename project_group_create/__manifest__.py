@@ -13,6 +13,8 @@
     "depends": ["project", "base_extended_security"],
     "data": [
         "security/res_groups.xml",
+        "security/ir.model.access.csv",
+        "security/extended_security_rule.xml",
     ],
     "installable": True,
 }

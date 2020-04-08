@@ -1,27 +1,23 @@
-Project Stage No Quick Create
-=============================
+Project Group Create
+====================
 
-This module prevents the quick creation of project stages.
+This module adds a new group in project management.
 
-It also add the field stage_ids on the project form.
+.. image:: static/description/group.png
 
-Same Stages for All Projects
-----------------------------
-If you need to have the same stages for all project:
+When you install the module, the group of project manager is not allowed anymore
+to create project anymore.
 
-* Activate the developer mode.
-* Go to /Settings/Technical/Actions/User-defined Defaults.
-* Click on `Create`.
-* In `Field` select `Tasks Stages (project.project)`.
-* In `Default Value (JSON format)` enter `[[6, 0, [n1, n2, ..., n]]]`
-  where [n1, n2, ..., n] is the list of ids of the stages.
+.. image:: static/description/warning.png
 
-Whenever you want to update the default stages, you may edit this default value.
+They need to be promoted to project manager with create group to be granted back
+with the create permissions.
+
+
 
 Contributors
 ------------
 * Numigi (tm) and all its contributors (https://bit.ly/numigiens)
-* Istvan Szalai (istvan.szalai@savoirfairelinux.com)
 
 More information
 ----------------
