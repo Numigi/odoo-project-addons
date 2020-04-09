@@ -23,7 +23,7 @@ msgstr "Accorde les droits de créations de projets"
 #. module: project_group_create
 #: model:res.groups,name:project_group_create.group_project_manager_create
 msgid "Manager with Create"
-msgstr "Gestionnaire avec droit de création"
+msgstr "Gestionnaire - Création de projet"
 
 #. module: project_group_create
 #: model:ir.model,name:project_group_create.model_project_project
