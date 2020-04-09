@@ -29,10 +29,3 @@ msgstr "Gestionnaire avec droit de création"
 #: model:ir.model,name:project_group_create.model_project_project
 msgid "Project"
 msgstr ""
-
-#. module: project_group_create
-#: code:addons/project_group_create/models/project.py:18
-#, python-format
-msgid "You are not allowed to create a project."
-msgstr "Vous n'êtes pas authorisé de créer un projet."
-

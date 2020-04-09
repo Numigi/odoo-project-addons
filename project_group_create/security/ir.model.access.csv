@@ -1,2 +1,2 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-project_manager_create,Project / Manager With Create: Access Recordings,model_project_project,group_project_manager_create,1,1,1,0
+project_manager_create,Project / Manager With Create: Access Recordings,project.model_project_project,group_project_manager_create,1,1,1,0
