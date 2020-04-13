@@ -62,10 +62,10 @@ class StockMoveWithNoAggregation(models.Model):
         if self.material_line_id:
             return self.material_line_id
 
-        for destination in self.move_dest_ids:
-            destination_material_line = destination._find_destination_material_line()
-            if destination_material_line:
-                return destination_material_line
+        if self.origin_returned_move_id:
+            return self.origin_returned_move_id._find_destination_material_line()
+
+        return self.mapped('move_dest_ids.material_line_id')[:1]
 
     @api.model
     def _prepare_merge_moves_distinct_fields(self):
