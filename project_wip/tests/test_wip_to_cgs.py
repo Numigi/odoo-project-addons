@@ -2,6 +2,7 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 import pytest
+from freezegun import freeze_time
 from datetime import datetime, timedelta
 from odoo import fields
 from odoo.tests import common
@@ -189,12 +190,12 @@ class TestWIPTrasferToCGS(common.SavepointCase):
         transfer_move = self._find_wip_to_cgs_move()
         assert transfer_move.state == 'posted'
 
-    # unstable test. Need to add timezone management
-    #
-    # def test_if_no_specific_date__current_date_is_used(self):
-    #     self.project.action_wip_to_cgs()
-    #     transfer_move = self._find_wip_to_cgs_move()
-    #     assert transfer_move.date == fields.Date.to_string(datetime.now().date())
+    def test_if_no_specific_date__current_date_is_used(self):
+        now = datetime(2020, 4, 13)
+        with freeze_time(now):
+            self.project.action_wip_to_cgs()
+            transfer_move = self._find_wip_to_cgs_move()
+            assert transfer_move.date == fields.Date.to_string(now)
 
     def test_if_specific_date_given__specific_date_is_used(self):
         specific_date = datetime.now().date() + timedelta(30)
