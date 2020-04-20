@@ -5,7 +5,7 @@ This module adds a new group in project management.
 
 .. image:: static/description/group.png
 
-When you install the module, the group of project manager is not allowed anymore
+When you install the module, the group of project manager is not allowed
 to create project anymore.
 
 .. image:: static/description/warning.png
