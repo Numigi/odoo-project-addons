@@ -13,6 +13,7 @@ RUN gitoo install-all --conf_file /gitoo.yml --destination "${THIRD_PARTY_ADDONS
 
 USER odoo
 
+COPY project_analytic_group /mnt/extra-addons/project_analytic_group
 COPY project_chatter /mnt/extra-addons/project_chatter
 COPY project_default_task_stage /mnt/extra-addons/project_default_task_stage
 COPY project_form_with_dates /mnt/extra-addons/project_form_with_dates
@@ -44,6 +45,7 @@ COPY project_template_timesheet /mnt/extra-addons/project_template_timesheet
 COPY project_time_management /mnt/extra-addons/project_time_management
 COPY project_time_range /mnt/extra-addons/project_time_range
 COPY project_type /mnt/extra-addons/project_type
+COPY timesheet_task_project_no_change /mnt/extra-addons/timesheet_task_project_no_change
 
 COPY .docker_files/main /mnt/extra-addons/main
 COPY .docker_files/odoo.conf /etc/odoo
