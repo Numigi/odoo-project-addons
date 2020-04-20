@@ -11,6 +11,7 @@
     "category": "Other",
     "summary": "Install all addons required for testing.",
     "depends": [
+        "project_analytic_group",
         "project_chatter",
         "project_default_task_stage",
         "project_form_with_dates",

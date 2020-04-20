@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="project_form" model="ir.ui.view">
+        <field name="name">Project Form: add analytic group</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="hr_timesheet.project_invoice_form"/>
+        <field name="arch" type="xml">
+            <field name="analytic_account_id" position="after">
+                <field name="analytic_group_id"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="project_search" model="ir.ui.view">
+        <field name="model">project.project</field>
+        <field name="name">Project Search: Add analytic group</field>
+        <field name="inherit_id" ref="project.view_project_project_filter"/>
+        <field name="arch" type="xml">
+            <field name="partner_id" position="after">
+                <field name="analytic_group_id"/>
+            </field>
+            <filter name="Partner" position="after">
+                <filter name="group_by_analytic_group_id" string="Analytic Group" context="{'group_by': 'analytic_group_id'}"/>
+            </filter>
+        </field>
+    </record>
+
+</odoo>
