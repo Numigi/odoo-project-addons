@@ -14,6 +14,7 @@
         "project_analytic_group",
         "project_chatter",
         "project_default_task_stage",
+        "project_group_create",
         "project_form_with_dates",
         "project_hide_create_sale_order",
         "project_iteration",
@@ -43,5 +44,5 @@
         "project_type",
         "timesheet_task_project_no_change",
     ],
-    "installable": True,
+    'installable': True,
 }
