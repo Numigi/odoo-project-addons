@@ -41,6 +41,7 @@
         "project_time_management",
         "project_time_range",
         "project_type",
+        "timesheet_task_project_no_change",
     ],
     "installable": True,
 }
