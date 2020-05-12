@@ -2,7 +2,7 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 from odoo import api, fields, models, _
-from odoo.exceptions import ValidationError
+from odoo.exceptions import ValidationError, AccessError
 
 
 class ProjectType(models.Model):
@@ -109,6 +109,7 @@ class Project(models.Model):
     def _get_common_wip_to_cgs_move_line_vals(self, wip_line):
         """Get the account move line vals common to both the debit and the credit part."""
         return {
+            'company_id': self.company_id.id,
             'name': wip_line.name,
             'quantity': wip_line.quantity,
             'product_uom_id': wip_line.product_uom_id.id,
@@ -135,6 +136,7 @@ class Project(models.Model):
         cgs_vals['credit'] = wip_line.credit if wip_line.credit else 0
 
         return self.env['account.move'].create({
+            'company_id': self.company_id.id,
             'journal_id': self.project_type_id.cgs_journal_id.id,
             'no_analytic_lines': True,
             'line_ids': [
@@ -170,10 +172,17 @@ class Project(models.Model):
         :param datetime.date accounting_date: an optional accounting date to use.
             By default, the date of accounting is the current date.
         """
+        self.check_wip_to_cgs_access()
         for project in self:
-            project._action_wip_to_cgs_single(accounting_date)
+            project.sudo()._action_wip_to_cgs_single(accounting_date)
 
         return True
+
+    def check_wip_to_cgs_access(self):
+        if not self.env.user.has_group("project.group_project_manager"):
+            raise AccessError(_(
+                "Only project managers are allowed to transfer WIP entries to CGS."
+            ))
 
 
 class ProjectWipTransferWizard(models.TransientModel):
