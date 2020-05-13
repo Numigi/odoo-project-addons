@@ -40,11 +40,15 @@ class TaskMaterialLine(models.Model):
         string='Prepared Quantity',
         digits=dp.get_precision('Product Unit of Measure'),
         compute='_compute_prepared_qty',
+        store=True,
+        compute_sudo=True,
     )
     consumed_qty = fields.Float(
         string='Consumed Quantity',
         digits=dp.get_precision('Product Unit of Measure'),
         compute='_compute_consumed_qty',
+        store=True,
+        compute_sudo=True,
     )
     product_uom_id = fields.Many2one(related='product_id.uom_id', readonly=True)
     unit_cost = fields.Float(
@@ -58,6 +62,12 @@ class TaskMaterialLine(models.Model):
         'Stock Moves',
     )
 
+    @api.depends(
+        'move_ids.move_orig_ids',
+        'move_ids.move_orig_ids.state',
+        'move_ids.move_orig_ids.returned_move_ids',
+        'move_ids.move_orig_ids.returned_move_ids.state',
+    )
     def _compute_prepared_qty(self):
         for line in self:
             preparation_moves = line.mapped('move_ids.move_orig_ids')
@@ -68,6 +78,10 @@ class TaskMaterialLine(models.Model):
             returned_qty = sum(return_moves_done.mapped('product_uom_qty'))
             line.prepared_qty = prepared_qty - returned_qty
 
+    @api.depends(
+        'move_ids',
+        'move_ids.state',
+    )
     def _compute_consumed_qty(self):
         for line in self:
             consumed_moves = line.move_ids.filtered(
