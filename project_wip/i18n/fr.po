@@ -165,6 +165,15 @@ msgstr ""
 "l'écriture de TEC n'est pas partiellement lettrée."
 
 #. module: project_wip
+#: code:addons/project_wip/wip_to_cgs.py:0
+#, python-format
+msgid ""
+"Only project managers are allowed to transfer WIP entries to CGS."
+msgstr ""
+"Seuls les membres du groupe Projet / Gestionnaire peuvent transférer les écritures "
+"de TEC vers les CMV."
+
+#. module: project_wip
 #: code:addons/project_wip/wip_to_cgs.py:90
 #: code:addons/project_wip/wip_to_cgs.py:93
 #, python-format

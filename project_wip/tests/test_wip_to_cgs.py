@@ -6,7 +6,7 @@ from freezegun import freeze_time
 from datetime import datetime, timedelta
 from odoo import fields
 from odoo.tests import common
-from odoo.exceptions import ValidationError
+from odoo.exceptions import ValidationError, AccessError
 
 
 class TestWIPTrasferToCGS(common.SavepointCase):
@@ -14,6 +14,9 @@ class TestWIPTrasferToCGS(common.SavepointCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
+        cls.user = cls.env.ref("base.user_demo")
+        cls.user.groups_id = cls.env.ref("project.group_project_manager")
+
         cls.stock_journal = cls.env['account.journal'].create({
             'name': 'MRP / Production',
             'code': 'MRP',
@@ -104,7 +107,7 @@ class TestWIPTrasferToCGS(common.SavepointCase):
 
     def test_after_process__wip_line_reconciled(self):
         assert not self.wip_line.reconciled
-        self.project.action_wip_to_cgs()
+        self._action_wip_to_cgs()
         assert self.wip_line.reconciled
 
     def test_if_wip_line_partially_reconciled__raise_validation_error(self):
@@ -125,7 +128,7 @@ class TestWIPTrasferToCGS(common.SavepointCase):
         (self.wip_line | wip_line_2).auto_reconcile_lines()
 
         with pytest.raises(ValidationError):
-            self.project.action_wip_to_cgs()
+            self._action_wip_to_cgs()
 
     def _find_wip_to_cgs_move(self):
         return self.env['account.move'].search([
@@ -139,61 +142,64 @@ class TestWIPTrasferToCGS(common.SavepointCase):
             ('account_id', '=', self.cgs_account.id),
         ])
 
+    def _action_wip_to_cgs(self):
+        self.project.sudo(self.user).action_wip_to_cgs()
+
     def test_transfer_move_has_no_analytic_lines(self):
-        self.project.action_wip_to_cgs()
+        self._action_wip_to_cgs()
         transfer_move = self._find_wip_to_cgs_move()
         assert not transfer_move.mapped('line_ids.analytic_line_ids')
 
     def test_cgs_move_line_has_expected_amount_in_debit(self):
-        self.project.action_wip_to_cgs()
+        self._action_wip_to_cgs()
         cgs_move_line = self._find_cgs_move_line()
         assert cgs_move_line.debit == self.raw_material_amount
 
     def test_product_propagated_to_transfer_move_lines(self):
-        self.project.action_wip_to_cgs()
+        self._action_wip_to_cgs()
         transfer_move = self._find_wip_to_cgs_move()
         assert transfer_move.line_ids[0].product_id == self.product_raw
         assert transfer_move.line_ids[1].product_id == self.product_raw
 
     def test_product_uom_propagated_to_transfer_move_lines(self):
-        self.project.action_wip_to_cgs()
+        self._action_wip_to_cgs()
         transfer_move = self._find_wip_to_cgs_move()
         assert transfer_move.line_ids[0].product_uom_id == self.uom
         assert transfer_move.line_ids[1].product_uom_id == self.uom
 
     def test_quantity_propagated_to_transfer_move_lines(self):
-        self.project.action_wip_to_cgs()
+        self._action_wip_to_cgs()
         transfer_move = self._find_wip_to_cgs_move()
         assert transfer_move.line_ids[0].quantity == self.raw_material_quantity
         assert transfer_move.line_ids[1].quantity == self.raw_material_quantity
 
     def test_partner_propagated_to_transfer_move_lines(self):
-        self.project.action_wip_to_cgs()
+        self._action_wip_to_cgs()
         transfer_move = self._find_wip_to_cgs_move()
         assert transfer_move.line_ids[0].partner_id == self.partner
         assert transfer_move.line_ids[1].partner_id == self.partner
 
     def test_analytic_account_propagated_to_transfer_move_lines(self):
-        self.project.action_wip_to_cgs()
+        self._action_wip_to_cgs()
         transfer_move = self._find_wip_to_cgs_move()
         assert transfer_move.line_ids[0].analytic_account_id == self.analytic_account
         assert transfer_move.line_ids[1].analytic_account_id == self.analytic_account
 
     def test_move_line_name_propagated_to_transfer_move_lines(self):
-        self.project.action_wip_to_cgs()
+        self._action_wip_to_cgs()
         transfer_move = self._find_wip_to_cgs_move()
         assert transfer_move.line_ids[0].name == self.wip_line.name
         assert transfer_move.line_ids[1].name == self.wip_line.name
 
     def test_after_process__transfer_move_is_posted(self):
-        self.project.action_wip_to_cgs()
+        self._action_wip_to_cgs()
         transfer_move = self._find_wip_to_cgs_move()
         assert transfer_move.state == 'posted'
 
     def test_if_no_specific_date__current_date_is_used(self):
         now = datetime(2020, 4, 13)
         with freeze_time(now):
-            self.project.action_wip_to_cgs()
+            self._action_wip_to_cgs()
             transfer_move = self._find_wip_to_cgs_move()
             assert transfer_move.date == fields.Date.to_string(now)
 
@@ -204,21 +210,21 @@ class TestWIPTrasferToCGS(common.SavepointCase):
         assert transfer_move.date == fields.Date.to_string(specific_date)
 
     def test_if_action_ran_twice__only_one_transfer_move_generated(self):
-        self.project.action_wip_to_cgs()
-        self.project.action_wip_to_cgs()
+        self._action_wip_to_cgs()
+        self._action_wip_to_cgs()
         transfer_move = self._find_wip_to_cgs_move()
         assert len(transfer_move) == 1
 
     def test_if_2_wip_entries__2_transfer_moves_generated(self):
         raw_move_2 = self.raw_material_move.copy()
         raw_move_2.post()
-        self.project.action_wip_to_cgs()
+        self._action_wip_to_cgs()
         transfer_move = self._find_wip_to_cgs_move()
         assert len(transfer_move) == 2
 
     def test_if_wip_entry_not_posted__no_transfer_move_generated(self):
         self.raw_material_move.copy()
-        self.project.action_wip_to_cgs()
+        self._action_wip_to_cgs()
         transfer_move = self._find_wip_to_cgs_move()
         assert len(transfer_move) == 1
 
@@ -238,3 +244,8 @@ class TestWIPTrasferToCGS(common.SavepointCase):
         wizard.validate()
         transfer_move = self._find_wip_to_cgs_move()
         assert transfer_move.date == fields.Date.to_string(specific_date)
+
+    def test_if_not_project_manager__can_not_transfer_wip_to_cgs(self):
+        self.user.groups_id -= self.env.ref("project.group_project_manager")
+        with pytest.raises(AccessError):
+            self._action_wip_to_cgs()
