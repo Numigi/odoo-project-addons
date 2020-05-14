@@ -24,6 +24,7 @@
         'project_form_with_dates',
         'project_material',
         'project_material_direct',
+        'project_material_quantity_filters',
         'project_portal_parent_task',
         'project_stage',
         'project_stage_no_quick_create',
