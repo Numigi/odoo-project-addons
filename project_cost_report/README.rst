@@ -57,23 +57,43 @@ By clicking on an analytic line, the form view of the analytic line is opened.
 
 .. image:: static/description/analytic_line_form.png
 
+Cost Subdivisions (Categories)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+The complete list of subdivision (categories) found in the report is available under ``Project / Configuration``.
+
+.. image:: static/description/cost_category_list.png
+
 Products
 ~~~~~~~~
 This section contains analytic lines with stockable or consumable products.
 
-It is subdivided into product categories.
+It is subdivided into cost categories.
 
 .. image:: static/description/report_section_products.png
+
+These cost categories are defined on product categories.
+
+.. image:: static/description/product_category_form.png
+
+..
+
+	The subdivision `Products` is a default category. It includes all products not bound to a specific cost category.
 
 Time
 ~~~~
 This section contains analytic lines from timesheets.
 
-It is subdivided into types of task (see module project_task_type from the same repository).
-
-The first subdivision `Labour` contains every timesheet line from tasks with no type.
+It is subdivided into cost categories.
 
 .. image:: static/description/report_section_time.png
+
+These categories are defined on task types (see module project_task_type from the same repository).
+
+.. image:: static/description/task_type_form.png
+
+..
+
+	The subdivision `Labour` is a default category. It contains all timesheet lines not bound to a specific category.
 
 Employee Column
 ***************

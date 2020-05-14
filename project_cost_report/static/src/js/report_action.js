@@ -196,11 +196,15 @@ var ReportAction = Widget.extend(ControlPanelMixin, {
      * Unfold all report categories.
      */
     async unfold(){
-        this.reportContext.unfolded_categories = await this._rpc({
-            model: "project.cost.report",
-            method: "get_foldable_categories",
-            args: [this.projectId],
+        const allCostGroups = await this._rpc({
+            model: "project.cost.category",
+            method: "search",
+            args: [[]],
         });
+        const sectionNames = Object(this.reportContext.unfolded_categories).keys()
+        sectionNames.foreach(sectionName => {
+            this.reportContext.unfolded_categories[sectionName] = [...allCostGroups]
+        })
         this.unfolded = true;
         this.refresh();
     },

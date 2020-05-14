@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo noupdate="1">
+
+    <record id="cost_category_product" model="project.cost.category">
+        <field name="name">Products</field>
+    </record>
+
+    <record id="cost_category_labour" model="project.cost.category">
+        <field name="name">Labour</field>
+    </record>
+
+    <record id="cost_category_outsourcing" model="project.cost.category">
+        <field name="name">Outsourcing</field>
+    </record>
+
+</odoo>
