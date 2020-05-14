@@ -13,28 +13,22 @@ def is_shop_supply_line(analytic_line):
 
 class ProjectCostReportWithShopSupply(models.TransientModel):
 
-    _inherit = 'project.cost.report'
+    _inherit = "project.cost.report"
 
     def get_rendering_variables(self, project, report_context):
         """Add the variables related to the OUTSOURCING section."""
         res = super().get_rendering_variables(project, report_context)
         shop_supply_total = self._get_shop_supply_total(project)
-        res.update({
-            'shop_supply_categories': self._get_shop_supply_categories(project, report_context),
-            'shop_supply_total': shop_supply_total,
-            'total_cost': float_round(res['total_cost'] + shop_supply_total, 2),
-            'is_shop_supply_line': is_shop_supply_line,
-        })
-        return res
-
-    @api.model
-    def get_foldable_categories(self, project_id):
-        """Add shop supply categories to foldable categories.
-
-        The SHOP SUPPLY section has only one category (the empty category).
-        """
-        res = super().get_foldable_categories(project_id)
-        res['shop_supply'] = [False]
+        res.update(
+            {
+                "shop_supply_categories": self._get_shop_supply_categories(
+                    project, report_context
+                ),
+                "shop_supply_total": shop_supply_total,
+                "total_cost": float_round(res["total_cost"] + shop_supply_total, 2),
+                "is_shop_supply_line": is_shop_supply_line,
+            }
+        )
         return res
 
     def _get_shop_supply_categories(self, project, report_context):
@@ -42,23 +36,22 @@ class ProjectCostReportWithShopSupply(models.TransientModel):
 
         Outsourcing has only one category (False).
         """
-        unfolded_categories = report_context.get('unfolded_categories') or {}
-        unfolded_shop_supply_categories = unfolded_categories.get('shop_supply') or []
+        unfolded_categories = report_context.get("unfolded_categories") or {}
+        unfolded_shop_supply_categories = unfolded_categories.get("shop_supply") or []
         result = []
         lines = self._get_shop_supply_analytic_lines(project)
+        supply_category = self.env.ref(
+            "project_cost_report_supply.cost_category_supply"
+        )
         if lines:
             empty_category = CostReportCategory(
-                id_=False,
-                name=self._get_empty_shop_supply_category_label(),
+                id_=supply_category.id,
+                name=supply_category.name,
                 lines=lines,
-                folded=False not in unfolded_shop_supply_categories
+                folded=supply_category.id not in unfolded_shop_supply_categories,
             )
             result.append(empty_category)
         return result
-
-    def _get_empty_shop_supply_category_label(self):
-        """Get the label to display on the unique shop supply category."""
-        return _('Shop Supply')
 
     def _get_shop_supply_total(self, project):
         lines = self._get_shop_supply_analytic_lines(project)
