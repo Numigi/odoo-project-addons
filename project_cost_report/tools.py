@@ -5,7 +5,9 @@ from odoo import models
 from typing import Optional
 
 
-def adjust_analytic_line_amount_sign(line: models.Model, amount: Optional[float]) -> float:
+def adjust_analytic_line_amount_sign(
+    line: models.Model, amount: Optional[float]
+) -> float:
     """Adjust the amount sign of an analytic line for the cost report.
 
     Analytic lines generated from outgoing stock moves have a negative
@@ -23,5 +25,5 @@ def adjust_analytic_line_amount_sign(line: models.Model, amount: Optional[float]
     :param amount: the amount to display in the report
     :return: the adjusted amount.
     """
-    isBoundToStockMove = bool(line.move_id.move_id.stock_move_id)
-    return -(amount or 0) if isBoundToStockMove else amount
+    is_bound_to_stock_move = bool(line.move_id.move_id.stock_move_id)
+    return -(amount or 0) if is_bound_to_stock_move else amount
