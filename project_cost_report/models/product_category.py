@@ -11,3 +11,7 @@ class ProductCategory(models.Model):
     project_cost_category_id = fields.Many2one(
         "project.cost.category", "Cost Report Category", ondelete="restrict"
     )
+
+    @api.onchange("parent_id")
+    def _propagate_cost_category_from_parent(self):
+        self.project_cost_category_id = self.parent_id.project_cost_category_id
