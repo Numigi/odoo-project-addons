@@ -16,11 +16,9 @@ jobs:
           name: Run Test
           command: docker-compose run --rm odoo run_pytest.sh
 
-      - run:
+       - run:
           name: Codacy Coverage
-          command: |
-            pip install codacy-coverage==1.3.10
-            python-codacy-coverage -r .log/coverage.xml
+          command: bash <(curl -Ls https://coverage.codacy.com/get.sh) report -l python -r .log/coverage.xml
 
       - store_test_results:
           path: .log
