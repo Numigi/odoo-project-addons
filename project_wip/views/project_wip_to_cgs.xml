@@ -49,7 +49,7 @@
                             string="Transfer WIP to CGS"
                             class="oe_highlight"
                             type="action"
-                            groups="account.group_account_invoice"
+                            groups="project_wip.group_wip_to_cgs"
                             />
                 </header>
             </sheet>
