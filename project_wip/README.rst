@@ -2,6 +2,8 @@ Project Work In Progress
 ========================
 This module enables to manage `Work In Progress` (WIP) accounting.
 
+.. contents:: Table of Contents
+
 Work In Progress
 ----------------
 `Work In Progress` is an account of the general ledger.
@@ -134,6 +136,15 @@ I see 3 analytic entries. These are the analytic entries of my initial WIP journ
 .. image:: static/description/project_analytic_entries.png
 
 The transfers from WIP to CGS did not create extra analytic entries.
+
+Transfer WIP to CGS Group
+-------------------------
+Since the version 1.1.0 of the module, the button to open the wizard on a project is only visible to
+a new group named 'Transfer WIP to CGS'.
+
+.. image:: static/description/wip_to_cgs_group.png
+
+Users do not need to be members of Project / Manager to transfer the journal entries.
 
 Contributors
 ------------

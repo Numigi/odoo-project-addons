@@ -168,9 +168,9 @@ msgstr ""
 #: code:addons/project_wip/wip_to_cgs.py:0
 #, python-format
 msgid ""
-"Only project managers are allowed to transfer WIP entries to CGS."
+"Only members of the group 'Transfert WIP to CGS' are allowed to transfer WIP entries to CGS."
 msgstr ""
-"Seuls les membres du groupe Projet / Gestionnaire peuvent transférer les écritures "
+"Seuls les membres du groupe 'Transfert des TEC vers CMV' peuvent transférer les écritures "
 "de TEC vers les CMV."
 
 #. module: project_wip
