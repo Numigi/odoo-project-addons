@@ -7,4 +7,4 @@ from openupgradelib import openupgrade
 @openupgrade.migrate()
 def migrate(env, version):
     project_managers = env.ref("project.group_project_manager").users
-    project_managers.write({"groups_id": env.ref("project_wip.group_wip_to_cgs").id})
+    project_managers.write({"groups_id": [(4, env.ref("project_wip.group_wip_to_cgs").id)]})
