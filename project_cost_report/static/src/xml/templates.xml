@@ -13,12 +13,4 @@
         <button type="button" class="btn btn-primary btn-sm project_cost_report__control_panel_button">FOLD</button>
     </t>
 
-    <t t-name="projectCostReport.showSummaryButton">
-        <button type="button" class="btn btn-primary btn-sm project_cost_report__control_panel_button">SHOW SUMMARY</button>
-    </t>
-
-    <t t-name="projectCostReport.hideSummaryButton">
-        <button type="button" class="btn btn-primary btn-sm project_cost_report__control_panel_button">HIDE SUMMARY</button>
-    </t>
-
 </templates>
