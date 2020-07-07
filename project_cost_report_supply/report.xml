@@ -14,7 +14,6 @@
             <td class="o_project_cost_report__shop_supply_total text-right" t-att-data-id="category.id" t-att-data-name="category.name">
                 <span class="o_project_cost_report__link" t-raw="category.total" t-options='{"widget": "monetary", "display_currency": currency}'/>
             </td>
-            <t t-call="project_cost_report.cost_report_body__category_summary"/>
         </tr>
         <t t-if="not category.folded">
             <t t-foreach="category.lines" t-as="line">
