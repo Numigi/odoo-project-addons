@@ -9,122 +9,142 @@ from odoo.exceptions import ValidationError
 
 
 class WIPJournalEntriesCase(common.SavepointCase):
-
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.company = cls.env['res.company'].create({
-            'name': 'Test Company',
-        })
-        cls.manager = cls.env['res.users'].create({
-            'name': 'Manager',
-            'login': 'manager',
-            'email': 'manager@test.com',
-            'groups_id': [
-                (4, cls.env.ref('project.group_project_manager').id),
-            ],
-            'company_id': cls.company.id,
-            'company_ids': [(4, cls.company.id)],
-        })
+        cls.company = cls.env["res.company"].create({"name": "Test Company"})
+        cls.manager = cls.env["res.users"].create(
+            {
+                "name": "Manager",
+                "login": "manager",
+                "email": "manager@test.com",
+                "groups_id": [(4, cls.env.ref("project.group_project_manager").id)],
+                "company_id": cls.company.id,
+                "company_ids": [(4, cls.company.id)],
+            }
+        )
 
-        cls.timesheet_user = cls.env['res.users'].create({
-            'name': 'Timesheet User',
-            'login': 'timesheet_user@example.com',
-            'email': 'timesheet_user@example.com',
-            'groups_id': [
-                (4, cls.env.ref('hr_timesheet.group_hr_timesheet_user').id),
-            ],
-            'company_id': cls.company.id,
-            'company_ids': [(4, cls.company.id)],
-        })
+        cls.timesheet_user = cls.env["res.users"].create(
+            {
+                "name": "Timesheet User",
+                "login": "timesheet_user@example.com",
+                "email": "timesheet_user@example.com",
+                "groups_id": [
+                    (4, cls.env.ref("hr_timesheet.group_hr_timesheet_user").id)
+                ],
+                "company_id": cls.company.id,
+                "company_ids": [(4, cls.company.id)],
+            }
+        )
 
-        cls.employee = cls.env['hr.employee'].create({
-            'name': 'Timesheet User',
-            'user_id': cls.timesheet_user.id,
-        })
+        cls.employee = cls.env["hr.employee"].create(
+            {"name": "Timesheet User", "user_id": cls.timesheet_user.id}
+        )
 
-        cls.salary_journal = cls.env['account.journal'].create({
-            'name': 'Salary To WIP',
-            'code': 'SALARY',
-            'type': 'general',
-            'company_id': cls.company.id,
-        })
+        cls.salary_journal = cls.env["account.journal"].create(
+            {
+                "name": "Salary To WIP",
+                "code": "SALARY",
+                "type": "general",
+                "company_id": cls.company.id,
+            }
+        )
 
-        cls.cgs_journal = cls.env['account.journal'].create({
-            'name': 'Work in Progress',
-            'code': 'WIP',
-            'update_posted': True,
-            'type': 'general',
-            'company_id': cls.company.id,
-        })
+        cls.cgs_journal = cls.env["account.journal"].create(
+            {
+                "name": "Work in Progress",
+                "code": "WIP",
+                "update_posted": True,
+                "type": "general",
+                "company_id": cls.company.id,
+            }
+        )
 
-        cls.wip_account = cls.env['account.account'].create({
-            'name': 'Work In Progress',
-            'code': '140101',
-            'user_type_id': cls.env.ref('account.data_account_type_non_current_assets').id,
-            'reconcile': True,
-            'company_id': cls.company.id,
-        })
+        cls.wip_account = cls.env["account.account"].create(
+            {
+                "name": "Work In Progress",
+                "code": "140101",
+                "user_type_id": cls.env.ref(
+                    "account.data_account_type_non_current_assets"
+                ).id,
+                "reconcile": True,
+                "company_id": cls.company.id,
+            }
+        )
 
-        cls.cgs_account = cls.env['account.account'].create({
-            'name': 'Cost of Goods Sold',
-            'code': '510101',
-            'user_type_id': cls.env.ref('account.data_account_type_expenses').id,
-            'company_id': cls.company.id,
-        })
+        cls.cgs_account = cls.env["account.account"].create(
+            {
+                "name": "Cost of Goods Sold",
+                "code": "510101",
+                "user_type_id": cls.env.ref("account.data_account_type_expenses").id,
+                "company_id": cls.company.id,
+            }
+        )
 
-        cls.salary_account = cls.env['account.account'].create({
-            'name': 'Salary',
-            'code': '510201',
-            'user_type_id': cls.env.ref('account.data_account_type_expenses').id,
-            'company_id': cls.company.id,
-        })
+        cls.salary_account = cls.env["account.account"].create(
+            {
+                "name": "Salary",
+                "code": "510201",
+                "user_type_id": cls.env.ref("account.data_account_type_expenses").id,
+                "company_id": cls.company.id,
+            }
+        )
 
-        cls.env = cls.env(user=cls.manager, context={'force_company': cls.company.id})
+        cls.env = cls.env(user=cls.manager, context={"force_company": cls.company.id})
 
-        cls.env['project.project'].create({
-            'name': 'Job 123',
-            'company_id': cls.company.id,
-        })
+        cls.env["project.project"].create(
+            {"name": "Job 123", "company_id": cls.company.id}
+        )
 
-        cls.project_type = cls.env['project.type'].create({
-            'name': 'Trailer Refurb',
-            'wip_account_id': cls.wip_account.id,
-            'salary_journal_id': cls.salary_journal.id,
-            'salary_account_id': cls.salary_account.id,
-            'cgs_account_id': cls.cgs_account.id,
-            'cgs_journal_id': cls.cgs_journal.id,
-        })
+        cls.project_type = cls.env["project.type"].create(
+            {
+                "name": "Trailer Refurb",
+                "wip_account_id": cls.wip_account.id,
+                "salary_journal_id": cls.salary_journal.id,
+                "salary_account_id": cls.salary_account.id,
+                "cgs_account_id": cls.cgs_account.id,
+                "cgs_journal_id": cls.cgs_journal.id,
+            }
+        )
 
-        cls.project = cls.env['project.project'].create({
-            'name': 'Job 123',
-            'project_type_id': cls.project_type.id,
-            'company_id': cls.company.id,
-        })
+        cls.project = cls.env["project.project"].create(
+            {
+                "name": "Job 123",
+                "project_type_id": cls.project_type.id,
+                "company_id": cls.company.id,
+            }
+        )
 
-        cls.task = cls.env['project.task'].create({
-            'name': 'Task 450',
-            'project_id': cls.project.id,
-            'company_id': cls.company.id,
-        })
+        cls.task = cls.env["project.task"].create(
+            {
+                "name": "Task 450",
+                "project_id": cls.project.id,
+                "company_id": cls.company.id,
+            }
+        )
 
     @classmethod
     def _create_timesheet(cls, description="/", quantity=1, amount=50, date_=None):
         cls.employee.timesheet_cost = amount
-        line = cls.env['account.analytic.line'].sudo(cls.timesheet_user).create({
-            'company_id': cls.company.id,
-            'project_id': cls.project.id,
-            'task_id': cls.task.id,
-            'employee_id': cls.employee.id,
-            'name': description,
-            'date': date_ or datetime.now().date(),
-            'unit_amount': quantity,
-        })
+        line = (
+            cls.env["account.analytic.line"]
+            .sudo(cls.timesheet_user)
+            .create(
+                {
+                    "company_id": cls.company.id,
+                    "project_id": cls.project.id,
+                    "task_id": cls.task.id,
+                    "employee_id": cls.employee.id,
+                    "name": description,
+                    "date": date_ or datetime.now().date(),
+                    "unit_amount": quantity,
+                }
+            )
+        )
         return line.sudo()
 
 
 class TestWIPJournalEntries(WIPJournalEntriesCase):
-
     def test_if_salary_account_filled__salary_journal_must_be_filled(self):
         with pytest.raises(ValidationError):
             self.project_type.salary_journal_id = False
@@ -139,24 +159,28 @@ class TestWIPJournalEntries(WIPJournalEntriesCase):
 
     def test_on_create_timesheet__account_move_is_posted(self):
         timesheet_line = self._create_timesheet()
-        assert timesheet_line.salary_account_move_id.state == 'posted'
+        assert timesheet_line.salary_account_move_id.state == "posted"
 
     def test_after_timesheet_write__account_move_is_posted(self):
         timesheet_line = self._create_timesheet()
         timesheet_line.amount = -100
-        assert timesheet_line.salary_account_move_id.state == 'posted'
+        assert timesheet_line.salary_account_move_id.state == "posted"
 
     def test_account_move_has_no_analytic_lines(self):
         timesheet_line = self._create_timesheet()
-        assert not timesheet_line.salary_account_move_id.mapped('line_ids.analytic_line_ids')
+        assert not timesheet_line.salary_account_move_id.mapped(
+            "line_ids.analytic_line_ids"
+        )
 
     def _get_wip_move_line(self, timesheet_line):
         return timesheet_line.salary_account_move_id.line_ids.filtered(
-            lambda l: l.account_id == self.wip_account)
+            lambda l: l.account_id == self.wip_account
+        )
 
     def _get_salary_move_line(self, timesheet_line):
         return timesheet_line.salary_account_move_id.line_ids.filtered(
-            lambda l: l.account_id == self.salary_account)
+            lambda l: l.account_id == self.salary_account
+        )
 
     def test_wip_move_line_analytic_account_is_project(self):
         timesheet_line = self._create_timesheet()
@@ -236,14 +260,13 @@ class TestWIPJournalEntries(WIPJournalEntriesCase):
 
     def test_if_new_project_requires_no_timesheet__account_move_reversed(self):
         timesheet_line = self._create_timesheet()
-        new_project = self.project.copy({'project_type_id': False})
-        new_task = self.task.copy({'project_id': new_project.id})
+        new_project = self.project.copy({"project_type_id": False})
+        new_task = self.task.copy({"project_id": new_project.id})
 
         wip_line = self._get_wip_move_line(timesheet_line)
-        timesheet_line.sudo(self.timesheet_user).write({
-            'project_id': new_project.id,
-            'task_id': new_task.id,
-        })
+        timesheet_line.sudo(self.timesheet_user).write(
+            {"project_id": new_project.id, "task_id": new_task.id}
+        )
         assert wip_line.reconciled
 
     def test_timesheet_amount_can_be_changed_twice(self):
@@ -271,12 +294,15 @@ class TestWIPJournalEntries(WIPJournalEntriesCase):
     def test_after_change_project_on_timesheet__move_ref_contains_project_name(self):
         timesheet_line = self._create_timesheet()
         new_project = self.project.copy()
-        new_task = self.task.copy({'project_id': new_project.id})
-        timesheet_line.sudo(self.timesheet_user).write({
-            'project_id': new_project.id,
-            'task_id': new_task.id,
-        })
+        new_task = self.task.copy({"project_id": new_project.id})
+        timesheet_line.sudo(self.timesheet_user).write(
+            {"project_id": new_project.id, "task_id": new_task.id}
+        )
         assert new_project.name in timesheet_line.salary_account_move_id.ref
+
+    def test_if_zero_hour__no_entry_created(self):
+        timesheet_line = self._create_timesheet(quantity=0)
+        assert not timesheet_line.salary_account_move_id
 
 
 class TestTimesheetEntryTransferedToWip(WIPJournalEntriesCase):
@@ -297,13 +323,12 @@ class TestTimesheetEntryTransferedToWip(WIPJournalEntriesCase):
             self.timesheet_line.sudo(self.timesheet_user).unit_amount = 10
 
     def test_project_with_no_type_can_not_be_set(self):
-        new_project = self.project.copy({'project_type_id': False})
-        new_task = self.task.copy({'project_id': new_project.id})
+        new_project = self.project.copy({"project_type_id": False})
+        new_task = self.task.copy({"project_id": new_project.id})
         with pytest.raises(ValidationError):
-            self.timesheet_line.sudo(self.timesheet_user).write({
-                'project_id': new_project.id,
-                'task_id': new_task.id,
-            })
+            self.timesheet_line.sudo(self.timesheet_user).write(
+                {"project_id": new_project.id, "task_id": new_task.id}
+            )
 
     def test_timesheet_can_not_be_deleted(self):
         with pytest.raises(ValidationError):
