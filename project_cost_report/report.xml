@@ -36,35 +36,6 @@
         </tr>
     </template>
 
-    <template id="cost_report_body__category_summary">
-        <t t-if="show_summary">
-            <td class="text-right">
-                <span t-raw="category.target_margin"/>%
-            </td>
-            <td class="text-right">
-                <span t-raw="category.target_sale_price" t-options='{"widget": "monetary", "display_currency": currency}'/>
-            </td>
-            <td class="text-right">
-                <span t-raw="category.target_profit" t-options='{"widget": "monetary", "display_currency": currency}'/>
-            </td>
-        </t>
-    </template>
-
-    <template id="cost_report_body__time_summary">
-        <t t-if="show_summary">
-            <td class="text-right">
-                <span t-raw="category.target_hourly_rate"/>
-                <span t-raw="currency.symbol"/>/H
-            </td>
-            <td class="text-right">
-                <span t-raw="category.target_sale_price" t-options='{"widget": "monetary", "display_currency": currency}'/>
-            </td>
-            <td class="text-right">
-                <span t-raw="category.target_profit" t-options='{"widget": "monetary", "display_currency": currency}'/>
-            </td>
-        </t>
-    </template>
-
     <!-- PRODUCTS -->
     <template id="cost_report_body__product_category">
         <tr class="o_project_cost_report__level_2">
@@ -78,7 +49,6 @@
             <td class="o_project_cost_report__product_total text-right" t-att-data-id="category.id" t-att-data-name="category.name">
                 <span class="o_project_cost_report__link" t-raw="category.total" t-options='{"widget": "monetary", "display_currency": currency}'/>
             </td>
-            <t t-call="project_cost_report.cost_report_body__category_summary"/>
         </tr>
         <t t-if="not category.folded">
             <t t-foreach="category.lines" t-as="line">
@@ -115,7 +85,6 @@
             <td colspan="2" class="o_project_cost_report__time_total text-right" t-att-data-id="category.id" t-att-data-name="category.name">
                 <span class="o_project_cost_report__link" t-raw="category.total" t-options='{"widget": "monetary", "display_currency": currency}'/>
             </td>
-            <t t-call="project_cost_report.cost_report_body__time_summary"/>
         </tr>
         <t t-if="not category.folded">
             <t t-foreach="category.lines" t-as="line">
@@ -152,7 +121,6 @@
             <td class="o_project_cost_report__outsourcing_total text-right" t-att-data-id="category.id" t-att-data-name="category.name">
                 <span class="o_project_cost_report__link" t-raw="category.total" t-options='{"widget": "monetary", "display_currency": currency}'/>
             </td>
-            <t t-call="project_cost_report.cost_report_body__category_summary"/>
         </tr>
         <t t-if="not category.folded">
             <t t-foreach="category.lines" t-as="line">
@@ -177,22 +145,11 @@
     <template id="cost_report_body__cost_total">
         <tr class="o_project_cost_report__level_1 o_project_cost_report__total_cost">
             <td colspan="7"></td>
-            <td class="o_project_cost_report__total">
+            <td>
                 <span>Total</span>
                 <span style="float: right"
                     t-raw="total_cost" t-options='{"widget": "monetary", "display_currency": currency}'/>
             </td>
-            <t t-if="show_summary">
-                <td class="o_project_cost_report__total text-right">
-                    <span t-raw="total_target_margin"/>%
-                </td>
-                <td class="o_project_cost_report__total text-right">
-                    <span t-raw="total_target_sale_price" t-options='{"widget": "monetary", "display_currency": currency}'/>
-                </td>
-                <td class="o_project_cost_report__total text-right">
-                    <span t-raw="total_profit" t-options='{"widget": "monetary", "display_currency": currency}'/>
-                </td>
-            </t>
         </tr>
     </template>
 
@@ -219,11 +176,6 @@
                 <tr class="o_project_cost_report__level_1">
                     <th colspan="7">Item</th>
                     <th class="text-right">Cost</th>
-                    <t t-if="show_summary">
-                        <th class="text-right">Target</th>
-                        <th class="text-right">Suggested</th>
-                        <th class="text-right">Profit</th>
-                    </t>
                 </tr>
                 <tr class="o_project_cost_report__level_3">
                     <th class="o_project_cost_report__padding_column"></th>

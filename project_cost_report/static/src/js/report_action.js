@@ -64,7 +64,6 @@ var ReportAction = Widget.extend(ControlPanelMixin, {
         this.reportContext = {
             active_id: this.projectId,
             unfolded_categories: {},
-            show_summary: true,
         };
         this.getCategoryNames().forEach((c) => this.reportContext.unfolded_categories[c] = []);
         this.unfolded = false;
@@ -81,29 +80,34 @@ var ReportAction = Widget.extend(ControlPanelMixin, {
         });
         this.$el.html(html);
     },
+    /**
+     * Render the PRINT button.
+     *
+     * returns {jQuery} the button node
+     */
     renderPrintButton(){
         var button = $(QWeb.render("projectCostReport.printButton", {}));
         button.bind("click", () => this.downloadPDF());
         return button;
     },
+    /**
+     * Render the FOLD button.
+     *
+     * returns {jQuery} the button node
+     */
     renderFoldButton(){
         var button = $(QWeb.render("projectCostReport.foldButton", {}));
         button.bind("click", () => this.fold());
         return button;
     },
+    /**
+     * Render the UNFOLD button.
+     *
+     * returns {jQuery} the button node
+     */
     renderUnfoldButton(){
         var button = $(QWeb.render("projectCostReport.unfoldButton", {}));
         button.bind("click", () => this.unfold());
-        return button;
-    },
-    renderShowSummaryButton(){
-        var button = $(QWeb.render("projectCostReport.showSummaryButton", {}));
-        button.bind("click", () => this.showSummary());
-        return button;
-    },
-    renderHideSummaryButton(){
-        var button = $(QWeb.render("projectCostReport.hideSummaryButton", {}));
-        button.bind("click", () => this.hideSummary());
         return button;
     },
     /**
@@ -116,14 +120,7 @@ var ReportAction = Widget.extend(ControlPanelMixin, {
             this.printButton = this.renderPrintButton();
             this.foldButton = this.renderFoldButton();
             this.unfoldButton = this.renderUnfoldButton();
-            this.showSummaryButton = this.renderShowSummaryButton();
-            this.hideSummaryButton = this.renderHideSummaryButton();
-            this.controlPanelButtons = [
-                this.printButton,
-                this.foldButton,
-                this.showSummaryButton,
-                this.hideSummaryButton,
-            ];
+            this.controlPanelButtons = [this.printButton, this.foldButton, this.unfoldButton];
         }
         return this.controlPanelButtons;
     },
@@ -136,6 +133,13 @@ var ReportAction = Widget.extend(ControlPanelMixin, {
             cp_content: {$buttons: this.getControlPanelButtons()},
         });
     },
+    /**
+     * Hide/show the FOLD/UNFOLD buttons given the folding state.
+     *
+     * The folding state is managed with the attribute `unfolded`.
+     * This method must be called after setting the attribute
+     * in order to update the DOM nodes.
+     */
     updateFoldButtonVisibility(){
         if(this.unfolded){
             this.foldButton.show();
@@ -146,18 +150,6 @@ var ReportAction = Widget.extend(ControlPanelMixin, {
             this.foldButton.hide();
             this.unfoldButton.show();
             this.unfoldButton.css("display", "inline-block");
-        }
-    },
-    updateSummaryButtonVisibility(){
-        if(this.reportContext.show_summary){
-            this.showSummaryButton.hide();
-            this.hideSummaryButton.show();
-            this.hideSummaryButton.css("display", "inline-block");
-        }
-        else {
-            this.showSummaryButton.show();
-            this.showSummaryButton.css("display", "inline-block");
-            this.hideSummaryButton.hide();
         }
     },
     /**
@@ -171,7 +163,6 @@ var ReportAction = Widget.extend(ControlPanelMixin, {
         this.updateControlPanel();
         this.updateHtml();
         this.updateFoldButtonVisibility();
-        this.updateSummaryButtonVisibility();
         return result;
     },
     /**
@@ -180,7 +171,6 @@ var ReportAction = Widget.extend(ControlPanelMixin, {
     async refresh(){
         this.updateHtml();
         this.updateFoldButtonVisibility();
-        this.updateSummaryButtonVisibility();
     },
     /**
      * Download the PDF version of the report.
@@ -239,14 +229,6 @@ var ReportAction = Widget.extend(ControlPanelMixin, {
      */
     unfoldCategory(categoryId, sectionName){
         this.reportContext.unfolded_categories[sectionName].push(categoryId);
-        this.refresh();
-    },
-    showSummary(){
-        this.reportContext.show_summary = true;
-        this.refresh();
-    },
-    hideSummary(){
-        this.reportContext.show_summary = false;
         this.refresh();
     },
     /**

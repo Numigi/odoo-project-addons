@@ -7,10 +7,7 @@
         <field name="inherit_id" ref="project_task_type.view_task_type_form"/>
         <field name="arch" type="xml">
             <field name="description" position="after">
-                <field name="project_cost_category_id"
-                    domain="[('section', '=', 'time')]"
-                    context="{'default_section': 'time'}"
-                    />
+                <field name="project_cost_category_id"/>
             </field>
         </field>
     </record>

@@ -24,9 +24,6 @@
                     <group>
                         <group name="group_1">
                             <field name="sequence"/>
-                            <field name="section"/>
-                            <field name="target_margin" attrs="{'invisible': [('section', '=', 'time')]}"/>
-                            <field name="target_hourly_rate" attrs="{'invisible': [('section', '!=', 'time')]}"/>
                         </group>
                         <group name="group_2">
                         </group>
@@ -42,10 +39,9 @@
         <field name="name">Project Cost Category List</field>
         <field name="model">project.cost.category</field>
         <field name="arch" type="xml">
-            <tree string="Project Cost Categories">
+            <tree string="Project Cost Categories" editable="top">
                 <field name="sequence" widget="handle"/>
                 <field name="name"/>
-                <field name="section"/>
                 <field name="active"/>
             </tree>
         </field>
@@ -57,7 +53,6 @@
         <field name="arch" type="xml">
             <search string="Search Project Cost Categories">
                 <field name="name"/>
-                <field name="section"/>
                 <separator/>
                 <filter string="Archived" name="inactive" domain="[('active', '=', False)]"/>
            </search>

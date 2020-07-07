@@ -9,10 +9,7 @@
             <group name="first" position="after">
                 <group>
                     <group>
-                        <field name="project_cost_category_id" required="1"
-                            domain="[('section', '=', 'products')]"
-                            context="{'default_section': 'products'}"
-                            />
+                        <field name="project_cost_category_id" required="1"/>
                     </group>
                 </group>
             </group>
