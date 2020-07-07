@@ -4,10 +4,21 @@
 import babel.dates
 from datetime import datetime
 from odoo import api, fields, models, _
-from odoo.tools.float_utils import float_round, float_compare
 from odoo.exceptions import ValidationError
+from odoo.tools.float_utils import float_round
 from typing import Callable, Mapping
-from .tools import adjust_analytic_line_amount_sign
+from .util import (
+    CostReportCategory,
+    TimeCategory,
+    adjust_analytic_line_amount_sign,
+    get_purchase_line_waiting_qty,
+    get_waiting_for_invoice_total,
+    group_analytic_lines,
+    is_outsourcing_line,
+    is_product_line,
+    is_timesheet_line,
+    purchase_line_is_waiting_invoice,
+)
 
 
 class ProjectCostReport(models.TransientModel):
@@ -66,13 +77,60 @@ class ProjectCostReport(models.TransientModel):
         :param report_context: the rendering context
         :rtype: dict
         """
-        lang = self._context.get("lang") or "en_US"
-        now = fields.Datetime.context_timestamp(self, datetime.now())
+        print_date = self._get_print_date()
+
+        product_categories = self._get_product_categories(project, report_context)
+        product_total = self._get_product_total(project)
+        product_sale_price = self._get_total_section_sale_price(product_categories)
+        time_categories = self._get_time_categories(project, report_context)
+        time_total = self._get_time_total(project)
+        time_total_hours = self._get_time_total_hours(project)
+        time_sale_price = self._get_total_section_sale_price(time_categories)
+        outsourcing_categories = self._get_outsourcing_categories(
+            project, report_context
+        )
+        outsourcing_total = self._get_outsourcing_total(project)
+        outsourcing_sale_price = self._get_total_section_sale_price(
+            outsourcing_categories
+        )
+
+        total_cost = product_total + time_total + outsourcing_total
+        total_sale_price = product_sale_price + time_sale_price + outsourcing_sale_price
+        total_profit = total_sale_price - total_cost
+        total_margin = (
+            (total_profit / total_sale_price) * 100 if total_sale_price else 0
+        )
+
+        waiting_purchase_orders = self._get_waiting_purchase_orders(project)
+        waiting_purchase_orders_total = sum(
+            get_waiting_for_invoice_total(o, project) for o in waiting_purchase_orders
+        )
+
         return {
-            "project": project,
-            "currency": project.company_id.currency_id,
-            "print_date": babel.dates.format_date(now, "long", locale=lang),
             "adjust_analytic_line_amount_sign": adjust_analytic_line_amount_sign,
+            "currency": project.company_id.currency_id,
+            "is_outsourcing_line": is_outsourcing_line,
+            "is_product_line": is_product_line,
+            "is_timesheet_line": is_timesheet_line,
+            "outsourcing_categories": outsourcing_categories,
+            "outsourcing_total": outsourcing_total,
+            "print_date": print_date,
+            "product_categories": product_categories,
+            "product_total": product_total,
+            "project": project,
+            "show_summary": report_context.get("show_summary", True),
+            "time_categories": time_categories,
+            "time_total": time_total,
+            "time_total_hours": time_total_hours,
+            "total_cost": float_round(total_cost, 2),
+            "total_profit": float_round(total_profit, 2),
+            "total_target_margin": float_round(total_margin, 2),
+            "total_target_sale_price": float_round(total_sale_price, 2),
+            "waiting_purchase_orders": waiting_purchase_orders,
+            "waiting_purchase_order_total": float_round(
+                waiting_purchase_orders_total, 2
+            ),
+            "get_waiting_for_invoice_total": get_waiting_for_invoice_total,
         }
 
     def get_project_from_report_context(self, report_context):
@@ -130,66 +188,10 @@ class ProjectCostReport(models.TransientModel):
             },
         )
 
-
-def _group_analytic_lines(
-    lines: models.Model, key: Callable
-) -> Mapping[object, models.Model]:
-    grouped_lines = {}
-    for line in lines:
-        key_ = key(line)
-        if key_ not in grouped_lines:
-            grouped_lines[key_] = lines.env["account.analytic.line"]
-        grouped_lines[key_] |= line
-    return grouped_lines
-
-
-class CostReportCategory:
-    """Cost report category.
-
-    This class is used to simplify the qWeb templates.
-    It contains the data related to a category of the report.
-    """
-
-    def __init__(self, id_: int, name: str, lines: models.Model, folded: bool):
-        """Initialize the report category.
-
-        :param id: the ID of the related product.category record
-        :param name: the name of the category
-        :param lines: a recordset of Odoo account.analytic.line
-        :param folded: whether the category is folded or not
-        """
-        self.id = id_
-        self.name = name
-        self.lines = lines
-        self.folded = folded
-        self.total = float_round(sum(-l.amount for l in lines), 2)
-
-
-def is_product_line(analytic_line):
-    return (
-        not analytic_line.project_id
-        and not analytic_line.revenue
-        and analytic_line.product_id.type in ("consu", "product")
-    )
-
-
-class ProjectCostReportWithProducts(models.TransientModel):
-
-    _inherit = "project.cost.report"
-
-    def get_rendering_variables(self, project, report_context):
-        """Add the variables related to the PRODUCTS section."""
-        res = super().get_rendering_variables(project, report_context)
-        res.update(
-            {
-                "product_categories": self._get_product_categories(
-                    project, report_context
-                ),
-                "product_total": self._get_product_total(project),
-                "is_product_line": is_product_line,
-            }
-        )
-        return res
+    def _get_print_date(self):
+        lang = self._context.get("lang") or "en_US"
+        now = fields.Datetime.context_timestamp(self, datetime.now())
+        return babel.dates.format_date(now, "long", locale=lang)
 
     def _get_product_categories(self, project, report_context):
         """Get the stockable/consumable product categories."""
@@ -197,7 +199,7 @@ class ProjectCostReportWithProducts(models.TransientModel):
         default_cost_category = self.env.ref(
             "project_cost_report.cost_category_product"
         )
-        grouped_lines = _group_analytic_lines(
+        grouped_lines = group_analytic_lines(
             lines,
             lambda l: l.product_id.categ_id.project_cost_category_id
             or default_cost_category,
@@ -207,8 +209,7 @@ class ProjectCostReportWithProducts(models.TransientModel):
         unfolded_product_categories = unfolded_categories.get("product") or []
         return [
             CostReportCategory(
-                id_=c.id,
-                name=c.name,
+                c,
                 lines=grouped_lines.get(c),
                 folded=c.id not in unfolded_product_categories,
             )
@@ -225,47 +226,11 @@ class ProjectCostReportWithProducts(models.TransientModel):
             lambda l: is_product_line(l)
         )
 
-
-class TimeCategory(CostReportCategory):
-    """Categories used for the TIME section.
-
-    These categories have one more field to display: the total hours.
-
-    The total of units can not be used on other sections because
-    other sections mix different units of measure.
-    """
-
-    def __init__(self, id_: int, name: str, lines: models.Model, folded: bool):
-        super().__init__(id_, name, lines, folded)
-        self.total_hours = float_round(sum(l.unit_amount for l in lines), 2)
-
-
-def is_timesheet_line(analytic_line):
-    return not analytic_line.revenue and analytic_line.project_id
-
-
-class ProjectCostReportWithTime(models.TransientModel):
-
-    _inherit = "project.cost.report"
-
-    def get_rendering_variables(self, project, report_context):
-        """Add the variables related to the TIME section."""
-        res = super().get_rendering_variables(project, report_context)
-        res.update(
-            {
-                "time_categories": self._get_time_categories(project, report_context),
-                "time_total": self._get_time_total(project),
-                "time_total_hours": self._get_time_total_hours(project),
-                "is_timesheet_line": is_timesheet_line,
-            }
-        )
-        return res
-
     def _get_time_categories(self, project, report_context):
         """Get the task types for the TIME section."""
         lines = self._get_timesheet_analytic_lines(project)
         default_cost_category = self.env.ref("project_cost_report.cost_category_labour")
-        grouped_lines = _group_analytic_lines(
+        grouped_lines = group_analytic_lines(
             lines,
             lambda l: l.task_id.task_type_id.project_cost_category_id
             or default_cost_category,
@@ -275,8 +240,7 @@ class ProjectCostReportWithTime(models.TransientModel):
         unfolded_time_categories = unfolded_categories.get("time") or []
         return [
             TimeCategory(
-                id_=c.id,
-                name=c.name,
+                c,
                 lines=grouped_lines.get(c),
                 folded=c.id not in unfolded_time_categories,
             )
@@ -298,33 +262,6 @@ class ProjectCostReportWithTime(models.TransientModel):
             lambda l: is_timesheet_line(l)
         )
 
-
-def is_outsourcing_line(analytic_line):
-    return (
-        not analytic_line.revenue
-        and not analytic_line.project_id
-        and analytic_line.product_id.type == "service"
-    )
-
-
-class ProjectCostReportWithOutsourcing(models.TransientModel):
-
-    _inherit = "project.cost.report"
-
-    def get_rendering_variables(self, project, report_context):
-        """Add the variables related to the OUTSOURCING section."""
-        res = super().get_rendering_variables(project, report_context)
-        res.update(
-            {
-                "outsourcing_categories": self._get_outsourcing_categories(
-                    project, report_context
-                ),
-                "outsourcing_total": self._get_outsourcing_total(project),
-                "is_outsourcing_line": is_outsourcing_line,
-            }
-        )
-        return res
-
     def _get_outsourcing_categories(self, project, report_context):
         """Get the OUTSOURCING sections.
 
@@ -334,16 +271,15 @@ class ProjectCostReportWithOutsourcing(models.TransientModel):
         unfolded_outsourcing_categories = unfolded_categories.get("outsourcing") or []
         result = []
         lines = self._get_outsourcing_analytic_lines(project)
-        outsourcing_group = self.env.ref(
+        outsourcing_category = self.env.ref(
             "project_cost_report.cost_category_outsourcing"
         )
 
         if lines:
             empty_category = CostReportCategory(
-                id_=outsourcing_group.id,
-                name=outsourcing_group.name,
+                outsourcing_category,
                 lines=lines,
-                folded=outsourcing_group.id not in unfolded_outsourcing_categories,
+                folded=outsourcing_category.id not in unfolded_outsourcing_categories,
             )
             result.append(empty_category)
         return result
@@ -357,72 +293,6 @@ class ProjectCostReportWithOutsourcing(models.TransientModel):
         return project.analytic_account_id.line_ids.filtered(
             lambda l: is_outsourcing_line(l)
         )
-
-
-class ProjectCostReportWithTotalCost(models.TransientModel):
-
-    _inherit = "project.cost.report"
-
-    def get_rendering_variables(self, project, report_context):
-        """Add the total of costs to the rendering variables."""
-        res = super().get_rendering_variables(project, report_context)
-        res.update(
-            {
-                "total_cost": float_round(
-                    res["product_total"] + res["time_total"] + res["outsourcing_total"],
-                    2,
-                )
-            }
-        )
-        return res
-
-
-def purchase_line_is_waiting_invoice(line: models.Model) -> bool:
-    """Determine whether a purchase line is waiting an invoice.
-
-    :param line: a purchase.order.line singleton
-    """
-    precision = line.env["decimal.precision"].precision_get("Product Unit of Measure")
-    less_units_invoiced_than_purchased = (
-        float_compare(line.qty_invoiced, line.product_qty, precision_digits=precision)
-        == -1
-    )
-    return less_units_invoiced_than_purchased
-
-
-def get_purchase_line_waiting_qty(line: models.Model) -> float:
-    """Get the quantity of units waiting invoices from a purchase line.
-
-    :param line: a purchase.order.line singleton
-    """
-    precision = line.env["decimal.precision"].precision_get("Product Unit of Measure")
-    return float_round(line.product_qty - line.qty_invoiced, precision_digits=precision)
-
-
-def get_waiting_for_invoice_total(order: models.Model, project: models.Model):
-    """Get the total amount waiting for invoices for a purchase order.
-
-    :param order: the purchase order record.
-    :param project: the project for which to render the report.
-    :return: the amount waiting for invoices
-    """
-    lines_waiting_invoices = order.order_line.filtered(
-        lambda l: purchase_line_is_waiting_invoice(l)
-        and l.account_analytic_id == project.analytic_account_id
-    )
-
-    return float_round(
-        sum(
-            l.price_unit * get_purchase_line_waiting_qty(l)
-            for l in lines_waiting_invoices
-        ),
-        2,
-    )
-
-
-class ProjectCostReportWithWaitingInvoices(models.TransientModel):
-
-    _inherit = "project.cost.report"
 
     def _get_waiting_purchase_order_lines(self, project):
         """Get the purchase order lines with unreceived invoices.
@@ -446,13 +316,5 @@ class ProjectCostReportWithWaitingInvoices(models.TransientModel):
         lines = self._get_waiting_purchase_order_lines(project)
         return lines.mapped("order_id").sorted(key=lambda o: o.name)
 
-    def get_rendering_variables(self, project, report_context):
-        """Add waiting purchase orders to the rendering context."""
-        result = super().get_rendering_variables(project, report_context)
-        orders = self._get_waiting_purchase_orders(project)
-        result["waiting_purchase_orders"] = orders
-        result["waiting_purchase_order_total"] = float_round(
-            sum(get_waiting_for_invoice_total(o, project) for o in orders), 2
-        )
-        result["get_waiting_for_invoice_total"] = get_waiting_for_invoice_total
-        return result
+    def _get_total_section_sale_price(self, categories):
+        return sum(c.target_sale_price for c in categories)
