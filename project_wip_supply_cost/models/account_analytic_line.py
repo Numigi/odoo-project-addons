@@ -44,18 +44,17 @@ def _map_wip_account(timesheet_line: models.Model) -> models.Model:
 
 class AnalyticLineWithIsShopSupply(models.Model):
 
-    _inherit = 'account.analytic.line'
+    _inherit = "account.analytic.line"
 
     is_shop_supply = fields.Boolean()
 
 
 class TimesheetLine(models.Model):
 
-    _inherit = 'account.analytic.line'
+    _inherit = "account.analytic.line"
 
     shop_supply_account_move_id = fields.Many2one(
-        'account.move', 'Shop Supply Entry',
-        ondelete='restrict',
+        "account.move", "Shop Supply Entry", ondelete="restrict"
     )
 
     def _requires_shop_supply_move(self):
@@ -66,7 +65,11 @@ class TimesheetLine(models.Model):
 
         :rtype: bool
         """
-        return bool(_map_shop_supply_account(self)) and _map_shop_supply_rate(self)
+        return (
+            self._get_shop_supply_amount()
+            and bool(_map_shop_supply_account(self))
+            and _map_shop_supply_rate(self)
+        )
 
     def _get_shop_supply_amount(self):
         """Get the debit/credit amount for the shop supply entry.
@@ -82,14 +85,14 @@ class TimesheetLine(models.Model):
         """
         amount = self._get_shop_supply_amount()
         return {
-            'account_id': _map_wip_account(self).id,
-            'name': self.name,
-            'debit': amount if amount > 0 else 0,
-            'credit': -amount if amount < 0 else 0,
-            'quantity': self.unit_amount,
-            'analytic_account_id': self.project_id.analytic_account_id.id,
-            'is_shop_supply': True,
-            'task_id': self.task_id.id,
+            "account_id": _map_wip_account(self).id,
+            "name": self.name,
+            "debit": amount if amount > 0 else 0,
+            "credit": -amount if amount < 0 else 0,
+            "quantity": self.unit_amount,
+            "analytic_account_id": self.project_id.analytic_account_id.id,
+            "is_shop_supply": True,
+            "task_id": self.task_id.id,
         }
 
     def _get_shop_supply_move_line_vals(self):
@@ -99,17 +102,16 @@ class TimesheetLine(models.Model):
         """
         amount = self._get_shop_supply_amount()
         return {
-            'account_id': _map_shop_supply_account(self).id,
-            'name': self.name,
-            'debit': -amount if amount < 0 else 0,
-            'credit': amount if amount > 0 else 0,
-            'quantity': self.unit_amount,
+            "account_id": _map_shop_supply_account(self).id,
+            "name": self.name,
+            "debit": -amount if amount < 0 else 0,
+            "credit": amount if amount > 0 else 0,
+            "quantity": self.unit_amount,
         }
 
     def _get_shop_supply_move_reference(self):
         return _("{project} / TA#{task} (Shop Supply)").format(
-            project=self.project_id.display_name,
-            task=self.task_id.id
+            project=self.project_id.display_name, task=self.task_id.id
         )
 
     def _get_shop_supply_move_vals(self):
@@ -118,12 +120,12 @@ class TimesheetLine(models.Model):
         :rtype: dict
         """
         return {
-            'company_id': self.company_id.id,
-            'journal_id': _map_shop_supply_journal(self).id,
-            'date': self.date,
-            'no_analytic_lines': False,
-            'ref': self._get_shop_supply_move_reference(),
-            'line_ids': [
+            "company_id": self.company_id.id,
+            "journal_id": _map_shop_supply_journal(self).id,
+            "date": self.date,
+            "no_analytic_lines": False,
+            "ref": self._get_shop_supply_move_reference(),
+            "line_ids": [
                 (5, 0),
                 (0, 0, self._get_shop_supply_wip_move_line_vals()),
                 (0, 0, self._get_shop_supply_move_line_vals()),
@@ -133,7 +135,7 @@ class TimesheetLine(models.Model):
     def _create_shop_supply_move(self):
         """Create the wip journal entry."""
         vals = self._get_shop_supply_move_vals()
-        self.shop_supply_account_move_id = self.env['account.move'].create(vals)
+        self.shop_supply_account_move_id = self.env["account.move"].create(vals)
         self.shop_supply_account_move_id.post()
 
     def _is_shop_supply_account_move_reconciled(self):
@@ -141,21 +143,25 @@ class TimesheetLine(models.Model):
 
         :rtype: bool
         """
-        return any(l.full_reconcile_id for l in self.shop_supply_account_move_id.line_ids)
+        return any(
+            l.full_reconcile_id for l in self.shop_supply_account_move_id.line_ids
+        )
 
     def _update_shop_supply_move(self):
         """Update the wip journal entry."""
         if self._is_shop_supply_account_move_reconciled():
-            raise ValidationError(_(
-                'The timesheet line {description} can not '
-                'be updated because the shop supply entry ({move_name}) is already '
-                'transfered into the cost of goods sold.'
-            ).format(
-                description=_format_timesheet_line_description(self),
-                move_name=self.shop_supply_account_move_id.name,
-            ))
+            raise ValidationError(
+                _(
+                    "The timesheet line {description} can not "
+                    "be updated because the shop supply entry ({move_name}) is already "
+                    "transfered into the cost of goods sold."
+                ).format(
+                    description=_format_timesheet_line_description(self),
+                    move_name=self.shop_supply_account_move_id.name,
+                )
+            )
 
-        self.shop_supply_account_move_id.state = 'draft'
+        self.shop_supply_account_move_id.state = "draft"
         vals = self._get_shop_supply_move_vals()
         self.shop_supply_account_move_id.write(vals)
         self.shop_supply_account_move_id.post()
@@ -163,15 +169,17 @@ class TimesheetLine(models.Model):
     def _reverse_shop_supply_account_move_for_updated_timesheet(self):
         """Reverse the wip journal entry in the context of an updated timesheet."""
         if self._is_shop_supply_account_move_reconciled():
-            raise ValidationError(_(
-                'The timesheet line {description} can not '
-                'be updated because the shop supply entry ({move_name}) would be '
-                'reversed. This journal entry was already transfered into '
-                'the cost of goods sold.'
-            ).format(
-                description=_format_timesheet_line_description(self),
-                move_name=self.shop_supply_account_move_id.name,
-            ))
+            raise ValidationError(
+                _(
+                    "The timesheet line {description} can not "
+                    "be updated because the shop supply entry ({move_name}) would be "
+                    "reversed. This journal entry was already transfered into "
+                    "the cost of goods sold."
+                ).format(
+                    description=_format_timesheet_line_description(self),
+                    move_name=self.shop_supply_account_move_id.name,
+                )
+            )
         self.shop_supply_account_move_id.reverse_moves()
         self.shop_supply_account_move_id = False
 
@@ -217,13 +225,7 @@ class TimesheetLine(models.Model):
 
         :rtype: Set
         """
-        return {
-            'name',
-            'unit_amount',
-            'date',
-            'project_id',
-            'task_id',
-        }
+        return {"name", "unit_amount", "date", "project_id", "task_id"}
 
     @api.multi
     def write(self, vals):
@@ -244,14 +246,16 @@ class TimesheetLine(models.Model):
     def _reverse_shop_supply_account_move_for_deleted_timesheet(self):
         """Reverse the wip journal entry in the context of a deleted timesheet."""
         if self._is_shop_supply_account_move_reconciled():
-            raise ValidationError(_(
-                'The timesheet line {description} can not '
-                'be deleted because the shop supply entry ({move_name}) is already '
-                'transfered into the cost of goods sold.'
-            ).format(
-                description=_format_timesheet_line_description(self),
-                move_name=self.shop_supply_account_move_id.name,
-            ))
+            raise ValidationError(
+                _(
+                    "The timesheet line {description} can not "
+                    "be deleted because the shop supply entry ({move_name}) is already "
+                    "transfered into the cost of goods sold."
+                ).format(
+                    description=_format_timesheet_line_description(self),
+                    move_name=self.shop_supply_account_move_id.name,
+                )
+            )
         self.shop_supply_account_move_id.reverse_moves()
 
     @api.multi
