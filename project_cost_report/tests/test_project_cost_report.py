@@ -1,215 +1,7 @@
 # © 2019 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
-from odoo.tests import common
-from ..report import CostReportCategory
-
-
-class ProjectCostReportCase(common.SavepointCase):
-    @classmethod
-    def setUpClass(cls):
-        super().setUpClass()
-        cls.project = cls.env["project.project"].create({"name": "Job 123"})
-
-        cls.analytic_account = cls.project.analytic_account_id
-
-        cls.product_group_a = cls.env["project.cost.category"].create(
-            {"name": "Product Group A", "sequence": 1}
-        )
-        cls.product_group_b = cls.env["project.cost.category"].create(
-            {"name": "Product Group B", "sequence": 2}
-        )
-
-        cls.category_a = cls.env["product.category"].create(
-            {"name": "Category A", "project_cost_category_id": cls.product_group_a.id}
-        )
-        cls.category_b = cls.env["product.category"].create(
-            {"name": "Category B", "project_cost_category_id": cls.product_group_b.id}
-        )
-
-        cls.product_a = cls.env["product.product"].create(
-            {"name": "Product A", "type": "product", "categ_id": cls.category_a.id}
-        )
-
-        cls.product_b = cls.env["product.product"].create(
-            {"name": "Product B", "type": "product", "categ_id": cls.category_b.id}
-        )
-
-        cls.service_a = cls.env["product.product"].create(
-            {"name": "Service A", "type": "service", "categ_id": cls.category_a.id}
-        )
-
-        cls.product_line_1 = cls.env["account.analytic.line"].create(
-            {
-                "account_id": cls.analytic_account.id,
-                "name": "Line 1",
-                "product_id": cls.product_a.id,
-                "unit_amount": 1,
-                "product_uom_id": cls.env.ref("product.product_uom_unit").id,
-                "amount": -100,
-            }
-        )
-
-        cls.product_line_2 = cls.env["account.analytic.line"].create(
-            {
-                "account_id": cls.analytic_account.id,
-                "name": "Line 2",
-                "product_id": cls.product_b.id,
-                "unit_amount": 2,
-                "product_uom_id": cls.env.ref("product.product_uom_unit").id,
-                "amount": -200,
-            }
-        )
-
-        cls.product_line_3 = cls.env["account.analytic.line"].create(
-            {
-                "account_id": cls.analytic_account.id,
-                "name": "Line 3",
-                "product_id": cls.product_b.id,
-                "unit_amount": 3,
-                "product_uom_id": cls.env.ref("product.product_uom_unit").id,
-                "amount": -300,
-            }
-        )
-
-        cls.time_group_labour = cls.env.ref("project_cost_report.cost_category_labour")
-        cls.time_group_1 = cls.env["project.cost.category"].create(
-            {"name": "Time Group 1", "sequence": 1}
-        )
-        cls.time_group_2 = cls.env["project.cost.category"].create(
-            {"name": "Time Group 2", "sequence": 2}
-        )
-        cls.task_type_1 = cls.env["task.type"].create(
-            {"name": "Type 1", "project_cost_category_id": cls.time_group_1.id}
-        )
-        cls.task_type_2 = cls.env["task.type"].create(
-            {"name": "Type 2", "project_cost_category_id": cls.time_group_2.id}
-        )
-
-        cls.task_1 = cls.env["project.task"].create(
-            {"name": "Task 1", "project_id": cls.project.id}
-        )
-
-        cls.task_2 = cls.env["project.task"].create(
-            {
-                "name": "Task 2",
-                "project_id": cls.project.id,
-                "task_type_id": cls.task_type_1.id,
-            }
-        )
-
-        cls.task_3 = cls.env["project.task"].create(
-            {
-                "name": "Task 3",
-                "project_id": cls.project.id,
-                "task_type_id": cls.task_type_2.id,
-            }
-        )
-
-        cls.env.user.employee_ids.write({"timesheet_cost": 100})
-
-        cls.time_line_1 = cls.env["account.analytic.line"].create(
-            {
-                "project_id": cls.project.id,
-                "name": "Time 1",
-                "product_uom_id": cls.env.ref("product.product_uom_hour").id,
-                "unit_amount": 4,
-                "amount": -400,
-                "user_id": cls.env.user.id,
-                "task_id": cls.task_1.id,
-            }
-        )
-
-        cls.time_line_2 = cls.env["account.analytic.line"].create(
-            {
-                "project_id": cls.project.id,
-                "name": "Time 2",
-                "product_uom_id": cls.env.ref("product.product_uom_hour").id,
-                "unit_amount": 5,
-                "amount": -500,
-                "user_id": cls.env.user.id,
-                "task_id": cls.task_2.id,
-            }
-        )
-
-        cls.time_line_3 = cls.env["account.analytic.line"].create(
-            {
-                "project_id": cls.project.id,
-                "name": "Time 3",
-                "product_uom_id": cls.env.ref("product.product_uom_hour").id,
-                "unit_amount": 6,
-                "amount": -600,
-                "user_id": cls.env.user.id,
-                "task_id": cls.task_2.id,
-            }
-        )
-
-        cls.time_line_4 = cls.env["account.analytic.line"].create(
-            {
-                "project_id": cls.project.id,
-                "name": "Time 3",
-                "product_uom_id": cls.env.ref("product.product_uom_hour").id,
-                "unit_amount": 7,
-                "amount": -700,
-                "user_id": cls.env.user.id,
-                "task_id": cls.task_3.id,
-            }
-        )
-
-        cls.outsourcing_group = cls.env.ref(
-            "project_cost_report.cost_category_outsourcing"
-        )
-
-        cls.outsourcing_line_1 = cls.env["account.analytic.line"].create(
-            {
-                "account_id": cls.analytic_account.id,
-                "name": "Service Line 1",
-                "product_id": cls.service_a.id,
-                "unit_amount": 1,
-                "product_uom_id": cls.env.ref("product.product_uom_unit").id,
-                "amount": -800,
-            }
-        )
-
-        cls.outsourcing_line_2 = cls.env["account.analytic.line"].create(
-            {
-                "account_id": cls.analytic_account.id,
-                "name": "Service Line 2",
-                "product_id": cls.service_a.id,
-                "unit_amount": 2,
-                "product_uom_id": cls.env.ref("product.product_uom_unit").id,
-                "amount": -900,
-            }
-        )
-
-        # Add revenue analytic lines
-        # These amounts must be excluded from cost categories
-        # (Outsourcing, Products, Time)
-        cls.revenue_line_1 = cls.env["account.analytic.line"].create(
-            {
-                "account_id": cls.analytic_account.id,
-                "name": "Revenue Line 1",
-                "product_id": cls.service_a.id,
-                "unit_amount": 1,
-                "product_uom_id": cls.env.ref("product.product_uom_unit").id,
-                "amount": 100,
-                "revenue": True,
-            }
-        )
-
-        cls.revenue_line_2 = cls.env["account.analytic.line"].create(
-            {
-                "account_id": cls.analytic_account.id,
-                "name": "Revenue Line 2",
-                "product_id": cls.product_a.id,
-                "unit_amount": 1,
-                "product_uom_id": cls.env.ref("product.product_uom_unit").id,
-                "amount": 200,
-                "revenue": True,
-            }
-        )
-
-        cls.report = cls.env["project.cost.report"].create({})
+from .common import ProjectCostReportCase
 
 
 class TestProjectCostReport(ProjectCostReportCase):
@@ -219,8 +11,6 @@ class TestProjectCostReport(ProjectCostReportCase):
     def test_all_product_categories_found_in_report(self):
         categories = self._get_product_categories()
         assert len(categories) == 2
-        assert isinstance(categories[0], CostReportCategory)
-        assert isinstance(categories[1], CostReportCategory)
 
     def test_all_product_analytic_lines_found_in_categories(self):
         categories = self._get_product_categories()
@@ -275,9 +65,6 @@ class TestProjectCostReport(ProjectCostReportCase):
     def test_all_time_categories_found_in_report(self):
         categories = self._get_time_categories()
         assert len(categories) == 3
-        assert isinstance(categories[0], CostReportCategory)
-        assert isinstance(categories[1], CostReportCategory)
-        assert isinstance(categories[2], CostReportCategory)
 
     def test_all_time_analytic_lines_found_in_categories(self):
         categories = self._get_time_categories()
@@ -338,7 +125,6 @@ class TestProjectCostReport(ProjectCostReportCase):
     def test_empty_outsourcing_categories_found_in_report(self):
         categories = self._get_outsourcing_categories()
         assert len(categories) == 1
-        assert isinstance(categories[0], CostReportCategory)
 
     def test_if_no_outsourcing_analytic_lines__then_no_categories(self):
         self.outsourcing_line_1.unlink()
@@ -371,3 +157,36 @@ class TestProjectCostReport(ProjectCostReportCase):
         total = self.report._get_outsourcing_total(self.project)
         # 800 + 900 (sum of outsourcing_line_1 and outsourcing_line_2)
         assert total == 1700
+
+    def test_product_target_margin(self):
+
+        categories = self._get_product_categories()
+        assert categories[0].target_sale_price == 156.25  # 100 / (1 - 36%)
+        assert categories[1].target_sale_price == 1000  # 500 / (1 - 50%)
+        assert categories[0].target_profit == 56.25  # 156.25 - 100
+        assert categories[1].target_profit == 500  # 1000 - 500
+
+    def test_time_target_margin(self):
+
+        categories = self._get_time_categories()
+        assert categories[0].target_sale_price == 400  # 4 * 100
+        assert categories[1].target_sale_price == 2200  # 11 * 200
+        assert categories[2].target_sale_price == 2100  # 7 * 300
+        assert categories[0].target_profit == 0  # 400 - 400
+        assert categories[1].target_profit == 1100  # 2200 - 1100
+        assert categories[2].target_profit == 1400  # 2100 - 700
+
+    def test_outsourcing_target_margin(self):
+        categories = self._get_outsourcing_categories()
+        assert categories[0].target_sale_price == 2125  # 1700 / (1 - 0.2)
+        assert categories[0].target_profit == 425  # 2125 - 1700
+
+    def test_global_target_margin(self):
+        variables = self.report.get_rendering_variables(self.project, {})
+        assert (
+            variables["total_cost"] == 4500
+        )  # 600 + 2200 + 1700 (products + time + outsourcing)
+        # 156.25 + 1000 + 400 + 2200 + 2100 + 2125
+        assert variables["total_target_sale_price"] == 7981.25
+        assert variables["total_profit"] == 3481.25  # 56.25 + 500 + 1100 + 1400 + 425
+        assert variables["total_target_margin"] == round((3481.25 / 7981.25) * 100, 2)

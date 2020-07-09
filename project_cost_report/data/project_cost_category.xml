@@ -3,14 +3,17 @@
 
     <record id="cost_category_product" model="project.cost.category">
         <field name="name">Products</field>
+        <field name="section">products</field>
     </record>
 
     <record id="cost_category_labour" model="project.cost.category">
         <field name="name">Labour</field>
+        <field name="section">time</field>
     </record>
 
     <record id="cost_category_outsourcing" model="project.cost.category">
         <field name="name">Outsourcing</field>
+        <field name="section">outsourcing</field>
     </record>
 
 </odoo>
