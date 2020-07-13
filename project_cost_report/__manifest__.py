@@ -3,7 +3,7 @@
 
 {
     "name": "Project Cost Report",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "author": "Numigi",
     "maintainer": "Numigi",
     "website": "https://bit.ly/numigi-com",
@@ -19,9 +19,9 @@
     ],
     "data": [
         "data/project_cost_category.xml",
-        "project.xml",
-        "report.xml",
+        "report/report.xml",
         "security/ir.model.access.csv",
+        "views/project_project.xml",
         "views/project_cost_category.xml",
         "views/product_category.xml",
         "views/task_type.xml",

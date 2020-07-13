@@ -11,5 +11,14 @@ class ProjectCostCategory(models.Model):
     _order = "sequence"
 
     sequence = fields.Integer()
-    name = fields.Char(translate=True)
+    name = fields.Char(translate=True, required=True)
     active = fields.Boolean(default=True)
+
+    section = fields.Selection(
+        [("products", "Products"), ("time", "Time"), ("outsourcing", "Outsourcing")],
+        required=True,
+        default="products",
+    )
+
+    target_margin = fields.Float()
+    target_hourly_rate = fields.Float()

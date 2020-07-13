@@ -1,10 +1,7 @@
 # © 2019 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
-from odoo.addons.project_cost_report.tests.test_project_cost_report import (
-    ProjectCostReportCase,
-)
-from odoo.addons.project_cost_report.report import CostReportCategory
+from odoo.addons.project_cost_report.tests.common import ProjectCostReportCase
 
 
 class TestProjectCostReportWithShopSupply(ProjectCostReportCase):
@@ -52,7 +49,6 @@ class TestProjectCostReportWithShopSupply(ProjectCostReportCase):
     def test_empty_shop_supply_categories_found_in_report(self):
         categories = self._get_shop_supply_categories()
         assert len(categories) == 1
-        assert isinstance(categories[0], CostReportCategory)
 
     def test_if_no_shop_supply_analytic_lines__then_no_categories(self):
         self.shop_supply_line_1.unlink()
@@ -72,13 +68,13 @@ class TestProjectCostReportWithShopSupply(ProjectCostReportCase):
         assert self.shop_supply_line_2 in categories[0].lines
 
     def test_if_no_unfolded_category_given__then_all_shop_supply_categories_folded(
-        self
+        self,
     ):
         categories = self._get_shop_supply_categories()
         assert categories[0].folded is True
 
     def test_if_false_in_folded_shop_supply_categories__then_empty_category_unfolded(
-        self
+        self,
     ):
         categories = self._get_shop_supply_categories(
             {"unfolded_categories": {"shop_supply": [self.cost_category_supply.id]}}

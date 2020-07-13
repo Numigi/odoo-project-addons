@@ -4,7 +4,7 @@
 from odoo import api, models, _
 from odoo.osv.expression import AND
 from odoo.tools.float_utils import float_round
-from odoo.addons.project_cost_report.report import CostReportCategory
+from odoo.addons.project_cost_report.report.util import CostReportCategory
 
 
 def is_shop_supply_line(analytic_line):
@@ -18,15 +18,33 @@ class ProjectCostReportWithShopSupply(models.TransientModel):
     def get_rendering_variables(self, project, report_context):
         """Add the variables related to the OUTSOURCING section."""
         res = super().get_rendering_variables(project, report_context)
+
         shop_supply_total = self._get_shop_supply_total(project)
+        shop_supply_categories = self._get_shop_supply_categories(
+            project, report_context
+        )
+        shop_supply_sale_price = self._get_total_section_sale_price(
+            shop_supply_categories
+        )
+
+        total_cost = float_round(res["total_cost"] + shop_supply_total, 2)
+        total_sale_price = float_round(
+            res["total_target_sale_price"] + shop_supply_sale_price, 2
+        )
+        total_profit = total_sale_price - total_cost
+        total_margin = (
+            (total_profit / total_sale_price) * 100 if total_sale_price else 0
+        )
+
         res.update(
             {
-                "shop_supply_categories": self._get_shop_supply_categories(
-                    project, report_context
-                ),
-                "shop_supply_total": shop_supply_total,
-                "total_cost": float_round(res["total_cost"] + shop_supply_total, 2),
                 "is_shop_supply_line": is_shop_supply_line,
+                "shop_supply_categories": shop_supply_categories,
+                "shop_supply_total": shop_supply_total,
+                "total_cost": float_round(total_cost, 2),
+                "total_profit": float_round(total_profit, 2),
+                "total_target_margin": float_round(total_margin, 2),
+                "total_target_sale_price": float_round(total_sale_price, 2),
             }
         )
         return res
@@ -45,8 +63,7 @@ class ProjectCostReportWithShopSupply(models.TransientModel):
         )
         if lines:
             empty_category = CostReportCategory(
-                id_=supply_category.id,
-                name=supply_category.name,
+                supply_category,
                 lines=lines,
                 folded=supply_category.id not in unfolded_shop_supply_categories,
             )

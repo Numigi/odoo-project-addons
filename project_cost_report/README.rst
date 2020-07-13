@@ -135,6 +135,48 @@ buttons in the control panel of the report.
 
 .. image:: static/description/unfold_button.png
 
+Target / Suggested / Profit
+---------------------------
+Since the version 1.3.0 of the module, 3 new columns are added to the report.
+
+.. image:: static/description/report_summary_columns.png
+
+These columns show respectively:
+
+* the target sale margin
+* the suggested sale price based on the target margin
+* the profit based on the suggested sale price
+
+Target Ratios
+~~~~~~~~~~~~~
+Under each sections (except TIME), the target is a margin ratio.
+
+.. image:: static/description/product_section_target.png
+
+This ratio is defined on the cost category.
+
+.. image:: static/description/product_category_sale_ratio.png
+
+Target Hourly Rate
+~~~~~~~~~~~~~~~~~~
+Under the TIME section, the target is an hourly rate.
+
+.. image:: static/description/time_section_target.png
+
+This hourly rate is defined on the cost category.
+
+.. image:: static/description/time_category_hourly_rate.png
+
+Hide / Show Summary
+~~~~~~~~~~~~~~~~~~~
+The 3 columns Target / Suggested / Profit can be hidden by clicking on ``HIDE SUMMARY``
+
+.. image:: static/description/hide_summary_button.png
+
+They can be displayed again by clicking on ``SHOW SUMMARY``.
+
+.. image:: static/description/show_summary_button.png
+
 PDF Version
 -----------
 You may print or doaload a PDF version of the report by clicking on the `PRINT` button
