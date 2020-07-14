@@ -121,6 +121,7 @@ var ReportAction = Widget.extend(ControlPanelMixin, {
             this.controlPanelButtons = [
                 this.printButton,
                 this.foldButton,
+                this.unfoldButton,
                 this.showSummaryButton,
                 this.hideSummaryButton,
             ];
@@ -211,8 +212,8 @@ var ReportAction = Widget.extend(ControlPanelMixin, {
             method: "search",
             args: [[]],
         });
-        const sectionNames = Object(this.reportContext.unfolded_categories).keys()
-        sectionNames.foreach(sectionName => {
+        const sectionNames = Object.keys(this.reportContext.unfolded_categories)
+        sectionNames.forEach(sectionName => {
             this.reportContext.unfolded_categories[sectionName] = [...allCostGroups]
         })
         this.unfolded = true;
