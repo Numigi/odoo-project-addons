@@ -293,8 +293,13 @@ msgstr "Articles"
 #: model:ir.model,name:project_material.model_project_project
 #: model:ir.model.fields,field_description:project_material.field_procurement_group_project_id
 #: model:ir.model.fields,field_description:project_material.field_project_task_material_project_id
+#: model:ir.model.fields,field_description:project_material.field_stock_move_line_project_id
 #: model:ir.model.fields,field_description:project_material.field_stock_move_project_id
 #: model:ir.model.fields,field_description:project_material.field_stock_picking_project_id
+#: model:ir.ui.view,arch_db:project_material.stock_move_line_with_project_form
+#: model:ir.ui.view,arch_db:project_material.stock_move_line_with_project_tree
+#: model:ir.ui.view,arch_db:project_material.stock_move_with_project_form
+#: model:ir.ui.view,arch_db:project_material.stock_move_with_project_tree
 #: model:ir.ui.view,arch_db:project_material.stock_picking_form_with_task
 #: model:ir.ui.view,arch_db:project_material.task_material_list_view
 #: model:ir.ui.view,arch_db:project_material.task_material_search
