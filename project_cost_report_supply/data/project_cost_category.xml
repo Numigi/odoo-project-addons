@@ -3,6 +3,7 @@
 
     <record id="cost_category_supply" model="project.cost.category">
         <field name="name">Shop Supply</field>
+        <field name="section">supply</field>
     </record>
 
 </odoo>
