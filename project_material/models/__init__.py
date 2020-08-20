@@ -9,6 +9,7 @@ from . import (
     project_task_material,
     project_task,
     stock_move,
+    stock_move_line,
     stock_picking,
     stock_picking_type,
     stock_warehouse,
