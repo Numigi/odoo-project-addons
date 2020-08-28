@@ -13,6 +13,7 @@
     'depends': [
         'project_time_range',
         'project_task_time_range',
+        'project_task_subtask_time_range'
     ],
     'data': [
         'views/project_project.xml',
