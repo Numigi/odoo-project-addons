@@ -42,6 +42,7 @@
         "project_template_timesheet",
         "project_time_management",
         "project_time_range",
+        "project_timesheet_analytic_update",
         "project_type",
         "timesheet_task_project_no_change",
     ],
