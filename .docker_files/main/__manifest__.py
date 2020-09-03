@@ -40,6 +40,7 @@
         'project_task_type',
         'project_time_management',
         'project_time_range',
+        'project_timesheet_analytic_update',
         'project_type',
         'project_wip',
         'project_wip_material',

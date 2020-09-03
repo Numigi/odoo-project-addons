@@ -35,6 +35,7 @@ COPY project_task_time_range /mnt/extra-addons/project_task_time_range
 COPY project_task_type /mnt/extra-addons/project_task_type
 COPY project_time_management /mnt/extra-addons/project_time_management
 COPY project_time_range /mnt/extra-addons/project_time_range
+COPY project_timesheet_analytic_update /mnt/extra-addons/project_timesheet_analytic_update
 COPY project_type /mnt/extra-addons/project_type
 COPY project_wip /mnt/extra-addons/project_wip
 COPY project_wip_material /mnt/extra-addons/project_wip_material
