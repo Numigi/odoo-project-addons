@@ -2,7 +2,7 @@
 # © 2020 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
-from odoo import fields, models, api, _
+from odoo import models, api, _
 
 
 class ProjectTimesheetAnalyticUpdate(models.Model):
@@ -10,7 +10,7 @@ class ProjectTimesheetAnalyticUpdate(models.Model):
 
     @api.multi
     def write(self, vals):
-        """ Propagate the value of the project's analytic account to the analytic lines of the project."""
+        """Propagate the value of the project's analytic account to the analytic lines of the project."""
         super().write(vals)
         if 'analytic_account_id' in vals:
             timesheets = self.env['account.analytic.line'].sudo().search([('project_id', 'in', self.ids)])
