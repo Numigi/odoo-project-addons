@@ -71,14 +71,22 @@ msgstr "Tâche"
 #. module: project_iteration
 #: code:addons/project_iteration/models/project_project.py:87
 #, python-format
-msgid "The project {project_1} can not be the child of {project_2} because {project_2} is a child of {project_3}."
-msgstr "Le projet {project_1} ne peut pas être un enfant de {project_2} parce que {project_2} est un enfant de {project_3}."
+msgid ""
+"The project {project_1} can not be the child of {project_2} because "
+"{project_2} is a child of {project_3}."
+msgstr ""
+"Le projet {project_1} ne peut pas être un enfant de {project_2} parce que "
+"{project_2} est un enfant de {project_3}."
 
 #. module: project_iteration
 #: code:addons/project_iteration/models/project_project.py:61
 #, python-format
-msgid "The project {project_2} can not be the parent of {project_1} because {project_2} is a child of {project_3}."
-msgstr "Le projet {project_2} ne peut pas être le parent de {project_1} parce que {project_2} est un enfant de {project_3}."
+msgid ""
+"The project {project_2} can not be the parent of {project_1} because "
+"{project_2} is a child of {project_3}."
+msgstr ""
+"Le projet {project_2} ne peut pas être le parent de {project_1} parce que "
+"{project_2} est un enfant de {project_3}."
 
 #. module: project_iteration
 #: code:addons/project_iteration/models/project_project.py:100
