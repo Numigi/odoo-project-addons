@@ -11,3 +11,6 @@ class ProjectProject(models.Model):
         if self.parent_id:
             self.sale_order_id = self.parent_id.sale_order_id
             self.sale_line_id = self.parent_id.sale_line_id
+        else:
+            self.sale_order_id = None
+            self.sale_line_id = None
