@@ -5,6 +5,11 @@ from .common import ProjectCostReportCase
 
 
 class TestProjectCostReport(ProjectCostReportCase):
+    def test_get_rendering_variables__with_multiple_projects(self, report_context=None):
+        project_2 = self.project.copy()
+        variables = self.report.get_rendering_variables(self.project | project_2)
+        assert isinstance(variables, dict)
+
     def _get_product_categories(self, report_context=None):
         return self.report._get_product_categories(self.project, report_context or {})
 
