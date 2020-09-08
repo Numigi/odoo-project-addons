@@ -20,7 +20,7 @@ class TestProjectIterationSaleInheritance(common.SavepointCase):
         )
         cls.partner = cls.env["res.partner"].create({"name": "partner"})
 
-    def test_allow_setting_project_with_timesheet_as_parent(self):
+    def test_child_project_get_sales_info_from_parent(self):
         sale_order = self.env["sale.order"].create(
             {
                 "name": "SO001",

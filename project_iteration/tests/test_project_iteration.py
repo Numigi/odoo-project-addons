@@ -32,20 +32,3 @@ class TestProjectIteration(ProjectIterationCase):
     def test_parent_project_can_not_have_parent(self):
         with pytest.raises(ValidationError):
             self.project_1.parent_id = self.project_2
-
-    def test_block_setting_parent_on_project_with_timesheet(self):
-        self.env["account.analytic.line"].create({
-            "name": "Timesheet 1",
-            "project_id": self.project_1.id,
-        })
-        with pytest.raises(ValidationError):
-            self.project_1.parent_id = self.project_2
-
-    def test_allow_setting_project_with_timesheet_as_parent(self):
-        self.env["account.analytic.line"].create({
-            "name": "Timesheet 2",
-        })
-        self.project_2.parent_id = self.project_1
-
-    def test_allow_setting_project_without_timesheet_as_parent(self):
-        self.project_2.parent_id = self.project_1
