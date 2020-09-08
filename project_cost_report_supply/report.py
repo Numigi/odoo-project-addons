@@ -15,13 +15,15 @@ class ProjectCostReportWithShopSupply(models.TransientModel):
 
     _inherit = "project.cost.report"
 
-    def get_rendering_variables(self, project, report_context):
+    def get_rendering_variables(self, projects, report_context=None):
         """Add the variables related to the OUTSOURCING section."""
-        res = super().get_rendering_variables(project, report_context)
+        report_context = report_context or {}
 
-        shop_supply_total = self._get_shop_supply_total(project)
+        res = super().get_rendering_variables(projects, report_context)
+
+        shop_supply_total = self._get_shop_supply_total(projects)
         shop_supply_categories = self._get_shop_supply_categories(
-            project, report_context
+            projects, report_context
         )
         shop_supply_sale_price = self._get_total_section_sale_price(
             shop_supply_categories
@@ -49,7 +51,7 @@ class ProjectCostReportWithShopSupply(models.TransientModel):
         )
         return res
 
-    def _get_shop_supply_categories(self, project, report_context):
+    def _get_shop_supply_categories(self, projects, report_context):
         """Get the SHOP SUPPLY sections.
 
         Outsourcing has only one category (False).
@@ -57,7 +59,7 @@ class ProjectCostReportWithShopSupply(models.TransientModel):
         unfolded_categories = report_context.get("unfolded_categories") or {}
         unfolded_shop_supply_categories = unfolded_categories.get("shop_supply") or []
         result = []
-        lines = self._get_shop_supply_analytic_lines(project)
+        lines = self._get_shop_supply_analytic_lines(projects)
         supply_category = self.env.ref(
             "project_cost_report_supply.cost_category_supply"
         )
@@ -70,24 +72,24 @@ class ProjectCostReportWithShopSupply(models.TransientModel):
             result.append(empty_category)
         return result
 
-    def _get_shop_supply_total(self, project):
-        lines = self._get_shop_supply_analytic_lines(project)
+    def _get_shop_supply_total(self, projects):
+        lines = self._get_shop_supply_analytic_lines(projects)
         total_amount = sum(l.amount for l in lines)
         return float_round(-total_amount, 2)
 
-    def _get_shop_supply_analytic_lines(self, project):
-        return project.analytic_account_id.line_ids.filtered(
+    def _get_shop_supply_analytic_lines(self, projects):
+        return projects.mapped("analytic_account_id.line_ids").filtered(
             lambda l: is_shop_supply_line(l)
         )
 
-    def _get_product_analytic_lines(self, project):
-        lines = super()._get_product_analytic_lines(project)
+    def _get_product_analytic_lines(self, projects):
+        lines = super()._get_product_analytic_lines(projects)
         return lines.filtered(lambda l: not is_shop_supply_line(l))
 
-    def _get_timesheet_analytic_lines(self, project):
-        lines = super()._get_timesheet_analytic_lines(project)
+    def _get_timesheet_analytic_lines(self, projects):
+        lines = super()._get_timesheet_analytic_lines(projects)
         return lines.filtered(lambda l: not is_shop_supply_line(l))
 
-    def _get_outsourcing_analytic_lines(self, project):
-        lines = super()._get_outsourcing_analytic_lines(project)
+    def _get_outsourcing_analytic_lines(self, projects):
+        lines = super()._get_outsourcing_analytic_lines(projects)
         return lines.filtered(lambda l: not is_shop_supply_line(l))

@@ -70,26 +70,28 @@ class ProjectCostReport(models.TransientModel):
     _name = "project.cost.report"
     _description = "Project Cost Report"
 
-    def get_rendering_variables(self, project, report_context):
+    def get_rendering_variables(self, projects, report_context=None):
         """Get the variables used for rendering the qweb report.
 
-        :param project: the project.project record
+        :param project: the project.project recordset
         :param report_context: the rendering context
         :rtype: dict
         """
+        report_context = report_context or {}
+
         print_date = self._get_print_date()
 
-        product_categories = self._get_product_categories(project, report_context)
-        product_total = self._get_product_total(project)
+        product_categories = self._get_product_categories(projects, report_context)
+        product_total = self._get_product_total(projects)
         product_sale_price = self._get_total_section_sale_price(product_categories)
-        time_categories = self._get_time_categories(project, report_context)
-        time_total = self._get_time_total(project)
-        time_total_hours = self._get_time_total_hours(project)
+        time_categories = self._get_time_categories(projects, report_context)
+        time_total = self._get_time_total(projects)
+        time_total_hours = self._get_time_total_hours(projects)
         time_sale_price = self._get_total_section_sale_price(time_categories)
         outsourcing_categories = self._get_outsourcing_categories(
-            project, report_context
+            projects, report_context
         )
-        outsourcing_total = self._get_outsourcing_total(project)
+        outsourcing_total = self._get_outsourcing_total(projects)
         outsourcing_sale_price = self._get_total_section_sale_price(
             outsourcing_categories
         )
@@ -101,10 +103,12 @@ class ProjectCostReport(models.TransientModel):
             (total_profit / total_sale_price) * 100 if total_sale_price else 0
         )
 
-        waiting_purchase_orders = self._get_waiting_purchase_orders(project)
+        waiting_purchase_orders = self._get_waiting_purchase_orders(projects)
         waiting_purchase_orders_total = sum(
-            get_waiting_for_invoice_total(o, project) for o in waiting_purchase_orders
+            get_waiting_for_invoice_total(o, projects) for o in waiting_purchase_orders
         )
+
+        project = projects[:1]
 
         return {
             "adjust_analytic_line_amount_sign": adjust_analytic_line_amount_sign,
@@ -193,9 +197,9 @@ class ProjectCostReport(models.TransientModel):
         now = fields.Datetime.context_timestamp(self, datetime.now())
         return babel.dates.format_date(now, "long", locale=lang)
 
-    def _get_product_categories(self, project, report_context):
+    def _get_product_categories(self, projects, report_context):
         """Get the stockable/consumable product categories."""
-        lines = self._get_product_analytic_lines(project)
+        lines = self._get_product_analytic_lines(projects)
         default_cost_category = self.env.ref(
             "project_cost_report.cost_category_product"
         )
@@ -216,19 +220,19 @@ class ProjectCostReport(models.TransientModel):
             for c in sorted_categories
         ]
 
-    def _get_product_total(self, project):
-        lines = self._get_product_analytic_lines(project)
+    def _get_product_total(self, projects):
+        lines = self._get_product_analytic_lines(projects)
         total_amount = sum(l.amount for l in lines)
         return float_round(-total_amount, 2)
 
-    def _get_product_analytic_lines(self, project):
-        return project.analytic_account_id.line_ids.filtered(
+    def _get_product_analytic_lines(self, projects):
+        return projects.mapped("analytic_account_id.line_ids").filtered(
             lambda l: is_product_line(l)
         )
 
-    def _get_time_categories(self, project, report_context):
+    def _get_time_categories(self, projects, report_context):
         """Get the task types for the TIME section."""
-        lines = self._get_timesheet_analytic_lines(project)
+        lines = self._get_timesheet_analytic_lines(projects)
         default_cost_category = self.env.ref("project_cost_report.cost_category_labour")
         grouped_lines = group_analytic_lines(
             lines,
@@ -247,22 +251,22 @@ class ProjectCostReport(models.TransientModel):
             for c in sorted_categories
         ]
 
-    def _get_time_total(self, project):
-        lines = self._get_timesheet_analytic_lines(project)
+    def _get_time_total(self, projects):
+        lines = self._get_timesheet_analytic_lines(projects)
         total_amount = sum(l.amount for l in lines)
         return float_round(-total_amount, 2)
 
-    def _get_time_total_hours(self, project):
-        lines = self._get_timesheet_analytic_lines(project)
+    def _get_time_total_hours(self, projects):
+        lines = self._get_timesheet_analytic_lines(projects)
         total_hours = sum((l.unit_amount or 0) for l in lines)
         return float_round(total_hours, 2)
 
-    def _get_timesheet_analytic_lines(self, project):
-        return project.analytic_account_id.line_ids.filtered(
+    def _get_timesheet_analytic_lines(self, projects):
+        return projects.mapped("analytic_account_id.line_ids").filtered(
             lambda l: is_timesheet_line(l)
         )
 
-    def _get_outsourcing_categories(self, project, report_context):
+    def _get_outsourcing_categories(self, projects, report_context):
         """Get the OUTSOURCING sections.
 
         Outsourcing has only one category (False).
@@ -270,7 +274,7 @@ class ProjectCostReport(models.TransientModel):
         unfolded_categories = report_context.get("unfolded_categories") or {}
         unfolded_outsourcing_categories = unfolded_categories.get("outsourcing") or []
         result = []
-        lines = self._get_outsourcing_analytic_lines(project)
+        lines = self._get_outsourcing_analytic_lines(projects)
         outsourcing_category = self.env.ref(
             "project_cost_report.cost_category_outsourcing"
         )
@@ -284,36 +288,36 @@ class ProjectCostReport(models.TransientModel):
             result.append(empty_category)
         return result
 
-    def _get_outsourcing_total(self, project):
-        lines = self._get_outsourcing_analytic_lines(project)
+    def _get_outsourcing_total(self, projects):
+        lines = self._get_outsourcing_analytic_lines(projects)
         total_amount = sum(l.amount for l in lines)
         return float_round(-total_amount, 2)
 
-    def _get_outsourcing_analytic_lines(self, project):
-        return project.analytic_account_id.line_ids.filtered(
+    def _get_outsourcing_analytic_lines(self, projects):
+        return projects.mapped("analytic_account_id.line_ids").filtered(
             lambda l: is_outsourcing_line(l)
         )
 
-    def _get_waiting_purchase_order_lines(self, project):
+    def _get_waiting_purchase_order_lines(self, projects):
         """Get the purchase order lines with unreceived invoices.
 
         :param project: the project.project record
         :rtype: purchase.order.line
         """
         domain = [
-            ("account_analytic_id", "=", project.analytic_account_id.id),
+            ("account_analytic_id", "in", projects.mapped("analytic_account_id").ids),
             ("order_id.state", "in", ("purchase", "done")),
         ]
         lines = self.env["purchase.order.line"].search(domain)
         return lines.filtered(lambda l: purchase_line_is_waiting_invoice(l))
 
-    def _get_waiting_purchase_orders(self, project):
+    def _get_waiting_purchase_orders(self, projects):
         """Get the purchase orders with unreceived invoices.
 
         :param project: the project.project record
         :rtype: List[waitingPurchaseOrder]
         """
-        lines = self._get_waiting_purchase_order_lines(project)
+        lines = self._get_waiting_purchase_order_lines(projects)
         return lines.mapped("order_id").sorted(key=lambda o: o.name)
 
     def _get_total_section_sale_price(self, categories):
