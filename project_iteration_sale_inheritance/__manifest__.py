@@ -8,7 +8,7 @@
     "author": "Numigi",
     "maintainer": "Numigi",
     "license": "AGPL-3",
-    "depends": ["project_iteration", "sale_timesheet", "timesheet_task_project_no_change"],
+    "depends": ["project_iteration", "sale_timesheet"],
     "data": ["views/project_project.xml"],
     "installable": True,
 }
