@@ -10,7 +10,7 @@
     'license': 'LGPL-3',
     'category': 'Project',
     'summary': 'Add fields Min and Max on project.',
-    'depends': ['project'],
+    'depends': ['project', 'project_task_time_range'],
     'data': [
         'views/project_project.xml',
     ],
