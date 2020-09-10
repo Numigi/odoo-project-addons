@@ -1,12 +1,19 @@
-# Project Time Range
+Project Time Range
+==================
+- This module adds the fields `Min` and `Ideal` and `Max` under the `Management` tab and `Budget` group of a project. The three fields are computed as the sum of the same fields on the Task Templates linked to the Project
+- In the OpenChatter of the Project, add a tracking of the changes on the new fields
 
-This module adds the fields `Min` and `Ideal` and `Max` under the `Management` tab of a project.
-These fields contain the minimum and maximum time initialy estimated on the task.
+![](static/description/project_time_range.png?raw=true)
 
-
-![Task Form](static/description/form_view_project.png?raw=true)
-
+Configuration
+-------------
+No configuration required apart from module installation.
 
 Contributors
 ------------
 * Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+* Komit (https://komit-consulting.com)
+
+More information
+----------------
+* Meet us at https://bit.ly/numigi-com

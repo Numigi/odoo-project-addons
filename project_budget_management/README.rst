@@ -1,5 +1,6 @@
 Project Budget Management
 =========================
+- Track the remaining budget per project
 
 .. image:: static/description/product_barcode_upc.png
 
