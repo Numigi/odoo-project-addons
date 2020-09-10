@@ -23,5 +23,5 @@ msgstr "Projet"
 #. module: project_budget_management
 #: model:ir.model.fields,field_description:project_budget_management.field_project_project__remaining_budget
 msgid "Remaining Budget"
-msgstr ""
+msgstr "Budget Restant"
 
