@@ -9,42 +9,42 @@ jobs:
   tests:
     machine: true
     steps:
-       - checkout
+      - checkout
 
-       - run:
-           <<: *quay_io_login
+      - run:
+          <<: *quay_io_login
 
-       - run:
+      - run:
           name: Build -- Init Database
           command: docker-compose run --rm odoo odoo --stop-after-init -i main
 
-       - run:
+      - run:
           name: Setup Log Folder For Reports
           command: sudo mkdir -p .log && sudo chmod 777 .log
 
-       - run:
+      - run:
           name: Run Test
           command: docker-compose run --rm odoo run_pytest.sh
 
-       - run:
-         name: Codacy Coverage
-         command: bash <(curl -Ls https://coverage.codacy.com/get.sh) report -l python -r .log/coverage.xml
+      - run:
+          name: Codacy Coverage
+          command: bash <(curl -Ls https://coverage.codacy.com/get.sh) report -l python -r .log/coverage.xml
 
-       - store_test_results:
+      - store_test_results:
           path: .log
 
   testcafe:
-      machine: true
-      steps:
-        - checkout
+    machine: true
+    steps:
+      - checkout
 
-        - run:
-            name: Build -- Init Database
-            command: docker-compose run --rm odoo odoo --stop-after-init -i main
+      - run:
+          name: Build -- Init Database
+          command: docker-compose run --rm odoo odoo --stop-after-init -i main
 
-        - run:
-          name: Run Tests With Chrome
-          command: docker-compose run --rm testcafe 'chrome:headless --no-sandbox' /tests/*.js --skip-js-errors --speed 0.5
+      - run:
+        name: Run Tests With Chrome
+        command: docker-compose run --rm testcafe 'chrome:headless --no-sandbox' /tests/*.js --skip-js-errors --speed 0.5
 
   # job that find the next tag for the current branch/repo and push the tag to github.
   # it will trigger the publish of a new docker image.
