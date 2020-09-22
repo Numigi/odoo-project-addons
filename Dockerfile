@@ -45,6 +45,7 @@ COPY project_template /mnt/extra-addons/project_template
 COPY project_template_timesheet /mnt/extra-addons/project_template_timesheet
 COPY project_time_management /mnt/extra-addons/project_time_management
 COPY project_time_range /mnt/extra-addons/project_time_range
+COPY project_timesheet_analytic_update /mnt/extra-addons/project_timesheet_analytic_update
 COPY project_type /mnt/extra-addons/project_type
 COPY timesheet_task_project_no_change /mnt/extra-addons/timesheet_task_project_no_change
 
