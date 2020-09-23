@@ -120,18 +120,18 @@ def get_purchase_line_waiting_qty(line):
     return float_round(line.product_qty - line.qty_invoiced, precision_digits=precision)
 
 
-def get_waiting_for_invoice_total(order, project):
+def get_waiting_for_invoice_total(order, projects):
     """Get the total amount waiting for invoices for a purchase order.
 
     :param order: the purchase order record.
     :param project: the project for which to render the report.
     :return: the amount waiting for invoices
     """
+    analytic_accounts = projects.mapped("analytic_account_id")
     lines_waiting_invoices = order.order_line.filtered(
         lambda l: purchase_line_is_waiting_invoice(l)
-        and l.account_analytic_id == project.analytic_account_id
+        and l.account_analytic_id in analytic_accounts
     )
-
     return float_round(
         sum(
             l.price_unit * get_purchase_line_waiting_qty(l)
