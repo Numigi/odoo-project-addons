@@ -66,6 +66,18 @@ class ProjectWithParent(models.Model):
                     project_3=project.parent_id.parent_id.display_name,
                 ))
 
+    @api.constrains("parent_id")
+    def _check_cannot_change_parent_while_existing_timesheet(self):
+        analytic_line_env = self.env["account.analytic.line"]
+        for project in self:
+            if analytic_line_env.search([("project_id", "=", project.id)], limit=1):
+                raise ValidationError(
+                    _(
+                        "Timesheet already exists on this project, to update the Parent Project field, the Project "
+                        "must have no Timesheets."
+                    )
+                )
+
     @api.constrains('parent_id', 'child_ids')
     def _check_child_project_has_no_child(self):
         child_projects_with_children = self.filtered(lambda p: p.parent_id and p.child_ids)
