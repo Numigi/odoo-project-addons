@@ -20,6 +20,7 @@
         "project_iteration",
         "project_iteration_parent_only",
         "project_iteration_parent_type_required",
+        "project_iteration_sale_inheritance",
         "project_no_quick_create",
         "project_portal_hide_timesheets",
         "project_portal_parent_task",
