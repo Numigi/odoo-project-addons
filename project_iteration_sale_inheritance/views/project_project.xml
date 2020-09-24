@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="project_project_view_form_always_show_sale_information" model="ir.ui.view">
+        <field name="name">Project Project Form: always show sale information</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="sale_timesheet.project_project_view_form"/>
+        <field name="arch" type="xml">
+            <page name="billing_employee_rate" position="attributes">
+                <attribute name="attrs">{}</attribute>
+            </page>
+            <field name="sale_order_id" position="attributes">
+                <attribute name="attrs">{}</attribute>
+                <attribute name="force_save">1</attribute>
+            </field>
+            <field name="sale_line_id" position="attributes">
+                <attribute name="attrs">{}</attribute>
+            </field>
+        </field>
+    </record>
+
+</odoo>

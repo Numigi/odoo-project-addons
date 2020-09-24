@@ -69,7 +69,7 @@ msgid "Task"
 msgstr "Tâche"
 
 #. module: project_iteration
-#: code:addons/project_iteration/models/project_project.py:69
+#: code:addons/project_iteration/models/project_project.py:87
 #, python-format
 msgid ""
 "The project {project_1} can not be the child of {project_2} because "
@@ -79,7 +79,7 @@ msgstr ""
 "{project_2} est un enfant de {project_3}."
 
 #. module: project_iteration
-#: code:addons/project_iteration/models/project_project.py:55
+#: code:addons/project_iteration/models/project_project.py:61
 #, python-format
 msgid ""
 "The project {project_2} can not be the parent of {project_1} because "
@@ -89,7 +89,13 @@ msgstr ""
 "{project_2} est un enfant de {project_3}."
 
 #. module: project_iteration
-#: code:addons/project_iteration/models/project_project.py:82
+#: code:addons/project_iteration/models/project_project.py:100
 #, python-format
 msgid "The project {project} can not be its own parent."
 msgstr "Le projet {project} ne peut pas être son propre parent."
+
+#. module: project_iteration
+#: code:addons/project_iteration/models/project_project.py:75
+#, python-format
+msgid "Timesheet already exists on this project, to update the Parent Project field, the Project must have no Timesheets."
+msgstr "Des lignes de temps sont enregistrées sur le projet. Pour modifier le projet parent, le projet ne doit pas contenir de lignes de temps."
