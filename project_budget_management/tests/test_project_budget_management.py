@@ -72,22 +72,22 @@ class TestProjectBudgetManagement(common.SavepointCase):
         )
         assert self.project_a.remaining_budget == 35
         mail_message = self._get_last_mail_message(self.project_a.id)
-        assert mail_message.body == ("<ul><li>Task Template %s added</ul></li>" % new_task.id)
+        assert mail_message.body == ("<ul><li>Task Template %s added</li></ul>" % new_task.id)
 
     def test_project_remaining_budget_for_task_template_remove(self):
         self.task_template_b.unlink()
         assert self.project_a.remaining_budget == -13
         mail_message = self._get_last_mail_message(self.project_a.id)
-        assert mail_message.body == ("<ul><li>Task Template %s deleted</ul></li>" % self.task_template_b.id)
+        assert mail_message.body == ("<ul><li>Task Template %s deleted</li></ul>" % self.task_template_b.id)
 
     def test_project_remaining_budget_for_task_template_move_project(self):
         new_project = self.env["project.project"].create({"name": "Project B"})
         self.task_template_b.project_id = new_project.id
         assert self.project_a.remaining_budget == -13
         mail_message = self._get_last_mail_message(self.project_a.id)
-        assert mail_message.body == ("<ul><li>Task Template %s removed from project</ul></li>" % self.task_template_b.id)
-        mail_message = self._get_last_mail_message(self.new_project.id)
-        assert mail_message.body == ("<ul><li>Task Template %s added</ul></li>" % self.task_template_b.id)
+        assert mail_message.body == ("<ul><li>Task Template %s removed from project</li></ul>" % self.task_template_b.id)
+        mail_message = self._get_last_mail_message(new_project.id)
+        assert mail_message.body == ("<ul><li>Task Template %s added</li></ul>" % self.task_template_b.id)
 
     def test_project_remaining_budget_for_task_template_update(self):
         self.task_template_b.write(
@@ -99,7 +99,7 @@ class TestProjectBudgetManagement(common.SavepointCase):
         )
         assert self.project_a.remaining_budget == 115
         mail_message = self._get_last_mail_message(self.project_a.id)
-        assert mail_message.body == ("<ul><li>Task Template %s modified</ul></li>" % self.task_b.id)
+        assert mail_message.body == ("<ul><li>Task Template %s modified</li></ul>" % self.task_template_b.id)
 
     def test_project_remaining_budget_add_timesheet_on_task(self):
         self.env["account.analytic.line"].create(
