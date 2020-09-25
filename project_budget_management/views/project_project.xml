@@ -9,6 +9,9 @@
             <field name="max_hours" position="after">
                 <field name="remaining_budget" widget="float_time"/>
             </field>
+            <field name="message_follower_ids" position="after">
+                <field name="message_ids" widget="mail_thread"/>
+            </field>
         </field>
     </record>
 

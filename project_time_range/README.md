@@ -1,7 +1,6 @@
 Project Time Range
 ==================
 - This module adds the fields `Min` and `Ideal` and `Max` under the `Management` tab and `Budget` group of a project. The three fields are computed as the sum of the same fields on the Task Templates linked to the Project
-- In the OpenChatter of the Project, add a tracking of the changes on the new fields
 
 ![](static/description/project_time_range.png?raw=true)
 
