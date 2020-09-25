@@ -5,8 +5,6 @@
 from odoo.tests import common
 from odoo.exceptions import ValidationError
 
-from ..models.project_task import ARROW_ICON
-
 
 class TestProjectWithMinMax(common.SavepointCase):
 
