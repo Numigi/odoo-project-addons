@@ -41,7 +41,7 @@ msgstr "Modèle de tâche"
 #: code:addons/project_budget_management/models/project_task.py:29
 #, python-format
 msgid "added"
-msgstr ""
+msgstr "ajoutée"
 
 #. module: project_budget_management
 #: code:addons/project_budget_management/models/project_task.py:37
