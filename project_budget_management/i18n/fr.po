@@ -53,7 +53,7 @@ msgstr "supprimée"
 #: code:addons/project_budget_management/models/project_task.py:32
 #, python-format
 msgid "modified"
-msgstr ""
+msgstr "modifiée"
 
 #. module: project_budget_management
 #: code:addons/project_budget_management/models/project_task.py:23
