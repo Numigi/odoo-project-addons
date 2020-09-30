@@ -5,7 +5,6 @@ from odoo.tests import common
 
 
 class TestProjectBudgetManagement(common.SavepointCase):
-
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -37,23 +36,43 @@ class TestProjectBudgetManagement(common.SavepointCase):
             {"name": "Task D", "is_template": False, "project_id": cls.project_a.id}
         )
         cls.timesheet_1 = cls.env["account.analytic.line"].create(
-            {"name": "ts1", "project_id": cls.project_a.id, "task_id": cls.task_c.id, "unit_amount": 1}
+            {
+                "name": "ts1",
+                "project_id": cls.project_a.id,
+                "task_id": cls.task_c.id,
+                "unit_amount": 1,
+            }
         )
         cls.timesheet_2 = cls.env["account.analytic.line"].create(
-            {"name": "ts2", "project_id": cls.project_a.id, "task_id": cls.task_c.id, "unit_amount": 2}
+            {
+                "name": "ts2",
+                "project_id": cls.project_a.id,
+                "task_id": cls.task_c.id,
+                "unit_amount": 2,
+            }
         )
         cls.timesheet_3 = cls.env["account.analytic.line"].create(
-            {"name": "ts3", "project_id": cls.project_a.id, "task_id": cls.task_d.id, "unit_amount": 4}
+            {
+                "name": "ts3",
+                "project_id": cls.project_a.id,
+                "task_id": cls.task_d.id,
+                "unit_amount": 4,
+            }
         )
         cls.timesheet_4 = cls.env["account.analytic.line"].create(
-            {"name": "ts4", "project_id": cls.project_a.id, "task_id": cls.task_d.id, "unit_amount": 8}
+            {
+                "name": "ts4",
+                "project_id": cls.project_a.id,
+                "task_id": cls.task_d.id,
+                "unit_amount": 8,
+            }
         )
 
     def _get_last_mail_message(self, project_id):
         return self.env["mail.message"].search(
             [("model", "=", "project.project"), ("res_id", "=", project_id)],
             order="id desc",
-            limit=1
+            limit=1,
         )
 
     def test_project_remaining_budget(self):
@@ -72,43 +91,57 @@ class TestProjectBudgetManagement(common.SavepointCase):
         )
         assert self.project_a.remaining_budget == 35
         mail_message = self._get_last_mail_message(self.project_a.id)
-        assert mail_message.body == ("<ul><li>Task Template %s added</li></ul>" % new_task.id)
+        assert mail_message.body == (
+            "<ul><li>Task Template %s added</li></ul>" % new_task.id
+        )
 
     def test_project_remaining_budget_for_task_template_remove(self):
         self.task_template_b.unlink()
         assert self.project_a.remaining_budget == -13
         mail_message = self._get_last_mail_message(self.project_a.id)
-        assert mail_message.body == ("<ul><li>Task Template %s deleted</li></ul>" % self.task_template_b.id)
+        assert mail_message.body == (
+            "<ul><li>Task Template %s deleted</li></ul>" % self.task_template_b.id
+        )
 
     def test_project_remaining_budget_for_task_template_move_project(self):
         new_project = self.env["project.project"].create({"name": "Project B"})
         self.task_template_b.project_id = new_project.id
         assert self.project_a.remaining_budget == -13
         mail_message = self._get_last_mail_message(self.project_a.id)
-        assert mail_message.body == ("<ul><li>Task Template %s removed from project</li></ul>" % self.task_template_b.id)
+        assert mail_message.body == (
+            "<ul><li>Task Template %s removed from project</li></ul>"
+            % self.task_template_b.id
+        )
         mail_message = self._get_last_mail_message(new_project.id)
-        assert mail_message.body == ("<ul><li>Task Template %s added</li></ul>" % self.task_template_b.id)
+        assert mail_message.body == (
+            "<ul><li>Task Template %s added</li></ul>" % self.task_template_b.id
+        )
 
     def test_project_remaining_budget_for_task_template_update(self):
         self.task_template_b.write(
-            {
-                "min_hours": 64,
-                "planned_hours": 128,
-                "max_hours": 256,
-            }
+            {"min_hours": 64, "planned_hours": 128, "max_hours": 256}
         )
         assert self.project_a.remaining_budget == 115
         mail_message = self._get_last_mail_message(self.project_a.id)
-        assert mail_message.body == ("<ul><li>Task Template %s modified</li></ul>" % self.task_template_b.id)
+        assert mail_message.body == (
+            "<ul><li>Task Template %s modified</li></ul>" % self.task_template_b.id
+        )
 
     def test_project_remaining_budget_add_timesheet_on_task(self):
         self.env["account.analytic.line"].create(
-            {"name": "ts1", "project_id": self.project_a.id, "task_id": self.task_c.id, "unit_amount": 16}
+            {
+                "name": "ts1",
+                "project_id": self.project_a.id,
+                "task_id": self.task_c.id,
+                "unit_amount": 16,
+            }
         )
         assert self.project_a.remaining_budget == -13
 
     def test_project_remaining_budget_add_timesheet_on_new_task(self):
-        self.env["account.analytic.line"].create({"name": "ts1", "project_id": self.project_a.id, "unit_amount": 16})
+        self.env["account.analytic.line"].create(
+            {"name": "ts1", "project_id": self.project_a.id, "unit_amount": 16}
+        )
         assert self.project_a.remaining_budget == -13
 
     def test_project_remaining_budget_for_moved_timesheet_in(self):
@@ -121,8 +154,11 @@ class TestProjectBudgetManagement(common.SavepointCase):
 
     def test_project_remaining_budget_for_moved_timesheet_out(self):
         project_b = self.env["project.project"].create({"name": "Project B"})
-        self.timesheet_3.write({"project_id": project_b.id})
-        self.timesheet_4.write({"project_id": project_b.id})
+        task_b = self.env["project.task"].create(
+            {"name": "Task B", "project_id": project_b.id}
+        )
+        self.timesheet_3.write({"project_id": project_b.id, "task_id": task_b.id})
+        self.timesheet_4.write({"project_id": project_b.id, "task_id": task_b.id})
         assert self.project_a.remaining_budget == 15
 
     def test_project_remaining_budget_for_deleted_timesheet(self):
