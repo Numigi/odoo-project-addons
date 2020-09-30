@@ -1,0 +1,63 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* project_budget_management
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-09-30 05:13+0000\n"
+"PO-Revision-Date: 2020-09-30 05:13+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: project_budget_management
+#: model:ir.model,name:project_budget_management.model_project_project
+msgid "Project"
+msgstr "Projet"
+
+#. module: project_budget_management
+#: model:ir.model.fields,field_description:project_budget_management.field_project_project__remaining_budget
+msgid "Remaining Budget"
+msgstr "Budget Restant"
+
+#. module: project_budget_management
+#: model:ir.model,name:project_budget_management.model_project_task
+msgid "Task"
+msgstr "Tâche"
+
+#. module: project_budget_management
+#: code:addons/project_budget_management/models/project_task.py:42
+#, python-format
+msgid "Task Template"
+msgstr "Modèle de tâche"
+
+#. module: project_budget_management
+#: code:addons/project_budget_management/models/project_task.py:13
+#: code:addons/project_budget_management/models/project_task.py:29
+#, python-format
+msgid "added"
+msgstr "ajoutée"
+
+#. module: project_budget_management
+#: code:addons/project_budget_management/models/project_task.py:37
+#, python-format
+msgid "deleted"
+msgstr "supprimée"
+
+#. module: project_budget_management
+#: code:addons/project_budget_management/models/project_task.py:32
+#, python-format
+msgid "modified"
+msgstr "modifiée"
+
+#. module: project_budget_management
+#: code:addons/project_budget_management/models/project_task.py:23
+#, python-format
+msgid "removed from project"
+msgstr "retirée du projet"
+

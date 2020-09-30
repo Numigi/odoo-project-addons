@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="project_with_min_max_hours_with_remaining_budget" model="ir.ui.view">
+        <field name="name">Project Project Form: Add Remaining Budget</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project_time_range.project_with_min_max_hours"/>
+        <field name="arch" type="xml">
+            <field name="max_hours" position="after">
+                <field name="remaining_budget" widget="float_time"/>
+            </field>
+            <field name="message_follower_ids" position="after">
+                <field name="message_ids" widget="mail_thread"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>

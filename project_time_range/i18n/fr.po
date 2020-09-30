@@ -19,8 +19,8 @@ msgstr ""
 
 #. module: project_time_range
 #: model_terms:ir.ui.view,arch_db:project_time_range.project_with_min_max_hours
-msgid "Estimated"
-msgstr "Estimés"
+msgid "Budget"
+msgstr "Budget"
 
 #. module: project_time_range
 #: model:ir.model.fields,field_description:project_time_range.field_project_project__planned_hours

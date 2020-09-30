@@ -14,6 +14,7 @@ RUN gitoo install-all --conf_file /gitoo.yml --destination "${THIRD_PARTY_ADDONS
 USER odoo
 
 COPY project_analytic_group /mnt/extra-addons/project_analytic_group
+COPY project_budget_management /mnt/extra-addons/project_budget_management
 COPY project_chatter /mnt/extra-addons/project_chatter
 COPY project_default_task_stage /mnt/extra-addons/project_default_task_stage
 COPY project_form_with_dates /mnt/extra-addons/project_form_with_dates
