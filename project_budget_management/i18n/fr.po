@@ -47,7 +47,7 @@ msgstr "ajoutée"
 #: code:addons/project_budget_management/models/project_task.py:37
 #, python-format
 msgid "deleted"
-msgstr ""
+msgstr "supprimée"
 
 #. module: project_budget_management
 #: code:addons/project_budget_management/models/project_task.py:32
