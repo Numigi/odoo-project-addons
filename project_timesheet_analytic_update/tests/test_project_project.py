@@ -34,3 +34,14 @@ class TestProjectTimesheetAnalyticUpdate(common.SavepointCase):
         assert self.project_b.analytic_account_id == self.analytic_account_2
         assert self.timesheet_b.account_id == self.analytic_account_2
         assert self.timesheet_c.account_id == self.analytic_account_2
+
+    def test_if_no_analytic_account__no_warning_raised(self):
+        project = self.env["project.project"].new()
+        result = project._onchange_account_id()
+        assert not result
+
+    def test_if_analytic_account_set__warning_raised(self):
+        project = self.env["project.project"].new()
+        project.analytic_account_id = self.analytic_account_1
+        result = project._onchange_account_id()
+        assert "warning" in result
