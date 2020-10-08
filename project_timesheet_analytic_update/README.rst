@@ -5,7 +5,7 @@ When the analytic account of a project is modified, this module updates the anal
 
 A warning is displayed to the user, informing them of the modification.
 
-.. image:: static/description/update_analytic_account_earning.png
+.. image:: static/description/update_analytic_account_warning.png
 
 Contributors
 ------------
