@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-04-01 12:46+0000\n"
-"PO-Revision-Date: 2019-04-01 08:50-0400\n"
+"POT-Creation-Date: 2020-12-02 21:30+0000\n"
+"PO-Revision-Date: 2020-12-02 16:37-0500\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -20,32 +20,37 @@ msgstr ""
 #. module: project_time_management
 #: model_terms:ir.ui.view,arch_db:project_time_management.project_calculated_time_fields
 msgid "Calculated"
-msgstr "Calculés"
+msgstr "Calculé"
 
 #. module: project_time_management
 #: model:ir.model.fields,field_description:project_time_management.field_project_project__calculated_planned_hours
 msgid "Calculated Ideal"
-msgstr "Idéal"
+msgstr "Heures calculées idéales"
 
 #. module: project_time_management
 #: model:ir.model.fields,field_description:project_time_management.field_project_project__calculated_max_hours
 msgid "Calculated Max"
-msgstr "Max"
+msgstr "Heures calculées maximales"
 
 #. module: project_time_management
 #: model:ir.model.fields,field_description:project_time_management.field_project_project__calculated_min_hours
 msgid "Calculated Min"
-msgstr "Min"
+msgstr "Heures calculées minimales"
 
 #. module: project_time_management
 #: model:ir.model.fields,field_description:project_time_management.field_project_project__calculated_remaining_hours
 msgid "Calculated Remaining Hours"
-msgstr "Temps Restant"
+msgstr "Heures calculées restantes"
 
 #. module: project_time_management
 #: model:ir.model.fields,field_description:project_time_management.field_project_project__calculated_total_hours_spent
 msgid "Calculated Total Hours Spent"
-msgstr "Encours Consommé"
+msgstr "Heures totales consommées"
+
+#. module: project_time_management
+#: model_terms:ir.ui.view,arch_db:project_time_management.project_calculated_time_fields
+msgid "Ideal"
+msgstr "Idéal"
 
 #. module: project_time_management
 #: model_terms:ir.ui.view,arch_db:project_time_management.project_calculated_time_fields
@@ -61,3 +66,13 @@ msgstr "Min"
 #: model:ir.model,name:project_time_management.model_project_project
 msgid "Project"
 msgstr "Projet"
+
+#. module: project_time_management
+#: model_terms:ir.ui.view,arch_db:project_time_management.project_calculated_time_fields
+msgid "Remaining"
+msgstr "Restant"
+
+#. module: project_time_management
+#: model_terms:ir.ui.view,arch_db:project_time_management.project_calculated_time_fields
+msgid "Spent"
+msgstr "Consommé"

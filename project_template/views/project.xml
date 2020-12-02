@@ -35,6 +35,7 @@
         <field name="target">new</field>
         <field name="context">{
             'default_project_id': active_id,
+            'default_is_template': True,
         }</field>
     </record>
 

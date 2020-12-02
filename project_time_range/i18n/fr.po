@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-04-01 12:47+0000\n"
-"PO-Revision-Date: 2019-04-01 08:49-0400\n"
+"POT-Creation-Date: 2020-12-02 21:30+0000\n"
+"PO-Revision-Date: 2020-12-02 16:34-0500\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -23,9 +23,14 @@ msgid "Budget"
 msgstr "Budget"
 
 #. module: project_time_range
+#: model_terms:ir.ui.view,arch_db:project_time_range.project_with_min_max_hours
+msgid "Ideal"
+msgstr "Idéal"
+
+#. module: project_time_range
 #: model:ir.model.fields,field_description:project_time_range.field_project_project__planned_hours
 msgid "Ideal Planned Hours"
-msgstr "Idéal"
+msgstr "Heures prévues idéales"
 
 #. module: project_time_range
 #: model_terms:ir.ui.view,arch_db:project_time_range.project_with_min_max_hours
@@ -46,7 +51,7 @@ msgstr "Les heures Max doivent être supérieures aux heures idéales."
 #. module: project_time_range
 #: model:ir.model.fields,field_description:project_time_range.field_project_project__max_hours
 msgid "Maximum Planned Hours"
-msgstr "Max"
+msgstr "Heures prévues maximales"
 
 #. module: project_time_range
 #: model_terms:ir.ui.view,arch_db:project_time_range.project_with_min_max_hours
@@ -62,7 +67,7 @@ msgstr "Les heures Min doivent être inférieures aux heures idéales."
 #. module: project_time_range
 #: model:ir.model.fields,field_description:project_time_range.field_project_project__min_hours
 msgid "Minimum Planned Hours"
-msgstr "Min"
+msgstr "Heures prévues minimales"
 
 #. module: project_time_range
 #: model:ir.model,name:project_time_range.model_project_project
