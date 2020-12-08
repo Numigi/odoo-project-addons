@@ -14,9 +14,10 @@
     "data": [
         "security/res_groups.xml",
         "security/ir.model.access.csv",
-        "views/account_move_no_analytic.xml",
+        "wizard/project_wip_transfer.xml",
+        "views/account_move.xml",
+        "views/project_project.xml",
         "views/project_type.xml",
-        "views/project_wip_to_cgs.xml",
     ],
     "installable": True,
 }

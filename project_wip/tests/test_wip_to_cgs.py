@@ -3,7 +3,7 @@
 
 import pytest
 from freezegun import freeze_time
-from datetime import datetime, timedelta
+from datetime import datetime, date, timedelta
 from odoo import fields
 from odoo.tests import common
 from odoo.exceptions import ValidationError, AccessError
@@ -226,17 +226,17 @@ class TestWIPTrasferToCGS(common.SavepointCase):
         assert transfer_move.state == "posted"
 
     def test_if_no_specific_date__current_date_is_used(self):
-        now = datetime(2020, 4, 13)
-        with freeze_time(now):
+        today = date(2020, 4, 13)
+        with freeze_time(today):
             self._action_wip_to_cgs()
             transfer_move = self._find_wip_to_cgs_move()
-            assert transfer_move.date == fields.Date.to_string(now)
+            assert transfer_move.date == today
 
     def test_if_specific_date_given__specific_date_is_used(self):
         specific_date = datetime.now().date() + timedelta(30)
         self.project.action_wip_to_cgs(specific_date)
         transfer_move = self._find_wip_to_cgs_move()
-        assert transfer_move.date == fields.Date.to_string(specific_date)
+        assert transfer_move.date == specific_date
 
     def test_if_action_ran_twice__only_one_transfer_move_generated(self):
         self._action_wip_to_cgs()
@@ -271,7 +271,7 @@ class TestWIPTrasferToCGS(common.SavepointCase):
         )
         wizard.validate()
         transfer_move = self._find_wip_to_cgs_move()
-        assert transfer_move.date == fields.Date.to_string(specific_date)
+        assert transfer_move.date == specific_date
 
     def test_if_not_project_manager__can_not_transfer_wip_to_cgs(self):
         self.user.groups_id -= self.env.ref("project_wip.group_wip_to_cgs")
