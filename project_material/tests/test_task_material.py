@@ -12,7 +12,6 @@ from .common import TaskMaterialCase
 
 @ddt
 class TestGenerateProcurementsFromTask(TaskMaterialCase):
-
     def test_if_no_date_planned_on_task__raise_exception(self):
         self.task.date_planned = False
         with pytest.raises(ValidationError):
@@ -54,11 +53,8 @@ class TestGenerateProcurementsFromTask(TaskMaterialCase):
         assert line.move_ids.product_uom_qty == 10
 
     def test_product_uom_propagated_to_stock_move(self):
-        uom = self.env.ref('product.product_uom_kgm')
-        self.product_a.write({
-            'uom_id': uom.id,
-            'uom_po_id': uom.id,
-        })
+        uom = self.env.ref("uom.product_uom_kgm")
+        self.product_a.write({"uom_id": uom.id, "uom_po_id": uom.id})
         line = self._create_material_line()
         assert line.move_ids.product_uom == uom
 
@@ -84,11 +80,7 @@ class TestGenerateProcurementsFromTask(TaskMaterialCase):
         line = self._create_material_line()
         assert line.move_ids.picking_id.project_id == self.project
 
-    @data(
-        ('task_readonly', True),
-        ('task_invisible', False),
-        ('task_required', False),
-    )
+    @data(("task_readonly", True), ("task_invisible", False), ("task_required", False))
     @unpack
     def test_stock_picking_task_modifiers(self, modifier_field, value):
         line = self._create_material_line()
@@ -103,7 +95,7 @@ class TestGenerateProcurementsFromTask(TaskMaterialCase):
     def test_if_delete_material_line__move_is_cancelled(self):
         line = self._create_material_line(initial_qty=10)
         line.initial_qty = 0
-        assert line.move_ids.state == 'cancel'
+        assert line.move_ids.state == "cancel"
 
     def test_if_delete_material_line__move_removed_from_stock_picking(self):
         line = self._create_material_line(initial_qty=10)
@@ -122,11 +114,13 @@ class TestGenerateProcurementsFromTask(TaskMaterialCase):
         line.initial_qty = 15
         assert len(line.move_ids) == 2
 
-    def test_if_raise_initial_quantity__if_move_is_done__new_move_has_missing_quantity(self):
+    def test_if_raise_initial_quantity__if_move_is_done__new_move_has_missing_quantity(
+        self
+    ):
         line = self._create_material_line(initial_qty=10)
         self._force_transfer_move(line.move_ids)
         line.initial_qty = 15
-        new_move = line.move_ids.filtered(lambda m: m.state != 'done')
+        new_move = line.move_ids.filtered(lambda m: m.state != "done")
         assert new_move.product_uom_qty == 5
 
     def test_if_move_is_done__can_not_reduce_quantity(self):
@@ -139,15 +133,15 @@ class TestGenerateProcurementsFromTask(TaskMaterialCase):
         line = self._create_material_line(initial_qty=10)
         self._force_transfer_move(line.move_ids, 7)
         line.initial_qty = 9
-        back_order = line.move_ids.filtered(lambda m: m.state != 'done')
+        back_order = line.move_ids.filtered(lambda m: m.state != "done")
         assert back_order.product_uom_qty == 2  # 9 - 7
 
     def test_if_back_order__initial_qty_can_be_reduced_to_delivered_quantity(self):
         line = self._create_material_line(initial_qty=10)
         self._force_transfer_move(line.move_ids, 7)
         line.initial_qty = 7
-        back_order = line.move_ids.filtered(lambda m: m.state != 'done')
-        assert back_order.state == 'cancel'
+        back_order = line.move_ids.filtered(lambda m: m.state != "done")
+        assert back_order.state == "cancel"
 
     def test_if_back_order__initial_qty_can_not_be_below_delivered_quantity(self):
         line = self._create_material_line(initial_qty=10)
@@ -159,7 +153,7 @@ class TestGenerateProcurementsFromTask(TaskMaterialCase):
         line = self._create_material_line(initial_qty=10)
         self._force_transfer_move(line.move_ids, 7)
         line.initial_qty = 11
-        back_order = line.move_ids.filtered(lambda m: m.state != 'done')
+        back_order = line.move_ids.filtered(lambda m: m.state != "done")
         assert back_order.product_uom_qty == 4  # 11 - 7
 
     def test_if_move_not_done__no_consumed_quantity(self):
@@ -187,7 +181,7 @@ class TestGenerateProcurementsFromTask(TaskMaterialCase):
         line = self._create_material_line()
         move = line.move_ids
         line.unlink()
-        assert move.state == 'cancel'
+        assert move.state == "cancel"
 
     def test_if_any_move_done__material_line_can_not_be_deleted(self):
         line = self._create_material_line(initial_qty=10)
@@ -196,17 +190,17 @@ class TestGenerateProcurementsFromTask(TaskMaterialCase):
             line.unlink()
 
     def _get_po_line(self, product):
-        return self.env['purchase.order.line'].search([('product_id', '=', product.id)])
+        return self.env["purchase.order.line"].search([("product_id", "=", product.id)])
 
     def test_if_product_is_not_mto__purchase_order_not_generated(self):
         self._create_material_line()
         po_line = self._get_po_line(self.product_a)
         assert not po_line
 
-    @data('one_step', 'two_steps')
+    @data("one_step", "two_steps")
     def test_if_product_is_mto__purchase_order_generated(self, steps):
         self.warehouse.consu_steps = steps
-        self.product_a.route_ids |= self.env.ref('stock.route_warehouse0_mto')
+        self.product_a.route_ids |= self.env.ref("stock.route_warehouse0_mto")
         self._create_material_line()
         po_line = self._get_po_line(self.product_a)
         assert po_line
@@ -215,7 +209,7 @@ class TestGenerateProcurementsFromTask(TaskMaterialCase):
         line = self._create_material_line()
         move = line.move_ids
         line.task_id = self.task_2
-        assert move.state == 'cancel'
+        assert move.state == "cancel"
 
     def test_after_change_task__new_stock_move_created(self):
         line = self._create_material_line()
@@ -232,7 +226,7 @@ class TestGenerateProcurementsFromTask(TaskMaterialCase):
         line = self._create_material_line()
         move = line.move_ids
         line.product_id = self.product_b
-        assert move.state == 'cancel'
+        assert move.state == "cancel"
 
     def test_after_change_product__new_stock_move_created(self):
         line = self._create_material_line()
@@ -273,11 +267,10 @@ class TestGenerateProcurementsFromTask(TaskMaterialCase):
 
 
 class TestPreparationStep(TaskMaterialCase):
-
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.warehouse.consu_steps = 'two_steps'
+        cls.warehouse.consu_steps = "two_steps"
         cls.initial_qty = 10
         cls.line = cls._create_material_line(initial_qty=cls.initial_qty)
         cls.preparation_move = cls.line.move_ids.move_orig_ids
@@ -289,7 +282,7 @@ class TestPreparationStep(TaskMaterialCase):
 
     def test_if_qty_reduced_to_zero__preparation_cancelled(self):
         self.line.initial_qty = 0
-        assert self.preparation_move.state == 'cancel'
+        assert self.preparation_move.state == "cancel"
 
     def test_if_qty_reduced_to_zero__preparation_unlinked_from_picking(self):
         self.line.initial_qty = 0
@@ -339,7 +332,7 @@ class TestPreparationStep(TaskMaterialCase):
         assert self.task.show_material_prepared_qty
 
     def test_on_task__if_1_step__hide_prepared_qty(self):
-        self.warehouse.consu_steps = 'one_step'
+        self.warehouse.consu_steps = "one_step"
         assert not self.task.show_material_prepared_qty
 
     def test_destination_material_line(self):

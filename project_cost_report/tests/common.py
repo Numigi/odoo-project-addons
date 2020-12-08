@@ -44,7 +44,7 @@ class ProjectCostReportCase(common.SavepointCase):
                 "name": "Line 1",
                 "product_id": cls.product_a.id,
                 "unit_amount": 1,
-                "product_uom_id": cls.env.ref("product.product_uom_unit").id,
+                "product_uom_id": cls.env.ref("uom.product_uom_unit").id,
                 "amount": -100,
             }
         )
@@ -55,7 +55,7 @@ class ProjectCostReportCase(common.SavepointCase):
                 "name": "Line 2",
                 "product_id": cls.product_b.id,
                 "unit_amount": 2,
-                "product_uom_id": cls.env.ref("product.product_uom_unit").id,
+                "product_uom_id": cls.env.ref("uom.product_uom_unit").id,
                 "amount": -200,
             }
         )
@@ -66,7 +66,7 @@ class ProjectCostReportCase(common.SavepointCase):
                 "name": "Line 3",
                 "product_id": cls.product_b.id,
                 "unit_amount": 3,
-                "product_uom_id": cls.env.ref("product.product_uom_unit").id,
+                "product_uom_id": cls.env.ref("uom.product_uom_unit").id,
                 "amount": -300,
             }
         )
@@ -112,7 +112,7 @@ class ProjectCostReportCase(common.SavepointCase):
             {
                 "project_id": cls.project.id,
                 "name": "Time 1",
-                "product_uom_id": cls.env.ref("product.product_uom_hour").id,
+                "product_uom_id": cls.env.ref("uom.product_uom_hour").id,
                 "unit_amount": 4,
                 "amount": -400,
                 "user_id": cls.env.user.id,
@@ -124,7 +124,7 @@ class ProjectCostReportCase(common.SavepointCase):
             {
                 "project_id": cls.project.id,
                 "name": "Time 2",
-                "product_uom_id": cls.env.ref("product.product_uom_hour").id,
+                "product_uom_id": cls.env.ref("uom.product_uom_hour").id,
                 "unit_amount": 5,
                 "amount": -500,
                 "user_id": cls.env.user.id,
@@ -136,7 +136,7 @@ class ProjectCostReportCase(common.SavepointCase):
             {
                 "project_id": cls.project.id,
                 "name": "Time 3",
-                "product_uom_id": cls.env.ref("product.product_uom_hour").id,
+                "product_uom_id": cls.env.ref("uom.product_uom_hour").id,
                 "unit_amount": 6,
                 "amount": -600,
                 "user_id": cls.env.user.id,
@@ -148,7 +148,7 @@ class ProjectCostReportCase(common.SavepointCase):
             {
                 "project_id": cls.project.id,
                 "name": "Time 3",
-                "product_uom_id": cls.env.ref("product.product_uom_hour").id,
+                "product_uom_id": cls.env.ref("uom.product_uom_hour").id,
                 "unit_amount": 7,
                 "amount": -700,
                 "user_id": cls.env.user.id,
@@ -167,7 +167,7 @@ class ProjectCostReportCase(common.SavepointCase):
                 "name": "Service Line 1",
                 "product_id": cls.service_a.id,
                 "unit_amount": 1,
-                "product_uom_id": cls.env.ref("product.product_uom_unit").id,
+                "product_uom_id": cls.env.ref("uom.product_uom_unit").id,
                 "amount": -800,
             }
         )
@@ -178,7 +178,7 @@ class ProjectCostReportCase(common.SavepointCase):
                 "name": "Service Line 2",
                 "product_id": cls.service_a.id,
                 "unit_amount": 2,
-                "product_uom_id": cls.env.ref("product.product_uom_unit").id,
+                "product_uom_id": cls.env.ref("uom.product_uom_unit").id,
                 "amount": -900,
             }
         )
@@ -192,7 +192,7 @@ class ProjectCostReportCase(common.SavepointCase):
                 "name": "Revenue Line 1",
                 "product_id": cls.service_a.id,
                 "unit_amount": 1,
-                "product_uom_id": cls.env.ref("product.product_uom_unit").id,
+                "product_uom_id": cls.env.ref("uom.product_uom_unit").id,
                 "amount": 100,
                 "revenue": True,
             }
@@ -204,7 +204,7 @@ class ProjectCostReportCase(common.SavepointCase):
                 "name": "Revenue Line 2",
                 "product_id": cls.product_a.id,
                 "unit_amount": 1,
-                "product_uom_id": cls.env.ref("product.product_uom_unit").id,
+                "product_uom_id": cls.env.ref("uom.product_uom_unit").id,
                 "amount": 200,
                 "revenue": True,
             }

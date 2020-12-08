@@ -64,7 +64,7 @@ class TestWIPTrasferToCGS(common.SavepointCase):
             {"name": "Customer", "customer": True}
         )
 
-        cls.uom = cls.env.ref("product.product_uom_lb")
+        cls.uom = cls.env.ref("uom.product_uom_lb")
 
         cls.product_raw = cls.env["product.product"].create(
             {

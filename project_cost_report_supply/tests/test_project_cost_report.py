@@ -23,7 +23,7 @@ class TestProjectCostReportWithShopSupply(ProjectCostReportCase):
             {
                 "account_id": cls.analytic_account.id,
                 "name": "Shop Supply 1",
-                "product_uom_id": cls.env.ref("product.product_uom_hour").id,
+                "product_uom_id": cls.env.ref("uom.product_uom_hour").id,
                 "unit_amount": 10,
                 "amount": -1000,
                 "is_shop_supply": True,
@@ -34,7 +34,7 @@ class TestProjectCostReportWithShopSupply(ProjectCostReportCase):
             {
                 "account_id": cls.analytic_account.id,
                 "name": "Shop Supply 2",
-                "product_uom_id": cls.env.ref("product.product_uom_hour").id,
+                "product_uom_id": cls.env.ref("uom.product_uom_hour").id,
                 "unit_amount": 11,
                 "amount": -1100,
                 "is_shop_supply": True,
