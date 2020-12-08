@@ -6,14 +6,14 @@ from odoo import models
 
 class AccountMoveLine(models.Model):
 
-    _inherit = 'account.move.line'
+    _inherit = "account.move.line"
 
     def create_analytic_lines(self):
         result = super().create_analytic_lines()
 
-        revenue_type = self.env.ref('account.data_account_type_revenue')
         revenue_lines = self.filtered(
-            lambda l: l.account_id.user_type_id == revenue_type)
-        revenue_lines.mapped('analytic_line_ids').write({'revenue': True})
+            lambda l: l.account_id.user_type_id.internal_group == "income"
+        )
+        revenue_lines.mapped("analytic_line_ids").write({"revenue": True})
 
         return result
