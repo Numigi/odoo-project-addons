@@ -6,15 +6,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-04-03 12:59+0000\n"
-"PO-Revision-Date: 2019-04-03 09:07-0400\n"
+"POT-Creation-Date: 2020-12-08 17:25+0000\n"
+"PO-Revision-Date: 2020-12-08 12:26-0500\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"Language: fr\n"
 "X-Generator: Poedit 2.0.6\n"
 
 #. module: project_outsourcing
@@ -33,22 +33,22 @@ msgid "New Outsourcing PO From Task"
 msgstr "Nouveau PO sous-traitance depuis tâche"
 
 #. module: project_outsourcing
-#: model:ir.ui.view,arch_db:project_outsourcing.task_form_with_outsourcing_tab
+#: model_terms:ir.ui.view,arch_db:project_outsourcing.task_form_with_outsourcing_tab
 msgid "New PO"
 msgstr "Nouveau PO"
 
 #. module: project_outsourcing
-#: model:ir.ui.view,arch_db:project_outsourcing.task_form_with_outsourcing_tab
+#: model_terms:ir.ui.view,arch_db:project_outsourcing.task_form_with_outsourcing_tab
 msgid "Order Lines"
 msgstr "Lignes de commande"
 
 #. module: project_outsourcing
-#: model:ir.model.fields,field_description:project_outsourcing.field_account_invoice_line_is_outsourcing
-#: model:ir.model.fields,field_description:project_outsourcing.field_purchase_order_is_outsourcing
-#: model:ir.model.fields,field_description:project_outsourcing.field_purchase_order_line_is_outsourcing
-#: model:ir.ui.view,arch_db:project_outsourcing.project_form_with_outsourcing_smart_button
-#: model:ir.ui.view,arch_db:project_outsourcing.purchase_order_search_with_outsourcing
-#: model:ir.ui.view,arch_db:project_outsourcing.task_form_with_outsourcing_tab
+#: model:ir.model.fields,field_description:project_outsourcing.field_account_invoice_line__is_outsourcing
+#: model:ir.model.fields,field_description:project_outsourcing.field_purchase_order__is_outsourcing
+#: model:ir.model.fields,field_description:project_outsourcing.field_purchase_order_line__is_outsourcing
+#: model_terms:ir.ui.view,arch_db:project_outsourcing.project_form_with_outsourcing_smart_button
+#: model_terms:ir.ui.view,arch_db:project_outsourcing.purchase_order_search_with_outsourcing
+#: model_terms:ir.ui.view,arch_db:project_outsourcing.task_form_with_outsourcing_tab
 msgid "Outsourcing"
 msgstr "Sous-traitance"
 
@@ -58,28 +58,23 @@ msgid "Outsourcing PO List From Project"
 msgstr "Liste PO sous-traitance depuis projet"
 
 #. module: project_outsourcing
-#: model:ir.model.fields,field_description:project_outsourcing.field_project_project_outsourcing_po_count
+#: model:ir.model.fields,field_description:project_outsourcing.field_project_project__outsourcing_po_count
 msgid "Outsourcing Po Count"
 msgstr "Compte du nombre de PO"
 
 #. module: project_outsourcing
-#: model:ir.model.fields,field_description:project_outsourcing.field_project_task_outsourcing_line_ids
+#: model:ir.model.fields,field_description:project_outsourcing.field_project_task__outsourcing_line_ids
 msgid "Outsourcing Purchase Lines"
 msgstr "Lignes de sous-traitance"
 
 #. module: project_outsourcing
-#: model:ir.model.fields,field_description:project_outsourcing.field_project_task_outsourcing_po_ids
+#: model:ir.model.fields,field_description:project_outsourcing.field_project_task__outsourcing_po_ids
 msgid "Outsourcing Purchase Orders"
 msgstr "Commandes de sous-traitance"
 
 #. module: project_outsourcing
-#: model:ir.model,name:project_outsourcing.model_procurement_rule
-msgid "Procurement Rule"
-msgstr ""
-
-#. module: project_outsourcing
 #: model:ir.model,name:project_outsourcing.model_project_project
-#: model:ir.model.fields,field_description:project_outsourcing.field_purchase_order_project_id
+#: model:ir.model.fields,field_description:project_outsourcing.field_purchase_order__project_id
 msgid "Project"
 msgstr "Projet"
 
@@ -94,47 +89,68 @@ msgid "Purchase Order Line"
 msgstr ""
 
 #. module: project_outsourcing
-#: model:ir.ui.view,arch_db:project_outsourcing.task_form_with_outsourcing_tab
+#: model_terms:ir.ui.view,arch_db:project_outsourcing.task_form_with_outsourcing_tab
 msgid "Purchase Orders"
 msgstr "Commandes fournisseurs"
 
 #. module: project_outsourcing
-#: model:ir.ui.view,arch_db:project_outsourcing.task_form_with_outsourcing_tab
+#: model_terms:ir.ui.view,arch_db:project_outsourcing.task_form_with_outsourcing_tab
 msgid "Reference"
 msgstr "Référence"
 
 #. module: project_outsourcing
+#: model:ir.model,name:project_outsourcing.model_stock_rule
+msgid "Stock Rule"
+msgstr ""
+
+#. module: project_outsourcing
 #: model:ir.model,name:project_outsourcing.model_project_task
-#: model:ir.model.fields,field_description:project_outsourcing.field_purchase_order_task_id
+#: model:ir.model.fields,field_description:project_outsourcing.field_purchase_order__task_id
 msgid "Task"
 msgstr "Tâche"
 
 #. module: project_outsourcing
-#: code:addons/project_outsourcing/no_stockable_products.py:27
+#: code:addons/project_outsourcing/models/purchase_order_line.py:20
 #, python-format
-msgid "The product {product} can not be added to the outsourcing order {order} because it is a stockable product. Stockable products can not be used on an outsourcing PO."
-msgstr "L'article {product} ne peut pas être ajouté à la commande de sous-traitance {order} car c'est un article stockable. Les articles stockables ne peuvent pas être utilisés sur un PO de sous-traitance."
+msgid ""
+"The product {product} can not be added to the outsourcing order {order} "
+"because it is a stockable product. Stockable products can not be used on an "
+"outsourcing PO."
+msgstr ""
+"L'article {product} ne peut pas être ajouté à la commande de sous-traitance "
+"{order} car c'est un article stockable. Les articles stockables ne peuvent "
+"pas être utilisés sur un PO de sous-traitance."
 
 #. module: project_outsourcing
-#: code:addons/project_outsourcing/task_change_project.py:18
+#: code:addons/project_outsourcing/models/project_task.py:41
 #, python-format
-msgid "The project can not be changed on the task {task}. The task is linked to the following confirmed outsourcing purchase orders: {orders}"
-msgstr "Le projet ne peut pas être modifié sur la tâche {task}. La tâche est liée à au moins une commande de sous-traitance confirmée : {orders}"
+msgid ""
+"The project can not be changed on the task {task}. The task is linked to the "
+"following confirmed outsourcing purchase orders: {orders}"
+msgstr ""
+"Le projet ne peut pas être modifié sur la tâche {task}. La tâche est liée à "
+"au moins une commande de sous-traitance confirmée : {orders}"
 
 #. module: project_outsourcing
-#: code:addons/project_outsourcing/outsourcing_purchase_order.py:89
+#: code:addons/project_outsourcing/models/purchase_order.py:66
 #, python-format
-msgid "The project {} has no type. The project type must be set before confirming the outsourcing purchase order."
-msgstr "Le projet {} n'a pas de type. Un type de projet doit être paramétré avant de confirmer la commande de sous-traitance."
+msgid ""
+"The purchase order {} must have a project because it is an outsourcing PO."
+msgstr ""
+"La commande fournisseur {} doit avoir un projet car il s'agit d'un PO de "
+"sous-traitance."
 
 #. module: project_outsourcing
-#: code:addons/project_outsourcing/outsourcing_purchase_order.py:54
-#, python-format
-msgid "The purchase order {} must have a project because it is an outsourcing PO."
-msgstr "La commande fournisseur {} doit avoir un projet car il s'agit d'un PO de sous-traitance."
-
-#. module: project_outsourcing
-#: code:addons/project_outsourcing/outsourcing_purchase_order.py:44
+#: code:addons/project_outsourcing/models/purchase_order.py:56
 #, python-format
 msgid "The purchase order {} must have a task because it is an outsourcing PO."
-msgstr "La commande fournisseur {} doit avoir une tâche car il s'agit d'un PO de sous-traitance."
+msgstr ""
+"La commande fournisseur {} doit avoir une tâche car il s'agit d'un PO de "
+"sous-traitance."
+
+#~ msgid ""
+#~ "The project {} has no type. The project type must be set before "
+#~ "confirming the outsourcing purchase order."
+#~ msgstr ""
+#~ "Le projet {} n'a pas de type. Un type de projet doit être paramétré avant "
+#~ "de confirmer la commande de sous-traitance."

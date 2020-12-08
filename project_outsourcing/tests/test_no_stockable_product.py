@@ -19,7 +19,7 @@ class TestNoStockableProduct(OutsourcingCase):
                 "type": "product",
                 "route_ids": [
                     (4, cls.env.ref("stock.route_warehouse0_mto").id),
-                    (4, cls.env.ref("purchase.route_warehouse0_buy").id),
+                    (4, cls.env.ref("purchase_stock.route_warehouse0_buy").id),
                 ],
                 "seller_ids": [(0, 0, {"name": cls.supplier.id})],
             }

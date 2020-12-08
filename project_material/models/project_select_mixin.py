@@ -15,12 +15,13 @@ class ProjectSelect(models.AbstractModel):
     This mixin expects the concrete class to have a many2one field `task_id`.
     """
 
-    _name = 'project.select.mixin'
+    _name = "project.select.mixin"
+    _description = "Project Selection Mixin"
 
     project_select_id = fields.Many2one(
-        'project.project',
-        'Project Select',
-        compute='_compute_project_select',
+        "project.project",
+        "Project Select",
+        compute="_compute_project_select",
         inverse=lambda self: None,
     )
 
@@ -28,7 +29,7 @@ class ProjectSelect(models.AbstractModel):
         for record in self:
             record.project_select_id = record.project_id
 
-    @api.onchange('project_select_id')
+    @api.onchange("project_select_id")
     def _onchange_project_select_reset_task(self):
         if self.project_select_id != self.task_id.project_id:
             self.task_id = False
