@@ -12,6 +12,7 @@ var framework = require("web.framework");
 var rpc = require("web.rpc");
 var session = require("web.session");
 var Widget = require("web.Widget");
+var AbstractAction = require("web.AbstractAction");
 
 var QWeb = core.qweb;
 var _t = core._t;
@@ -42,7 +43,7 @@ function getRecordNameFromEvent(event){
     return attributeNode ? attributeNode.nodeValue : false;
 }
 
-var ReportAction = Widget.extend(ControlPanelMixin, {
+var ReportAction = AbstractAction.extend(ControlPanelMixin, {
     events: {
         "click .o_project_cost_report__analytic_line": "analyticLineClicked",
         "click .o_project_cost_report__product_category": "productCategoryClicked",
@@ -133,7 +134,7 @@ var ReportAction = Widget.extend(ControlPanelMixin, {
      */
     updateControlPanel(){
         this.update_control_panel({
-            breadcrumbs: this.getParent().get_breadcrumbs(),
+            breadcrumbs: this.getParent()._getBreadcrumbs(),
             cp_content: {$buttons: this.getControlPanelButtons()},
         });
     },

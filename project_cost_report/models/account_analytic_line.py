@@ -9,9 +9,7 @@ class AnalyticLine(models.Model):
 
     _inherit = "account.analytic.line"
 
-    unit_cost = fields.Monetary(
-        compute="_compute_unit_cost", currency_field="company_currency_id"
-    )
+    unit_cost = fields.Monetary(compute="_compute_unit_cost")
 
     @api.depends("amount", "unit_amount")
     def _compute_unit_cost(self):

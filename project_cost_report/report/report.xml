@@ -217,7 +217,7 @@
         <table>
             <thead>
                 <tr class="o_project_cost_report__level_1">
-                    <th colspan="7">Item</th>
+                    <th class="text-left" colspan="7">Item</th>
                     <th class="text-right">Cost</th>
                     <t t-if="show_summary">
                         <th class="text-right">Target</th>
@@ -296,7 +296,7 @@
     <template id="assets_backend" name="cost_report assets" inherit_id="web.assets_backend">
         <xpath expr="." position="inside">
             <script type="text/javascript" src="/project_cost_report/static/src/js/report_action.js"></script>
-            <link rel="stylesheet" type="text/less" href="/project_cost_report/static/src/less/cost_report.less"/>
+            <link rel="stylesheet" type="text/scss" href="/project_cost_report/static/src/scss/cost_report.scss"/>
         </xpath>
     </template>
 
@@ -305,9 +305,9 @@
     </template>
 
     <template id="cost_report_assets_pdf" name="Cost Report PDF Assets">
-        <t t-call="web.less_helpers"/>
-        <link rel="stylesheet" href="/project_cost_report/static/src/less/cost_report.less" />
-        <link rel="stylesheet" href="/project_cost_report/static/src/less/cost_report_pdf.less" />
+        <t t-call="web._assets_helpers"/>
+        <link rel="stylesheet" type="text/scss" href="/project_cost_report/static/src/scss/cost_report.scss" />
+        <link rel="stylesheet" type="text/scss" href="/project_cost_report/static/src/scss/cost_report_pdf.scss" />
     </template>
 
     <template id="cost_report_pdf">

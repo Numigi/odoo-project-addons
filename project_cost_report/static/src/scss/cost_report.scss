@@ -12,15 +12,14 @@
 }
 
 .o_project_cost_report__header {
-    display: flex;
 }
 
 .o_project_cost_report__header__left {
-    flex: 1;
+    float: left;
 }
 
 .o_project_cost_report__header__right {
-    max-width: 50%;
+    float: right;
 }
 
 .o_project_cost_report__level_1 {
@@ -68,7 +67,7 @@
 }
 
 .o_project_cost_report__link {
-    color: @odoo-brand-optional;
+    color: $o-brand-primary;
     cursor: pointer;
 }
 

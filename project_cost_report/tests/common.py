@@ -119,6 +119,7 @@ class ProjectCostReportCase(common.SavepointCase):
                 "task_id": cls.task_1.id,
             }
         )
+        cls.time_line_1.amount = -400
 
         cls.time_line_2 = cls.env["account.analytic.line"].create(
             {
@@ -131,6 +132,7 @@ class ProjectCostReportCase(common.SavepointCase):
                 "task_id": cls.task_2.id,
             }
         )
+        cls.time_line_2.amount = -500
 
         cls.time_line_3 = cls.env["account.analytic.line"].create(
             {
@@ -143,6 +145,7 @@ class ProjectCostReportCase(common.SavepointCase):
                 "task_id": cls.task_2.id,
             }
         )
+        cls.time_line_3.amount = -600
 
         cls.time_line_4 = cls.env["account.analytic.line"].create(
             {
@@ -155,6 +158,7 @@ class ProjectCostReportCase(common.SavepointCase):
                 "task_id": cls.task_3.id,
             }
         )
+        cls.time_line_4.amount = -700
 
         cls.outsourcing_group = cls.env.ref(
             "project_cost_report.cost_category_outsourcing"
