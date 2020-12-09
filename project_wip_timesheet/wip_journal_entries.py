@@ -154,7 +154,7 @@ class TimesheetLine(models.Model):
 
         :rtype: bool
         """
-        return any(l.full_reconcile_id for l in self.salary_account_move_id.line_ids)
+        return any(l.reconciled for l in self.salary_account_move_id.line_ids)
 
     def _update_wip_account_move(self):
         """Update the wip journal entry."""

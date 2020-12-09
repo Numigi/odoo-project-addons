@@ -38,7 +38,11 @@ class WIPJournalEntriesCase(common.SavepointCase):
         )
 
         cls.employee = cls.env["hr.employee"].create(
-            {"name": "Timesheet User", "user_id": cls.timesheet_user.id}
+            {
+                "name": "Timesheet User",
+                "user_id": cls.timesheet_user.id,
+                "company_id": cls.company.id,
+            }
         )
 
         cls.salary_journal = cls.env["account.journal"].create(
@@ -232,7 +236,7 @@ class TestWIPJournalEntries(WIPJournalEntriesCase):
 
     def test_on_change_timesheet_a_date__account_move_date_updated(self):
         timesheet_line = self._create_timesheet()
-        new_date = fields.Date.to_string(datetime.now().date() + timedelta(30))
+        new_date = datetime.now().date() + timedelta(30)
         timesheet_line.sudo(self.timesheet_user).date = new_date
         assert timesheet_line.salary_account_move_id.date == new_date
 
