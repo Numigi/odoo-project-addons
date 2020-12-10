@@ -5,7 +5,7 @@ Project Task Analytic Lines (Stock Binding)
 
 Summary
 -------
-This module is binding between project_task_analytic_lines and the inventory application.
+This module is a binding between project_task_analytic_lines and the inventory application.
 
 Real Time Inventory
 -------------------
