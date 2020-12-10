@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="stock_picking_type_form" model="ir.ui.view">
+        <field name="name">Stock Picking Type Form: display hidden fields</field>
+        <field name="model">stock.picking.type</field>
+        <field name="inherit_id" ref="stock.view_picking_type_form"/>
+        <field name="arch" type="xml">
+            <!--
+                These nodes have attrs='{"invisible": [("code", "not in", ["incoming", "outgoing", "internal"])]}'.
+
+                This is very odd because ["incoming", "outgoing", "internal"] are the only selectable codes
+                in vanilla Odoo.
+
+                The nodes must also be visible to "consumption" and "consumption_return".
+            -->
+            <field name="return_picking_type_id" position="attributes">
+                <attribute name="attrs"></attribute>
+            </field>
+            <xpath expr="//field[@name='use_create_lots']//.." position="attributes">
+                <attribute name="attrs"></attribute>
+            </xpath>
+            <xpath expr="//field[@name='show_entire_packs']//.." position="attributes">
+                <attribute name="attrs"></attribute>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

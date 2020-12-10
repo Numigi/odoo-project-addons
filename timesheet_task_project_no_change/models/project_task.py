@@ -24,7 +24,7 @@ class Task(models.Model):
         return super().write(vals)
 
     def _check_has_no_timesheet(self):
-        if self.timesheet_ids:
+        if self.sudo().timesheet_ids:
             raise ValidationError(
                 _(
                     "Timesheets have already been entered on this task ({task}). "
@@ -34,8 +34,10 @@ class Task(models.Model):
             )
 
     def _check_has_no_subtask_timesheet(self):
-        timesheets = self.env["account.analytic.line"].search(
-            [("task_id.parent_id", "=", self.id)]
+        timesheets = (
+            self.env["account.analytic.line"]
+            .sudo()
+            .search([("task_id.parent_id", "=", self.id)])
         )
 
         if timesheets:

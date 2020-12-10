@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Analytic line rows -->
+    <template id="cost_report_body__analytic_line_details">
+        <tr class="o_project_cost_report__level_3 o_project_cost_report__analytic_line" t-att-data-id="line.id">
+            <td></td>
+            <td>
+                <span t-field="line.date" style="white-space: nowrap; margin-right: 8px;"/>
+            </td>
+            <td>
+                <span t-field="line.name"/>
+            </td>
+            <td>
+                <span t-if="is_outsourcing_line(line)" t-field="line.move_id.partner_id.display_name"/>
+            </td>
+            <td>
+                <span t-field="line.employee_id.name"/>
+            </td>
+            <td class="text-right">
+                <!-- Display hours for timesheets -->
+                <span t-if="is_timesheet_line(line)" t-field="line.unit_amount" t-options="{'widget': 'float_time'}"/>
+
+                <!-- Display units as float for other types of analytic lines -->
+                <t t-if="not is_timesheet_line(line)">
+                    <span t-raw="adjust_analytic_line_amount_sign(line, line.unit_amount)" t-options="{'widget': 'float', 'precision': 2}"/>
+                    <span t-field="line.product_uom_id.name"/>
+                </t>
+            </td>
+            <td class="text-right">
+                <span t-raw="adjust_analytic_line_amount_sign(line, line.unit_cost)" t-options='{"widget": "monetary", "display_currency": currency}'/>
+            </td>
+            <td class="text-right">
+                <span t-raw="-line.amount" t-options='{"widget": "monetary", "display_currency": currency}'/>
+            </td>
+        </tr>
+    </template>
+
+    <template id="cost_report_body__category_summary">
+        <t t-if="show_summary">
+            <td class="text-right">
+                <span t-raw="category.target_margin"/>%
+            </td>
+            <td class="text-right">
+                <span t-raw="category.target_sale_price" t-options='{"widget": "monetary", "display_currency": currency}'/>
+            </td>
+            <td class="text-right">
+                <span t-raw="category.target_profit" t-options='{"widget": "monetary", "display_currency": currency}'/>
+            </td>
+        </t>
+    </template>
+
+    <template id="cost_report_body__time_summary">
+        <t t-if="show_summary">
+            <td class="text-right">
+                <span t-raw="category.target_hourly_rate"/>
+                <span t-raw="currency.symbol"/>/H
+            </td>
+            <td class="text-right">
+                <span t-raw="category.target_sale_price" t-options='{"widget": "monetary", "display_currency": currency}'/>
+            </td>
+            <td class="text-right">
+                <span t-raw="category.target_profit" t-options='{"widget": "monetary", "display_currency": currency}'/>
+            </td>
+        </t>
+    </template>
+
+    <!-- PRODUCTS -->
+    <template id="cost_report_body__product_category">
+        <tr class="o_project_cost_report__level_2">
+            <td colspan="7">
+                <span class="o_project_cost_report__product_category o_project_cost_report__link" t-att-data-id="category.id">
+                    <i class="fa fa-caret-right" t-if="category.folded"></i>
+                    <i class="fa fa-caret-down" t-if="not category.folded"></i>
+                    <span t-raw="category.name"/>
+                </span>
+            </td>
+            <td class="o_project_cost_report__product_total text-right" t-att-data-id="category.id" t-att-data-name="category.name">
+                <span class="o_project_cost_report__link" t-raw="category.total" t-options='{"widget": "monetary", "display_currency": currency}'/>
+            </td>
+            <t t-call="project_cost_report.cost_report_body__category_summary"/>
+        </tr>
+        <t t-if="not category.folded">
+            <t t-foreach="category.lines" t-as="line">
+                <t t-call="project_cost_report.cost_report_body__analytic_line_details"/>
+            </t>
+        </t>
+    </template>
+
+    <template id="cost_report_body__product_section">
+        <tr class="o_project_cost_report__level_1" v-if="product_categories">
+            <td colspan="7">Products</td>
+            <td class="text-right">
+                <span t-raw="product_total" t-options='{"widget": "monetary", "display_currency": currency}'/>
+            </td>
+        </tr>
+        <t t-foreach="product_categories" t-as="category">
+            <t t-call="project_cost_report.cost_report_body__product_category"/>
+        </t>
+    </template>
+
+    <!-- TIME -->
+    <template id="cost_report_body__time_category">
+        <tr class="o_project_cost_report__level_2">
+            <td colspan="5">
+                <span class="o_project_cost_report__time_category o_project_cost_report__link" t-att-data-id="category.id">
+                    <i class="fa fa-caret-right" t-if="category.folded"></i>
+                    <i class="fa fa-caret-down" t-if="not category.folded"></i>
+                    <span t-raw="category.name"/>
+                </span>
+            </td>
+            <td class="o_project_cost_report__time_total_hours text-right" t-att-data-id="category.id" t-att-data-name="category.name">
+                <span class="o_project_cost_report__link" t-raw="category.total_hours" t-options="{'widget': 'float_time'}"/>
+            </td>
+            <td colspan="2" class="o_project_cost_report__time_total text-right" t-att-data-id="category.id" t-att-data-name="category.name">
+                <span class="o_project_cost_report__link" t-raw="category.total" t-options='{"widget": "monetary", "display_currency": currency}'/>
+            </td>
+            <t t-call="project_cost_report.cost_report_body__time_summary"/>
+        </tr>
+        <t t-if="not category.folded">
+            <t t-foreach="category.lines" t-as="line">
+                <t t-call="project_cost_report.cost_report_body__analytic_line_details"/>
+            </t>
+        </t>
+    </template>
+
+    <template id="cost_report_body__time_section">
+        <tr class="o_project_cost_report__level_1" v-if="time_categories">
+            <td colspan="5">Time</td>
+            <td class="text-right">
+                <span t-raw="time_total_hours" t-options="{'widget': 'float_time'}"/>
+            </td>
+            <td colspan="2" class="text-right">
+                <span t-raw="time_total" t-options='{"widget": "monetary", "display_currency": currency}'/>
+            </td>
+        </tr>
+        <t t-foreach="time_categories" t-as="category">
+            <t t-call="project_cost_report.cost_report_body__time_category"/>
+        </t>
+    </template>
+
+    <!-- OUTSOURCING -->
+    <template id="cost_report_body__outsourcing_category">
+        <tr class="o_project_cost_report__level_2">
+            <td colspan="7">
+                <span class="o_project_cost_report__outsourcing_category o_project_cost_report__link" t-att-data-id="category.id">
+                    <i class="fa fa-caret-right" t-if="category.folded"></i>
+                    <i class="fa fa-caret-down" t-if="not category.folded"></i>
+                    <span t-raw="category.name"/>
+                </span>
+            </td>
+            <td class="o_project_cost_report__outsourcing_total text-right" t-att-data-id="category.id" t-att-data-name="category.name">
+                <span class="o_project_cost_report__link" t-raw="category.total" t-options='{"widget": "monetary", "display_currency": currency}'/>
+            </td>
+            <t t-call="project_cost_report.cost_report_body__category_summary"/>
+        </tr>
+        <t t-if="not category.folded">
+            <t t-foreach="category.lines" t-as="line">
+                <t t-call="project_cost_report.cost_report_body__analytic_line_details"/>
+            </t>
+        </t>
+    </template>
+
+    <template id="cost_report_body__outsourcing_section">
+        <tr class="o_project_cost_report__level_1" v-if="outsourcing_categories">
+            <td colspan="7">Outsourcing</td>
+            <td class="text-right">
+                <span t-raw="outsourcing_total" t-options='{"widget": "monetary", "display_currency": currency}'/>
+            </td>
+        </tr>
+        <t t-foreach="outsourcing_categories" t-as="category">
+            <t t-call="project_cost_report.cost_report_body__outsourcing_category"/>
+        </t>
+    </template>
+
+    <!-- Total of costs -->
+    <template id="cost_report_body__cost_total">
+        <tr class="o_project_cost_report__level_1 o_project_cost_report__total_cost">
+            <td colspan="7"></td>
+            <td class="o_project_cost_report__total">
+                <span>Total</span>
+                <span style="float: right"
+                    t-raw="total_cost" t-options='{"widget": "monetary", "display_currency": currency}'/>
+            </td>
+            <t t-if="show_summary">
+                <td class="o_project_cost_report__total text-right">
+                    <span t-raw="total_target_margin"/>%
+                </td>
+                <td class="o_project_cost_report__total text-right">
+                    <span t-raw="total_target_sale_price" t-options='{"widget": "monetary", "display_currency": currency}'/>
+                </td>
+                <td class="o_project_cost_report__total text-right">
+                    <span t-raw="total_profit" t-options='{"widget": "monetary", "display_currency": currency}'/>
+                </td>
+            </t>
+        </tr>
+    </template>
+
+    <template id="cost_report_body__header">
+        <div class="o_project_cost_report__header">
+            <div class="o_project_cost_report__header__left">
+                <h1>Cost Report</h1>
+                <div>
+                    <span>Printed on</span>
+                    <span t-raw="print_date"/>
+                </div>
+            </div>
+            <div class="o_project_cost_report__header__right">
+                <div t-raw="project.partner_id.display_name"></div>
+                <h2 t-raw="project.name"></h2>
+                <div t-raw="project.project_type_id.display_name"></div>
+            </div>
+        </div>
+    </template>
+
+    <template id="cost_report_body__costs">
+        <table>
+            <thead>
+                <tr class="o_project_cost_report__level_1">
+                    <th class="text-left" colspan="7">Item</th>
+                    <th class="text-right">Cost</th>
+                    <t t-if="show_summary">
+                        <th class="text-right">Target</th>
+                        <th class="text-right">Suggested</th>
+                        <th class="text-right">Profit</th>
+                    </t>
+                </tr>
+                <tr class="o_project_cost_report__level_3">
+                    <th class="o_project_cost_report__padding_column"></th>
+                    <th>Date</th>
+                    <th>Description</th>
+                    <th>Supplier</th>
+                    <th>Employee</th>
+                    <th class="text-right">Quantity</th>
+                    <th class="text-right">Unit Cost</th>
+                    <th class="text-right">Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+                <t t-call="project_cost_report.cost_report_body__product_section"/>
+                <t t-call="project_cost_report.cost_report_body__time_section"/>
+                <t t-call="project_cost_report.cost_report_body__outsourcing_section"/>
+                <t t-call="project_cost_report.cost_report_body__cost_total"/>
+            </tbody>
+        </table>
+    </template>
+
+    <template id="cost_report_body__waiting_purchase_orders">
+        <table>
+            <tr class="o_project_cost_report__level_1">
+                <td colspan="5">Waiting For Invoices</td>
+                <td class="text-right">
+                    <span t-raw="waiting_purchase_order_total" t-options='{"widget": "monetary", "display_currency": currency}'/>
+                </td>
+            </tr>
+            <tr class="o_project_cost_report__level_3">
+                <th class="o_project_cost_report__padding_column"></th>
+                <th>Date</th>
+                <th>Reference</th>
+                <th colspan="2">Supplier</th>
+                <th class="text-right">Amount</th>
+            </tr>
+            <tr t-foreach="waiting_purchase_orders" t-as="po"
+                class="o_project_cost_report__level_3">
+                <td></td>
+                <td>
+                    <span t-field="po.date_order"/>
+                </td>
+                <td>
+                    <span t-field="po.name"
+                        class="o_project_cost_report__purchase_order_name o_project_cost_report__link"
+                        t-att-data-id="po.id"
+                        />
+                </td>
+                <td colspan="2">
+                    <span t-field="po.partner_id.display_name"/>
+                </td>
+                <td class="text-right">
+                    <span t-raw="get_waiting_for_invoice_total(po, project)"
+                        t-options='{"widget": "monetary", "display_currency": po.currency_id}'
+                        />
+                </td>
+            </tr>
+        </table>
+    </template>
+
+    <!-- Main report body -->
+    <template id="cost_report_body">
+        <div class="container o_project_cost_report">
+            <t t-call="project_cost_report.cost_report_body__header"/>
+            <t t-call="project_cost_report.cost_report_body__costs"/>
+            <t t-call="project_cost_report.cost_report_body__waiting_purchase_orders"/>
+        </div>
+    </template>
+
+    <template id="assets_backend" name="cost_report assets" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/project_cost_report/static/src/js/report_action.js"></script>
+            <link rel="stylesheet" type="text/scss" href="/project_cost_report/static/src/scss/cost_report.scss"/>
+        </xpath>
+    </template>
+
+    <template id="cost_report_html">
+        <t t-call="project_cost_report.cost_report_body"/>
+    </template>
+
+    <template id="cost_report_assets_pdf" name="Cost Report PDF Assets">
+        <t t-call="web._assets_helpers"/>
+        <link rel="stylesheet" type="text/scss" href="/project_cost_report/static/src/scss/cost_report.scss" />
+        <link rel="stylesheet" type="text/scss" href="/project_cost_report/static/src/scss/cost_report_pdf.scss" />
+    </template>
+
+    <template id="cost_report_pdf">
+        <t t-raw="'&lt;base href=%s&gt;' % base_url"/>
+        <t t-call="web.html_container">
+            <t t-call-assets="web.assets_common" t-js="False"/>
+            <t t-call-assets="project_cost_report.cost_report_assets_pdf" t-js="False"/>
+            <t t-call="project_cost_report.cost_report_body"/>
+        </t>
+    </template>
+
+</odoo>
