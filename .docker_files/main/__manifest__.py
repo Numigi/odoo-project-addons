@@ -29,6 +29,7 @@
         "project_iteration_parent_only",
         "project_iteration_parent_type_required",
         "project_iteration_sale_inheritance",
+        "project_lump_sum",
         "project_material",
         "project_material_direct",
         "project_material_quantity_filters",

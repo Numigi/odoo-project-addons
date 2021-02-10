@@ -6,7 +6,7 @@
         <field name="model">project.type</field>
         <field name="inherit_id" ref="project_type.view_project_type_form"/>
         <field name="arch" type="xml">
-            <field name="active" position="after">
+            <field name="sequence" position="after">
                 <field name="default_task_stage_ids" widget="many2many_tags"/>
             </field>
         </field>
