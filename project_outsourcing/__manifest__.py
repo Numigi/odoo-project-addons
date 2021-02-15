@@ -3,14 +3,14 @@
 
 {
     "name": "Project Outsourcing",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "author": "Numigi",
     "maintainer": "Numigi",
     "website": "https://bit.ly/numigi-com",
     "license": "LGPL-3",
     "category": "Project",
     "summary": "Generate outsourcing purchase orders from tasks",
-    "depends": ["purchase", "project_task_analytic_lines"],
+    "depends": ["purchase_stock", "project_task_analytic_lines"],
     "data": [
         "views/account_invoice.xml",
         "views/project_project.xml",
