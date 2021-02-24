@@ -8,9 +8,8 @@ import functools
 def time_range_constraint(method):
     @functools.wraps(method)
     def wrapper(self):
-        if self._context.get("enable_task_max_hours_constraint") or getattr(
-            threading.currentThread(), "testing", False
-        ):
+        is_testing = getattr(threading.currentThread(), "testing", False)
+        if self._context.get("enable_task_max_hours_constraint") or not is_testing:
             for task in self:
                 method(task)
 
