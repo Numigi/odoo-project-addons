@@ -16,7 +16,6 @@ USER odoo
 COPY analytic_line_employee  /mnt/extra-addons/analytic_line_employee
 COPY analytic_line_revenue  /mnt/extra-addons/analytic_line_revenue
 COPY project_analytic_group  /mnt/extra-addons/project_analytic_group
-COPY project_budget_management  /mnt/extra-addons/project_budget_management
 COPY project_chatter  /mnt/extra-addons/project_chatter
 COPY project_cost_report  /mnt/extra-addons/project_cost_report
 COPY project_cost_report_supply  /mnt/extra-addons/project_cost_report_supply
@@ -53,13 +52,11 @@ COPY project_task_resource_type  /mnt/extra-addons/project_task_resource_type
 COPY project_task_search_parent_subtask  /mnt/extra-addons/project_task_search_parent_subtask
 COPY project_task_stage_external_mail  /mnt/extra-addons/project_task_stage_external_mail
 COPY project_task_subtask_same_project  /mnt/extra-addons/project_task_subtask_same_project
-COPY project_task_subtask_time_range  /mnt/extra-addons/project_task_subtask_time_range
-COPY project_task_time_range  /mnt/extra-addons/project_task_time_range
 COPY project_task_type  /mnt/extra-addons/project_task_type
 COPY project_template  /mnt/extra-addons/project_template
 COPY project_template_timesheet  /mnt/extra-addons/project_template_timesheet
-COPY project_time_management  /mnt/extra-addons/project_time_management
-COPY project_time_range  /mnt/extra-addons/project_time_range
+COPY project_time_budget /mnt/extra-addons/project_time_budget
+COPY project_time_range /mnt/extra-addons/project_time_range
 COPY project_timesheet_analytic_update  /mnt/extra-addons/project_timesheet_analytic_update
 COPY project_type  /mnt/extra-addons/project_type
 COPY project_wip  /mnt/extra-addons/project_wip

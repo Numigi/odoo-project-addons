@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="project_form" model="ir.ui.view">
+        <field name="name">Project: add budgeted hours</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project_time_range.project_form"/>
+        <field name="arch" type="xml">
+            <group name="time_range" position="before">
+                <group name="time_budget" string="Budget">
+                    <field name="budget_min_hours" string="Min" widget="float_time"/>
+                    <field name="budget_planned_hours" string="Ideal" widget="float_time"/>
+                    <field name="budget_max_hours" string="Max" widget="float_time"/>
+                    <field name="budget_remaining_hours" string="Remaining" widget="float_time"/>
+                </group>
+            </group>
+            <group name="time_range" position="attributes">
+                <attribute name="string">Real</attribute>
+            </group>
+        </field>
+    </record>
+
+
+    <record id="project_list" model="ir.ui.view">
+        <field name="name">Project: Add Budgeted Min / Ideal / Max hours</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project_time_range.project_list"/>
+        <field name="arch" type="xml">
+            <field name="min_hours" position="before">
+                <field name="budget_min_hours" string="Budgeted Min" sum="Budgeted Min" widget="float_time"/>
+                <field name="budget_planned_hours" string="Budgeted Ideal" sum="Budgeted Ideal" widget="float_time"/>
+                <field name="budget_max_hours" string="Budgeted Max" sum="Budgeted Max" widget="float_time"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>
