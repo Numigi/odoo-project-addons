@@ -17,8 +17,6 @@
         "analytic_line_revenue",
         "project_analytic_group",
         "project_chatter",
-        "project_cost_report",
-        "project_cost_report_supply",
         "project_cost_smart_button",
         "project_default_task_stage",
         "project_form_with_dates",
