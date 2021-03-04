@@ -17,8 +17,6 @@ COPY analytic_line_employee  /mnt/extra-addons/analytic_line_employee
 COPY analytic_line_revenue  /mnt/extra-addons/analytic_line_revenue
 COPY project_analytic_group  /mnt/extra-addons/project_analytic_group
 COPY project_chatter  /mnt/extra-addons/project_chatter
-COPY project_cost_report  /mnt/extra-addons/project_cost_report
-COPY project_cost_report_supply  /mnt/extra-addons/project_cost_report_supply
 COPY project_cost_smart_button  /mnt/extra-addons/project_cost_smart_button
 COPY project_default_task_stage  /mnt/extra-addons/project_default_task_stage
 COPY project_form_with_dates  /mnt/extra-addons/project_form_with_dates
