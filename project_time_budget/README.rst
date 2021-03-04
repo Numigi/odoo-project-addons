@@ -43,6 +43,16 @@ The fields ``Budgeted Min / Ideal / Max`` are also added to the list view of pro
 
 .. image:: static/description/project_list.png
 
+Project Chatter
+---------------
+When a task template is modified, removed or added to a project,
+an entry is added to the chatter of the project.
+
+.. image:: static/description/project_chatter.png
+
+This allows to easily track the evolution of the budgeted hours.
+
 Contributors
 ------------
 * Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+* Komit (https://komit-consulting.com)

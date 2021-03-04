@@ -18,6 +18,28 @@ msgstr ""
 "X-Generator: Poedit 2.0.6\n"
 
 #. module: project_time_budget
+#: code:addons/project_time_budget/models/project_task.py:0
+#, python-format
+msgid ""
+"\n"
+"            <b>{action}</b>\n"
+"            <ul>\n"
+"                <li>Min: {min}</li>\n"
+"                <li>Ideal: {ideal}</li>\n"
+"                <li>Max: {max}</li>\n"
+"            </ul>\n"
+"        "
+msgstr ""
+"\n"
+"            <b>{action}</b>\n"
+"            <ul>\n"
+"                <li>Min : {min}</li>\n"
+"                <li>Idéal : {ideal}</li>\n"
+"                <li>Max : {max}</li>\n"
+"            </ul>\n"
+"        "
+
+#. module: project_time_budget
 #: model_terms:ir.ui.view,arch_db:project_time_budget.project_form
 msgid "Budget"
 msgstr ""
@@ -87,11 +109,38 @@ msgstr "Restant"
 msgid "Remaining Budgeted Hours"
 msgstr "Heures budgétées restantes"
 
-#~ msgid "Calculated"
-#~ msgstr "Calculé"
+#. module: project_time_budget
+#: code:addons/project_time_budget/models/project_task.py:0
+#, python-format
+msgid "Task template #{} added"
+msgstr "Modèle de tâche #{} ajouté"
 
-#~ msgid "Calculated Total Hours Spent"
-#~ msgstr "Heures totales consommées"
+#. module: project_time_budget
+#: code:addons/project_time_budget/models/project_task.py:0
+#, python-format
+msgid "Task template #{} deleted"
+msgstr "Modèle de tâche #{} supprimé"
 
-#~ msgid "Spent"
-#~ msgstr "Consommé"
+#. module: project_time_budget
+#: code:addons/project_time_budget/models/project_task.py:0
+#, python-format
+msgid "Task template #{} modified"
+msgstr "Modèle de tâche #{} modifié"
+
+#. module: project_time_budget
+#: code:addons/project_time_budget/models/project_task.py:0
+#, python-format
+msgid "Task template #{} removed from the project"
+msgstr "Modèle de tâche #{} retiré du projet"
+
+#. module: project_time_budget
+#: code:addons/project_time_budget/models/project_task.py:0
+#, python-format
+msgid "Task template #{} archived"
+msgstr "Modèle de tâche #{} archivé"
+
+#. module: project_time_budget
+#: code:addons/project_time_budget/models/project_task.py:0
+#, python-format
+msgid "Task template #{} restored"
+msgstr "Modèle de tâche #{} restauré"
