@@ -52,6 +52,7 @@
         "project_task_subtask_same_project",
         "project_task_type",
         "project_template",
+        "project_template_date_planned",
         "project_template_timesheet",
         "project_time_budget",
         "project_time_range",
