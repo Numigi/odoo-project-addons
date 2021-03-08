@@ -7,25 +7,19 @@ from odoo.exceptions import ValidationError
 
 class ProjectTask(models.Model):
 
-    _inherit = 'project.task'
+    _inherit = "project.task"
 
-    @api.model
-    def _get_values_for_invisible_template_fields(self):
-        return {
-            'date_start': False,
-            'date_end': False,
-        }
-
-    @api.constrains('is_template')
+    @api.constrains("is_template")
     def _check_template_can_not_have_timesheets(self):
         templates = self.filtered(lambda t: t.is_template)
         for template in templates:
-            timesheet_lines = (
-                template.timesheet_ids |
-                template.mapped('child_ids.timesheet_ids')
+            timesheet_lines = template.timesheet_ids | template.mapped(
+                "child_ids.timesheet_ids"
             )
             if timesheet_lines:
-                raise ValidationError(_(
-                    "The task {} can not be a template "
-                    "because it already has timesheet lines."
-                ).format(template.display_name))
+                raise ValidationError(
+                    _(
+                        "The task {} can not be a template "
+                        "because it already has timesheet lines."
+                    ).format(template.display_name)
+                )
