@@ -52,6 +52,7 @@ COPY project_task_stage_external_mail  /mnt/extra-addons/project_task_stage_exte
 COPY project_task_subtask_same_project  /mnt/extra-addons/project_task_subtask_same_project
 COPY project_task_type  /mnt/extra-addons/project_task_type
 COPY project_template  /mnt/extra-addons/project_template
+COPY project_template_date_planned  /mnt/extra-addons/project_template_date_planned
 COPY project_template_timesheet  /mnt/extra-addons/project_template_timesheet
 COPY project_time_budget /mnt/extra-addons/project_time_budget
 COPY project_time_range /mnt/extra-addons/project_time_range
