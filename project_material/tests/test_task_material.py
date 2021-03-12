@@ -288,6 +288,25 @@ class TestPreparationStep(TaskMaterialCase):
         self.line.initial_qty = 0
         assert not self.preparation_move.picking_id
 
+    def test_if_move_is_done__can_not_reduce_quantity(self):
+        self._force_transfer_move(self.preparation_move)
+        with pytest.raises(ValidationError):
+            self.line.initial_qty -= 1
+
+    def test_remaining_quantity_reduced_to_zero(self):
+        self._force_transfer_move(self.preparation_move, self.initial_qty - 1)
+        self.line.initial_qty -= 1
+        backorder = self.line.move_ids.move_orig_ids - self.preparation_move
+        assert backorder.product_uom_qty == 0
+        assert backorder.state == "cancel"
+
+    def test_remaining_quantity_reduced(self):
+        self._force_transfer_move(self.preparation_move, self.initial_qty - 2)
+        self.line.initial_qty -= 1
+        backorder = self.line.move_ids.move_orig_ids - self.preparation_move
+        assert backorder.product_uom_qty == 1
+        assert backorder.state not in ("cancel", "done")
+
     def test_task_propagated_to_stock_picking(self):
         assert self.preparation_move.task_id == self.task
 
