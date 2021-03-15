@@ -18,6 +18,7 @@ function openProjectApp(t){
 
 function openAllTaskKanban(t){
     return openProjectApp(t)
+        .click("a[data-menu-xmlid='project_task_editable_list_view.search_menu']")
         .click("a[data-menu-xmlid='project.menu_project_management']")
 }
 
