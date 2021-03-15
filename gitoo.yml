@@ -2,3 +2,4 @@
   branch: "12.0"
   includes:
     - base_extended_security
+    - base_xml_rename

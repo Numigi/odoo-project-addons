@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="search_menu" model="ir.ui.menu">
+        <field name="name">Search</field>
+        <field name="parent_id" ref="project.menu_main_pm"/>
+        <field name="sequence">2</field>
+    </record>
+
+    <record id="project.menu_project_management" model="ir.ui.menu">
+        <field name="name">Tasks</field>
+        <field name="parent_id" ref="search_menu"/>
+        <field name="sequence">1</field>
+    </record>
+
+    <function name="rename" model="ir.ui.menu">
+        <value type="char">project.menu_project_management</value>
+        <value type="char">fr_FR</value>
+        <value type="char">Tâches</value>
+    </function>
+
+    <record id="editable_task_list_menu" model="ir.ui.menu">
+        <field name="name">Tasks (Editable List)</field>
+        <field name="parent_id" ref="search_menu"/>
+        <field name="action" ref="editable_task_list_action"/>
+        <field name="sequence">2</field>
+    </record>
+
+</odoo>

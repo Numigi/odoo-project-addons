@@ -42,6 +42,7 @@ COPY project_task_analytic_lines  /mnt/extra-addons/project_task_analytic_lines
 COPY project_task_analytic_lines_stock  /mnt/extra-addons/project_task_analytic_lines_stock
 COPY project_task_date_planned  /mnt/extra-addons/project_task_date_planned
 COPY project_task_deadline_from_project  /mnt/extra-addons/project_task_deadline_from_project
+COPY project_task_editable_list_view  /mnt/extra-addons/project_task_editable_list_view
 COPY project_task_full_text_search  /mnt/extra-addons/project_task_full_text_search
 COPY project_task_id_in_display_name  /mnt/extra-addons/project_task_id_in_display_name
 COPY project_task_link  /mnt/extra-addons/project_task_link
