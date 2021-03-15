@@ -1,6 +1,7 @@
 # © 2019 - today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
+from datetime import timedelta
 from odoo import api, fields, models, _
 from odoo.addons import decimal_precision as dp
 from odoo.exceptions import ValidationError
@@ -283,12 +284,10 @@ class TaskMaterialLine(models.Model):
         )
 
     def _get_first_step_moves(self):
-        moves = self.move_ids
+        moves = self.env["stock.move"]
 
-        origin_moves = moves.mapped("move_orig_ids")
-        while origin_moves:
-            moves = origin_moves
-            origin_moves = moves.mapped("move_orig_ids")
+        for moves in self._iter_procurement_moves():
+            pass
 
         return moves
 
@@ -300,8 +299,26 @@ class TaskMaterialLine(models.Model):
         with zero quantity. Otherwise, stock moves with zero quantity
         would appear in pickings and create confusion among users.
         """
-        self.move_ids
+        for moves in self._iter_procurement_moves():
+            moves_with_zero_qty = moves.filtered(lambda m: m.product_qty == 0)
+            moves_with_zero_qty._action_cancel()
+            moves_with_zero_qty.write({"picking_id": False})
 
+    def _propagate_planned_date_to_stock_moves(self):
+        date_planned = self.task_id.date_planned
+
+        for moves in self._iter_procurement_moves():
+            moves_to_update = moves.filtered(
+                lambda m: m.state not in ("done", "cancel")
+            )
+
+            delay = moves_to_update.mapped("rule_id.delay")
+            if delay:
+                date_planned = date_planned - timedelta(delay[0])
+
+            moves_to_update.write({"date_expected": date_planned})
+
+    def _iter_procurement_moves(self):
         moves = self.move_ids
 
         # Limit the recursion depth stock.move chains.
@@ -310,9 +327,7 @@ class TaskMaterialLine(models.Model):
 
         while moves and limit:
             origin_moves = moves.mapped("move_orig_ids")
-            moves_with_zero_qty = moves.filtered(lambda m: m.product_qty == 0)
-            moves_with_zero_qty._action_cancel()
-            moves_with_zero_qty.write({"picking_id": False})
+            yield moves
             moves = origin_moves
             limit -= 1
 
