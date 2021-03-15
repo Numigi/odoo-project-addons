@@ -368,3 +368,25 @@ class TestPreparationStep(TaskMaterialCase):
         self._force_transfer_move(consumption_move, 1)
         consumption_return = self._return_stock_move(consumption_move, 1)
         assert consumption_return.destination_material_line_id == line
+
+    def test_date_planned_to_preparation_move(self):
+        new_date = self.task.date_planned + timedelta(2)
+        self.task.date_planned = new_date
+
+        move_date = self.preparation_move.date_expected.date()
+        assert move_date == new_date
+
+    def test_preparation_step_with_delay(self):
+        self.preparation_move.rule_id.delay = 3
+        line = self._create_material_line()
+        move = line.move_ids.move_orig_ids
+        assert move.date_expected.date() == self.task.date_planned - timedelta(3)
+
+    def test_change_date_planned_with_delay(self):
+        self.preparation_move.rule_id.delay = 3
+
+        new_date = self.task.date_planned + timedelta(2)
+        self.task.date_planned = new_date
+
+        move_date = self.preparation_move.date_expected.date()
+        assert move_date == new_date - timedelta(3)

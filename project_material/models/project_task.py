@@ -7,63 +7,59 @@ from odoo import api, fields, models
 class TaskWithMaterialLines(models.Model):
     """Add material consumption to tasks."""
 
-    _inherit = 'project.task'
+    _inherit = "project.task"
 
-    material_line_ids = fields.One2many(
-        'project.task.material',
-        'task_id',
-        'Material',
-    )
+    material_line_ids = fields.One2many("project.task.material", "task_id", "Material")
 
     procurement_group_id = fields.Many2one(
-        'procurement.group', 'Procurement Group',
-        copy=False,
+        "procurement.group", "Procurement Group", copy=False
     )
 
     @api.multi
     def write(self, vals):
         super().write(vals)
 
-        if 'date_planned' in vals:
-            for task in self:
-                task._propagate_planned_date_to_stock_moves()
+        if "date_planned" in vals:
+            self._propagate_planned_date_to_stock_moves()
 
         return True
 
     def _propagate_planned_date_to_stock_moves(self):
-        moves_to_update = self.mapped('material_line_ids.move_ids').filtered(
-            lambda m: m.state not in ('done', 'cancel'))
-        moves_to_update.write({'date_expected': self.date_planned})
+        for line in self.mapped("material_line_ids"):
+            line._propagate_planned_date_to_stock_moves()
 
     def _get_procurement_group(self):
         if not self.procurement_group_id:
-            self.procurement_group_id = self.env['procurement.group'].create({
-                'name': self._get_reference_for_procurements(),
-                'task_id': self.id,
-            })
+            self.procurement_group_id = self.env["procurement.group"].create(
+                {"name": self._get_reference_for_procurements(), "task_id": self.id}
+            )
         return self.procurement_group_id
 
     def _get_reference_for_procurements(self):
-        return 'TA#{}'.format(str(self.id))
+        return "TA#{}".format(str(self.id))
 
 
 class TaskWithConsumptionPickingSmartButton(models.Model):
     """Add the smart button to view the comsumption pickings."""
 
-    _inherit = 'project.task'
+    _inherit = "project.task"
 
-    consumption_picking_count = fields.Integer(compute='_compute_consumption_pickings')
+    consumption_picking_count = fields.Integer(compute="_compute_consumption_pickings")
     consumption_picking_ids = fields.One2many(
-        'stock.picking', string='Consumption Pickings',
-        compute='_compute_consumption_pickings')
+        "stock.picking",
+        string="Consumption Pickings",
+        compute="_compute_consumption_pickings",
+    )
 
     def _compute_consumption_pickings(self):
         tasks_with_procurement_group = self.filtered(lambda t: t.procurement_group_id)
         for task in tasks_with_procurement_group:
-            pickings = self.env['stock.picking'].search([
-                ('group_id', '=', task.procurement_group_id.id),
-                ('picking_type_code', 'in', ('consumption', 'consumption_return')),
-            ])
+            pickings = self.env["stock.picking"].search(
+                [
+                    ("group_id", "=", task.procurement_group_id.id),
+                    ("picking_type_code", "in", ("consumption", "consumption_return")),
+                ]
+            )
             task.consumption_picking_ids = pickings
             task.consumption_picking_count = len(pickings)
 
@@ -88,15 +84,15 @@ class TaskWithConsumptionPickingSmartButton(models.Model):
         This method is intended to be inherited to show the list/form view
         of different types of picking related to the task.
         """
-        action = self.env.ref('stock.action_picking_tree_all').read()[0]
+        action = self.env.ref("stock.action_picking_tree_all").read()[0]
 
         if len(pickings) > 1:
-            action['domain'] = [('id', 'in', pickings.ids)]
+            action["domain"] = [("id", "in", pickings.ids)]
 
         else:
-            picking_form_view = self.env.ref('stock.view_picking_form')
-            action['views'] = [(picking_form_view.id, 'form')]
-            action['res_id'] = pickings.id
+            picking_form_view = self.env.ref("stock.view_picking_form")
+            action["views"] = [(picking_form_view.id, "form")]
+            action["res_id"] = pickings.id
 
         return action
 
@@ -104,26 +100,38 @@ class TaskWithConsumptionPickingSmartButton(models.Model):
 class TaskWithPreparationPickingSmartButton(models.Model):
     """Add the smart button to view the preparation pickings."""
 
-    _inherit = 'project.task'
+    _inherit = "project.task"
 
-    preparation_picking_count = fields.Integer(compute='_compute_preparation_pickings')
+    preparation_picking_count = fields.Integer(compute="_compute_preparation_pickings")
     preparation_picking_ids = fields.One2many(
-        'stock.picking', string='Preparation Pickings',
-        compute='_compute_preparation_pickings')
-    preparation_return_picking_count = fields.Integer(compute='_compute_preparation_pickings')
+        "stock.picking",
+        string="Preparation Pickings",
+        compute="_compute_preparation_pickings",
+    )
+    preparation_return_picking_count = fields.Integer(
+        compute="_compute_preparation_pickings"
+    )
     preparation_return_picking_ids = fields.One2many(
-        'stock.picking', string='Preparation Return Pickings',
-        compute='_compute_preparation_pickings')
+        "stock.picking",
+        string="Preparation Return Pickings",
+        compute="_compute_preparation_pickings",
+    )
 
     def _compute_preparation_pickings(self):
         tasks_with_procurement_group = self.filtered(lambda t: t.procurement_group_id)
         for task in tasks_with_procurement_group:
-            pickings = self.env['stock.picking'].search([
-                ('group_id', '=', task.procurement_group_id.id),
-                ('picking_type_code', '=', 'internal'),
-            ])
-            prep_picking = pickings.filtered(lambda p: not _is_preparation_return_picking(p))
-            return_picking = pickings.filtered(lambda p: _is_preparation_return_picking(p))
+            pickings = self.env["stock.picking"].search(
+                [
+                    ("group_id", "=", task.procurement_group_id.id),
+                    ("picking_type_code", "=", "internal"),
+                ]
+            )
+            prep_picking = pickings.filtered(
+                lambda p: not _is_preparation_return_picking(p)
+            )
+            return_picking = pickings.filtered(
+                lambda p: _is_preparation_return_picking(p)
+            )
             task.preparation_picking_ids = prep_picking
             task.preparation_picking_count = len(prep_picking)
             task.preparation_return_picking_ids = return_picking
@@ -133,10 +141,12 @@ class TaskWithPreparationPickingSmartButton(models.Model):
         return self._open_stock_pickings_view_from_task(self.preparation_picking_ids)
 
     def open_preparation_return_picking_view_from_task(self):
-        return self._open_stock_pickings_view_from_task(self.preparation_return_picking_ids)
+        return self._open_stock_pickings_view_from_task(
+            self.preparation_return_picking_ids
+        )
 
 
-def _is_preparation_return_picking(picking: 'StockPicking'):
+def _is_preparation_return_picking(picking: "StockPicking"):
     """Return whether the given stock picking is a return picking.
 
     This function allows to partition `Preparation Pickings` from
@@ -157,12 +167,14 @@ class TaskWithPreparedQtyHidden(models.Model):
     the prepared qty on material lines is not relevant.
     """
 
-    _inherit = 'project.task'
+    _inherit = "project.task"
 
-    show_material_prepared_qty = fields.Boolean(compute='_compute_show_material_prepared_qty')
+    show_material_prepared_qty = fields.Boolean(
+        compute="_compute_show_material_prepared_qty"
+    )
 
     def _compute_show_material_prepared_qty(self):
         for task in self:
             task.show_material_prepared_qty = (
-                task.project_id.warehouse_id.consu_steps == 'two_steps'
+                task.project_id.warehouse_id.consu_steps == "two_steps"
             )
