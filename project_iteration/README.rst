@@ -1,5 +1,10 @@
 Project Iteration
 =================
+
+.. contents:: Table of Contents
+
+Overview
+--------
 This module adds the concept of iterations to the project application.
 
 An iteration is a sub-project under a parent project.
@@ -49,6 +54,16 @@ If I click on an iteration, I see only the task of the selected iteration.
 However, If I click on the parent project, I see the task under the project, plus the tasks under its iterations.
 
 .. image:: static/description/parent_project_task_kanban.png
+
+Followers
+---------
+Since version ``2.1.0`` of the module, the followers (partners and channels) are propagated from the parent
+project when creating a child iteration.
+
+.. image:: static/description/iteration_followers.png
+
+When changing the parent project on an existing iteration, the followers are replaced with
+the followers of the new parent project.
 
 Contributors
 ------------

@@ -2,21 +2,18 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 {
-    'name': 'Project Iteration',
-    'version': '2.0.0',
-    'author': 'Numigi',
-    'maintainer': 'Numigi',
-    'license': 'LGPL-3',
-    'category': 'Project',
-    'summary': 'Add iterations to projects',
-    'depends': [
-        'hr_timesheet',
-        'project',
+    "name": "Project Iteration",
+    "version": "2.1.0",
+    "author": "Numigi",
+    "maintainer": "Numigi",
+    "license": "LGPL-3",
+    "category": "Project",
+    "summary": "Add iterations to projects",
+    "depends": ["hr_timesheet", "project"],
+    "data": [
+        "views/account_analytic_line.xml",
+        "views/project_project.xml",
+        "views/project_task.xml",
     ],
-    'data': [
-        'views/account_analytic_line.xml',
-        'views/project_project.xml',
-        'views/project_task.xml',
-    ],
-    'installable': True,
+    "installable": True,
 }
