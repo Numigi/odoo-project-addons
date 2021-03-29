@@ -30,7 +30,7 @@ class ProjectWithParent(models.Model):
 
         return res
 
-    @api.model
+    @api.multi
     def write(self, vals):
         super().write(vals)
 
