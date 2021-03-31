@@ -36,7 +36,7 @@ class TestProject(common.SavepointCase):
             }
         )
 
-        cls.env["project.task"].create(
+        cls.real_task = cls.env["project.task"].create(
             {
                 "name": "Normal Task",
                 "project_id": cls.project_a.id,
@@ -60,6 +60,12 @@ class TestProject(common.SavepointCase):
         assert self.project_a.budget_min_hours == 73
         assert self.project_a.budget_planned_hours == 146
         assert self.project_a.budget_max_hours == 292
+
+    def test_template_tasks_excluded_from_real_amounts(self):
+        self.task_a.with_context(show_task_templates=True).copy()
+        assert self.project_a.min_hours == 999
+        assert self.project_a.planned_hours == 999
+        assert self.project_a.max_hours == 999
 
     def test_task_child_excluded(self):
         self.task_b.parent_id = self.task_a

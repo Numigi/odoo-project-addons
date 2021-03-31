@@ -41,8 +41,10 @@ class ProjectProject(models.Model):
             project.planned_hours = sum(tasks.mapped("planned_hours"))
 
     def _get_parent_tasks(self):
-        return self.env["project.task"].search(
-            [("project_id", "=", self.id), ("parent_id", "=", False)]
+        return (
+            self.env["project.task"]
+            .with_context({})
+            .search([("project_id", "=", self.id), ("parent_id", "=", False)])
         )
 
     def _compute_consumed_remaining_hours(self):
