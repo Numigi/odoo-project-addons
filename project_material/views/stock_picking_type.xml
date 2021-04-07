@@ -26,4 +26,15 @@
         </field>
     </record>
 
+    <record id="stock_production_type_kanban" model="ir.ui.view">
+        <field name="name">Stock Picking Type Kanban: show consumption picking types</field>
+        <field name="model">stock.picking.type</field>
+        <field name="inherit_id" ref="stock.stock_picking_type_kanban"/>
+        <field name="arch" type="xml">
+            <div name="stock_picking" position="attributes">
+                <attribute name="t-if">record.code.raw_value != 'mrp_operation'</attribute>
+            </div>
+        </field>
+    </record>
+
 </odoo>
