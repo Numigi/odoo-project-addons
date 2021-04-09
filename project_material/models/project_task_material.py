@@ -316,7 +316,9 @@ class TaskMaterialLine(models.Model):
             if delay:
                 date_planned = date_planned - timedelta(delay[0])
 
-            moves_to_update.write({"date_expected": date_planned})
+            moves_to_update.with_context(do_not_propagate=True).write(
+                {"date_expected": date_planned}
+            )
 
     def _iter_procurement_moves(self):
         moves = self.move_ids
