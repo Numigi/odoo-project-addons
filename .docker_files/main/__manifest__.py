@@ -33,6 +33,7 @@
         "project_no_quick_create",
         "project_outsourcing",
         "project_portal_hide_timesheets",
+        "project_portal_no_subtask",
         "project_portal_parent_task",
         "project_remaining_hours_update",
         "project_stage",
