@@ -33,6 +33,7 @@ COPY project_material_quantity_filters  /mnt/extra-addons/project_material_quant
 COPY project_no_quick_create  /mnt/extra-addons/project_no_quick_create
 COPY project_outsourcing  /mnt/extra-addons/project_outsourcing
 COPY project_portal_hide_timesheets  /mnt/extra-addons/project_portal_hide_timesheets
+COPY project_portal_no_subtask  /mnt/extra-addons/project_portal_no_subtask
 COPY project_portal_parent_task  /mnt/extra-addons/project_portal_parent_task
 COPY project_remaining_hours_update  /mnt/extra-addons/project_remaining_hours_update
 COPY project_stage  /mnt/extra-addons/project_stage
