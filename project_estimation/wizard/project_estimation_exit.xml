@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="project_estimation_exit_form" model="ir.ui.view">
+        <field name="name">Project Estimation Mode Exit Wizard</field>
+        <field name="model">project.estimation.exit</field>
+        <field name="arch" type="xml">
+            <form string="Exit From Estimation Mode">
+                <sheet>
+                    <group name="top">
+                        <field name="project_id" readonly="1"/>
+                    </group>
+                    <div>
+                        Before proceeding, make sure that every task has a planned date.
+                    </div>
+                </sheet>
+                <footer>
+                    <button name="validate" class="oe_highlight" string="Validate" type="object"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+</odoo>
