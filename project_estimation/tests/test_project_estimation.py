@@ -45,6 +45,11 @@ class TestProjectEstimation(common.SavepointCase):
         wizard.validate()
         assert not self.project.estimation_mode_active
 
+    def _make_enter_wizard(self):
+        return self.env["project.estimation.enter"].create(
+            {"project_id": self.project.id}
+        )
+
     def _make_exit_wizard(self):
         return self.env["project.estimation.exit"].create(
             {"project_id": self.project.id}

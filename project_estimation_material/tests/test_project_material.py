@@ -7,6 +7,11 @@ from odoo.addons.project_material.tests.common import TaskMaterialCase
 
 
 class TestProjectMaterial(TaskMaterialCase):
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.project.estimation_mode_active = False
+
     def test_estimation_mode_active(self):
         line = self._create_material_line()
         assert line.move_ids
