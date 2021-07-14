@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-07-14 11:57+0000\n"
-"PO-Revision-Date: 2021-07-14 08:00-0400\n"
+"POT-Creation-Date: 2021-07-14 16:57+0000\n"
+"PO-Revision-Date: 2021-07-14 12:58-0400\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -58,11 +58,14 @@ msgstr "Entrer en mode estimation"
 
 #. module: project_estimation
 #: model_terms:ir.ui.view,arch_db:project_estimation.project_form
+#: model_terms:ir.ui.view,arch_db:project_estimation.project_search
+#: model_terms:ir.ui.view,arch_db:project_estimation.task_search
 msgid "Estimation"
 msgstr "Estimation"
 
 #. module: project_estimation
 #: model:ir.model.fields,field_description:project_estimation.field_project_project__estimation_mode_active
+#: model:ir.model.fields,field_description:project_estimation.field_project_task__estimation_mode_active
 msgid "Estimation Mode Active"
 msgstr "Mode estimation actif"
 
@@ -128,3 +131,9 @@ msgstr "Tâche"
 #: model_terms:ir.ui.view,arch_db:project_estimation.project_estimation_exit_form
 msgid "Validate"
 msgstr "Valider"
+
+#. module: project_estimation
+#: model_terms:ir.ui.view,arch_db:project_estimation.task_form
+msgid "You are currently viewing a task under a project in estimation mode."
+msgstr ""
+"Vous visualisez présentement une tâche dans un projet en mode estimation."

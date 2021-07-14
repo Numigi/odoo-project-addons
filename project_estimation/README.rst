@@ -29,6 +29,20 @@ In kanban view of projects, a blue badge is added on projects in estimation mode
 
 .. image:: static/description/project_kanban.png
 
+Also, a filter allows to view only projects that are in estimation mode.
+
+.. image:: static/description/project_filter.png
+
+Tasks
+-----
+In form view of a task, if the task is related to a project in estimation mode, a message is displayed.
+
+.. image:: static/description/task_form.png
+
+In list or kanban view of tasks, a filter allows to view tasks related to a project in estimation mode.
+
+.. image:: static/description/task_filter.png
+
 Configuration
 -------------
 By default, when creating or duplicating a project, the new project is NOT in estimation mode.
