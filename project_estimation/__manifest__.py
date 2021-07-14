@@ -14,6 +14,7 @@
         "wizard/project_estimation_enter.xml",
         "wizard/project_estimation_exit.xml",
         "views/project.xml",
+        "views/project_task.xml",
     ],
     "installable": True,
 }

@@ -69,4 +69,16 @@
         </field>
     </record>
 
+    <record id="project_search" model="ir.ui.view">
+        <field name="name">Project Search: add estimation mode</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.view_project_project_filter"/>
+        <field name="arch" type="xml">
+            <search position="inside">
+                <separator/>
+                <filter string="Estimation" name="estimation" domain="[('estimation_mode_active', '=', True)]"/>
+            </search>
+        </field>
+    </record>
+
 </odoo>
