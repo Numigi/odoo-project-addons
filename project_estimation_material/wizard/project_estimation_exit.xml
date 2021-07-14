@@ -18,7 +18,7 @@
                 </div>
                 <field name="task_with_material_ids">
                     <tree editable="top" create="false" delete="false">
-                        <field name="display_name"/>
+                        <field name="display_name" string="Task"/>
                         <field name="date_planned" required="1"/>
                     </tree>
                 </field>

@@ -15,8 +15,8 @@ class ProjectEstimationExit(models.TransientModel):
 
     @api.onchange("project_id")
     def _set_tasks_with_material(self):
-        self.task_with_material_ids = self.project_id.task_ids.filtered(
-            lambda t: t.material_line_ids
+        self.task_with_material_ids = self.project_id.mapped(
+            "material_line_ids.task_id"
         )
 
     def validate(self):

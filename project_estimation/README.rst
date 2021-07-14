@@ -14,7 +14,7 @@ When a project is in ``Estimation`` mode, the button is blue.
 
 Otherwise, the button is gray.
 
-.. image:: static/description/project_smart_button_blue.png
+.. image:: static/description/project_smart_button_gray.png
 
 When I click on the button, a confirmation wizard is opened.
 This wizard allows to either enter or exit the estimation mode.

@@ -10,9 +10,6 @@
                     <group name="top">
                         <field name="project_id" readonly="1"/>
                     </group>
-                    <div>
-                        Before proceeding, make sure that every task has a planned date.
-                    </div>
                 </sheet>
                 <footer>
                     <button name="validate" class="oe_highlight" string="Validate" type="object"/>
