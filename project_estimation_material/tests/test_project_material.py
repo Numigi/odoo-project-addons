@@ -3,7 +3,6 @@
 
 import pytest
 from odoo.exceptions import ValidationError
-from odoo.tests import common
 from odoo.addons.project_material.tests.common import TaskMaterialCase
 
 
