@@ -16,6 +16,8 @@
         "analytic_line_employee",
         "analytic_line_revenue",
         "project_analytic_group",
+        "project_estimation",
+        "project_estimation_material",
         "project_chatter",
         "project_cost_smart_button",
         "project_default_task_stage",
