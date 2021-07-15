@@ -48,6 +48,10 @@ class TestTasks(common.SavepointCase):
         with self.assertRaises(ValidationError):
             self.task_a.write({"min_hours": -10, "planned_hours": -2, "max_hours": 0})
 
+    def test_create_with_only_planned_hours(self):
+        task = self.env["project.task"].create({"name": "My Task", "planned_hours": 10})
+        assert task.max_hours == 10
+
 
 @ddt
 class TestSubtasks(common.SavepointCase):
