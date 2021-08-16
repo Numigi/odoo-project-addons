@@ -33,4 +33,5 @@ class ProjectEstimationExit(models.TransientModel):
 
     def _trigger_procurements(self):
         for line in self.project_id.material_line_ids:
-            line._run_procurements()
+            if line._should_generate_procurement():
+                line._run_procurements()
