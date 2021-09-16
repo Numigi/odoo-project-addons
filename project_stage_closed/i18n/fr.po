@@ -1,0 +1,87 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* project_stage_closed
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 11.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-09-16 00:16+0000\n"
+"PO-Revision-Date: 2021-09-15 20:17-0400\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"X-Generator: Poedit 2.3\n"
+
+#. module: project_stage_closed
+#: model:ir.model.fields,field_description:project_stage_closed.field_project_project__closed
+#: model:ir.model.fields,field_description:project_stage_closed.field_project_stage__closed
+#: model_terms:ir.ui.view,arch_db:project_stage_closed.view_project_search
+msgid "Closed"
+msgstr "Fermé"
+
+#. module: project_stage_closed
+#: model_terms:ir.ui.view,arch_db:project_stage_closed.view_project_search
+msgid "Open"
+msgstr "Ouvert"
+
+#. module: project_stage_closed
+#: model:ir.model,name:project_stage_closed.model_project_project
+msgid "Project"
+msgstr "Projet"
+
+#. module: project_stage_closed
+#: model_terms:ir.ui.view,arch_db:project_stage_closed.project_stage_form
+msgid "Project Closed"
+msgstr "Projet fermé"
+
+#. module: project_stage_closed
+#: model:ir.model,name:project_stage_closed.model_project_stage
+msgid "Project Stage"
+msgstr ""
+
+#~ msgid "Active"
+#~ msgstr "Actif"
+
+#~ msgid "Color Index"
+#~ msgstr "Index de la couleur"
+
+#~ msgid "Created by"
+#~ msgstr "Créé par"
+
+#~ msgid "Created on"
+#~ msgstr "Créé le"
+
+#~ msgid "Description"
+#~ msgstr "Description"
+
+#~ msgid "Display Name"
+#~ msgstr "Nom affiché"
+
+#~ msgid "ID"
+#~ msgstr "ID"
+
+#~ msgid "Last Modified on"
+#~ msgstr "Modifié le"
+
+#~ msgid "Last Updated by"
+#~ msgstr "Modifié par"
+
+#~ msgid "Last Updated on"
+#~ msgstr "Dernière mise à jour le"
+
+#~ msgid "Name"
+#~ msgstr "Nom"
+
+#~ msgid "Project Types"
+#~ msgstr "Types de projets"
+
+#~ msgid "Sequence"
+#~ msgstr "Séquence"
+
+#~ msgid "Type"
+#~ msgstr "Type"
