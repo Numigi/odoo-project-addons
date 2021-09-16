@@ -26,6 +26,7 @@
         "project_iteration_parent_only",
         "project_iteration_parent_type_required",
         "project_iteration_sale_inheritance",
+        "project_kanban_dates",
         "project_lump_sum",
         "project_material",
         "project_material_direct",

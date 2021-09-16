@@ -26,6 +26,7 @@ COPY project_iteration  /mnt/extra-addons/project_iteration
 COPY project_iteration_parent_only  /mnt/extra-addons/project_iteration_parent_only
 COPY project_iteration_parent_type_required  /mnt/extra-addons/project_iteration_parent_type_required
 COPY project_iteration_sale_inheritance  /mnt/extra-addons/project_iteration_sale_inheritance
+COPY project_kanban_dates /mnt/extra-addons/project_kanban_dates
 COPY project_lump_sum  /mnt/extra-addons/project_lump_sum
 COPY project_material  /mnt/extra-addons/project_material
 COPY project_material_direct  /mnt/extra-addons/project_material_direct
