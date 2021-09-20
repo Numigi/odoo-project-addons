@@ -7,7 +7,7 @@ Context
 -------
 The module ``project_material`` allows to consume products on tasks.
 
-The module ``project_stage_closed`` allows to close a project without archiving it.
+The module ``project_closed`` allows to close a project without archiving it.
 
 Overview
 --------

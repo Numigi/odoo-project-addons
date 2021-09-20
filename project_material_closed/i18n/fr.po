@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* project_material_stage_closed
+# 	* project_material_closed
 #
 msgid ""
 msgstr ""
@@ -17,22 +17,22 @@ msgstr ""
 "Plural-Forms: \n"
 "X-Generator: Poedit 2.3\n"
 
-#. module: project_material_stage_closed
-#: model:ir.model.fields,field_description:project_material_stage_closed.field_project_task_material__closed
+#. module: project_material_closed
+#: model:ir.model.fields,field_description:project_material_closed.field_project_task_material__closed
 msgid "Closed"
 msgstr "Fermé"
 
-#. module: project_material_stage_closed
-#: model_terms:ir.ui.view,arch_db:project_material_stage_closed.project_task_material_search
+#. module: project_material_closed
+#: model_terms:ir.ui.view,arch_db:project_material_closed.project_task_material_search
 msgid "Closed Project"
 msgstr "Projet fermé"
 
-#. module: project_material_stage_closed
-#: model_terms:ir.ui.view,arch_db:project_material_stage_closed.project_task_material_search
+#. module: project_material_closed
+#: model_terms:ir.ui.view,arch_db:project_material_closed.project_task_material_search
 msgid "Open Project"
 msgstr "Projet ouvert"
 
-#. module: project_material_stage_closed
-#: model:ir.model,name:project_material_stage_closed.model_project_task_material
+#. module: project_material_closed
+#: model:ir.model,name:project_material_closed.model_project_task_material
 msgid "Task Material Consumption"
 msgstr ""
