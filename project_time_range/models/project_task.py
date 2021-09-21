@@ -49,3 +49,9 @@ class ProjectTask(models.Model):
     def _check_positive_hours(self):
         if any(h < 0 for h in [self.min_hours, self.planned_hours, self.max_hours]):
             raise ValidationError(_("Hours must be positive numbers."))
+
+    @api.model
+    def create(self, vals):
+        if "max_hours" not in vals:
+            vals["max_hours"] = vals.get("planned_hours")
+        return super().create(vals)

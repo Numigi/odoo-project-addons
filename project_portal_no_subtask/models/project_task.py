@@ -12,23 +12,8 @@ class ProjectTask(models.Model):
     _inherit = "project.task"
 
     @api.model
-    def _search(
-        self,
-        args,
-        offset=0,
-        limit=None,
-        order=None,
-        count=False,
-        access_rights_uid=None,
-    ):
+    def _where_calc(self, domain, active_test=True):
         if self._context.get(NO_DISPLAY_SUBTASKS):
-            args = AND([args or [], [("parent_id", "=", False)]])
+            domain = AND([domain or [], [("parent_id", "=", False)]])
 
-        return super()._search(
-            args,
-            offset=offset,
-            limit=limit,
-            order=order,
-            count=count,
-            access_rights_uid=access_rights_uid,
-        )
+        return super()._where_calc(domain, active_test)
