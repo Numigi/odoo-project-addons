@@ -41,7 +41,7 @@
         "project_remaining_hours_update",
         "project_stage",
         "project_stage_allow_timesheet",
-        "project_stage_closed",
+        "project_closed",
         "project_stage_no_quick_create",
         "project_task_analytic_lines",
         "project_task_analytic_lines_stock",

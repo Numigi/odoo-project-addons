@@ -41,7 +41,7 @@ COPY project_portal_parent_task  /mnt/extra-addons/project_portal_parent_task
 COPY project_remaining_hours_update  /mnt/extra-addons/project_remaining_hours_update
 COPY project_stage  /mnt/extra-addons/project_stage
 COPY project_stage_allow_timesheet  /mnt/extra-addons/project_stage_allow_timesheet
-COPY project_stage_closed  /mnt/extra-addons/project_stage_closed
+COPY project_closed  /mnt/extra-addons/project_closed
 COPY project_stage_no_quick_create  /mnt/extra-addons/project_stage_no_quick_create
 COPY project_task_analytic_lines  /mnt/extra-addons/project_task_analytic_lines
 COPY project_task_analytic_lines_stock  /mnt/extra-addons/project_task_analytic_lines_stock
