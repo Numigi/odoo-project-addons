@@ -96,7 +96,7 @@ class TaskWithMaterialLines(models.Model):
 
     def _copy_material_lines_from(self, task):
         if not self.date_planned:
-            self.date_planned = fields.Date.context_today(self)
+            self.date_planned = date(2099, 1, 1)
 
         for line in task.material_line_ids:
             line.copy({"task_id": self.id})
