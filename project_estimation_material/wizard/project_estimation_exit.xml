@@ -16,7 +16,7 @@
                         Before proceeding, make sure that every task has a planned date.
                     </p>
                 </div>
-                <field name="task_with_material_ids">
+                <field name="task_ids">
                     <tree editable="top" create="false" delete="false">
                         <field name="display_name" string="Task"/>
                         <field name="date_planned" required="1"/>

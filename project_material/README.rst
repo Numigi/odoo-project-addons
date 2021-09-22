@@ -155,6 +155,15 @@ From the form view of a project, a smart button allows to access the material re
 
 .. image:: static/description/project_material_list.png
 
+Duplicating A Task
+~~~~~~~~~~~~~~~~~~
+When duplicating a task, material lines are also duplicated in the new task.
+
+Duplicated tasks with material lines the field ``Planned Date`` on the task
+is set as the current date.
+
+This allows the material to be scheduled without error.
+
 Contributors
 ------------
 * Numigi (tm) and all its contributors (https://bit.ly/numigiens)
