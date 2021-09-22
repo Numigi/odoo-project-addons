@@ -88,6 +88,19 @@ class TaskWithMaterialLines(models.Model):
 
         return True
 
+    @api.multi
+    def copy(self, vals=None):
+        task = super().copy(vals)
+        task._copy_material_lines_from(self)
+        return task
+
+    def _copy_material_lines_from(self, task):
+        if not self.date_planned:
+            self.date_planned = fields.Date.context_today(self)
+
+        for line in task.material_line_ids:
+            line.copy({"task_id": self.id})
+
     def _propagate_planned_date_to_stock_moves(self):
         for line in self.mapped("material_line_ids"):
             line._propagate_planned_date_to_stock_moves()

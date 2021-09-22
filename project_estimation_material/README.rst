@@ -27,8 +27,7 @@ material lines on the tasks will not generate stock operations.
 Because stock operations are not generated, it will also be possible to define
 material lines on a task without defining a planned date for the task.
 
-When exiting the estimation mode, you will be asked to define a planned date
-on every task that has material lines on it.
+When exiting the estimation mode, you will be asked to define a planned date on every task.
 
 .. image:: static/description/project_smart_button.png
 
