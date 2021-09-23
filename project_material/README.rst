@@ -160,7 +160,7 @@ Duplicating A Task
 When duplicating a task, material lines are also duplicated in the new task.
 
 Duplicated tasks with material lines the field ``Planned Date`` on the task
-is set as the current date.
+is set to ``2099-01-01`` (a date far in the future).
 
 This allows the material to be scheduled without error.
 
