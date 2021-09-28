@@ -42,6 +42,8 @@ class TaskWithMaterialLines(models.Model):
         compute="_compute_show_material_prepared_qty"
     )
 
+    procurement_disabled = fields.Boolean()
+
     def _compute_preparation_pickings(self):
         tasks_with_procurement_group = self.filtered(lambda t: t.procurement_group_id)
         for task in tasks_with_procurement_group:
@@ -84,6 +86,13 @@ class TaskWithMaterialLines(models.Model):
     def write(self, vals):
         super().write(vals)
 
+        procurement_disabled = vals.get("procurement_disabled")
+        if procurement_disabled is False:
+            self._run_procurements()
+
+        if procurement_disabled is True:
+            self._cancel_procurements()
+
         if "date_planned" in vals:
             self._propagate_planned_date_to_stock_moves()
 
@@ -92,8 +101,17 @@ class TaskWithMaterialLines(models.Model):
     @api.multi
     def copy(self, vals=None):
         task = super().copy(vals)
-        task._copy_material_lines_from(self)
+
+        if self.material_line_ids:
+            task.procurement_disabled = True
+            task._copy_material_lines_from(self)
+
         return task
+
+    @api.onchange("project_id")
+    def _onchange_project_enable_procurements(self):
+        if self.project_id:
+            self.procurement_disabled = False
 
     def _copy_material_lines_from(self, task):
         if not self.date_planned:
@@ -101,6 +119,14 @@ class TaskWithMaterialLines(models.Model):
 
         for line in task.material_line_ids:
             line.copy({"task_id": self.id})
+
+    def _run_procurements(self):
+        for line in self.mapped("material_line_ids"):
+            line._run_procurements()
+
+    def _cancel_procurements(self):
+        for line in self.mapped("material_line_ids"):
+            line._cancel_procurements()
 
     def _propagate_planned_date_to_stock_moves(self):
         for line in self.mapped("material_line_ids"):

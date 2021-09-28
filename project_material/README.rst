@@ -159,10 +159,17 @@ Duplicating A Task
 ~~~~~~~~~~~~~~~~~~
 When duplicating a task, material lines are also duplicated in the new task.
 
-Duplicated tasks with material lines the field ``Planned Date`` on the task
-is set to ``2099-01-01`` (a date far in the future).
+The field ``Planned Date`` is set to ``2099-01-01`` (a date far in the future).
 
-This allows the material to be scheduled without error.
+Also, procurements are temporarily blocked.
+
+.. image:: static/description/duplicated_task.png
+
+When changing the project on the form view, the procurements are automatically enabled.
+
+.. image:: static/description/duplicated_task_with_procurement_enabled.png
+
+Otherwise, you may also uncheck the ``Procurement Disabled`` box manually.
 
 Contributors
 ------------
