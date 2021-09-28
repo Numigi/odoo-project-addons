@@ -128,7 +128,7 @@ class TaskMaterialLine(models.Model):
         return super().unlink()
 
     def _should_generate_procurement(self):
-        return True
+        return not self.task_id.procurement_disabled
 
     def _cancel_procurements(self):
         self.initial_qty = 0
