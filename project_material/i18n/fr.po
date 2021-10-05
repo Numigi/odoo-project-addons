@@ -329,7 +329,7 @@ msgstr "Articles"
 #: model_terms:ir.ui.view,arch_db:project_material.stock_move_with_project_tree_2
 #: model_terms:ir.ui.view,arch_db:project_material.stock_move_with_project_tree_3
 #: model_terms:ir.ui.view,arch_db:project_material.stock_move_with_project_tree_4
-#: model_terms:ir.ui.view,arch_db:project_material.stock_picking_form_with_task
+#: model_terms:ir.ui.view,arch_db:project_material.stock_picking_form
 #: model_terms:ir.ui.view,arch_db:project_material.task_material_list_view
 #: model_terms:ir.ui.view,arch_db:project_material.task_material_search
 msgid "Project"
