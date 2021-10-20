@@ -16,11 +16,15 @@ class Task(models.Model):
 
     @api.depends(
         'effective_hours', 'subtask_effective_hours', 'planned_hours',
-        'remaining_hours_ids.remaining_hours_change'
+        'remaining_hours_ids.remaining_hours_change', 'stage_id',
+        'stage_id.set_remaining_hours_to_0',
     )
     def _compute_remaining_hours(self):
         super()._compute_remaining_hours()
         for task in self:
+            if task.stage_id.set_remaining_hours_to_0:
+                task.remaining_hours = 0
+                continue
             remaining_hours_change = sum(task.mapped('remaining_hours_ids.remaining_hours_change'))
             task.remaining_hours += remaining_hours_change
 

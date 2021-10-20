@@ -32,6 +32,8 @@ class TestProjectTask(common.SavepointCase):
             'planned_hours': cls.planned_hours,
         })
 
+        cls.stage_done = cls.env.ref("project.project_stage_2")
+
     def test_after_task_created__remaining_hours_is_planned_hours(self):
         assert self.task.remaining_hours == self.planned_hours
 
@@ -78,3 +80,19 @@ class TestProjectTask(common.SavepointCase):
         task = self.task.sudo(self.user)
         with pytest.raises(AccessError):
             task.update_remaining_hours(10, self.user, comment='Testing')
+
+    def test_change_task_stage_with_set_remaining_hour_to_0(self):
+        self.stage_done.set_remaining_hours_to_0 = True
+        self.task.stage_id = self.stage_done
+        assert self.task.remaining_hours == 0
+
+    def test_change_task_stage_without_set_remaining_hour_to_0(self):
+        self.stage_done.set_remaining_hours_to_0 = False
+        self.task.stage_id = self.stage_done
+        assert self.task.remaining_hours == 10
+
+    def test_task_remaining_hours_become_0_when_enable_set_remaining_hour_to_0(self):
+        self.task.stage_id = self.stage_done
+        assert self.task.remaining_hours == 10
+        self.stage_done.set_remaining_hours_to_0 = True
+        assert self.task.remaining_hours == 0
