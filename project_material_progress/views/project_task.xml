@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="project_task_form" model="ir.ui.view">
+        <field name="name">Project Task Form: add material progress</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project_material.task_form_with_material"/>
+        <field name="arch" type="xml">
+            <field name="material_line_ids" position="before">
+                <div class="oe_right" colspan="2" style="margin-top: -40px">
+                    <group>
+                        <field name="material_progress" widget="progressbar" string="Progress"/>
+                    </group>
+                </div>
+            </field>
+        </field>
+    </record>
+
+    <record id="project_task_form" model="ir.ui.view">
+        <field name="name">Project Task Form: add material progress</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_tree2"/>
+        <field name="arch" type="xml">
+            <field name="stage_id" position="after">
+                <field name="material_progress" widget="progressbar" string="Progression"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="view_task_kanban" model="ir.ui.view">
+        <field name="name">project.task.kanban: add material progress</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_kanban"/>
+        <field name="arch" type="xml">
+            <field name="color" position="after">
+                <field name="has_material"/>
+            </field>
+            <xpath expr="//small[hasclass('o_kanban_record_subtitle')]" position="after">
+                <t t-if="record.has_material.raw_value">
+                    <field name="material_progress" widget="progressbar"/>
+                </t>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_task_search" model="ir.ui.view">
+        <field name="name">Task Search: add material progress filters</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_search_form"/>
+        <field name="arch" type="xml">
+            <separator position="after">
+                <filter string="Has Material" name="has_material" domain="[('has_material', '=', True)]"/>
+                <separator/>
+                <filter string="Material Prepared 100%" name="has_material" domain="[('material_progress', '>=', 100)]"/>
+                <separator/>
+            </separator>
+        </field>
+    </record>
+
+</odoo>
