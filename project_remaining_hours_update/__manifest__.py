@@ -15,6 +15,7 @@
         'security/ir.model.access.csv',
         'views/project_task.xml',
         'views/project_task_remaining_hours.xml',
+        'views/project_task_type.xml',
         'wizard/project_task_remaining_hours_update.xml',
     ],
     'installable': True,

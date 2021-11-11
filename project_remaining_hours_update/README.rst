@@ -58,6 +58,16 @@ This list is available from ``Project / Reporting / Task Remaining Hours``.
 
 .. image:: static/description/global_history_list.png
 
+Set Remaining Hours To 0
+------------------------
+On the Stages form view, a new boolean field "Set Remaining Hours To 0" is added
+
+.. image:: static/description/set_remaining_hours_to_0.png
+
+When updating the task to a stage which has "Set Remaining Hours To 0" is checked, the task remaining hours become 0
+
+When checking "Set Remaining Hours To 0" on a stage, the remaining hours of all tasks have this stage become 0
+
 Contributors
 ------------
 * Numigi (tm) and all its contributors (https://bit.ly/numigiens)
