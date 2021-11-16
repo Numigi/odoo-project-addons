@@ -44,4 +44,4 @@ class TestCustomerReference(SavepointCase):
             return Portal().task_update_customer_reference(
                 self.task.id,
                 reference=new_reference,
-                )
+            )
