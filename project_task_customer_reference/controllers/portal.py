@@ -14,7 +14,7 @@ class Portal(_Portal):
         website=True,
     )
     def task_update_customer_reference(self, task_id, token=None, reference=None, **kw):
-        task = _get_task(task_id, token)
+        task = _get_task(task_id)
 
         if task is None:
             return request.redirect("/my")
@@ -25,12 +25,12 @@ class Portal(_Portal):
         except (AccessError, MissingError):
             return request.redirect("/my")
 
-        task.customer_reference = reference
+        task_sudo.customer_reference = reference
 
         url = task.get_portal_url()
         return request.redirect(url)
 
 
-def _get_task(task_id, access_token):
+def _get_task(task_id):
     task = request.env["project.task"].sudo().search([("id", "=", task_id)], limit=1)
     return task
