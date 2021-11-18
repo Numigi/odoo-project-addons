@@ -46,6 +46,7 @@
         "project_stage_no_quick_create",
         "project_task_analytic_lines",
         "project_task_analytic_lines_stock",
+        "project_task_customer_reference",
         "project_task_date_planned",
         "project_task_deadline_from_project",
         "project_task_editable_list_view",
