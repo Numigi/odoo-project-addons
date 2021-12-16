@@ -155,6 +155,22 @@ From the form view of a project, a smart button allows to access the material re
 
 .. image:: static/description/project_material_list.png
 
+Duplicating A Task
+~~~~~~~~~~~~~~~~~~
+When duplicating a task, material lines are also duplicated in the new task.
+
+The field ``Planned Date`` is set to ``2099-01-01`` (a date far in the future).
+
+Also, procurements are temporarily blocked.
+
+.. image:: static/description/duplicated_task.png
+
+When changing the project on the form view, the procurements are automatically enabled.
+
+.. image:: static/description/duplicated_task_with_procurement_enabled.png
+
+Otherwise, you may also uncheck the ``Procurement Disabled`` box manually.
+
 Contributors
 ------------
 * Numigi (tm) and all its contributors (https://bit.ly/numigiens)

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="view_project_search" model="ir.ui.view">
+        <field name="name">Project Search: add field closed</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.view_project_project_filter"/>
+        <field name="arch" type="xml">
+            <separator position="after">
+                <filter string="Open" name="open" domain="[('closed', '=', False)]"/>
+                <filter string="Closed" name="closed" domain="[('closed', '=', True)]"/>
+                <separator/>
+            </separator>
+        </field>
+    </record>
+
+    <record id="project.open_view_project_all" model="ir.actions.act_window">
+        <field name="context">{'search_default_open': 1}</field>
+    </record>
+
+    <record id="project.open_view_project_all_config" model="ir.actions.act_window">
+        <field name="context">{'search_default_open': 1}</field>
+    </record>
+
+</odoo>

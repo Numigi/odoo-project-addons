@@ -3,7 +3,7 @@
 
 {
     'name': 'Project Remaining Hours Update',
-    'version': '1.0.0',
+    'version': '1.1.0',
     'author': 'Numigi',
     'maintainer': 'Numigi',
     'website': 'https://bit.ly/numigi-com',
@@ -15,6 +15,7 @@
         'security/ir.model.access.csv',
         'views/project_task.xml',
         'views/project_task_remaining_hours.xml',
+        'views/project_task_type.xml',
         'wizard/project_task_remaining_hours_update.xml',
     ],
     'installable': True,

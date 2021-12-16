@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="project_estimation_enter_form" model="ir.ui.view">
+        <field name="name">Project Estimation Mode Enter Wizard</field>
+        <field name="model">project.estimation.enter</field>
+        <field name="arch" type="xml">
+            <form string="Enter Estimation Mode">
+                <sheet>
+                    <group>
+                        <field name="project_id" readonly="1"/>
+                    </group>
+                </sheet>
+                <footer>
+                    <button name="validate" class="oe_highlight" string="Validate" type="object"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+</odoo>
