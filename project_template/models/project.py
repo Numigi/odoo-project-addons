@@ -59,10 +59,11 @@ class Project(models.Model):
         return True
 
     def _compute_template_task_ids(self):
-        self.template_task_ids = self.env["project.task"].search([
-            ("project_id", "=", self.id),
-            ("is_template", "=", True),
-        ])
+        for rec in self:
+            rec.template_task_ids = rec.env["project.task"].search([
+                ("project_id", "=", rec.id),
+                ("is_template", "=", True),
+            ])
 
 class ProjectWithTemplateTaskCount(models.Model):
 
