@@ -3,3 +3,4 @@
   includes:
     - base_extended_security
     - base_xml_rename
+    - test_http_request

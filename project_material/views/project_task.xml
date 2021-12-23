@@ -6,6 +6,14 @@
         <field name="model">project.task</field>
         <field name="inherit_id" ref="project.view_task_form2"/>
         <field name="arch" type="xml">
+            <header position="after">
+                <div class="alert alert-warning"
+                     role="alert"
+                     attrs="{'invisible': [('procurement_disabled', '=', False)]}"
+                     >
+                        Material procurements are currently disabled on this task.
+                </div>
+            </header>
             <notebook position="inside">
                 <page name="material_page" string="Consumption">
                     <group name="material_group" string="Products">
@@ -20,6 +28,9 @@
                                 <field name="unit_cost"/>
                             </tree>
                         </field>
+                    </group>
+                    <group>
+                        <field name="procurement_disabled"/>
                     </group>
                 </page>
 
