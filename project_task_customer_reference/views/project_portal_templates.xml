@@ -4,16 +4,15 @@
         <xpath expr="//span[@t-field='task.date_deadline']/.." position="after">
             <div class="col-12 col-md-6">
                 <strong >Customer Reference:</strong> <span style="padding-right:30px;" t-field="task.customer_reference"/>
-                <a
+                <button
                 role="button"
-                class="btn btn-secondary btn-block mb8"
+                class="btn btn-sm btn-secondary mb8"
                 data-toggle="modal"
                 data-target="#modalreference"
                 href="#"
-                style="width:75px;height:30px;display:inline-block;"
                 >
-                    Modify
-                </a>
+                    <span>Modify</span>
+                </button>
             </div>
             <div
                 id="quote_content"
@@ -35,8 +34,10 @@
                                 </button>
                             </header>
                             <main class="modal-body" id="reference-dialog">
-                                <input name="reference"/>
-                                <input type="submit" value="Submit"/>
+                                <div class="d-flex align-items-center">
+                                    <input name="reference" type="text" class="form-control"/>
+                                    <input type="submit" class="btn btn-sm btn-secondary mb8 m-2" value="Submit"/>
+                                </div>
                             </main>
                         </form>
                     </div>
