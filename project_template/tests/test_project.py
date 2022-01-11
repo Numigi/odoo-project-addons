@@ -86,3 +86,10 @@ class TestConvertTemplatesToTask(common.SavepointCase):
         self.template_b.is_template = False
         assert self.project.task_count == 2
         assert self.project.task_template_count == 0
+
+    def test_template_task_ids_compute(self):
+        self.template_a.project_id = self.project
+        self.template_b.project_id = self.project
+        self.project._compute_template_task_ids()
+        assert self.template_a in self.project.template_task_ids
+        assert self.template_b in self.project.template_task_ids

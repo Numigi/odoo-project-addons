@@ -10,6 +10,7 @@ class Project(models.Model):
     _inherit = 'project.project'
 
     is_template = fields.Boolean()
+    template_task_ids = fields.One2many('project.task', compute="_compute_template_task_ids")
 
     @api.model
     def _create_task_from_template(self, template):
@@ -57,6 +58,12 @@ class Project(models.Model):
 
         return True
 
+    def _compute_template_task_ids(self):
+        for rec in self:
+            rec.template_task_ids = rec.env["project.task"].search([
+                ("project_id", "=", rec.id),
+                ("is_template", "=", True),
+            ])
 
 class ProjectWithTemplateTaskCount(models.Model):
 
