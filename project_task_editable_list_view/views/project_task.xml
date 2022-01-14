@@ -11,7 +11,7 @@
                 <field name="project_id" readonly="1"/>
                 <field name="user_id"/>
                 <field name="date_planned"/>
-                <field name="stage_id"/>
+                <field name="planned_hours"/>
             </tree>
         </field>
     </record>
