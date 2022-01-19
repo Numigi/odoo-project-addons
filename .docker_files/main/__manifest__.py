@@ -36,6 +36,7 @@
         "project_material_direct",
         "project_material_progress",
         "project_material_quantity_filters",
+        "project_milestone_enhanced",
         "project_no_quick_create",
         "project_outsourcing",
         "project_portal_hide_timesheets",
