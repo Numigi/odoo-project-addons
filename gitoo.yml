@@ -4,3 +4,9 @@
     - base_extended_security
     - base_xml_rename
     - test_http_request
+
+- url: https://github.com/OCA/project
+  branch: "12.0"
+  includes:
+    - project_milestone
+    - project_stage_closed
