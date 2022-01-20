@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="editable_task_list_view" model="ir.ui.view">
+        <field name="name">Task Editable List View: Add stage_id</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project_task_editable_list_view.editable_task_list_view"/>
+        <field name="arch" type="xml">
+            <field name="planned_hours" position="after">
+                <field name="stage_id"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>

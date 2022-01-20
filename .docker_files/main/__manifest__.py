@@ -51,6 +51,7 @@
         "project_task_customer_reference",
         "project_task_date_planned",
         "project_task_deadline_from_project",
+        "project_task_editable_list_stage",
         "project_task_editable_list_view",
         "project_task_full_text_search",
         "project_task_id_in_display_name",
