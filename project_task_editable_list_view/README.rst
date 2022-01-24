@@ -5,7 +5,7 @@ This module adds an editable list view of tasks.
 
 .. image:: static/description/menu.png
 
-The fields ``Assigned To``, ``Date Planned`` and ``Stage`` are editable.
+The fields ``Assigned To``, ``Date Planned`` and ``Planned Hours`` are editable.
 
 The field ``Project`` is readonly.
 
