@@ -18,7 +18,7 @@
                 <page name="material_page" string="Consumption">
                     <group name="material_group" string="Products">
                         <field name="material_line_ids" nolabel="1" col="2">
-                            <tree editable="bottom">
+                            <tree editable="bottom" limit="200">
                                 <field name="product_id"/>
                                 <field name="initial_qty"/>
                                 <field name="prepared_qty"
