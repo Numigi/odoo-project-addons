@@ -4,7 +4,7 @@
     <record id="project_task_material_multi_company_rule" model="ir.rule">
         <field name="name">Project Task Material Multi-Company Rule</field>
         <field name="model_id" ref="model_project_task_material"/>
-        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'child_of', [user.company_id.id])]</field>
+        <field name="domain_force">[('task_id.company_id', '=', user.company_id.id)]</field>
         <field name="global" eval="True"/>
     </record>
 
