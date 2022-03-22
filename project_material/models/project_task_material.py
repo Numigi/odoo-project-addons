@@ -131,9 +131,8 @@ class TaskMaterialLine(models.Model):
         return not self.task_id.procurement_disabled
 
     def _cancel_procurements(self):
-        self.initial_qty = 0
-        self._run_procurements()
-        self.move_ids.write({"material_line_id": False})
+        for moves in self._iter_procurement_moves():
+            self._cancel_stock_moves(moves)
 
     def _run_procurements(self):
         """Generate procurements for the material line.
@@ -300,9 +299,12 @@ class TaskMaterialLine(models.Model):
         would appear in pickings and create confusion among users.
         """
         for moves in self._iter_procurement_moves():
-            moves_with_zero_qty = moves.filtered(lambda m: m.product_qty == 0)
-            moves_with_zero_qty._action_cancel()
-            moves_with_zero_qty.write({"picking_id": False})
+            moves_to_cancel = moves.filtered(lambda m: m.product_qty == 0)
+            self._cancel_stock_moves(moves_to_cancel)
+
+    def _cancel_stock_moves(self, moves):
+        moves._action_cancel()
+        moves.write({"picking_id": False, "material_line_id": False})
 
     def _propagate_planned_date_to_stock_moves(self):
         date_planned = self.task_id.date_planned
