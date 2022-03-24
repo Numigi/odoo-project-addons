@@ -12,6 +12,12 @@ from .common import TaskMaterialCase
 
 @ddt
 class TestGenerateProcurementsFromTask(TaskMaterialCase):
+    def test_change_task__quantity_not_reset(self):
+        line = self._create_material_line()
+        line.initial_qty = 9
+        line.task_id = self.task_2
+        assert line.initial_qty == 9
+
     def test_if_no_date_planned_on_task__raise_exception(self):
         self.task.date_planned = False
         with pytest.raises(ValidationError):
@@ -94,14 +100,16 @@ class TestGenerateProcurementsFromTask(TaskMaterialCase):
 
     def test_if_delete_material_line__move_is_cancelled(self):
         line = self._create_material_line(initial_qty=10)
+        moves = line.move_ids
         line.initial_qty = 0
-        assert line.move_ids.state == "cancel"
+        assert moves.state == "cancel"
 
     def test_if_delete_material_line__move_removed_from_stock_picking(self):
         line = self._create_material_line(initial_qty=10)
+        move = line.move_ids
+        assert move.picking_id
         line.initial_qty = 0
-        assert line.move_ids
-        assert not line.move_ids.picking_id
+        assert not move.picking_id
 
     def test_if_raise_initial_quantity__stock_move_is_increased(self):
         line = self._create_material_line(initial_qty=10)
@@ -132,15 +140,15 @@ class TestGenerateProcurementsFromTask(TaskMaterialCase):
     def test_if_back_order__initial_qty_can_be_reduced(self):
         line = self._create_material_line(initial_qty=10)
         self._force_transfer_move(line.move_ids, 7)
-        line.initial_qty = 9
         back_order = line.move_ids.filtered(lambda m: m.state != "done")
+        line.initial_qty = 9
         assert back_order.product_uom_qty == 2  # 9 - 7
 
     def test_if_back_order__initial_qty_can_be_reduced_to_delivered_quantity(self):
         line = self._create_material_line(initial_qty=10)
         self._force_transfer_move(line.move_ids, 7)
-        line.initial_qty = 7
         back_order = line.move_ids.filtered(lambda m: m.state != "done")
+        line.initial_qty = 7
         assert back_order.state == "cancel"
 
     def test_if_back_order__initial_qty_can_not_be_below_delivered_quantity(self):
