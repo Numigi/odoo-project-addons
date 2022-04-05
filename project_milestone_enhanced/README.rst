@@ -25,13 +25,17 @@ In this module :
 
 Copied tasks are linked to the copied milestones when duplicating a project.
 
-Add the field active on milestones and a button is displayed on form view
+Add the field "active" on milestones and a button is displayed on form view
+
+Add the field "active toggle" on milestones which store last value of field "active" using button active in milestone form view
+If value of field "active toggle" is False, when a project is disabled or field Use milestones is disabled, when they are reactivated,
+milestones stay inactive
 
 When a milestone has his project modified, all his associated tasks not associated to this new project are dissociated.
 
-when a project change field "Use milestones", milestones are set to same value.
+when a project change field "Use milestones", milestones are set to same value if field "active toggle" is set to True.
 
-When a project is (de)activated, milestones too.
+When a project is (de)activated, milestones too if field "active toggle" is set to True.
 
 Overview
 --------
