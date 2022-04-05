@@ -3,7 +3,7 @@
 
 {
     "name": "Project Milestone Enhanced",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "author": "Numigi",
     "maintainer": "Numigi",
     "website": "https://bit.ly/numigi-com",
@@ -11,5 +11,9 @@
     "category": "Project",
     "summary": "Improve usability of project milestones",
     "depends": ["project_milestone"],
+    "data": [
+        "views/project_milestone.xml",
+        "views/project.xml",
+    ],
     "installable": True,
 }
