@@ -19,7 +19,13 @@
         <field name="inherit_id" ref="project.edit_project"/>
         <field name="arch" type="xml">
             <button name="toggle_active" position="before">
-                <button  class="oe_stat_button" name="%(action_purchase_order_list_from_project)d" type="action" icon="fa-shopping-cart">
+                <button
+                    class="oe_stat_button"
+                    name="%(action_purchase_order_list_from_project)d"
+                    type="action"
+                    icon="fa-shopping-cart"
+                    groups="purchase.group_purchase_user"
+                    >
                     <field string="Outsourcing" name="outsourcing_po_count" widget="statinfo"/>
                 </button>
             </button>

@@ -8,7 +8,9 @@ class Project(models.Model):
 
     _inherit = "project.project"
 
-    outsourcing_po_count = fields.Integer(compute="_compute_outsourcing_po_count")
+    outsourcing_po_count = fields.Integer(
+        compute="_compute_outsourcing_po_count", groups="purchase.group_purchase_user"
+    )
 
     def _compute_outsourcing_po_count(self):
         for project in self:
