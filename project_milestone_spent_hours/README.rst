@@ -1,4 +1,4 @@
-Project Milestone Estimated Hours
+Project Milestone Spent Hours
 =================================
 
 .. contents:: Table of Contents
