@@ -4,14 +4,16 @@
 from .common import OutsourcingCase
 
 
-class TestTaskOutsourcingTab(OutsourcingCase):
-
+class TestProjectTask(OutsourcingCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
         cls.order_2 = cls.order.copy()
 
-    def test_outsourcing_line_ids_contains_lines_from_all_po(self):
+    def test_outsourcing_line_ids(self):
         assert self.task.outsourcing_line_ids == (
             self.order.order_line | self.order_2.order_line
         )
+
+    def test_outsourcing_po_count(self):
+        assert self.task.outsourcing_po_count == 2
