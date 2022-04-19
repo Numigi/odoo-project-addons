@@ -45,10 +45,6 @@ class Project(models.Model):
         self._test_active_milestones(vals)
         return res
 
-    def _de_active_milestones(self, vals):
-        if {"active", "use_milestones"} & set(vals):
-            self._de_active_milestones(vals)
-
     def _test_active_milestones(self, vals):
         for project in self:
             project._set_active_milestones(vals)
