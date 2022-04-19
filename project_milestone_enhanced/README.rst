@@ -14,7 +14,7 @@ When a project is copied, its milestones and tasks are copied as well.
 The problem is that the copied tasks are linked to milestones
 in the old project instead of the new one.
 
-Technique
+Technical
 ---------
 
 Add possibility to not copy by default milestones of a project using a the key "milestones_no_copy" set to True in context.
