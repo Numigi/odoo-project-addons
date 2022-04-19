@@ -10,7 +10,7 @@
         <field name="arch" type="xml">
             <button name="toggle_active" position="attributes">
                 <attribute
-                    name="confirm">(Un)archiving a project automatically (un)archives its tasks and milestones. Do you want to proceed?
+                    name="confirm">(Un)archiving a project automatically (un)archives its tasks and milestones. Do you want to proceed ?
                 </attribute>
             </button>
         </field>
