@@ -8,14 +8,13 @@ class Project(models.Model):
 
     _inherit = "project.project"
 
-    timesheet_ids = fields.One2many('account.analytic.line', 'project_id', string="Timesheets")
+    timesheet_ids = fields.One2many("account.analytic.line", "project_id", string="Timesheets")
     total_hours_spent = fields.Float(
-        string="Total spent hours", compute='_compute_total_hours_spent', store=True)
+        string="Total spent hours", compute="_compute_total_hours_spent", store=True
+    )
 
     @api.multi
-    @api.depends(
-        'timesheet_ids', 'timesheet_ids.project_id', 'timesheet_ids.unit_amount'
-    )
+    @api.depends("timesheet_ids", "timesheet_ids.project_id", "timesheet_ids.unit_amount")
     def _compute_total_hours_spent(self):
         for project in self:
-            project.total_hours_spent = sum(project.timesheet_ids.mapped('unit_amount'))
+            project.total_hours_spent = sum(project.timesheet_ids.mapped("unit_amount"))
