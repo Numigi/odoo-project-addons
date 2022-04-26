@@ -17,14 +17,28 @@ class ProjectTask(models.Model):
     _inherit = "project.task"
 
     outsourcing_po_ids = fields.One2many(
-        "purchase.order", "task_id", "Outsourcing Purchase Orders"
+        "purchase.order",
+        "task_id",
+        "Outsourcing Purchase Orders",
+        groups="purchase.group_purchase_user",
     )
 
     outsourcing_line_ids = fields.Many2many(
         "purchase.order.line",
         compute="_compute_outsourcing_line_ids",
         string="Outsourcing Purchase Lines",
+        groups="purchase.group_purchase_user",
     )
+
+    outsourcing_po_count = fields.Integer(
+        compute="_compute_outsourcing_po_count", groups="purchase.group_purchase_user"
+    )
+
+    def _compute_outsourcing_po_count(self):
+        for task in self:
+            task.outsourcing_po_count = self.env["purchase.order"].search(
+                [("task_id", "=", task.id), ("state", "!=", "cancel")], count=True
+            )
 
     def _compute_outsourcing_line_ids(self):
         for task in self:
