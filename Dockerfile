@@ -15,6 +15,7 @@ USER odoo
 
 COPY analytic_line_employee  /mnt/extra-addons/analytic_line_employee
 COPY analytic_line_revenue  /mnt/extra-addons/analytic_line_revenue
+COPY portal_project_list_hours_spent  /mnt/extra-addons/portal_project_list_hours_spent
 COPY project_analytic_group  /mnt/extra-addons/project_analytic_group
 COPY project_chatter  /mnt/extra-addons/project_chatter
 COPY project_closed  /mnt/extra-addons/project_closed
