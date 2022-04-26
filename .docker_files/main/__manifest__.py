@@ -57,6 +57,7 @@
         "project_task_full_text_search",
         "project_task_id_in_display_name",
         "project_task_link",
+        "project_task_milestone_mandatory",
         "project_task_reference",
         "project_task_resource_type",
         "project_task_search_parent_subtask",
