@@ -15,6 +15,7 @@
         "purchase",  # required for testing project_wip_material
         "analytic_line_employee",
         "analytic_line_revenue",
+        "portal_project_list_hours_spent",
         "project_analytic_group",
         "project_chatter",
         "project_closed",
