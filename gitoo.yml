@@ -5,7 +5,7 @@
     - base_xml_rename
     - test_http_request
 
-- url: https://github.com/Numigi/odoo-account-addons
+- url: https://{{GIT_TOKEN}}@github.com/numigi/odoo-account-addons
   branch: "12.0"
   includes:
     - account_analytic_enhanced
