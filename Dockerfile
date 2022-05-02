@@ -15,6 +15,7 @@ USER odoo
 
 COPY analytic_line_employee  /mnt/extra-addons/analytic_line_employee
 COPY analytic_line_revenue  /mnt/extra-addons/analytic_line_revenue
+COPY portal_project_list_hours_spent  /mnt/extra-addons/portal_project_list_hours_spent
 COPY project_analytic_group  /mnt/extra-addons/project_analytic_group
 COPY project_chatter  /mnt/extra-addons/project_chatter
 COPY project_closed  /mnt/extra-addons/project_closed
@@ -37,6 +38,8 @@ COPY project_material_direct  /mnt/extra-addons/project_material_direct
 COPY project_material_progress  /mnt/extra-addons/project_material_progress
 COPY project_material_quantity_filters  /mnt/extra-addons/project_material_quantity_filters
 COPY project_milestone_enhanced  /mnt/extra-addons/project_milestone_enhanced
+COPY project_milestone_estimated_hours  /mnt/extra-addons/project_milestone_estimated_hours
+COPY project_milestone_spent_hours  /mnt/extra-addons/project_milestone_spent_hours
 COPY project_no_quick_create  /mnt/extra-addons/project_no_quick_create
 COPY project_outsourcing  /mnt/extra-addons/project_outsourcing
 COPY project_portal_hide_timesheets  /mnt/extra-addons/project_portal_hide_timesheets
@@ -56,6 +59,7 @@ COPY project_task_editable_list_view  /mnt/extra-addons/project_task_editable_li
 COPY project_task_full_text_search  /mnt/extra-addons/project_task_full_text_search
 COPY project_task_id_in_display_name  /mnt/extra-addons/project_task_id_in_display_name
 COPY project_task_link  /mnt/extra-addons/project_task_link
+COPY project_task_milestone_mandatory  /mnt/extra-addons/project_task_milestone_mandatory
 COPY project_task_reference  /mnt/extra-addons/project_task_reference
 COPY project_task_resource_type  /mnt/extra-addons/project_task_resource_type
 COPY project_task_search_parent_subtask  /mnt/extra-addons/project_task_search_parent_subtask
