@@ -6,7 +6,7 @@ This module adds the stages on project like stages on task.
 
 ## Configuration
 
-The project types are editable under Project / Settings / Project Stages.
+The project stages are editable under Project / Settings / Project Stages.
 
 ![Project Type List](static/description/project_stage_tree.png?raw=true)
 
