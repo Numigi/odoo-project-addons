@@ -6,18 +6,18 @@ This module allows to autocomplete descriptions on tasks.
 
 Context
 -------
-When using ``Projects`` for field interventions, the description of tasks is very repetitive.
+When using ``Projects`` for field interventions for example, the description of tasks is very repetitive.
 It is therefore convenient to automatically fill the description with a template.
 
 Usage
 -----
-As ``Project / Manager``, I go to ``Proejct / Configuration / Task Description Templates``.
+As ``Project / Manager``, I go to ``Project / Configuration / Task Description Templates``.
 
 I find the list of description templates.
 
 .. image:: static/description/description_template_list.png
 
-Each record contains a name andd a HTML description.
+Each record contains a name and a HTML description.
 
 .. image:: static/description/description_template_form.png
 
