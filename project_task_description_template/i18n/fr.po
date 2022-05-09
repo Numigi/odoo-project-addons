@@ -1,0 +1,106 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* project_task_description_template
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-05-06 18:38+0000\n"
+"PO-Revision-Date: 2022-05-06 14:41-0400\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"X-Generator: Poedit 2.3\n"
+
+#. module: project_task_description_template
+#: model:ir.model.fields,field_description:project_task_description_template.field_project_task_description_template__active
+msgid "Active"
+msgstr "Actif"
+
+#. module: project_task_description_template
+#: model_terms:ir.ui.view,arch_db:project_task_description_template.project_task_description_template_search
+msgid "Archived"
+msgstr "Archivé"
+
+#. module: project_task_description_template
+#: model:ir.model.fields,field_description:project_task_description_template.field_project_task_description_template__create_uid
+msgid "Created by"
+msgstr "Créé par"
+
+#. module: project_task_description_template
+#: model:ir.model.fields,field_description:project_task_description_template.field_project_task_description_template__create_date
+msgid "Created on"
+msgstr "Créé le"
+
+#. module: project_task_description_template
+#: model:ir.model.fields,field_description:project_task_description_template.field_project_task_description_template__description
+msgid "Description"
+msgstr "Description"
+
+#. module: project_task_description_template
+#: model:ir.model.fields,field_description:project_task_description_template.field_project_task__description_template_id
+msgid "Description Template"
+msgstr "Modèle de description"
+
+#. module: project_task_description_template
+#: model:ir.model.fields,field_description:project_task_description_template.field_project_task_description_template__display_name
+msgid "Display Name"
+msgstr "Nom affiché"
+
+#. module: project_task_description_template
+#: model:ir.model.fields,field_description:project_task_description_template.field_project_task_description_template__id
+msgid "ID"
+msgstr "ID"
+
+#. module: project_task_description_template
+#: model:ir.model.fields,field_description:project_task_description_template.field_project_task_description_template____last_update
+msgid "Last Modified on"
+msgstr "Dernière modification le"
+
+#. module: project_task_description_template
+#: model:ir.model.fields,field_description:project_task_description_template.field_project_task_description_template__write_uid
+msgid "Last Updated by"
+msgstr "Dernière mise à jour par"
+
+#. module: project_task_description_template
+#: model:ir.model.fields,field_description:project_task_description_template.field_project_task_description_template__write_date
+msgid "Last Updated on"
+msgstr "Dernière mise à jour le"
+
+#. module: project_task_description_template
+#: model:ir.model.fields,field_description:project_task_description_template.field_project_task_description_template__name
+msgid "Name"
+msgstr "Nom"
+
+#. module: project_task_description_template
+#: model:ir.model,name:project_task_description_template.model_project_task_description_template
+msgid "Project Task Description Template"
+msgstr "Modèles de description de tâches"
+
+#. module: project_task_description_template
+#: model:ir.model.fields,field_description:project_task_description_template.field_project_task_description_template__sequence
+msgid "Sequence"
+msgstr "Séquence"
+
+#. module: project_task_description_template
+#: model:ir.model,name:project_task_description_template.model_project_task
+msgid "Task"
+msgstr "Tâche"
+
+#. module: project_task_description_template
+#: model_terms:ir.ui.view,arch_db:project_task_description_template.project_task_description_template_form
+msgid "Task Description Template"
+msgstr "Modèle de description de tâche"
+
+#. module: project_task_description_template
+#: model:ir.actions.act_window,name:project_task_description_template.project_task_description_template_action
+#: model:ir.ui.menu,name:project_task_description_template.project_task_description_template_menu
+#: model_terms:ir.ui.view,arch_db:project_task_description_template.project_task_description_template_list
+#: model_terms:ir.ui.view,arch_db:project_task_description_template.project_task_description_template_search
+msgid "Task Description Templates"
+msgstr "Modèles de description de tâches"
