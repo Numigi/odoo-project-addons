@@ -1,7 +1,7 @@
-FROM node:9.11.2-stretch
+FROM node:17.9.0-stretch
 LABEL maintainer="contact@numigi.com"
 
-RUN npm install -g testcafe@0.23.2
+RUN npm install -g testcafe@1.19.0
 
 RUN echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list && \
     wget https://dl-ssl.google.com/linux/linux_signing_key.pub && \
