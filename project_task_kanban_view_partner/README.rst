@@ -12,7 +12,7 @@ Usage
 -----
 There is now the customer field under task kanban view.
 
-    .. image:: project_task_kanban_view_partner/static/description/project_task_kanban_partner.png
+    .. image:: static/description/project_task_kanban_partner.png
         :width: 100%
         :align: center
         :height: 600px
