@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record model="ir.ui.view" id="view_task_kanban">
+        <field name="name">project.task.kanban</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_kanban"/>
+        <field name="arch" type="xml">
+            <xpath expr="//t[@t-if='record.email_from.raw_value']" position="replace">
+                <t t-if="record.partner_id.raw_value"><span><field name="partner_id"/></span></t>
+            </xpath>
+        </field>
+    </record>
+</odoo>
