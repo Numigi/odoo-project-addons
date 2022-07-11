@@ -8,7 +8,7 @@ Overview
 --------
 As member of the group ``Project / User``, I go the form view of a task.
 
-.. image:: static/description/task_form.png
+.. image:: static/description/task_formpng.png
 
 In the description, I need to reference the task ID=18.
 Therefore, I write ``TA#18`` in the description.
