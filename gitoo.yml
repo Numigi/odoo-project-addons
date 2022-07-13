@@ -5,6 +5,11 @@
     - base_xml_rename
     - test_http_request
 
+- url: https://github.com/OCA/hr
+  branch: "12.0"
+  includes:
+    - hr_timesheet_task_stage
+    
 - url: https://github.com/OCA/project
   branch: "12.0"
   includes:
