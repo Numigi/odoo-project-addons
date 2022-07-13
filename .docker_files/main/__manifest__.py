@@ -44,6 +44,7 @@
         "project_milestone_spent_hours",
         "project_no_quick_create",
         "project_outsourcing",
+        "project_outsourcing_timesheet_automation",
         "project_portal_hide_timesheets",
         "project_portal_no_subtask",
         "project_portal_parent_task",
