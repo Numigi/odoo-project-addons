@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="task_type_form_with_outsourcing" model="ir.ui.view">
+        <field name="name">Task Stages: add outsourcing field</field>
+        <field name="model">project.task.type</field>
+        <field name="inherit_id" ref="project.task_type_edit"/>
+        <field name="arch" type="xml">
+            <field name="sequence" position="after">
+                <field name="create_subcontractors_time_entries"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>

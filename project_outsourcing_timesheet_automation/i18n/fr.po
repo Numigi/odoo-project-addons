@@ -1,0 +1,121 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* project_outsourcing_timesheet_automation
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-07-08 09:08+0000\n"
+"PO-Revision-Date: 2022-07-08 09:08+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: project_outsourcing_timesheet_automation
+#: code:addons/project_outsourcing_timesheet_automation/models/project_task.py:68
+#, python-format
+msgid "<li> A time entry has been automatically created for PO line {} <br> - {} </li>"
+msgstr "<li> Une entrée de temps a été créé automatiquement pour la ligne de PO {} <br> - {} </li>"
+
+#. module: project_outsourcing_timesheet_automation
+#: code:addons/project_outsourcing_timesheet_automation/models/project_task.py:62
+#, python-format
+msgid "<li> Employee: {} </li>"
+msgstr "<li> Employé: {} </li>"
+
+#. module: project_outsourcing_timesheet_automation
+#: code:addons/project_outsourcing_timesheet_automation/models/project_task.py:66
+#, python-format
+msgid "<li> Status: {} </li>"
+msgstr "<li> Statut: {} </li>"
+
+#. module: project_outsourcing_timesheet_automation
+#: code:addons/project_outsourcing_timesheet_automation/models/project_task.py:65
+#, python-format
+msgid "<li> Task: {} </li>"
+msgstr "<li> Tâche: {} </li>"
+
+#. module: project_outsourcing_timesheet_automation
+#: code:addons/project_outsourcing_timesheet_automation/models/project_task.py:59
+#, python-format
+msgid "<li>User: {} </li>"
+msgstr "<li>Utilisateur: {} </li>"
+
+#. module: project_outsourcing_timesheet_automation
+#: model:ir.model,name:project_outsourcing_timesheet_automation.model_account_analytic_line
+msgid "Analytic Line"
+msgstr "Line analitique"
+
+#. module: project_outsourcing_timesheet_automation
+#: model:ir.model.fields,field_description:project_outsourcing_timesheet_automation.field_product_product__automate_time_entries
+#: model:ir.model.fields,field_description:project_outsourcing_timesheet_automation.field_product_template__automate_time_entries
+msgid "Automate Time Entries"
+msgstr "Automatiser les saisies de temps"
+
+#. module: project_outsourcing_timesheet_automation
+#: model:ir.model,name:project_outsourcing_timesheet_automation.model_res_partner
+msgid "Contact"
+msgstr "Contact"
+
+#. module: project_outsourcing_timesheet_automation
+#: model:ir.model.fields,field_description:project_outsourcing_timesheet_automation.field_project_task_type__create_subcontractors_time_entries
+msgid "Create Subcontractors Time Entries"
+msgstr "Créer des entrées de temps de sous-traitants"
+
+#. module: project_outsourcing_timesheet_automation
+#: model:ir.model.fields,field_description:project_outsourcing_timesheet_automation.field_res_partner__employee_id
+#: model:ir.model.fields,field_description:project_outsourcing_timesheet_automation.field_res_users__employee_id
+msgid "Employee for Time Entries"
+msgstr ""
+
+#. module: project_outsourcing_timesheet_automation
+#: code:addons/project_outsourcing_timesheet_automation/models/project_task.py:45
+#, python-format
+msgid "Module Realisation"
+msgstr "Employé pour les saisies de temps"
+
+#. module: project_outsourcing_timesheet_automation
+#: model:ir.model.fields,field_description:project_outsourcing_timesheet_automation.field_account_analytic_line__purchase_order_line_id
+msgid "PO Line"
+msgstr "Ligne de PO"
+
+#. module: project_outsourcing_timesheet_automation
+#: model:ir.model,name:project_outsourcing_timesheet_automation.model_product_template
+msgid "Product Template"
+msgstr "Modèle de produit"
+
+#. module: project_outsourcing_timesheet_automation
+#: model:ir.model,name:project_outsourcing_timesheet_automation.model_purchase_order
+msgid "Purchase Order"
+msgstr "Bon d'achat"
+
+#. module: project_outsourcing_timesheet_automation
+#: model_terms:ir.ui.view,arch_db:project_outsourcing_timesheet_automation.product_form_with_outsourcing
+msgid "Subcontracting"
+msgstr "Sous-traitance"
+
+#. module: project_outsourcing_timesheet_automation
+#: model:ir.model.fields,field_description:project_outsourcing_timesheet_automation.field_res_partner__subcontracting_auto_time_entries
+#: model:ir.model.fields,field_description:project_outsourcing_timesheet_automation.field_res_users__subcontracting_auto_time_entries
+msgid "Subcontracting - Automate Time Entries"
+msgstr "Sous-traitance - Automatiser les saisies de temps"
+
+#. module: project_outsourcing_timesheet_automation
+#: model:ir.model,name:project_outsourcing_timesheet_automation.model_project_task
+msgid "Task"
+msgstr "Tâche"
+
+#. module: project_outsourcing_timesheet_automation
+#: model:ir.model,name:project_outsourcing_timesheet_automation.model_project_task_type
+msgid "Task Stage"
+msgstr "Étape de tâche"
+
+#. module: project_outsourcing_timesheet_automation
+#: model:ir.model.fields,help:project_outsourcing_timesheet_automation.field_project_task_type__create_subcontractors_time_entries
+msgid "When activated, if the Subcontractor and the Product have the parameter ‘Subcontracting - Automate Time Entries’ active, when a task associated with a subcontracting Purchase Order is updated to this Stage, Subcontractor’s Time Entry is created automatically"
+msgstr "Lorsque cochée, si le fournisseur ET l’article ont un paramètre ‘Réimputer les temps du sous-traitant’ actif, alors, lorsqu’une tâche associée à un PO de sous-traitance validé est passée à ce statut, la feuille de temps du sous-traitant est créée automatiquement sur la tâche’."
+
