@@ -35,7 +35,7 @@ In a vendor form view, go to the `Sales & Purchases` tab and under `Purchase` se
 A new field **Employee for Time Entries** is displayed, select an employee.
 This employee is used to create the timesheet.
 
-    .. image:: static/description/product_automate_time_entries_checked.png
+    .. image:: static/description/vendor_auomate_time_entries_checked.png
 
 As a user with Extra `Rights / Technical Features`, go to `Project > Configuration > Stages`.
 Create a new stage and check **Create Subcontractors Time Entries** box.
