@@ -7,7 +7,7 @@
         <field name="inherit_id" ref="purchase.view_product_supplier_inherit"/>
         <field name="arch" type="xml">
             <group name="vendors" position="after">
-                    <group string="Subcontracting" name="subcontracting">
+                    <group string="Subcontracting" name="subcontracting" attrs="{'invisible': [('type', '!=', 'service')]}">
                         <field name="automate_time_entries"/>
                     </group>
                 </group>
