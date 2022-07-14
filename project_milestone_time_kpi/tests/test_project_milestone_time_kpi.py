@@ -11,8 +11,8 @@ class TestProjectMilestoneTimeKPI(SavepointCase):
         super(TestProjectMilestoneTimeKPI, cls).setUpClass()
 
         # create a generic Project with 2 milestones and 2 tasks associated to milestones
-        cls.folded_stage = cls.env["project.task.type"].create({
-            "name": "Done", "fold": True
+        cls.stage = cls.env["project.task.type"].create({
+            "name": "New"
         })
 
         cls.project_a = cls.env["project.project"].create({
@@ -36,7 +36,7 @@ class TestProjectMilestoneTimeKPI(SavepointCase):
                 "project_id": cls.project_a.id,
                 "milestone_id": cls.milestone_a.id,
                 "planned_hours": 4,
-                "stage_id": cls.folded_stage.id,
+                "stage_id": cls.stage.id,
             })
 
         cls.task_b = cls.env["project.task"].create({
@@ -44,7 +44,7 @@ class TestProjectMilestoneTimeKPI(SavepointCase):
                 "project_id": cls.project_a.id,
                 "milestone_id": cls.milestone_b.id,
                 "planned_hours": 8,
-                "stage_id": cls.folded_stage.id,
+                "stage_id": cls.stage.id,
             })
 
         # Add timelines to created tasks
