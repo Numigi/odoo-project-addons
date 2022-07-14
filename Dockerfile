@@ -16,7 +16,6 @@ USER odoo
 COPY account_analytic_enhanced  /mnt/extra-addons/account_analytic_enhanced
 COPY analytic_line_employee  /mnt/extra-addons/analytic_line_employee
 COPY analytic_line_revenue  /mnt/extra-addons/analytic_line_revenue
-COPY portal_project_list_hours_spent  /mnt/extra-addons/portal_project_list_hours_spent
 COPY project_analytic_group  /mnt/extra-addons/project_analytic_group
 COPY project_chatter  /mnt/extra-addons/project_chatter
 COPY project_closed  /mnt/extra-addons/project_closed
@@ -35,6 +34,7 @@ COPY project_iteration_sale_inheritance  /mnt/extra-addons/project_iteration_sal
 COPY project_kanban_dates /mnt/extra-addons/project_kanban_dates
 COPY project_kanban_to_form  /mnt/extra-addons/project_kanban_to_form
 COPY project_lump_sum  /mnt/extra-addons/project_lump_sum
+COPY portal_project_timesheet_conditional  /mnt/extra-addons/portal_project_timesheet_conditional
 COPY project_material  /mnt/extra-addons/project_material
 COPY project_material_direct  /mnt/extra-addons/project_material_direct
 COPY project_material_progress  /mnt/extra-addons/project_material_progress

@@ -16,7 +16,6 @@
         "account_analytic_enhanced",  # required for project_enhanced
         "analytic_line_employee",
         "analytic_line_revenue",
-        "portal_project_list_hours_spent",
         "project_analytic_group",
         "project_chatter",
         "project_closed",
@@ -35,6 +34,7 @@
         "project_kanban_dates",
         "project_kanban_to_form",
         "project_lump_sum",
+        "portal_project_timesheet_conditional",
         "project_material",
         "project_material_direct",
         "project_material_progress",
