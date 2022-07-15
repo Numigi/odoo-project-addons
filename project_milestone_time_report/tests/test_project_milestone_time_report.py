@@ -98,7 +98,7 @@ class TestReport(common.SavepointCase):
     def test_total_estimated_hours_clicked(self):
         res = self.report.total_estimated_hours_clicked(self.parent_project.id)
         assert res["context"] == {
-            "search_default_project_id": self.parent_project.id,
+            "search_default_parent_project_id": self.parent_project.id,
             "search_default_not_lump_sum": True,
         }
 

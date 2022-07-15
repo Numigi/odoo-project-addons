@@ -5,9 +5,21 @@
     - base_xml_rename
     - test_http_request
 
+- url: https://github.com/OCA/timesheet
+  branch: "12.0"
+  includes:
+    - hr_timesheet_task_domain
+    - hr_timesheet_task_stage
+    
 - url: https://github.com/OCA/project
   branch: "12.0"
   includes:
     - project_milestone
     - project_stage_closed
     - project_timesheet_time_control
+
+- url: https://github.com/OCA/web
+  branch: "12.0"
+  includes:
+    - web_ir_actions_act_multi
+    - web_ir_actions_act_view_reload
