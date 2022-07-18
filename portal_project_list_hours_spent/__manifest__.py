@@ -10,8 +10,6 @@
     "category": "Project",
     "summary": "Add column total spent hours in portal list projects.",
     "depends": ["project_lump_sum"],
-    "data": [
-        "views/portal.xml",
-    ],
+    "data": [],
     "installable": True,
 }
