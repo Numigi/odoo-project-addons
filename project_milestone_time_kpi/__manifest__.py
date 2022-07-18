@@ -3,14 +3,15 @@
 
 {
     "name": "Project Milestone Time KPI",
-    "version": "1.0",
+    "version": "1.0.1",
     "author": "Numigi",
     "maintainer": "Numigi",
     "website": "https://bit.ly/numigi-com",
     "license": "LGPL-3",
     "category": "Project",
     "summary": "Track budgeted hours on projects using milestone",
-    "depends": ["project_milestone_estimated_hours", "project_milestone_spent_hours"],
+    "depends": ["project_milestone_estimated_hours",
+                "project_milestone_spent_hours"],
     "data": ["views/project_project.xml"],
     "installable": True,
 }

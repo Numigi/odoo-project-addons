@@ -10,7 +10,7 @@
                 <group name="milestone_time_kpi" class="oe_subtotal_footer oe_right" colspan="2">
                     <field name="total_estimated_hours" widget="float_time"/>
                     <field name="total_spent_hours" widget="float_time"/>
-                    <field name="remaining_estimated_hours" widget="float_time" invisible="1"/>
+                    <field name="remaining_estimated_hours" widget="float_time"/>
                     <field name="total_remaining_hours" widget="float_time"/>
                 </group>
             </xpath>
