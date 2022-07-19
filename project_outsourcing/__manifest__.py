@@ -3,7 +3,7 @@
 
 {
     "name": "Project Outsourcing",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "author": "Numigi",
     "maintainer": "Numigi",
     "website": "https://bit.ly/numigi-com",
