@@ -34,8 +34,17 @@ class OutsourcingCase(common.TransactionCase):
 
         self.supplier = self.env["res.partner"].create({
             "name": "Supplier A",
+            "is_company": True,
             "supplier": True,
-            "subcontracting_auto_time_entries": True
+            "subcontracting_auto_time_entries": True,
+            "employee_id": self.env.ref("hr.employee_admin").id,
+        })
+
+        self.supplier_child = self.env["res.partner"].create({
+            "name": "Supplier Child A",
+            "company_type": 'person',
+            "supplier": True,
+            "parent_id": self.supplier.id,
         })
 
         self.project = self.env["project.project"].create({"name": "Job 123"})

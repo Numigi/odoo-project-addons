@@ -70,13 +70,13 @@ msgstr "Créer des entrées de temps de sous-traitants"
 #: model:ir.model.fields,field_description:project_outsourcing_timesheet_automation.field_res_partner__employee_id
 #: model:ir.model.fields,field_description:project_outsourcing_timesheet_automation.field_res_users__employee_id
 msgid "Employee for Time Entries"
-msgstr ""
+msgstr "Employé pour les saisies de temps"
 
 #. module: project_outsourcing_timesheet_automation
 #: code:addons/project_outsourcing_timesheet_automation/models/project_task.py:45
 #, python-format
 msgid "Module Realisation"
-msgstr "Employé pour les saisies de temps"
+msgstr "Réalisation du Module"
 
 #. module: project_outsourcing_timesheet_automation
 #: model:ir.model.fields,field_description:project_outsourcing_timesheet_automation.field_account_analytic_line__purchase_order_line_id
@@ -119,3 +119,7 @@ msgstr "Étape de tâche"
 msgid "When activated, if the Subcontractor and the Product have the parameter ‘Subcontracting - Automate Time Entries’ active, when a task associated with a subcontracting Purchase Order is updated to this Stage, Subcontractor’s Time Entry is created automatically"
 msgstr "Lorsque cochée, si le fournisseur ET l’article ont un paramètre ‘Réimputer les temps du sous-traitant’ actif, alors, lorsqu’une tâche associée à un PO de sous-traitance validé est passée à ce statut, la feuille de temps du sous-traitant est créée automatiquement sur la tâche’."
 
+#. module: project_outsourcing_timesheet_automation
+#: model_terms:ir.ui.view,arch_db:project_outsourcing_timesheet_automation.partner_form_with_outsourcing
+msgid "Subcontracting automation datas are managed on"
+msgstr "Les données d'automatisation de sous-traitance sont gérées sur"
