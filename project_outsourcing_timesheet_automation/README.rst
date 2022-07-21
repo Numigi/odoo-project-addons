@@ -15,6 +15,7 @@ Description
     - Subcontracting - Automate Time Entries (checkbox).
     - Employee for Time Entries (required if first field is checked).
   This employee is used to create the timesheet.
+* The module allows to manage Subcontracting Automation Datas from the parent company for all associated contacts.
 * The module adds new field in task status (**Create Subcontractors Time Entries**).
 * When the task passes to a status in which the box **Create Subcontractors Time Entries** is checked, the system verifies following conditions to create time entries automatically:
 
@@ -36,6 +37,12 @@ A new field **Employee for Time Entries** is displayed, select an employee.
 This employee is used to create the timesheet.
 
     .. image:: static/description/vendor_auomate_time_entries_checked.png
+
+If a vendor is associated to a company, the Subcontracting Automation Datas are managed on the parent company.
+
+    .. image:: static/description/subcontracting_auto_datas_managed_on_parent_company.png
+
+    .. image:: static/description/parent_company_subcontracting_datas.png
 
 As a user with Extra `Rights / Technical Features`, go to `Project > Configuration > Stages`.
 Create a new stage and check **Create Subcontractors Time Entries** box.
