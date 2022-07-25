@@ -42,7 +42,8 @@ class Project(models.Model):
     @api.multi
     def write(self, vals):
         res = super(Project, self).write(vals)
-        self._test_active_milestones(vals)
+        if "active" in vals or "use_milestones" in vals:
+            self._test_active_milestones(vals)
         return res
 
     def _test_active_milestones(self, vals):
@@ -53,7 +54,7 @@ class Project(models.Model):
         active = self._get_active_milestones(vals)
         self.with_context(active_test=False).milestone_ids.filtered(
             lambda milestone: milestone.active_toggle
-        ).write({"active": active})
+        ).sudo().write({"active": active})
 
     def _get_active_milestones(self, vals):
         if "use_milestones" in vals:
