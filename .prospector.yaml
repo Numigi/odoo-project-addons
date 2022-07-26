@@ -1,0 +1,24 @@
+output-format: json
+
+strictness: medium
+test-warnings: true
+doc-warnings: true
+
+autodetect: true
+
+dodgy:
+    run: true
+
+mccabe:
+    run: true
+    options:
+        max-complexity: 10
+
+pydocstyle:
+    run: true
+
+pyflakes:
+  run: true
+
+ignore-patterns:
+  - '__init__\.py'
