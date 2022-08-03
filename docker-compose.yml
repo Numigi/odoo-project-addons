@@ -4,6 +4,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        - GIT_TOKEN=${GIT_TOKEN}
     volumes:
       - odoo-web-data:/var/lib/odoo
       - ./.log:/var/log/odoo
@@ -15,10 +17,6 @@ services:
     command: odoo
     environment:
       - LOG_ODOO=/var/log/odoo
-    networks:
-      default:
-        aliases:
-          - odoo.localtest.me
   db:
     image: postgres:9.6
     environment:
@@ -29,13 +27,6 @@ services:
       - odoo-db-data:/var/lib/postgresql/data/pgdata
     expose:
       - 5432
-
-  testcafe:
-    build:
-      context: .testcafe
-      dockerfile: Dockerfile
-    depends_on:
-      - odoo
 
 volumes:
   odoo-web-data:
