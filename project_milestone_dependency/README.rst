@@ -1,0 +1,49 @@
+Project Milestone Dependencies
+==============================
+
+.. contents:: Table of Contents
+
+Description
+-----------
+This module adds new tab to select milestone dependencies.
+
+Overview
+--------
+I open the form view of a milestone, a new tab is added ``Dependencies``.
+
+.. image:: static/description/dependencies_tab_milestone_form.png
+
+The field ``Project Tasks`` are moved to a new Tab ``Tasks``.
+
+.. image:: static/description/tasks_tab_milestone_form.png
+
+Usage
+-----
+
+As a user with access to Milestones management, go to the form view of a milestone and click on ``add line`` from Dependencies Tab:
+
+.. image:: static/description/add_milestone_dependencies.png
+
+The milestones are filtered by the project of the current milestone.
+
+.. image:: static/description/milestones_filtered_by_current_project.png
+
+It is impossible to have recursion on dependencies. If this is the case, a blocking message is displayed.
+
+Example:
+~~~~~~~~
+- If ``Mileston 1`` depends of ``Milestone 2``
+
+.. image:: static/description/Milestone-2_dependsOf_Milestone-1.png
+
+- When user tries to add ``Milestone 2`` in ``Milestone 1`` dependencies, the blocking message is displayed.
+
+.. image:: static/description/recursion_blocking_message.png
+
+Contributors
+------------
+* Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+
+More information
+----------------
+* Meet us at https://bit.ly/numigi-com
