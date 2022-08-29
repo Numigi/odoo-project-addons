@@ -42,6 +42,7 @@ COPY project_material_quantity_filters  /mnt/extra-addons/project_material_quant
 COPY project_milestone_enhanced  /mnt/extra-addons/project_milestone_enhanced
 COPY project_milestone_estimated_hours  /mnt/extra-addons/project_milestone_estimated_hours
 COPY project_milestone_spent_hours  /mnt/extra-addons/project_milestone_spent_hours
+COPY project_milestone_start_date  /mnt/extra-addons/project_milestone_start_date
 COPY project_milestone_time_report  /mnt/extra-addons/project_milestone_time_report
 COPY project_milestone_time_kpi  /mnt/extra-addons/project_milestone_time_kpi
 COPY project_no_quick_create  /mnt/extra-addons/project_no_quick_create
