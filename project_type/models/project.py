@@ -11,4 +11,4 @@ class ProjectWithType(models.Model):
 
     project_type_id = fields.Many2one(
         'project.type', 'Type', ondelete='restrict', index=True,
-        track_visibility='onchange')
+        tracking=True)
