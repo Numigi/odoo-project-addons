@@ -52,6 +52,7 @@
         "project_portal_no_subtask",
         "project_portal_parent_task",
         "project_remaining_hours_update",
+        "project_role_milestone",
         "project_stage",
         "project_stage_allow_timesheet",
         "project_stage_no_quick_create",

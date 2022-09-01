@@ -52,6 +52,7 @@ COPY project_portal_hide_timesheets  /mnt/extra-addons/project_portal_hide_times
 COPY project_portal_no_subtask  /mnt/extra-addons/project_portal_no_subtask
 COPY project_portal_parent_task  /mnt/extra-addons/project_portal_parent_task
 COPY project_remaining_hours_update  /mnt/extra-addons/project_remaining_hours_update
+COPY project_role_milestone  /mnt/extra-addons/project_role_milestone
 COPY project_stage  /mnt/extra-addons/project_stage
 COPY project_stage_allow_timesheet  /mnt/extra-addons/project_stage_allow_timesheet
 COPY project_stage_no_quick_create  /mnt/extra-addons/project_stage_no_quick_create
