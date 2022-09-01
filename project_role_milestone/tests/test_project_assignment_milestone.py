@@ -1,14 +1,8 @@
 # Copyright 2018-2019 Brainbean Apps (https://brainbeanapps.com)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
-from psycopg2 import IntegrityError
-from unittest import mock
 
-from odoo.exceptions import ValidationError
 from odoo.tests import common
-from odoo.tools.misc import mute_logger
-
-
 
 class TestProjectMilestoneDomain(common.TransactionCase):
 
@@ -34,12 +28,12 @@ class TestProjectMilestoneDomain(common.TransactionCase):
         })
 
     def test_onchange_milestone(self):
-            record = self.env['project.assignment'].new()
-            record.milestone_id = self.milestone.id
-            res_onchange_milestone =record.onchange_milestone()
-            self.assertEqual(record.project_id, self.project)
-            domain = [('id', '=', record.milestone_id.project_id.id)]
-            self.assertEqual(res_onchange_milestone['domain']['project_id'], domain)
+        record = self.env['project.assignment'].new()
+        record.milestone_id = self.milestone.id
+        res_onchange_milestone =record.onchange_milestone()
+        self.assertEqual(record.project_id, self.project)
+        domain = [('id', '=', record.milestone_id.project_id.id)]
+        self.assertEqual(res_onchange_milestone['domain']['project_id'], domain)
 
     def test_onchange_project_id(self):
         record = self.env['project.assignment'].new()
