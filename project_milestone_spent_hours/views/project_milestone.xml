@@ -8,7 +8,7 @@
         <field name="model">project.milestone</field>
         <field name="inherit_id" ref="project_milestone.project_milestone_view_list"/>
         <field name="arch" type="xml">
-            <field name="project_task_ids" position="after">
+           <field name="progress" position="before">
                 <field name="total_hours" widget="float_time"/>
             </field>
         </field>
