@@ -5,28 +5,30 @@ Project Milestone Types
 
 Description
 -----------
-This module adds a Milestone Types Object, then adds a field type to milestone form view.
+This module adds ``Types`` to Project Milestones.
 
 Overview
 --------
-As a project manager,I go to the ``Project / Configuration Menu``.
-New menus are added, ``Milestones`` and ``Milestone Types``.
-The ``All milestones`` menu is moved under the new menu ``Milestones``.
+As a member of the group ``Projects / Manager``, I go to Project > Configuration.
+
+I notice that a new section ``Milestones`` is available and that it contains the new menu ``Milestone Types`` with the existing menu ``All milestones``.
 
 .. image:: static/description/Milestones_menus.png
 
-I click on the menu ``Milestone Types``, the list view of milestone types is displayed.
+I click on the menu ``Milestone Types``. The List View of Milestone Types is displayed.
 
 .. image:: static/description/Milestone_types_list_view.png
 
-I click on ``create`` button, the Milestone Types form view is displayed.
+I click on the ``Create`` button. The Milestone Types Form View is displayed.
 
 .. image:: static/description/Milestone_types_form_view.png
 
 I click on the menu ``All Milestones``, then I click on a milestone line.
-I see a new field ``Type``added to the Milestone form view.
+
+I see that the new field ``Type`` is available in the Milestone Form View.
 
 .. image:: static/description/Milestone_form_view.png
+
 
 Contributors
 ------------
