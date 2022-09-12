@@ -1,16 +1,21 @@
 Project Milestone Timeline Color
 ================================
 
-.. contents:: Table of Contents
-
-Description
------------
 This module displays milestones in the color assigned to the milestone type.
 
-Overview
+.. contents:: Table of Contents
+
+Context
+-------
+The module `project_milestone_type <https://github.com/Numigi/odoo-project-addons/tree/12.0/project_milestone_type>`_
+allows to define ``Types`` for a Project Milestone.
+
+
+Configuration
 --------
-As a Projects / Manager user, I go to the form view of Milestone Types.
-I see that a new ``HTML Color`` field is present and it contains the #FF0000 placeholder.
+As a member of the group ``Projects / Manager``, I go to the Form View of Milestone Types.
+
+I see that a new ``HTML Color`` field is available and that it has the following default value : ``#FFFFFF``.
 
 .. image:: static/description/field_html_color_form_view.png
 
@@ -18,11 +23,13 @@ When I click in the field, I see that I can select a color thanks to the ``Widge
 
 .. image:: static/description/widget_color.png
 
-From the Milestone Types list view, I see that the new ``HTML Color`` field
-is present and that a preview of the color is also displayed.
+From the Milestone Types List View, I see that the new ``HTML Color`` field is available and that a preview of the color is also displayed.
 
 .. image:: static/description/field_html_color_list_view.png
 
+
+Usage
+--------
 
 As a user who can view milestones, I go to the Milestones Timeline View.
 
