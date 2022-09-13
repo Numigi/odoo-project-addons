@@ -2,7 +2,7 @@
     © 2022 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
     License LGPL-3.0 or later (http://www.gnu.org/licenses/LGPL.html).
 */
-odoo.define("project_report_consumed_by_lot", function (require) {
+odoo.define("project_milestone_time_report", function (require) {
 "use strict";
 
 var ControlPanelMixin = require("web.ControlPanelMixin");

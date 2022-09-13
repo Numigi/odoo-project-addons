@@ -46,6 +46,7 @@ COPY project_milestone_start_date  /mnt/extra-addons/project_milestone_start_dat
 COPY project_milestone_time_report  /mnt/extra-addons/project_milestone_time_report
 COPY project_milestone_type  /mnt/extra-addons/project_milestone_type
 COPY project_milestone_time_kpi  /mnt/extra-addons/project_milestone_time_kpi
+COPY project_milestone_timeline  /mnt/extra-addons/project_milestone_timeline
 COPY project_no_quick_create  /mnt/extra-addons/project_no_quick_create
 COPY project_outsourcing  /mnt/extra-addons/project_outsourcing
 COPY project_outsourcing_timesheet_automation   /mnt/extra-addons/project_outsourcing_timesheet_automation
