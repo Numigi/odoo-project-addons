@@ -1,1 +1,6 @@
-
+- url: https://github.com/Numigi/odoo-base-addons
+  branch: "12.0"
+  includes:
+    - base_extended_security
+    - base_xml_rename
+    - test_http_request
