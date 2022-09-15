@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+
+    <!-- Form View -->
+    <record id="project_assignment_milestone_form" model="ir.ui.view">
+        <field name="name">project.assignment.milestone.form</field>
+        <field name="model">project.assignment</field>
+        <field name="inherit_id" ref="project_role.project_assignment_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="attributes">
+               <attribute name="duplicate">0</attribute>
+            </xpath>
+            <xpath expr="//field[@name='project_id']" position="after">
+                <field name="milestone_id" />
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Search View -->
+    <record id="project_assignment_milestone_search" model="ir.ui.view">
+        <field name="name">project.assignment.milestone.search</field>
+        <field name="model">project.assignment</field>
+        <field name="inherit_id" ref="project_role.project_assignment_search"/>
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='groupby_project']" position="after">
+                   <filter string="Milestone" name="groupby_milestone" context="{'group_by':'milestone_id'}"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Actions -->
+    <record id="milestone_assignment_view_action" model="ir.actions.act_window">
+        <field name="name">Assignments</field>
+        <field name="res_model">project.assignment</field>
+        <field name="view_mode">kanban,tree,form,pivot,graph</field>
+        <field name="view_type">form</field>
+        <field name="search_view_id" ref="project_role.project_assignment_search"/>
+        <field name="context">{'default_milestone_id': active_id}</field>
+        <field name="domain">[('milestone_id','=',active_id)]</field>
+    </record>
+
+
+</odoo>
