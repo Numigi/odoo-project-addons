@@ -46,6 +46,7 @@
         "project_milestone_start_date",
         "project_milestone_time_report",
         "project_milestone_time_kpi",
+        "project_milestone_timeline",
         "project_no_quick_create",
         "project_outsourcing",
         "project_outsourcing_timesheet_automation",
