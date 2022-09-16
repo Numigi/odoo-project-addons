@@ -39,6 +39,7 @@
         "project_material_direct",
         "project_material_progress",
         "project_material_quantity_filters",
+        "project_milestone_dependency",
         "project_milestone_enhanced",
         "project_milestone_estimated_hours",
         "project_milestone_remaining_hours",
