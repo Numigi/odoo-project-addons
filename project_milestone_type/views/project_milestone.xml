@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+
+    <!-- Form View -->
+    <record id="project_milestone_inherit_view_form" model="ir.ui.view">
+        <field name="name">Project Milestone Form: Add Type</field>
+        <field name="model">project.milestone</field>
+        <field name="inherit_id" ref="project_milestone.project_milestone_view_form"/>
+        <field name="arch" type="xml">
+            <field name="target_date" position="before">
+                <field name="type_id"/>
+            </field>
+        </field>
+    </record>
+
+    <!-- List View -->
+    <record id="project_milestone_inherit_view_list" model="ir.ui.view">
+        <field name="name">Project Milestone List: Add Start Date</field>
+        <field name="model">project.milestone</field>
+        <field name="inherit_id" ref="project_milestone.project_milestone_view_list"/>
+        <field name="arch" type="xml">
+            <field name="project_id" position="after">
+                <field name="type_id"/>
+            </field>
+        </field>
+    </record>
+
+    <!-- Move All Milestones under Milestone Menu -->
+    <record id="project_milestone.milestone_configuration_menu" model="ir.ui.menu">
+        <field name="parent_id" ref="project_milestone_type.milestones_menu"/>
+    </record>
+
+</odoo>
