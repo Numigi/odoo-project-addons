@@ -5,26 +5,26 @@ Project Milestone Dependencies
 
 Description
 -----------
-This module adds new tab to select milestone dependencies.
+This module allows to manage Milestone Dependencies.
 
 Overview
 --------
-I open the form view of a milestone, a new tab is added ``Dependencies``.
+As a user who can manage Milestones, I open the form view of a Milestone, I notice a new tab ``Dependencies``.
 
 .. image:: static/description/dependencies_tab_milestone_form.png
 
-The field ``Project Tasks`` are moved to a new Tab ``Tasks``.
+I also notice that the field ``Project Tasks`` is moved into a new tab ``Tasks``.
 
 .. image:: static/description/tasks_tab_milestone_form.png
 
 Usage
 -----
 
-As a user with access to Milestones management, go to the form view of a milestone and click on ``add line`` from Dependencies Tab:
+As a user who can manage Milestones, I go to the form view of a Milestone and I click on ``Add line`` from the ``Dependencies`` tab:
 
 .. image:: static/description/add_milestone_dependencies.png
 
-The milestones are filtered by the project of the current milestone.
+I notice that the Milestones are filtered on the Project assigned on the current Milestone.
 
 .. image:: static/description/milestones_filtered_by_current_project.png
 
@@ -32,7 +32,7 @@ It is impossible to have recursion on dependencies. If this is the case, a block
 
 Example:
 ~~~~~~~~
-- If ``Mileston 1`` depends of ``Milestone 2``
+- If ``Milestone 1`` depends of ``Milestone 2``
 
 .. image:: static/description/Milestone-2_dependsOf_Milestone-1.png
 
