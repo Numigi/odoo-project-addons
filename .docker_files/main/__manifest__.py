@@ -50,6 +50,7 @@
         "project_milestone_time_kpi",
         "project_milestone_timeline",
         "project_milestone_timeline_color",
+        "project_milestone_week_duration",
         "project_no_quick_create",
         "project_outsourcing",
         "project_outsourcing_timesheet_automation",
