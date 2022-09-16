@@ -25,3 +25,4 @@
     - web_ir_actions_act_multi
     - web_ir_actions_act_view_reload
     - web_timeline
+    - web_widget_color
