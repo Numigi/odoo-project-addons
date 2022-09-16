@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+
+    <!-- Form View -->
+    <record id="project_milestone_duration_view_form" model="ir.ui.view">
+        <field name="name">Project Milestone Form: Add Duration</field>
+        <field name="model">project.milestone</field>
+        <field name="inherit_id" ref="project_milestone_start_date.project_milestone_start_date_view_form"/>
+        <field name="arch" type="xml">
+            <field name="start_date" position="after">
+                <label for="duration" string="Duration"/>
+                <div>
+                    <field name="duration" class="oe_inline"/> <span class="oe_inline"> week(s)</span>
+                </div>
+            </field>
+        </field>
+    </record>
+
+    <record id="project_milestone_target_date_view_form" model="ir.ui.view">
+        <field name="name">Project Milestone Form: Force Save Target Date</field>
+        <field name="model">project.milestone</field>
+        <field name="inherit_id" ref="project_milestone.project_milestone_view_form"/>
+        <field name="arch" type="xml">
+            <field name="target_date" position="attributes">
+                <attribute name="force_save">1</attribute>
+            </field>
+        </field>
+    </record>
+
+    <!-- List View -->
+    <record id="project_milestone_duration_view_list" model="ir.ui.view">
+        <field name="name">Project Milestone List: Add Duration</field>
+        <field name="model">project.milestone</field>
+        <field name="inherit_id" ref="project_milestone_start_date.project_milestone_start_date_view_list"/>
+        <field name="arch" type="xml">
+            <field name="start_date" position="after">
+                <field name="duration" string="Duration (week(s))"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>
