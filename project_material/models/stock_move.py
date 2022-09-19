@@ -72,3 +72,10 @@ class StockMoveWithNoAggregation(models.Model):
         result = super()._prepare_merge_moves_distinct_fields()
         result.append('destination_material_line_id')
         return result
+
+    @api.model
+    def _prepare_merge_move_sort_method(self, move):
+        result = super()._prepare_merge_move_sort_method(move)
+        result.append(move.destination_material_line_id.id)
+        return result
+    

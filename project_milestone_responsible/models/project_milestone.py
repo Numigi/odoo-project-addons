@@ -18,3 +18,5 @@ class ProjectMilestone(models.Model):
     def _onchange_project_id(self):
         if self.project_id:
             self.user_id = self.project_id.user_id.id
+
+
