@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+
+    <!-- Form View -->
+    <record id="project_milestone_view_form" model="ir.ui.view">
+        <field name="name">project.milestone.form</field>
+        <field name="model">project.milestone</field>
+        <field name="inherit_id" ref="project_milestone.project_milestone_view_form"/>
+        <field name="arch" type="xml">
+           <field name="target_date" position="before">
+                <field name="user_id"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="project_milestone_view_search" model="ir.ui.view">
+        <field name="name">project.milestone.search</field>
+        <field name="model">project.milestone</field>
+        <field name="inherit_id" ref="project_milestone.project_milestone_view_search"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='project_id']" position="after">
+                   <field name="user_id"/>
+            </xpath>
+             <xpath expr="//filter[@name='group_by_project']" position="after">
+                   <filter string="Responsible" name="groupby_user_id" context="{'group_by':'user_id'}"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="project_enhancement_milestone_view_inherit_form" model="ir.ui.view">
+        <field name="name">project.milestone.form</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project_milestone.project_enhancement_milestone_view_inherit_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='milestone_ids']" position="attributes">
+                   <attribute name="context">{'default_project_id': active_id, 'default_user_id':user_id}</attribute>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
