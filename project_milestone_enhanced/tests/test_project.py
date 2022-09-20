@@ -12,6 +12,12 @@ class TestProject(SavepointCase):
             {"name": "My Project", "use_milestones": True}
         )
 
+        cls.project_template = cls.env["project.project"].create(
+            {
+                "name": "My Template Project",
+            }
+        )
+
         cls.milestone = cls.env["project.milestone"].create(
             {"name": "My Milestone", "project_id": cls.project.id}
         )
@@ -67,3 +73,10 @@ class TestProject(SavepointCase):
         self.project.toggle_active()
         assert self.milestone.active
         assert not self.milestone_2.active
+
+    def test_remove_milestone_task(self):
+        task = self.env["project.task"].new({})
+        task.project_id = self.project.id
+        new_project = self.project.copy({})
+        task.project_id = new_project.id
+        assert not task.milestone_id
