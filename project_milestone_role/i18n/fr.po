@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	*project_role_milestone
+#	*project_milestone_role
 #
 # Translators:
 # Abdellatif Benzbiria <abdellatif.Benzbiria@kolabus.com>,2022
@@ -19,31 +19,31 @@ msgstr ""
 "Plural-Forms: \n"
 
 
-#. module: project_role_milestone
-#: model:ir.model.fields,field_description:project_role_milestone.field_project_assignment__milestone_id
-#: model_terms:ir.ui.view,arch_db:project_role_milestone.project_assignment_milestone_search
+#. module: project_milestone_role
+#: model:ir.model.fields,field_description:project_milestone_role.field_project_assignment__milestone_id
+#: model_terms:ir.ui.view,arch_db:project_milestone_role.project_assignment_milestone_search
 msgid "Milestone"
 msgstr "Jalon"
 
-#. module: project_role_milestone
-#: model:ir.model.fields,field_description:project_role_milestone.field_pproject_milestone__assignment_ids
+#. module: project_milestone_role
+#: model:ir.model.fields,field_description:project_milestone_role.field_pproject_milestone__assignment_ids
 msgid "Milestone assignments"
 msgstr "Assignations du jalon"
 
-#. module: project_role_milestone
-#: model_terms:ir.ui.view,arch_db:project_role_milestone.project_milestone_view_search
+#. module: project_milestone_role
+#: model_terms:ir.ui.view,arch_db:project_milestone_role.project_milestone_view_search
 msgid "Role"
 msgstr "Rôle"
 
 
-#. module: project_role_milestone
-#: model_terms:ir.actions.act_window,name:project_role_milestone.milestone_assignment_view_action
-#: model_terms:ir.ui.view,arch_db:project_role_milestone.project_milestone_view_form
-#: model_terms:ir.ui.view,arch_db:project_role_milestone.project_milestone_view_search
+#. module: project_milestone_role
+#: model_terms:ir.actions.act_window,name:project_milestone_role.milestone_assignment_view_action
+#: model_terms:ir.ui.view,arch_db:project_milestone_role.project_milestone_view_form
+#: model_terms:ir.ui.view,arch_db:project_milestone_role.project_milestone_view_search
 msgid "Assignments"
 msgstr "Assignations"
 
-#. module: project_role_milestone
+#. module: project_milestone_role
 #: sql_constraint:project.assignment:0
 msgid "User may be assigned per role and per milestone only once within a project!"
 msgstr ""

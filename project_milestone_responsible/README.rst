@@ -1,5 +1,6 @@
 Project Milestone Responsible
 =============================
+
 This module allows you to assign a ``Responsible`` for a Project's Milestone.
 
 .. image:: static/description/milestone_responsible.png
