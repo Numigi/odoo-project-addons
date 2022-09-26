@@ -15,6 +15,7 @@
         'project_milestone'
     ],
     'data': [
+          'security/ir.model.access.csv',
           'views/project_assignment.xml',
           'views/project_milestone.xml',
     ],
