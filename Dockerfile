@@ -43,6 +43,7 @@ COPY project_milestone_dependency  /mnt/extra-addons/project_milestone_dependenc
 COPY project_milestone_enhanced  /mnt/extra-addons/project_milestone_enhanced
 COPY project_milestone_estimated_hours  /mnt/extra-addons/project_milestone_estimated_hours
 COPY project_milestone_remaining_hours  /mnt/extra-addons/project_milestone_remaining_hours
+COPY project_milestone_responsible  /mnt/extra-addons/project_milestone_responsible
 COPY project_milestone_spent_hours  /mnt/extra-addons/project_milestone_spent_hours
 COPY project_milestone_start_date  /mnt/extra-addons/project_milestone_start_date
 COPY project_milestone_time_report  /mnt/extra-addons/project_milestone_time_report

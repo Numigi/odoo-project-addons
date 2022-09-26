@@ -43,6 +43,7 @@
         "project_milestone_enhanced",
         "project_milestone_estimated_hours",
         "project_milestone_remaining_hours",
+        "project_milestone_responsible",
         "project_milestone_role",
         "project_milestone_spent_hours",
         "project_milestone_start_date",
