@@ -74,9 +74,6 @@ class TestProject(SavepointCase):
         assert self.milestone.active
         assert not self.milestone_2.active
 
-    def test_remove_milestone_task(self):
-        task = self.env["project.task"].new({})
-        task.project_id = self.project.id
-        new_project = self.project.copy({})
-        task.project_id = new_project.id
-        assert not task.milestone_id
+    def test_onchange_project(self):
+        self.task._onchange_project()
+        assert not self.task.milestone_id

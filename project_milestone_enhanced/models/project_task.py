@@ -9,6 +9,7 @@ class ProjectTask(models.Model):
     _inherit = "project.task"
 
     @api.onchange('project_id')
-    def remove_milestone_task(self):
-        if self.project_id.use_milestones:
-            self.milestone_id = False
+    def _onchange_project(self):
+        result = super(ProjectTask, self)._onchange_project()
+        self.milestone_id = False
+        return result
