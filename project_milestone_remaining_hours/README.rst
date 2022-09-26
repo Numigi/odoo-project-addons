@@ -28,7 +28,6 @@ This field is read-only and is calculated according to the following formula:
 
 Project Milestone list view
 ---------------------------
-
 From the Project form, under the Milestones tab, I see that the ``Remaining Hours`` field is displayed in the Milestones list view.
 
 .. image:: static/description/project_milestone_rh.png
@@ -44,3 +43,4 @@ Contributors
 More information
 ----------------
 * Meet us at https://bit.ly/numigi-com
+
