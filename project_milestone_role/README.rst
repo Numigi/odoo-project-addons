@@ -26,7 +26,7 @@ Milestones are filtred by the selected project.
 
 
 Assignments grouped by Milestone
--------------------------
+--------------------------------
 
 From the Assignments list view , the user can group by Milestones.
 
@@ -34,10 +34,18 @@ From the Assignments list view , the user can group by Milestones.
 
 
 Milestone's Assignments
--------------------------
+-----------------------
 As a user with access to Milestone form view , I can display all the assignements linked to the selected milestone.
 
 .. image:: static/description/milestone_assignements.png
+
+Create Project's roles
+----------------------
+As a project manager user , I have the access right to create a project role
+
+.. image:: static/description/project_role_creation.png
+
+
 
 
 Contributors
