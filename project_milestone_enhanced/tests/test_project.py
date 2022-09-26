@@ -12,6 +12,12 @@ class TestProject(SavepointCase):
             {"name": "My Project", "use_milestones": True}
         )
 
+        cls.project_template = cls.env["project.project"].create(
+            {
+                "name": "My Template Project",
+            }
+        )
+
         cls.milestone = cls.env["project.milestone"].create(
             {"name": "My Milestone", "project_id": cls.project.id}
         )
@@ -67,3 +73,7 @@ class TestProject(SavepointCase):
         self.project.toggle_active()
         assert self.milestone.active
         assert not self.milestone_2.active
+
+    def test_onchange_project(self):
+        self.task._onchange_project()
+        assert not self.task.milestone_id

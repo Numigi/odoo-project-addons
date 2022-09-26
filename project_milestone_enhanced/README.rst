@@ -84,7 +84,12 @@ If I (de)activate a project, its associated milestones too
 
 .. image:: static/description/project_deactive_milestone.png
 
+Since version `1.0.3`, when I change the project linked to a task, the milestone will be removed.
 
 Contributors
 ------------
 * Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+
+More information
+----------------
+* Meet us at https://bit.ly/numigi-com
