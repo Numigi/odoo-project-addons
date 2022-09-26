@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	*project_role_milestone
+#	*project_milestone_role
 #
 # Translators:
 # Abdellatif Benzbiria <abdellatif.Benzbiria@numigi.com>,2022
