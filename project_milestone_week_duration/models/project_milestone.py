@@ -1,4 +1,4 @@
-# © 2022 - today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+# © 2022 - Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 from odoo import models, fields, api
@@ -11,7 +11,8 @@ class ProjectMilestone(models.Model):
 
     duration = fields.Float(
         string="Duration",
-        help="Indicates the duration of the milestone in calendar weeks (7 days)",
+        help="Indicates the duration of the milestone "
+             "in calendar weeks (7 days)",
     )
     target_date = fields.Date(
         string="End Date",
