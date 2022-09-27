@@ -1,4 +1,4 @@
-# © 2022 - today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+# © 2022 - Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 {
@@ -9,7 +9,7 @@
     "website": "https://bit.ly/numigi-com",
     "license": "LGPL-3",
     "category": "Project",
-    'summary': "This module provide a pivot view in project's milestones",
+    'summary': "Project Milestones Pivot View",
     'depends': [
         'project_milestone_remaining_hours',
     ],

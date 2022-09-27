@@ -9,7 +9,6 @@ class ProjectMilestone(models.Model):
 
     remaining_hours = fields.Float(compute='_compute_remaining_hours', string="Remaining Hours", store=True, readonly=True)
 
-
     @api.depends("estimated_hours", "total_hours")
     def _compute_remaining_hours(self):
         for rec in self:
