@@ -9,8 +9,8 @@
         <field name="inherit_id" ref="project_milestone.project_enhancement_milestone_view_inherit_form"/>
         <field name="type">form</field>
         <field name="arch" type="xml">
-            <xpath expr="//page[@name='milestone_ids']/group/field[@name='milestone_ids']/tree/field[@name='project_task_ids']"
-                   position="after">
+            <xpath expr="//page[@name='milestone_ids']/group/field[@name='milestone_ids']/tree/field[@name='progress']"
+                   position="before">
                 <field name="total_hours"/>
             </xpath>
         </field>

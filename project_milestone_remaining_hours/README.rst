@@ -26,14 +26,13 @@ This field is read-only and is calculated according to the following formula:
 
 ``Estimated Hours`` - ``Total Hours`` = ``Remaining Hours``
 
-Project Milestone List View
+Project Milestone list view
 ---------------------------
-
-From the Project form, under the Milestones tab, I see that the ``Remaining Hours`` field is displayed in the Milestones List View.
+From the Project form, under the Milestones tab, I see that the ``Remaining Hours`` field is displayed in the Milestones list view.
 
 .. image:: static/description/project_milestone_rh.png
 
-From the menu Project > Configuration > All Milestones, I see that the ``Remaining Hours`` field is displayed in the Milestones List View.
+From the menu Projects --> Configuration --> All Milestones, I see that the ``Remaining Hours`` field is displayed in the Milestones list view.
 
 .. image:: static/description/milestone_list_rh.PNG
 
@@ -44,3 +43,4 @@ Contributors
 More information
 ----------------
 * Meet us at https://bit.ly/numigi-com
+

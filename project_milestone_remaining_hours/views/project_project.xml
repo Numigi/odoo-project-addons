@@ -6,11 +6,11 @@
     <record id="project_milestone_remaiing_view_form" model="ir.ui.view">
         <field name="name">Project Milestone Remaining Hours Form</field>
         <field name="model">project.project</field>
-        <field name="inherit_id" ref="project_milestone.project_enhancement_milestone_view_inherit_form"/>
+        <field name="inherit_id" ref="project_milestone_spent_hours.project_milestone_spent_hours_view_form"/>
         <field name="type">form</field>
         <field name="arch" type="xml">
-            <xpath expr="//page[@name='milestone_ids']/group/field[@name='milestone_ids']/tree/field[@name='progress']"
-                   position="before">
+            <xpath expr="//page[@name='milestone_ids']/group/field[@name='milestone_ids']/tree/field[@name='total_hours']"
+                   position="after">
                 <field name="remaining_hours"/>
             </xpath>
         </field>
