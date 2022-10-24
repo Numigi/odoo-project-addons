@@ -8,7 +8,7 @@
         <field name="model">project.milestone</field>
         <field name="inherit_id" ref="project_milestone.project_milestone_view_form"/>
         <field name="arch" type="xml">
-           <field name="project_id" position="before">
+           <field name="project_id" position="after">
                 <field name="user_id"/>
             </field>
         </field>
