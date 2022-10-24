@@ -18,10 +18,10 @@
     <record id="project_milestone_estimated_hours_form" model="ir.ui.view">
         <field name="name">Project Milestone Estimated Hours Form</field>
         <field name="model">project.milestone</field>
+        <field name="priority">10</field>
         <field name="inherit_id" ref="project_milestone.project_milestone_view_form"/>
         <field name="arch" type="xml">
             <field name="target_date" position="replace"/>
-            
             <xpath expr="//group" position="before">
                 <group>
                     <group>
