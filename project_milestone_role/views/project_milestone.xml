@@ -8,16 +8,14 @@
         <field name="model">project.milestone</field>
         <field name="inherit_id" ref="project_milestone.project_milestone_view_form"/>
         <field name="arch" type="xml">
-           <xpath expr="//div" position="before">
-                <div class="oe_button_box" name="button_box" groups="base.group_user">
-                     <button
+           <xpath expr="//div[hasclass('oe_button_box')]/button[1]" position="before">
+               <button
                     class="oe_stat_button"
                     name="%(milestone_assignment_view_action)d"
                     type="action"
                     icon="fa-users"
                     string="Assignments"
-                />
-                </div>
+               />
             </xpath>
         </field>
     </record>

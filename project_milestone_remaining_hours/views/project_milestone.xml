@@ -20,9 +20,9 @@
         <field name="model">project.milestone</field>
         <field name="inherit_id" ref="project_milestone_spent_hours.project_milestone_spent_hours_form"/>
         <field name="arch" type="xml">
-           <field name="total_hours" position="after">
+            <xpath expr="//group[last()]" position="inside">
                 <field name="remaining_hours" widget="float_time"/>
-            </field>
+            </xpath>
         </field>
     </record>
 </odoo>
