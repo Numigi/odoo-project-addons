@@ -22,11 +22,6 @@ msgid "Dependencies"
 msgstr "Dépendances"
 
 #. module: project_milestone_dependency
-#: model_terms:ir.ui.view,arch_db:project_milestone_dependency.project_milestone_dependencies_view_form
-msgid "End Date"
-msgstr "Date de fin"
-
-#. module: project_milestone_dependency
 #: model:ir.model,name:project_milestone_dependency.model_project_milestone
 msgid "Project Milestone"
 msgstr "Jalon du projet"
