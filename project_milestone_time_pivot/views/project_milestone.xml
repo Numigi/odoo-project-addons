@@ -17,7 +17,6 @@
     </record>
 
     <record id="project_milestone.project_milestone_action" model="ir.actions.act_window">
-        <field name="view_mode">tree,pivot</field>
         <field name="context">{'group_by': ['project_id', 'name']}</field>
     </record>
 

@@ -25,9 +25,6 @@
             <field name="target_date" position="attributes">
                 <attribute name="force_save">1</attribute>
             </field>
-            <field name="target_date" position="attributes">
-                <attribute name="string">End Date</attribute>
-            </field>
         </field>
     </record>
 
@@ -39,9 +36,6 @@
         <field name="arch" type="xml">
             <field name="start_date" position="after">
                 <field name="duration" string="Duration (week(s))"/>
-            </field>
-            <field name="target_date" position="attributes">
-                <attribute name="string">End Date</attribute>
             </field>
         </field>
     </record>

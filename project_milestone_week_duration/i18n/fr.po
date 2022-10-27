@@ -33,13 +33,6 @@ msgid "Duration (week(s))"
 msgstr "Durée (semaine(s))"
 
 #. module: project_milestone_week_duration
-#: model:ir.model.fields,field_description:project_milestone_week_duration.field_project_milestone__target_date
-#: model_terms:ir.ui.view,arch_db:project_milestone_week_duration.project_milestone_duration_view_list
-#: model_terms:ir.ui.view,arch_db:project_milestone_week_duration.project_milestone_target_date_view_form
-msgid "End Date"
-msgstr "Date de fin"
-
-#. module: project_milestone_week_duration
 #: model:ir.model.fields,help:project_milestone_week_duration.field_project_milestone__duration
 msgid "Indicates the duration of the milestone in calendar weeks (7 days)"
 msgstr "Indique la durée du jalon en semaines calendaires (7 jours)."
@@ -53,4 +46,9 @@ msgstr "Jalon du projet"
 #: model:ir.model.fields,help:project_milestone_week_duration.field_project_milestone__target_date
 msgid "The date when the Milestone should be complete."
 msgstr "La date à laquelle le jalon doit être terminé."
+
+#. module: project_milestone
+#: model:ir.model.fields,field_description:project_milestone.field_project_milestone__target_date
+msgid "Target Date"
+msgstr "Date de fin"
 
