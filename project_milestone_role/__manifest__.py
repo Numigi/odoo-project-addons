@@ -12,7 +12,7 @@
     'summary': 'Manage role for a project milestone',
     'depends': [
         'project_role',
-        'project_milestone'
+        'project_milestone_enhanced',
     ],
     'data': [
           'security/ir.model.access.csv',

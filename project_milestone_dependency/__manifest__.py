@@ -10,7 +10,7 @@
     "license": "LGPL-3",
     "category": "Project",
     "summary": "Add dependencies between Milestones",
-    "depends": ["project_milestone_start_date"],
+    "depends": ["project_milestone_start_date", "project_milestone_enhanced"],
     "data": [
         "views/project_milestone.xml",
     ],

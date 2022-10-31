@@ -3,7 +3,7 @@
 
 {
     "name": "Project Milestone Enhanced",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "author": "Numigi",
     "maintainer": "Numigi",
     "website": "https://bit.ly/numigi-com",
