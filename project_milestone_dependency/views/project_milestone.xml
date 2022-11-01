@@ -6,33 +6,23 @@
         <field name="name">Project Milestone Form: Add Dependencies Tab</field>
         <field name="model">project.milestone</field>
         <field name="priority">20</field>
-        <field name="inherit_id" ref="project_milestone.project_milestone_view_form"/>
+        <field name="inherit_id" ref="project_milestone_enhanced.project_milestone_enhanced_view_form"/>
         <field name="arch" type="xml">
-            <xpath expr="//group//field[@name='project_task_ids']" position="replace"/>
-            <xpath expr="//sheet" position="inside">
-                <notebook>
-                    <page name="tasks" string="Tasks">
-                        <field name="project_task_ids"
-                               context="{'default_project_id': project_id,
-                               'default_date_end': target_date,
-                               'default_milestone_id': active_id}"
-                        />
-                    </page>
-                    <page name="dependencies" string="Dependencies">
-                        <field name="child_ids"
-                               context="{'search_default_project_id': project_id}"
-                               domain="[('id', '!=', active_id)]">
-                            <tree default_order="sequence">
-                                <field name="sequence" widget="handle"/>
-                                <field name="name"/>
-                                <field name="project_id"/>
-                                <field name="start_date"/>
-                                <field name="target_date"/>
-                                <field name="progress" widget="progressbar"/>
-                            </tree>
-                        </field>
-                    </page>
-                </notebook>
+            <xpath expr="//notebook" position="inside">
+                <page name="dependencies" string="Dependencies">
+                    <field name="child_ids"
+                           context="{'search_default_project_id': project_id}"
+                           domain="[('id', '!=', active_id)]">
+                        <tree default_order="sequence">
+                            <field name="sequence" widget="handle"/>
+                            <field name="name"/>
+                            <field name="project_id"/>
+                            <field name="start_date"/>
+                            <field name="target_date"/>
+                            <field name="progress" widget="progressbar"/>
+                        </tree>
+                    </field>
+                </page>
             </xpath>
         </field>
     </record>

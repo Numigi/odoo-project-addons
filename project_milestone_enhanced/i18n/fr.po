@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-11 13:38+0000\n"
-"PO-Revision-Date: 2022-04-11 13:38+0000\n"
+"POT-Creation-Date: 2022-10-31 20:38+0000\n"
+"PO-Revision-Date: 2022-10-31 20:38+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -34,6 +34,16 @@ msgstr "Projet"
 #: model:ir.model,name:project_milestone_enhanced.model_project_milestone
 msgid "Project Milestone"
 msgstr "Jalon du projet"
+
+#. module: project_milestone_enhanced
+#: model:ir.model,name:project_milestone_enhanced.model_project_task
+msgid "Task"
+msgstr "Tâche"
+
+#. module: project_milestone_enhanced
+#: model_terms:ir.ui.view,arch_db:project_milestone_enhanced.project_milestone_enhanced_view_form
+msgid "Tasks"
+msgstr "Tâches"
 
 #. module: project_milestone_enhanced
 #: model:ir.model.fields,field_description:project_milestone_enhanced.field_project_milestone__active_toggle

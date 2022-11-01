@@ -86,6 +86,16 @@ If I (de)activate a project, its associated milestones too
 
 Since version `1.0.3`, when I change the project linked to a task, the milestone will be removed.
 
+Since version `1.0.4`, The project Tasks field will be displayed in the Tab `Tasks` of the `Milestone Form View`
+
+Before
+~~~~~~
+.. image:: static/description/milestone_form_view_before.png
+
+After
+~~~~~
+.. image:: static/description/milestone_form_view_after.png
+
 Contributors
 ------------
 * Numigi (tm) and all its contributors (https://bit.ly/numigiens)

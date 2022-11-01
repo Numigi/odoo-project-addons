@@ -13,10 +13,6 @@ As a user who can manage Milestones, I open the form view of a Milestone, I noti
 
 .. image:: static/description/dependencies_tab_milestone_form.png
 
-I also notice that the field ``Project Tasks`` is moved into a new tab ``Tasks``.
-
-.. image:: static/description/tasks_tab_milestone_form.png
-
 Usage
 -----
 
