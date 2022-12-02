@@ -16,21 +16,28 @@ class TestProjectTimesheetTimeControlEmployeePin(common.TransactionCase):
             'name': 'Test project',
             "allow_timesheets": True,
         })
+        self.analytic_account = self.project.analytic_account_id
+        self.task = self.env['project.task'].create({
+            'name': 'Test task',
+            'project_id': self.project.id,
+        })
         self.line = self.env['account.analytic.line'].create({
             'date_time': datetime.now() - timedelta(hours=1),
             'task_id': self.task.id,
             'project_id': self.project.id,
             'account_id': self.analytic_account.id,
             'name': 'Test line',
+            'employee_id': self.employee.id,
         })
 
     def test_wizard_with_employee_pin(self):
-        """Standalone wizard usage works properly."""
+        """Standalone wizard usage works properly with employee PIN"""
         wizard = self.env["hr.timesheet.switch"].create({
             "name": "Standalone 1",
             "pin": 12345,
             "project_id": self.project.id,
         })
+        wizard._onchange_pin()
         self.assertEqual(wizard.running_timer_id, self.line)
         self.assertTrue(wizard.running_timer_duration)
         new_act = wizard.with_context(show_created_timer=True).action_switch()

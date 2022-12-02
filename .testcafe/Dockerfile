@@ -1,4 +1,5 @@
-FROM node:17.9.0-stretch
+FROM node:17.9.0-bullseye
+
 LABEL maintainer="contact@numigi.com"
 
 RUN npm install -g testcafe@1.19.0
