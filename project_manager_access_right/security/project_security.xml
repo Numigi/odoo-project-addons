@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="group_project_restricted_manager" model="res.groups">
+        <field name="name">Manager: Own projects only</field>
+        <field name="implied_ids" eval="[(4, ref('base.group_user')), (4, ref('project.group_project_user'))]"/>
+        <field name="category_id" ref="base.module_category_project_management"/>
+    </record>
+
+    <record id="project.group_project_manager" model="res.groups">
+        <field name="name">Manager: All projects</field>
+        <field name="implied_ids" eval="[(4, ref('group_project_restricted_manager'))]"/>
+    </record>
+
+    <!--I can't edit but I can create a project that I'm not assigned as an Is a Manager role-->
+    <record id="project_project_restricted_manager" model="ir.rule">
+        <field name="name">Project: Manager of own projects only</field>
+        <field name="model_id" ref="project.model_project_project"/>
+        <field name="perm_read" eval="False"/>
+        <field name="perm_create" eval="False"/>
+        <field name="domain_force">[('manager_ids', 'in', [user.id])]</field>
+        <field name="groups"
+               eval="[(4, ref('project_manager_access_right.group_project_restricted_manager')),
+                      (4, ref('project.group_project_user'))]"/>
+    </record>
+
+    <!--disable native access rule on projects for project user-->
+    <record id="project.project_public_members_rule" model="ir.rule">
+        <field name="active" eval="False"/>
+    </record>
+
+    <!--I can't edit but I can create a milestone of a project that I'm not assigned as an Is a Manager role-->
+    <record id="project_milestone_restricted_manager" model="ir.rule">
+        <field name="name">Project Milestone: Manager of own projects milestones only</field>
+        <field name="model_id" ref="project_milestone.model_project_milestone"/>
+        <field name="perm_read" eval="False"/>
+        <field name="perm_create" eval="False"/>
+        <field name="domain_force">[('project_id.manager_ids', 'in', [user.id])]</field>
+        <field name="groups"
+               eval="[(4, ref('project_manager_access_right.group_project_restricted_manager')),
+                      (4, ref('project.group_project_user'))]"/>
+    </record>
+
+    <!--I only have access to data related to a project on which I am assigned as "Is a manager" role.-->
+    <record id="project_profitability_report_restricted_manager" model="ir.rule">
+        <field name="name">Profitability Report: Manager of own projects only</field>
+        <field name="model_id" ref="sale_timesheet.model_project_profitability_report"/>
+        <field name="domain_force">[('project_id.manager_ids', 'in', [user.id])]</field>
+        <field name="groups"
+               eval="[(4, ref('project_manager_access_right.group_project_restricted_manager')),
+                      (4, ref('project.group_project_user'))]"/>
+    </record>
+
+</odoo>

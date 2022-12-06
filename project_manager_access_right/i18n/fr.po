@@ -1,0 +1,74 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* project_manager_access_right
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-12-06 22:24+0000\n"
+"PO-Revision-Date: 2022-12-06 22:24+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: project_manager_access_right
+#: model_terms:ir.ui.view,arch_db:project_manager_access_right.project_kanban_view_inherit
+msgid "<i class=\"fa fa-ellipsis-v\" role=\"img\" aria-label=\"Manage\" title=\"Manage\"/>"
+msgstr "<i class=\"fa fa-ellipsis-v\" role=\"img\" aria-label=\"gérer\" title=\"gérer\"/>"
+
+#. module: project_manager_access_right
+#: model_terms:ir.ui.view,arch_db:project_manager_access_right.project_timesheet_kanban_view_inherit
+msgid "<span class=\"o_label\">Overview</span>"
+msgstr "<span class=\"o_label\">Vue d\'ensemble</span>"
+
+#. module: project_manager_access_right
+#: model:ir.model.fields,help:project_manager_access_right.field_project_role__is_manager
+msgid "Check this box to identify the roles that the (Projects / Manager: Own Projects Only) rights group is based on. \n"
+" \n"
+" When a user belonging to this group is assigned to a project with this role, he can modify the project and see all of its data and indicators."
+msgstr "Cochez cette case pour identifier les rôles sur lesquels le groupe de droits Projets / Gestionnaire: Mes projets seulement est basé. \n"
+" \n"
+" Lorsqu’un utilisateur faisant partie de ce groupe est assigné à un projet avec ce rôle, il peut modifier le projet et voir l’ensemble de ses données et indicateurs."
+
+
+#. module: project_manager_access_right
+#: model:ir.model.fields,field_description:project_manager_access_right.field_project_project__is_manager
+#: model:ir.model.fields,field_description:project_manager_access_right.field_project_role__is_manager
+msgid "Is Manager"
+msgstr "Est un gestionnaire"
+
+#. module: project_manager_access_right
+#: model:res.groups,name:project_manager_access_right.group_project_restricted_manager
+msgid "Manager: Own projects only"
+msgstr "Gestionnaire: Projets personnels uniquement"
+
+#. module: project_manager_access_right
+#: model:ir.model.fields,field_description:project_manager_access_right.field_project_project__manager_ids
+msgid "Managers"
+msgstr "Gestionnaires"
+
+#. module: project_manager_access_right
+#: model:ir.model,name:project_manager_access_right.model_project_project
+msgid "Project"
+msgstr "Projet"
+
+#. module: project_manager_access_right
+#: model:ir.model,name:project_manager_access_right.model_project_assignment
+msgid "Project Assignment"
+msgstr "Assignation de projet"
+
+#. module: project_manager_access_right
+#: model:ir.model,name:project_manager_access_right.model_project_role
+msgid "Project Role"
+msgstr "Role de projet"
+
+#. module: project_manager_access_right
+#: code:addons/project_manager_access_right/models/project_assignment.py:14
+#, python-format
+msgid "You are not allowed to create / modify an assignment for a project on which you are not assigned an \"Is a manager\" role."
+msgstr "Vous n'êtes pas autorisé à supprimer une assignation pour un projet sur lequel vous n'êtes pas assigné à un rôle de type \"Est un gestionnaire\"."
+

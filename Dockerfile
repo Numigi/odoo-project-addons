@@ -34,6 +34,7 @@ COPY project_iteration_sale_inheritance  /mnt/extra-addons/project_iteration_sal
 COPY project_kanban_dates /mnt/extra-addons/project_kanban_dates
 COPY project_kanban_to_form  /mnt/extra-addons/project_kanban_to_form
 COPY project_lump_sum  /mnt/extra-addons/project_lump_sum
+COPY project_manager_access_right  /mnt/extra-addons/project_manager_access_right
 COPY portal_project_timesheet_conditional  /mnt/extra-addons/portal_project_timesheet_conditional
 COPY project_material  /mnt/extra-addons/project_material
 COPY project_material_direct  /mnt/extra-addons/project_material_direct

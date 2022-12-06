@@ -34,6 +34,7 @@
         "project_kanban_dates",
         "project_kanban_to_form",
         "project_lump_sum",
+        "project_manager_access_right",
         "portal_project_timesheet_conditional",
         "project_material",
         "project_material_direct",

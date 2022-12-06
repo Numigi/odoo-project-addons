@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="project_form_view_inherit" model="ir.ui.view">
+        <field name="name">project.project.from.inherit</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.edit_project"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='options_active']" position="inside">
+                <field name="is_manager" invisible="1"/>
+            </xpath>
+            <field name="user_id" position="after">
+                <field name="manager_ids" widget='many2many_tags' invisible="0"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="project_kanban_view_inherit" model="ir.ui.view">
+        <field name="name">project.project.kanban.inherit</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.view_project_kanban"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@class='o_kanban_card_manage_pane dropdown-menu']" position="attributes">
+                <attribute name="groups">project.group_project_manager,project_manager_access_right.group_project_restricted_manager</attribute>
+            </xpath>
+            <xpath expr="//templates" position="after">
+                <field name="is_manager"/>
+            </xpath>
+            <xpath expr="//a[@class='o_kanban_manage_toggle_button o_left']" position="replace">
+                <t t-if="record.is_manager.raw_value">
+                    <a class="o_kanban_manage_toggle_button o_left" href="#" groups="project.group_project_manager,project_manager_access_right.group_project_restricted_manager">
+                        <i class="fa fa-ellipsis-v" role="img" aria-label="Manage" title="Manage"/>
+                    </a>
+                </t>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="project_timesheet_kanban_view_inherit" model="ir.ui.view">
+        <field name="name">project.project.kanban.inherit.sale.timesheet</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="sale_timesheet.project_project_view_kanban_inherit_sale_timesheet"/>
+        <field name="arch" type="xml">
+            <xpath expr="//a[@t-if='record.allow_timesheets.raw_value']" position="replace">
+                <a t-if="record.allow_timesheets.raw_value and record.is_manager.raw_value" name="action_view_timesheet" type="object" class="o_project_kanban_box o_project_timesheet_box"
+                   groups="project.group_project_manager,project_manager_access_right.group_project_restricted_manager">
+                    <div>
+                        <span class="o_label">Overview</span>
+                    </div>
+                </a>
+            </xpath>
+        </field>
+    </record>
+    <!--Give access to menus Reporting and Configuration to the restricted manager-->
+    <record id="project.menu_project_config" model="ir.ui.menu">
+        <field name="groups_id" eval="[(4, ref('project.group_project_manager')),
+        (4, ref('project_manager_access_right.group_project_restricted_manager'))]"/>
+    </record>
+    <record id="project.project_config_settings_menu_action" model="ir.ui.menu">
+        <field name="groups_id" eval="[(4, ref('project.group_project_manager')),
+        (4, ref('project_manager_access_right.group_project_restricted_manager'))]"/>
+    </record>
+    <record id="project.menu_project_report" model="ir.ui.menu">
+        <field name="groups_id" eval="[(4, ref('project.group_project_manager')),
+        (4, ref('project_manager_access_right.group_project_restricted_manager'))]"/>
+    </record>
+
+</odoo>
