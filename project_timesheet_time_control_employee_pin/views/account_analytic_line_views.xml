@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="account_analytic_line_form_view" model="ir.ui.view">
+        <field name="name">account.analytic.line.form.inherit</field>
+        <field name="model">account.analytic.line</field>
+        <field name="inherit_id" ref="project_timesheet_time_control.hr_timesheet_line_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[hasclass('oe_title')]" position="before">
+                <group>
+                    <field name="pin"/>
+                    <field name="employee_id" readonly="1" force_save="1"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

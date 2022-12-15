@@ -88,6 +88,7 @@ COPY project_template_timesheet  /mnt/extra-addons/project_template_timesheet
 COPY project_time_budget /mnt/extra-addons/project_time_budget
 COPY project_time_range /mnt/extra-addons/project_time_range
 COPY project_timesheet_analytic_update  /mnt/extra-addons/project_timesheet_analytic_update
+COPY project_timesheet_time_control_employee_pin  /mnt/extra-addons/project_timesheet_time_control_employee_pin
 COPY project_type  /mnt/extra-addons/project_type
 COPY project_wip  /mnt/extra-addons/project_wip
 COPY project_wip_material  /mnt/extra-addons/project_wip_material
