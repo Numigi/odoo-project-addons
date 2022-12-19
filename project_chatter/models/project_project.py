@@ -8,5 +8,5 @@ class ProjectWithChatter(models.Model):
     _name = 'project.project'
     _inherit = ['project.project', 'mail.activity.mixin']
 
-    date = fields.Date(track_visibility='onchange')
-    date_start = fields.Date(track_visibility='onchange')
+    date = fields.Date(tracking=True)
+    date_start = fields.Date(tracking=True)
