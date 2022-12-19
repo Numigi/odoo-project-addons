@@ -18,7 +18,7 @@ USER odoo
 #COPY analytic_line_revenue  /mnt/extra-addons/analytic_line_revenue
 #COPY project_analytic_group  /mnt/extra-addons/project_analytic_group
 COPY project_chatter  /mnt/extra-addons/project_chatter
-#COPY project_closed  /mnt/extra-addons/project_closed
+COPY project_closed  /mnt/extra-addons/project_closed
 #COPY project_cost_smart_button  /mnt/extra-addons/project_cost_smart_button
 #COPY project_default_task_stage  /mnt/extra-addons/project_default_task_stage
 #COPY project_enhanced  /mnt/extra-addons/project_enhanced
@@ -59,7 +59,7 @@ COPY project_chatter  /mnt/extra-addons/project_chatter
 #COPY project_portal_parent_task  /mnt/extra-addons/project_portal_parent_task
 #COPY project_remaining_hours_update  /mnt/extra-addons/project_remaining_hours_update
 #COPY project_role_milestone  /mnt/extra-addons/project_role_milestone
-#COPY project_stage  /mnt/extra-addons/project_stage
+COPY project_stage  /mnt/extra-addons/project_stage
 #COPY project_stage_allow_timesheet  /mnt/extra-addons/project_stage_allow_timesheet
 #COPY project_stage_no_quick_create  /mnt/extra-addons/project_stage_no_quick_create
 #COPY project_task_analytic_lines  /mnt/extra-addons/project_task_analytic_lines
