@@ -1,0 +1,13 @@
+# © 2019 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+# License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
+
+from . import (
+    account_analytic_line,
+    account_invoice,
+    account_invoice_line,
+    account_invoice_tax,
+    account_move,
+    account_move_line,
+    product_product,
+    project_task,
+)

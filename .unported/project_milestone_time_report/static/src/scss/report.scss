@@ -1,0 +1,40 @@
+table.o_project_report__parameters {
+    margin: 24px 0px 16px;
+
+    td {
+        padding: 8px 0px;
+    }
+
+    td:first-child {
+        font-weight: bold;
+    }
+    td:not(:first-child) {
+        padding-left: 24px;
+    }
+}
+
+table.o_project_report__content {
+    width: 100%;
+
+    th {
+        padding: 8px 0px;
+    }
+
+    th:not(:first-child) {
+        padding-left: 16px;
+    }
+
+    tr.o_project_report__totals > td {
+        font-weight: bold;
+        border-top: black double;
+    }
+
+    th, td {
+        padding: 8px 0px;
+    }
+}
+
+.o_project_report__amount {
+    cursor: pointer;
+    color: $o-brand-primary;
+}

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="task_form_with_is_template" model="ir.ui.view">
+        <field name="name">Task Form: add field is_template</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_form2"/>
+        <field name="arch" type="xml">
+            <header position="after">
+                <div class="alert alert-warning"
+                     role="alert"
+                     attrs="{'invisible': [('is_template', '=', False)]}"
+                     >
+                        You are currently viewing a task template. Some fields are therefore hidden.
+                </div>
+            </header>
+            <field name="parent_id" position="after">
+                <field name="is_template" attrs="{'readonly': [('parent_id', '!=', False)]}" force_save="1"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="task_form_with_invisible_fields_on_templates" model="ir.ui.view">
+        <field name="name">Task Form: make fields invisible for task templates</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_form2"/>
+        <field name="arch" type="xml">
+            <field name="date_assign" position="attributes">
+                <attribute name="invisible_on_template">1</attribute>
+            </field>
+            <field name="date_deadline" position="attributes">
+                <attribute name="invisible_on_template">1</attribute>
+            </field>
+            <field name="date_last_stage_update" position="attributes">
+                <attribute name="invisible_on_template">1</attribute>
+            </field>
+            <field name="email_cc" position="attributes">
+                <attribute name="invisible_on_template">1</attribute>
+            </field>
+            <field name="email_from" position="attributes">
+                <attribute name="invisible_on_template">1</attribute>
+            </field>
+            <field name="kanban_state" position="attributes">
+                <attribute name="invisible_on_template">1</attribute>
+            </field>
+            <field name="partner_id" position="attributes">
+                <attribute name="invisible_on_template">1</attribute>
+            </field>
+            <field name="stage_id" position="attributes">
+                <attribute name="invisible_on_template">1</attribute>
+            </field>
+            <field name="user_id" position="attributes">
+                <attribute name="invisible_on_template">1</attribute>
+            </field>
+        </field>
+    </record>
+
+    <record id="task_search_with_task_template_filters" model="ir.ui.view">
+        <field name="name">Task Search: add search filters for templates versus normal tasks</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_search_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//separator[last()]" position="after">
+                <filter string="Tasks" name="filter_not_template" domain="[('is_template', '=', False)]"/>
+                <filter string="Templates" name="filter_is_template" domain="[('is_template', '=', True)]"
+                    context="{'show_task_templates': True}"/>
+                <separator/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

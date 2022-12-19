@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+
+    <!-- Form View -->
+    <record id="project_milestones_duration_view_form" model="ir.ui.view">
+        <field name="name">Project Milestones Add Duration Form</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project_milestone_start_date.project_milestones_start_date_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='start_date']" position="after">
+                <field name="duration" string="Duration (week(s))"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

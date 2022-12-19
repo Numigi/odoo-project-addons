@@ -1,0 +1,139 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* project_estimation
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-07-14 16:57+0000\n"
+"PO-Revision-Date: 2021-07-14 12:58-0400\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"X-Generator: Poedit 2.3\n"
+
+#. module: project_estimation
+#: model_terms:ir.ui.view,arch_db:project_estimation.project_kanban
+msgid ""
+"<span class=\"badge-pill badge-info\" attrs=\"{'invisible': "
+"[('estimation_mode_active', '=', False)]}\">\n"
+"                        Estimation\n"
+"                    </span>"
+msgstr ""
+
+#. module: project_estimation
+#: model_terms:ir.ui.view,arch_db:project_estimation.project_estimation_enter_form
+#: model_terms:ir.ui.view,arch_db:project_estimation.project_estimation_exit_form
+msgid "Cancel"
+msgstr "Annuler"
+
+#. module: project_estimation
+#: model:ir.model.fields,field_description:project_estimation.field_project_estimation_enter__create_uid
+#: model:ir.model.fields,field_description:project_estimation.field_project_estimation_exit__create_uid
+msgid "Created by"
+msgstr "Créé par"
+
+#. module: project_estimation
+#: model:ir.model.fields,field_description:project_estimation.field_project_estimation_enter__create_date
+#: model:ir.model.fields,field_description:project_estimation.field_project_estimation_exit__create_date
+msgid "Created on"
+msgstr "Créé le"
+
+#. module: project_estimation
+#: model:ir.model.fields,field_description:project_estimation.field_project_estimation_enter__display_name
+#: model:ir.model.fields,field_description:project_estimation.field_project_estimation_exit__display_name
+msgid "Display Name"
+msgstr "Nom affiché"
+
+#. module: project_estimation
+#: model:ir.actions.act_window,name:project_estimation.action_project_estimation_enter
+#: model_terms:ir.ui.view,arch_db:project_estimation.project_estimation_enter_form
+msgid "Enter Estimation Mode"
+msgstr "Entrer en mode estimation"
+
+#. module: project_estimation
+#: model_terms:ir.ui.view,arch_db:project_estimation.project_form
+#: model_terms:ir.ui.view,arch_db:project_estimation.project_search
+#: model_terms:ir.ui.view,arch_db:project_estimation.task_search
+msgid "Estimation"
+msgstr "Estimation"
+
+#. module: project_estimation
+#: model:ir.model.fields,field_description:project_estimation.field_project_project__estimation_mode_active
+#: model:ir.model.fields,field_description:project_estimation.field_project_task__estimation_mode_active
+msgid "Estimation Mode Active"
+msgstr "Mode estimation actif"
+
+#. module: project_estimation
+#: model:ir.actions.act_window,name:project_estimation.action_project_estimation_exit
+#: model_terms:ir.ui.view,arch_db:project_estimation.project_estimation_exit_form
+msgid "Exit From Estimation Mode"
+msgstr "Sortir du mode estimation"
+
+#. module: project_estimation
+#: model:ir.model.fields,field_description:project_estimation.field_project_estimation_enter__id
+#: model:ir.model.fields,field_description:project_estimation.field_project_estimation_exit__id
+msgid "ID"
+msgstr ""
+
+#. module: project_estimation
+#: model:ir.model.fields,field_description:project_estimation.field_project_estimation_enter____last_update
+#: model:ir.model.fields,field_description:project_estimation.field_project_estimation_exit____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: project_estimation
+#: model:ir.model.fields,field_description:project_estimation.field_project_estimation_enter__write_uid
+#: model:ir.model.fields,field_description:project_estimation.field_project_estimation_exit__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: project_estimation
+#: model:ir.model.fields,field_description:project_estimation.field_project_estimation_enter__write_date
+#: model:ir.model.fields,field_description:project_estimation.field_project_estimation_exit__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: project_estimation
+#: model:ir.model,name:project_estimation.model_project_project
+#: model:ir.model.fields,field_description:project_estimation.field_project_estimation_enter__project_id
+#: model:ir.model.fields,field_description:project_estimation.field_project_estimation_exit__project_id
+msgid "Project"
+msgstr "Projet"
+
+#. module: project_estimation
+#: model:ir.model,name:project_estimation.model_project_estimation_enter
+msgid "Project Estimation Mode Enter Wizard"
+msgstr "Wizard d'entrée en mode estimation"
+
+#. module: project_estimation
+#: model:ir.model,name:project_estimation.model_project_estimation_exit
+msgid "Project Estimation Mode Exit Wizard"
+msgstr "Wizard de sortie du mode estimation"
+
+#. module: project_estimation
+#: model:ir.model,name:project_estimation.model_project_estimation_exit_line
+msgid "Project Estimation Mode Exit Wizard Line"
+msgstr ""
+
+#. module: project_estimation
+#: model:ir.model,name:project_estimation.model_project_task
+msgid "Task"
+msgstr "Tâche"
+
+#. module: project_estimation
+#: model_terms:ir.ui.view,arch_db:project_estimation.project_estimation_enter_form
+#: model_terms:ir.ui.view,arch_db:project_estimation.project_estimation_exit_form
+msgid "Validate"
+msgstr "Valider"
+
+#. module: project_estimation
+#: model_terms:ir.ui.view,arch_db:project_estimation.task_form
+msgid "You are currently viewing a task under a project in estimation mode."
+msgstr ""
+"Vous visualisez présentement une tâche dans un projet en mode estimation."

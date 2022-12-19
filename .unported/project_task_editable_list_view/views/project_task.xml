@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="editable_task_list_view" model="ir.ui.view">
+        <field name="name">Task Editable List View</field>
+        <field name="model">project.task</field>
+        <field name="priority">99</field>
+        <field name="arch" type="xml">
+            <tree string="Tasks" editable="top">
+                <field name="display_name"/>
+                <field name="project_id" readonly="1"/>
+                <field name="user_id"/>
+                <field name="date_planned"/>
+                <field name="planned_hours"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="editable_task_list_action" model="ir.actions.act_window">
+        <field name="name">Tasks</field>
+        <field name="res_model">project.task</field>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="editable_task_list_view"/>
+    </record>
+
+</odoo>

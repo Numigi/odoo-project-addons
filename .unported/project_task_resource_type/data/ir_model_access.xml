@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<odoo>
+  <record model="ir.model.access" id="task_resource_group_50e1dde0-727a-428b-9b9b-aa65529731aa">
+    <field name="active" eval="True"/>
+    <field ref="project.group_project_manager" name="group_id"/>
+    <field ref="task_resource_45d7d283-666e-4766-8a3a-4a265c24d269" name="model_id"/>
+    <field name="name">Task resource group_system</field>
+    <field name="perm_create" eval="True"/>
+    <field name="perm_read" eval="True"/>
+    <field name="perm_unlink" eval="True"/>
+    <field name="perm_write" eval="True"/>
+  </record>
+  <record model="ir.model.access" id="task_resource_group_1243111c-ca32-4668-88be-39f71a01efb7">
+    <field name="active" eval="True"/>
+    <field ref="base.group_user" name="group_id"/>
+    <field ref="task_resource_45d7d283-666e-4766-8a3a-4a265c24d269" name="model_id"/>
+    <field name="name">Task resource group_user</field>
+    <field name="perm_create" eval="False"/>
+    <field name="perm_read" eval="True"/>
+    <field name="perm_unlink" eval="False"/>
+    <field name="perm_write" eval="False"/>
+  </record>
+</odoo>

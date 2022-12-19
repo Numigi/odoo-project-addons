@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="view_project_search" model="ir.ui.view">
+        <field name="name">Add Lump Sum Filters</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.view_project_project_filter"/>
+        <field name="arch" type="xml">
+            <group position="before">
+                <separator/>
+                <filter string="Lump Sum" name="lump_sum" domain="[('lump_sum', '=', True)]"/>
+                <filter string="Not Lump Sum" name="not_lump_sum" domain="[('lump_sum', '=', False)]"/>
+            </group>
+        </field>
+    </record>
+</odoo>
