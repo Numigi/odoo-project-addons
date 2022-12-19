@@ -27,4 +27,4 @@ class ProjectWithStage(models.Model):
 
     stage_id = fields.Many2one(
         'project.stage', 'Stage', ondelete='restrict', index=True, default=compute_default_stage,
-        track_visibility='onchange')
+        tracking=True)
