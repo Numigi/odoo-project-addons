@@ -3,7 +3,7 @@
 
 {
     "name": "Project Stage Closed",
-    "version": "1.0.0",
+    "version": "14.0.1.0.0",
     "author": "Numigi",
     "maintainer": "Numigi",
     "website": "https://bit.ly/numigi-com",
