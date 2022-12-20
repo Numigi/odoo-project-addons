@@ -1,0 +1,35 @@
+<odoo>
+    <record id="project_stage_allow_timesheet_tree" model="ir.ui.view">
+        <field name="name">Project stage: allow timesheet</field>
+        <field name="model">project.stage</field>
+        <field ref="project_stage.project_stage_tree" name="inherit_id"/>
+        <field type="xml" name="arch">
+            <field name="description" position="after">
+                <field name="allow_timesheet"/>
+            </field>
+        </field>
+    </record>
+    <record id="project_stage_allow_timesheet_form" model="ir.ui.view">
+        <field name="name">Project stage: allow timesheet</field>
+        <field name="model">project.stage</field>
+        <field ref="project_stage.project_stage_default_form_view" name="inherit_id"/>
+        <field type="xml" name="arch">
+            <field name="active" position="after">
+                <newline/>
+                <field name="allow_timesheet"/>
+            </field>
+        </field>
+    </record>
+     <record model="ir.ui.view" id="project_task_type_form_view">
+        <field name="name">project.task.type.form (in project_task_stage_allow_timesheet)</field>
+        <field name="model">project.task.type</field>
+        <field name="inherit_id" ref="project.task_type_edit"/>
+        <field name="arch" type="xml">
+
+            <field name="fold" position="before">
+                <field name="allow_timesheet"/>
+            </field>
+
+        </field>
+    </record>
+</odoo>
