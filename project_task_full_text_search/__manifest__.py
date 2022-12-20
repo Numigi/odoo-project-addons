@@ -11,6 +11,9 @@
     'license': 'LGPL-3',
     'category': 'Project',
     'depends': ['project'],
+    'external_dependencies': {
+        'python': ['unidecode'],
+    },
     'data': [
         'views/project_task.xml',
     ],
