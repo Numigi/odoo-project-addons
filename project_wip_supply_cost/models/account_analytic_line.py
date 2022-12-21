@@ -23,8 +23,10 @@ class AnalyticLine(models.Model):
         may be created by a write before the return of super().create(vals).
         """
         line = super().create(vals)
-        if line._requires_shop_supply_move():
-            line.sudo()._create_update_or_reverse_shop_supply_move()
+        if line._requires_shop_supply_move() and \
+                not line._context.get('shop_supply_move'):
+            line.with_context(shop_supply_move=True).sudo()\
+                ._create_update_or_reverse_shop_supply_move()
         return line
 
     @api.multi
