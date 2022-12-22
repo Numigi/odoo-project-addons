@@ -1,0 +1,264 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* project_wip
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 11.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-12-09 15:31+0000\n"
+"PO-Revision-Date: 2020-12-09 10:34-0500\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"X-Generator: Poedit 2.0.6\n"
+
+#. module: project_wip
+#: code:addons/project_wip/models/account_analytic_line.py:12
+#, python-format
+msgid "(task: {})"
+msgstr "(tâche : {})"
+
+#. module: project_wip
+#: model:ir.model.fields,help:project_wip.field_project_type__cgs_account_id
+#: model:ir.model.fields,help:project_wip.field_project_wip_transfer__cgs_account_id
+msgid "Account used to cumulate Costs of Goods Sold for this project type."
+msgstr ""
+"Compte utilisé pour accumuler le coût des marchandises vendues pour ce type "
+"de projet."
+
+#. module: project_wip
+#: model:ir.model.fields,help:project_wip.field_project_type__wip_account_id
+#: model:ir.model.fields,help:project_wip.field_project_wip_transfer__wip_account_id
+msgid "Account used to cumulate Work In Progress for this project type."
+msgstr ""
+"Compte utilisé pour accumuler le coût des travaux en cours pour ce type de "
+"projet."
+
+#. module: project_wip
+#: model_terms:ir.ui.view,arch_db:project_wip.project_type_form_with_accounting_tab
+msgid "Accounting"
+msgstr "Comptabilité"
+
+#. module: project_wip
+#: model:ir.model.fields,field_description:project_wip.field_project_wip_transfer__accounting_date
+msgid "Accounting Date"
+msgstr "Date de comptabilisation"
+
+#. module: project_wip
+#: model:ir.model.fields,help:project_wip.field_project_type__cgs_journal_id
+#: model:ir.model.fields,help:project_wip.field_project_wip_transfer__cgs_journal_id
+msgid "Accounting journal used when transfering WIP journal items into CGS."
+msgstr ""
+"Journal comptable utilisé pour transférer les écritures de TEC vers les CMV."
+
+#. module: project_wip
+#: model:res.groups,comment:project_wip.group_wip_to_cgs
+msgid "Allow to transfer WIP journal entries to CGS"
+msgstr "Permet de transférer des écritures de TEC vers les CMV"
+
+#. module: project_wip
+#: model:ir.model.fields,field_description:project_wip.field_project_type__cgs_account_id
+#: model:ir.model.fields,field_description:project_wip.field_project_wip_transfer__cgs_account_id
+msgid "CGS Account"
+msgstr "Compte CMV"
+
+#. module: project_wip
+#: model_terms:ir.ui.view,arch_db:project_wip.wip_to_cgs_wizard
+msgid "Cancel"
+msgstr "Annuler"
+
+#. module: project_wip
+#: model_terms:ir.ui.view,arch_db:project_wip.project_type_form_with_accounting_tab
+msgid "Cost of Goods Sold"
+msgstr "Coût des marchandises vendues"
+
+#. module: project_wip
+#: model:ir.model.fields,field_description:project_wip.field_project_wip_transfer__costs_to_transfer
+msgid "Costs To Transfer"
+msgstr "Coûts à transférer"
+
+#. module: project_wip
+#: model:ir.model.fields,field_description:project_wip.field_project_wip_transfer__create_uid
+msgid "Created by"
+msgstr "Créé par"
+
+#. module: project_wip
+#: model:ir.model.fields,field_description:project_wip.field_project_wip_transfer__create_date
+msgid "Created on"
+msgstr "Créé le"
+
+#. module: project_wip
+#: model:ir.model.fields,field_description:project_wip.field_project_wip_transfer__currency_id
+msgid "Currency"
+msgstr "Devise"
+
+#. module: project_wip
+#: model:ir.model.fields,field_description:project_wip.field_project_wip_transfer__display_name
+msgid "Display Name"
+msgstr "Nom affiché"
+
+#. module: project_wip
+#: model:ir.model.fields,field_description:project_wip.field_project_wip_transfer__id
+msgid "ID"
+msgstr "ID"
+
+#. module: project_wip
+#: model:ir.model.fields,help:project_wip.field_account_move__no_analytic_lines
+msgid ""
+"If checked, analytic lines will not be generated when posting this journal "
+"entry."
+msgstr ""
+"Si coché, aucune ligne analytique ne sera générée à la comptabilisation de "
+"cette pièce comptable."
+
+#. module: project_wip
+#: model:ir.model,name:project_wip.model_account_move
+msgid "Journal Entries"
+msgstr ""
+
+#. module: project_wip
+#: model:ir.model,name:project_wip.model_account_move_line
+msgid "Journal Item"
+msgstr ""
+
+#. module: project_wip
+#: model:ir.model.fields,field_description:project_wip.field_project_wip_transfer____last_update
+msgid "Last Modified on"
+msgstr "Dernière modification le"
+
+#. module: project_wip
+#: model:ir.model.fields,field_description:project_wip.field_project_wip_transfer__write_uid
+msgid "Last Updated by"
+msgstr "Dernière mise à jour par"
+
+#. module: project_wip
+#: model:ir.model.fields,field_description:project_wip.field_project_wip_transfer__write_date
+msgid "Last Updated on"
+msgstr "Dernière mise à jour le"
+
+#. module: project_wip
+#: model:ir.model.fields,field_description:project_wip.field_account_move__no_analytic_lines
+msgid "No Analytic Lines"
+msgstr "Ne pas générer les lignes analytiques"
+
+#. module: project_wip
+#: code:addons/project_wip/models/project_project.py:28
+#, python-format
+msgid ""
+"Only members of the group 'Transfert WIP to CGS' are allowed to transfer WIP "
+"entries to CGS."
+msgstr ""
+"Seuls les membres du groupe 'Transfert des TEC vers CMV' peuvent transférer "
+"les écritures de TEC vers les CMV."
+
+#. module: project_wip
+#: model:ir.model,name:project_wip.model_project_project
+#: model:ir.model.fields,field_description:project_wip.field_project_wip_transfer__project_id
+msgid "Project"
+msgstr "Projet"
+
+#. module: project_wip
+#: model:ir.model,name:project_wip.model_project_type
+msgid "Project Type"
+msgstr "Type de projet"
+
+#. module: project_wip
+#: model:ir.model,name:project_wip.model_project_wip_transfer
+msgid "Project WIP To CGS Wizard"
+msgstr "Assistant de transfert des TEC vers CMV"
+
+#. module: project_wip
+#: code:addons/project_wip/models/project_project.py:154
+#, python-format
+msgid ""
+"The WIP entry {wip_line} ({amount}) could not be reconciled when transfering "
+"the amount into Costs of Goods Sold. You should verify if the WIP entry is "
+"partially reconciled."
+msgstr ""
+"L'écriture de TEC {wip_line} ({amount}) ne peut pas être lettrée lors du "
+"transfert vers le coût des marchandises vendues. Vous devriez vérifier que "
+"l'écriture de TEC n'est pas partiellement lettrée."
+
+#. module: project_wip
+#: code:addons/project_wip/models/project_project.py:111
+#, python-format
+msgid "The project type {} has no CGS (Cost of Goods Sold) account defined."
+msgstr ""
+"Le type de projet {} n'a pas de compte de CMV (coût des marchandises "
+"vendues) défini."
+
+#. module: project_wip
+#: code:addons/project_wip/models/project_project.py:99
+#, python-format
+msgid "The project type {} has no WIP (Work In Progress) account defined."
+msgstr ""
+"Le type de projet {} n'a pas de compte de TEC (travaux en cours) défini."
+
+#. module: project_wip
+#: code:addons/project_wip/models/project_project.py:87
+#, python-format
+msgid "The project type {} has no WIP journal defined."
+msgstr ""
+"Le type de projet {} n'a pas de journal de transfert des TEC vers les CMV."
+
+#. module: project_wip
+#: code:addons/project_wip/models/project_type.py:38
+#, python-format
+msgid "The selected WIP account ({}) must allow reconciliation."
+msgstr "Le compte de TEC sélectionné ({}) doit autoriser le lettrage."
+
+#. module: project_wip
+#: model:ir.model.fields,help:project_wip.field_project_wip_transfer__accounting_date
+msgid ""
+"The selected date will be used for posting the journal entries when "
+"transfering amounts from WIP to CGS."
+msgstr ""
+"La date sélectionnée sera utilisée dans la comptabilisation des écritures de "
+"transfert des TEC vers les CMV."
+
+#. module: project_wip
+#: model_terms:ir.ui.view,arch_db:project_wip.wip_to_cgs_wizard
+msgid ""
+"This wizard will transfer all amounts accruded in the work in progress "
+"account\n"
+"                        to the costs of goods sold for the selected project."
+msgstr ""
+"En cliquant sur Valider, les montants accumulés dans les travaux en cours "
+"seront transférés vers le coût des marchandises vendues pour le projet "
+"sélectionné."
+
+#. module: project_wip
+#: model:res.groups,name:project_wip.group_wip_to_cgs
+#, fuzzy
+#| msgid "Transfer WIP to CGS"
+msgid "Transfer WIP To CGS"
+msgstr "Transfert des TEC vers CMV"
+
+#. module: project_wip
+#: model:ir.actions.act_window,name:project_wip.action_wip_to_cgs_wizard
+#: model_terms:ir.ui.view,arch_db:project_wip.project_form_with_wip_to_cgs_button
+#: model_terms:ir.ui.view,arch_db:project_wip.wip_to_cgs_wizard
+msgid "Transfer WIP to CGS"
+msgstr "Transfert des TEC vers CMV"
+
+#. module: project_wip
+#: model_terms:ir.ui.view,arch_db:project_wip.wip_to_cgs_wizard
+msgid "Validate"
+msgstr "Valider"
+
+#. module: project_wip
+#: model:ir.model.fields,field_description:project_wip.field_project_type__wip_account_id
+#: model:ir.model.fields,field_description:project_wip.field_project_wip_transfer__wip_account_id
+msgid "WIP Account"
+msgstr "Compte TEC"
+
+#. module: project_wip
+#: model:ir.model.fields,field_description:project_wip.field_project_type__cgs_journal_id
+#: model:ir.model.fields,field_description:project_wip.field_project_wip_transfer__cgs_journal_id
+msgid "WIP To CGS Journal"
+msgstr "Journal TEC vers CMV"

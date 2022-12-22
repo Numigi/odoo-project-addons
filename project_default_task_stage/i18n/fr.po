@@ -1,0 +1,31 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* project_default_task_stage
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-08-15 19:28+0000\n"
+"PO-Revision-Date: 2019-08-15 19:28+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: project_default_task_stage
+#: model:ir.model.fields,field_description:project_default_task_stage.field_project_type__default_task_stage_ids
+msgid "Default Task Stages"
+msgstr "Étapes de tâches par défaut"
+
+#. module: project_default_task_stage
+#: model:ir.model,name:project_default_task_stage.model_project_project
+msgid "Project"
+msgstr ""
+
+#. module: project_default_task_stage
+#: model:ir.model,name:project_default_task_stage.model_project_type
+msgid "Project Type"
+msgstr ""

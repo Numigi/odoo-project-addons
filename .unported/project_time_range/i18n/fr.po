@@ -1,0 +1,165 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* project_task_time_range
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 11.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-02-24 14:59+0000\n"
+"PO-Revision-Date: 2021-02-24 10:06-0500\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"X-Generator: Poedit 2.0.6\n"
+
+#. module: project_time_range
+#: model_terms:ir.ui.view,arch_db:project_time_range.portal_my_task_with_time_range
+msgid "<strong>Ideal:</strong>"
+msgstr "<strong>Idéal:</strong>"
+
+#. module: project_time_range
+#: model_terms:ir.ui.view,arch_db:project_time_range.portal_my_task_with_time_range
+msgid "<strong>Max:</strong>"
+msgstr "<strong>Max:</strong>"
+
+#. module: project_time_range
+#: model_terms:ir.ui.view,arch_db:project_time_range.portal_my_task_with_time_range
+msgid "<strong>Min:</strong>"
+msgstr "<strong>Min:</strong>"
+
+#. module: project_time_range
+#: model:ir.model.fields,field_description:project_time_range.field_project_project__consumed_hours
+msgid "Consumed Hours"
+msgstr "Heures consommées"
+
+#. module: project_time_range
+#: code:addons/project_time_range/models/project_task.py:51
+#, python-format
+msgid "Hours must be positive numbers."
+msgstr "Les heures doivent être des nombres positives."
+
+#. module: project_time_range
+#: model_terms:ir.ui.view,arch_db:project_time_range.project_form
+#: model_terms:ir.ui.view,arch_db:project_time_range.project_list
+#: model_terms:ir.ui.view,arch_db:project_time_range.project_task_form
+#: model_terms:ir.ui.view,arch_db:project_time_range.project_task_list
+msgid "Ideal"
+msgstr "Idéal"
+
+#. module: project_time_range
+#: model:ir.model.fields,field_description:project_time_range.field_project_project__planned_hours
+#: model:ir.model.fields,field_description:project_time_range.field_project_task__planned_hours
+msgid "Ideal Planned Hours"
+msgstr "Heures planifiées idéal"
+
+#. module: project_time_range
+#: model:ir.model.fields,help:project_time_range.field_project_task__planned_hours
+msgid ""
+"It is the time planned to achieve the task. If this document has sub-tasks, "
+"it means the time needed to achieve this tasks and its childs."
+msgstr ""
+
+#. module: project_time_range
+#: model_terms:ir.ui.view,arch_db:project_time_range.project_form
+msgid "Management"
+msgstr "Pilotage"
+
+#. module: project_time_range
+#: model_terms:ir.ui.view,arch_db:project_time_range.project_form
+#: model_terms:ir.ui.view,arch_db:project_time_range.project_list
+#: model_terms:ir.ui.view,arch_db:project_time_range.project_task_form
+#: model_terms:ir.ui.view,arch_db:project_time_range.project_task_list
+msgid "Max"
+msgstr "Max"
+
+#. module: project_time_range
+#: code:addons/project_time_range/models/project_task.py:38
+#, python-format
+msgid "Max Hours must be greater than the planned hours."
+msgstr "Les heures Max doivent être supérieures aux heures idéales."
+
+#. module: project_time_range
+#: model:ir.model.fields,field_description:project_time_range.field_project_project__max_hours
+#: model:ir.model.fields,field_description:project_time_range.field_project_task__max_hours
+msgid "Maximum Planned Hours"
+msgstr "Heures maximales plannifiées"
+
+#. module: project_time_range
+#: model_terms:ir.ui.view,arch_db:project_time_range.project_form
+#: model_terms:ir.ui.view,arch_db:project_time_range.project_list
+#: model_terms:ir.ui.view,arch_db:project_time_range.project_task_form
+#: model_terms:ir.ui.view,arch_db:project_time_range.project_task_list
+msgid "Min"
+msgstr "Min"
+
+#. module: project_time_range
+#: code:addons/project_time_range/models/project_task.py:45
+#, python-format
+msgid "Min Hours must be lesser than the planned hours."
+msgstr "Les heures Min doivent être inférieures aux heures idéales."
+
+#. module: project_time_range
+#: model:ir.model.fields,field_description:project_time_range.field_project_project__min_hours
+#: model:ir.model.fields,field_description:project_time_range.field_project_task__min_hours
+msgid "Minimum Planned Hours"
+msgstr "Heures minimales plannifiées"
+
+#. module: project_time_range
+#: model_terms:ir.ui.view,arch_db:project_time_range.project_task_form
+msgid "Planned Hours"
+msgstr "Heures planifiées idéales"
+
+#. module: project_time_range
+#: model:ir.model,name:project_time_range.model_project_project
+msgid "Project"
+msgstr "Projet"
+
+#. module: project_time_range
+#: model_terms:ir.ui.view,arch_db:project_time_range.project_form
+#: model_terms:ir.ui.view,arch_db:project_time_range.project_list
+msgid "Remaining"
+msgstr "Restant"
+
+#. module: project_time_range
+#: model:ir.model.fields,field_description:project_time_range.field_project_project__remaining_hours
+msgid "Remaining Hours"
+msgstr "Heures restantes"
+
+#. module: project_time_range
+#: model_terms:ir.ui.view,arch_db:project_time_range.project_form
+#: model_terms:ir.ui.view,arch_db:project_time_range.project_list
+msgid "Spent"
+msgstr "Consommé"
+
+#. module: project_time_range
+#: model_terms:ir.ui.view,arch_db:project_time_range.project_task_form
+msgid "Sub-tasks Hours"
+msgstr "Heures planifiées des sous-tâches"
+
+#. module: project_time_range
+#: model:ir.model.fields,field_description:project_time_range.field_project_task__subtask_max_hours
+msgid "Sub-tasks Max"
+msgstr "Heures maximales des sous-tâches"
+
+#. module: project_time_range
+#: model:ir.model.fields,field_description:project_time_range.field_project_task__subtask_min_hours
+msgid "Sub-tasks Min"
+msgstr "Heures minimales des sous-tâches"
+
+#. module: project_time_range
+#: model:ir.model,name:project_time_range.model_project_task
+msgid "Task"
+msgstr "Tâche"
+
+#. module: project_time_range
+#: model_terms:ir.ui.view,arch_db:project_time_range.project_form
+msgid "Time Range"
+msgstr "Intervalle de temps"
+
+#~ msgid "Initially Planned Hours"
+#~ msgstr "Heures planifiées initialement"

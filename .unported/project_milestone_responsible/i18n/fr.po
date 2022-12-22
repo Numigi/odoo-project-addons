@@ -1,0 +1,27 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	*project_role_milestone
+#
+# Translators:
+# Abdellatif Benzbiria <abdellatif.Benzbiria@numigi.com>,2022
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-08-30\n"
+"PO-Revision-Date:  2022-08-30\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+
+#. module: project_milestone_responsible
+#: model:ir.model.fields,field_description:project_milestone_responsible.field_project_milestone__user_id
+#: model_terms:ir.ui.view,arch_db:project_milestone_responsible.project_milestone_view_search
+msgid "Responsible"
+msgstr "Responsable"
+

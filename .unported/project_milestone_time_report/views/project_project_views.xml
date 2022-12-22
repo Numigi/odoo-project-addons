@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="milestone_time_report_action" model="ir.actions.client">
+        <field name="name">Milestone time report</field>
+        <field name="tag">project_milestone_time_report</field>
+    </record>
+
+    <record id="project_form_with_smart_button" model="ir.ui.view">
+        <field name="name">Project Form: Milestone time report</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.edit_project"/>
+        <field name="arch" type="xml">
+            <button name="toggle_active" position="before">
+                <button class="oe_stat_button"
+                        type="action"
+                        name="%(milestone_time_report_action)d"
+                        icon="fa-usd"
+                        string="Milestone time report"
+                        widget="statinfo"
+                        />
+            </button>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="action_view_task_templates_from_project" model="ir.actions.act_window">
+        <field name="name">Task Templates</field>
+        <field name="res_model">project.task</field>
+        <field name="view_mode">tree,form,pivot,graph</field>
+        <field name="context">{
+            'search_default_project_id': [active_id],
+            'search_default_filter_is_template': True,
+            'default_project_id': active_id,
+            'default_is_template': True,
+        }</field>
+    </record>
+
+    <record id="project_form_with_task_template_smart_button" model="ir.ui.view">
+        <field name="name">Project Form: add task template smart button</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.edit_project"/>
+        <field name="arch" type="xml">
+            <button name="%(project.act_project_project_2_project_task_all)d" position="after">
+                <button class="oe_stat_button" type="action" name="%(action_view_task_templates_from_project)d" icon="fa-tasks">
+                    <field string="Templates" name="task_template_count" widget="statinfo"/>
+                </button>
+            </button>
+        </field>
+    </record>
+
+    <record id="action_open_task_template_add_wizard" model="ir.actions.act_window">
+        <field name="name">Add Task Templates</field>
+        <field name="res_model">project.task.template.add</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="context">{
+            'default_project_id': active_id,
+            'default_is_template': True,
+        }</field>
+    </record>
+
+    <record id="project_form_with_task_template_add_button" model="ir.ui.view">
+        <field name="name">Project Form: add button to add task templates</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.edit_project"/>
+        <field name="arch" type="xml">
+            <button name="%(portal.portal_share_action)d" position="after">
+                <button name="%(action_open_task_template_add_wizard)d" type="action" string="Add Task Templates"/>
+            </button>
+        </field>
+    </record>
+
+    <record id="project_form_with_convert_template_to_task_button" model="ir.ui.view">
+        <field name="name">Project Form: add button to convert templates to tasks</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.edit_project"/>
+        <field name="arch" type="xml">
+            <button name="%(portal.portal_share_action)d" position="after">
+                <button name="convert_templates_to_tasks" type="object" string="Convert Templates To Tasks"/>
+            </button>
+        </field>
+    </record>
+
+    <record id="project_form_with_is_template" model="ir.ui.view">
+        <field name="name">Project Form: add field is_template</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.edit_project"/>
+        <field name="arch" type="xml">
+            <form position="inside">
+                <!-- Invisible for now because not implemented. -->
+                <field name="is_template" invisible="1"/>
+            </form>
+        </field>
+    </record>
+
+</odoo>

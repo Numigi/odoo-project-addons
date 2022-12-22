@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="project_form" model="ir.ui.view">
+        <field name="name">Project: Add Min / Ideal / Max hours</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.edit_project"/>
+        <field name="arch" type="xml">
+            <page name="settings" position="after">
+                <page name="management" string="Management">
+                    <group>
+                        <group name="time_range" string="Time Range">
+                            <field name="min_hours" string="Min" widget="float_time"/>
+                            <field name="planned_hours" string="Ideal" widget="float_time"/>
+                            <field name="max_hours" string="Max" widget="float_time"/>
+                            <field name="consumed_hours" string="Spent" widget="float_time"/>
+                            <field name="remaining_hours" string="Remaining" widget="float_time"/>
+                        </group>
+                    </group>
+                </page>
+            </page>
+        </field>
+    </record>
+
+    <record id="project_list" model="ir.ui.view">
+        <field name="name">Project: Add Min / Ideal / Max hours</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.view_project"/>
+        <field name="arch" type="xml">
+            <tree position="inside">
+                <field name="min_hours" string="Min" sum="Min" widget="float_time"/>
+                <field name="planned_hours" string="Ideal" sum="Ideal" widget="float_time"/>
+                <field name="max_hours" string="Max" sum="Max" widget="float_time"/>
+                <field name="consumed_hours" string="Spent" widget="float_time"/>
+                <field name="remaining_hours" string="Remaining" widget="float_time"/>
+            </tree>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates>
+
+    <t t-name="projectReport.printButton">
+        <button type="button" class="btn btn-primary btn-sm project_report__control_panel_button">PRINT</button>
+    </t>
+
+</templates>

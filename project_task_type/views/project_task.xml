@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="view_task_form_with_task_type" model="ir.ui.view">
+        <field name="name">Task Form With Task Type</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_form2"/>
+        <field name="arch" type="xml">
+            <field name="user_id" position="after">
+                <field name="task_type_id"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="view_task_search_form_with_task_type_id" model="ir.ui.view">
+        <field name="name">Search Task By Task Type</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_search_form"/>
+        <field name="arch" type="xml">
+            <field name="stage_id" position="after">
+                <field name="task_type_id"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="view_task_search_form_with_group_by_task_type_id" model="ir.ui.view">
+        <field name="name">Group Tasks By Task Type</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_search_form"/>
+        <field name="arch" type="xml">
+            <group position="inside">
+                <filter string="Task Type" name="group_by_task_type_id" context="{'group_by':'task_type_id'}"/>
+            </group>
+        </field>
+    </record>
+
+</odoo>

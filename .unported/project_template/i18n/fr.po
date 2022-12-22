@@ -1,0 +1,166 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* project_template
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-10-31 18:47+0000\n"
+"PO-Revision-Date: 2019-10-31 14:53-0400\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"Language: fr\n"
+"X-Generator: Poedit 2.0.6\n"
+
+#. module: project_template
+#: model:ir.actions.act_window,name:project_template.action_open_task_template_add_wizard
+#: model_terms:ir.ui.view,arch_db:project_template.project_form_with_task_template_add_button
+#: model_terms:ir.ui.view,arch_db:project_template.project_task_template_add_form
+msgid "Add Task Templates"
+msgstr "Ajouter modèles de tâches"
+
+#. module: project_template
+#: model_terms:ir.ui.view,arch_db:project_template.project_task_template_add_form
+msgid "Cancel"
+msgstr "Annuler"
+
+#. module: project_template
+#: model_terms:ir.ui.view,arch_db:project_template.project_form_with_convert_template_to_task_button
+msgid "Convert Templates To Tasks"
+msgstr "Convertir modèles en tâches"
+
+#. module: project_template
+#: model:ir.model.fields,field_description:project_template.field_project_task_template_add__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: project_template
+#: model:ir.model.fields,field_description:project_template.field_project_task_template_add__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: project_template
+#: model:ir.model.fields,field_description:project_template.field_project_task_template_add__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: project_template
+#: model:ir.model.fields,field_description:project_template.field_project_task__effective_task_ids
+msgid "Generated Tasks"
+msgstr "Générer tâches"
+
+#. module: project_template
+#: model:ir.model.fields,field_description:project_template.field_project_task_template_add__id
+msgid "ID"
+msgstr ""
+
+#. module: project_template
+#: model:ir.model.fields,field_description:project_template.field_project_project__is_template
+#: model:ir.model.fields,field_description:project_template.field_project_task__is_template
+msgid "Is Template"
+msgstr "Est un modèle"
+
+#. module: project_template
+#: model:ir.model.fields,field_description:project_template.field_project_task_template_add____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: project_template
+#: model:ir.model.fields,field_description:project_template.field_project_task_template_add__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: project_template
+#: model:ir.model.fields,field_description:project_template.field_project_task_template_add__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: project_template
+#: sql_constraint:project.task:0
+msgid "Only one task can be generated per template."
+msgstr "Une seule tâche peut être générée par modèle de tâche."
+
+#. module: project_template
+#: model:ir.model.fields,field_description:project_template.field_project_task__origin_template_id
+msgid "Origin Template"
+msgstr "Modèle de tâche d'origine"
+
+#. module: project_template
+#: model:ir.model,name:project_template.model_project_project
+#: model:ir.model.fields,field_description:project_template.field_project_task_template_add__project_id
+msgid "Project"
+msgstr "Projet"
+
+#. module: project_template
+#: model:ir.model.fields,field_description:project_template.field_project_task__child_ids
+msgid "Sub-tasks"
+msgstr "Sous-tâches"
+
+#. module: project_template
+#: model:ir.model,name:project_template.model_project_task
+#: selection:project.task,template_or_task:0
+msgid "Task"
+msgstr "Tâche"
+
+#. module: project_template
+#: model:ir.model.fields,field_description:project_template.field_project_task_template_add__task_template_ids
+msgid "Task Template"
+msgstr "Modèle de tâche"
+
+#. module: project_template
+#: model:ir.model.fields,field_description:project_template.field_project_project__task_template_count
+msgid "Task Template Count"
+msgstr "Nombre de modèles de tâches"
+
+#. module: project_template
+#: model:ir.model,name:project_template.model_project_task_template_add
+msgid "Task Template Selection Wizard"
+msgstr "Assistant de sélection de modèles de tâches"
+
+#. module: project_template
+#: model:ir.actions.act_window,name:project_template.action_view_task_templates_from_project
+msgid "Task Templates"
+msgstr "Modèles de tâches"
+
+#. module: project_template
+#: model_terms:ir.ui.view,arch_db:project_template.project_task_template_add_form
+#: model_terms:ir.ui.view,arch_db:project_template.task_search_with_task_template_filters
+msgid "Tasks"
+msgstr "Tâches"
+
+#. module: project_template
+#: selection:project.task,template_or_task:0
+msgid "Template"
+msgstr "Modèle"
+
+#. module: project_template
+#: model:ir.model.fields,field_description:project_template.field_project_task__template_or_task
+msgid "Template / Task"
+msgstr "Modèle / Tâche"
+
+#. module: project_template
+#: model_terms:ir.ui.view,arch_db:project_template.project_form_with_task_template_smart_button
+#: model_terms:ir.ui.view,arch_db:project_template.task_search_with_task_template_filters
+msgid "Templates"
+msgstr "Modèles"
+
+#. module: project_template
+#: code:addons/project_template/wizard/project_task_template_add.py:24
+#, python-format
+msgid "The selected task {} is not a template."
+msgstr "La tâche sélectionnée ({}) n'est pas un modèle."
+
+#. module: project_template
+#: model_terms:ir.ui.view,arch_db:project_template.project_task_template_add_form
+msgid "Validate"
+msgstr "Valider"
+
+#. module: project_template
+#: model_terms:ir.ui.view,arch_db:project_template.task_form_with_is_template
+msgid "You are currently viewing a task template. Some fields are therefore hidden."
+msgstr "Vous visualisez présentement un modèle de tâche. Certains champs sont cachés pour cette raison."
