@@ -53,6 +53,7 @@
         "project_milestone_time_pivot",
         "project_milestone_timeline",
         "project_milestone_timeline_color",
+        "project_milestone_timeline_dynamic",
         "project_milestone_week_duration",
         "project_no_quick_create",
         "project_outsourcing",
