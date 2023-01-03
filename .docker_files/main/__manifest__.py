@@ -51,6 +51,7 @@
         "project_milestone_type",
         "project_milestone_time_kpi",
         "project_milestone_time_pivot",
+        "project_milestone_time_progress",
         "project_milestone_timeline",
         "project_milestone_timeline_color",
         "project_milestone_week_duration",
