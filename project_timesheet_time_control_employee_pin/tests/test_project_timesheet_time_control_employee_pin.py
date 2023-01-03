@@ -11,6 +11,7 @@ class TestProjectTimesheetTimeControlEmployeePin(common.TransactionCase):
         self.employee = self.env["hr.employee"].create({
             "name": "Somebody else",
             "pin": 12345,
+            "user_id": 2,
         })
         self.project = self.env['project.project'].create({
             'name': 'Test project',
