@@ -38,6 +38,7 @@ COPY portal_project_timesheet_conditional  /mnt/extra-addons/portal_project_time
 COPY project_material  /mnt/extra-addons/project_material
 COPY project_material_direct  /mnt/extra-addons/project_material_direct
 COPY project_material_progress  /mnt/extra-addons/project_material_progress
+COPY project_milestone_time_progress_timeline  /mnt/extra-addons/project_milestone_time_progress_timeline
 COPY project_material_quantity_filters  /mnt/extra-addons/project_material_quantity_filters
 COPY project_milestone_dependency  /mnt/extra-addons/project_milestone_dependency
 COPY project_milestone_enhanced  /mnt/extra-addons/project_milestone_enhanced
