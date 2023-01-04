@@ -24,14 +24,16 @@ class HrTimesheetSwitch(models.TransientModel):
         self.read(_fields)
         values = self._convert_to_write(self._cache)
         # check if user selected a valid employee PIN
-        if values.get('pin'):
+        if not values.get('pin'):
+            employee = None
+        else:
             employee = self.env['hr.employee'].search(
                 [('pin', '=', values.get('pin'))], limit=1)
-            values['employee_id'] = employee.id if employee else False
-            if not employee or not employee.user_id:
-                raise UserError(_(
-                    "Please choose an existing employee PIN and ensure that "
-                    "the selected employee is related to an existing user."))
+        values['employee_id'] = employee.id if employee else None
+        if not employee or not employee.user_id:
+            raise UserError(_(
+                "Please choose an existing employee PIN and ensure that "
+                "the selected employee is related to an existing user."))
         # Stop old timer
         self.with_context(
             resuming_lines=self.ids,
