@@ -6,22 +6,21 @@
         <field name="model">project.milestone</field>
         <field name="inherit_id" ref="project_milestone_timeline.project_milestone_timeline_form_view"/>
         <field name="arch" type="xml">
-            <xpath expr="//timeline" position="replace">
-                <timeline date_start="start_date"
-                      date_stop="target_date"
-                      default_group_by="project_id"
-                      event_open_popup="true"
-                >
+            <xpath expr="//timeline" position="inside">
                     <field name="progress"/>
                     <templates>
                         <t t-name="timeline-item">
+                            <div class="o_project_milestone_name">
+                                <span name="display_name">
+                                    <t t-esc="record.display_name"/>
+                                </span>
+                            </div>
                             <div class="o_project_milestone_time_progress">
                                 <div t-att-class="record.progress > 100 and 'danger'"
                                      t-attf-style="width: #{record.progress}%"/>
                             </div>
                         </t>
                     </templates>
-                </timeline>
             </xpath>
         </field>
     </record>
