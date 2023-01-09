@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+    <record id="project_milestone_time_progress_timeline" model="ir.ui.view">
+        <field name="name">project_milestone_timeline</field>
+        <field name="model">project.milestone</field>
+        <field name="inherit_id" ref="project_milestone_timeline.project_milestone_timeline_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//timeline" position="replace">
+                <timeline date_start="start_date"
+                      date_stop="target_date"
+                      default_group_by="project_id"
+                      event_open_popup="true"
+                >
+                    <field name="progress"/>
+                    <templates>
+                        <t t-name="timeline-item">
+                            <div class="o_project_milestone_time_progress">
+                                <div t-att-class="record.progress > 100 and 'danger'"
+                                     t-attf-style="width: #{record.progress}%"/>
+                            </div>
+                        </t>
+                    </templates>
+                </timeline>
+            </xpath>
+        </field>
+    </record>
+</odoo>
