@@ -35,3 +35,14 @@ msgstr "NIP"
 #: model:ir.model.fields,field_description:project_timesheet_time_control_employee_pin.field_hr_timesheet_switch__running_timer_id
 msgid "Previous timer"
 msgstr "Minuteur précédent"
+
+#. module: project_timesheet_time_control_employee_pin
+#: model:ir.model.fields,help:project_timesheet_time_control_employee_pin.field_hr_timesheet_switch__running_timer_id
+msgid "This timer is running and will be stopped"
+msgstr "Ce minuteur est en cours d'exécution et sera arrêté"
+
+#. module: project_timesheet_time_control_employee_pin
+#: code:addons/project_timesheet_time_control_employee_pin/wizards/hr_timesheet_switch.py:35
+#, python-format
+msgid "Please enter an existing employee PIN."
+msgstr "Veuillez entrer un NIP d'employé existant."
