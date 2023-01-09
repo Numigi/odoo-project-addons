@@ -25,3 +25,8 @@ msgstr "Jalon du projet"
 msgid "Start Date"
 msgstr "Date de début"
 
+#. module: project_milestone_start_date
+#: code:addons/project_milestone_start_date/models/project_milestone.py:16
+#, python-format
+msgid "The milestone start date must be before the milestone end date."
+msgstr "La date de début du jalon doit être antérieure à la date de fin du jalon."
