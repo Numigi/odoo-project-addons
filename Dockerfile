@@ -52,6 +52,7 @@ COPY project_milestone_time_kpi  /mnt/extra-addons/project_milestone_time_kpi
 COPY project_milestone_time_pivot  /mnt/extra-addons/project_milestone_time_pivot
 COPY project_milestone_timeline  /mnt/extra-addons/project_milestone_timeline
 COPY project_milestone_timeline_color  /mnt/extra-addons/project_milestone_timeline_color
+COPY project_milestone_timeline_dynamic  /mnt/extra-addons/project_milestone_timeline_dynamic
 COPY project_milestone_week_duration  /mnt/extra-addons/project_milestone_week_duration
 COPY project_no_quick_create  /mnt/extra-addons/project_no_quick_create
 COPY project_outsourcing  /mnt/extra-addons/project_outsourcing
