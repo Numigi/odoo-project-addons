@@ -20,3 +20,9 @@ msgstr ""
 msgid "Project Milestone"
 msgstr "Jalon du projet"
 
+#. module: project_milestone_timeline_dynamic
+#: code:addons/project_milestone_timeline_dynamic/models/project_milestone.py:24
+#, python-format
+msgid "The milestone %s - %s is dependent on this milestone and has a %s end date."
+msgstr "Le jalon %s - %s est en dépendance de ce jalon et a une date de fin %s."
+
