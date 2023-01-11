@@ -18,6 +18,7 @@
     - project_role
     - project_stage_closed
     - project_timesheet_time_control
+    - project_risk
 
 - url: https://github.com/OCA/web
   branch: "12.0"
