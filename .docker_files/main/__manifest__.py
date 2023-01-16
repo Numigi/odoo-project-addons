@@ -92,6 +92,7 @@
         "project_time_range",
         "project_timesheet_analytic_update",
         "project_timesheet_time_control_employee_pin",
+        "project_timesheet_time_control_restricted_group",
         "project_type",
         "project_wip",
         "project_wip_material",
