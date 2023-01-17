@@ -1,5 +1,5 @@
 .o_project_milestone_time_progress {
-  height: 7px;
+  height: 15x;
   background-color: #FFF;
   margin-left: -5px;
   margin-bottom: -5px;
@@ -8,6 +8,7 @@
   > div {
     height: 100%;
     max-width: 100%;
+    font-size: 10px;
     background: theme-color('success');
     &.danger {
       background: theme-color('danger');

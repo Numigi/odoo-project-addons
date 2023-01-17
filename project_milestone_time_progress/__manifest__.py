@@ -17,4 +17,6 @@
         "views/project_milestone.xml",
     ],
     "installable": True,
+    "post_init_hook": "recompute_progress_hook",
+    "uninstall_hook": "recompute_progress_hook",
 }

@@ -25,5 +25,3 @@ class ProjectMilestone(models.Model):
                 show_info_message = True
             record.progress = progress
             record.show_progress_info_message = show_info_message
-
-
