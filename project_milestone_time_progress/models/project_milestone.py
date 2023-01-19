@@ -20,7 +20,8 @@ class ProjectMilestone(models.Model):
         show_info_message = False
         for record in self:
             if record.estimated_hours:
-                progress = (record.total_hours / record.estimated_hours) * 100
+                progress = round(
+                    (record.total_hours / record.estimated_hours) * 100, 2)
             else:
                 show_info_message = True
             record.progress = progress

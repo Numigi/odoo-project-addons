@@ -18,9 +18,7 @@
                             <div class="o_project_milestone_time_progress">
                                 <div t-att-class="record.progress > 100 and 'danger'"
                                      t-attf-style="width: #{record.progress}%">
-                                    <span name="progress">
-                                        <t t-esc="record.progress"/>%%
-                                    </span>
+                                    &amp;nbsp;<t t-esc="record.progress"/>%%
                                 </div>
                             </div>
                         </t>
