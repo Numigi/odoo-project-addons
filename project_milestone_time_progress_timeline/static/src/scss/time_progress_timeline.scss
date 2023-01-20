@@ -1,5 +1,5 @@
 .o_project_milestone_time_progress {
-  height: 15x;
+  height: 16px;
   background-color: #FFF;
   margin-left: -5px;
   margin-bottom: -5px;
@@ -9,9 +9,14 @@
     height: 100%;
     max-width: 100%;
     font-size: 10px;
-    background: theme-color('success');
+    background-color: #5D6A7F;
+    color: white;
+    font-weight: bold;
     &.danger {
       background: theme-color('danger');
     }
+  }
+  > div:hover {
+    color: black;
   }
 }
