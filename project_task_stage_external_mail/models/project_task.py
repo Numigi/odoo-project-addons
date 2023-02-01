@@ -11,15 +11,19 @@ class ProjectTaskTypeExternalMail(models.Model):
     external_mail = fields.Boolean()
 
 
-class ProjectTaskDiscussion(models.Model):
+class ProjectTask(models.Model):
 
     _inherit = 'project.task'
 
-    def _track_template(self, tracking):
+
+
+    def _track_template(self, changes):
         """Set the publication channel to discussion."""
-        res = super()._track_template(tracking)
+        res = super()._track_template(changes)
         task = self[0]
         task_type = task.stage_id
         if 'stage_id' in res and task_type.external_mail:
             res['stage_id'][-1]['subtype_id'] = self.env.ref('mail.mt_comment').id
         return res
+
+
