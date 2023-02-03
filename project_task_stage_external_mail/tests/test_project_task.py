@@ -25,17 +25,16 @@ class TestProjectTask(common.SavepointCase):
         cls.external_partner = cls.env['res.partner'].create({
             'name': 'tpartner',
             'email': 'tpartner@example.com',
-
         })
-
         cls.task.message_subscribe([cls.external_partner.id])
 
-
     def _get_sent_message(self):
-        return self.task.message_ids.filtered(lambda m: 'Task Open: ' in (m.subject or ''))
+        message = self.task.message_ids.filtered(lambda m: 'Task Open: ' in (m.subject or ''))
+        return message
 
     def _get_message_recipients(self):
         message = self._get_sent_message()
+        # The use of self.task._notify_thread(message) create the notification
         return message.mapped('notification_ids.res_partner_id')
 
     def test_givenExternalMailIsUnchecked_thenInternalNoteSent(self):
@@ -43,12 +42,14 @@ class TestProjectTask(common.SavepointCase):
         assert self._get_sent_message().subtype_id == self.discussion_type
 
     def test_givenExternalMailIsUnchecked_thenPartnerNotInRecipients(self):
+        # This test is OK only because of the empty resukt of _get_message_recipients
+        #TODO create a notification mail when subscribe a follower and check external_mail = False
         self.stage.external_mail = False
         assert self.external_partner not in self._get_message_recipients()
 
     def test_givenExternalMailIsChecked_thenMessageSent(self):
         assert self._get_sent_message().subtype_id == self.discussion_type
 
-    # TODO: Port this test method
+    # #TODO: Port this test method
     # def test_givenExternalMailIsChecked_thenPartnerInRecipients(self):
     #     assert self.external_partner in self._get_message_recipients()
