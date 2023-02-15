@@ -19,7 +19,7 @@
         # "project_analytic_group",
          "project_chatter",
          "project_closed",
-        # "project_cost_smart_button",
+         "project_cost_smart_button",
          "project_default_task_stage",
         # "project_enhanced",
         # "project_estimation",

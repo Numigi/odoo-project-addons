@@ -19,7 +19,7 @@ USER odoo
 #COPY project_analytic_group  /mnt/extra-addons/project_analytic_group
 COPY project_chatter  /mnt/extra-addons/project_chatter
 COPY project_closed  /mnt/extra-addons/project_closed
-#COPY project_cost_smart_button  /mnt/extra-addons/project_cost_smart_button
+COPY project_cost_smart_button  /mnt/extra-addons/project_cost_smart_button
 COPY project_default_task_stage  /mnt/extra-addons/project_default_task_stage
 #COPY project_enhanced  /mnt/extra-addons/project_enhanced
 #COPY project_estimation  /mnt/extra-addons/project_estimation
