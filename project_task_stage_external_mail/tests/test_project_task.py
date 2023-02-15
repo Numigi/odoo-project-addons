@@ -3,8 +3,6 @@
 
 from odoo.tests import common
 
-from odoo.tests import Form
-
 
 class TestProjectTask(common.SavepointCase):
 
