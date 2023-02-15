@@ -1,6 +1,7 @@
 - url: https://github.com/OCA/project
   branch: "14.0"
   includes:
+    - project_category
     - project_milestone
     - project_stage_closed
     - project_timesheet_time_control

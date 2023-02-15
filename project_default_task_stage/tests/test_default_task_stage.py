@@ -19,6 +19,6 @@ class TestDefaultTaskStage(common.SavepointCase):
         cls.project = cls.env['project.project'].create({'name': 'My Project'})
 
     def test_onchange_project_type__task_stages_set(self):
-        self.project.project_type_id = self.project_type
+        self.project.type_id = self.project_type
         self.project._on_change_project_type_id__set_default_task_stages()
         assert self.project.type_ids == self.stage_1 | self.stage_2

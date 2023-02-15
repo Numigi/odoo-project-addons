@@ -6,12 +6,9 @@ from odoo import fields, models
 
 class ProjectType(models.Model):
 
-    _name = 'project.type'
-    _description = 'Project Type'
+    _inherit = 'project.type'
     _order = 'sequence'
 
-    name = fields.Char(required=True, translate=True)
     sequence = fields.Integer()
-    description = fields.Text(translate=True)
     active = fields.Boolean(default=True)
     color = fields.Integer(string='Color Index')
