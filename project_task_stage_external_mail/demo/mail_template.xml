@@ -8,13 +8,13 @@
             <field name="subject">Task Open: ${object.display_name}</field>
             <field name="use_default_to" eval="True"/>
             <field name="body_html" type="html">
-<div>
-    Hello,
-</div>
-<div>
-    this is an automated message to inform you that a ticket was open in your project.
-</div>
-        </field>
+                <div>
+                    Hello,
+                </div>
+                <div>
+                    this is an automated message to inform you that a ticket was open in your project.
+                </div>
+            </field>
             <field name="auto_delete" eval="True"/>
         </record>
 
