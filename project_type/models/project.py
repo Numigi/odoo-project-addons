@@ -5,10 +5,6 @@ from odoo import fields, models
 
 
 class ProjectWithType(models.Model):
-    """Add the field project_type_id on projects."""
-
     _inherit = 'project.project'
 
-    project_type_id = fields.Many2one(
-        'project.type', 'Type', ondelete='restrict', index=True,
-        track_visibility='onchange')
+    type_id = fields.Many2one(Tracking=True)

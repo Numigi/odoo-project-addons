@@ -10,11 +10,9 @@
     "license": "LGPL-3",
     "category": "Project",
     "summary": "Add a field for typing projects.",
-    "depends": ["project"],
+    "depends": ["project", "project_category"],
     "data": [
-        "views/project.xml",
         "views/project_type.xml",
-        "security/ir.model.access.csv",
     ],
     "installable": True,
 }
