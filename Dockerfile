@@ -77,7 +77,7 @@ COPY project_task_link  /mnt/extra-addons/project_task_link
 COPY project_task_reference  /mnt/extra-addons/project_task_reference
 #COPY project_task_resource_type  /mnt/extra-addons/project_task_resource_type
 #COPY project_task_search_parent_subtask  /mnt/extra-addons/project_task_search_parent_subtask
-#COPY project_task_stage_external_mail  /mnt/extra-addons/project_task_stage_external_mail
+COPY project_task_stage_external_mail  /mnt/extra-addons/project_task_stage_external_mail
 #COPY project_task_subtask_same_project  /mnt/extra-addons/project_task_subtask_same_project
 COPY project_task_type  /mnt/extra-addons/project_task_type
 #COPY project_template  /mnt/extra-addons/project_template
