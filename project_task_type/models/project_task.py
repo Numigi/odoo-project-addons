@@ -11,4 +11,4 @@ class ProjectTaskWithType(models.Model):
 
     task_type_id = fields.Many2one(
         'task.type', 'Type', ondelete='restrict', index=True,
-        Tracking=True)
+        tracking=True)

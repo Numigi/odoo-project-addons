@@ -11,4 +11,4 @@ class ProjectTaskWithPlannedDate(models.Model):
 
     date_planned = fields.Date(
         'Planned Date', index=True, copy=False,
-        Tracking=True)
+        tracking=True)
