@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <template id="portal_my_task_with_timesheets_hidden" inherit_id="hr_timesheet.portal_my_task">
+        <div  t-if="timesheets" position="replace"></div>
+        <t t-if="timesheets_by_subtask" position="replace"></t>
+    </template>
+
+</odoo>
