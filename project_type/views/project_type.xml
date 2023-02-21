@@ -1,29 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
-
-    <record id="view_project_type_form" model="ir.ui.view">
+    <record id="project_type_form" model="ir.ui.view">
         <field name="name">Project Type Form</field>
         <field name="model">project.type</field>
+        <field name="inherit_id" ref="project_category.project_type_form"/>
         <field name="arch" type="xml">
-            <form string="Project Type">
-                <sheet>
-                    <div class="oe_button_box" name="button_box">
-                        <button name="toggle_active" type="object" class="oe_stat_button" icon="fa-archive">
-                            <field name="active" widget="boolean_button" options='{"terminology": "archive"}'/>
-                        </button>
-                    </div>
-                    <div class="oe_title">
-                        <h1>
-                            <field name="name"/>
-                        </h1>
-                    </div>
-                    <group>
-                        <field name="description"/>
-                        <field name="sequence"/>
-                    </group>
-                    <notebook/>
-                </sheet>
-            </form>
+            <xpath expr="//div[hasclass('oe_title')]" position="before">
+                <div class="oe_button_box" name="button_box">
+                    <button name="toggle_active" type="object" class="oe_stat_button" icon="fa-archive">
+                        <field name="active" widget="boolean_button" options='{"terminology": "archive"}'/>
+                    </button>
+                </div>
+            </xpath>
+            <field name="parent_id" position="after">
+                <field name="sequence"/>
+            </field>
         </field>
     </record>
 
@@ -33,28 +24,10 @@
         <field name="arch" type="xml">
             <tree string="Project Types">
                 <field name="sequence" widget="handle"/>
-                <field name="name"/>
-                <field name="active"/>
+                <field name="complete_name"/>
+                <field name="active" invisible="1"/>
             </tree>
         </field>
     </record>
-
-    <record id="view_project_type_search" model="ir.ui.view">
-        <field name="name">Project Type Search</field>
-        <field name="model">project.type</field>
-        <field name="arch" type="xml">
-            <search string="Project Types">
-                <field name="name" string="Project Types"/>
-            </search>
-        </field>
-    </record>
-
-    <record id="project_type_action" model="ir.actions.act_window">
-        <field name="name">Project Types</field>
-        <field name="res_model">project.type</field>
-        <field name="view_mode">tree,form</field>
-    </record>
-
-    <menuitem action="project_type_action" id="project_type_menu" parent="project.menu_project_config"/>
 
 </odoo>
