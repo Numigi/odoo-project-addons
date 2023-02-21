@@ -8,7 +8,7 @@ class Project(models.Model):
 
     _inherit = 'project.project'
 
-    @api.onchange('project_type_id')
+    @api.onchange('type_id')
     def _on_change_project_type_id__set_default_task_stages(self):
-        if self.project_type_id:
-            self.type_ids = self.project_type_id.default_task_stage_ids
+        if self.type_id:
+            self.type_ids = self.type_id.default_task_stage_ids
