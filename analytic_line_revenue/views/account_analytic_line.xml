@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="analytic_line_form_with_revenue" model="ir.ui.view">
+        <field name="name">Analytic Line Form: add field revenue</field>
+        <field name="model">account.analytic.line</field>
+        <field name="inherit_id" ref="analytic.view_account_analytic_line_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='amount']/.." position="inside">
+                <field name="revenue"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="analytic_line_list_with_revenue" model="ir.ui.view">
+        <field name="name">Analytic Line List: add field revenue</field>
+        <field name="model">account.analytic.line</field>
+        <field name="inherit_id" ref="analytic.view_account_analytic_line_tree"/>
+        <field name="arch" type="xml">
+            <tree position="inside">
+                <field name="revenue"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="analytic_line_search_with_revenue" model="ir.ui.view">
+        <field name="name">Analytic Line Search: add revenues and costs filters</field>
+        <field name="model">account.analytic.line</field>
+        <field name="inherit_id" ref="analytic.view_account_analytic_line_filter"/>
+        <field name="arch" type="xml">
+            <group position="before">
+                <separator/>
+                <filter string="Costs" domain="[('revenue', '=', False)]" name="costs"/>
+                <filter string="Revenues" domain="[('revenue', '=', True)]" name="revenues"/>
+            </group>
+        </field>
+    </record>
+
+</odoo>

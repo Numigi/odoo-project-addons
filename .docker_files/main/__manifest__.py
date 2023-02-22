@@ -14,8 +14,8 @@
         # "stock_account",  # required for testing project_wip
         # "purchase",  # required for testing project_wip_material
         # "account_analytic_enhanced",  # required for project_enhanced
-         "analytic_line_employee",
-        # "analytic_line_revenue",
+        "analytic_line_revenue",
+        "analytic_line_employee",
         # "project_analytic_group",
          "project_chatter",
          "project_closed",
