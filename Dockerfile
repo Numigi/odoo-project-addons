@@ -19,7 +19,7 @@ COPY analytic_line_employee  /mnt/extra-addons/analytic_line_employee
 #COPY project_analytic_group  /mnt/extra-addons/project_analytic_group
 COPY project_chatter  /mnt/extra-addons/project_chatter
 COPY project_closed  /mnt/extra-addons/project_closed
-#COPY project_cost_smart_button  /mnt/extra-addons/project_cost_smart_button
+COPY project_cost_smart_button  /mnt/extra-addons/project_cost_smart_button
 COPY project_default_task_stage  /mnt/extra-addons/project_default_task_stage
 #COPY project_enhanced  /mnt/extra-addons/project_enhanced
 #COPY project_estimation  /mnt/extra-addons/project_estimation
@@ -77,7 +77,7 @@ COPY project_task_link  /mnt/extra-addons/project_task_link
 COPY project_task_reference  /mnt/extra-addons/project_task_reference
 #COPY project_task_resource_type  /mnt/extra-addons/project_task_resource_type
 #COPY project_task_search_parent_subtask  /mnt/extra-addons/project_task_search_parent_subtask
-#COPY project_task_stage_external_mail  /mnt/extra-addons/project_task_stage_external_mail
+COPY project_task_stage_external_mail  /mnt/extra-addons/project_task_stage_external_mail
 #COPY project_task_subtask_same_project  /mnt/extra-addons/project_task_subtask_same_project
 COPY project_task_type  /mnt/extra-addons/project_task_type
 #COPY project_template  /mnt/extra-addons/project_template

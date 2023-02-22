@@ -30,4 +30,4 @@ msgstr "Planifiée aujourd'hui"
 #. module: project_task_date_planned
 #: model:ir.model,name:project_task_date_planned.model_project_task
 msgid "Task"
-msgstr ""
+msgstr "Tâches"
