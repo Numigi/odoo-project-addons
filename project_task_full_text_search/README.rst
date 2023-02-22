@@ -10,8 +10,8 @@ The returned tasks are tasks for which the title / description contain every giv
 
 Usage
 -----
-* Go to Projects / Search / Tasks
-* In the search bar, type something and click on `Search Full Text for: ...`.
+* Go to Projects / Tasks
+* In the search bar, type something and click on ``Search Full Text for: ...``.
 
 Accents and Upper Cases
 -----------------------
@@ -66,3 +66,7 @@ That's it, your task are now indexed under the new language.
 Contributors
 ------------
 * Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+
+More information
+----------------
+* Meet us at https://bit.ly/numigi-com
