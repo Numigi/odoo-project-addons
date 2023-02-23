@@ -12,7 +12,7 @@
     'summary': 'Lock the stage column drag and drop on kanban view of project task',
     'depends': [
         'project',
-        'kanban_draggable'
+        'kanban_draggable',
     ],
     'data': [
         'views/project_task.xml',
