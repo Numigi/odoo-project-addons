@@ -19,17 +19,7 @@ After that, I go to project then click on one record. It will show a list of tas
 
 .. image:: static/description/opening_project.png
 
-In the kanban view, the pointer will change to ``not allowed`` style when attempting to drag and drop the column.
-
-.. image:: static/description/pointer_preventing_moving_column_1.png
-
-Same thing if attempting to drag and drop a folded column.
-
-.. image:: static/description/pointer_preventing_moving_column_2.png
-
-A pop-up will be show if I am always trying to drag and drop the column.
-
-.. image:: static/description/pop_up_drag_and_drop_not_allowed.png
+In the kanban view, the user could not drag and drop column anymore.
 
 
 Contributors

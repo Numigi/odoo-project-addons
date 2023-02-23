@@ -6,14 +6,16 @@
     'version': '1.0.0',
     'author': 'Numigi',
     'maintainer': 'Numigi',
+    "website": "https://www.numigi.com",
     'license': 'LGPL-3',
     'category': 'Other',
-    'summary': 'Lock the stage column drag and drop on kanban view',
+    'summary': 'Lock the stage column drag and drop on kanban view of project task',
     'depends': [
         'project',
+        'kanban_draggable'
     ],
     'data': [
-        'views/assets.xml',
+        'views/project_task.xml',
     ],
     'installable': True,
 }
