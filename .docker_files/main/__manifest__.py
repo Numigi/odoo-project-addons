@@ -73,6 +73,7 @@
         "project_task_date_planned",
         "project_task_deadline_from_project",
         "project_task_description_template",
+        "project_task_draggable_column_disable",
         "project_task_editable_list_stage",
         "project_task_editable_list_view",
         "project_task_full_text_search",
