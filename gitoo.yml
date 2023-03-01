@@ -28,3 +28,7 @@
     - web_timeline
     - web_widget_color
 
+- url: https://github.com/Navybits/kanban_draggable
+  branch: "11.0"
+  includes:
+    - kanban_draggable
