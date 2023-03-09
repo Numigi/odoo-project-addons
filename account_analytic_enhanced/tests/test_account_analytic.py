@@ -13,7 +13,6 @@ class TestAccountAnalytic(SavepointCase):
             {
                 "name": "Customer Task",
                 "email": "customer@task.com",
-                "customer": True,
             }
         )
 
