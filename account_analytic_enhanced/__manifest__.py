@@ -9,8 +9,8 @@
     "website": "https://bit.ly/numigi-com",
     "license": "LGPL-3",
     "category": "Hidden/Dependency",
-    "summary": """The analytic account stays archived if it has 
-    been manually archived""",
+    "summary": "The analytic account stays archived if it has "
+               "been manually archived",
     "depends": ["analytic"],
     "data": [],
     "installable": True,
