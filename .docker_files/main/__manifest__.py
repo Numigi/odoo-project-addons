@@ -13,7 +13,7 @@
     "depends": [
         # "stock_account",  # required for testing project_wip
         # "purchase",  # required for testing project_wip_material
-        # "account_analytic_enhanced",  # required for project_enhanced
+        "account_analytic_enhanced",  # required for project_enhanced
         "analytic_line_revenue",
         "analytic_line_employee",
         # "project_analytic_group",
@@ -21,7 +21,7 @@
          "project_closed",
          "project_cost_smart_button",
          "project_default_task_stage",
-        # "project_enhanced",
+         "project_enhanced",
         # "project_estimation",
         # "project_estimation_material",
         # "project_form_with_dates",

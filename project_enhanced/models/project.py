@@ -10,19 +10,16 @@ class Project(models.Model):
 
     active_toggle = fields.Boolean(string="Toggle active", default=True)
 
-    @api.multi
     def toggle_active(self):
         res = super(Project, self).toggle_active()
         self.toggle_active_change()
         return res
 
-    @api.multi
     def toggle_active_change(self):
 
         for project in self:
             project.active_toggle = project.active
 
-    @api.multi
     def write(self, vals):
         res = super(Project, self).write(vals)
 
