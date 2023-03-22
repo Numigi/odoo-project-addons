@@ -32,6 +32,6 @@ class AccountAnalyticLine(models.Model):
     _inherit = "account.analytic.line"
 
     invoicing_profile_id = fields.Many2one(
-        related="task_id.invoicing_profile_id", string="Invoicing profile", store=True)
+        related="project_id.invoicing_profile_id", string="Invoicing profile", store=True)
 
 
