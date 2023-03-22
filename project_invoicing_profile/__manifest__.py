@@ -3,12 +3,12 @@
 
 {
     "name": "Project Invoicing Profile",
-    "version": "2.1.0",
+    "version": "1.0.0",
     "author": "Numigi",
     "maintainer": "Numigi",
     "license": "LGPL-3",
     "category": "Project",
-    "summary": "Add iterations to projects",
+    "summary": "Add invoicing profiles to projects",
     "depends": ["project"],
     "data": [
         "security/groups.xml",
