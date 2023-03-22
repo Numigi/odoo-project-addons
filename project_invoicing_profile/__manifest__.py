@@ -9,7 +9,7 @@
     "license": "LGPL-3",
     "category": "Project",
     "summary": "Add invoicing profiles to projects",
-    "depends": ["project"],
+    "depends": ["project", "hr_timesheet"],
     "data": [
         "security/groups.xml",
         "views/project_invoice_profile.xml",
