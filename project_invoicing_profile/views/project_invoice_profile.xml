@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="view_project_invoice_profile_tree" model="ir.ui.view">
+        <field name="name">project.invoice.profile.tree</field>
+        <field name="model">project.invoice.profile</field>
+        <field name="type">tree</field>
+        <field name="mode">primary</field>
+        <field name="priority" eval="16" />
+        <field name="active" eval="True" />
+        <field name="arch" type="xml">
+            <tree string="profile tree" create="true" delete="true" edit="true">
+                <field name="name" />
+
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_project_invoice_profile_form" model="ir.ui.view">
+        <field name="name">project.invoice.profile.form</field>
+        <field name="model">project.invoice.profile</field>
+        <field name="type">form</field>
+        <field name="mode">primary</field>
+        <field name="priority" eval="16" />
+        <field name="active" eval="True" />
+        <field name="arch" type="xml">
+            <form string="profile form" create="true" delete="true" edit="true">
+                <header>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name" class="oe_edit_only" />
+                        <h1>
+                            <field name="name" class="oe_inline"
+                                placeholder="name" />
+                        </h1>
+                    </div>
+                    <group>
+                            <field name="note" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_project_invoice_profile_search" model="ir.ui.view">
+        <field name="name">project.invoice.profile.search</field>
+        <field name="model">project.invoice.profile</field>
+        <field name="type">search</field>
+        <field name="mode">primary</field>
+        <field name="priority" eval="16" />
+        <field name="active" eval="True" />
+        <field name="arch" type="xml">
+            <search string="profile search">
+                <field name="name" />
+
+            </search>
+        </field>
+    </record>
+
+    <record id="action_project_invoice_profile" model="ir.actions.act_window">
+        <field name="name">Project invoicing profile</field>
+        <field name="res_model">project.invoice.profile</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_type">form</field>
+        <field name="target">current</field>
+    </record>
+
+
+
+    <menuitem id="menu_project_invoice_profile" name="Project invoicing profile" parent="project.menu_project_config"
+              action="action_project_invoice_profile" groups="group_project_invoicing_profile"/>
+
+
+</odoo>

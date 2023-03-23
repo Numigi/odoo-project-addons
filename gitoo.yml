@@ -10,7 +10,7 @@
   includes:
     - hr_timesheet_task_domain
     - hr_timesheet_task_stage
-    
+
 - url: https://github.com/OCA/project
   branch: "12.0"
   includes:
