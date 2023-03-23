@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="action_open_remaining_hours_wizard" model="ir.actions.act_window">
+        <field name="name">Update Remaining Hours</field>
+        <field name="res_model">project.task.remaining.hours.update</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="context">{
+            'default_task_id': active_id,
+        }</field>
+    </record>
+
+    <record id="task_form_with_update_remaining_hours_button" model="ir.ui.view">
+        <field name="name">Task Form: add button to update remaining hours</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="hr_timesheet.view_task_form2_inherited"/>
+        <field name="arch" type="xml">
+            <field name="remaining_hours" position="after">
+                <button name="%(action_open_remaining_hours_wizard)d" type="action" string="Update Remaining Hours"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="action_open_remaining_hours_history" model="ir.actions.act_window">
+        <field name="name">Remaining Hours</field>
+        <field name="res_model">project.task.remaining.hours</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">tree</field>
+        <field name="context">{
+            'search_default_task_id': active_id,
+        }</field>
+    </record>
+
+    <record id="task_form_with_remaining_hours_history" model="ir.ui.view">
+        <field name="name">Task Form: add smart button to access remaining hours history</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_form2"/>
+        <field name="arch" type="xml">
+            <button name="action_subtask" position="before">
+                <button class="oe_stat_button" string="Remaining Hours"
+                    name="%(action_open_remaining_hours_history)d" type="action" icon="fa-history"
+                    attrs="{'invisible': [('allow_timesheets', '=', False)]}"/>
+            </button>
+        </field>
+    </record>
+
+    <record id="task_form_with_remaining_hours_field" model="ir.ui.view">
+        <field name="name">Task Form: add remaining hours field (invisible)</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="hr_timesheet.view_task_form2_inherited"/>
+        <field name="arch" type="xml">
+            <form position="inside">
+                <!--
+                    This field is necessary, because otherwise, when an onchange is triggered,
+                    the computation of remaining_hours ignores remaining_hours_ids.
+                -->
+                <field name="remaining_hours_ids" invisible="1"/>
+            </form>
+        </field>
+    </record>
+
+</odoo>
