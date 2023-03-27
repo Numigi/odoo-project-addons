@@ -3,6 +3,7 @@
 from odoo.tests.common import SavepointCase
 from psycopg2 import IntegrityError
 
+
 class TestProjectInvoiceProfile(SavepointCase):
 
     @classmethod
@@ -36,7 +37,6 @@ class TestProjectInvoiceProfile(SavepointCase):
             'email': 'projectmanager@example.com',
             'groups_id': [(6, 0, [user_group_employee.id, user_group_project_manager.id,
                                   user_group_project_profile.id])]})
-
 
         cls.project_1 = cls.env['project.project'].with_context({'mail_create_nolog': True}).create({
             'name': 'Project1',
