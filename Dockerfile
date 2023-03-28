@@ -57,7 +57,7 @@ COPY project_milestone_time_kpi  /mnt/extra-addons/project_milestone_time_kpi
 #COPY project_portal_hide_timesheets  /mnt/extra-addons/project_portal_hide_timesheets
 #COPY project_portal_no_subtask  /mnt/extra-addons/project_portal_no_subtask
 #COPY project_portal_parent_task  /mnt/extra-addons/project_portal_parent_task
-#COPY project_remaining_hours_update  /mnt/extra-addons/project_remaining_hours_update
+COPY project_remaining_hours_update  /mnt/extra-addons/project_remaining_hours_update
 #COPY project_role_milestone  /mnt/extra-addons/project_role_milestone
 COPY project_stage  /mnt/extra-addons/project_stage
 COPY project_stage_allow_timesheet  /mnt/extra-addons/project_stage_allow_timesheet
@@ -80,7 +80,7 @@ COPY project_task_reference  /mnt/extra-addons/project_task_reference
 COPY project_task_stage_external_mail  /mnt/extra-addons/project_task_stage_external_mail
 #COPY project_task_subtask_same_project  /mnt/extra-addons/project_task_subtask_same_project
 COPY project_task_type  /mnt/extra-addons/project_task_type
-#COPY project_template  /mnt/extra-addons/project_template
+COPY project_template  /mnt/extra-addons/project_template
 #COPY project_template_date_planned  /mnt/extra-addons/project_template_date_planned
 #COPY project_template_timesheet  /mnt/extra-addons/project_template_timesheet
 #COPY project_time_budget /mnt/extra-addons/project_time_budget
