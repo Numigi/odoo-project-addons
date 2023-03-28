@@ -1,4 +1,4 @@
-# © 2018 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+# © 2023 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 from datetime import date
@@ -28,12 +28,15 @@ class TestProjectTask(common.SavepointCase):
         })
         self.assertEqual(task.date_deadline, self.deadline)
 
-    def test_when_creating_task_with_default_project_then_deadline_is_propagated(self):
+    def test_when_creating_task_with_default_project_then_deadline_is_propagated(
+            self):
         task = self.env['project.task'].with_context(
-            default_project_id=self.project_with_deadline.id).create({'name': 'Task 2'})
+            default_project_id=self.project_with_deadline.id).create(
+            {'name': 'Task 2'})
         self.assertEqual(task.date_deadline, self.deadline)
 
-    def test_when_creating_task_if_project_has_no_deadline_then_deadline_is_empty(self):
+    def test_when_creating_task_if_project_has_no_deadline_then_deadline_is_empty(
+            self):
         task = self.env['project.task'].create({
             'name': 'Task 2',
             'project_id': self.project_with_no_deadline.id,
@@ -44,13 +47,12 @@ class TestProjectTask(common.SavepointCase):
         self.task.project_id = self.project_with_deadline
         self.assertEqual(self.task.date_deadline, self.deadline)
 
-    def test_when_changing_project_if_project_has_no_deadline_then_deadline_is_empty(self):
+    def test_when_changing_project_if_project_has_no_deadline_then_deadline_is_empty(
+            self):
         self.task.project_id = self.project_with_no_deadline
         self.assertFalse(self.task.date_deadline)
 
     def test_onchange_project_then_deadline_is_propagated_to_task(self):
-        with self.env.do_in_onchange():
-            self.task.project_id = self.project_with_deadline
-            self.task._onchange_project_propagate_deadline()
-
+        self.task.project_id = self.project_with_deadline
+        self.task._onchange_project_propagate_deadline()
         self.assertEqual(self.task.date_deadline, self.deadline)

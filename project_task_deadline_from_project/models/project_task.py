@@ -1,4 +1,4 @@
-# © 2018 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+# © 2023 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 from odoo import api, models
@@ -17,9 +17,9 @@ class ProjectTaskWithDeadlineFromProject(models.Model):
             task.date_deadline = task.project_id.date
         return task
 
-    @api.multi
     def write(self, vals):
-        should_propagate_deadline = vals.get('project_id') and 'date_deadline' not in vals
+        should_propagate_deadline = vals.get(
+            'project_id') and 'date_deadline' not in vals
         if should_propagate_deadline:
             project = self.env['project.project'].browse(vals['project_id'])
             vals['date_deadline'] = project.date

@@ -1,15 +1,17 @@
-# © 2018 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+# © 2023 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 {
-    'name': 'Project Task Deadline From Project',
-    'version': '1.0.0',
+    'name': 'Project Portal Parent Task',
+    'version': '14.0.1.0.0',
     'author': 'Numigi',
     'maintainer': 'Numigi',
     'website': 'https://bit.ly/numigi-com',
     'license': 'LGPL-3',
     'category': 'Project',
-    'summary': 'Propagate the deadline from projects to tasks.',
     'depends': ['project'],
+    'data': [
+        'views/portal.xml',
+    ],
     'installable': True,
 }

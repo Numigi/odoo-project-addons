@@ -10,7 +10,7 @@ In vanilla Odoo, it is possible to create a project directly from the kanban vie
 
 It is done in a simplified version of the form view of a project.
 
-.. image:: static/description/project_simplified_form.png
+.. image:: project_no_quick_create/static/description/project_simplified_form.png
 
 This leads to projects missing very important fields (such as an analytic account).
 
@@ -19,7 +19,7 @@ Usage
 When this module is installed, when creating a project from the kanban view,
 the complete form view is opened.
 
-.. image:: static/description/project_complete_form.png
+.. image:: project_no_quick_create/static/description/project_complete_form.png
 
 Contributors
 ------------
