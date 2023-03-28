@@ -16,7 +16,7 @@
         "account_analytic_enhanced",  # required for project_enhanced
         "analytic_line_revenue",
         "analytic_line_employee",
-        # "project_analytic_group",
+        "project_analytic_group",
         "project_chatter",
         "project_closed",
         "project_cost_smart_button",
@@ -24,7 +24,7 @@
         "project_enhanced",
         # "project_estimation",
         # "project_estimation_material",
-        # "project_form_with_dates",
+        "project_form_with_dates",
         # "project_group_create",
         # "project_hide_create_sale_order",
         "project_iteration",
@@ -81,6 +81,7 @@
         # "project_task_subtask_same_project",
         "project_task_type",
         "project_template",
+
         # "project_template_date_planned",
         # "project_template_timesheet",
         # "project_time_budget",
