@@ -10,3 +10,4 @@
   branch: "14.0"
   includes:
    - base_extended_security
+   - test_http_request
