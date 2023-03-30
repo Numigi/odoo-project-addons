@@ -22,3 +22,4 @@
   branch: "14.0"
   includes:
     - web_ir_actions_act_multi
+    - web_ir_actions_act_view_reload
