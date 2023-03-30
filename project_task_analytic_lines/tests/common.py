@@ -2,6 +2,7 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 from odoo.tests import common
+from odoo import fields
 
 
 class AccountCase(common.SavepointCase):
@@ -114,6 +115,7 @@ class InvoiceCase(AccountCase):
                 "partner_id": cls.supplier.id,
                 "move_type": "in_invoice",
                 "invoice_line_ids": [(0, 0, cls._get_invoice_line_vals())],
+                "invoice_date": fields.Date.from_string('2019-01-01'),
             }
         )
 
