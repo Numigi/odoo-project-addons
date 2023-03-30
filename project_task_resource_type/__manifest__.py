@@ -1,4 +1,7 @@
 # -*- coding: utf-8 -*-
+# © 2023 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+# License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
+
 {
     "name": "Project Task Resource Type",
     "version": "1.0.0",
@@ -9,13 +12,9 @@
     "website": "www.numigi.com",
     "depends": ["project",],
     "data": [
-        "data/ir_model.xml",
-        "data/ir_model_fields.xml",
-        "data/ir_ui_view.xml",
-        "data/ir_actions_act_window.xml",
-        "data/ir_ui_menu.xml",
-        "data/ir_model_access.xml",
-        "views/project_task.xml",
+        "security/ir.model.access.csv",
+        "views/project_resource_views.xml",
+        "views/project_task_views.xml",
     ],
     "application": False,
     "license": "LGPL-3",

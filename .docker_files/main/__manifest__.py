@@ -75,7 +75,7 @@
         "project_task_link",
         "project_task_milestone_mandatory",
         "project_task_reference",
-        # "project_task_resource_type",
+        "project_task_resource_type",
         "project_task_search_parent_subtask",
         "project_task_stage_external_mail",
         "project_task_subtask_same_project",
