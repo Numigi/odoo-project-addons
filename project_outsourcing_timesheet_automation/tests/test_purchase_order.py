@@ -10,6 +10,8 @@ class TestPurchaseOrder(OutsourcingCase):
         super().setUpClass()
 
     def test_create_timesheet_line_automatically(self):
+        self.task.outsourcing_line_ids.refresh()
+
         self.po_order_2.write({"state": 'purchase'})
         assert self.po_order_2.order_line in \
                self.task.timesheet_ids.mapped('purchase_order_line_id')

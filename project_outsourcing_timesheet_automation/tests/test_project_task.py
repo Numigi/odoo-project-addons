@@ -10,14 +10,14 @@ class TestProjectTask(OutsourcingCase):
 
 
     def test_create_timesheet_line_automatically(self):
-        self.po_order.button_confirm()
+        self.task.outsourcing_line_ids.refresh()
         self.task.write({"stage_id": self.stage_test.id})
-        self.task.timesheet_ids.refresh()
         assert len(self.task.timesheet_ids) == 1
         assert self.task.timesheet_ids.mapped('purchase_order_line_id') in \
                self.task.outsourcing_line_ids
 
     def test_timesheet_line_when_change_task_stage(self):
+        self.task.outsourcing_line_ids.refresh()
         self.task.write({"stage_id": self.stage_done.id})
         assert len(self.task.timesheet_ids) == 1
         assert self.task.timesheet_ids.mapped('purchase_order_line_id') in \
