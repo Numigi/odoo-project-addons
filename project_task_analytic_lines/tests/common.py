@@ -124,7 +124,7 @@ class InvoiceCase(AccountCase):
             "quantity": 1,
             "product_uom_id": cls.env.ref("uom.product_uom_unit").id,
             "price_unit": 100,
-            "analytic_account__id": cls.analytic_account.id,
+            "analytic_account_id": cls.analytic_account.id,
             "task_id": cls.task.id,
             "account_id": cls.expense_account.id,
             "tax_ids": [(4, cls.tax.id)],
