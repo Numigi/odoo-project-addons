@@ -11,3 +11,8 @@
   includes:
    - base_extended_security
    - test_http_request
+
+- url: https://github.com/OCA/timesheet
+  branch: "14.0"
+  includes:
+   - hr_timesheet_task_domain
