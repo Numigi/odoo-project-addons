@@ -109,7 +109,7 @@ class InvoiceCase(AccountCase):
             }
         )
 
-        cls.invoice = cls.env["account.invoice"].create(
+        cls.invoice = cls.env["account.move"].create(
             {
                 "partner_id": cls.supplier.id,
                 "project_id": cls.project.id,
