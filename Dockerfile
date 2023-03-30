@@ -33,7 +33,7 @@ COPY project_iteration  /mnt/extra-addons/project_iteration
 #COPY project_iteration_sale_inheritance  /mnt/extra-addons/project_iteration_sale_inheritance
 #COPY project_kanban_dates /mnt/extra-addons/project_kanban_dates
 #COPY project_kanban_to_form  /mnt/extra-addons/project_kanban_to_form
-#COPY project_lump_sum  /mnt/extra-addons/project_lump_sum
+COPY project_lump_sum  /mnt/extra-addons/project_lump_sum
 #COPY portal_project_timesheet_conditional  /mnt/extra-addons/portal_project_timesheet_conditional
 #COPY project_material  /mnt/extra-addons/project_material
 #COPY project_material_direct  /mnt/extra-addons/project_material_direct
@@ -62,7 +62,7 @@ COPY project_remaining_hours_update  /mnt/extra-addons/project_remaining_hours_u
 COPY project_stage  /mnt/extra-addons/project_stage
 COPY project_stage_allow_timesheet  /mnt/extra-addons/project_stage_allow_timesheet
 COPY project_stage_no_quick_create  /mnt/extra-addons/project_stage_no_quick_create
-#COPY project_task_analytic_lines  /mnt/extra-addons/project_task_analytic_lines
+COPY project_task_analytic_lines  /mnt/extra-addons/project_task_analytic_lines
 #COPY project_task_analytic_lines_stock  /mnt/extra-addons/project_task_analytic_lines_stock
 #COPY project_task_customer_reference /mnt/extra-addons/project_task_customer_reference
 COPY project_task_date_planned  /mnt/extra-addons/project_task_date_planned

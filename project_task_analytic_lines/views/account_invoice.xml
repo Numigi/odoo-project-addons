@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="supplier_invoice_form_with_task" model="ir.ui.view">
+        <field name="name">Supplier Invoice Form: add field task</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='invoice_line_ids']/tree/field[@name='analytic_account_id']" position="after">
+                <field name="task_id"
+                    attrs="{'readonly': [('analytic_account_id', '=', False)]}"
+                    force_save="1"
+                    domain="[('project_id.analytic_account_id', '=', analytic_account_id)]"
+                    groups="analytic.group_analytic_accounting"
+                    />
+            </xpath>
+<!--            <xpath expr="//field[@name='tax_line_ids']//field[@name='analytic_account_id']" position="after">-->
+<!--                <field name="task_id"-->
+<!--                    attrs="{'readonly': [('analytic_account_id', '=', False)]}"-->
+<!--                    force_save="1"-->
+<!--                    domain="[('project_id.analytic_account_id', '=', analytic_account_id)]"-->
+<!--                    groups="analytic.group_analytic_accounting"-->
+<!--                    />-->
+<!--            </xpath>-->
+        </field>
+    </record>
+
+    <record id="invoice_line_form_with_task" model="ir.ui.view">
+        <field name="name">Invoice Line Form: add field task</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='line_ids']/tree/field[@name='name']" position="after">
+                <field name="task_id"
+                    attrs="{'readonly': [('analytic_account_id', '=', False)]}"
+                    force_save="1"
+                    domain="[('project_id.analytic_account_id', '=', analytic_account_id)]"
+                    groups="analytic.group_analytic_accounting"
+                />
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
