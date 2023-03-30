@@ -16,3 +16,4 @@
   branch: "14.0"
   includes:
    - hr_timesheet_task_domain
+   - hr_timesheet_task_stage
