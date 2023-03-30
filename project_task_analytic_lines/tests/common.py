@@ -113,7 +113,6 @@ class InvoiceCase(AccountCase):
             {
                 "partner_id": cls.supplier.id,
                 "move_type": "in_invoice",
-                "account_id": cls.payable_account.id,
                 "invoice_line_ids": [(0, 0, cls._get_invoice_line_vals())],
             }
         )
