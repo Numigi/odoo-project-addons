@@ -5,12 +5,14 @@ from .common import OutsourcingCase
 
 
 class TestProjectTask(OutsourcingCase):
-    @classmethod
-    def setUpClass(cls):
-        super().setUpClass()
+    def setUp(self):
+        super(TestProjectTask, self).setUp()
+
 
     def test_create_timesheet_line_automatically(self):
+        self.po_order.button_confirm()
         self.task.write({"stage_id": self.stage_test.id})
+        self.task.timesheet_ids.refresh()
         assert len(self.task.timesheet_ids) == 1
         assert self.task.timesheet_ids.mapped('purchase_order_line_id') in \
                self.task.outsourcing_line_ids

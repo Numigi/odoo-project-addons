@@ -15,5 +15,4 @@ class StockRule(models.Model):
         domain += (
             ('is_outsourcing', '=', False),
         )
-
         return domain

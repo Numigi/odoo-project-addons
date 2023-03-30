@@ -54,7 +54,8 @@ class OutsourcingCase(common.TransactionCase):
         })
         self.stage_test = self.env["project.task.type"].create({
             "name": "Client Test",
-            "create_subcontractors_time_entries": True
+            "create_subcontractors_time_entries": True,
+            "project_ids": [(4, self.project.id)]
         })
         self.task = self.env["project.task"].create({
             "name": "Task 450",
