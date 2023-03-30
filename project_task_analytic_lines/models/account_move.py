@@ -13,4 +13,4 @@ class AccountMove(models.Model):
         for line in self.mapped("line_ids"):
             line._check_task_matches_with_project()
 
-        return super().post(invoice)
+        return super().post(invoice=invoice)

@@ -97,7 +97,7 @@ class InvoiceCase(AccountCase):
     def setUpClass(cls):
         super().setUpClass()
         cls.supplier = cls.env["res.partner"].create(
-            {"name": "Supplier A", "supplier": True}
+            {"name": "Supplier A", "supplier_rank": 1}
         )
 
         cls.tax_account = cls.env["account.account"].search(
