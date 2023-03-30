@@ -64,7 +64,7 @@ The following fields are filled automatically.
 
 I select my supplier, then I add a new line to the PO.
 
-.. image:: static/description/po_with_supplier_and_product.png
+.. image:: project_outsourcing/static/description/po_with_supplier_and_product.png
 
 Analytic Account
 ~~~~~~~~~~~~~~~~

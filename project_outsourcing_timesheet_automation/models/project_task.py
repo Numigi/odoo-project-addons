@@ -1,4 +1,4 @@
-# © 2022 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+# © 2023 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 from odoo import models, api, fields, _
@@ -69,7 +69,6 @@ class ProjectTask(models.Model):
             ts.purchase_order_line_id.order_id.name, ts.name)
         ts.purchase_order_line_id.order_id.message_post(body=message)
 
-    @api.multi
     def write(self, vals):
         res = super(ProjectTask, self).write(vals)
         for record in self:

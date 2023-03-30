@@ -30,7 +30,7 @@ class OutsourcingCase(common.SavepointCase):
         )
 
         cls.supplier = cls.env["res.partner"].create(
-            {"name": "Partner A"}
+            {"name": "Supplier A"}
         )
 
         cls.project = cls.env["project.project"].create({"name": "Job 123"})

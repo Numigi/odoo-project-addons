@@ -53,7 +53,7 @@
         # "project_milestone_week_duration",
         "project_no_quick_create",
         "project_outsourcing",
-        # "project_outsourcing_timesheet_automation",
+        "project_outsourcing_timesheet_automation",
         # "project_portal_hide_timesheets",
         # "project_portal_no_subtask",
         "project_portal_parent_task",

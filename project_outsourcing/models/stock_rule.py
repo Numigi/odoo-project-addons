@@ -12,5 +12,8 @@ class StockRule(models.Model):
     def _make_po_get_domain(self, company_id, values, partner):
         domain = super(StockRule, self)._make_po_get_domain(company_id, values,
                                                             partner)
-        domain += [("is_outsourcing", "=", False)]
+        domain += (
+            ('is_outsourcing', '=', False),
+        )
+
         return domain

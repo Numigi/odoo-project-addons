@@ -16,7 +16,7 @@ class PurchaseOrderLine(models.Model):
 
         if self.order_id.is_outsourcing:
             project = self.order_id.project_id
-            result["account_analytic_id"] = project.analytic_account_id.id
+            result["analytic_account_id"] = project.analytic_account_id.id
             result["task_id"] = self.order_id.task_id.id
         return result
 

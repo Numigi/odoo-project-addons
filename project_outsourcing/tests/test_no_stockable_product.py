@@ -24,6 +24,15 @@ class TestNoStockableProduct(OutsourcingCase):
                 "seller_ids": [(0, 0, {"name": cls.supplier.id})],
             }
         )
+
+        cls.env['stock.warehouse.orderpoint'].create({
+            'name': 'A RR',
+            'location_id': cls.env.ref('stock.warehouse0').lot_stock_id.id,
+            'product_id': cls.stockable_product.id,
+            'product_min_qty': 1,
+            'product_max_qty': 100,
+        })
+
         cls.sale_order = cls.env["sale.order"].create(
             {
                 "partner_id": cls.customer.id,

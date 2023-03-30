@@ -20,6 +20,6 @@ class AccountInvoiceLine(models.Model):
     def _onchange_product_id(self):
         result = super()._onchange_product_id()
         if self.is_outsourcing:
-            self.account_analytic_id = self._get_outsourcing_analytic_account()
+            self.analytic_account_id = self._get_outsourcing_analytic_account()
             self.task_id = self._get_outsourcing_task()
         return result

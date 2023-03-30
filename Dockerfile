@@ -53,7 +53,7 @@ COPY project_milestone_time_kpi  /mnt/extra-addons/project_milestone_time_kpi
 #COPY project_milestone_week_duration  /mnt/extra-addons/project_milestone_week_duration
 COPY project_no_quick_create  /mnt/extra-addons/project_no_quick_create
 COPY project_outsourcing  /mnt/extra-addons/project_outsourcing
-#COPY project_outsourcing_timesheet_automation   /mnt/extra-addons/project_outsourcing_timesheet_automation
+COPY project_outsourcing_timesheet_automation   /mnt/extra-addons/project_outsourcing_timesheet_automation
 #COPY project_portal_hide_timesheets  /mnt/extra-addons/project_portal_hide_timesheets
 #COPY project_portal_no_subtask  /mnt/extra-addons/project_portal_no_subtask
 COPY project_portal_parent_task  /mnt/extra-addons/project_portal_parent_task
