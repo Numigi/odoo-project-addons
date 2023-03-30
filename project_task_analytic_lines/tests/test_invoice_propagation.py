@@ -8,20 +8,20 @@ class TestTaskPropagationFromInvoice(InvoiceCase):
 
     def test_task_propagated_to_expense_move_line(self):
         self._validate_invoice()
-        move_line = self.invoice.move_id.line_ids.filtered(
+        move_line = self.invoice.line_ids.filtered(
             lambda l: l.account_id == self.expense_account)
         assert move_line.task_id == self.task
 
     def test_task_not_propagated_to_payable_move_line(self):
         self._validate_invoice()
-        move_line = self.invoice.move_id.line_ids.filtered(
+        move_line = self.invoice.line_ids.filtered(
             lambda l: l.account_id == self.payable_account)
         assert len(move_line) == 1
         assert not move_line.task_id
 
     def test_task_not_propagated_to_tax_move_line(self):
         self._validate_invoice()
-        move_line = self.invoice.move_id.line_ids.filtered(
+        move_line = self.invoice.line_ids.filtered(
             lambda l: l.account_id == self.tax_account)
         assert len(move_line) == 1
         assert not move_line.task_id
@@ -30,7 +30,7 @@ class TestTaskPropagationFromInvoice(InvoiceCase):
         self.tax.analytic = True
         # self.invoice._recompute_dynamic_lines(recompute_all_taxes=True)
         self._validate_invoice()
-        move_line = self.invoice.move_id.line_ids.filtered(
+        move_line = self.invoice.line_ids.filtered(
             lambda l: l.account_id == self.tax_account)
         assert move_line.task_id == self.task
 
