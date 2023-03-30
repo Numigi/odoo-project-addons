@@ -122,7 +122,7 @@ class InvoiceCase(AccountCase):
         defaults = {
             "name": "/",
             "quantity": 1,
-            "uom_id": cls.env.ref("uom.product_uom_unit").id,
+            "product_uom_id": cls.env.ref("uom.product_uom_unit").id,
             "price_unit": 100,
             "account_analytic_id": cls.analytic_account.id,
             "task_id": cls.task.id,
