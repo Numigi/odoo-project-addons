@@ -9,8 +9,8 @@ class AccountMove(models.Model):
 
     _inherit = "account.move"
 
-    def post(self, invoice=False):
+    def post(self):
         for line in self.mapped("line_ids"):
             line._check_task_matches_with_project()
 
-        return super().post(invoice=invoice)
+        return super().post()

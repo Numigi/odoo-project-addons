@@ -100,23 +100,12 @@ class InvoiceCase(AccountCase):
             {"name": "Supplier A", "supplier_rank": 1}
         )
 
-        cls.tax_account = cls.env["account.account"].search(
-            [
-                (
-                    "user_type_id",
-                    "=",
-                    cls.env.ref("account.data_account_type_receivable").id,
-                )
-            ],
-            limit=1,
-        )
-
         cls.tax = cls.env["account.tax"].create(
             {
                 "name": "10% tax",
                 "amount_type": "percent",
                 "amount": 0.10,
-                "account_id": cls.tax_account.id,
+                "type_tax_use": "purchase",
             }
         )
 
