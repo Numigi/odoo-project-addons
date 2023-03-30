@@ -1,4 +1,4 @@
-# © 2018 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+# © 2023 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 from odoo import models, api, _
@@ -6,10 +6,8 @@ from odoo.exceptions import ValidationError
 
 
 class ProjectTaskSubtaskSameProject(models.Model):
-
     _inherit = 'project.task'
 
-    @api.multi
     def write(self, vals):
         """ Propagate the value of the project to the subtask when it is changed on the parent task."""
         res = super().write(vals)
@@ -27,7 +25,8 @@ class ProjectTaskSubtaskSameProject(models.Model):
         )
 
         res['context'] = {
-            k: v for k, v in res['context'].items() if k not in context_vars_to_remove
+            k: v for k, v in res['context'].items() if
+            k not in context_vars_to_remove
         }
 
         return res
@@ -36,14 +35,15 @@ class ProjectTaskSubtaskSameProject(models.Model):
     def _check_subtask_not_in_different_project(self):
         subtasks = self.filtered(lambda t: t.parent_id)
 
-        for subtask in subtasks:
-            task = subtask.parent_id
-            if subtask.project_id != task.project_id:
-                raise ValidationError(_(
-                    'The task {task} is in the project {task_project}. '
-                    'The subtask {subtask} must be in the same project.'
-                ).format(
-                    task=task.display_name,
-                    task_project=task.project_id.display_name,
-                    subtask=subtask.display_name,
-                ))
+        for subtask in self:
+            if subtask.parent_id:
+                task = subtask.parent_id
+                if subtask.project_id != task.project_id:
+                    raise ValidationError(_(
+                        'The task {task} is in the project {task_project}. '
+                        'The subtask {subtask} must be in the same project.'
+                    ).format(
+                        task=task.display_name,
+                        task_project=task.project_id.display_name,
+                        subtask=subtask.display_name,
+                    ))

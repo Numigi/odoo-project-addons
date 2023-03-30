@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<odoo>
+    <record id="project_task_search_parent_tasks_subtasks" model="ir.ui.view">
+        <field name="name">Project Task Search: parent tasks and subtasks</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_search_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//search[1]/separator[1]" position="after">
+                <filter domain="[('parent_id', '=', False)]" name="filter_parent"
+                        string="Parent Tasks"/>
+                <filter domain="[('parent_id', '!=', False)]" name="filter_subtasks"
+                        string="Subtasks"/>
+                <separator/>
+            </xpath>
+        </field>
+    </record>
+</odoo>
