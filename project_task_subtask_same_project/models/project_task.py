@@ -28,22 +28,20 @@ class ProjectTaskSubtaskSameProject(models.Model):
             k: v for k, v in res['context'].items() if
             k not in context_vars_to_remove
         }
-
         return res
 
     @api.constrains('project_id')
     def _check_subtask_not_in_different_project(self):
         subtasks = self.filtered(lambda t: t.parent_id)
 
-        for subtask in self:
-            if subtask.parent_id:
-                task = subtask.parent_id
-                if subtask.project_id != task.project_id:
-                    raise ValidationError(_(
-                        'The task {task} is in the project {task_project}. '
-                        'The subtask {subtask} must be in the same project.'
-                    ).format(
-                        task=task.display_name,
-                        task_project=task.project_id.display_name,
-                        subtask=subtask.display_name,
-                    ))
+        for subtask in subtasks:
+            task = subtask.parent_id
+            if subtask.project_id != task.project_id:
+                raise ValidationError(_(
+                    'The task {task} is in the project {task_project}. '
+                    'The subtask {subtask} must be in the same project.'
+                ).format(
+                    task=task.display_name,
+                    task_project=task.project_id.display_name,
+                    subtask=subtask.display_name,
+                ))

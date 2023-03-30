@@ -14,8 +14,7 @@ class TestProjectTaskSubTaskSameProject(common.SavepointCase):
         cls.project_a = cls.env['project.project'].create({'name': 'projectA'})
         cls.project_b = cls.env['project.project'].create({'name': 'projectB'})
         cls.task_parent = cls.env['project.task'].create({
-            'name': 'Task Parent', 'project_id': cls.project_a.id,
-            'parent_id': False
+            'name': 'Task Parent', 'project_id': cls.project_a.id
         })
         cls.subtask_1 = cls.env['project.task'].create({
             'name': 'Task Child 1',
