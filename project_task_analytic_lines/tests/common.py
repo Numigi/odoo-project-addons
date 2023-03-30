@@ -112,8 +112,7 @@ class InvoiceCase(AccountCase):
         cls.invoice = cls.env["account.move"].create(
             {
                 "partner_id": cls.supplier.id,
-                "project_id": cls.project.id,
-                "type": "in_invoice",
+                "move_type": "in_invoice",
                 "account_id": cls.payable_account.id,
                 "invoice_line_ids": [(0, 0, cls._get_invoice_line_vals())],
             }
