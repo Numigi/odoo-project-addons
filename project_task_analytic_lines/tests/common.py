@@ -133,4 +133,4 @@ class InvoiceCase(AccountCase):
         return defaults
 
     def _validate_invoice(self):
-        self.invoice.with_user(self.account_user).action_invoice_open()
+        self.invoice.with_user(self.account_user).action_post()

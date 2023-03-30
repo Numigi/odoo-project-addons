@@ -28,7 +28,7 @@ class TestTaskPropagationFromInvoice(InvoiceCase):
 
     def test_if_tax_included_in_analytic_cost__task_propagated_to_tax_move_line(self):
         self.tax.analytic = True
-        self.invoice.compute_taxes()
+        self.invoice._recompute_dynamic_lines(recompute_all_taxes=True)
         self._validate_invoice()
         move_line = self.invoice.move_id.line_ids.filtered(
             lambda l: l.account_id == self.tax_account)
