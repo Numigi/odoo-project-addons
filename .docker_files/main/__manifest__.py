@@ -78,7 +78,7 @@
         "project_task_resource_type",
         "project_task_search_parent_subtask",
         "project_task_stage_external_mail",
-        "project_task_subtask_same_project",
+        # "project_task_subtask_same_project",
         "project_task_type",
         "project_template",
 
@@ -93,7 +93,7 @@
         # "project_wip_outsourcing",
         # "project_wip_supply_cost",
         # "project_wip_timesheet",
-        "timesheet_task_project_no_change",
+        # "timesheet_task_project_no_change",
     ],
     "installable": True,
 }
