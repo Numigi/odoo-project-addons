@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="project_task_form" model="ir.ui.view">
+        <field name="name">Task Form: Add Min / Ideal / Max hours</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="hr_timesheet.view_task_form2_inherited"/>
+        <field name="arch" type="xml">
+            <!-- Add a label to the group that wraps the field planned hours. -->
+            <xpath expr="//field[@name='planned_hours']/parent::group" position="attributes">
+                <attribute name="string">Planned Hours</attribute>
+            </xpath>
+
+            <field name="planned_hours" position="before">
+                <field name="min_hours" string="Min" widget="float_time"/>
+            </field>
+            <field name="planned_hours" position="attributes">
+                <attribute name="string">Ideal</attribute>
+                <attribute name="nolabel">0</attribute>
+            </field>
+            <xpath expr="//label[@for='planned_hours']/parent::div" position="replace"/>
+            <field name="planned_hours" position="after">
+                <field name="max_hours" string="Max" widget="float_time"/>
+            </field>
+            <xpath expr="//label[@for='subtask_planned_hours']/parent::div" position="replace"/>
+
+            <xpath expr="//field[@name='planned_hours']/parent::group" position="after">
+                <group string="Sub-tasks Hours" name="subtask_hours" attrs="{'invisible': [('subtask_count', '=', 0)]}">
+                    <field name="subtask_min_hours" string="Min" widget="float_time"/>
+                    <field name="subtask_planned_hours" position="move"/>
+                    <field name="subtask_max_hours" string="Max" widget="float_time"/>
+                </group>
+            </xpath>
+            <field name="subtask_planned_hours" position="attributes">
+                <attribute name="string">Ideal</attribute>
+                <attribute name="widget">float_time</attribute>
+                <attribute name="nolabel">0</attribute>
+            </field>
+        </field>
+    </record>
+
+    <record id="project_task_list" model="ir.ui.view">
+        <field name="name">Task List: Add Min / Ideal / Max Hours</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="hr_timesheet.view_task_tree2_inherited"/>
+        <field name="arch" type="xml">
+            <field name="planned_hours" position="before">
+                <field name="min_hours" string="Min" widget="float_time" sum="Min"/>
+            </field>
+            <field name="planned_hours" position="attributes">
+                <attribute name="string">Ideal</attribute>
+                <attribute name="sum">Ideal</attribute>
+            </field>
+            <field name="planned_hours" position="after">
+                <field name="max_hours" string="Max" widget="float_time" sum="Max"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>

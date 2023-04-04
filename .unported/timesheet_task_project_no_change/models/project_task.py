@@ -1,4 +1,4 @@
-# © 2020 - today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+# © 2023 - today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 from odoo import models, api, _
@@ -6,10 +6,8 @@ from odoo.exceptions import ValidationError
 
 
 class Task(models.Model):
-
     _inherit = "project.task"
 
-    @api.multi
     def write(self, vals):
         if "project_id" in vals:
             project = self.env["project.project"].browse(vals["project_id"])
@@ -47,6 +45,7 @@ class Task(models.Model):
                     "In order to modify the project of the parent task ({task}), there must "
                     "be no time on the parent task, nor on its child tasks."
                 ).format(
-                    task=self.display_name, subtask=timesheets[0].task_id.display_name
+                    task=self.display_name,
+                    subtask=timesheets[0].task_id.display_name
                 )
             )

@@ -1,4 +1,4 @@
-# © 2018 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+# © 2023 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 from odoo import models, api, _
@@ -6,10 +6,8 @@ from odoo.exceptions import ValidationError
 
 
 class ProjectTaskSubtaskSameProject(models.Model):
-
     _inherit = 'project.task'
 
-    @api.multi
     def write(self, vals):
         """ Propagate the value of the project to the subtask when it is changed on the parent task."""
         res = super().write(vals)
@@ -27,9 +25,9 @@ class ProjectTaskSubtaskSameProject(models.Model):
         )
 
         res['context'] = {
-            k: v for k, v in res['context'].items() if k not in context_vars_to_remove
+            k: v for k, v in res['context'].items() if
+            k not in context_vars_to_remove
         }
-
         return res
 
     @api.constrains('project_id')

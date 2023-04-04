@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <template id="portal_my_task_with_time_range" inherit_id="project.portal_my_task">
+        <xpath expr="//span[@t-field='task.create_date']/.." position="after">
+            <div class="mb8">
+                <div>
+                    <strong>Min:</strong>
+                    <span t-field="task.min_hours" t-field-options="{'widget': 'float_time'}" t-if="task.min_hours"/>
+                </div>
+                <div>
+                    <strong>Ideal:</strong>
+                    <span t-field="task.planned_hours" t-field-options="{'widget': 'float_time'}"
+                          t-if="task.planned_hours"/>
+                </div>
+                <div>
+                    <strong>Max:</strong>
+                    <span t-field="task.max_hours" t-field-options="{'widget': 'float_time'}" t-if="task.max_hours"/>
+                </div>
+            </div>
+        </xpath>
+    </template>
+
+</odoo>
