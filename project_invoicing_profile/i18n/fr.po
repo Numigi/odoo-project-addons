@@ -42,5 +42,12 @@ msgstr "Profil de facturation"
 #. module: project_invoicing_profile
 #: model:ir.actions.act_window,name:project_invoicing_profile.action_project_invoice_profile
 #: model:ir.ui.menu,name:project_invoicing_profile.menu_project_invoice_profile
+#: model:res.groups,name:project_invoicing_profile.group_project_invoicing_profile
 msgid "Project invoicing profile"
 msgstr "Profils de facturation des projets"
+
+
+#. module: project_invoicing_profile
+#: model:res.groups,comment:project_invoicing_profile.group_project_invoicing_profile
+msgid "Grants access to create project invoicing profile"
+msgstr "Donne l'accés à la création des profils de de facturation des projets"
