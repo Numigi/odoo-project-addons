@@ -1,13 +1,10 @@
 # © 2023 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
-import logging
 import pytz
 from datetime import datetime
 from odoo import api, models, _
 from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT as DATETIME_FORMAT
-
-_logger = logging.getLogger(__name__)
 
 
 class ProjectMilestoneTimeReport(models.AbstractModel):
@@ -24,37 +21,15 @@ class ProjectMilestoneTimeReport(models.AbstractModel):
 
     @api.model
     def get_pdf(self, project_id):
-        # context = dict(self.env.context)
         project = self._get_project(project_id)
-        # base_url = self._get_report_url()
-        # rcontext = {
-        #     'mode': 'print',
-        #     'base_url': base_url,
-        # }
         rendering_variables = self.get_rendering_variables(project)
-        # rendering_variables.update({"mode": "print", "base_url": base_url})
-        # body = self.env["ir.ui.view"]._render_template(
-        #     "project_milestone_time_report.project_report_report_pdf",
-        #     values=rendering_variables,
-        # )
-        _logger.info('>>>>>>>>rendering_variables>>>>>>>>>><: %s',
-                     rendering_variables)
-        # body = self.env['ir.ui.view'].with_context(context)._render_template(
-        #     "project_milestone_time_report.project_report_report_pdf",
-        #     values=dict(rcontext, lines=rendering_variables,
-        #                 report=self, context=self),
-        # )
         body = self.env["ir.ui.view"]._render_template(
             "project_milestone_time_report.project_report_report_pdf",
             values=rendering_variables,
         )
-        _logger.info('>>>>>>>>body>>>>>>>>>>: %s',
-                     body)
         header = self.env["ir.actions.report"]._render_template(
             "web.external_layout", values=rendering_variables
         )
-        _logger.info('>>>>>>>>header>>>>>>>>>>: %s',
-                     header)
         return self.env["ir.actions.report"]._run_wkhtmltopdf(
             [body],
             header=header,
