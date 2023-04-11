@@ -6,7 +6,7 @@
         <field name="model">project.type</field>
         <field name="inherit_id" ref="project_category.project_type_form"/>
         <field name="arch" type="xml">
-            <field name="sequence" position="after">
+            <field name="parent_id" position="after">
                 <field name="lump_sum"/>
             </field>
         </field>
