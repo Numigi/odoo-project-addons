@@ -11,6 +11,7 @@
   includes:
    - base_extended_security
    - test_http_request
+   - base_xml_rename
 
 - url: https://github.com/OCA/timesheet
   branch: "14.0"

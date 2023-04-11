@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="project_form_with_subtask_project_hidden" model="ir.ui.view">
+        <field name="name">Project Form: Hide subtask_project_id</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.edit_project"/>
+        <field name="arch" type="xml">
+            <field name="subtask_project_id" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            <label for="subtask_project_id" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </label>
+        </field>
+    </record>
+</odoo>

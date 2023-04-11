@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!--We want to drive the project of the subtasks from the parent task,-->
+    <!--therefore, we force the field project_id to be readonly on substask.-->
+    <record id="task_form_project_id_readonly_for_subtasks" model="ir.ui.view">
+        <field name="name">Project task: Project Readonly for Subtasks</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_form2"/>
+        <field name="arch" type="xml">
+            <field name="project_id" position="attributes">
+                <attribute name="attrs">{'readonly': [('parent_id', '!=', False)]}</attribute>
+            </field>
+        </field>
+    </record>
+
+    <!--Force readonly also on kanban view so user can't change the subtask project by-->
+    <!--drag and drop-->
+    <!--TA#8601-->
+    <record id="task_kanban_project_id_readonly_for_subtasks" model="ir.ui.view">
+        <field name="name">Project task: Project Readonly for Subtasks Kanban</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_kanban"/>
+        <field name="arch" type="xml">
+            <field name="project_id" position="after">
+                <field name="parent_id" invisible="1"/>
+            </field>
+            <field name="project_id" position="attributes">
+                <attribute name="attrs">{'readonly': [('parent_id', '!=', False)]}</attribute>
+            </field>
+        </field>
+    </record>
+
+</odoo>
