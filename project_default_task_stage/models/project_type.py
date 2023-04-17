@@ -11,7 +11,7 @@ class ProjectType(models.Model):
     default_task_stage_ids = fields.Many2many(
         'project.task.type',
         'project_type_default_task_stage_rel',
-        'type_id',
+        'project_type_id',
         'task_stage_id',
         string="Default Task Stages",
     )
