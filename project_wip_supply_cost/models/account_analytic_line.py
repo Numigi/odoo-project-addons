@@ -225,10 +225,13 @@ class AnalyticLine(models.Model):
         return {"name", "unit_amount", "date", "project_id", "task_id"}
 
     def _get_shop_supply_journal(self):
+        self = self.with_context(force_company=self.company_id.id)
         return self.project_id.project_type_id.shop_supply_journal_id
 
     def _get_shop_supply_account(self):
+        self = self.with_context(force_company=self.company_id.id)
         return self.project_id.project_type_id.shop_supply_account_id
 
     def _get_shop_supply_rate(self):
+        self = self.with_context(force_company=self.company_id.id)
         return self.project_id.project_type_id.shop_supply_rate
