@@ -208,6 +208,7 @@ class TimesheetLine(models.Model):
 
         :rtype: account.journal
         """
+        self = self.with_context(force_company=self.company_id.id)
         return self.project_id.project_type_id.salary_journal_id
 
     def _get_salary_account(self):
@@ -215,4 +216,5 @@ class TimesheetLine(models.Model):
 
         :rtype: account.account
         """
+        self = self.with_context(force_company=self.company_id.id)
         return self.project_id.project_type_id.salary_account_id
