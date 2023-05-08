@@ -9,6 +9,19 @@ class Project(models.Model):
 
     _inherit = "project.project"
 
+    def action_wip_to_cgs_wizard(self):
+        action = {
+            'name': 'Transfer WIP to CGS',
+            'type': 'ir.actions.act_window',
+            'view_mode': 'form',
+            'view_id': self.env.ref("project_wip.wip_to_cgs_wizard").id,
+            'res_model': 'project.wip.transfer',
+            'context': {'default_project_id': self.id,
+                        'force_company': self.env.user.company_id.id},
+            'target': 'new',
+        }
+        return action
+
     @api.multi
     def action_wip_to_cgs(self, accounting_date=None):
         """Move all WIP amounts accruded into the CGS account.
@@ -118,6 +131,7 @@ class Project(models.Model):
 
         :rtype: account.move.line recordset
         """
+        self = self.with_context(force_company=self.company_id.id)
         return self.env["account.move.line"].search(
             [
                 ("analytic_account_id", "=", self.analytic_account_id.id),
