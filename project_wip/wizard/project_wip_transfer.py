@@ -43,4 +43,5 @@ class ProjectWipTransferWizard(models.TransientModel):
             )
 
     def validate(self):
+        self = self.with_context(force_company=self.env.user.company_id.id)
         return self.project_id.action_wip_to_cgs(self.accounting_date)
