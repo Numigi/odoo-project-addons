@@ -21,6 +21,7 @@ class TaskMaterialLine(models.Model):
         return not is_testing or self._context.get('apply_project_wip_material_constraints')
 
     def _check_project_wip_account(self):
+        self = self.with_context(force_company=self.company_id.id)
         project = self.task_id.project_id
         if not project.project_type_id:
             raise ValidationError(_(
