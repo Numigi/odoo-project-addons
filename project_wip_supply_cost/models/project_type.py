@@ -33,6 +33,7 @@ class ProjectType(models.Model):
 
     @api.constrains('shop_supply_account_id', 'shop_supply_journal_id', 'wip_account_id')
     def _check_required_fields_for_shop_supply(self):
+        self = self.with_context(force_company=self.env.user.company_id.id)
         project_types_with_shop_supply = self.filtered(lambda t: t.shop_supply_account_id)
         for project_type in project_types_with_shop_supply:
             if not project_type.wip_account_id:

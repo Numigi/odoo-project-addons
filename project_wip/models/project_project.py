@@ -46,6 +46,7 @@ class Project(models.Model):
 
     def _action_wip_to_cgs_single(self, accounting_date=None):
         """Run the wip to cgs process for a single project."""
+        self = self.with_context(force_company=self.company_id.id)
         self._check_project_type_has_wip_journal()
         self._check_project_type_has_wip_account()
         self._check_project_type_has_cgs_account()
@@ -71,6 +72,7 @@ class Project(models.Model):
         :param wip_line: the Work In Progress account move line to transfer into CGS.
         :return: the transfer account move.
         """
+        self = self.with_context(force_company=self.company_id.id)
         wip_reversal_vals = self._get_common_wip_to_cgs_move_line_vals(wip_line)
         wip_reversal_vals["account_id"] = self.project_type_id.wip_account_id.id
         wip_reversal_vals["debit"] = wip_line.credit if wip_line.credit else 0
@@ -95,6 +97,7 @@ class Project(models.Model):
 
         :raises: ValidationError if no journal defined.
         """
+        self = self.with_context(force_company=self.company_id.id)
         if not self.project_type_id.cgs_journal_id:
             raise ValidationError(
                 _("The project type {} has no WIP journal defined.").format(
@@ -107,6 +110,7 @@ class Project(models.Model):
 
         :raises: ValidationError if no account defined.
         """
+        self = self.with_context(force_company=self.company_id.id)
         if not self.project_type_id.wip_account_id:
             raise ValidationError(
                 _(
@@ -119,6 +123,7 @@ class Project(models.Model):
 
         :raises: ValidationError if no account defined.
         """
+        self = self.with_context(force_company=self.company_id.id)
         if not self.project_type_id.cgs_account_id:
             raise ValidationError(
                 _(

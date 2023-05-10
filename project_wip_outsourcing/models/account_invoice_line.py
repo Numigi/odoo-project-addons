@@ -9,6 +9,7 @@ class AccountInvoiceLine(models.Model):
     _inherit = "account.invoice.line"
 
     def _get_outsourcing_wip_account(self):
+        self = self.with_context(force_company=self.company_id.id)
         return self.purchase_id.project_id.project_type_id.wip_account_id
 
     @api.onchange("product_id")

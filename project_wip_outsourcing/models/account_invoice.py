@@ -20,6 +20,7 @@ class AccountInvoice(models.Model):
         result = super()._prepare_invoice_line_from_po_line(line)
         if line.is_outsourcing:
             project = line.order_id.project_id
+            project = project.with_context(force_company=self.company_id.id)
             wip_account = project.project_type_id.wip_account_id
             if wip_account:
                 result["account_id"] = wip_account.id
