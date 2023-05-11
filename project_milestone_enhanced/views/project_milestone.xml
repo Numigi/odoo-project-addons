@@ -15,6 +15,14 @@
                     </button>
                 </div>
             </xpath>
+            <xpath expr="//group//field[@name='project_task_ids']" position="replace"/>
+            <xpath expr="//sheet" position="inside">
+                <notebook>
+                    <page name="tasks" string="Tasks">
+                        <field name="project_task_ids" context="{'default_project_id': project_id, 'default_date_end': target_date, 'default_milestone_id': active_id}"/>
+                    </page>
+                </notebook>
+            </xpath>
         </field>
     </record>
 </odoo>

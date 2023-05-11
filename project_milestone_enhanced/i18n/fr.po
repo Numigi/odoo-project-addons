@@ -42,3 +42,7 @@ msgstr "Jalon du projet"
 msgid "Toggle active"
 msgstr "Toggle actif"
 
+#. module: project_milestone_enhanced
+#: model_terms:ir.ui.view,arch_db:project_milestone_enhanced.project_milestone_active_view_form
+msgid "Tasks"
+msgstr "Tâches"
