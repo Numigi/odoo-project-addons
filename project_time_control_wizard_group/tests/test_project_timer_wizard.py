@@ -27,13 +27,8 @@ class TestWizardPermission(common.TransactionCase):
         admin.groups_id |= self.browse_ref(
             "hr_timesheet.group_hr_timesheet_user")
         self.uid = admin.id
-        self.other_employee = self.env["hr.employee"].create(
-            {"name": "Somebody else"})
         self.project = self.env["project.project"].create(
             {"name": "Test project", "allow_timesheets": True}
-        )
-        self.project_without_timesheets = self.env["project.project"].create(
-            {"name": "Test project", "allow_timesheets": False}
         )
         self.analytic_account = self.project.analytic_account_id
         self.task = self.env["project.task"].create(
@@ -72,14 +67,6 @@ class TestWizardPermission(common.TransactionCase):
         )
 
     def test_no_user_error_access_right(self):
-        # Running line found, stop the timer
-        # self.task.button_end_work()
-        # # No more running lines, cannot stop again
-        # with self.assertRaises(exceptions.UserError):
-        #     self.task.button_end_work()
-        # # All lines stopped, start new one and test if wizard action possible
-        # self.task.invalidate_cache()
-        # self.assertEqual(self.task.show_time_control, "start")
         start_action = self.task.button_start_work()
         wizard = self._create_wizard(start_action, self.task)
         self.assertIsNotNone(wizard.id)
