@@ -84,6 +84,7 @@ COPY project_template  /mnt/extra-addons/project_template
 COPY project_template_date_planned  /mnt/extra-addons/project_template_date_planned
 COPY project_template_timesheet  /mnt/extra-addons/project_template_timesheet
 COPY project_time_budget /mnt/extra-addons/project_time_budget
+COPY project_time_control_wizard_group /mnt/extra-addons/project_time_control_wizard_group
 COPY project_time_range /mnt/extra-addons/project_time_range
 COPY project_timesheet_analytic_update  /mnt/extra-addons/project_timesheet_analytic_update
 COPY project_type  /mnt/extra-addons/project_type

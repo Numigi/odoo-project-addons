@@ -85,6 +85,7 @@
         "project_template_date_planned",
         "project_template_timesheet",
         "project_time_budget",
+        "project_time_control_wizard_group",
         "project_time_range",
         "project_timesheet_analytic_update",
         "project_type",
