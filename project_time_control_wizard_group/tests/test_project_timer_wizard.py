@@ -3,7 +3,6 @@
 
 from datetime import datetime, timedelta
 
-from odoo import exceptions
 from odoo.tests import common
 
 
