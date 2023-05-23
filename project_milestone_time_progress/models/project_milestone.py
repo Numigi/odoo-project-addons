@@ -16,9 +16,9 @@ class ProjectMilestone(models.Model):
 
     @api.depends('estimated_hours', 'total_hours')
     def _compute_milestone_progress(self):
-        progress = 0.0
-        show_info_message = False
         for record in self:
+            progress = 0.0
+            show_info_message = False
             if record.estimated_hours:
                 progress = round(
                     (record.total_hours / record.estimated_hours) * 100, 2)
