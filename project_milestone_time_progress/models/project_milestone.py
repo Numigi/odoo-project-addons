@@ -2,6 +2,7 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 from odoo import fields, models, api
+from odoo.exceptions import UserError
 
 
 class ProjectMilestone(models.Model):
@@ -23,6 +24,7 @@ class ProjectMilestone(models.Model):
                 progress = round(
                     (record.total_hours / record.estimated_hours) * 100, 2)
             else:
+                raise UserError('this is triggered.')
                 show_info_message = True
             record.progress = progress
             record.show_progress_info_message = show_info_message

@@ -58,5 +58,4 @@ class TestMilestoneProgress(SavepointCase):
                 "project_id": self.project.id,
             }
         )
-        self.assertEqual(self.milestone_2.estimated_hours, "999")
         self.assertEqual(self.milestone_2.show_progress_info_message, True)
