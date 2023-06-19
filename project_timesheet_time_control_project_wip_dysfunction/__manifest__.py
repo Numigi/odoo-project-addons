@@ -2,7 +2,7 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 {
-    'name': 'Project Timesheet Time Control And Project WIP'
+    'name': 'Project Timesheet Time Control And Project WIP Supply Cost'
             '- Resolve Dysfunction',
     'version': '1.0.0',
     'author': 'Numigi',
@@ -13,7 +13,6 @@
     'summary': 'Resolve dysfunction of module Project Timesheet '
                'Time Control when installing WIP modules.',
     'depends': [
-        'project_wip_timesheet',
         'project_wip_supply_cost',
         'project_timesheet_time_control',
     ],
