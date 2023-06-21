@@ -64,6 +64,8 @@
         "project_portal_hide_timesheets",
         "project_portal_no_subtask",
         "project_portal_parent_task",
+        "project_progress_variance",
+        "project_projected_hours",
         "project_remaining_hours_update",
         "project_stage",
         "project_stage_allow_timesheet",
