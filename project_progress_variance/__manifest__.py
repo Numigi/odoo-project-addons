@@ -13,6 +13,8 @@
     "summary": "Add some progress variance time on task and project",
     "data": [
         "views/project_project.xml",
+        "views/project_task.xml",
+        "views/project_task_progress_report.xml",
     ],
     "installable": True,
 }

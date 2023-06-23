@@ -20,13 +20,6 @@ class ProjectTask(models.Model):
         readonly=True,
         store=True,
     )
-    progress_variance = fields.Float(
-        "Progress Variance",
-        digits=(16, 2),
-        compute="_compute_progress_variance",
-        readonly=True,
-        store=True,
-    )
 
     @api.depends("effective_hours", "remaining_hours")
     def _compute_projected_hours(self):
@@ -41,8 +34,3 @@ class ProjectTask(models.Model):
                 task.real_progress = task.effective_hours / projected_hours
             else:
                 task.real_progress = 0
-
-    @api.depends("progress", "real_progress")
-    def _compute_progress_variance(self):
-        for task in self:
-            task.real_progress = task.real_progress - task.progress

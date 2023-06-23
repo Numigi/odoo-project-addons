@@ -12,7 +12,6 @@
                 </field>
                 <field name="progress" position="after">
                     <field name="real_progress" widget="progressbar"/>
-                    <field name="progress_variance" widget="progressbar"/>
                 </field>
             </field>
         </record>

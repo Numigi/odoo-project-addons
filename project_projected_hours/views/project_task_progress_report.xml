@@ -13,7 +13,6 @@
                      <field name="projected_hours"/>
                      <field name="progress"/>
                      <field name="real_progress"/>
-                     <field name="progress_variance"/>
                  </tree>
              </field>
         </record>

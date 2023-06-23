@@ -16,11 +16,6 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: project_projected_hours
-#: model:ir.model.fields,field_description:project_projected_hours.field_project_task__progress_variance
-msgid "Progress Variance"
-msgstr "Écart sur avancement"
-
-#. module: project_projected_hours
 #: model:ir.model.fields,field_description:project_projected_hours.field_project_task__projected_hours
 msgid "Projected Hours"
 msgstr "Heures projetées"

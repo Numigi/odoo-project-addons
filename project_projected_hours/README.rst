@@ -12,11 +12,6 @@ Computed as : task effective hours / (task effective hours + task remaining hour
 
 .. image:: static/description/task_real_progress.png
 
-* Add the "Progress Variance” field in the form view of a task
-Computed as : task real progress + task theorical progress.
-
-.. image:: static/description/task_progress_variance.png
-
 * Add a “Task Progress” analysis list view
     * Add a list view with the elements to filter and group excluding the variance on progress
 

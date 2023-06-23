@@ -16,6 +16,11 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: project_progress_variance
+#: model:ir.model.fields,field_description:project_progress_variance.field_project_task__progress_variance
+msgid "Progress Variance"
+msgstr "Écart sur avancement"
+
+#. module: project_progress_variance
 #: model_terms:ir.ui.view,arch_db:project_progress_variance.project_project_view_form
 msgid "Progress"
 msgstr "Avancement"
