@@ -63,6 +63,8 @@ COPY project_outsourcing_timesheet_automation   /mnt/extra-addons/project_outsou
 COPY project_portal_hide_timesheets  /mnt/extra-addons/project_portal_hide_timesheets
 COPY project_portal_no_subtask  /mnt/extra-addons/project_portal_no_subtask
 COPY project_portal_parent_task  /mnt/extra-addons/project_portal_parent_task
+COPY project_progress_variance  /mnt/extra-addons/project_progress_variance
+COPY project_projected_hours  /mnt/extra-addons/project_projected_hours
 COPY project_remaining_hours_update  /mnt/extra-addons/project_remaining_hours_update
 COPY project_milestone_role  /mnt/extra-addons/project_milestone_role
 COPY project_stage  /mnt/extra-addons/project_stage

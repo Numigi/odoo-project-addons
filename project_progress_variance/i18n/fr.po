@@ -1,0 +1,46 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* project_progress_variance
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-06-21 11:42+0000\n"
+"PO-Revision-Date: 2023-06-21 11:42+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: project_progress_variance
+#: model:ir.model.fields,field_description:project_progress_variance.field_project_task__progress_variance
+msgid "Progress Variance"
+msgstr "Écart sur avancement"
+
+#. module: project_progress_variance
+#: model_terms:ir.ui.view,arch_db:project_progress_variance.project_project_view_form
+msgid "Progress"
+msgstr "Avancement"
+
+#. module: project_progress_variance
+#: model:ir.model,name:project_progress_variance.model_project_project
+msgid "Project"
+msgstr "Projet"
+
+#. module: project_progress_variance
+#: model:ir.model.fields,field_description:project_progress_variance.field_project_project__total_progress
+msgid "Total Progress"
+msgstr "Total avancement théorique"
+
+#. module: project_progress_variance
+#: model:ir.model.fields,field_description:project_progress_variance.field_project_project__total_progress_variance
+msgid "Total Progress Variance"
+msgstr "Total écart sur avancement"
+
+#. module: project_progress_variance
+#: model:ir.model.fields,field_description:project_progress_variance.field_project_project__total_real_progress
+msgid "Total Real Progress"
+msgstr "Total avancement réel"
