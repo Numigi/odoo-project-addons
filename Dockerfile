@@ -48,6 +48,7 @@ COPY project_milestone_responsible  /mnt/extra-addons/project_milestone_responsi
 COPY project_milestone_spent_hours  /mnt/extra-addons/project_milestone_spent_hours
 COPY project_milestone_start_date  /mnt/extra-addons/project_milestone_start_date
 COPY project_milestone_time_report  /mnt/extra-addons/project_milestone_time_report
+COPY project_milestone_time_report_advanced  /mnt/extra-addons/project_milestone_time_report_advanced
 COPY project_milestone_type  /mnt/extra-addons/project_milestone_type
 COPY project_milestone_time_kpi  /mnt/extra-addons/project_milestone_time_kpi
 COPY project_milestone_time_pivot  /mnt/extra-addons/project_milestone_time_pivot
