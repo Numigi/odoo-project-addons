@@ -35,7 +35,7 @@ class TestCustomerReference(SavepointCase):
             datetime(2023, 3, 24, 3), tz="EST", task_id=self.task_2, unit_amount=3
         )
 
-        self.assertEqual(self.task_2.real_progress, 0.15)
+        self.assertEqual(self.task_2.real_progress, 15)
 
     def _create_analytic_line(self, datetime_, tz=None, task_id=False, unit_amount=0):
         self.env["account.analytic.line"].with_context(tz=tz).create(

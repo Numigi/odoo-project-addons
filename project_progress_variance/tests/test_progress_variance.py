@@ -24,22 +24,22 @@ class TestCustomerReference(SavepointCase):
     def test_total_progress(self):
         self.assertEqual(self.project.total_progress, 0)
         self._load_analytic_line_remaining_hours_not_updated()
-        self.assertEqual(self.project.total_progress, 0.48)
+        self.assertEqual(self.project.total_progress, 47.83)
 
     def test_total_progress_remaining_hours_updated(self):
         self.assertEqual(self.project.total_progress, 0)
         self._load_analytic_line_with_remaining_hours_updated()
-        self.assertEqual(self.project.total_progress, 0.33)
+        self.assertEqual(self.project.total_progress, 32.5)
 
     def test_total_real_progress(self):
         self.assertEqual(self.project.total_real_progress, 0)
         self._load_analytic_line_remaining_hours_not_updated()
-        self.assertEqual(self.project.total_real_progress, 0.48)
+        self.assertEqual(self.project.total_real_progress, 47.83)
 
     def test_total_real_progress_remaining_hours_updated(self):
         self.assertEqual(self.project.total_real_progress, 0)
         self._load_analytic_line_with_remaining_hours_updated()
-        self.assertEqual(self.project.total_real_progress, 0.27)
+        self.assertEqual(self.project.total_real_progress, 27.08)
 
     def test_total_progress_variance(self):
         self.assertEqual(self.project.total_progress_variance, 0)
@@ -49,9 +49,9 @@ class TestCustomerReference(SavepointCase):
     def test_total_progress_variance_remaining_hours_updated(self):
         self.assertEqual(self.project.total_progress_variance, 0)
         self._load_analytic_line_with_remaining_hours_updated()
-        self.assertEqual(self.project.total_real_progress, 0.27)
-        self.assertEqual(self.project.total_progress, 0.33)
-        self.assertEqual(self.project.total_progress_variance, -0.06)
+        self.assertEqual(self.project.total_real_progress, 27.08)
+        self.assertEqual(self.project.total_progress, 32.5)
+        self.assertEqual(self.project.total_progress_variance, -5.42)
 
     def _load_analytic_line_remaining_hours_not_updated(self):
         self.task_1.planned_hours = 10
