@@ -31,6 +31,6 @@ class ProjectTask(models.Model):
         for task in self:
             projected_hours = task.effective_hours + task.remaining_hours
             if projected_hours:
-                task.real_progress = task.effective_hours / projected_hours
+                task.real_progress = 100.0 * task.effective_hours / projected_hours
             else:
-                task.real_progress = 0
+                task.real_progress = 0.0

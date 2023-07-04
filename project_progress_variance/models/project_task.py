@@ -18,4 +18,4 @@ class ProjectTask(models.Model):
     @api.depends("progress", "real_progress")
     def _compute_progress_variance(self):
         for task in self:
-            task.real_progress = task.real_progress - task.progress
+            task.progress_variance = task.real_progress - task.progress

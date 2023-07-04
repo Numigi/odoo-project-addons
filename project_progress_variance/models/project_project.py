@@ -37,9 +37,9 @@ class ProjectProject(models.Model):
             planned_hours = sum(project.task_ids.mapped("planned_hours"))
             effective_hours = sum(project.task_ids.mapped("effective_hours"))
             if planned_hours:
-                project.total_progress = effective_hours / planned_hours
+                project.total_progress = 100.0 * (effective_hours / planned_hours)
             else:
-                project.total_progress = 0
+                project.total_progress = 0.0
 
     @api.depends("task_ids.projected_hours", "task_ids.effective_hours")
     def _compute_total_real_progress(self):
@@ -47,9 +47,11 @@ class ProjectProject(models.Model):
             projected_hours = sum(project.task_ids.mapped("projected_hours"))
             effective_hours = sum(project.task_ids.mapped("effective_hours"))
             if projected_hours:
-                project.total_real_progress = effective_hours / projected_hours
+                project.total_real_progress = 100.0 * (
+                    effective_hours / projected_hours
+                )
             else:
-                project.total_real_progress = 0
+                project.total_real_progress = 0.0
 
     @api.depends("total_progress", "total_real_progress")
     def _compute_total_progress_variance(self):
