@@ -47,10 +47,15 @@ class TaskMaterialLine(models.Model):
         compute_sudo=True,
     )
     product_uom_id = fields.Many2one(related="product_id.uom_id", readonly=True)
-    unit_cost = fields.Float(
-        related="product_id.standard_price", string="Unit Cost", readonly=True
-    )
+    unit_cost = fields.Float(string="Unit Cost",
+                             compute='_compute_unit_cost',
+                             )
     move_ids = fields.One2many("stock.move", "material_line_id", "Stock Moves")
+
+    def _compute_unit_cost(self):
+        for record in self:
+            record.unit_cost = record.with_context(
+                force_company=record.company_id.id).product_id.standard_price
 
     @api.depends(
         "move_ids.move_orig_ids",
