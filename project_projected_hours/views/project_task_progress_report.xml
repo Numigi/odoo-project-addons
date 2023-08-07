@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<odoo>       
+        <record id="view_task_project_progress_tree" model="ir.ui.view">
+            <field name="name">report.project.task.progress.tree</field>
+            <field name="model">project.task</field>
+            <field name="arch" type="xml">
+                <tree string="Tasks Progress" create="false" default_order="id desc">
+                     <field name="project_id"/>   
+                     <field name="name" string="Task"/>                  
+                     <field name="planned_hours"/>
+                     <field name="effective_hours"/>
+                     <field name="remaining_hours"/>
+                     <field name="projected_hours"/>
+                     <field name="progress"/>
+                     <field name="real_progress"/>
+                 </tree>
+             </field>
+        </record>
+
+       <record id="action_project_task_progress_tree" model="ir.actions.act_window">
+            <field name="name">Tasks Progress</field>
+            <field name="res_model">project.task</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="view_task_project_progress_tree"/>
+        </record>
+
+</odoo>

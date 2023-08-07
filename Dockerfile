@@ -48,6 +48,7 @@ COPY project_milestone_responsible  /mnt/extra-addons/project_milestone_responsi
 COPY project_milestone_spent_hours  /mnt/extra-addons/project_milestone_spent_hours
 COPY project_milestone_start_date  /mnt/extra-addons/project_milestone_start_date
 COPY project_milestone_time_report  /mnt/extra-addons/project_milestone_time_report
+COPY project_milestone_time_report_advanced  /mnt/extra-addons/project_milestone_time_report_advanced
 COPY project_milestone_type  /mnt/extra-addons/project_milestone_type
 COPY project_milestone_time_kpi  /mnt/extra-addons/project_milestone_time_kpi
 COPY project_milestone_time_pivot  /mnt/extra-addons/project_milestone_time_pivot
@@ -63,6 +64,8 @@ COPY project_outsourcing_timesheet_automation   /mnt/extra-addons/project_outsou
 COPY project_portal_hide_timesheets  /mnt/extra-addons/project_portal_hide_timesheets
 COPY project_portal_no_subtask  /mnt/extra-addons/project_portal_no_subtask
 COPY project_portal_parent_task  /mnt/extra-addons/project_portal_parent_task
+COPY project_progress_variance  /mnt/extra-addons/project_progress_variance
+COPY project_projected_hours  /mnt/extra-addons/project_projected_hours
 COPY project_remaining_hours_update  /mnt/extra-addons/project_remaining_hours_update
 COPY project_milestone_role  /mnt/extra-addons/project_milestone_role
 COPY project_stage  /mnt/extra-addons/project_stage
@@ -94,6 +97,7 @@ COPY project_time_budget /mnt/extra-addons/project_time_budget
 COPY project_time_range /mnt/extra-addons/project_time_range
 COPY project_timesheet_analytic_update  /mnt/extra-addons/project_timesheet_analytic_update
 COPY project_timesheet_time_control_employee_pin  /mnt/extra-addons/project_timesheet_time_control_employee_pin
+COPY project_timesheet_time_control_project_wip_dysfunction  /mnt/extra-addons/project_timesheet_time_control_project_wip_dysfunction
 COPY project_timesheet_time_control_restricted_group  /mnt/extra-addons/project_timesheet_time_control_restricted_group
 COPY project_type  /mnt/extra-addons/project_type
 COPY project_wip  /mnt/extra-addons/project_wip
