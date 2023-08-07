@@ -14,7 +14,7 @@
             <tbody>
                 <tr t-foreach="stage_lines" t-as="stage_line" style="background-color: #d9d8d7;">
                     <t t-set="stage" t-value="stage_line['stage']"/>
-                        <td style="padding-left: 7px; font-size: 13px; color: blue; font-weight: bold;">
+                        <td style="padding-left: 7px; font-size: 13px; font-weight: bold;">
                             <span t-raw="stage.display_name"/>
                         </td>
                         <td></td>
@@ -30,10 +30,10 @@
                                 <td>
                                     <span t-raw="project.display_name"/>
                                 </td>
-                                <td class="text-right">
+                                <td class="text-right" width="10%">
                                     <span t-raw="line['date_start']" t-options="{'widget': 'date'}"/>
                                 </td>
-                                <td class="text-right">
+                                <td class="text-right" width="10%">
                                     <span t-raw="line['date_end']" t-options="{'widget': 'date'}"/>
                                 </td>
                                 <td
