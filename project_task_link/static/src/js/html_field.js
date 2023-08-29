@@ -5,7 +5,7 @@
 odoo.define("project_task_link.html_field", function(require) {
 "use strict";
 
-var HtmlField = require("web_editor.backend").FieldTextHtmlSimple;
+var HtmlField = require("web_editor.field.html");
 
 var taskUrlRegex = /\/my\/task\/\d+$/;
 
@@ -14,6 +14,7 @@ var taskUrlRegex = /\/my\/task\/\d+$/;
  * (<a href="https://my.domain.com/my/task/123">TA#123</a>),
  * open the task in the backend instead of the portal.
  */
+
 HtmlField.include({
     /**
      * Open the form view of a task given the task ID.
@@ -44,5 +45,7 @@ HtmlField.include({
         });
     },
 });
+
+return HtmlField;
 
 });
