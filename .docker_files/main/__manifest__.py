@@ -99,6 +99,7 @@
         "project_timesheet_time_control_employee_pin",
         "project_timesheet_time_control_project_wip_dysfunction",
         "project_timesheet_time_control_restricted_group",
+        "project_track_end_date",
         "project_type",
         "project_wip",
         "project_wip_material",

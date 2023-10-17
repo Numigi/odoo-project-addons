@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="edit_date_wizard" model="ir.ui.view">
+        <field name="name">Edit Date Wizard View</field>
+        <field name="model">edit.date.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Edit date">
+                <group>
+                    <h1>
+                        <field name="reason" required="1" placeholder="Reason"/>
+                    </h1>
+                </group>
+                <group>
+                    <field name="initial_date" invisible="1"/>
+                    <field name="date" placeholder="Date"/>
+                    <field name="project_id" readonly="1"/>
+                    <field name="user_id" readonly="1"/>
+                    <field name="company_id" readonly="1"/>
+                </group>
+                <footer>
+                    <button string="Save" name="action_update_date" type="object" class="btn-primary"/>
+                    <button string="Cancel" class="btn-default" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="wizard_edit_end_date" model="ir.actions.act_window">
+        <field name="name">Edit date action</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">edit.date.wizard</field>
+        <field name="view_id" ref="edit_date_wizard"/>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>
