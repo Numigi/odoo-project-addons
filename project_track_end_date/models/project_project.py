@@ -1,14 +1,13 @@
 # © 2023 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo import api, fields, models
+from odoo import api, fields, models, _
 from odoo.exceptions import UserError
 
 
 class ProjectProject(models.Model):
     _inherit = "project.project"
 
-    allow_edit_end_date = fields.Boolean("Allow edit end date")
     stage_name = fields.Char(related="stage_id.name")
     project_end_history_ids = fields.Many2many(
         "project.end.history",
@@ -34,7 +33,7 @@ class ProjectProject(models.Model):
     def write(self, values):
         # Actually state is many2one (or related with it)
         # no external ID
-        if "date" in values and self and self.stage_name == "Prévu":
+        if "date" in values and self and self.stage_name != "Prévu":
             raise UserError(
                 _(
                     "You can not modify the end date when project status is not 'Planned'."

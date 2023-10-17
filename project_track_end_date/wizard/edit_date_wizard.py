@@ -12,7 +12,7 @@ class EditDateWizard(models.TransientModel):
     date = fields.Date(string="Date")
     company_id = fields.Many2one("res.company", string="Company")
     user_id = fields.Many2one("res.users", string="Author")
-    reason = fields.Text("Access warning")
+    reason = fields.Text("Reason")
     project_id = fields.Many2one("project.project", string="Project")
 
     @api.multi

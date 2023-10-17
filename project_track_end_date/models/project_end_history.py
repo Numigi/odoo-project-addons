@@ -15,5 +15,5 @@ class ProjectEndHistory(models.Model):
     total_week_duration = fields.Float(string="Total project duration (weeks)")
     company_id = fields.Many2one("res.company", string="Company")
     user_id = fields.Many2one("res.users", string="Author")
-    reason = fields.Text("Access warning")
+    reason = fields.Text("Reason")
     project_id = fields.Many2one("project.project", string="Project")

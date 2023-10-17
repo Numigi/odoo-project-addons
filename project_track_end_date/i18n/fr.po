@@ -1,0 +1,165 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* project_track_end_date
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-10-17 07:55+0000\n"
+"PO-Revision-Date: 2023-10-17 07:55+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: project_track_end_date
+#: model_terms:ir.ui.view,arch_db:project_track_end_date.edit_date_wizard
+#: model:ir.model.fields,field_description:project_track_end_date.field_edit_date_wizard__reason
+#: model:ir.model.fields,field_description:project_track_end_date.field_project_end_history__reason
+msgid "Reason"
+msgstr "Motif de modification"
+
+#. module: project_track_end_date
+#: model:ir.model.fields,field_description:project_track_end_date.field_edit_date_wizard__user_id
+#: model:ir.model.fields,field_description:project_track_end_date.field_project_end_history__user_id
+msgid "Author"
+msgstr "Utilisateur"
+
+#. module: project_track_end_date
+#: model_terms:ir.ui.view,arch_db:project_track_end_date.edit_date_wizard
+msgid "Cancel"
+msgstr "Annuler"
+
+#. module: project_track_end_date
+#: model:ir.model.fields,field_description:project_track_end_date.field_edit_date_wizard__company_id
+#: model:ir.model.fields,field_description:project_track_end_date.field_project_end_history__company_id
+msgid "Company"
+msgstr "Société"
+
+#. module: project_track_end_date
+#: model:ir.model.fields,field_description:project_track_end_date.field_edit_date_wizard__create_uid
+#: model:ir.model.fields,field_description:project_track_end_date.field_project_end_history__create_uid
+msgid "Created by"
+msgstr "Créé par"
+
+#. module: project_track_end_date
+#: model:ir.model.fields,field_description:project_track_end_date.field_edit_date_wizard__create_date
+#: model:ir.model.fields,field_description:project_track_end_date.field_project_end_history__create_date
+msgid "Created on"
+msgstr "Créé le"
+
+#. module: project_track_end_date
+#: model:ir.model.fields,field_description:project_track_end_date.field_edit_date_wizard__date
+#: model:ir.model.fields,field_description:project_track_end_date.field_project_end_history__date
+#: model_terms:ir.ui.view,arch_db:project_track_end_date.edit_date_wizard
+msgid "Date"
+msgstr ""
+
+#. module: project_track_end_date
+#: model:ir.model.fields,field_description:project_track_end_date.field_edit_date_wizard__display_name
+#: model:ir.model.fields,field_description:project_track_end_date.field_project_end_history__display_name
+msgid "Display Name"
+msgstr "Nom affiché"
+
+#. module: project_track_end_date
+#: model:ir.model,name:project_track_end_date.model_edit_date_wizard
+msgid "Edit Date Wizard"
+msgstr "Wizard de modification de la date"
+
+#. module: project_track_end_date
+#: model_terms:ir.ui.view,arch_db:project_track_end_date.edit_date_wizard
+msgid "Edit date"
+msgstr "Modifier la date"
+
+#. module: project_track_end_date
+#: model:ir.actions.act_window,name:project_track_end_date.wizard_edit_end_date
+msgid "Edit date action"
+msgstr "Modifier la date"
+
+#. module: project_track_end_date
+#: model_terms:ir.ui.view,arch_db:project_track_end_date.project_form_with_edit_end_date
+msgid "Edit end date"
+msgstr "Modifier la date de fin"
+
+#. module: project_track_end_date
+#: model:ir.actions.act_window,name:project_track_end_date.action_view_project_end_history
+#: model:ir.model.fields,field_description:project_track_end_date.field_project_project__project_end_history_count
+#: model_terms:ir.ui.view,arch_db:project_track_end_date.ir_actions_project_end_history_tree
+#: model_terms:ir.ui.view,arch_db:project_track_end_date.project_form_with_edit_end_date
+msgid "Historics"
+msgstr "Historiques"
+
+#. module: project_track_end_date
+#: model:ir.model.fields,field_description:project_track_end_date.field_project_project__project_end_history_ids
+msgid "Historics associated to this project"
+msgstr "Historique associée au projet"
+
+#. module: project_track_end_date
+#: model:ir.model.fields,field_description:project_track_end_date.field_edit_date_wizard__id
+#: model:ir.model.fields,field_description:project_track_end_date.field_project_end_history__id
+msgid "ID"
+msgstr ""
+
+#. module: project_track_end_date
+#: model:ir.model.fields,field_description:project_track_end_date.field_edit_date_wizard__initial_date
+#: model:ir.model.fields,field_description:project_track_end_date.field_project_end_history__initial_date
+msgid "Initial date"
+msgstr "Date initiale de fin de validité"
+
+#. module: project_track_end_date
+#: model:ir.model.fields,field_description:project_track_end_date.field_edit_date_wizard____last_update
+#: model:ir.model.fields,field_description:project_track_end_date.field_project_end_history____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: project_track_end_date
+#: model:ir.model.fields,field_description:project_track_end_date.field_edit_date_wizard__write_uid
+#: model:ir.model.fields,field_description:project_track_end_date.field_project_end_history__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: project_track_end_date
+#: model:ir.model.fields,field_description:project_track_end_date.field_edit_date_wizard__write_date
+#: model:ir.model.fields,field_description:project_track_end_date.field_project_end_history__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: project_track_end_date
+#: model:ir.model.fields,field_description:project_track_end_date.field_project_project__stage_name
+msgid "Name"
+msgstr "Nom de l'étape"
+
+#. module: project_track_end_date
+#: model:ir.model.fields,field_description:project_track_end_date.field_project_end_history__week_interval_date
+msgid "Number of reporting weeks"
+msgstr "Nombre de semaine de report"
+
+#. module: project_track_end_date
+#: model:ir.model,name:project_track_end_date.model_project_project
+#: model:ir.model.fields,field_description:project_track_end_date.field_edit_date_wizard__project_id
+#: model:ir.model.fields,field_description:project_track_end_date.field_project_end_history__project_id
+msgid "Project"
+msgstr "Projet"
+
+#. module: project_track_end_date
+#: model:ir.model,name:project_track_end_date.model_project_end_history
+msgid "Project End History"
+msgstr ""
+
+#. module: project_track_end_date
+#: model_terms:ir.ui.view,arch_db:project_track_end_date.edit_date_wizard
+msgid "Save"
+msgstr "Mettre à jour"
+
+#. module: project_track_end_date
+#: model:ir.model.fields,field_description:project_track_end_date.field_project_end_history__total_week_duration
+msgid "Total project duration (weeks)"
+msgstr "Durée totale du projet (semaines)"
+
+#. module: project_track_end_date
+#: model:ir.model.fields,field_description:project_track_end_date.field_project_end_history__update_on
+msgid "Update on"
+msgstr "Date de mise à jour"
