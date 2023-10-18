@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="ir_actions_project_end_history_tree" model="ir.ui.view">
+        <field name="model">project.end.history</field>
+        <field name="name">Historics</field>
+        <field name="arch" type="xml">
+            <tree string="Historics">
+                <field name="update_on"/>
+                <field name="reason"/>
+                <field name="project_id" invisible="1"/>
+                <field name="initial_date"/>
+                <field name="date"/>
+                <field name="week_interval_date"/>
+                <field name="total_week_duration"/>
+            </tree>
+        </field>
+    </record>
+    
+    <record id="action_view_project_end_history" model="ir.actions.act_window">
+        <field name="name">Historics</field>
+        <field name="res_model">project.end.history</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="ir_actions_project_end_history_tree"/>
+        <field name="context">{
+            'search_default_user_id': [uid],
+            'search_default_project_id': [active_id],
+            'default_project_id': active_id,
+            'default_user_id': uid,
+        }
+        </field>
+        <field name="domain">[('project_id', '=', active_id)]</field>
+    </record>
+
+    <record id="project_form_with_edit_end_date" model="ir.ui.view">
+        <field name="name">Project Form With Edit End Date</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.edit_project"/>
+        <field name="arch" type="xml">
+            <header position="inside">
+                <field name="stage_name" invisible="1"/>
+                <button name="action_edit_end_date" type="object" string="Edit end date" groups="project.group_project_manager"  attrs="{'invisible': [('stage_name', 'in', ['Terminé','Abandonné'])]}"/>
+            </header>
+
+            <xpath expr="//div[hasclass('oe_button_box')]" position="inside">
+                <button name="%(action_view_project_end_history)d" attrs="{'invisible': [('project_end_history_count', '=', 0)]}"
+                    type="action" class="oe_stat_button order-9" icon="fa-list" groups="project.group_project_manager">                   
+                    <field name="project_end_history_count" widget="statinfo" string="Historics"/>
+                </button>
+            </xpath>
+
+        </field>
+    </record>
+
+    <record id="project_form_readonly_end_date" model="ir.ui.view">
+        <field name="name">Project Form Readonly End Date</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project_timeline.project_project_form"/>
+        <field name="arch" type="xml">
+            <field name="date" position="attributes">
+                <attribute name="attrs">{"readonly": [("stage_name", "not in", ['Prévu'])]}</attribute>
+            </field>
+        </field>
+    </record>
+
+
+
+</odoo>
