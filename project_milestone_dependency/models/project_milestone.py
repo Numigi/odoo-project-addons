@@ -6,16 +6,20 @@ from odoo.exceptions import ValidationError
 
 
 class ProjectMilestone(models.Model):
-
     _inherit = "project.milestone"
 
-    child_ids = fields.Many2many('project.milestone',
-                                 'rel_project_milestone_dependencies',
-                                 'milestone_id', 'child_id',
-                                 string="Dependencies")
+    child_ids = fields.Many2many(
+        "project.milestone",
+        "rel_project_milestone_dependencies",
+        "milestone_id",
+        "child_id",
+        string="Dependencies",
+        copy=False,
+    )
 
-    @api.constrains('child_ids')
+    @api.constrains("child_ids")
     def _check_recursion(self):
-        if not self._check_m2m_recursion('child_ids'):
-            raise ValidationError(_("You cannot create recursive "
-                                    "dependencies between milestones."))
+        if not self._check_m2m_recursion("child_ids"):
+            raise ValidationError(
+                _("You cannot create recursive " "dependencies between milestones.")
+            )
