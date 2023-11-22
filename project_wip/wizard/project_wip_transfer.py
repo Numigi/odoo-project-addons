@@ -12,13 +12,13 @@ class ProjectWipTransferWizard(models.TransientModel):
 
     project_id = fields.Many2one("project.project", "Project")
     cgs_journal_id = fields.Many2one(
-        related="project_id.project_type_id.cgs_journal_id", readonly=True
+        related="project_id.type_id.cgs_journal_id", readonly=True
     )
     wip_account_id = fields.Many2one(
-        related="project_id.project_type_id.wip_account_id", readonly=True
+        related="project_id.type_id.wip_account_id", readonly=True
     )
     cgs_account_id = fields.Many2one(
-        related="project_id.project_type_id.cgs_account_id", readonly=True
+        related="project_id.type_id.cgs_account_id", readonly=True
     )
     accounting_date = fields.Date(
         default=fields.Date.context_today,
@@ -35,6 +35,7 @@ class ProjectWipTransferWizard(models.TransientModel):
 
     @api.onchange("project_id")
     def _onchange_project_compute_costs_to_transfer(self):
+        self = self.with_context(force_company=self.env.user.company_id.id)
         has_wip_account = bool(self.wip_account_id)
         if has_wip_account:
             self.costs_to_transfer = sum(
@@ -43,4 +44,5 @@ class ProjectWipTransferWizard(models.TransientModel):
             )
 
     def validate(self):
+        self = self.with_context(force_company=self.env.user.company_id.id)
         return self.project_id.action_wip_to_cgs(self.accounting_date)

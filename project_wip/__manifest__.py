@@ -3,14 +3,14 @@
 
 {
     "name": "Project Work In Progress",
-    "version": "1.1.0",
+    "version": "14.0.1.0.0",
     "author": "Numigi",
     "maintainer": "Numigi",
     "website": "https://bit.ly/numigi-com",
     "license": "LGPL-3",
     "category": "Project",
     "summary": "Manage Work In Progress Accounting",
-    "depends": ["account", "project", "project_type"],
+    "depends": ["account", "stock", "project", "project_type"],
     "data": [
         "security/res_groups.xml",
         "security/ir.model.access.csv",
