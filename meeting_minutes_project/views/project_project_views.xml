@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="ir_actions_meeting_minutes_project_tree" model="ir.ui.view">
+        <field name="model">meeting.minutes.project</field>
+        <field name="name">Meeting minutes</field>
+        <field name="arch" type="xml">
+            <tree string="Meeting Minutes">
+                <field name="name"/>
+                <field name="start_date"/>
+                <field name="end_date"/>
+                <field name="mean_communication_id"/>
+                <field name="partner_ids" widget="many2many_tags"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_view_meeting_minutes_project" model="ir.actions.act_window">
+        <field name="name">Meeting minutes</field>
+        <field name="res_model">meeting.minutes.project</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="ir_actions_meeting_minutes_project_tree"/>
+        <field name="context">{
+            'search_default_user_id': [uid],
+            'search_default_project_id': [active_id],
+            'default_project_id': active_id,
+            'default_user_id': uid,
+        }
+        </field>
+        <field name="domain">[('project_id', '=', active_id)]</field>
+    </record>
+
+    <record id="meeting_minutes_project_form" model="ir.ui.view">
+        <field name="name">Project Form With Meeting Minutes</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.edit_project"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[hasclass('oe_button_box')]" position="inside">
+                <button name="%(action_view_meeting_minutes_project)d" attrs="{'invisible': [('meeting_minutes_project_count', '=', 0)]}"
+                    type="action" class="oe_stat_button order-9"  icon="fa-exchange" groups="project.group_project_user">
+                    <field name="meeting_minutes_project_count" widget="statinfo" string="Meeting minutes"/>
+                </button>
+            </xpath>
+            <xpath expr="//page[@name='settings']" position="after">
+                <page name="report" string="Meeting minutes">
+                    <label for="pending_actions_ids" string="Pending Actions"/>
+                        <group name="pending_action">
+                            <field name="pending_actions_ids" nolabel="1" />
+                        </group>
+                    </page>
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>

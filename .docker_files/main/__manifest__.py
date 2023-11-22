@@ -15,6 +15,7 @@
         # "purchase",  # required for testing project_wip_material
         "account_analytic_enhanced",  # required for project_enhanced
         "analytic_line_revenue",
+        "meeting_minutes_project",
         "analytic_line_employee",
         "project_analytic_group",
         "project_chatter",
@@ -81,7 +82,6 @@
         "project_task_subtask_same_project",
         "project_task_type",
         "project_template",
-
         "project_template_date_planned",
         "project_template_timesheet",
         "project_time_budget",
