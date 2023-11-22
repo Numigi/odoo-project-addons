@@ -109,6 +109,5 @@ COPY project_wip_outsourcing  /mnt/extra-addons/project_wip_outsourcing
 COPY project_wip_supply_cost  /mnt/extra-addons/project_wip_supply_cost
 COPY project_wip_timesheet  /mnt/extra-addons/project_wip_timesheet
 COPY timesheet_task_project_no_change  /mnt/extra-addons/timesheet_task_project_no_change
-
 COPY .docker_files/main /mnt/extra-addons/main
 COPY .docker_files/odoo.conf /etc/odoo
