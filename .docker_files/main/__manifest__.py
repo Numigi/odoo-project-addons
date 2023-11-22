@@ -16,7 +16,7 @@
         "account_analytic_enhanced",  # required for project_enhanced
         "analytic_line_employee",
         "analytic_line_revenue",
-        "meeting_minutes_project",
+        # "meeting_minutes_project",
         "project_analytic_group",
         "project_chatter",
         "project_closed",
