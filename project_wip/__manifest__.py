@@ -10,7 +10,7 @@
     "license": "LGPL-3",
     "category": "Project",
     "summary": "Manage Work In Progress Accounting",
-    "depends": ["account", "project", "hr_timesheet", "project_type"],
+    "depends": ["account", "project", "stock", "hr_timesheet", "project_type"],
     "data": [
         "security/res_groups.xml",
         "security/ir.model.access.csv",
