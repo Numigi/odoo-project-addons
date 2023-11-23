@@ -184,6 +184,12 @@ class TestWIPTrasferToCGS(common.SavepointCase):
         cgs_move_line = self._find_cgs_move_line()
         assert cgs_move_line.debit == self.raw_material_amount
 
+    def test_wip_and_cgs_move_line_full_reconcile(self):
+        self._action_wip_to_cgs()
+        cgs_move_line = self._find_cgs_move_line()
+        assert self.wip_line.full_reconcile_id is True
+        assert cgs_move_line.full_reconcile_id is True
+
     def test_product_propagated_to_transfer_move_lines(self):
         self._action_wip_to_cgs()
         transfer_move = self._find_wip_to_cgs_move()
