@@ -6,19 +6,20 @@ from odoo.exceptions import ValidationError, AccessError
 
 
 class Project(models.Model):
-
     _inherit = "project.project"
 
     def action_wip_to_cgs_wizard(self):
         action = {
-            'name': 'Transfer WIP to CGS',
-            'type': 'ir.actions.act_window',
-            'view_mode': 'form',
-            'view_id': self.env.ref("project_wip.wip_to_cgs_wizard").id,
-            'res_model': 'project.wip.transfer',
-            'context': {'default_project_id': self.id,
-                        'force_company': self.env.user.company_id.id},
-            'target': 'new',
+            "name": "Transfer WIP to CGS",
+            "type": "ir.actions.act_window",
+            "view_mode": "form",
+            "view_id": self.env.ref("project_wip.wip_to_cgs_wizard").id,
+            "res_model": "project.wip.transfer",
+            "context": {
+                "default_project_id": self.id,
+                "force_company": self.env.user.company_id.id,
+            },
+            "target": "new",
         }
         return action
 
@@ -167,7 +168,8 @@ def _reconcile_wip_move_lines(wip_line, wip_reversal_line):
     :param wip_reversal_line: the wip reversal account.move.line
     :raises: ValidationError if the lines could not be reconciled.
     """
-    unreconciled_line = (wip_line | wip_reversal_line).auto_reconcile_lines()
+    unreconciled_line = (wip_line + wip_reversal_line).auto_reconcile_lines()
+    (wip_reversal_line).check_full_reconcile()
     if unreconciled_line:
         raise ValidationError(
             _(
