@@ -12,8 +12,6 @@ class TestProjectEndHistoric(SavepointCase):
     def setUpClass(cls):
         super(TestProjectEndHistoric, cls).setUpClass()
 
-        # Create project stage : only in French
-        cls.qualified_stage = cls.env["project.stage"].create({"name": "Prévu"})
         # Test 'Numigi' project
         cls.project = (
             cls.env["project.project"]
@@ -45,12 +43,12 @@ class TestProjectEndHistoric(SavepointCase):
             self.project.write({"date": date(2023, 1, 15)})
 
     def test_update_date_from_wizard(self):
-        self.project.stage_id = self.qualified_stage.id
         vals = {
             "reason": "Project postponed",
         }
         res = (
-            self.env["edit.date.wizard"].with_context(self.action_context).create(vals)
+            self.env["edit.date.wizard"].with_context(self.action_context
+                                                      ).create(vals)
         )
         res.date = date(2023, 1, 15)
         res.refresh()
@@ -61,8 +59,4 @@ class TestProjectEndHistoric(SavepointCase):
         for history in self.project.project_end_history_ids:
             self.assertEqual(history.week_interval_date, 1)
             self.assertEqual(history.total_week_duration, 2)
-
-
-# project_end_history_ids
-#         "week_interval_date": (self.date - self.initial_date).days / 7,
-# "total_week_duration": (self.date - self.project_id.date_start).days / 7,
+        self.assertEqual(self.project.expected_week_duration, 2)

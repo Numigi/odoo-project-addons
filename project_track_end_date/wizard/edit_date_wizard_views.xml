@@ -12,10 +12,10 @@
                 </group>
                 <group>
                     <field name="initial_date" invisible="1"/>
-                    <field name="date" placeholder="Date"/>
+                    <field name="date" required="1" placeholder="Date"/>
                     <field name="project_id" readonly="1"/>
                     <field name="user_id" readonly="1"/>
-                    <field name="company_id" readonly="1"/>
+                    <field name="company_id" readonly="1" groups="base.group_multi_company"/>
                 </group>
                 <footer>
                     <button string="Save" name="action_update_date" type="object" class="btn-primary"/>
