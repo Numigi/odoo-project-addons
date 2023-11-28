@@ -38,7 +38,7 @@
         <field name="arch" type="xml">
             <header position="inside">
                 <field name="stage_name" invisible="1"/>
-                <button name="action_edit_end_date" type="object" string="Edit end date" groups="project.group_project_manager"  attrs="{'invisible': [('stage_name', 'in', ['Terminé','Abandonné'])]}"/>
+                <button name="action_edit_end_date" type="object" string="Edit end date" groups="project.group_project_manager" />
             </header>
 
             <xpath expr="//div[hasclass('oe_button_box')]" position="inside">
@@ -57,7 +57,10 @@
         <field name="inherit_id" ref="project_timeline.project_project_form"/>
         <field name="arch" type="xml">
             <field name="date" position="attributes">
-                <attribute name="attrs">{"readonly": [("stage_name", "not in", ['Prévu'])]}</attribute>
+                <attribute name="readonly">1</attribute>
+            </field>
+            <field name="date" position="after">
+                 <field name="expected_week_duration" attrs="{'invisible': [('expected_week_duration', '=', 0)]}" />
             </field>
         </field>
     </record>

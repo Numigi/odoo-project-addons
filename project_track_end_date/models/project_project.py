@@ -19,6 +19,18 @@ class ProjectProject(models.Model):
         compute="_compute_project_end_history",
         groups="project.group_project_user",
     )
+    expected_week_duration = fields.Float(
+        string="Expected week duration",
+        compute="_compute_expected_week_duration",
+    )
+
+    def _compute_expected_week_duration(self):
+        for project in self:
+            project.expected_week_duration = (
+                (project.date - project.date_start).days / 7
+                if project.date and project.date_start
+                else 0
+            )
 
     def _compute_project_end_history(self):
         for project in self:
@@ -28,18 +40,6 @@ class ProjectProject(models.Model):
                 ]
             )
             project.project_end_history_count = len(project.project_end_history_ids)
-
-    @api.multi
-    def write(self, values):
-        # Actually state is many2one (or related with it)
-        # no external ID
-        if "date" in values and self and self.stage_name != "Prévu":
-            raise UserError(
-                _(
-                    "You can not modify the end date when project status is not 'Planned'."
-                )
-            )
-        return super(ProjectProject, self).write(values)
 
     @api.multi
     def action_edit_end_date(self):

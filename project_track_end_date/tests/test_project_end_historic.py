@@ -61,8 +61,4 @@ class TestProjectEndHistoric(SavepointCase):
         for history in self.project.project_end_history_ids:
             self.assertEqual(history.week_interval_date, 1)
             self.assertEqual(history.total_week_duration, 2)
-
-
-# project_end_history_ids
-#         "week_interval_date": (self.date - self.initial_date).days / 7,
-# "total_week_duration": (self.date - self.project_id.date_start).days / 7,
+        self.assertEqual(self.project.expected_week_duration, 2)

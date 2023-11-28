@@ -24,7 +24,9 @@ class EditDateWizard(models.TransientModel):
             "update_on": self.create_date,
             "initial_date": self.initial_date,
             "date": self.date,
-            "week_interval_date": (self.date - self.initial_date).days / 7,
+            "week_interval_date": (self.date - self.initial_date).days / 7
+            if self.initial_date
+            else False,
             "total_week_duration": (self.date - self.project_id.date_start).days / 7,
             "company_id": self.company_id.id,
             "user_id": self.user_id.id,

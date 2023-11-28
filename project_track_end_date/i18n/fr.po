@@ -163,3 +163,8 @@ msgstr "Durée totale du projet (semaines)"
 #: model:ir.model.fields,field_description:project_track_end_date.field_project_end_history__update_on
 msgid "Update on"
 msgstr "Date de mise à jour"
+
+#. module: project_track_end_date
+#: model:ir.model.fields,field_description:project_track_end_date.field_project_project__expected_week_duration
+msgid "Expected week duration"
+msgstr "Durée prévue en semaine"
