@@ -1,6 +1,6 @@
 Project Track End Date
 ======================
-This module gives the possibility to trace the changes in the end of validity date of each project/lot.
+This module gives the possibility to trace the changes in the end of validity date of each project/milestone.
 
 Usage
 -----

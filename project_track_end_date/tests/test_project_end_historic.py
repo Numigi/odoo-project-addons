@@ -12,8 +12,6 @@ class TestProjectEndHistoric(SavepointCase):
     def setUpClass(cls):
         super(TestProjectEndHistoric, cls).setUpClass()
 
-        # Create project stage : only in French
-        cls.qualified_stage = cls.env["project.stage"].create({"name": "Prévu"})
         # Test 'Numigi' project
         cls.project = (
             cls.env["project.project"]
@@ -45,12 +43,12 @@ class TestProjectEndHistoric(SavepointCase):
             self.project.write({"date": date(2023, 1, 15)})
 
     def test_update_date_from_wizard(self):
-        self.project.stage_id = self.qualified_stage.id
         vals = {
             "reason": "Project postponed",
         }
         res = (
-            self.env["edit.date.wizard"].with_context(self.action_context).create(vals)
+            self.env["edit.date.wizard"].with_context(self.action_context
+                                                      ).create(vals)
         )
         res.date = date(2023, 1, 15)
         res.refresh()

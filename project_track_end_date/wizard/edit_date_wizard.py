@@ -18,21 +18,22 @@ class EditDateWizard(models.TransientModel):
     @api.multi
     def action_update_date(self):
         self.ensure_one()
-        self.project_id.date = self.date
-
         data = {
             "update_on": self.create_date,
             "initial_date": self.initial_date,
             "date": self.date,
             "week_interval_date": (self.date - self.initial_date).days / 7
-            if self.initial_date
+            if self.initial_date and self.date
             else False,
-            "total_week_duration": (self.date - self.project_id.date_start).days / 7,
+            "total_week_duration": (self.date - self.project_id.date_start
+                                    ).days / 7
+            if self.project_id.date_start and self.date
+            else False,
             "company_id": self.company_id.id,
             "user_id": self.user_id.id,
             "reason": self.reason,
             "project_id": self.project_id.id,
         }
-
         self.env["project.end.history"].sudo().create(data)
+        self.project_id.date = self.date
         return {"type": "ir.actions.act_window_close"}

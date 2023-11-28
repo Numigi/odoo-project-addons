@@ -37,7 +37,6 @@
         <field name="inherit_id" ref="project.edit_project"/>
         <field name="arch" type="xml">
             <header position="inside">
-                <field name="stage_name" invisible="1"/>
                 <button name="action_edit_end_date" type="object" string="Edit end date" groups="project.group_project_manager" />
             </header>
 
