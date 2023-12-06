@@ -20,6 +20,7 @@ COPY project_analytic_group  /mnt/extra-addons/project_analytic_group
 COPY project_chatter  /mnt/extra-addons/project_chatter
 COPY project_closed  /mnt/extra-addons/project_closed
 COPY project_cost_smart_button  /mnt/extra-addons/project_cost_smart_button
+COPY project_cost_report  /mnt/extra-addons/project_cost_report
 COPY project_default_task_stage  /mnt/extra-addons/project_default_task_stage
 COPY project_enhanced  /mnt/extra-addons/project_enhanced
 COPY project_estimation  /mnt/extra-addons/project_estimation
@@ -100,6 +101,7 @@ COPY project_timesheet_analytic_update  /mnt/extra-addons/project_timesheet_anal
 COPY project_timesheet_time_control_employee_pin  /mnt/extra-addons/project_timesheet_time_control_employee_pin
 COPY project_timesheet_time_control_project_wip_dysfunction  /mnt/extra-addons/project_timesheet_time_control_project_wip_dysfunction
 COPY project_timesheet_time_control_restricted_group  /mnt/extra-addons/project_timesheet_time_control_restricted_group
+COPY project_track_end_date  /mnt/extra-addons/project_track_end_date
 COPY project_type  /mnt/extra-addons/project_type
 COPY project_wip  /mnt/extra-addons/project_wip
 COPY project_wip_material  /mnt/extra-addons/project_wip_material

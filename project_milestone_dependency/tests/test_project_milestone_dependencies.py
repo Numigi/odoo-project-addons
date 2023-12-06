@@ -6,7 +6,6 @@ from odoo.exceptions import ValidationError
 
 
 class TestProjectMilestoneDependencies(SavepointCase):
-
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -17,13 +16,20 @@ class TestProjectMilestoneDependencies(SavepointCase):
             {"name": "Milestone 1", "project_id": cls.project.id}
         )
 
-        cls.milestone_2 = cls.env["project.milestone"].create({
-            "name": "Milestone 2",
-            "project_id": cls.project.id,
-            "child_ids": [(4, cls.milestone_1.id)]
-        })
+        cls.milestone_2 = cls.env["project.milestone"].create(
+            {
+                "name": "Milestone 2",
+                "project_id": cls.project.id,
+                "child_ids": [(4, cls.milestone_1.id)],
+            }
+        )
 
     def test_project_milestone_dependencies_recursion(self):
         with self.assertRaises(ValidationError):
             self.milestone_1.write({"child_ids": [(4, self.milestone_2.id)]})
 
+    def test_duplicate_project_milestone_childs(self):
+        project_copy = self.project.copy()
+        self.assertEqual(len(project_copy.milestone_ids.ids), 2)
+        for milestone in project_copy.milestone_ids:
+            self.assertFalse(milestone.child_ids)

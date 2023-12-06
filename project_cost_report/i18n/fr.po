@@ -1,0 +1,361 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* project_cost_report
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 11.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-06-03 19:35+0000\n"
+"PO-Revision-Date: 2021-06-03 15:36-0400\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"X-Generator: Poedit 2.3\n"
+
+#. module: project_cost_report
+#: code:addons/project_cost_report/report/report.py:275
+#, python-format
+msgid "({category}) - Cost"
+msgstr "({category}) - Coût"
+
+#. module: project_cost_report
+#: code:addons/project_cost_report/report/report.py:305
+#, python-format
+msgid "({category}) - Profit"
+msgstr "({category}) - Profit"
+
+#. module: project_cost_report
+#: code:addons/project_cost_report/report/report.py:289
+#, python-format
+msgid "({category}) - Revenue"
+msgstr "({category}) - Revenu"
+
+#. module: project_cost_report
+#: model_terms:ir.ui.view,arch_db:project_cost_report.cost_report_body__header
+msgid "<span>Printed on</span>"
+msgstr "<span>Imprimé le</span>"
+
+#. module: project_cost_report
+#: model_terms:ir.ui.view,arch_db:project_cost_report.cost_report_body__cost_total
+msgid "<span>Total</span>"
+msgstr "<span>Total</span>"
+
+#. module: project_cost_report
+#: model:ir.model.fields,field_description:project_cost_report.field_project_cost_category__active
+msgid "Active"
+msgstr "Actif"
+
+#. module: project_cost_report
+#: model_terms:ir.ui.view,arch_db:project_cost_report.cost_report_body__waiting_purchase_orders
+msgid "Amount"
+msgstr "Montant"
+
+#. module: project_cost_report
+#: model:ir.model,name:project_cost_report.model_account_analytic_line
+msgid "Analytic Line"
+msgstr "Ligne analytique"
+
+#. module: project_cost_report
+#: model_terms:ir.ui.view,arch_db:project_cost_report.project_cost_category_search
+msgid "Archived"
+msgstr "Archivé"
+
+#. module: project_cost_report
+#: model_terms:ir.ui.view,arch_db:project_cost_report.cost_report_body__costs
+msgid "Cost"
+msgstr "Coût"
+
+#. module: project_cost_report
+#: model:ir.actions.client,name:project_cost_report.cost_report_action
+#: model_terms:ir.ui.view,arch_db:project_cost_report.cost_report_body__header
+#: model_terms:ir.ui.view,arch_db:project_cost_report.project_form_with_smart_button
+msgid "Cost Report"
+msgstr "Rapport de coûts"
+
+#. module: project_cost_report
+#: model:ir.ui.menu,name:project_cost_report.project_cost_category_menu
+msgid "Cost Report Categories"
+msgstr "Catégories de rapport de coûts"
+
+#. module: project_cost_report
+#: model:ir.model.fields,field_description:project_cost_report.field_product_category__project_cost_category_id
+#: model:ir.model.fields,field_description:project_cost_report.field_task_type__project_cost_category_id
+msgid "Cost Report Category"
+msgstr "Catégorie de rapport de coûts"
+
+#. module: project_cost_report
+#: model:ir.model.fields,field_description:project_cost_report.field_project_cost_category__create_uid
+#: model:ir.model.fields,field_description:project_cost_report.field_project_cost_report__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: project_cost_report
+#: model:ir.model.fields,field_description:project_cost_report.field_project_cost_category__create_date
+#: model:ir.model.fields,field_description:project_cost_report.field_project_cost_report__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: project_cost_report
+#: model_terms:ir.ui.view,arch_db:project_cost_report.cost_report_body__costs
+#: model_terms:ir.ui.view,arch_db:project_cost_report.cost_report_body__waiting_purchase_orders
+msgid "Date"
+msgstr "Date"
+
+#. module: project_cost_report
+#: model_terms:ir.ui.view,arch_db:project_cost_report.cost_report_body__costs
+msgid "Description"
+msgstr "Description"
+
+#. module: project_cost_report
+#: model:ir.model.fields,field_description:project_cost_report.field_project_cost_category__display_name
+#: model:ir.model.fields,field_description:project_cost_report.field_project_cost_report__display_name
+msgid "Display Name"
+msgstr "Nom affiché"
+
+#. module: project_cost_report
+#. openerp-web
+#: code:addons/project_cost_report/static/src/xml/templates.xml:13
+#, python-format
+msgid "FOLD"
+msgstr "PLIER"
+
+#. module: project_cost_report
+#. openerp-web
+#: code:addons/project_cost_report/static/src/xml/templates.xml:21
+#, python-format
+msgid "HIDE SUMMARY"
+msgstr "CACHER SOMMAIRE"
+
+#. module: project_cost_report
+#: selection:project.cost.category,target_type:0
+msgid "Hourly Rate"
+msgstr "Taux horaire"
+
+#. module: project_cost_report
+#: model:ir.model.fields,field_description:project_cost_report.field_project_cost_category__id
+#: model:ir.model.fields,field_description:project_cost_report.field_project_cost_report__id
+msgid "ID"
+msgstr "ID"
+
+#. module: project_cost_report
+#: model_terms:ir.ui.view,arch_db:project_cost_report.cost_report_body__costs
+msgid "Item"
+msgstr "Poste"
+
+#. module: project_cost_report
+#: model:project.cost.category,name:project_cost_report.cost_category_labour
+msgid "Labour"
+msgstr "Main d'œuvre"
+
+#. module: project_cost_report
+#: model:ir.model.fields,field_description:project_cost_report.field_project_cost_category____last_update
+#: model:ir.model.fields,field_description:project_cost_report.field_project_cost_report____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: project_cost_report
+#: model:ir.model.fields,field_description:project_cost_report.field_project_cost_category__write_uid
+#: model:ir.model.fields,field_description:project_cost_report.field_project_cost_report__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: project_cost_report
+#: model:ir.model.fields,field_description:project_cost_report.field_project_cost_category__write_date
+#: model:ir.model.fields,field_description:project_cost_report.field_project_cost_report__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: project_cost_report
+#: model:ir.model.fields,field_description:project_cost_report.field_project_cost_category__name
+msgid "Name"
+msgstr "Nom"
+
+#. module: project_cost_report
+#: selection:account.analytic.line,project_cost_section:0
+#: code:addons/project_cost_report/report/report.py:24
+#: model:project.cost.category,name:project_cost_report.cost_category_outsourcing
+#: selection:project.cost.category,section:0
+#, python-format
+msgid "Outsourcing"
+msgstr "Sous-traitance"
+
+#. module: project_cost_report
+#. openerp-web
+#: code:addons/project_cost_report/static/src/xml/templates.xml:5
+#, python-format
+msgid "PRINT"
+msgstr "IMPRIMER"
+
+#. module: project_cost_report
+#: model_terms:ir.ui.view,arch_db:project_cost_report.cost_report_body__costs
+msgid "Partner"
+msgstr "Partenaire"
+
+#. module: project_cost_report
+#: selection:project.cost.category,target_type:0
+msgid "Percentage"
+msgstr "Pourcentage"
+
+#. module: project_cost_report
+#: model:ir.model,name:project_cost_report.model_product_category
+msgid "Product Category"
+msgstr ""
+
+#. module: project_cost_report
+#: selection:account.analytic.line,project_cost_section:0
+#: code:addons/project_cost_report/report/report.py:22
+#: model:project.cost.category,name:project_cost_report.cost_category_product
+#: selection:project.cost.category,section:0
+#, python-format
+msgid "Products"
+msgstr "Articles"
+
+#. module: project_cost_report
+#: model_terms:ir.ui.view,arch_db:project_cost_report.cost_report_body__costs
+msgid "Profit"
+msgstr "PROFIT"
+
+#. module: project_cost_report
+#: model:ir.actions.act_window,name:project_cost_report.action_project_cost_category
+#: model_terms:ir.ui.view,arch_db:project_cost_report.project_cost_category_list
+msgid "Project Cost Categories"
+msgstr "Catégories de rapport de coûts"
+
+#. module: project_cost_report
+#: model:ir.model.fields,field_description:project_cost_report.field_account_analytic_line__project_cost_category_id
+#: model_terms:ir.ui.view,arch_db:project_cost_report.project_cost_category_form
+msgid "Project Cost Category"
+msgstr "Catégorie de rapport de coûts"
+
+#. module: project_cost_report
+#: model:ir.model,name:project_cost_report.model_project_cost_report
+msgid "Project Cost Report"
+msgstr "Rapport de coûts de projet"
+
+#. module: project_cost_report
+#: model:ir.model,name:project_cost_report.model_project_cost_category
+msgid "Project Cost Report Group"
+msgstr "Catégorie de rapport de coûts"
+
+#. module: project_cost_report
+#: model:ir.model.fields,field_description:project_cost_report.field_account_analytic_line__project_cost_section
+msgid "Project Cost Section"
+msgstr "Rapport de coûts de projet"
+
+#. module: project_cost_report
+#: model_terms:ir.ui.view,arch_db:project_cost_report.cost_report_body__costs
+msgid "Quantity"
+msgstr "Quantité"
+
+#. module: project_cost_report
+#: model_terms:ir.ui.view,arch_db:project_cost_report.cost_report_body__waiting_purchase_orders
+msgid "Reference"
+msgstr "Référence"
+
+#. module: project_cost_report
+#: model_terms:ir.ui.view,arch_db:project_cost_report.cost_report_body__costs
+msgid "Revenue"
+msgstr "Revenu"
+
+#. module: project_cost_report
+#. openerp-web
+#: code:addons/project_cost_report/static/src/xml/templates.xml:17
+#, python-format
+msgid "SHOW SUMMARY"
+msgstr "AFFICHER SOMMAIRE"
+
+#. module: project_cost_report
+#: model_terms:ir.ui.view,arch_db:project_cost_report.project_cost_category_search
+msgid "Search Project Cost Categories"
+msgstr "Chercher des catégories de rapport de coût"
+
+#. module: project_cost_report
+#: model:ir.model.fields,field_description:project_cost_report.field_project_cost_category__section
+msgid "Section"
+msgstr "Poste"
+
+#. module: project_cost_report
+#: model:ir.model.fields,field_description:project_cost_report.field_project_cost_category__sequence
+msgid "Sequence"
+msgstr "Séquence"
+
+#. module: project_cost_report
+#: selection:account.analytic.line,project_cost_section:0
+#: code:addons/project_cost_report/report/report.py:21
+#: model:project.cost.category,name:project_cost_report.cost_category_supply
+#: selection:project.cost.category,section:0
+#, python-format
+msgid "Shop Supply"
+msgstr "Matériel"
+
+#. module: project_cost_report
+#: model_terms:ir.ui.view,arch_db:project_cost_report.cost_report_body__costs
+msgid "Suggested"
+msgstr "Suggéré"
+
+#. module: project_cost_report
+#: model_terms:ir.ui.view,arch_db:project_cost_report.cost_report_body__waiting_purchase_orders
+msgid "Supplier"
+msgstr "Fournisseur"
+
+#. module: project_cost_report
+#: model_terms:ir.ui.view,arch_db:project_cost_report.cost_report_body__costs
+msgid "Target"
+msgstr "Objectif"
+
+#. module: project_cost_report
+#: model:ir.model.fields,field_description:project_cost_report.field_project_cost_category__target_hourly_rate
+msgid "Target Hourly Rate"
+msgstr "Objectif taux horaire"
+
+#. module: project_cost_report
+#: model:ir.model.fields,field_description:project_cost_report.field_project_cost_category__target_margin
+msgid "Target Margin"
+msgstr "Objectif marge"
+
+#. module: project_cost_report
+#: model:ir.model.fields,field_description:project_cost_report.field_project_cost_category__target_type
+msgid "Target Type"
+msgstr "Type d'objectif"
+
+#. module: project_cost_report
+#: model:ir.model,name:project_cost_report.model_task_type
+msgid "Task Type"
+msgstr ""
+
+#. module: project_cost_report
+#: code:addons/project_cost_report/report/report.py:127
+#, python-format
+msgid "The cost report was triggered without a project ID in context."
+msgstr "Le rapport de coûts a été déclenché sans passer un ID de projet en contexte."
+
+#. module: project_cost_report
+#: selection:account.analytic.line,project_cost_section:0
+#: code:addons/project_cost_report/report/report.py:23
+#: selection:project.cost.category,section:0
+#, python-format
+msgid "Time"
+msgstr "Temps"
+
+#. module: project_cost_report
+#. openerp-web
+#: code:addons/project_cost_report/static/src/xml/templates.xml:9
+#, python-format
+msgid "UNFOLD"
+msgstr "DÉPLIER"
+
+#. module: project_cost_report
+#: model:ir.model.fields,field_description:project_cost_report.field_account_analytic_line__unit_cost
+#: model_terms:ir.ui.view,arch_db:project_cost_report.cost_report_body__costs
+msgid "Unit Cost"
+msgstr "Coût unitaire"
+
+#. module: project_cost_report
+#: model_terms:ir.ui.view,arch_db:project_cost_report.cost_report_body__waiting_purchase_orders
+msgid "Waiting For Invoices"
+msgstr "En attente de factures"

@@ -1,0 +1,85 @@
+.o_project_cost_report table {
+    width: 100%;
+    margin-bottom: 32px;
+}
+
+.o_project_cost_report h1 {
+
+}
+
+.o_project_cost_report h2 {
+    margin: 0.5em 0;
+}
+
+.o_project_cost_report__header {
+}
+
+.o_project_cost_report__header__left {
+    float: left;
+}
+
+.o_project_cost_report__header__right {
+    float: right;
+}
+
+.o_project_cost_report__level_1 {
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 16px;
+}
+
+.o_project_cost_report__level_1 th {
+    border-top: solid black 1px;
+    border-bottom: solid black 1px;
+    padding: 8px 0px;
+}
+
+.o_project_cost_report__level_1 td {
+    padding: 8px 0px;
+}
+
+.o_project_cost_report__level_2 th {
+    padding: 8px 0px;
+}
+
+.o_project_cost_report__level_2 td {
+    padding: 8px 0px;
+}
+
+.o_project_cost_report__level_3 {
+    font-style: italic;
+}
+
+.o_project_cost_report__level_3 th {
+    padding: 8px 0px;
+}
+
+.o_project_cost_report__level_3 td {
+    padding: 8px 0px;
+}
+
+.o_project_cost_report__padding_column {
+    width: 16px;
+}
+
+.o_project_cost_report__analytic_line {
+    cursor: pointer;
+}
+
+.o_project_cost_report__link {
+    color: $o-brand-primary;
+    cursor: pointer;
+}
+
+.project_cost_report__control_panel_button {
+    margin-right: 4px;
+}
+
+/**
+ * Add borders around the totals
+ */
+td.o_project_cost_report__total {
+    border: 1px black solid;
+    padding: 8px;
+    width: 200px;
+}
