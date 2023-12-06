@@ -30,6 +30,7 @@ COPY project_group_create  /mnt/extra-addons/project_group_create
 COPY project_hide_create_sale_order  /mnt/extra-addons/project_hide_create_sale_order
 COPY project_invoicing_profile  /mnt/extra-addons/project_invoicing_profile
 COPY project_iteration  /mnt/extra-addons/project_iteration
+COPY project_iteration_change_parent  /mnt/extra-addons/project_iteration_change_parent
 COPY project_iteration_parent_only  /mnt/extra-addons/project_iteration_parent_only
 COPY project_iteration_parent_type_required  /mnt/extra-addons/project_iteration_parent_type_required
 COPY project_iteration_sale_inheritance  /mnt/extra-addons/project_iteration_sale_inheritance
