@@ -168,7 +168,8 @@ def _reconcile_wip_move_lines(wip_line, wip_reversal_line):
     :param wip_reversal_line: the wip reversal account.move.line
     :raises: ValidationError if the lines could not be reconciled.
     """
-    unreconciled_line = (wip_line | wip_reversal_line).reconcile()
+    unreconciled_line = (wip_line + wip_reversal_line).reconcile()
+
     if unreconciled_line:
         raise ValidationError(
             _(

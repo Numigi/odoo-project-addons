@@ -109,7 +109,6 @@ class TestWIPTrasferToCGS(common.SavepointCase):
                             "quantity": cls.raw_material_quantity,
                             "product_uom_id": cls.uom.id,
                             "debit": cls.raw_material_amount,
-                            "credit": 0.0,
                         },
                     ),
                     (
@@ -122,7 +121,6 @@ class TestWIPTrasferToCGS(common.SavepointCase):
                             "product_uom_id": cls.uom.id,
                             "quantity": cls.raw_material_quantity,
                             "credit": cls.raw_material_amount,
-                            "debit": 0.0,
                         },
                     ),
                 ],
