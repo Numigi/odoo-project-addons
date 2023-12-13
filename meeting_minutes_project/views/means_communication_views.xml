@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="means_communication_view_form" model="ir.ui.view">
+        <field name="name">means.communication.form</field>
+        <field name="model">means.communication</field>
+        <field name="arch" type="xml">
+            <form string="Communication">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                    </group>
+
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="means_communication_view_tree" model="ir.ui.view">
+        <field name="name">means.communication.tree</field>
+        <field name="model">means.communication</field>
+        <field name="arch" type="xml">
+            <tree string="Communication" editable="top">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+
+            </tree>
+        </field>
+    </record>
+
+
+    <record id="means_communication_action" model="ir.actions.act_window">
+        <field name="name">Means of Communication</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">means.communication</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+
+    <menuitem id="mean_communication_menu" action="means_communication_action" sequence="11"
+            name="Means of Communication"
+            parent="project.menu_project_config"
+            />
+
+</odoo>
