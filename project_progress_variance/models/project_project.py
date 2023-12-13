@@ -31,7 +31,7 @@ class ProjectProject(models.Model):
         store=True,
     )
 
-    @api.depends("task_ids.planned_hours", "task_ids.effective_hours")
+    @api.depends("task_ids", "task_ids.planned_hours", "task_ids.effective_hours")
     def _compute_total_progress(self):
         for project in self:
             planned_hours = sum(project.task_ids.mapped("planned_hours"))
@@ -41,7 +41,7 @@ class ProjectProject(models.Model):
             else:
                 project.total_progress = 0.0
 
-    @api.depends("task_ids.projected_hours", "task_ids.effective_hours")
+    @api.depends("task_ids", "task_ids.projected_hours", "task_ids.effective_hours")
     def _compute_total_real_progress(self):
         for project in self:
             projected_hours = sum(project.task_ids.mapped("projected_hours"))
