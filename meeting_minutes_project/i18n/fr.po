@@ -249,16 +249,20 @@ msgstr "Compte-rendu: {task} - {create_datetime}"
 #. module: meeting_minutes_project
 #: model:ir.actions.act_window,name:meeting_minutes_project.action_view_meeting_minutes_project
 #: model:ir.actions.act_window,name:meeting_minutes_project.action_view_task_meeting_minutes
-#: model:ir.model.fields,field_description:meeting_minutes_project.field_project_project__meeting_minutes_project_count
-#: model:ir.model.fields,field_description:meeting_minutes_project.field_project_task__task_meeting_minutes_count
+#: model:ir.model.fields,field_description:meeting_minutes_project.field_project_project__meeting_minutes_count
+#: model:ir.model.fields,field_description:meeting_minutes_project.field_project_task__meeting_minutes_count
 #: model_terms:ir.ui.view,arch_db:meeting_minutes_project.meeting_minutes_project_form
 #: model_terms:ir.ui.view,arch_db:meeting_minutes_project.project_task_form_view_inherit
 msgid "Meeting minutes"
 msgstr "Compte-rendus"
 
 #. module: meeting_minutes_project
-#: model:ir.model.fields,field_description:meeting_minutes_project.field_project_project__meeting_minutes_project_ids
-#: model:ir.model.fields,field_description:meeting_minutes_project.field_project_task__task_meeting_minutes_ids
+#: model:ir.model.fields,field_description:meeting_minutes_project.field_project_project__meeting_minutes_ids
+msgid "Meeting minutes associated to this project"
+msgstr "Compte-rendu lié à un project"
+
+#. module: meeting_minutes_project
+#: model:ir.model.fields,field_description:meeting_minutes_project.field_project_task__meeting_minutes_ids
 msgid "Meeting minutes associated to this task"
 msgstr "Compte-rendu lié à une tâche"
 

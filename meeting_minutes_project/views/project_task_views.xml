@@ -44,9 +44,9 @@
                 </button>
             </div>
             <xpath expr="//div[hasclass('oe_button_box')]" position="inside">
-                <button name="%(action_view_task_meeting_minutes)d" attrs="{'invisible': [('task_meeting_minutes_count', '=', 0)]}"
+                <button name="%(action_view_task_meeting_minutes)d" attrs="{'invisible': [('meeting_minutes_count', '=', 0)]}"
                     type="action" class="oe_stat_button order-9"  icon="fa-exchange" groups="project.group_project_user">
-                    <field name="task_meeting_minutes_count" widget="statinfo" string="Meeting minutes"/>
+                    <field name="meeting_minutes_count" widget="statinfo" string="Meeting minutes"/>
                 </button>
             </xpath>
         </field>

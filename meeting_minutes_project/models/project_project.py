@@ -7,32 +7,26 @@ from odoo import fields, models, api
 class ProjectProject(models.Model):
     _inherit = "project.project"
 
-    meeting_minutes_project_ids = fields.Many2many(
+    meeting_minutes_ids = fields.One2many(
         "meeting.minutes.project",
-        compute="_compute_meeting_minutes_project",
-        string="Meeting minutes associated to this task",
+        "project_id",
+        string="Meeting minutes associated to this project",
     )
-    meeting_minutes_project_count = fields.Integer(
+    meeting_minutes_count = fields.Integer(
         string="Meeting minutes",
-        compute="_compute_meeting_minutes_project",
+        compute="_compute_nbr_meeting",
         groups="project.group_project_user",
     )
     pending_actions_ids = fields.Many2many(
-        "mail.activity", string="Pending Actions", compute="_compute_pending_action_ids"
+        "mail.activity", string="Pending Actions",
+        compute="_compute_pending_action_ids"
     )
 
     @api.multi
-    def _compute_meeting_minutes_project(self):
+    def _compute_nbr_meeting(self):
         for project in self:
-            project.meeting_minutes_project_ids = self.env[
-                "meeting.minutes.project"
-            ].search(
-                [
-                    ("project_id", "=", project.id),
-                ]
-            )
-            project.meeting_minutes_project_count = len(
-                project.meeting_minutes_project_ids
+            project.meeting_minutes_count = len(
+                project.meeting_minutes_ids
             )
 
     @api.multi

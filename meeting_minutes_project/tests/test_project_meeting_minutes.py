@@ -76,9 +76,9 @@ class TestMeetingMinutesProject(SavepointCase):
             }
         )
         assert self.channel.id not in minutes.partner_ids.ids
-        assert self.project_1.meeting_minutes_project_count == 1
+        assert self.project_1.meeting_minutes_count == 1
         assert self.task_1.mentions_count == 1
-        assert self.task_1.task_meeting_minutes_count == 1
+        assert self.task_1.meeting_minutes_count == 1
 
     def test_meeting_minutes_display_name(self):
         minutes = self._create_minutes()
