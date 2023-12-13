@@ -9,28 +9,25 @@ class ProjectTask(models.Model):
 
     projected_hours = fields.Float(
         "Projected Hours",
-        compute="_compute_projected_hours",
-        readonly=True,
+        compute="_compute_project_data",
         store=True,
     )
     real_progress = fields.Float(
         "Real Progress",
         digits=(16, 2),
-        compute="_compute_real_progress",
-        readonly=True,
+        compute="_compute_project_data",
         store=True,
     )
 
     @api.depends("effective_hours", "remaining_hours")
-    def _compute_projected_hours(self):
+    def _compute_project_data(self):
+        """Compute projected hours and real progress."""
         for task in self:
-            task.projected_hours = task.effective_hours + task.remaining_hours
-
-    @api.depends("effective_hours", "remaining_hours")
-    def _compute_real_progress(self):
-        for task in self:
-            projected_hours = task.effective_hours + task.remaining_hours
-            if projected_hours:
-                task.real_progress = 100.0 * task.effective_hours / projected_hours
-            else:
-                task.real_progress = 0.0
+            effective_hours, remaining_hours = (
+                task.effective_hours,
+                task.remaining_hours,
+            )
+            projected_hours = effective_hours + remaining_hours
+            task.projected_hours = projected_hours
+            task.real_progress = 100.0 * effective_hours / projected_hours\
+                if projected_hours else 0.0
