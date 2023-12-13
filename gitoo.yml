@@ -3,6 +3,7 @@
   includes:
     - base_extended_security
     - base_xml_rename
+    - meeting_minutes
     - test_http_request
 
 - url: https://github.com/OCA/timesheet
