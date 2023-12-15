@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="meeting_minutes_project_parent_view_form" model="ir.ui.view">
+        <field name="name">meeting.minutes.project.form</field>
+        <field name="model">meeting.minutes.project</field>
+        <field name="inherit_id" ref="meeting_minutes_project.meeting_minutes_project_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='project_id']" position="before">
+                <field name="parent_project_id"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
