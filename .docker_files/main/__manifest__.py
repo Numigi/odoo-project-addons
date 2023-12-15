@@ -17,6 +17,7 @@
         "analytic_line_employee",
         "analytic_line_revenue",
         "meeting_minutes_project",
+        "meeting_minutes_project_parent",
         "portal_project_list_hours_spent",
         "portal_project_timesheet_conditional",
         "project_analytic_group",
