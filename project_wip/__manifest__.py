@@ -1,4 +1,4 @@
-# © 2019 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+# © 2023 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 {
@@ -10,7 +10,13 @@
     "license": "LGPL-3",
     "category": "Project",
     "summary": "Manage Work In Progress Accounting",
-    "depends": ["account", "stock", "project", "project_type", "account_reconciliation_widget"],
+    "depends": [
+        "account",
+        "stock",
+        "project",
+        "project_type",
+        "account_reconciliation_widget",
+    ],
     "data": [
         "security/res_groups.xml",
         "security/ir.model.access.csv",
