@@ -10,7 +10,7 @@
     "license": "LGPL-3",
     "category": "Project",
     "summary": "Manage Work In Progress Accounting",
-    "depends": ["account", "stock", "project", "project_type"],
+    "depends": ["account", "stock", "project", "project_type", "account_reconciliation_widget"],
     "data": [
         "security/res_groups.xml",
         "security/ir.model.access.csv",

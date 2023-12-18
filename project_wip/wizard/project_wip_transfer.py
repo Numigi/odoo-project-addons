@@ -35,7 +35,7 @@ class ProjectWipTransferWizard(models.TransientModel):
 
     @api.onchange("project_id")
     def _onchange_project_compute_costs_to_transfer(self):
-        self = self.with_context(force_company=self.env.user.company_id.id)
+        self = self.with_company(self.env.user.company_id)
         has_wip_account = bool(self.wip_account_id)
         if has_wip_account:
             self.costs_to_transfer = sum(
@@ -44,5 +44,5 @@ class ProjectWipTransferWizard(models.TransientModel):
             )
 
     def validate(self):
-        self = self.with_context(force_company=self.env.user.company_id.id)
+        self = self.with_company(self.env.user.company_id)
         return self.project_id.action_wip_to_cgs(self.accounting_date)

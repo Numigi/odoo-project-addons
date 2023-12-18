@@ -31,7 +31,7 @@ class ProjectType(models.Model):
     @api.constrains("wip_account_id")
     def _check_wip_account_allows_reconcile(self):
         """Check that the wip account on project type allows reconciliation."""
-        self = self.with_context(force_company=self.env.user.company_id.id)
+        self = self.with_company(self.env.user.company_id)
         project_types_with_wip_accounts = self.filtered(lambda t: t.wip_account_id)
         for project_type in project_types_with_wip_accounts:
             if not project_type.wip_account_id.reconcile:

@@ -12,5 +12,5 @@ class AccountAnalyticLine(models.Model):
         return "{} {}".format(self.name, task) if self.name else task
 
     def _get_wip_account(self):
-        self = self.with_context(force_company=self.company_id.id)
+        self = self.with_company(self.company_id)
         return self.project_id.type_id.wip_account_id

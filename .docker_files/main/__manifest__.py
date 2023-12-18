@@ -81,7 +81,6 @@
         "project_task_subtask_same_project",
         "project_task_type",
         "project_template",
-
         "project_template_date_planned",
         "project_template_timesheet",
         "project_time_budget",
@@ -89,7 +88,7 @@
         "project_time_range",
         "project_timesheet_analytic_update",
         "project_type",
-        # "project_wip",
+        "project_wip",
         # "project_wip_material",
         # "project_wip_outsourcing",
         # "project_wip_supply_cost",
