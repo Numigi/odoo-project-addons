@@ -35,7 +35,7 @@ COPY project_iteration_parent_type_required  /mnt/extra-addons/project_iteration
 #COPY project_kanban_to_form  /mnt/extra-addons/project_kanban_to_form
 COPY project_lump_sum  /mnt/extra-addons/project_lump_sum
 #COPY portal_project_timesheet_conditional  /mnt/extra-addons/portal_project_timesheet_conditional
-#COPY project_material  /mnt/extra-addons/project_material
+COPY project_material  /mnt/extra-addons/project_material
 #COPY project_material_direct  /mnt/extra-addons/project_material_direct
 #COPY project_material_progress  /mnt/extra-addons/project_material_progress
 #COPY project_material_quantity_filters  /mnt/extra-addons/project_material_quantity_filters
@@ -89,6 +89,7 @@ COPY project_time_range /mnt/extra-addons/project_time_range
 COPY project_timesheet_analytic_update  /mnt/extra-addons/project_timesheet_analytic_update
 COPY project_type  /mnt/extra-addons/project_type
 #COPY project_wip  /mnt/extra-addons/project_wip
+COPY stock_location_production  /mnt/extra-addons/stock_location_production
 #COPY project_wip_material  /mnt/extra-addons/project_wip_material
 #COPY project_wip_outsourcing  /mnt/extra-addons/project_wip_outsourcing
 #COPY project_wip_supply_cost  /mnt/extra-addons/project_wip_supply_cost

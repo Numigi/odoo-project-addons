@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+            <record id="location_production" model="stock.location">
+            <field name="name">Production</field>
+            <field name="location_id" ref="stock.stock_location_locations_virtual"/>
+            <field name="usage">production</field>
+            <field name="company_id"></field>
+        </record>
+    </data>
+</odoo>

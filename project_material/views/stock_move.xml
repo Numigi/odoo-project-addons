@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="stock_move_with_project_tree" model="ir.ui.view">
+        <field name="name">Stock Move Tree: add project</field>
+        <field name="model">stock.move</field>
+        <field name="inherit_id" ref="stock.view_move_tree"/>
+        <field name="arch" type="xml">
+            <field name="product_id" position="before">
+                <field name="project_id" string="Project"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="stock_move_with_project_tree_2" model="ir.ui.view">
+        <field name="name">Stock Move Tree: add project</field>
+        <field name="model">stock.move</field>
+        <field name="inherit_id" ref="stock.view_picking_move_tree"/>
+        <field name="arch" type="xml">
+            <field name="product_id" position="before">
+                <field name="project_id" string="Project"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="stock_move_with_project_tree_3" model="ir.ui.view">
+        <field name="name">Stock Move Tree: add project</field>
+        <field name="model">stock.move</field>
+        <field name="inherit_id" ref="stock.view_move_tree_receipt_picking"/>
+        <field name="arch" type="xml">
+            <field name="product_id" position="before">
+                <field name="project_id" string="Project"/>
+            </field>
+        </field>
+    </record>
+
+<!--    <record id="stock_move_with_project_tree_4" model="ir.ui.view">-->
+<!--        <field name="name">Stock Move Tree: add project</field>-->
+<!--        <field name="model">stock.move</field>-->
+<!--        <field name="inherit_id" ref="stock.view_move_tree_receipt_picking_board"/>-->
+<!--        <field name="arch" type="xml">-->
+<!--            <field name="product_id" position="before">-->
+<!--                <field name="project_id" string="Project"/>-->
+<!--            </field>-->
+<!--        </field>-->
+<!--    </record>-->
+
+    <record id="stock_move_with_project_form" model="ir.ui.view">
+        <field name="name">Stock Move Form: add project</field>
+        <field name="model">stock.move</field>
+        <field name="inherit_id" ref="stock.view_move_form"/>
+        <field name="arch" type="xml">
+            <field name="reference" position="after">
+                <field name="project_id" string="Project"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>
