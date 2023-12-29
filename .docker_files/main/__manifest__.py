@@ -16,6 +16,7 @@
         "account_analytic_enhanced",  # required for project_enhanced
         "analytic_line_employee",
         "analytic_line_revenue",
+        "meeting_minutes_certificate",
         "meeting_minutes_project",
         "meeting_minutes_project_parent",
         "portal_project_list_hours_spent",

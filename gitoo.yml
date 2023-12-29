@@ -6,11 +6,21 @@
     - meeting_minutes
     - test_http_request
 
+- url: https://github.com/Numigi/aeroo_reports
+  branch: "12.0"
+  includes:
+    - report_aeroo 
+
 - url: https://github.com/OCA/timesheet
   branch: "12.0"
   includes:
     - hr_timesheet_task_domain
     - hr_timesheet_task_stage
+
+- url: https://github.com/OCA/partner-contact
+  branch: "12.0"
+  includes:
+    - partner_firstname
 
 - url: https://github.com/OCA/project
   branch: "12.0"
@@ -29,6 +39,7 @@
     - web_ir_actions_act_view_reload
     - web_timeline
     - web_widget_color
+    - web_widget_digitized_signature
 
 - url: https://github.com/Navybits/kanban_draggable
   branch: "11.0"
