@@ -1,10 +1,10 @@
-# © 2021 - today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+# © 2023 - Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/gpl).
 
 from odoo.addons.report_aeroo.controllers.portal import Portal as _Portal
 from odoo.addons.portal.controllers.portal import pager as portal_pager
 from odoo.http import request, route
-from odoo.exceptions import AccessError, MissingError
+
 
 SIGN_PAGE_TEMPLATE = "meeting_minutes_certificate.signature_portal_template"
 CERTIFICATE_LIST_PAGE_TEMPLATE = (

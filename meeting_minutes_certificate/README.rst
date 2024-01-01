@@ -1,5 +1,5 @@
-Project Task Meeting Certificate
-================================
+Meeting Minutes Certificate
+===========================
 
 .. contents:: Table of Contents
 

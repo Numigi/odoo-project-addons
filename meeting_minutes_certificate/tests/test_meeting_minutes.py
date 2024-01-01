@@ -1,4 +1,4 @@
-# © 2020 - today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+# © 2023 - Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 import pytest
@@ -7,7 +7,7 @@ from datetime import timedelta
 from odoo.addons.test_http_request.common import mock_odoo_request
 from odoo.exceptions import ValidationError
 from odoo.tests.common import SavepointCase
-from odoo import api, fields, models, tools, _
+from odoo import _
 from ..controllers.portal import (
     Portal,
     SIGN_PAGE_TEMPLATE,
