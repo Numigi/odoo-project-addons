@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_meeting_minutes_signature,meeting.minutes.signature,model_meeting_minutes_signature,project.group_project_user,1,1,1,1
+access_meeting_minutes_project_portal,meeting.minutes.portal,model_meeting_minutes_project,base.group_portal,1,0,0,0
+access_meeting_minutes_signature_portal,meeting.minutes.signature.portal,model_meeting_minutes_signature,base.group_portal,1,0,0,0

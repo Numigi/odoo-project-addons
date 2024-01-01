@@ -1,0 +1,56 @@
+<odoo>
+
+    <record id="mail_template_request" model="mail.template">
+        <field name="name">Training Certificate - Signature Request</field>
+        <field name="model_id" ref="model_meeting_minutes_signature"/>
+        <field name="user_signature" eval="False"/>
+        <field name="auto_delete" eval="True"/>
+        <field name="subject">Training Certificate - ${object.task_id.name} - ${object.partner_id.display_name} - ${format_date(object.minutes_id.start_date, "MM-dd-yyyy")}</field>
+        <field name="body_html" type="html">
+            <div>
+                <p style="margin: 0px; padding: 0px; font-size: 13px;line-height:2.5em;">
+                 Hello,
+                 <br/>
+                 Thank you for your participation at the ${object.task_id.name}. 
+                   <br/>
+                   Please click on the button below to sign the training certificate.
+                </p>
+                <br/>
+                <p style="margin: 0px; padding: 0px; font-size: 13px; line-height:2.5em;">
+                    <a
+                        href="${object.get_access_url()}"
+                        style="background-color: #1a62c6; padding: 8px 16px 8px 16px; text-decoration: none; color: #fff; border-radius: 5px; font-size:13px;"
+                        target="_blank"
+                        >
+                        Sign
+                    </a>
+                </p>
+                
+                <p style="margin: 0px; padding: 0px; font-size: 13px; line-height:2.5em;">
+                 Have a nice day,
+                </p>
+            </div>
+        </field>
+    </record>
+
+    <record id="mail_template_signed" model="mail.template">
+        <field name="name">Training Certificate - Signed</field>
+        <field name="model_id" ref="model_meeting_minutes_signature"/>
+        <field name="user_signature" eval="False"/>
+        <field name="auto_delete" eval="True"/>
+        <field name="subject">Training Certificate - ${object.task_id.name} - ${object.partner_id.display_name} - ${format_date(object.minutes_id.start_date, "MM-dd-yyyy")} - Signed</field>
+        <field name="body_html" type="html">
+            <div>
+                <p style="margin: 0px; padding: 0px; font-size: 13px; line-height:2.5em;">
+                 Hello,
+                 <br/>
+                 Here is the certificate for the ${object.task_id.name} training.
+                </p>
+                <p style="margin: 0px; padding: 0px; font-size: 13px; line-height:2.5em;">
+                 Thank you and have a nice day,
+                </p>
+            </div>
+        </field>
+    </record>
+
+</odoo>
