@@ -357,6 +357,7 @@ msgstr "Points prévus"
 #. module: meeting_minutes_project
 #: model:ir.model,name:meeting_minutes_project.model_project_project
 #: model:ir.model.fields,field_description:meeting_minutes_project.field_meeting_minutes_project__project_id
+#: model_terms:ir.ui.view,arch_db:meeting_minutes_project.meeting_minutes_project_view_search
 msgid "Project"
 msgstr "Projet"
 
@@ -399,12 +400,18 @@ msgstr "Statut basé sur les activités\n"
 "Planifié : activités futures."
 
 #. module: meeting_minutes_project
+#: model_terms:ir.ui.view,arch_db:meeting_minutes_project.meeting_minutes_project_view_search
+msgid "Group By"
+msgstr "Grouper Par"
+
+#. module: meeting_minutes_project
 #: model:ir.model,name:meeting_minutes_project.model_project_task
 #: model:ir.model.fields,field_description:meeting_minutes_project.field_mail_activity__task_id
 #: model:ir.model.fields,field_description:meeting_minutes_project.field_meeting_minutes_discuss_point__task_id
 #: model:ir.model.fields,field_description:meeting_minutes_project.field_meeting_minutes_project__task_id
 #: model_terms:ir.ui.view,arch_db:meeting_minutes_project.meeting_minutes_discuss_point_view_form
 #: model_terms:ir.ui.view,arch_db:meeting_minutes_project.meeting_minutes_discuss_point_view_tree
+#: model_terms:ir.ui.view,arch_db:meeting_minutes_project.meeting_minutes_project_view_search
 msgid "Task"
 msgstr "Tâche"
 

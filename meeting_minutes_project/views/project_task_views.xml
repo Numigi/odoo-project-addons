@@ -34,9 +34,6 @@
         <field name="model">project.task</field>
         <field name="inherit_id" ref="project.view_task_form2"/>
         <field name="arch" type="xml">
-            <xpath expr="//header" position="inside">
-                <button name="open_meeting_minutes" string="Meeting Minutes" type="object" class="oe_highlight"/>
-            </xpath>
             <div class="oe_button_box" position="inside">
                 <button name="%(meeting_minutes_discuss_point_action)d" type="action" attrs="{'invisible': [('mentions_count', '=', 0)]}"
                         class="oe_stat_button" icon="fa-quote-right">
@@ -44,7 +41,7 @@
                 </button>
             </div>
             <xpath expr="//div[hasclass('oe_button_box')]" position="inside">
-                <button name="%(action_view_task_meeting_minutes)d" attrs="{'invisible': [('meeting_minutes_count', '=', 0)]}"
+                <button name="%(action_view_task_meeting_minutes)d"
                     type="action" class="oe_stat_button order-9"  icon="fa-exchange" groups="project.group_project_user">
                     <field name="meeting_minutes_count" widget="statinfo" string="Meeting minutes"/>
                 </button>
