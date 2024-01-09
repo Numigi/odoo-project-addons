@@ -48,6 +48,11 @@ class TestMeetingMinutesProjectParent(SavepointCase):
         self.project_1.write({"parent_id": self.project_2.id})
         self.project_2._compute_nbr_meeting()
         assert 2 == self.project_2.meeting_minutes_count
-        self.task_3.open_meeting_minutes()
+        minutes = (
+            self.env["meeting.minutes.project"]
+            .with_context(default_task_id=self.task_3.id)
+            .create({})
+        )
+        minutes.on_change_task_id()
         self.project_2._compute_nbr_meeting()
         assert 3 == self.project_2.meeting_minutes_count
