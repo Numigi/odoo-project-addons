@@ -41,19 +41,6 @@
                                 <field name="planned_point" nolabel="1"/>
                             </group>
 
-                            <h2>Actions</h2>
-                            <group>
-                                <field name="action_ids" nolabel="1">
-                                    <tree>
-                                        <field name="task_id"/>
-                                        <field name="summary"/>
-                                        <field name="note"/>
-                                        <field name="user_id"/>
-                                        <field name="date_deadline"/>
-                                    </tree>
-                                </field>
-                            </group>
-
                             <h2>Discussed Points</h2>
                             <group>
                                 <field name="discuss_point_ids" nolabel="1" colspan="4">
@@ -148,6 +135,21 @@
                 <field name="mean_communication_id"/>
                 <field name="partner_ids" widget="many2many_tags"/>
             </tree>
+        </field>
+    </record>
+
+    <record id="meeting_minutes_project_view_search" model="ir.ui.view">
+        <field name="name">meeting.minutes.project.search</field>
+        <field name="model">meeting.minutes.project</field>
+        <field name="arch" type="xml">
+            <search string="Activities Analysis">
+                <field name="project_id" string="Project"/>
+                <field name="task_id" string="Task"/>
+                <group expand="1" string="Group By">
+                    <filter string="Project" name="group_by_project" context="{'group_by':'project_id'}"/>
+                    <filter string="Task" name="group_by_task" context="{'group_by':'task_id'}"/>
+                </group>
+            </search>
         </field>
     </record>
 

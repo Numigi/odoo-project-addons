@@ -18,6 +18,12 @@ class TestMeetingMinutesProject(SavepointCase):
                 "email": "partner1@yourcompany.com",
             }
         )
+        cls.partner_extra = cls.env["res.partner"].create(
+            {
+                "name": "Partner 2",
+                "email": "partner2@yourcompany.com",
+            }
+        )
         cls.channel = cls.env["mail.channel"].create({"name": "Channel 1"})
 
         cls.project_1 = cls.env["project.project"].create({"name": "Project 1"})
@@ -40,22 +46,17 @@ class TestMeetingMinutesProject(SavepointCase):
         cls.today = fields.Date.context_today(cls.task_1)
         cls.yesterday = cls.today - timedelta(1)
 
-    def test_open_meeting_minutes(self):
-        minutes = self.task_1.open_meeting_minutes()
-        assert (
-            minutes.get("view_id", False)
-            == self.env.ref("meeting_minutes.meeting_minutes_view_mixin_form").id
-        )
-
-    def test_second_click_open_meeting_minutes(self):
-        action = self.task_2.open_meeting_minutes()
-        action_2 = self.task_2.open_meeting_minutes()
-        assert action["res_id"] == action_2["res_id"]
-
     def test_task_partner_follower_in_participants(self):
         self.task_1._message_subscribe(self.partner.ids)
         minutes = self._create_minutes()
         assert self.partner in minutes.partner_ids
+        unified_partners = self.partner.ids + self.partner_extra.ids
+        self.task_2._message_subscribe(unified_partners)
+        minutes.task_id = self.task_2.id
+        minutes.on_change_task_id()
+        assert len(minutes.partner_ids.ids) == 2
+        assert self.partner in minutes.partner_ids
+        assert self.partner_extra in minutes.partner_ids
 
     def test_task_commercial_follower_not_in_participants(self):
         self.partner.is_company = True
@@ -121,10 +122,13 @@ class TestMeetingMinutesProject(SavepointCase):
         self.env["meeting.minutes.project"].search(
             [("task_id", "=", self.task_1.id)]
         ).unlink()
-        meeting_minutes = self.task_1.open_meeting_minutes()
-        minutes = self.env["meeting.minutes.project"].search(
-            [("id", "=", meeting_minutes.get("res_id", False))]
+
+        minutes = (
+            self.env["meeting.minutes.project"]
+            .with_context(default_task_id=self.task_1.id)
+            .create({})
         )
+        minutes.on_change_task_id()
         return minutes
 
     def _create_homework_activity(self, date_deadline):

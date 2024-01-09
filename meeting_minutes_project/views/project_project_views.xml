@@ -35,7 +35,7 @@
         <field name="inherit_id" ref="project.edit_project"/>
         <field name="arch" type="xml">
             <xpath expr="//div[hasclass('oe_button_box')]" position="inside">
-                <button name="%(action_view_meeting_minutes_project)d" attrs="{'invisible': [('meeting_minutes_project_count', '=', 0)]}"
+                <button name="%(action_view_meeting_minutes_project)d"
                     type="action" class="oe_stat_button order-9"  icon="fa-exchange" groups="project.group_project_user">
                     <field name="meeting_minutes_project_count" widget="statinfo" string="Meeting minutes"/>
                 </button>

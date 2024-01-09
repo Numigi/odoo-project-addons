@@ -11,10 +11,14 @@ class MeetingMinutesProject(models.Model):
 
     name = fields.Char(compute="_compute_name")
     task_id = fields.Many2one(
-        "project.task", string="Task", ondelete="restrict", index=True
+        "project.task", string="Task", ondelete="restrict", index=True, store=True
     )
     project_id = fields.Many2one(
-        "project.project", related="task_id.project_id", string="Project", readonly=True
+        "project.project",
+        related="task_id.project_id",
+        string="Project",
+        readonly=True,
+        store=True,
     )
     action_ids = fields.One2many(
         "mail.activity", compute="_compute_action_ids", string="Actions", readonly=True
@@ -25,6 +29,24 @@ class MeetingMinutesProject(models.Model):
     homework_ids = fields.One2many(
         "mail.activity", "meeting_minutes_id", string="Homework"
     )
+
+    @api.onchange("task_id")
+    def on_change_task_id(self):
+        # Filter odoobot to avoid displaying it on edit mode then disappear on save
+        odoobot_id = self.env["ir.model.data"].xmlid_to_res_id("base.partner_root")
+        partner_follower_ids = self.task_id.message_follower_ids.filtered(
+            lambda f: f.partner_id
+            and not f.channel_id
+            and not f.partner_id.is_company
+            and f.partner_id.id != odoobot_id
+        )
+        self.partner_ids = [
+            (
+                6,
+                0,
+                [follower.partner_id.id for follower in partner_follower_ids],
+            )
+        ]
 
     def _compute_name(self):
         name_format = _("Meeting Minutes: {task} - {create_datetime}")
