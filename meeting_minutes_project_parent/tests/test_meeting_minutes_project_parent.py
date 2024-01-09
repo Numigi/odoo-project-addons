@@ -33,8 +33,18 @@ class TestMeetingMinutesProjectParent(SavepointCase):
         )
 
     def test_project_child_meeting_minutes(self):
-        self.task_1.open_meeting_minutes()
-        self.task_2.open_meeting_minutes()
+        minutes_1 = (
+            self.env["meeting.minutes.project"]
+            .with_context(default_task_id=self.task_1.id)
+            .create({})
+        )
+        minutes_1.on_change_task_id()
+        minutes_2 = (
+            self.env["meeting.minutes.project"]
+            .with_context(default_task_id=self.task_2.id)
+            .create({})
+        )
+        minutes_2.on_change_task_id()
         self.project_1.write({"parent_id": self.project_2.id})
         self.project_2._compute_nbr_meeting()
         assert 2 == self.project_2.meeting_minutes_count

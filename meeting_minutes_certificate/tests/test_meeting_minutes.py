@@ -61,7 +61,12 @@ class TestMeetingMinutes(SavepointCase):
         )
 
         cls.report = cls.env.ref("meeting_minutes_certificate.meeting_minutes_report")
-        cls.minutes = cls.task.get_meeting_minutes()
+        cls.minutes = (
+            cls.env["meeting.minutes.project"]
+            .with_context(default_task_id=cls.task.id)
+            .create({})
+        )
+        cls.minutes.on_change_task_id()
         cls.minutes.certificate_enabled = True
         cls.minutes.certificate_report_id = cls.report
         cls.minutes._onchange_certificate_enabled()
