@@ -61,7 +61,16 @@ class TestMeetingMinutes(SavepointCase):
         )
 
         cls.report = cls.env.ref("meeting_minutes_certificate.meeting_minutes_report")
-        cls.minutes = cls.task.get_meeting_minutes()
+        cls.minutes = cls.env["meeting.minutes.project"].search(
+            [("task_id", "=", cls.task.id)]
+        )
+        if not cls.minutes:
+            cls.minutes = (
+                cls.env["meeting.minutes.project"]
+                .with_context(default_task_id=cls.task.id)
+                .create({})
+            )
+            cls.minutes.on_change_task_id()
         cls.minutes.certificate_enabled = True
         cls.minutes.certificate_report_id = cls.report
         cls.minutes._onchange_certificate_enabled()
@@ -145,7 +154,16 @@ class TestMeetingMinutes(SavepointCase):
     def test_participants_from_task(self):
         task = self.task.copy()
         task._message_subscribe(self.partner.ids)
-        minutes = task.get_meeting_minutes()
+        minutes = self.env["meeting.minutes.project"].search(
+            [("task_id", "=", task.id)]
+        )
+        if not minutes:
+            minutes = (
+                self.env["meeting.minutes.project"]
+                .with_context(default_task_id=task.id)
+                .create({})
+            )
+            minutes.on_change_task_id()
         minutes.certificate_enabled = True
         minutes._onchange_certificate_enabled()
         assert minutes.participant_signature_ids.partner_id == self.partner
