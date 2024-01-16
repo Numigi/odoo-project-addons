@@ -2,6 +2,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo import api, fields, models, _
+from odoo.exceptions import UserError
 
 
 class ProjectProject(models.Model):
@@ -32,14 +33,12 @@ class ProjectProject(models.Model):
 
     def _compute_project_end_history(self):
         for project in self:
-            project.project_end_history_count =\
-                len(project.project_end_history_ids)
+            project.project_end_history_count = len(project.project_end_history_ids)
 
     @api.multi
     def action_edit_end_date(self):
         self.ensure_one()
-        action = self.env.ref("project_track_end_date.wizard_edit_end_date"
-                              ).read()[0]
+        action = self.env.ref("project_track_end_date.wizard_edit_end_date").read()[0]
         action["context"] = {
             "default_initial_date": self.date,
             "default_date": self.date,
@@ -48,3 +47,14 @@ class ProjectProject(models.Model):
             "default_company_id": self.company_id.id,
         }
         return action
+
+    def write(self, values):
+        # Adding subtask_project_id on condition
+        # because project is doing write operation after create
+        # this is the line on create() : project.subtask_project_id = project.id
+        if not values.get("subtask_project_id", False) and not values.get(
+            "date", False
+        ):
+            raise UserError(_("The expiration date of the project must be set first."))
+        result = super(ProjectProject, self).write(values)
+        return result

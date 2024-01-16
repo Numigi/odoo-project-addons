@@ -33,6 +33,21 @@ class TestProjectEndHistoric(SavepointCase):
             "default_company_id": cls.env.user.company_id.id,
         }
 
+    def test_create_then_write_project(self):
+        # No expiration date project
+        new_project = (
+            self.env["project.project"]
+            .with_context({"mail_create_nolog": True})
+            .create(
+                {
+                    "name": "Numigi",
+                    "date_start": date(2023, 1, 1),
+                }
+            )
+        )
+        with self.assertRaises(UserError):
+            new_project.write({"sequence": 20})
+
     def test_action_to_wizard(self):
         action = self.project.action_edit_end_date()
 
@@ -47,8 +62,7 @@ class TestProjectEndHistoric(SavepointCase):
             "reason": "Project postponed",
         }
         res = (
-            self.env["edit.date.wizard"].with_context(self.action_context
-                                                      ).create(vals)
+            self.env["edit.date.wizard"].with_context(self.action_context).create(vals)
         )
         res.date = date(2023, 1, 15)
         res.refresh()

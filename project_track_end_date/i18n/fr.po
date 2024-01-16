@@ -168,3 +168,10 @@ msgstr "Date de mise à jour"
 #: model:ir.model.fields,field_description:project_track_end_date.field_project_project__expected_week_duration
 msgid "Expected week duration"
 msgstr "Durée prévue en semaine"
+
+#. module: project_track_end_date
+#: code:addons/project_track_end_date/models/project_project.py:56
+#, python-format
+msgid "The expiration date of the project must be set first."
+msgstr "La date d'expiration du projet doit être renseignée."
+
