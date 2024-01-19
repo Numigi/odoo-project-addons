@@ -31,24 +31,23 @@ class ProjectProject(models.Model):
         store=True,
     )
 
-    @api.depends("task_ids",
-                 "task_ids.planned_hours", "task_ids.effective_hours")
+    @api.depends("tasks", "tasks.planned_hours", "tasks.effective_hours")
     def _compute_total_progress(self):
         for project in self:
-            planned_hours = sum(project.task_ids.mapped("planned_hours"))
-            effective_hours = sum(project.task_ids.mapped("effective_hours"))
-            project.total_progress = 100.0 * (effective_hours / planned_hours)\
-                if planned_hours else 0.0
+            planned_hours = sum(project.tasks.mapped("planned_hours"))
+            effective_hours = sum(project.tasks.mapped("effective_hours"))
+            project.total_progress = (
+                100.0 * (effective_hours / planned_hours) if planned_hours else 0.0
+            )
 
-    @api.depends("task_ids",
-                 "task_ids.projected_hours", "task_ids.effective_hours")
+    @api.depends("tasks", "tasks.projected_hours", "tasks.effective_hours")
     def _compute_total_real_progress(self):
         for project in self:
-            projected_hours = sum(project.task_ids.mapped("projected_hours"))
-            effective_hours = sum(project.task_ids.mapped("effective_hours"))
-            project.total_real_progress = 100.0 * (
-                effective_hours / projected_hours
-            ) if projected_hours else 0.0
+            projected_hours = sum(project.tasks.mapped("projected_hours"))
+            effective_hours = sum(project.tasks.mapped("effective_hours"))
+            project.total_real_progress = (
+                100.0 * (effective_hours / projected_hours) if projected_hours else 0.0
+            )
 
     @api.depends("total_progress", "total_real_progress")
     def _compute_total_progress_variance(self):
