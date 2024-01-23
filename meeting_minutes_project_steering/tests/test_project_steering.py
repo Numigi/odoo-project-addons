@@ -1,16 +1,16 @@
 # Copyright 2024 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo.addons.meeting_minutes_project.tests.test_project_meeting_minutes import (
-    TestMeetingMinutesProject,
-)
+from odoo.tests.common import SavepointCase
 
 
-class TestProjectSteering(TestMeetingMinutesProject):
+class TestProjectSteering(SavepointCase):
     @classmethod
     def setUpClass(cls):
-        super(TestProjectSteering, cls).setUpClass()
+        super().setUpClass()
         task_model = cls.env["ir.model"].search([("model", "=", "project.task")]).id
+
+        cls.project_1 = cls.env["project.project"].create({"name": "Project 1"})
         cls.steering_kpi_1 = cls.env["project.steering.kpi"].create(
             {
                 "name": "Steering KPI 1",
@@ -48,6 +48,22 @@ class TestProjectSteering(TestMeetingMinutesProject):
             }
         )
 
+        cls.task_1 = cls.env["project.task"].create(
+            {
+                "project_id": cls.project_1.id,
+                "name": "Room Task 1",
+                "planned_hours": 7,
+            }
+        )
+
+        cls.task_2 = cls.env["project.task"].create(
+            {
+                "project_id": cls.project_1.id,
+                "name": "Task 2",
+                "date_deadline": "2024-01-01",
+            }
+        )
+
         cls.task_3 = cls.env["project.task"].create(
             {
                 "project_id": cls.project_1.id,
@@ -66,10 +82,6 @@ class TestProjectSteering(TestMeetingMinutesProject):
         )
 
     def test_project_steering_load_data(self):
-        self.task_1.planned_hours = 7
-        self.task_1.name = "Room Task 1"
-        self.task_2.date_deadline = "2024-01-01"
-
         minutes = self._create_minutes()
 
         minutes.project_steering_enabled = True
@@ -105,3 +117,16 @@ class TestProjectSteering(TestMeetingMinutesProject):
         self.assertEqual(minutes.project_steering_ids[0].name, "Steering KPI 2")
         self.assertEqual(minutes.project_steering_ids[3].name, "Steering KPI 1")
         self.assertEqual(minutes.project_steering_ids[7].name, "Steering KPI 3")
+
+    def _create_minutes(self):
+        self.env["meeting.minutes.project"].search(
+            [("task_id", "=", self.task_1.id)]
+        ).unlink()
+
+        minutes = (
+            self.env["meeting.minutes.project"]
+            .with_context(default_task_id=self.task_1.id)
+            .create({})
+        )
+        minutes.on_change_task_id()
+        return minutes
