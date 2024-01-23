@@ -1,0 +1,53 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<odoo>
+
+    <record id="steering_indicators_view_form" model="ir.ui.view">
+        <field name="name">project.steering.kpi.form</field>
+        <field name="model">project.steering.kpi</field>
+        <field name="arch" type="xml">
+            <form string="Steering Indicators">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="sequence"/>
+                        <field name="model" invisible="1"/>
+                        <field name="model_id" options="{'no_create_edit': True}"/>
+                        <field name="active"/>
+                        <field name="filter_domain" widget="domain" options="{'model': 'model'}"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="steering_indicators_view_tree" model="ir.ui.view">
+        <field name="name">project.steering.kpi.tree</field>
+        <field name="model">project.steering.kpi</field>
+        <field name="arch" type="xml">
+            <tree string="Steering Indicators">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="model_id"/>
+                <field name="active"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_steering_indicators" model="ir.actions.act_window">
+        <field name="name">Steering Indicators</field>
+        <field name="res_model">project.steering.kpi</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="steering_indicators_view_tree"/>
+        <field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'tree', 'view_id': ref('steering_indicators_view_tree')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('steering_indicators_view_form')})]"/>
+
+    </record>
+
+    <menuitem action="action_steering_indicators" name="Steering Indicators"
+            id="menu_steering_indicators"
+            parent="project.menu_project_config"
+            groups="project.group_project_user" sequence="4"/>
+
+</odoo>
