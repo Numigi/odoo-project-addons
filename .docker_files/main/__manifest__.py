@@ -40,7 +40,7 @@
         # "project_material_progress",
         # "project_material_quantity_filters",
         # "project_milestone_dependency",
-        "project_milestone_enhanced",
+        # "project_milestone_enhanced", # FOR TESTING PURPOSE
         "project_milestone_estimated_hours",
         # "project_milestone_remaining_hours",
         "project_milestone_spent_hours",
@@ -85,7 +85,7 @@
         "project_template_timesheet",
         "project_time_budget",
         "project_time_control_wizard_group",
-        "project_time_range",
+        # "project_time_range", # FOR TESTING PURPOSE
         "project_timesheet_analytic_update",
         "project_type",
         # "project_wip",
