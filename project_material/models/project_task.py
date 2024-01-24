@@ -88,18 +88,18 @@ class TaskWithMaterialLines(models.Model):
 
     def write(self, vals):
         super().write(vals)
+        for task in self:
+            procurement_disabled = vals.get(
+                "procurement_disabled", task.procurement_disabled
+            )
+            if procurement_disabled is False:
+                task._run_procurements()
 
-        procurement_disabled = vals.get(
-            "procurement_disabled", self.procurement_disabled
-        )
-        if procurement_disabled is False:
-            self._run_procurements()
+            if procurement_disabled is True:
+                task._cancel_procurements()
 
-        if procurement_disabled is True:
-            self._cancel_procurements()
-
-        if "date_planned" in vals:
-            self._propagate_planned_date_to_stock_moves()
+            if "date_planned" in vals:
+                task._propagate_planned_date_to_stock_moves()
 
         return True
 
