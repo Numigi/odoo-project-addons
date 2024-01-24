@@ -1,4 +1,4 @@
-# © 2023 - today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+# Copyright 2024 - today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 from ddt import ddt, data
@@ -10,7 +10,12 @@ class TestOpenPickingsFromTaskCase(TaskMaterialCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.warehouse.consu_steps = "two_steps"
+        cls.warehouse.with_company(cls.company).write(
+            {
+                "consu_steps": "two_steps",
+                "consu_prep_location_id": cls.env.ref("stock.warehouse0").id,
+            }
+        )
 
     def _create_one_procurement(self):
         self._create_material_line()

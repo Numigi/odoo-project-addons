@@ -1,4 +1,4 @@
-# © 2023 - today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+# Copyright 2024 - today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 import pytest
@@ -23,23 +23,19 @@ class TestGenerateProcurementsFromTask(TaskMaterialCase):
         with pytest.raises(ValidationError):
             self._create_material_line()
 
-    # def test_date_planned_on_task_propagated_to_stock_move(self):
-    #     line = self._create_material_line()
-    #     expected_date = fields.Date.from_string(self.task.date_planned)
-    #     move_date = fields.Datetime.from_string(
-    #         line.move_ids.forecast_expected_date
-    #     ).date()
-    #     assert move_date == expected_date
+    def test_date_planned_on_task_propagated_to_stock_move(self):
+        line = self._create_material_line()
+        expected_date = fields.Date.from_string(self.task.date_planned)
+        move_date = fields.Datetime.from_string(line.move_ids.date).date()
+        assert move_date == expected_date
 
-    # def test_change_date_planned_on_task__date_propagated_to_stock_move(self):
-    #     new_date = fields.Date.from_string(self.task.date_planned) + timedelta(2)
-    #     line = self._create_material_line()
-    #     self.task.date_planned = new_date
+    def test_change_date_planned_on_task__date_propagated_to_stock_move(self):
+        new_date = fields.Date.from_string(self.task.date_planned) + timedelta(2)
+        line = self._create_material_line()
+        self.task.date_planned = new_date
 
-    #     move_date = fields.Datetime.from_string(
-    #         line.move_ids.forecast_expected_date
-    #     ).date()
-    #     assert move_date == new_date
+        move_date = fields.Datetime.from_string(line.move_ids.date).date()
+        assert move_date == new_date
 
     def test_product_display_name_propagated_to_stock_move(self):
         line = self._create_material_line()
@@ -60,6 +56,13 @@ class TestGenerateProcurementsFromTask(TaskMaterialCase):
 
     def test_quantity_propagated_to_stock_move(self):
         line = self._create_material_line(initial_qty=10)
+        assert line.initial_qty == 10
+        assert (
+            line.move_ids.filtered(
+                lambda m: m.picking_code == "consumption"
+            ).product_uom_qty
+            == 10
+        )
         assert line.move_ids.product_uom_qty == 10
 
     def test_product_uom_propagated_to_stock_move(self):
@@ -177,12 +180,12 @@ class TestGenerateProcurementsFromTask(TaskMaterialCase):
         self._force_transfer_move(line.move_ids, 7)
         assert line.consumed_qty == 7
 
-    # def test_returned_moves_substracted_from_consumed_quantity(self):
-    #     line = self._create_material_line(initial_qty=10)
-    #     move = line.move_ids
-    #     self._force_transfer_move(move, 7)
-    #     self._return_stock_move(move, 2)
-    #     assert line.consumed_qty == 5  # 7 - 2
+    def test_returned_moves_substracted_from_consumed_quantity(self):
+        line = self._create_material_line(initial_qty=10)
+        move = line.move_ids
+        self._force_transfer_move(move, 7)
+        self._return_stock_move(move, 2)
+        assert line.consumed_qty == 5  # 7 - 2
 
     def test_if_move_not_done__material_line_can_be_deleted(self):
         line = self._create_material_line()
@@ -204,18 +207,47 @@ class TestGenerateProcurementsFromTask(TaskMaterialCase):
     def _get_po_line(self, product):
         return self.env["purchase.order.line"].search([("product_id", "=", product.id)])
 
-    # def test_if_product_is_not_mto__purchase_order_not_generated(self):
-    #     self._create_material_line()
-    #     po_line = self._get_po_line(self.product_a)
-    #     assert not po_line
+    def test_if_product_is_not_mto__purchase_order_not_generated(self):
+        self._create_material_line()
+        po_line = self._get_po_line(self.product_a)
+        assert not po_line
 
-    # @data("one_step", "two_steps")
-    # def test_if_product_is_mto__purchase_order_generated(self, steps):
-    #     self.warehouse.consu_steps = steps
-    #     self.product_a.route_ids |= self.env.ref("stock.route_warehouse0_mto")
-    #     self._create_material_line()
-    #     po_line = self._get_po_line(self.product_a)
-    #     assert po_line
+    @data("one_step", "two_steps")
+    def test_if_product_is_mto__purchase_order_generated(self, steps):
+        self.warehouse.with_company(self.company).write(
+            {
+                "consu_steps": steps,
+            }
+        )
+        self.env.ref("stock.route_warehouse0_mto").active = True
+        self.product_a.write(
+            {
+                "route_ids": [
+                    (4, self.ref("stock.route_warehouse0_mto")),
+                ],
+                "seller_ids": [
+                    (5, 0),
+                    (
+                        0,
+                        0,
+                        {
+                            "name": self.vendor.id,
+                            "price": 50.0,
+                            "company_id": self.company.id,
+                        },
+                    ),
+                ],
+            }
+        )
+        self.product_a.refresh()
+        self._create_material_line()
+
+        purchase_order = self.env["purchase.order"].search(
+            [("partner_id", "=", self.vendor.id)]
+        )
+        self.assertTrue(purchase_order, "No purchase order created.")
+        po_line = self._get_po_line(self.product_a)
+        assert po_line
 
     def test_after_change_task__initial_stock_move_cancelled(self):
         line = self._create_material_line()
@@ -282,7 +314,11 @@ class TestPreparationStep(TaskMaterialCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.warehouse.consu_steps = "two_steps"
+        cls.warehouse.with_company(cls.company).write(
+            {
+                "consu_steps": "two_steps",
+            }
+        )
         cls.initial_qty = 10
         cls.line = cls._create_material_line(initial_qty=cls.initial_qty)
         cls.preparation_move = cls.line.move_ids.move_orig_ids
@@ -352,12 +388,12 @@ class TestPreparationStep(TaskMaterialCase):
         self._force_transfer_move(line.move_ids.move_orig_ids, 7)
         assert line.prepared_qty == 7
 
-    # def test_returned_moves_substracted_from_prepared_quantity(self):
-    #     line = self._create_material_line(initial_qty=10)
-    #     move = line.move_ids.move_orig_ids
-    #     self._force_transfer_move(move, 7)
-    #     self._return_stock_move(move, 2)
-    #     assert line.prepared_qty == 5  # 7 - 2
+    def test_returned_moves_substracted_from_prepared_quantity(self):
+        line = self._create_material_line(initial_qty=10)
+        move = line.move_ids.move_orig_ids
+        self._force_transfer_move(move, 7)
+        self._return_stock_move(move, 2)
+        assert line.prepared_qty == 5  # 7 - 2
 
     def test_on_task__if_2_steps__show_prepared_qty(self):
         assert self.task.show_material_prepared_qty
@@ -366,41 +402,39 @@ class TestPreparationStep(TaskMaterialCase):
         self.warehouse.consu_steps = "one_step"
         assert not self.task.show_material_prepared_qty
 
-    # def test_destination_material_line(self):
-    #     line = self._create_material_line(initial_qty=10)
-    #     consumption_move = line.move_ids
-    #     preparation_move = consumption_move.move_orig_ids
-    #     assert consumption_move.destination_material_line_id == line
-    #     assert preparation_move.destination_material_line_id == line
+    def test_destination_material_line(self):
+        line = self._create_material_line(initial_qty=10)
+        consumption_move = line.move_ids
+        preparation_move = consumption_move.move_orig_ids
+        assert consumption_move.destination_material_line_id == line
+        assert preparation_move.destination_material_line_id == line
 
-    #     self._force_transfer_move(preparation_move, 2)
-    #     preparation_return = self._return_stock_move(preparation_move, 1)
-    #     assert preparation_return.destination_material_line_id == line
+        self._force_transfer_move(preparation_move, 2)
+        preparation_return = self._return_stock_move(preparation_move, 1)
+        assert preparation_return.destination_material_line_id == line
 
-    #     self._force_transfer_move(consumption_move, 1)
-    #     consumption_return = self._return_stock_move(consumption_move, 1)
-    #     assert consumption_return.destination_material_line_id == line
+        self._force_transfer_move(consumption_move, 1)
+        consumption_return = self._return_stock_move(consumption_move, 1)
+        assert consumption_return.destination_material_line_id == line
 
-    # def test_date_planned_to_preparation_move(self):
-    #     new_date = self.task.date_planned + timedelta(2)
-    #     self.task.date_planned = new_date
+    def test_date_planned_to_preparation_move(self):
+        new_date = self.task.date_planned + timedelta(2)
+        self.task.date_planned = new_date
 
-    #     move_date = self.preparation_move.forecast_expected_date.date()
-    #     assert move_date == new_date
+        move_date = self.preparation_move.date.date()
+        assert move_date == new_date
 
-    # def test_preparation_step_with_delay(self):
-    #     self.preparation_move.rule_id.delay = 3
-    #     line = self._create_material_line()
-    #     move = line.move_ids.move_orig_ids
-    #     assert move.forecast_expected_date.date() == self.task.date_planned - timedelta(
-    #         3
-    #     )
+    def test_preparation_step_with_delay(self):
+        self.preparation_move.rule_id.delay = 3
+        line = self._create_material_line()
+        move = line.move_ids.move_orig_ids
+        assert move.date.date() == self.task.date_planned - timedelta(3)
 
-    # def test_change_date_planned_with_delay(self):
-    #     self.preparation_move.rule_id.delay = 3
+    def test_change_date_planned_with_delay(self):
+        self.preparation_move.rule_id.delay = 3
 
-    #     new_date = self.task.date_planned + timedelta(2)
-    #     self.task.date_planned = new_date
+        new_date = self.task.date_planned + timedelta(2)
+        self.task.date_planned = new_date
 
-    #     move_date = self.preparation_move.forecast_expected_date.date()
-    #     assert move_date == new_date - timedelta(3)
+        move_date = self.preparation_move.date.date()
+        assert move_date == new_date - timedelta(3)

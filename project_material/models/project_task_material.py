@@ -1,4 +1,4 @@
-# © 2023 - today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+# Copyright 2024 - today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 from datetime import timedelta
@@ -188,15 +188,6 @@ class TaskMaterialLine(models.Model):
                 )
             ]
         )
-        # self.env["procurement.group"].run(
-        #     self.product_id,
-        #     missing_qty,
-        #     self.product_uom_id,
-        #     self._get_consumption_location(),
-        #     self.product_id.display_name,
-        #     self.task_id._get_reference_for_procurements(),
-        #     self._get_procurement_values(),
-        # )
 
     def _get_consumption_location(self):
         warehouse = self._get_warehouse()
@@ -228,6 +219,7 @@ class TaskMaterialLine(models.Model):
             "warehouse_id": self.task_id.project_id.warehouse_id,
             "material_line_id": self.id,
             "task_id": self.task_id.id,
+            "supplierinfo_name": self.task_id.partner_id,
         }
 
     def _check_quantity_can_be_reduced(self):
@@ -332,8 +324,10 @@ class TaskMaterialLine(models.Model):
             if delay:
                 date_planned = date_planned - timedelta(delay[0])
 
+            # FIX ME : update date_expected on v12 but use what field on v14 instead
+            # Maybe `date`  ?
             moves_to_update.with_context(do_not_propagate=True).write(
-                {"date_expected": date_planned}
+                {"date": date_planned}
             )
 
     def _iter_procurement_moves(self):

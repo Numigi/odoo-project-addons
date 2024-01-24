@@ -1,4 +1,4 @@
-# © 2023 - today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+# Copyright 2024 - today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 from datetime import date
@@ -16,21 +16,25 @@ class TaskWithMaterialLines(models.Model):
         "procurement.group", "Procurement Group", copy=False
     )
 
-    consumption_picking_count = fields.Integer(compute="_compute_consumption_pickings")
+    consumption_picking_count = fields.Integer(
+        compute="_compute_consumption_pickings", readonly=False
+    )
     consumption_picking_ids = fields.One2many(
         "stock.picking",
         string="Consumption Pickings",
         compute="_compute_consumption_pickings",
     )
 
-    preparation_picking_count = fields.Integer(compute="_compute_preparation_pickings")
+    preparation_picking_count = fields.Integer(
+        compute="_compute_preparation_pickings", readonly=False
+    )
     preparation_picking_ids = fields.One2many(
         "stock.picking",
         string="Preparation Pickings",
         compute="_compute_preparation_pickings",
     )
     preparation_return_picking_count = fields.Integer(
-        compute="_compute_preparation_pickings"
+        compute="_compute_preparation_pickings", readonly=False
     )
     preparation_return_picking_ids = fields.One2many(
         "stock.picking",
@@ -42,7 +46,7 @@ class TaskWithMaterialLines(models.Model):
         compute="_compute_show_material_prepared_qty"
     )
 
-    procurement_disabled = fields.Boolean()
+    procurement_disabled = fields.Boolean(default=False)
 
     def _compute_preparation_pickings(self):
         tasks_with_procurement_group = self.filtered(lambda t: t.procurement_group_id)
@@ -85,7 +89,9 @@ class TaskWithMaterialLines(models.Model):
     def write(self, vals):
         super().write(vals)
 
-        procurement_disabled = vals.get("procurement_disabled")
+        procurement_disabled = vals.get(
+            "procurement_disabled", self.procurement_disabled
+        )
         if procurement_disabled is False:
             self._run_procurements()
 

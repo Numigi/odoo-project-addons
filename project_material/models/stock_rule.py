@@ -1,4 +1,4 @@
-# © 2023 - today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+# Copyright 2024 - today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 from odoo import models
@@ -30,4 +30,7 @@ class StockRule(models.Model):
         )
         result["material_line_id"] = values.get("material_line_id")
         result["task_id"] = values.get("task_id")
+        if self.group_propagation_option == "propagate":
+            group_id = values.get("group_id", False) and values["group_id"].id
+            result["group_id"] = group_id
         return result

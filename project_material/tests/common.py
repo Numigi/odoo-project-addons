@@ -1,8 +1,9 @@
-# © 2023 - today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+# Copyright 2024 - today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 from datetime import datetime
 from odoo.tests import common
+from odoo.tests.common import Form
 
 
 class TaskMaterialCase(common.SavepointCase):
@@ -43,8 +44,6 @@ class TaskMaterialCase(common.SavepointCase):
                 "company_ids": [(4, cls.company.id)],
             }
         )
-        # cls.env = cls.env(user=cls.manager, context={"force_company": cls.company.id})
-        # cls.env = cls.env(user=cls.manager)
 
         cls.warehouse = cls.env["stock.warehouse"].search(
             [("company_id", "=", cls.company.id)], limit=1
@@ -91,7 +90,6 @@ class TaskMaterialCase(common.SavepointCase):
                 "name": "Category 1",
                 "property_valuation": "manual_periodic",
                 "property_cost_method": "standard",
-                # "company_id": cls.company.id,
             }
         )
 
@@ -107,6 +105,13 @@ class TaskMaterialCase(common.SavepointCase):
                 "route_ids": [
                     (4, cls.env.ref("purchase_stock.route_warehouse0_buy").id)
                 ],
+            }
+        )
+        cls.env["product.supplierinfo"].create(
+            {
+                "name": cls.vendor.id,
+                "product_tmpl_id": cls.product_a.product_tmpl_id.id,
+                "delay": 2,
             }
         )
         cls.product_b_value = 100
@@ -138,10 +143,12 @@ class TaskMaterialCase(common.SavepointCase):
                 {
                     "task_id": task.id if task else cls.task.id,
                     "product_id": product.id if product else cls.product_a.id,
-                    "initial_qty": initial_qty,
                 }
             )
         )
+        new_line.initial_qty = initial_qty
+
+        new_line.refresh()
         return new_line.sudo()
 
     @classmethod
@@ -172,26 +179,22 @@ class TaskMaterialCase(common.SavepointCase):
         :param move_to_return: the stock move to return
         :param returned_qty: the quantity to return
         """
-        wizard_fields = [
-            "product_return_moves",
-            "move_dest_exists",
-            "parent_location_id",
-            "original_location_id",
-            "location_id",
-        ]
-        wizard_cls = (
+
+        return_form = Form(
             cls.env["stock.return.picking"]
             .with_user(cls.stock_user)
-            .with_context(active_id=move_to_return.picking_id.id)
+            .with_context(
+                active_id=move_to_return.picking_id.id, active_model="stock.picking"
+            )
         )
-        wizard_defaults = wizard_cls.default_get(wizard_fields)
-        wizard = wizard_cls.create(wizard_defaults)
+
+        wizard = return_form.save()
 
         for product_return in wizard.product_return_moves:
             if product_return.move_id == move_to_return:
                 product_return.quantity = returned_qty
 
-        return_picking_id = wizard.create_returns()["res_id"]
+        return_picking_id, pick_type_id = wizard._create_returns()
         return_picking = (
             cls.env["stock.picking"].with_user(cls.stock_user).browse(return_picking_id)
         )
