@@ -4,7 +4,7 @@
     <record id="project_type_form_with_accounting_tab" model="ir.ui.view">
         <field name="name">Project Type Form: add Accounting tab</field>
         <field name="model">project.type</field>
-        <field name="inherit_id" ref="project_type.view_project_type_form"/>
+        <field name="inherit_id" ref="project_type.project_type_form"/>
         <field name="arch" type="xml">
             <notebook position="inside">
                 <page name="accounting_page" string="Accounting">

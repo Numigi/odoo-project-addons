@@ -1,4 +1,4 @@
-# © 2019 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+# © 2023 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 from odoo import api, models, _
@@ -6,10 +6,23 @@ from odoo.exceptions import ValidationError, AccessError
 
 
 class Project(models.Model):
-
     _inherit = "project.project"
 
-    @api.multi
+    def action_wip_to_cgs_wizard(self):
+        action = {
+            "name": "Transfer WIP to CGS",
+            "type": "ir.actions.act_window",
+            "view_mode": "form",
+            "view_id": self.env.ref("project_wip.wip_to_cgs_wizard").id,
+            "res_model": "project.wip.transfer",
+            "context": {
+                "default_project_id": self.id,
+                "default_company_id": self.env.user.company_id.id,
+            },
+            "target": "new",
+        }
+        return action
+
     def action_wip_to_cgs(self, accounting_date=None):
         """Move all WIP amounts accruded into the CGS account.
 
@@ -33,6 +46,7 @@ class Project(models.Model):
 
     def _action_wip_to_cgs_single(self, accounting_date=None):
         """Run the wip to cgs process for a single project."""
+        self = self.with_company(self.company_id)
         self._check_project_type_has_wip_journal()
         self._check_project_type_has_wip_account()
         self._check_project_type_has_cgs_account()
@@ -46,11 +60,12 @@ class Project(models.Model):
                 move.date = accounting_date
 
             wip_reversal_line = move.line_ids.filtered(
-                lambda l: l.account_id == self.project_type_id.wip_account_id
+                lambda l: l.account_id == self.type_id.wip_account_id
             )
-            _reconcile_wip_move_lines(wip_line, wip_reversal_line)
 
-            move.post()
+            move.action_post()
+
+            self._reconcile_wip_move_lines(wip_line, wip_reversal_line)
 
     def _create_wip_to_cgs_account_move(self, wip_line):
         """Generate an account move to transfer a WIP amount into CGS.
@@ -58,20 +73,21 @@ class Project(models.Model):
         :param wip_line: the Work In Progress account move line to transfer into CGS.
         :return: the transfer account move.
         """
+        self = self.with_company(self.company_id)
         wip_reversal_vals = self._get_common_wip_to_cgs_move_line_vals(wip_line)
-        wip_reversal_vals["account_id"] = self.project_type_id.wip_account_id.id
+        wip_reversal_vals["account_id"] = self.type_id.wip_account_id.id
         wip_reversal_vals["debit"] = wip_line.credit if wip_line.credit else 0
         wip_reversal_vals["credit"] = wip_line.debit if wip_line.debit else 0
 
         cgs_vals = self._get_common_wip_to_cgs_move_line_vals(wip_line)
-        cgs_vals["account_id"] = self.project_type_id.cgs_account_id.id
+        cgs_vals["account_id"] = self.type_id.cgs_account_id.id
         cgs_vals["debit"] = wip_line.debit if wip_line.debit else 0
         cgs_vals["credit"] = wip_line.credit if wip_line.credit else 0
 
         return self.env["account.move"].create(
             {
                 "company_id": self.company_id.id,
-                "journal_id": self.project_type_id.cgs_journal_id.id,
+                "journal_id": self.type_id.cgs_journal_id.id,
                 "no_analytic_lines": True,
                 "line_ids": [(0, 0, wip_reversal_vals), (0, 0, cgs_vals)],
             }
@@ -82,10 +98,11 @@ class Project(models.Model):
 
         :raises: ValidationError if no journal defined.
         """
-        if not self.project_type_id.cgs_journal_id:
+        self = self.with_company(self.company_id)
+        if not self.type_id.cgs_journal_id:
             raise ValidationError(
                 _("The project type {} has no WIP journal defined.").format(
-                    self.project_type_id.name
+                    self.type_id.name
                 )
             )
 
@@ -94,11 +111,12 @@ class Project(models.Model):
 
         :raises: ValidationError if no account defined.
         """
-        if not self.project_type_id.wip_account_id:
+        self = self.with_company(self.company_id)
+        if not self.type_id.wip_account_id:
             raise ValidationError(
                 _(
                     "The project type {} has no WIP (Work In Progress) account defined."
-                ).format(self.project_type_id.name)
+                ).format(self.type_id.name)
             )
 
     def _check_project_type_has_cgs_account(self):
@@ -106,11 +124,12 @@ class Project(models.Model):
 
         :raises: ValidationError if no account defined.
         """
-        if not self.project_type_id.cgs_account_id:
+        self = self.with_company(self.company_id)
+        if not self.type_id.cgs_account_id:
             raise ValidationError(
                 _(
                     "The project type {} has no CGS (Cost of Goods Sold) account defined."
-                ).format(self.project_type_id.name)
+                ).format(self.type_id.name)
             )
 
     def _get_posted_unreconciled_wip_lines(self):
@@ -118,10 +137,11 @@ class Project(models.Model):
 
         :rtype: account.move.line recordset
         """
+        self = self.with_company(self.company_id)
         return self.env["account.move.line"].search(
             [
                 ("analytic_account_id", "=", self.analytic_account_id.id),
-                ("account_id", "=", self.project_type_id.wip_account_id.id),
+                ("account_id", "=", self.type_id.wip_account_id.id),
                 ("reconciled", "=", False),
                 ("move_id.state", "=", "posted"),
             ]
@@ -140,20 +160,29 @@ class Project(models.Model):
             "analytic_tag_ids": [(6, 0, wip_line.analytic_tag_ids.ids)],
         }
 
+    def _reconcile_wip_move_lines(self, wip_line, wip_reversal_line):
+        """Reconcile a WIP journal item with its reversal.
 
-def _reconcile_wip_move_lines(wip_line, wip_reversal_line):
-    """Reconcile a WIP journal item with its reversal.
+        :param wip_line: the initial wip account.move.line
+        :param wip_reversal_line: the wip reversal account.move.line
+        :raises: ValidationError if the lines could not be reconciled.
+        """
 
-    :param wip_line: the initial wip account.move.line
-    :param wip_reversal_line: the wip reversal account.move.line
-    :raises: ValidationError if the lines could not be reconciled.
-    """
-    unreconciled_line = (wip_line | wip_reversal_line).auto_reconcile_lines()
-    if unreconciled_line:
-        raise ValidationError(
-            _(
-                "The WIP entry {wip_line} ({amount}) could not be reconciled when transfering "
-                "the amount into Costs of Goods Sold. "
-                "You should verify if the WIP entry is partially reconciled."
-            ).format(wip_line=wip_line.display_name, amount=wip_line.balance)
-        )
+        data = [
+            {
+                "id": None,
+                "mv_line_ids": [wip_line.id, wip_reversal_line.id],
+                "new_mv_line_dicts": [],
+                "type": None,
+            }
+        ]
+        self.env["account.reconciliation.widget"].process_move_lines(data)
+
+        if wip_line.matching_number == "P":
+            raise ValidationError(
+                _(
+                    "The WIP entry {wip_line} ({amount}) could not be reconciled when transfering "
+                    "the amount into Costs of Goods Sold. "
+                    "You should verify if the WIP entry is partially reconciled."
+                ).format(wip_line=wip_line.display_name, amount=wip_line.balance)
+            )

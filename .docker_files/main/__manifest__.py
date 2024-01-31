@@ -11,8 +11,8 @@
     "category": "Other",
     "summary": "Install all addons required for testing.",
     "depends": [
-        # "stock_account",  # required for testing project_wip
-        # "purchase",  # required for testing project_wip_material
+        "stock_account",  # required for testing project_wip
+        "purchase",  # required for testing project_wip_material
         "account_analytic_enhanced",  # required for project_enhanced
         "analytic_line_revenue",
         "analytic_line_employee",
@@ -81,7 +81,6 @@
         "project_task_subtask_same_project",
         "project_task_type",
         "project_template",
-
         "project_template_date_planned",
         "project_template_timesheet",
         "project_time_budget",
@@ -89,7 +88,7 @@
         "project_time_range",
         "project_timesheet_analytic_update",
         "project_type",
-        # "project_wip",
+        "project_wip",
         # "project_wip_material",
         # "project_wip_outsourcing",
         # "project_wip_supply_cost",

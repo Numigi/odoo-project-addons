@@ -88,6 +88,7 @@ COPY project_time_control_wizard_group /mnt/extra-addons/project_time_control_wi
 COPY project_time_range /mnt/extra-addons/project_time_range
 COPY project_timesheet_analytic_update  /mnt/extra-addons/project_timesheet_analytic_update
 COPY project_type  /mnt/extra-addons/project_type
+COPY project_wip /mnt/extra-addons/project_wip
 #COPY project_wip  /mnt/extra-addons/project_wip
 #COPY project_wip_material  /mnt/extra-addons/project_wip_material
 #COPY project_wip_outsourcing  /mnt/extra-addons/project_wip_outsourcing
