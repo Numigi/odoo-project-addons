@@ -20,6 +20,7 @@ class TestWIPTrasferToCGS(common.SavepointCase):
             {
                 "name": "MRP / Production",
                 "code": "MRP",
+                "restrict_mode_hash_table": True,
                 "type": "general",
             }
         )
@@ -27,6 +28,7 @@ class TestWIPTrasferToCGS(common.SavepointCase):
             {
                 "name": "Work in Progress",
                 "code": "WIP",
+                "restrict_mode_hash_table": True,
                 "type": "general",
             }
         )

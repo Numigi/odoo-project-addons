@@ -11,8 +11,8 @@
     "category": "Other",
     "summary": "Install all addons required for testing.",
     "depends": [
-        # "stock_account",  # required for testing project_wip
-        # "purchase",  # required for testing project_wip_material
+        "stock_account",  # required for testing project_wip
+        "purchase",  # required for testing project_wip_material
         "account_analytic_enhanced",  # required for project_enhanced
         "analytic_line_revenue",
         "analytic_line_employee",
