@@ -1,3 +1,8 @@
+- url: https://github.com/OCA/account-reconcile
+  branch: "14.0"
+  includes:
+    - account_reconciliation_widget
+
 - url: https://github.com/OCA/project
   branch: "14.0"
   includes:

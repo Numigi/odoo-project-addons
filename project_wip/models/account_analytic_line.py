@@ -5,7 +5,6 @@ from odoo import fields, models, _
 
 
 class AccountAnalyticLine(models.Model):
-
     _inherit = "account.analytic.line"
 
     def _get_wip_timesheet_line_description(self):
@@ -13,4 +12,5 @@ class AccountAnalyticLine(models.Model):
         return "{} {}".format(self.name, task) if self.name else task
 
     def _get_wip_account(self):
-        return self.project_id.project_type_id.wip_account_id
+        self = self.with_company(self.company_id)
+        return self.project_id.type_id.wip_account_id

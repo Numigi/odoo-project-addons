@@ -1,4 +1,4 @@
-# © 2019 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+# © 2023 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 from odoo.tests import common
@@ -9,7 +9,7 @@ class TestAccountMoveNoAnalytic(common.SavepointCase):
     def setUpClass(cls):
         super().setUpClass()
         cls.journal = cls.env["account.journal"].create(
-            {"name": "WIP", "code": "WIP", "update_posted": True, "type": "general"}
+            {"name": "WIP", "code": "WIP", "type": "general"}
         )
 
         cls.analytic_account = cls.env["account.analytic.account"].create(
@@ -95,7 +95,7 @@ class TestAccountMoveNoAnalytic(common.SavepointCase):
         assert len(self.line_1_2.analytic_line_ids) == 1
         assert len(self.line_2_1.analytic_line_ids) == 1
         assert len(self.line_2_2.analytic_line_ids) == 1
-        self.moves.button_cancel()
+        self.moves.button_draft()
 
         self.move_1.no_analytic_lines = True
         self.moves.post()

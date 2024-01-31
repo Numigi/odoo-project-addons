@@ -1,14 +1,12 @@
-# © 2019 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+# © 2023 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 from odoo import api, models
 
 
 class AccountMoveLine(models.Model):
-
     _inherit = "account.move.line"
 
-    @api.multi
     def create_analytic_lines(self):
         """Prevent creating analytic lines for moves with no_analytic_lines checked."""
         lines_with_no_analytic = self.filtered(lambda l: l.move_id.no_analytic_lines)

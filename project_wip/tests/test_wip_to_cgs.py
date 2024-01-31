@@ -1,4 +1,4 @@
-# © 2019 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+# © 2023 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 import pytest
@@ -20,7 +20,7 @@ class TestWIPTrasferToCGS(common.SavepointCase):
             {
                 "name": "MRP / Production",
                 "code": "MRP",
-                "update_posted": True,
+                "restrict_mode_hash_table": True,
                 "type": "general",
             }
         )
@@ -28,7 +28,7 @@ class TestWIPTrasferToCGS(common.SavepointCase):
             {
                 "name": "Work in Progress",
                 "code": "WIP",
-                "update_posted": True,
+                "restrict_mode_hash_table": True,
                 "type": "general",
             }
         )
@@ -60,9 +60,7 @@ class TestWIPTrasferToCGS(common.SavepointCase):
             }
         )
 
-        cls.partner = cls.env["res.partner"].create(
-            {"name": "Customer", "customer": True}
-        )
+        cls.partner = cls.env["res.partner"].create({"name": "Customer"})
 
         cls.uom = cls.env.ref("uom.product_uom_lb")
 
@@ -88,7 +86,7 @@ class TestWIPTrasferToCGS(common.SavepointCase):
             {
                 "name": "Job 123",
                 "partner_id": cls.partner.id,
-                "project_type_id": cls.project_type.id,
+                "type_id": cls.project_type.id,
             }
         )
         cls.analytic_account = cls.project.analytic_account_id
@@ -98,6 +96,7 @@ class TestWIPTrasferToCGS(common.SavepointCase):
 
         cls.raw_material_move = cls.env["account.move"].create(
             {
+                "move_type": "entry",
                 "journal_id": cls.wip_journal.id,
                 "line_ids": [
                     (
@@ -132,7 +131,7 @@ class TestWIPTrasferToCGS(common.SavepointCase):
         cls.wip_line = cls.raw_material_move.line_ids.filtered(
             lambda l: l.account_id == cls.wip_account
         )
-        cls.raw_material_move.post()
+        cls.raw_material_move.action_post()
 
     def test_after_process__wip_line_reconciled(self):
         assert not self.wip_line.reconciled
@@ -149,11 +148,20 @@ class TestWIPTrasferToCGS(common.SavepointCase):
                 ],
             }
         )
-        wip_line_2 = move.line_ids.filtered(lambda l: l.account_id == self.wip_account)
-        (self.wip_line | wip_line_2).auto_reconcile_lines()
+
+        unreconciled_wip_lines = self.project._get_posted_unreconciled_wip_lines()
+        for wip_line in unreconciled_wip_lines:
+            move_2 = self.project._create_wip_to_cgs_account_move(wip_line)
+
+        wip_line_2 = move.line_ids.filtered(
+            lambda l: l.account_id == self.project.type_id.wip_account_id
+        )
+
+        move.action_post()
+        move_2.action_post()
 
         with pytest.raises(ValidationError):
-            self._action_wip_to_cgs()
+            self.project._reconcile_wip_move_lines(self.wip_line, wip_line_2)
 
     def _find_wip_to_cgs_move(self):
         return self.env["account.move"].search(
@@ -172,7 +180,7 @@ class TestWIPTrasferToCGS(common.SavepointCase):
         )
 
     def _action_wip_to_cgs(self):
-        self.project.sudo(self.user).action_wip_to_cgs()
+        self.project.with_user(self.user).action_wip_to_cgs()
 
     def test_transfer_move_has_no_analytic_lines(self):
         self._action_wip_to_cgs()
@@ -246,7 +254,7 @@ class TestWIPTrasferToCGS(common.SavepointCase):
 
     def test_if_2_wip_entries__2_transfer_moves_generated(self):
         raw_move_2 = self.raw_material_move.copy()
-        raw_move_2.post()
+        raw_move_2.action_post()
         self._action_wip_to_cgs()
         transfer_move = self._find_wip_to_cgs_move()
         assert len(transfer_move) == 2
