@@ -93,6 +93,7 @@
         # "project_wip_outsourcing",
         # "project_wip_supply_cost",
         # "project_wip_timesheet",
+        "task_info_in_dependencies_tree_view",
         "timesheet_task_project_no_change",
     ],
     "installable": True,

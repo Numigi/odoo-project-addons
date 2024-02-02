@@ -94,6 +94,7 @@ COPY project_wip /mnt/extra-addons/project_wip
 #COPY project_wip_outsourcing  /mnt/extra-addons/project_wip_outsourcing
 #COPY project_wip_supply_cost  /mnt/extra-addons/project_wip_supply_cost
 #COPY project_wip_timesheet  /mnt/extra-addons/project_wip_timesheet
+COPY task_info_in_dependencies_tree_view /mnt/extra-addons/task_info_in_dependencies_tree_view
 COPY timesheet_task_project_no_change  /mnt/extra-addons/timesheet_task_project_no_change
 
 
