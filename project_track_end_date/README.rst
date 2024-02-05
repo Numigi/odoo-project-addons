@@ -1,6 +1,6 @@
-Project Track Expiration Date
-=============================
-This module gives the possibility to trace the changes in the end of validity date of each project.
+Project Track End Date
+======================
+This module gives the possibility to trace the expiration date changes of each project.
 
 Usage
 -----
