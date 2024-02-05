@@ -7,6 +7,7 @@ services:
     volumes:
       - odoo-web-data:/var/lib/odoo
       - ./.log:/var/log/odoo
+      - ./project_iteration_forecasted_end_date:/mnt/extra-addons/project_iteration_forecasted_end_date
     ports:
       - "8069:8069"
       - "8071:8071"

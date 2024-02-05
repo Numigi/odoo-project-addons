@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+
+    <!-- Project Form View -->
+    <record id="edit_project" model="ir.ui.view">
+        <field name="name">Project Forecasted End Date</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.edit_project"/>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='resource_calendar_id']" position="after">
+                <field name="forecasted_end_date" attrs="{'invisible': [('is_parent', '=', False)]}"/>
+                <field name="remaining_days" attrs="{'invisible': [('is_parent', '=', False)]}"/>
+            </xpath>
+        </field>
+    </record>
+
+      <!-- Project Type Form View -->
+    <record id="view_project_type_form" model="ir.ui.view">
+        <field name="name">Project Type Forecasted End Date</field>
+        <field name="model">project.type</field>
+        <field name="inherit_id" ref="project_type.view_project_type_form"/>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='sequence']" position="after">
+                <field name="exclude_forecasted_end_date"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

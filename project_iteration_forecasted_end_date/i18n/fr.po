@@ -1,0 +1,41 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* project_iteration_forecasted_end_date
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-02-05 19:29+0000\n"
+"PO-Revision-Date: 2024-02-05 19:29+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: project_iteration_forecasted_end_date
+#: model:ir.model.fields,field_description:project_iteration_forecasted_end_date.field_project_type__exclude_forecasted_end_date
+msgid "Exclude From Forecasted End Date Computation"
+msgstr "Exclure du calcul de la date fin projetée"
+
+#. module: project_iteration_forecasted_end_date
+#: model:ir.model.fields,field_description:project_iteration_forecasted_end_date.field_project_project__forecasted_end_date
+msgid "Forecasted End Date"
+msgstr "Date de fin prévue"
+
+#. module: project_iteration_forecasted_end_date
+#: model:ir.model,name:project_iteration_forecasted_end_date.model_project_project
+msgid "Project"
+msgstr "Projet"
+
+#. module: project_iteration_forecasted_end_date
+#: model:ir.model,name:project_iteration_forecasted_end_date.model_project_type
+msgid "Project Type"
+msgstr "Type de projet"
+
+#. module: project_iteration_forecasted_end_date
+#: model:ir.model.fields,field_description:project_iteration_forecasted_end_date.field_project_project__remaining_days
+msgid "Remaining weeks"
+msgstr "Nombre de semaines restantes"

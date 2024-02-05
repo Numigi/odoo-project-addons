@@ -36,6 +36,7 @@
         "project_invoicing_profile",
         "project_iteration",
         "project_iteration_change_parent",
+        "project_iteration_forecasted_end_date",
         "project_iteration_parent_only",
         "project_iteration_parent_type_required",
         "project_iteration_sale_inheritance",
