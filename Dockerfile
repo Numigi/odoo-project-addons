@@ -67,6 +67,7 @@ COPY project_task_analytic_lines  /mnt/extra-addons/project_task_analytic_lines
 #COPY project_task_customer_reference /mnt/extra-addons/project_task_customer_reference
 COPY project_task_date_planned  /mnt/extra-addons/project_task_date_planned
 COPY project_task_deadline_from_project  /mnt/extra-addons/project_task_deadline_from_project
+COPY project_task_dependency_more_info  /mnt/extra-addons/project_task_dependency_more_info
 COPY project_task_description_template  /mnt/extra-addons/project_task_description_template
 #COPY project_task_editable_list_stage  /mnt/extra-addons/project_task_editable_list_stage
 COPY project_task_editable_list_view  /mnt/extra-addons/project_task_editable_list_view
