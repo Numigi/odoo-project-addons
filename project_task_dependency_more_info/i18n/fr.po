@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* task_info_in_dependencies_tree_view
+#	* project_task_dependency_more_info
 #
 msgid ""
 msgstr ""
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
 
-#. module: task_info_in_dependencies_tree_view
-#: model_terms:ir.ui.view,arch_db:task_info_in_dependencies_tree_view.project_task_form_inherit
+#. module: project_task_dependency_more_info
+#: model_terms:ir.ui.view,arch_db:project_task_dependency_more_info.project_task_form_inherit
 msgid "Kanban State"
 msgstr "Etat Kanban"

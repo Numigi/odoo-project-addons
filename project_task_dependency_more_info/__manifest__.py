@@ -2,8 +2,8 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 {
-    "name": "Task Info In Dependencies Tree View",
-    "version": "14.0.1.0.0",
+    "name": "Project Task Dependency More Info",
+    "version": "1.0.0",
     "author": "Numigi",
     "maintainer": "Numigi",
     "website": "https://bit.ly/numigi-com",
@@ -12,7 +12,8 @@
     "depends": [
         "project_task_dependency",
     ],
-    "summary": "Shows the ID of each task listed in the dependencies as well as their kanban states",
+    "summary": """Shows the ID of each task listed in the dependencies as well
+as their kanban states""",
     "data": [
         "views/project_task_view.xml",
     ],
