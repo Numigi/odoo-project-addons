@@ -46,3 +46,9 @@ class TestForecastedEndDate(SavepointCase):
         self.project_type_a.exclude_forecasted_end_date = True
         assert self.project.forecasted_end_date == self.iteration_1.date
 
+    def test_forcated_end_date_remaining_days(self):
+        self.iteration_2.date = self.today + timedelta(days=140)
+        assert self.project.remaining_days == 20
+
+
+

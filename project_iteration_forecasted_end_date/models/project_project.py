@@ -25,7 +25,8 @@ class ProjectProject(models.Model):
                 continue
             if rec.project_type_id.exclude_forecasted_end_date:
                 continue
-            dates.append(rec.date)
+            if rec.date:
+                dates.append(rec.date)
         return dates
 
     @api.multi
