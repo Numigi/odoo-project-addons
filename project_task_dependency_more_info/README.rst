@@ -1,5 +1,5 @@
-Task Info In Dependencies Tree View
-===================================
+Project Task Dependency More Info
+=================================
 This module allow to show the ID of each task listed in the dependencies as well as their kanban states.
 
 Usage
