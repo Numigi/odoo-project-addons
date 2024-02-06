@@ -28,6 +28,7 @@
     - project_milestone
     - project_role
     - project_stage_closed
+    - project_task_dependency
     - project_timesheet_time_control
     - project_timeline
     - project_risk
