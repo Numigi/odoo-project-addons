@@ -8,8 +8,8 @@ class EditDateWizard(models.TransientModel):
     _name = "edit.date.wizard"
     _description = "Edit Date Wizard"
 
-    initial_date = fields.Date(string="Initial date")
-    date = fields.Date(string="Date")
+    initial_date = fields.Date(string="Initial Date")
+    date = fields.Date(string="Expiration Date")
     company_id = fields.Many2one("res.company", string="Company")
     user_id = fields.Many2one("res.users", string="Author")
     reason = fields.Text("Reason")
@@ -22,13 +22,16 @@ class EditDateWizard(models.TransientModel):
             "update_on": self.create_date,
             "initial_date": self.initial_date,
             "date": self.date,
-            "week_interval_date": (self.date - self.initial_date).days / 7
-            if self.initial_date and self.date
-            else False,
-            "total_week_duration": (self.date - self.project_id.date_start
-                                    ).days / 7
-            if self.project_id.date_start and self.date
-            else False,
+            "week_interval_date": (
+                (self.date - self.initial_date).days / 7
+                if self.initial_date and self.date
+                else False
+            ),
+            "total_week_duration": (
+                (self.date - self.project_id.date_start).days / 7
+                if self.project_id.date_start and self.date
+                else False
+            ),
             "company_id": self.company_id.id,
             "user_id": self.user_id.id,
             "reason": self.reason,
