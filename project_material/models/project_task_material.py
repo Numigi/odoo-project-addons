@@ -3,7 +3,6 @@
 
 from datetime import timedelta
 from odoo import api, fields, models, _
-from odoo.addons import decimal_precision as dp
 from odoo.exceptions import ValidationError
 from odoo.tools import float_compare
 
