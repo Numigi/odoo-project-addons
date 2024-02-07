@@ -9,6 +9,7 @@
     - project_category
     - project_milestone
     - project_stage_closed
+    - project_task_dependency
     - project_timesheet_time_control
 
 - url: https://github.com/Numigi/odoo-base-addons

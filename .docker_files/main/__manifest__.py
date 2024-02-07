@@ -67,6 +67,7 @@
         # "project_task_customer_reference",
         "project_task_date_planned",
         "project_task_deadline_from_project",
+        "project_task_dependency_more_info",
         "project_task_description_template",
         # "project_task_editable_list_stage",
         "project_task_editable_list_view",
