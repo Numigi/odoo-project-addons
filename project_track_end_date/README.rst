@@ -1,14 +1,15 @@
 Project Track End Date
 ======================
-This module gives the possibility to trace the changes in the end of validity date of each project/milestone.
+This module gives the possibility to trace the expiration date changes of each project.
 
 Usage
 -----
-Changing the expiry date must be done by clicking on the `Edit End Date` button:
+*UPDATE OF EXPIRATION DATE*
+Changing the expiry date must be done by clicking on the `Edit Expiration Date` button:
 
 .. image:: static/description/edit_end_date_button.png
 
-The `Expiration Date` field must be locked and is only modified using the modification button. Manual modification will not be possible.
+The `Expiration Date` is now readonly and can only be modified using the new button.
 
 A popup wizard will open :
 
@@ -21,8 +22,9 @@ The list is accessible from the smart button:
 
 .. image:: static/description/project_end_date_historic_lines.png
 
-Also, I can see that under the `Expiration Date` of project, in a view form, there is a new field `Expected week duration`.
-This field is calculated and updated each time the end date is revised, this makes it easy to use the number of weeks on the project.
+*EXPECTED DURATION OF A PROJECT*
+I can also see that under the `Expiration Date` of project, in a view form, there is a new field `Expected Duration (in Weeks)`.
+This field is calculated and updated each time the expiration date is revised, this makes it easy to use the number of weeks on the project.
 
 .. image:: static/description/expected_week_duration.png
 

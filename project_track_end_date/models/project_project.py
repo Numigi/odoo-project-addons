@@ -10,15 +10,15 @@ class ProjectProject(models.Model):
     project_end_history_ids = fields.One2many(
         "project.end.history",
         "project_id",
-        string="Historics associated to this project",
+        string="Historics Associated to this Project",
     )
     project_end_history_count = fields.Integer(
-        string="Historics",
+        string="Expiration Date Changes Historics",
         compute="_compute_project_end_history",
         groups="project.group_project_manager",
     )
     expected_week_duration = fields.Float(
-        string="Expected week duration",
+        string="Expected Duration (in Weeks)",
         compute="_compute_expected_week_duration",
     )
 
@@ -32,14 +32,12 @@ class ProjectProject(models.Model):
 
     def _compute_project_end_history(self):
         for project in self:
-            project.project_end_history_count =\
-                len(project.project_end_history_ids)
+            project.project_end_history_count = len(project.project_end_history_ids)
 
     @api.multi
-    def action_edit_end_date(self):
+    def action_edit_expiration_date(self):
         self.ensure_one()
-        action = self.env.ref("project_track_end_date.wizard_edit_end_date"
-                              ).read()[0]
+        action = self.env.ref("project_track_end_date.wizard_edit_end_date").read()[0]
         action["context"] = {
             "default_initial_date": self.date,
             "default_date": self.date,

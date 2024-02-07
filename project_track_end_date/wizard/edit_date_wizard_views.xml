@@ -4,7 +4,7 @@
         <field name="name">Edit Date Wizard View</field>
         <field name="model">edit.date.wizard</field>
         <field name="arch" type="xml">
-            <form string="Edit date">
+            <form string="Edit Date">
                 <group>
                     <h1>
                         <field name="reason" required="1" placeholder="Reason"/>
@@ -26,7 +26,7 @@
     </record>
 
     <record id="wizard_edit_end_date" model="ir.actions.act_window">
-        <field name="name">Edit date action</field>
+        <field name="name">Edit Date Action</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">edit.date.wizard</field>
         <field name="view_id" ref="edit_date_wizard"/>

@@ -34,7 +34,7 @@ class TestProjectEndHistoric(SavepointCase):
         }
 
     def test_action_to_wizard(self):
-        action = self.project.action_edit_end_date()
+        action = self.project.action_edit_expiration_date()
 
         self.assertEqual(action["context"], self.action_context)
 
@@ -47,8 +47,7 @@ class TestProjectEndHistoric(SavepointCase):
             "reason": "Project postponed",
         }
         res = (
-            self.env["edit.date.wizard"].with_context(self.action_context
-                                                      ).create(vals)
+            self.env["edit.date.wizard"].with_context(self.action_context).create(vals)
         )
         res.date = date(2023, 1, 15)
         res.refresh()
