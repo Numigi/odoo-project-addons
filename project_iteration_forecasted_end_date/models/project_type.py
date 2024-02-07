@@ -10,6 +10,3 @@ class ProjectType(models.Model):
 
     exclude_forecasted_end_date = fields.Boolean(
         "Exclude From Forecasted End Date Computation")
-
-
-

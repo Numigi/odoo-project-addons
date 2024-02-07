@@ -11,7 +11,6 @@
         <field name="arch" type="xml">
             <xpath expr="//field[@name='resource_calendar_id']" position="after">
                 <field name="forecasted_end_date" attrs="{'invisible': [('is_parent', '=', False)]}"/>
-                <field name="remaining_days" attrs="{'invisible': [('is_parent', '=', False)]}"/>
             </xpath>
         </field>
     </record>

@@ -10,45 +10,18 @@ class ProjectProject(models.Model):
 
     forecasted_end_date = fields.Date(
         string="Forecasted End Date",
-        compute="_compute_forecasted_end_date",
+        compute="_compute_forecasted_date",
         store=True,
     )
-    remaining_days = fields.Float(
-        string="Remaining weeks",
-        compute="_compute_forecasted_end_date",
-        store=True,
-    )
-    def _get_child_ids_end_date(self, child_ids):
-        dates = []
-        for rec in child_ids:
-            if not rec.active:
-                continue
-            if rec.project_type_id.exclude_forecasted_end_date:
-                continue
-            if rec.date:
-                dates.append(rec.date)
-        return dates
 
     @api.multi
     @api.depends(
-        'child_ids.date', 'child_ids.project_type_id.exclude_forecasted_end_date',
-        'child_ids.active')
-    def _compute_forecasted_end_date(self):
+        'child_ids', 'child_ids.active',
+        'child_ids.date', 'child_ids.project_type_id',
+        'child_ids.project_type_id.exclude_forecasted_end_date',
+        )
+    def _compute_forecasted_date(self):
         for project in self:
-            if project.child_ids:
-                dates = self._get_child_ids_end_date(project.child_ids)
-                if dates:
-                    project.forecasted_end_date = max(dates)
-                    dt = project.forecasted_end_date - fields.Date.today()
-                    project.remaining_days = dt.days/7
-
-
-
-
-
-
-
-
-
-
-
+            if project.is_parent:
+                project.forecasted_end_date = max(child.date for child in project.child_ids.filtered(
+                    lambda c: c.active and c.date and not c.project_type_id.exclude_forecasted_end_date))
