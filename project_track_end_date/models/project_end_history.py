@@ -9,10 +9,10 @@ class ProjectEndHistory(models.Model):
     _description = "Project End History"
 
     update_on = fields.Datetime(string="Update on")
-    initial_date = fields.Date(string="Initial date")
+    initial_date = fields.Date(string="Initial Date")
     date = fields.Date(string="Date")
-    week_interval_date = fields.Float(string="Number of reporting weeks")
-    total_week_duration = fields.Float(string="Total project duration (weeks)")
+    week_interval_date = fields.Float(string="Number of Reporting Weeks")
+    total_week_duration = fields.Float(string="Total Project Duration (Weeks)")
     company_id = fields.Many2one("res.company", string="Company")
     user_id = fields.Many2one("res.users", string="Author")
     reason = fields.Text("Reason")

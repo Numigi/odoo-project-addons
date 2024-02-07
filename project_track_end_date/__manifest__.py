@@ -3,13 +3,13 @@
 
 {
     "name": "Project Track End Date",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "author": "Numigi",
     "maintainer": "Numigi",
     "website": "https://bit.ly/numigi-com",
     "license": "AGPL-3",
     "category": "Project",
-    "description": "Track project end date",
+    "description": "Track project expiration date changes",
     "summary": """
     Gives the possibility to trace the changes in the end of
     validity date of each project/Milestone.
