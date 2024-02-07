@@ -23,5 +23,8 @@ class ProjectProject(models.Model):
     def _compute_forecasted_date(self):
         for project in self:
             if project.is_parent:
-                project.forecasted_end_date = max(child.date for child in project.child_ids.filtered(
-                    lambda c: c.active and c.date and not c.project_type_id.exclude_forecasted_end_date))
+                dates = []
+                for child in project.child_ids.filtered(lambda c: c.active and (
+                        c.date and not c.project_type_id.exclude_forecasted_end_date)):
+                    dates.append(child.date)
+                project.forecasted_end_date = dates and max(dates) or False
