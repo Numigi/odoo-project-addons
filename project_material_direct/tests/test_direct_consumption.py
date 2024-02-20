@@ -1,4 +1,4 @@
-# © 2020 - today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+# © 2024 - today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 import pytest
@@ -17,11 +17,13 @@ class TestDirectConsumption(TaskMaterialCase):
         cls.direct_picking_type = cls.env['stock.picking.type'].create({
             'name': 'Direct Consumption',
             'warehouse_id': cls.warehouse.id,
+            'company_id': cls.company.id,
             'code': 'consumption',
             'is_direct_consumption': True,
             'sequence_id': cls.env['ir.sequence'].sudo().create({
                 'name': 'Direct Consumption',
             }).id,
+            'sequence_code': 'DCO',
         })
 
         cls.picking = cls.env['stock.picking'].create({
