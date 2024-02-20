@@ -6,7 +6,8 @@ This module enables to consume material (products) on a task.
 
 Warehouse Configuration
 -----------------------
-As member of the group ``Stock / Manager``, I go to the form view of my warehouse.
+As member of the group ``Inventory / Administrator``, and has group ``Manage Push and Pull inventory flows`` checked.
+I go to the form view of my warehouse `Inventory / Configuration / Warehouses`.
 
 In the ``Warehouse Configuration`` tab, I see a field ``Consumption``.
 
@@ -22,7 +23,7 @@ Task Material Tab
 -----------------
 As member of the group ``Project / User``, I go to the form view of a task.
 
-I see a ``Material`` containing a table of products to consume for this task.
+I see a ``Consumption`` tab containing a table of products to consume for this task.
 
 .. image:: static/description/task_material_tab.png
 
@@ -40,7 +41,7 @@ I fill the ``Planned Date`` field, then I click on ``Save``.
 
 .. image:: static/description/task_with_planned_date.png
 
-After saving, a new smart button ``Stock Pickings`` appears.
+After saving, a new smart button ``Consumption`` appears.
 
 .. image:: static/description/task_stock_picking_smart_button.png
 
@@ -174,3 +175,8 @@ Otherwise, you may also uncheck the ``Procurement Disabled`` box manually.
 Contributors
 ------------
 * Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+
+
+More information
+----------------
+* Meet us at https://bit.ly/numigi-com
