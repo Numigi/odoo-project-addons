@@ -1,7 +1,7 @@
-# © 2020 - today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+# © 2024 - today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
-from odoo import api, fields, models, _
+from odoo import fields, models, _
 from odoo.exceptions import AccessError
 
 
@@ -25,7 +25,6 @@ class TaskMaterialLine(models.Model):
             return False
         return super()._should_generate_procurement()
 
-    @api.multi
     def write(self, vals):
         for line in self:
             if line.is_direct_consumption and not self.env.user._is_superuser():
@@ -35,7 +34,6 @@ class TaskMaterialLine(models.Model):
                 ).format(line.display_name))
         return super().write(vals)
 
-    @api.multi
     def unlink(self):
         for line in self:
             if line.is_direct_consumption:

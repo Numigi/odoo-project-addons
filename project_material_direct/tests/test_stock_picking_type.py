@@ -1,4 +1,4 @@
-# © 2020 - today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+# © 2024 - today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 import pytest
@@ -15,9 +15,7 @@ class TestPickingType(SavepointCase):
             'name': 'Direct Consumption',
             'code': 'consumption',
             'is_direct_consumption': True,
-            'sequence_id': cls.env['ir.sequence'].create({
-                'name': 'Direct Consumption',
-            }).id,
+            'sequence_code': 'DCO',
         })
 
     def test_if_not_consumption__can_not_be_direct_consumption(self):

@@ -1,4 +1,4 @@
-# © 2020 - today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+# © 2024 - today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 from odoo import fields, models
@@ -12,9 +12,9 @@ class StockMove(models.Model):
         related='picking_id.is_direct_consumption',
     )
 
-    def _action_done(self):
+    def _action_done(self, cancel_backorder=False):
         self._bind_direct_consumption_moves_to_picking_task()
-        done_moves = super()._action_done()
+        done_moves = super()._action_done(cancel_backorder=False)
         done_moves.sudo()._generate_direct_task_material_if_required()
         return done_moves
 

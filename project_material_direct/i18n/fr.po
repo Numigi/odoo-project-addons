@@ -1,21 +1,19 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* project_material
+# 	* project_material_direct
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 11.0+e\n"
+"Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-08 17:01+0000\n"
-"PO-Revision-Date: 2020-12-08 12:02-0500\n"
-"Last-Translator: <>\n"
+"POT-Creation-Date: 2024-02-20 22:25+0000\n"
+"PO-Revision-Date: 2024-02-20 22:25+0000\n"
+"Last-Translator: \n"
 "Language-Team: \n"
-"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
+"Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
-"X-Generator: Poedit 2.0.6\n"
 
 #. module: project_material_direct
 #: model:ir.model.fields,field_description:project_material_direct.field_stock_move__is_direct_consumption
@@ -23,12 +21,39 @@ msgstr ""
 #: model:ir.model.fields,field_description:project_material_direct.field_stock_picking_type__is_direct_consumption
 #: model_terms:ir.ui.view,arch_db:project_material_direct.task_form_with_direct_material_consumption
 msgid "Direct Consumption"
-msgstr "Consommation Directe"
+msgstr "Consommation directe"
+
+#. module: project_material_direct
+#: model:ir.model.fields,field_description:project_material_direct.field_project_task__display_name
+#: model:ir.model.fields,field_description:project_material_direct.field_project_task_material__display_name
+#: model:ir.model.fields,field_description:project_material_direct.field_stock_move__display_name
+#: model:ir.model.fields,field_description:project_material_direct.field_stock_picking__display_name
+#: model:ir.model.fields,field_description:project_material_direct.field_stock_picking_type__display_name
+msgid "Display Name"
+msgstr "Nom Affiché"
+
+#. module: project_material_direct
+#: model:ir.model.fields,field_description:project_material_direct.field_project_task__id
+#: model:ir.model.fields,field_description:project_material_direct.field_project_task_material__id
+#: model:ir.model.fields,field_description:project_material_direct.field_stock_move__id
+#: model:ir.model.fields,field_description:project_material_direct.field_stock_picking__id
+#: model:ir.model.fields,field_description:project_material_direct.field_stock_picking_type__id
+msgid "ID"
+msgstr ""
 
 #. module: project_material_direct
 #: model:ir.model.fields,field_description:project_material_direct.field_project_task_material__is_direct_consumption
 msgid "Is Direct Consumption"
-msgstr "Est Une Consommation Directe"
+msgstr "Est une consommation directe"
+
+#. module: project_material_direct
+#: model:ir.model.fields,field_description:project_material_direct.field_project_task____last_update
+#: model:ir.model.fields,field_description:project_material_direct.field_project_task_material____last_update
+#: model:ir.model.fields,field_description:project_material_direct.field_stock_move____last_update
+#: model:ir.model.fields,field_description:project_material_direct.field_stock_picking____last_update
+#: model:ir.model.fields,field_description:project_material_direct.field_stock_picking_type____last_update
+msgid "Last Modified on"
+msgstr ""
 
 #. module: project_material_direct
 #: model:ir.model.fields,field_description:project_material_direct.field_project_task__material_line_ids
@@ -41,7 +66,7 @@ msgid "Material (Direct Consumption)"
 msgstr "Consommation matériel directe sur tâche"
 
 #. module: project_material_direct
-#: code:addons/project_material_direct/models/stock_picking_type.py:19
+#: code:addons/project_material_direct/models/stock_picking_type.py:0
 #, python-format
 msgid ""
 "Only operations of type Consumption or Consumption Return can be defined as "
@@ -53,7 +78,7 @@ msgstr ""
 #. module: project_material_direct
 #: model:ir.model,name:project_material_direct.model_stock_picking_type
 msgid "Picking Type"
-msgstr ""
+msgstr "Type d'opération"
 
 #. module: project_material_direct
 #: model_terms:ir.ui.view,arch_db:project_material_direct.task_form_with_direct_material_consumption
@@ -64,12 +89,12 @@ msgstr "Quantité"
 #: model:ir.model,name:project_material_direct.model_stock_move
 #: model:ir.model.fields,field_description:project_material_direct.field_project_task_material__origin_stock_move_id
 msgid "Stock Move"
-msgstr "Mouvement d'inventaire"
+msgstr "Mouvement du stock"
 
 #. module: project_material_direct
 #: model:ir.model.fields,field_description:project_material_direct.field_project_task_material__origin_stock_picking_id
 msgid "Stock Picking"
-msgstr "Opération d'inventaire"
+msgstr "Opération du stock"
 
 #. module: project_material_direct
 #: model:ir.model,name:project_material_direct.model_project_task
@@ -82,7 +107,7 @@ msgid "Task Material Consumption"
 msgstr "Consommation de matériel sur tâche"
 
 #. module: project_material_direct
-#: code:addons/project_material_direct/models/project_task_material.py:42
+#: code:addons/project_material_direct/models/project_task_material.py:0
 #, python-format
 msgid ""
 "The material line {} was created from a direct consumption. It can not be "
@@ -92,7 +117,7 @@ msgstr ""
 "directe. Elle ne peut pas être supprimée."
 
 #. module: project_material_direct
-#: code:addons/project_material_direct/models/project_task_material.py:32
+#: code:addons/project_material_direct/models/project_task_material.py:0
 #, python-format
 msgid ""
 "The material line {} was created from a direct consumption. It can not be "
@@ -105,6 +130,3 @@ msgstr ""
 #: model:ir.model,name:project_material_direct.model_stock_picking
 msgid "Transfer"
 msgstr "Transfert"
-
-#~ msgid "Task Material Direct Consumption"
-#~ msgstr "Consommation directe de matériel sur tâche"
