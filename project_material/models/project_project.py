@@ -10,7 +10,7 @@ class Project(models.Model):
     _inherit = "project.project"
 
     def _get_default_warehouse(self):
-        company = self.env.user.company_id
+        company = self.env.company
         warehouse = self.env["stock.warehouse"].search(
             [("company_id", "=", company.id)], limit=1
         )
