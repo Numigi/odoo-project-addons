@@ -18,12 +18,6 @@ class TaskMaterialLine(models.Model):
 
     def _must_check_project_wip_account(self):
         is_testing = getattr(threading.currentThread(), 'testing', False)
-        
-        import logging
-        _logger = logging.getLogger(__name__)
-        _logger.info("3333333 %s", self._context.get(
-            'apply_project_wip_material_constraints'))
-        
         return not is_testing or self._context.get('apply_project_wip_material_constraints')
 
     def _check_project_wip_account(self):

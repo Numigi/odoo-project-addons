@@ -66,8 +66,8 @@ class StockMove(models.Model):
             debit_account_id=acc_valuation, credit_account_id=wip_account.id, journal_id=journal_id)
 
     def _check_project_has_wip_account(self):
-        self = self.with_company(self.project_id.company_id.id)
         project = self.project_id
+        self = self.with_company(self.company_id.id)
         if not project.type_id:
             raise ValidationError(_(
                 'The transfer {picking} can not be processed because '
@@ -87,7 +87,7 @@ class StockMove(models.Model):
             ))
 
     def _get_wip_account(self):
-        self = self.with_company(self.project_id.company_id.id)
+        self = self.with_company(self.company_id.id)
         return self.project_id.type_id.wip_account_id
 
     def _get_project_analytic_account(self):
