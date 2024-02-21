@@ -13,13 +13,8 @@ class TestPickingType(SavepointCase):
         super().setUpClass()
         cls.picking_type = cls.env['stock.picking.type'].create({
             'name': 'Direct Consumption',
-            'warehouse_id': cls.warehouse.id,
-            'company_id': cls.company.id,
             'code': 'consumption',
             'is_direct_consumption': True,
-            'sequence_id': cls.env['ir.sequence'].create({
-                'name': 'Direct Consumption',
-            }).id,
             'sequence_code': 'DCO',
         })
 

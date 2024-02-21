@@ -4,7 +4,7 @@
 import pytest
 from ddt import ddt, data, unpack
 from odoo.addons.project_material.tests.common import TaskMaterialCase
-from odoo.exceptions import AccessError
+from odoo.exceptions import ValidationError
 
 
 @ddt
@@ -20,16 +20,22 @@ class TestDirectConsumption(TaskMaterialCase):
             'company_id': cls.company.id,
             'code': 'consumption',
             'is_direct_consumption': True,
-            'sequence_id': cls.env['ir.sequence'].sudo().create({
-                'name': 'Direct Consumption',
-            }).id,
             'sequence_code': 'DCO',
         })
+
+        cls.production_location_id = cls.env["stock.location"].create(
+            {
+                "name": "Production",
+                "usage": "internal",
+                "location_id": cls.warehouse.view_location_id.id,
+                "company_id": cls.company.id,
+            }
+        )
 
         cls.picking = cls.env['stock.picking'].create({
             'picking_type_id': cls.direct_picking_type.id,
             'location_id': cls.warehouse.lot_stock_id.id,
-            'location_dest_id': cls.env.ref('stock.location_production').id,
+            'location_dest_id': cls.production_location_id.id,
             'task_id': cls.task.id,
         })
         cls.quantity = 10
@@ -39,7 +45,7 @@ class TestDirectConsumption(TaskMaterialCase):
             'product_id': cls.product_a.id,
             'product_uom': cls.product_a.uom_id.id,
             'location_id': cls.warehouse.lot_stock_id.id,
-            'location_dest_id': cls.env.ref('stock.location_production').id,
+            'location_dest_id': cls.production_location_id.id,
             'product_uom_qty': cls.quantity,
         })
 
@@ -86,12 +92,12 @@ class TestDirectConsumption(TaskMaterialCase):
         self._force_transfer_move(self.move)
         direct_material_line = self.task.direct_material_line_ids
 
-        with pytest.raises(AccessError):
+        with pytest.raises(ValidationError):
             direct_material_line.initial_qty = 0
 
     def test_user_can_not_delete_direct_material_line(self):
         self._force_transfer_move(self.move)
         direct_material_line = self.task.direct_material_line_ids
 
-        with pytest.raises(AccessError):
+        with pytest.raises(ValidationError):
             direct_material_line.unlink()
