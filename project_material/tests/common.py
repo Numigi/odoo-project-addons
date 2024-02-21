@@ -167,7 +167,7 @@ class TaskMaterialCase(common.SavepointCase):
                 )
             )
         )
-        move.picking_id._action_done(cancel_backorder=False)
+        move.picking_id._action_done()
 
     @classmethod
     def _return_stock_move(cls, move_to_return, returned_qty):
