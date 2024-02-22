@@ -73,16 +73,16 @@ msgstr "Wizard de modification de la date"
 
 #. module: project_track_end_date
 #: model_terms:ir.ui.view,arch_db:project_track_end_date.project_form_readonly_end_date
-msgid "Edit Expiration Date"
-msgstr "Modifier la date d'échéance"
+msgid "Edit End Date"
+msgstr "Modifier la date de fin"
 
 #. module: project_track_end_date
 #: model:ir.actions.act_window,name:project_track_end_date.action_view_project_end_history
 #: model:ir.model.fields,field_description:project_track_end_date.field_project_project__project_end_history_count
 #: model_terms:ir.ui.view,arch_db:project_track_end_date.ir_actions_project_end_history_tree
 #: model_terms:ir.ui.view,arch_db:project_track_end_date.project_form_with_edit_end_date
-msgid "Expiration Date Changes Historics"
-msgstr "Historiques d'échéances de projet"
+msgid "End Date Changes Historics"
+msgstr "Historiques des dates de fin de projet"
 
 #. module: project_track_end_date
 #: model:ir.model.fields,field_description:project_track_end_date.field_project_project__expected_week_duration
@@ -91,8 +91,8 @@ msgstr "Durée prévue (en semaine)"
 
 #. module: project_track_end_date
 #: model:ir.model.fields,field_description:project_track_end_date.field_edit_date_wizard__date
-msgid "Expiration Date"
-msgstr "Date d'échéance"
+msgid "End Date"
+msgstr "Date de fin"
 
 #. module: project_track_end_date
 #: model:ir.model.fields,field_description:project_track_end_date.field_project_project__project_end_history_ids
