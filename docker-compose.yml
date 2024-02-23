@@ -12,7 +12,7 @@ services:
       - "8071:8071"
     depends_on:
       - db
-    command: odoo
+    command:  odoo
     environment:
       - LOG_ODOO=/var/log/odoo
     networks:
