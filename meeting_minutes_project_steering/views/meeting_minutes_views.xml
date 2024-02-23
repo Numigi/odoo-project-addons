@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="meeting_minutes_project_view_form_inherit" model="ir.ui.view">
+        <field name="name">meeting.minutes.project.form.inherit</field>
+        <field name="model">meeting.minutes.project</field>
+        <field name="inherit_id" ref="meeting_minutes_project.meeting_minutes_project_view_form"/>
+        <field name="arch" type="xml">
+             <xpath expr="//field[@name='task_id']" position="after">
+                    <field name="project_steering_enabled" attrs="{'invisible': [('project_id', '=', False)]}"/>
+            </xpath>
+            <xpath expr="//page[@name='meeting_minutes']" position="after">
+                    <page name="steering" string="Steering" attrs="{'invisible': [('project_steering_enabled', '=', False)]}">
+                        <button name="load_steering_data" type="object" >
+                            <span class="fa fa-play"/>
+                                Load Data
+                        </button>
+                        <group>
+
+                        <field name="project_steering_ids" widget="section_and_note_one2many" nolabel="1">
+                            <tree editable="bottom">
+                                <control>
+                                    <create string="Add a line"/>
+                                    <create string="Add a section" context="{'default_display_type': 'line_section'}"/>
+                                </control>
+                                <field name="display_type" invisible="1"/>
+                                <field name="project_id" style="width: 230px;"  />
+                                <field name="project_end_date" style="width: 100px;"/>
+                                <field name="task_id" style="width: 342px;"/>
+                                <field name="task_date_planned" style="width: 100px;"/>
+                                <field name="task_date_deadline" style="width: 100px;"/>
+                                <field name="name" widget="section_and_note_text" style="width: 230px;"/>
+                            </tree>
+                        </field>
+                        </group>
+                    </page>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
