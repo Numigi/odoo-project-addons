@@ -2,14 +2,14 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 {
-    'name': 'Project Kanban Draggable Record Disable',
+    'name': 'Project Kanban Draggable Column Disable',
     'version': '1.0.0',
     'author': 'Numigi',
     'maintainer': 'Numigi',
     "website": "https://bit.ly/numigi-com",
     'license': 'LGPL-3',
     'category': 'Other',
-    'summary': 'Disable drag and drop records  on project kanban view',
+    'summary': 'Disable drag and drop columns  on project kanban view',
     'depends': [
         'project_stage',
         'kanban_draggable',

@@ -27,7 +27,7 @@
         "project_cost_report",
         "project_cost_smart_button",
         "project_default_task_stage",
-        "project_draggable_record_disable",
+        "project_draggable_column_disable",
         "project_enhanced",
         "project_estimation",
         "project_estimation_material",

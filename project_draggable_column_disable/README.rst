@@ -18,7 +18,7 @@ It will show a list of project in a kanban view.
 
 In the  kanban view, the drag and drop column is no longer available.
 
-.. image:: static/description/record_draggable_disabled.png
+.. image:: static/description/column_draggable_disabled.png
 
 
 Contributors

@@ -9,7 +9,7 @@
     <field name="arch" type="xml">
       <data>
         <xpath expr="/kanban" position="attributes">
-          <attribute name="disable_sort_record">true</attribute>
+          <attribute name="disable_sort_column">true</attribute>
         </xpath>
       </data>
     </field>
