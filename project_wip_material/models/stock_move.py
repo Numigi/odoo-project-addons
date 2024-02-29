@@ -18,14 +18,14 @@ class StockMove(models.Model):
         """Use the same valuation as outgoing moves for consumptions."""
         return super()._is_out() or self._is_consumption()
 
-    def _account_entry_move(self):
+    def _account_entry_move(self, qty, description, svl_id, cost):
         self.ensure_one()
         if self._is_consumption():
             self._generate_consumption_account_move()
         elif self._is_consumption_return():
             self._generate_consumption_return_account_move()
         else:
-            super()._account_entry_move()
+            super()._account_entry_move(qty, description, svl_id, cost)
 
     def _prepare_account_move_line(self, qty, cost, credit_account_id, debit_account_id):
         """Add the analytic to WIP account move lines."""
