@@ -27,10 +27,11 @@ class StockMove(models.Model):
         else:
             super()._account_entry_move(qty, description, svl_id, cost)
 
-    def _prepare_account_move_line(self, qty, cost, credit_account_id, debit_account_id):
+    def _prepare_account_move_line(self, qty, cost, credit_account_id, 
+                                   debit_account_id, description):
         """Add the analytic to WIP account move lines."""
         move_line_vals = super()._prepare_account_move_line(
-            qty, cost, credit_account_id, debit_account_id)
+            qty, cost, credit_account_id, debit_account_id, description)
 
         if self._is_consumption() or self._is_consumption_return():
             wip_account = self._get_wip_account()
