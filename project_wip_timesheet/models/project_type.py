@@ -1,4 +1,4 @@
-# © 2019 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+# © 2024 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 from odoo import api, fields, models, _
@@ -28,7 +28,6 @@ class ProjectType(models.Model):
 
     @api.constrains("salary_account_id", "salary_journal_id", "wip_account_id")
     def _check_required_fields_for_salary_entries(self):
-        self = self.with_context(force_company=self.env.user.company_id.id)
         project_types_with_salary_account = self.filtered(lambda t: t.salary_account_id)
         for project_type in project_types_with_salary_account:
             if not project_type.wip_account_id:

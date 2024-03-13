@@ -1,4 +1,4 @@
-# © 2019 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+# © 2024 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 from odoo import api, fields, models, _
@@ -25,7 +25,6 @@ class TimesheetLine(models.Model):
             line.sudo()._create_update_or_reverse_salary_account_move()
         return line
 
-    @api.multi
     def write(self, vals):
         """When updating an analytic line, create / update / delete the wip entry.
 
@@ -41,10 +40,9 @@ class TimesheetLine(models.Model):
 
         return True
 
-    @api.multi
     def unlink(self):
         """Reverse the salary account move entry when a timesheet line is deleted."""
-        lines_with_moves = self.filtered(lambda l: l.salary_account_move_id)
+        lines_with_moves = self.filtered(lambda line: line.salary_account_move_id)
         for line in lines_with_moves:
             line.sudo()._reverse_salary_account_move_for_deleted_timesheet()
         return super().unlink()
@@ -94,7 +92,8 @@ class TimesheetLine(models.Model):
                 )
             )
 
-        self.salary_account_move_id.state = "draft"
+        self.salary_account_move_id.button_draft()
+        self.salary_account_move_id.name = ""
         vals = self._get_salary_account_move_vals()
         self.salary_account_move_id.write(vals)
         self.salary_account_move_id.post()
@@ -113,7 +112,17 @@ class TimesheetLine(models.Model):
                     move_name=self.salary_account_move_id.name,
                 )
             )
-        self.salary_account_move_id.reverse_moves()
+        reversed_move = self.salary_account_move_id._reverse_moves()
+        reversed_move.action_post()
+
+        # get the reversed move line and reconcile it with the salary move line
+        reversed_move_line, move_line = self._get_line_reconciliation_data(
+            self.salary_account_move_id, reversed_move
+        )
+
+        # reconcile the move lines
+        self._reconcile_move_lines(move_line, reversed_move_line)
+
         self.salary_account_move_id = False
 
     def _reverse_salary_account_move_for_deleted_timesheet(self):
@@ -129,10 +138,56 @@ class TimesheetLine(models.Model):
                     move_name=self.salary_account_move_id.name,
                 )
             )
-        self.salary_account_move_id.reverse_moves()
+        # reverse the move and post it to allow the reconciliation of the move lines
+        reversed_move = self.salary_account_move_id._reverse_moves()
+        reversed_move.action_post()
+
+        # get the reversed move line and reconcile it with the salary move line
+        reversed_move_line, move_line = self._get_line_reconciliation_data(
+            self.salary_account_move_id, reversed_move
+        )
+
+        # reconcile the move lines
+        self._reconcile_move_lines(move_line, reversed_move_line)
+
+    def _get_line_reconciliation_data(self, move, reversed_move):
+        """Get the reconciled move line and the original move line.
+        In case, we changed project in timesheet, and project has no type to select wip
+        account, we identify the account move line by task_id linked, that only on wip
+        account.
+
+        :rtype: tuple
+        """
+        move_line = move.line_ids.filtered(
+            lambda line: (line.account_id == self._get_wip_account()) or line.task_id
+        )
+        reversed_move_line = reversed_move.line_ids.filtered(
+            lambda line: (line.account_id == self._get_wip_account()) or line.task_id
+        )
+        return reversed_move_line, move_line
+
+    def _reconcile_move_lines(self, move_line, reversal_line):
+        """Reconcile the move lines."""
+        data = [
+            {
+                "id": None,
+                "mv_line_ids": [move_line.id, reversal_line.id],
+                "new_mv_line_dicts": [],
+                "type": None,
+            }
+        ]
+        self.env["account.reconciliation.widget"].process_move_lines(data)
+
+        if move_line.matching_number == "P":
+            raise ValidationError(
+                _(
+                    "The entry {move_line} ({amount}) could not be reconciled."
+                    "You should verify if the Salary entry is partially reconciled."
+                ).format(wip_line=move_line.display_name, amount=move_line.balance)
+            )
 
     def _is_salary_account_move_reconciled(self):
-        return any(l.reconciled for l in self.salary_account_move_id.line_ids)
+        return any(line.reconciled for line in self.salary_account_move_id.line_ids)
 
     def _get_salary_account_move_vals(self):
         """Get the values for the wip account move.
@@ -209,12 +264,11 @@ class TimesheetLine(models.Model):
         :rtype: account.journal
         """
         self = self.with_context(force_company=self.company_id.id)
-        return self.project_id.project_type_id.salary_journal_id
+        return self.project_id.type_id.salary_journal_id
 
     def _get_salary_account(self):
         """Get the account to use for the salary move line.
 
         :rtype: account.account
         """
-        self = self.with_context(force_company=self.company_id.id)
-        return self.project_id.project_type_id.salary_account_id
+        return self.project_id.type_id.salary_account_id
