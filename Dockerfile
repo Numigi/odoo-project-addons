@@ -1,5 +1,5 @@
 FROM quay.io/numigi/odoo-public:14.latest
-MAINTAINER numigi <contact@numigi.com>
+LABEL numigi <contact@numigi.com>
 
 USER root
 
@@ -90,6 +90,7 @@ COPY project_timesheet_analytic_update  /mnt/extra-addons/project_timesheet_anal
 COPY project_type  /mnt/extra-addons/project_type
 COPY project_wip /mnt/extra-addons/project_wip
 COPY project_wip_material  /mnt/extra-addons/project_wip_material
+COPY project_wip_timesheet  /mnt/extra-addons/project_wip_timesheet
 #COPY project_wip_outsourcing  /mnt/extra-addons/project_wip_outsourcing
 #COPY project_wip_supply_cost  /mnt/extra-addons/project_wip_supply_cost
 #COPY project_wip_timesheet  /mnt/extra-addons/project_wip_timesheet

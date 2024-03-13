@@ -91,6 +91,7 @@
         "stock_location_production",
         "project_wip",
         "project_wip_material",
+        "project_wip_timesheet",
         # "project_wip_outsourcing",
         # "project_wip_supply_cost",
         # "project_wip_timesheet",
