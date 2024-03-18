@@ -1,4 +1,4 @@
-# © 2019 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+# © 2024 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 from odoo import api, fields, models, _
@@ -92,7 +92,9 @@ class TimesheetLine(models.Model):
                 )
             )
 
-        self.salary_account_move_id.state = "draft"
+        # self.salary_account_move_id.state = "draft"
+        self.salary_account_move_id.button_draft()
+        self.salary_account_move_id.name = ""
         vals = self._get_salary_account_move_vals()
         self.salary_account_move_id.write(vals)
         self.salary_account_move_id.post()
@@ -111,7 +113,17 @@ class TimesheetLine(models.Model):
                     move_name=self.salary_account_move_id.name,
                 )
             )
-        self.salary_account_move_id._reverse_moves()
+        reversed_move = self.salary_account_move_id._reverse_moves()
+        reversed_move.action_post()
+
+        # get the reversed move line and reconcile it with the salary move line
+        reversed_move_line, move_line = self._get_line_reconciliation_data(
+            self.salary_account_move_id, reversed_move
+        )
+
+        # reconcile the move lines
+        self._reconcile_move_lines(move_line, reversed_move_line)
+
         self.salary_account_move_id = False
 
     def _reverse_salary_account_move_for_deleted_timesheet(self):
@@ -141,14 +153,17 @@ class TimesheetLine(models.Model):
 
     def _get_line_reconciliation_data(self, move, reversed_move):
         """Get the reconciled move line and the original move line.
+        In case, we changed project in timesheet, and project has no type to select wip
+        account, we identify the account move line by task_id linked, that only on wip
+        account.
 
         :rtype: tuple
         """
         move_line = move.line_ids.filtered(
-            lambda line: line.account_id == self._get_wip_account()
+            lambda line: (line.account_id == self._get_wip_account()) or line.task_id
         )
         reversed_move_line = reversed_move.line_ids.filtered(
-            lambda line: line.account_id == self._get_wip_account()
+            lambda line: (line.account_id == self._get_wip_account()) or line.task_id
         )
         return reversed_move_line, move_line
 

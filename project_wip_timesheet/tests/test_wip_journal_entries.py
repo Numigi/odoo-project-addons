@@ -1,4 +1,4 @@
-# © 2019 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+# © 2024 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 import pytest
@@ -18,7 +18,10 @@ class WIPJournalEntriesCase(common.SavepointCase):
                 "name": "Manager",
                 "login": "manager",
                 "email": "manager@test.com",
-                "groups_id": [(4, cls.env.ref("project.group_project_manager").id)],
+                "groups_id": [
+                    (4, cls.env.ref("project.group_project_manager").id),
+                    (4, cls.env.ref("project_wip.group_wip_to_cgs").id),
+                ],
                 "company_id": cls.company.id,
                 "company_ids": [(4, cls.company.id)],
             }
@@ -58,7 +61,7 @@ class WIPJournalEntriesCase(common.SavepointCase):
             {
                 "name": "Work in Progress",
                 "code": "WIP",
-                "update_posted": True,
+                # "update_posted": True,
                 "type": "general",
                 "company_id": cls.company.id,
             }
@@ -297,11 +300,13 @@ class TestWIPJournalEntries(WIPJournalEntriesCase):
 
     def test_after_change_project_on_timesheet__move_ref_contains_project_name(self):
         timesheet_line = self._create_timesheet()
-        new_project = self.project.copy()
+        self.assertIsNotNone(timesheet_line.salary_account_move_id.ref, msg=None)
+        new_project = self.project.copy({})
         new_task = self.task.copy({"project_id": new_project.id})
         timesheet_line.with_user(self.timesheet_user).write(
             {"project_id": new_project.id, "task_id": new_task.id}
         )
+
         assert new_project.name in timesheet_line.salary_account_move_id.ref
 
     def test_if_zero_hour__no_entry_created(self):
@@ -316,7 +321,7 @@ class TestTimesheetEntryTransferedToWip(WIPJournalEntriesCase):
     def setUpClass(cls):
         super().setUpClass()
         cls.timesheet_line = cls._create_timesheet()
-        cls.project.sudo().action_wip_to_cgs()
+        cls.project.with_user(cls.manager).action_wip_to_cgs()
 
     def test_timesheet_amount_can_not_be_changed(self):
         with pytest.raises(ValidationError):
@@ -327,7 +332,8 @@ class TestTimesheetEntryTransferedToWip(WIPJournalEntriesCase):
             self.timesheet_line.with_user(self.timesheet_user).unit_amount = 10
 
     def test_project_with_no_type_can_not_be_set(self):
-        new_project = self.project.copy({"type_id": False})
+        new_project = self.project.with_user(self.manager).copy()
+        new_project.type_id = False
         new_task = self.task.copy({"project_id": new_project.id})
         with pytest.raises(ValidationError):
             self.timesheet_line.with_user(self.timesheet_user).write(
