@@ -1,5 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_means_communication,means.communication,meeting_minutes.model_means_communication,project.group_project_user,1,0,0,0
-access_means_communication_manager,means.communication.manager,meeting_minutes.model_means_communication,project.group_project_manager,1,1,1,1
-access_meeting_minutes,meeting.minutes,model_meeting_minutes_project,project.group_project_user,1,1,1,0
-access_discuss_point,meeting.minutes.discuss.points,model_meeting_minutes_discuss_point,project.group_project_user,1,1,1,1

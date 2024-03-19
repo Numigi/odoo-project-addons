@@ -1,7 +1,0 @@
-.log
-/.idea
-__pycache__
-.pytest_cache
-node_modules
-/.third-party-addons
-.vscode

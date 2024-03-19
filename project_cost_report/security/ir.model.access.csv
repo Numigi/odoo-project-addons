@@ -1,3 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_project_cost_category,access_project_cost_category,model_project_cost_category,base.group_user,1,0,0,0
-access_project_cost_category_manager,access_project_cost_category_manager,model_project_cost_category,project.group_project_manager,1,1,1,0
