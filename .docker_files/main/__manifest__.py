@@ -27,6 +27,7 @@
         "project_form_with_dates",
         "project_group_create",
         "project_hide_create_sale_order",
+        "project_invoicing_profile",
         "project_iteration",
         "project_iteration_parent_only",
         "project_iteration_parent_type_required",
