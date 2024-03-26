@@ -21,9 +21,9 @@ class StockMove(models.Model):
     def _account_entry_move(self, qty, description, svl_id, cost):
         self.ensure_one()
         if self._is_consumption():
-            self._generate_consumption_account_move()
+            self._generate_consumption_account_move(qty, description, svl_id, cost)
         elif self._is_consumption_return():
-            self._generate_consumption_return_account_move()
+            self._generate_consumption_return_account_move(qty, description, svl_id, cost)
         else:
             super()._account_entry_move(qty, description, svl_id, cost)
 
@@ -52,19 +52,31 @@ class StockMove(models.Model):
     def _is_consumption_return(self):
         return self.picking_code == 'consumption_return'
 
-    def _generate_consumption_account_move(self):
+    def _generate_consumption_account_move(self, qty, description, svl_id, cost):
         self._check_project_has_wip_account()
         wip_account = self._get_wip_account()
         journal_id, dummy, dummy, acc_valuation = self._get_accounting_data_for_valuation()
         self.with_company(self.project_id.company_id.id)._create_account_move_line(
-            debit_account_id=wip_account.id, credit_account_id=acc_valuation, journal_id=journal_id)
+            credit_account_id=acc_valuation,
+            debit_account_id=wip_account.id,
+            journal_id=journal_id,
+            qty=qty,
+            description=description,
+            svl_id=svl_id,
+            cost=cost)
 
-    def _generate_consumption_return_account_move(self):
+    def _generate_consumption_return_account_move(self, qty, description, svl_id, cost):
         self._check_project_has_wip_account()
         wip_account = self._get_wip_account()
         journal_id, dummy, dummy, acc_valuation = self._get_accounting_data_for_valuation()
         self.with_company(self.project_id.company_id.id)._create_account_move_line(
-            debit_account_id=acc_valuation, credit_account_id=wip_account.id, journal_id=journal_id)
+            credit_account_id=acc_valuation,
+            debit_account_id=wip_account.id,
+            journal_id=journal_id,
+            qty=qty,
+            description=description,
+            svl_id=svl_id,
+            cost=cost)
 
     def _check_project_has_wip_account(self):
         project = self.project_id
