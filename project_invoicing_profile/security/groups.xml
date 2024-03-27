@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="group_project_invoicing_profile" model="res.groups">
+        <field name="name">Project invoicing profile</field>
+        <field name="comment">Grants access to create project invoicing profile</field>
+    </record>
+
+</odoo>
