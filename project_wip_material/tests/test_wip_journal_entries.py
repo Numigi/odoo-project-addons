@@ -39,8 +39,8 @@ class TestConsumptionJournalEntry(ProjectWIPMaterialCase):
         cls.move = cls._create_material_line(initial_qty=10).move_ids
         cls._force_transfer_move(cls.move)
         cls.account_move = cls.move.account_move_ids
-        cls.debit_line = cls.account_move.line_ids.filtered(lambda l: l.debit)
-        cls.credit_line = cls.account_move.line_ids.filtered(lambda l: l.credit)
+        cls.debit_line = cls.account_move.line_ids.filtered(lambda line: line.debit)
+        cls.credit_line = cls.account_move.line_ids.filtered(lambda line: line.credit)
         cls.expected_value = 500  # 50 * 10 (product_a_value * initial_qty)
 
     def test_debit_account_is_wip(self):
@@ -95,8 +95,8 @@ class TestConsumptionReturnJournalEntry(ProjectWIPMaterialCase):
         cls._force_transfer_move(initial_move)
         cls.move = cls._return_stock_move(initial_move, 10)
         cls.account_move = cls.move.account_move_ids
-        cls.debit_line = cls.account_move.line_ids.filtered(lambda l: l.debit)
-        cls.credit_line = cls.account_move.line_ids.filtered(lambda l: l.credit)
+        cls.debit_line = cls.account_move.line_ids.filtered(lambda line: line.debit)
+        cls.credit_line = cls.account_move.line_ids.filtered(lambda line: line.credit)
         cls.expected_value = 500  # 50 * 10 (product_a_value * initial_qty)
 
     def test_credit_account_is_wip(self):
