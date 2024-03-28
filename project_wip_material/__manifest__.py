@@ -11,6 +11,7 @@
     'category': 'Project',
     'summary': 'WIP accounting entries from consumed products',
     'depends': [
+        'project_task_analytic_lines',
         'project_material',
         'project_wip',
     ],
