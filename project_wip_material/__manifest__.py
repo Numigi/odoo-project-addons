@@ -3,7 +3,7 @@
 
 {
     'name': 'Project WIP Material',
-    'version': '1.1.0',
+    'version': '1.1.1',
     'author': 'Numigi',
     'maintainer': 'Numigi',
     'website': 'https://bit.ly/numigi-com',
@@ -11,6 +11,7 @@
     'category': 'Project',
     'summary': 'WIP accounting entries from consumed products',
     'depends': [
+        'project_task_analytic_lines',
         'project_material',
         'project_wip',
     ],
