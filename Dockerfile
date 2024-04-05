@@ -92,7 +92,7 @@ COPY project_wip /mnt/extra-addons/project_wip
 COPY project_wip_material  /mnt/extra-addons/project_wip_material
 #COPY project_wip_outsourcing  /mnt/extra-addons/project_wip_outsourcing
 #COPY project_wip_supply_cost  /mnt/extra-addons/project_wip_supply_cost
-#COPY project_wip_timesheet  /mnt/extra-addons/project_wip_timesheet
+COPY project_wip_timesheet  /mnt/extra-addons/project_wip_timesheet
 COPY stock_location_production  /mnt/extra-addons/stock_location_production
 COPY timesheet_task_project_no_change  /mnt/extra-addons/timesheet_task_project_no_change
 

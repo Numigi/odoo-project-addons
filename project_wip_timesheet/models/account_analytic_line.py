@@ -92,8 +92,7 @@ class TimesheetLine(models.Model):
                 )
             )
 
-        self.salary_account_move_id.button_draft()
-        self.salary_account_move_id.name = ""
+        self.salary_account_move_id.state = "draft"
         vals = self._get_salary_account_move_vals()
         self.salary_account_move_id.write(vals)
         self.salary_account_move_id.post()
@@ -112,16 +111,7 @@ class TimesheetLine(models.Model):
                     move_name=self.salary_account_move_id.name,
                 )
             )
-        reversed_move = self.salary_account_move_id._reverse_moves()
-        reversed_move.action_post()
-
-        # get the reversed move line and reconcile it with the salary move line
-        reversed_move_line, move_line = self._get_line_reconciliation_data(
-            self.salary_account_move_id, reversed_move
-        )
-
-        # reconcile the move lines
-        self._reconcile_move_lines(move_line, reversed_move_line)
+        self.salary_account_move_id._reverse_moves()
 
         self.salary_account_move_id = False
 
@@ -138,53 +128,7 @@ class TimesheetLine(models.Model):
                     move_name=self.salary_account_move_id.name,
                 )
             )
-        # reverse the move and post it to allow the reconciliation of the move lines
-        reversed_move = self.salary_account_move_id._reverse_moves()
-        reversed_move.action_post()
-
-        # get the reversed move line and reconcile it with the salary move line
-        reversed_move_line, move_line = self._get_line_reconciliation_data(
-            self.salary_account_move_id, reversed_move
-        )
-
-        # reconcile the move lines
-        self._reconcile_move_lines(move_line, reversed_move_line)
-
-    def _get_line_reconciliation_data(self, move, reversed_move):
-        """Get the reconciled move line and the original move line.
-        In case, we changed project in timesheet, and project has no type to select wip
-        account, we identify the account move line by task_id linked, that only on wip
-        account.
-
-        :rtype: tuple
-        """
-        move_line = move.line_ids.filtered(
-            lambda line: (line.account_id == self._get_wip_account()) or line.task_id
-        )
-        reversed_move_line = reversed_move.line_ids.filtered(
-            lambda line: (line.account_id == self._get_wip_account()) or line.task_id
-        )
-        return reversed_move_line, move_line
-
-    def _reconcile_move_lines(self, move_line, reversal_line):
-        """Reconcile the move lines."""
-        data = [
-            {
-                "id": None,
-                "mv_line_ids": [move_line.id, reversal_line.id],
-                "new_mv_line_dicts": [],
-                "type": None,
-            }
-        ]
-        self.env["account.reconciliation.widget"].process_move_lines(data)
-
-        if move_line.matching_number == "P":
-            raise ValidationError(
-                _(
-                    "The entry {move_line} ({amount}) could not be reconciled."
-                    "You should verify if the Salary entry is partially reconciled."
-                ).format(wip_line=move_line.display_name, amount=move_line.balance)
-            )
+        self.salary_account_move_id._reverse_moves()
 
     def _is_salary_account_move_reconciled(self):
         return any(line.reconciled for line in self.salary_account_move_id.line_ids)
