@@ -1,4 +1,4 @@
-# © 2019 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+# © 2024 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 from odoo import api, fields, models, _
@@ -25,7 +25,6 @@ class TimesheetLine(models.Model):
             line.sudo()._create_update_or_reverse_salary_account_move()
         return line
 
-    @api.multi
     def write(self, vals):
         """When updating an analytic line, create / update / delete the wip entry.
 
@@ -41,10 +40,9 @@ class TimesheetLine(models.Model):
 
         return True
 
-    @api.multi
     def unlink(self):
         """Reverse the salary account move entry when a timesheet line is deleted."""
-        lines_with_moves = self.filtered(lambda l: l.salary_account_move_id)
+        lines_with_moves = self.filtered(lambda line: line.salary_account_move_id)
         for line in lines_with_moves:
             line.sudo()._reverse_salary_account_move_for_deleted_timesheet()
         return super().unlink()
@@ -113,7 +111,8 @@ class TimesheetLine(models.Model):
                     move_name=self.salary_account_move_id.name,
                 )
             )
-        self.salary_account_move_id.reverse_moves()
+        self.salary_account_move_id._reverse_moves()
+
         self.salary_account_move_id = False
 
     def _reverse_salary_account_move_for_deleted_timesheet(self):
@@ -129,10 +128,10 @@ class TimesheetLine(models.Model):
                     move_name=self.salary_account_move_id.name,
                 )
             )
-        self.salary_account_move_id.reverse_moves()
+        self.salary_account_move_id._reverse_moves()
 
     def _is_salary_account_move_reconciled(self):
-        return any(l.reconciled for l in self.salary_account_move_id.line_ids)
+        return any(line.reconciled for line in self.salary_account_move_id.line_ids)
 
     def _get_salary_account_move_vals(self):
         """Get the values for the wip account move.
@@ -208,11 +207,12 @@ class TimesheetLine(models.Model):
 
         :rtype: account.journal
         """
-        return self.project_id.project_type_id.salary_journal_id
+        self = self.with_context(force_company=self.company_id.id)
+        return self.project_id.type_id.salary_journal_id
 
     def _get_salary_account(self):
         """Get the account to use for the salary move line.
 
         :rtype: account.account
         """
-        return self.project_id.project_type_id.salary_account_id
+        return self.project_id.type_id.salary_account_id

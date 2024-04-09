@@ -1,4 +1,4 @@
-# © 2019 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+# © 2024 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 import pytest
@@ -18,7 +18,10 @@ class WIPJournalEntriesCase(common.SavepointCase):
                 "name": "Manager",
                 "login": "manager",
                 "email": "manager@test.com",
-                "groups_id": [(4, cls.env.ref("project.group_project_manager").id)],
+                "groups_id": [
+                    (4, cls.env.ref("project.group_project_manager").id),
+                    (4, cls.env.ref("project_wip.group_wip_to_cgs").id),
+                ],
                 "company_id": cls.company.id,
                 "company_ids": [(4, cls.company.id)],
             }
@@ -58,7 +61,7 @@ class WIPJournalEntriesCase(common.SavepointCase):
             {
                 "name": "Work in Progress",
                 "code": "WIP",
-                "update_posted": True,
+                "restrict_mode_hash_table": True,
                 "type": "general",
                 "company_id": cls.company.id,
             }
@@ -96,10 +99,6 @@ class WIPJournalEntriesCase(common.SavepointCase):
 
         cls.env = cls.env(user=cls.manager, context={"force_company": cls.company.id})
 
-        cls.env["project.project"].create(
-            {"name": "Job 123", "company_id": cls.company.id}
-        )
-
         cls.project_type = cls.env["project.type"].create(
             {
                 "name": "Trailer Refurb",
@@ -114,7 +113,7 @@ class WIPJournalEntriesCase(common.SavepointCase):
         cls.project = cls.env["project.project"].create(
             {
                 "name": "Job 123",
-                "project_type_id": cls.project_type.id,
+                "type_id": cls.project_type.id,
                 "company_id": cls.company.id,
             }
         )
@@ -132,7 +131,7 @@ class WIPJournalEntriesCase(common.SavepointCase):
         cls.employee.timesheet_cost = amount
         line = (
             cls.env["account.analytic.line"]
-            .sudo(cls.timesheet_user)
+            .with_user(cls.timesheet_user)
             .create(
                 {
                     "company_id": cls.company.id,
@@ -178,12 +177,12 @@ class TestWIPJournalEntries(WIPJournalEntriesCase):
 
     def _get_wip_move_line(self, timesheet_line):
         return timesheet_line.salary_account_move_id.line_ids.filtered(
-            lambda l: l.account_id == self.wip_account
+            lambda line: line.account_id == self.wip_account
         )
 
     def _get_salary_move_line(self, timesheet_line):
         return timesheet_line.salary_account_move_id.line_ids.filtered(
-            lambda l: l.account_id == self.salary_account
+            lambda line: line.account_id == self.salary_account
         )
 
     def test_wip_move_line_analytic_account_is_project(self):
@@ -223,25 +222,25 @@ class TestWIPJournalEntries(WIPJournalEntriesCase):
     def test_on_change_timesheet_amount__debit_amount_updated(self):
         timesheet_line = self._create_timesheet()
         expected_amount = 25
-        timesheet_line.sudo(self.timesheet_user).amount = -expected_amount
+        timesheet_line.with_user(self.timesheet_user).amount = -expected_amount
         wip_line = self._get_wip_move_line(timesheet_line)
         assert wip_line.debit == expected_amount
 
     def test_on_change_timesheet_quantity__move_quantity_updated(self):
         timesheet_line = self._create_timesheet()
         expected_quantity = 5
-        timesheet_line.sudo(self.timesheet_user).unit_amount = expected_quantity
+        timesheet_line.with_user(self.timesheet_user).unit_amount = expected_quantity
         wip_line = self._get_wip_move_line(timesheet_line)
         assert wip_line.quantity == expected_quantity
 
     def test_on_change_timesheet_a_date__account_move_date_updated(self):
         timesheet_line = self._create_timesheet()
         new_date = datetime.now().date() + timedelta(30)
-        timesheet_line.sudo(self.timesheet_user).date = new_date
+        timesheet_line.with_user(self.timesheet_user).date = new_date
         assert timesheet_line.salary_account_move_id.date == new_date
 
     def test_if_project_has_no_type__no_account_move_created(self):
-        self.project.project_type_id = False
+        self.project.type_id = False
         timesheet_line = self._create_timesheet()
         assert not timesheet_line.salary_account_move_id
 
@@ -264,11 +263,11 @@ class TestWIPJournalEntries(WIPJournalEntriesCase):
 
     def test_if_new_project_requires_no_timesheet__account_move_reversed(self):
         timesheet_line = self._create_timesheet()
-        new_project = self.project.copy({"project_type_id": False})
+        new_project = self.project.copy({"type_id": False})
         new_task = self.task.copy({"project_id": new_project.id})
 
         wip_line = self._get_wip_move_line(timesheet_line)
-        timesheet_line.sudo(self.timesheet_user).write(
+        timesheet_line.with_user(self.timesheet_user).write(
             {"project_id": new_project.id, "task_id": new_task.id}
         )
         assert wip_line.reconciled
@@ -276,8 +275,8 @@ class TestWIPJournalEntries(WIPJournalEntriesCase):
     def test_timesheet_amount_can_be_changed_twice(self):
         timesheet_line = self._create_timesheet()
         expected_amount = 25
-        timesheet_line.sudo(self.timesheet_user).amount = -20
-        timesheet_line.sudo(self.timesheet_user).amount = -expected_amount
+        timesheet_line.with_user(self.timesheet_user).amount = -20
+        timesheet_line.with_user(self.timesheet_user).amount = -expected_amount
         wip_line = self._get_wip_move_line(timesheet_line)
         assert wip_line.debit == expected_amount
 
@@ -288,7 +287,7 @@ class TestWIPJournalEntries(WIPJournalEntriesCase):
     def test_after_change_task_on_timesheet__move_ref_contains_task_id(self):
         timesheet_line = self._create_timesheet()
         new_task = self.task.copy()
-        timesheet_line.sudo(self.timesheet_user).task_id = new_task
+        timesheet_line.with_user(self.timesheet_user).task_id = new_task
         assert str(new_task.id) in timesheet_line.salary_account_move_id.ref
 
     def test_move_ref_contains_project_name(self):
@@ -297,11 +296,13 @@ class TestWIPJournalEntries(WIPJournalEntriesCase):
 
     def test_after_change_project_on_timesheet__move_ref_contains_project_name(self):
         timesheet_line = self._create_timesheet()
-        new_project = self.project.copy()
+        self.assertIsNotNone(timesheet_line.salary_account_move_id.ref, msg=None)
+        new_project = self.project.copy({})
         new_task = self.task.copy({"project_id": new_project.id})
-        timesheet_line.sudo(self.timesheet_user).write(
+        timesheet_line.with_user(self.timesheet_user).write(
             {"project_id": new_project.id, "task_id": new_task.id}
         )
+
         assert new_project.name in timesheet_line.salary_account_move_id.ref
 
     def test_if_zero_hour__no_entry_created(self):
@@ -316,24 +317,25 @@ class TestTimesheetEntryTransferedToWip(WIPJournalEntriesCase):
     def setUpClass(cls):
         super().setUpClass()
         cls.timesheet_line = cls._create_timesheet()
-        cls.project.sudo().action_wip_to_cgs()
+        cls.project.with_user(cls.manager).action_wip_to_cgs()
 
     def test_timesheet_amount_can_not_be_changed(self):
         with pytest.raises(ValidationError):
-            self.timesheet_line.sudo(self.timesheet_user).amount = -100
+            self.timesheet_line.with_user(self.timesheet_user).amount = -100
 
     def test_timesheet_quantity_can_not_be_changed(self):
         with pytest.raises(ValidationError):
-            self.timesheet_line.sudo(self.timesheet_user).unit_amount = 10
+            self.timesheet_line.with_user(self.timesheet_user).unit_amount = 10
 
     def test_project_with_no_type_can_not_be_set(self):
-        new_project = self.project.copy({"project_type_id": False})
+        new_project = self.project.with_user(self.manager).copy()
+        new_project.type_id = False
         new_task = self.task.copy({"project_id": new_project.id})
         with pytest.raises(ValidationError):
-            self.timesheet_line.sudo(self.timesheet_user).write(
+            self.timesheet_line.with_user(self.timesheet_user).write(
                 {"project_id": new_project.id, "task_id": new_task.id}
             )
 
     def test_timesheet_can_not_be_deleted(self):
         with pytest.raises(ValidationError):
-            self.timesheet_line.sudo(self.timesheet_user).unlink()
+            self.timesheet_line.with_user(self.timesheet_user).unlink()
