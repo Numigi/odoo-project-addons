@@ -2,7 +2,6 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 from odoo import api, fields, models, _
-from odoo.addons import decimal_precision as dp
 from odoo.exceptions import AccessError
 
 
@@ -20,17 +19,6 @@ class TaskMaterialLine(models.Model):
         "Stock Picking",
         related="origin_stock_move_id.picking_id",
     )
-    direct_consumption_subtotal = fields.Float(
-        "Direct Consumption Subtotal",
-        digits=dp.get_precision("Product Price"),
-        compute="_compute_direct_consumption_subtotal",
-    )
-
-    @api.depends("consumed_qty", "unit_cost")
-    def _compute_direct_consumption_subtotal(self):
-        """Compute the direct consumption subtotal."""
-        for line in self:
-            line.direct_consumption_subtotal = line.consumed_qty * line.unit_cost
 
     def _should_generate_procurement(self):
         if self.is_direct_consumption:

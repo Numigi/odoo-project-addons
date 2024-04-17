@@ -20,7 +20,7 @@ services:
         aliases:
           - odoo.localtest.me
   db:
-    image: postgres:9.6
+    image: postgres:16.0
     environment:
       - POSTGRES_PASSWORD=odoo
       - POSTGRES_USER=odoo

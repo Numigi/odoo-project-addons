@@ -1,39 +1,31 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* project_material
+#	* project_material
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 11.0+e\n"
+"Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-09-28 14:22+0000\n"
-"PO-Revision-Date: 2021-09-28 10:24-0400\n"
+"POT-Creation-Date: 2024-04-17 22:35+0000\n"
+"PO-Revision-Date: 2024-04-17 22:35+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
-"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
+"Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
-"X-Generator: Poedit 2.3\n"
 
 #. module: project_material
-#: code:addons/project_material/models/project_task_material.py:157
+#: code:addons/project_material/models/project_task_material.py:195
 #, python-format
 msgid "Before adding material to the task, you must set a planned date."
-msgstr ""
-"Avant d'ajouter du matériel à consommer sur la tâche, vous devez entrer une "
-"date prévue."
+msgstr "Avant d'ajouter du matériel à consommer sur la tâche, vous devez entrer une date prévue."
 
 #. module: project_material
-#: code:addons/project_material/models/project_task_material.py:201
+#: code:addons/project_material/models/project_task_material.py:239
 #, python-format
-msgid ""
-"Before adding products to consume on a task, a warehouse must be defined on "
-"the project ({project})."
-msgstr ""
-"Avant d'ajouter du matériel à consommer sur la tâche, l'entrepôt doit être "
-"défini sur le projet ({project})."
+msgid "Before adding products to consume on a task, a warehouse must be defined on the project ({project})."
+msgstr "Avant d'ajouter du matériel à consommer sur la tâche, l'entrepôt doit être défini sur le projet ({project})."
 
 #. module: project_material
 #: model:ir.model.fields,field_description:project_material.field_project_task_material__company_id
@@ -49,6 +41,16 @@ msgstr "Étapes de consommation"
 #: model:ir.model.fields,field_description:project_material.field_project_task_material__consumed_qty
 msgid "Consumed Quantity"
 msgstr "Quantités consommées"
+
+#. module: project_material
+#: model:ir.model.fields,field_description:project_material.field_project_task_material__consumed_subtotal
+msgid "Consumed Subtotal"
+msgstr "Sous-total consommé"
+
+#. module: project_material
+#: model:ir.model.fields,field_description:project_material.field_project_task__consumed_total
+msgid "Consumed Total"
+msgstr "Total consommé"
 
 #. module: project_material
 #: code:addons/project_material/models/stock_warehouse.py:104
@@ -68,7 +70,7 @@ msgstr "Emplacement de consommation"
 #. module: project_material
 #: model:ir.model.fields,field_description:project_material.field_stock_warehouse__consu_mto_pull_id
 msgid "Consumption MTO Pull"
-msgstr ""
+msgstr "Consommation Tirer depuis MTO"
 
 #. module: project_material
 #: model:ir.model.fields,field_description:project_material.field_project_task__consumption_picking_count
@@ -103,14 +105,6 @@ msgid "Consumption Route"
 msgstr "Route de consommation"
 
 #. module: project_material
-#: model:ir.model.fields,help:project_material.field_project_task_material__unit_cost
-msgid ""
-"Cost used for stock valuation in standard price and as a first price to set "
-"in average/fifo. Also used as a base price for pricelists. Expressed in the "
-"default unit of measure of the product."
-msgstr ""
-
-#. module: project_material
 #: model:ir.model.fields,field_description:project_material.field_project_task_material__create_uid
 msgid "Created by"
 msgstr "Créé par"
@@ -121,14 +115,20 @@ msgid "Created on"
 msgstr "Créé le"
 
 #. module: project_material
+#: model:ir.model.fields,field_description:project_material.field_project_task__currency_id
+#: model:ir.model.fields,field_description:project_material.field_project_task_material__currency_id
+msgid "Currency"
+msgstr "Devise"
+
+#. module: project_material
 #: selection:stock.picking.type,code:0
 msgid "Customers"
-msgstr ""
+msgstr "Clients"
 
 #. module: project_material
 #: model:ir.model.fields,help:project_material.field_project_task_material__product_uom_id
 msgid "Default unit of measure used for all stock operations."
-msgstr ""
+msgstr "Unité de mesure par défaut utilisée pour toutes les opérations de stock"
 
 #. module: project_material
 #: model:ir.model.fields,field_description:project_material.field_stock_move__destination_material_line_id
@@ -152,7 +152,7 @@ msgstr "Nom affiché"
 #: model:ir.model.fields,field_description:project_material.field_project_select_mixin__id
 #: model:ir.model.fields,field_description:project_material.field_project_task_material__id
 msgid "ID"
-msgstr "ID"
+msgstr ""
 
 #. module: project_material
 #: model:ir.model.fields,field_description:project_material.field_project_task_material__initial_qty
@@ -160,9 +160,19 @@ msgid "Initial Quantity"
 msgstr "Quantité initiale"
 
 #. module: project_material
+#: model:ir.model.fields,field_description:project_material.field_project_task_material__initial_subtotal
+msgid "Initial Subtotal"
+msgstr "Sous-total initial"
+
+#. module: project_material
+#: model:ir.model.fields,field_description:project_material.field_project_task__initial_total
+msgid "Initial Total"
+msgstr "Total initial"
+
+#. module: project_material
 #: selection:stock.picking.type,code:0
 msgid "Internal"
-msgstr ""
+msgstr "Interne"
 
 #. module: project_material
 #: model:ir.model.fields,field_description:project_material.field_project_select_mixin____last_update
@@ -193,21 +203,15 @@ msgid "Material Line"
 msgstr "Ligne de matériel"
 
 #. module: project_material
-#: code:addons/project_material/models/project_task_material.py:164
+#: code:addons/project_material/models/project_task_material.py:202
 #, python-format
-msgid ""
-"Material consumption lines can not have an initial quantity below zero. The "
-"line {line} has a quantity of {qty}."
-msgstr ""
-"Les lignes de consommation de matériel ne peuvent pas avoir une quantité "
-"initiale inférieure à zéro. La ligne {line} a une quantité de {qty}."
+msgid "Material consumption lines can not have an initial quantity below zero. The line {line} has a quantity of {qty}."
+msgstr "Les lignes de consommation de matériel ne peuvent pas avoir une quantité initiale inférieure à zéro. La ligne {line} a une quantité de {qty}."
 
 #. module: project_material
 #: model_terms:ir.ui.view,arch_db:project_material.task_form_with_material
 msgid "Material procurements are currently disabled on this task."
-msgstr ""
-"Les approvisionnements de matériel sont présentement désactivés sur cette "
-"tâche."
+msgstr "Les approvisionnements de matériel sont présentement désactivés sur cette tâche."
 
 #. module: project_material
 #: model:ir.model,name:project_material.model_stock_picking_type
@@ -308,7 +312,7 @@ msgstr "Article"
 #. module: project_material
 #: model:ir.model,name:project_material.model_stock_move_line
 msgid "Product Moves (Stock Move Line)"
-msgstr ""
+msgstr "Mouvements d'article (Ligne de mouvement de stock)"
 
 #. module: project_material
 #: model_terms:ir.ui.view,arch_db:project_material.task_form_with_material
@@ -360,12 +364,12 @@ msgstr "Mouvement d'inventaire"
 #. module: project_material
 #: model:ir.model.fields,field_description:project_material.field_project_task_material__move_ids
 msgid "Stock Moves"
-msgstr "Mouvements d'inventaire"
+msgstr "Mouvements de stocks"
 
 #. module: project_material
 #: model:ir.model,name:project_material.model_stock_rule
 msgid "Stock Rule"
-msgstr ""
+msgstr "Règle de stock minimum"
 
 #. module: project_material
 #: model:ir.model,name:project_material.model_project_task
@@ -395,7 +399,7 @@ msgstr "Matériel"
 #. module: project_material
 #: model:ir.model,name:project_material.model_project_task_material
 msgid "Task Material Consumption"
-msgstr "Consommation matériel sur tâche"
+msgstr "Consommation de matériel sur tâche"
 
 #. module: project_material
 #: model:ir.model.fields,field_description:project_material.field_stock_picking__task_readonly
@@ -408,34 +412,31 @@ msgid "Task Required"
 msgstr "Tâche obligatoire"
 
 #. module: project_material
-#: code:addons/project_material/models/project_task_material.py:261
+#: code:addons/project_material/models/project_task_material.py:299
 #, python-format
-msgid ""
-"The material line {line} can not be deleted because it is bound to stock "
-"moves with the status done."
-msgstr ""
-"La ligne de matériel {line} ne peut pas être supprimée car elle est liée à "
-"un (des) mouvement(s) de stock au statut terminé."
+msgid "The material line {line} can not be deleted because it is bound to stock moves with the status done."
+msgstr "La ligne de matériel {line} ne peut pas être supprimée car elle est liée à un (des) mouvement(s) de stock au statut terminé."
 
 #. module: project_material
-#: code:addons/project_material/models/project_task_material.py:236
+#: code:addons/project_material/models/project_task_material.py:274
 #, python-format
-msgid ""
-"The quantity on the material line {line} can not be reduced to "
-"{new_quantity} (it can not be lower than the delivered quantity).\n"
+msgid "The quantity on the material line {line} can not be reduced to {new_quantity} (it can not be lower than the delivered quantity).\n"
 "\n"
 "The line may not be reduced below a minimum of {minimum_qty} {uom}."
-msgstr ""
-"La quantité sur la ligne de matériel {line} ne peut pas être réduite à "
-"{new_quantity} (elle ne peut pas être plus petite que la quantité livrée).\n"
+msgstr "La quantité sur la ligne de matériel {line} ne peut pas être réduite à {new_quantity} (elle ne peut pas être plus petite que la quantité livrée).\n"
 "\n"
 "La ligne ne peut pas être réduite en dessous de {minimum_qty} {uom}."
 
 #. module: project_material
-#: code:addons/project_material/models/project_task_material.py:192
+#: code:addons/project_material/models/project_task_material.py:230
 #, python-format
 msgid "The warehouse {warehouse} does not have a consumption location."
 msgstr "L'entrepôt {warehouse} n'a pas d'emplacement de consommation."
+
+#. module: project_material
+#: model_terms:ir.ui.view,arch_db:project_material.stock_production_type_kanban
+msgid "To Process"
+msgstr "A traiter"
 
 #. module: project_material
 #: model:ir.model,name:project_material.model_stock_picking
@@ -460,7 +461,7 @@ msgstr "Unité de mesure"
 #. module: project_material
 #: selection:stock.picking.type,code:0
 msgid "Vendors"
-msgstr ""
+msgstr "Fournisseurs"
 
 #. module: project_material
 #: model:ir.model,name:project_material.model_stock_warehouse
@@ -469,31 +470,7 @@ msgid "Warehouse"
 msgstr "Entrepôt"
 
 #. module: project_material
-#: code:addons/project_material/models/project_task_material.py:251
+#: code:addons/project_material/models/project_task_material.py:289
 #, python-format
-msgid ""
-"You may not change the product or the task on the material line {line} "
-"because it is bound to stock moves with the status done."
-msgstr ""
-"Vous ne pouvez pas modifier l'article ou la tâche sur la ligne de matériel "
-"{line} car elle est liée à un (des) mouvement(s) de stock au statut terminé."
-
-#. module: project_material
-#: model:ir.model.fields,field_description:project_material.field_project_task_material__initial_subtotal
-msgid "Initial Subtotal"
-msgstr "Sous-total initial"
-
-#. module: project_material
-#: model:ir.model.fields,field_description:project_material.field_project_task__initial_total
-msgid "Initial Total"
-msgstr "Total initial"
-
-#. module: project_material
-#: model:ir.model.fields,field_description:project_material.field_project_task__total_consumption
-msgid "Total Consumption"
-msgstr "Total consommation"
-
-#. module: project_material
-#: model:ir.model.fields,field_description:project_material.field_project_task_material__consumed_subtotal
-msgid "Consumed Subtotal"
-msgstr "Sous-total consommé"
+msgid "You may not change the product or the task on the material line {line} because it is bound to stock moves with the status done."
+msgstr "Vous ne pouvez pas modifier l'article ou la tâche sur la ligne de matériel {line} car elle est liée à un (des) mouvement(s) de stock au statut terminé."

@@ -3,7 +3,6 @@
 
 from datetime import date
 from odoo import api, fields, models
-from odoo.addons import decimal_precision as dp
 
 
 class TaskWithMaterialLines(models.Model):
@@ -45,24 +44,33 @@ class TaskWithMaterialLines(models.Model):
 
     procurement_disabled = fields.Boolean()
 
-    initial_total = fields.Float(
-        "Initial Total",
-        digits=dp.get_precision("Product Price"),
-        compute="_compute_initial_total",
+    currency_id = fields.Many2one(
+        "res.currency",
+        related="project_id.currency_id",
+        string="Currency",
+        readonly=True,
     )
-    total_consumption = fields.Float(
-        "Total Consumption",
-        digits=dp.get_precision("Product Price"),
-        compute="_compute_total_consumption",
+
+    initial_total = fields.Monetary(
+        "Initial Total",
+        compute="_compute_initial_total",
+        store=True,
+        track_visibility="onchange",
+    )
+    consumed_total = fields.Monetary(
+        "Consumed Total",
+        compute="_compute_consumed_total",
+        store=True,
+        track_visibility="onchange",
     )
 
     @api.depends("material_line_ids.consumed_subtotal")
-    def _compute_total_consumption(self):
+    def _compute_consumed_total(self):
         """
         Total of all material lines consumption.
         """
         for record in self:
-            record.total_consumption = sum(
+            record.consumed_total = sum(
                 record.material_line_ids.mapped("consumed_subtotal")
             )
 

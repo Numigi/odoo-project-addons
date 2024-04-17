@@ -14,26 +14,32 @@
                         Material procurements are currently disabled on this task.
                 </div>
             </header>
+            <field name="project_id" position="after">
+                <field name="currency_id" invisible="1"/>
+            </field>
             <notebook position="inside">
                 <page name="material_page" string="Consumption">
                     <group name="material_group" string="Products">
                         <field name="material_line_ids" nolabel="1" col="2">
                             <tree editable="bottom" limit="200">
+                                <field name="currency_id" invisible="1"/>
                                 <field name="product_id"/>
                                 <field name="initial_qty"/>
                                 <field name="prepared_qty"
                                     attrs="{'column_invisible': [('parent.show_material_prepared_qty', '=', False)]}"/>
                                 <field name="consumed_qty"/>
                                 <field name="product_uom_id"/>
-                                <field name="unit_cost"/>
-                                <field name="initial_subtotal"/>
-                                <field name="consumed_subtotal"/>
+                                <field name="unit_cost" widget="monetary"/>
+                                <field name="initial_subtotal" widget="monetary"/>
+                                <field name="consumed_subtotal" widget="monetary"/>
                             </tree>
                         </field>
-                        <group class="oe_subtotal_footer oe_right" colspan="2" name="material_lines_total">
-                            <field name="initial_total"/>
-                            <field name="total_consumption"/>
+                        <group class="oe_subtotal_footer oe_right" colspan="2" name="material_lines_initial_total">
+                            <field name="initial_total" widget="monetary" options="{'currency_field': 'currency_id'}"/>
                         </group>
+                    </group>
+                    <group class="oe_subtotal_footer oe_right" colspan="2" name="material_lines_total">
+                        <field name="consumed_total" widget="monetary" options="{'currency_field': 'currency_id'}"/>
                     </group>
                     <group>
                         <field name="procurement_disabled"/>

@@ -20,6 +20,12 @@ class TaskMaterialLine(models.Model):
         "project.project", related="task_id.project_id", store=True, readonly=True
     )
     task_id = fields.Many2one("project.task", "Task", index=True, required=True)
+    currency_id = fields.Many2one(
+        "res.currency",
+        related="project_id.currency_id",
+        string="Currency",
+        readonly=True,
+    )
     product_id = fields.Many2one(
         "product.product",
         "Product",
@@ -47,20 +53,20 @@ class TaskMaterialLine(models.Model):
         compute_sudo=True,
     )
     product_uom_id = fields.Many2one(related="product_id.uom_id", readonly=True)
-    unit_cost = fields.Float(
+    unit_cost = fields.Monetary(
         string="Unit Cost",
         compute="_compute_unit_cost",
     )
     move_ids = fields.One2many("stock.move", "material_line_id", "Stock Moves")
-    initial_subtotal = fields.Float(
+    initial_subtotal = fields.Monetary(
         "Initial Subtotal",
-        digits=dp.get_precision("Product Price"),
         compute="_compute_initial_subtotal",
+        store=True,
     )
-    consumed_subtotal = fields.Float(
+    consumed_subtotal = fields.Monetary(
         "Consumed Subtotal",
-        digits=dp.get_precision("Product Price"),
         compute="_compute_consumed_subtotal",
+        store=True,
     )
 
     @api.depends("initial_qty", "unit_cost")

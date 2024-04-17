@@ -34,6 +34,12 @@
             <div name="stock_picking" position="attributes">
                 <attribute name="t-if">record.code.raw_value != 'mrp_operation'</attribute>
             </div>
+            <button name="get_action_picking_tree_ready" position="inside">
+                <span t-if="record.code.raw_value =='consumption'">
+                    <t t-esc="record.count_picking_ready.value"/> To Process</span>
+                <span t-if="record.code.raw_value =='consumption_return'">
+                    <t t-esc="record.count_picking_ready.value"/> To Process</span>
+            </button>
         </field>
     </record>
 

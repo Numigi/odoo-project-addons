@@ -110,11 +110,11 @@ class TestDirectConsumption(TaskMaterialCase):
         line_1 = self.task.direct_material_line_ids
         # We have initially 50 as standard price
         # and 10 as consumed quantity
-        assert line_1.direct_consumption_subtotal == 500
+        assert line_1.consumed_subtotal == 500
 
         line_2 = self._create_material_line(initial_qty=10)
         self._force_transfer_move(line_2.move_ids, 7)
         assert line_2.consumed_qty == 7
 
         # 500 + (7*50) = 850
-        assert line_2.task_id.total_consumed == 850
+        assert line_2.task_id.consumed_total == 850

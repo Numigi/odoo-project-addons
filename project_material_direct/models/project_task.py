@@ -19,34 +19,31 @@ class Task(models.Model):
         domain=[("is_direct_consumption", "=", True)],
     )
 
-    total_direct_consumption = fields.Float(
-        "Total Direct Consumption",
+    direct_consumed_total = fields.Monetary(
+        "Direct Consumed Total",
         digits=dp.get_precision("Product Price"),
-        compute="_compute_total_direct_consumption",
+        compute="_compute_direct_consumed_total",
+        store=True,
+        track_visibility="onchange",
     )
 
-    total_consumed = fields.Float(
-        "Total Consumed",
-        digits=dp.get_precision("Product Price"),
-        compute="_compute_total_consumed",
-    )
-
-    @api.depends("total_direct_consumption", "total_consumption")
-    def _compute_total_consumed(self):
-        """
-        Total of all consumptions, direct or not.
-        """
-        for record in self:
-            record.total_consumed = (
-                record.total_direct_consumption + record.total_consumption
-            )
-
-    @api.depends("direct_material_line_ids.direct_consumption_subtotal")
-    def _compute_total_direct_consumption(self):
+    @api.depends("direct_material_line_ids.consumed_subtotal")
+    def _compute_direct_consumed_total(self):
         """
         Total of all material lines direct consumption.
         """
         for record in self:
-            record.total_direct_consumption = sum(
-                record.direct_material_line_ids.mapped("direct_consumption_subtotal")
+            record.direct_consumed_total = sum(
+                record.direct_material_line_ids.mapped("consumed_subtotal")
+            )
+
+    @api.depends("material_line_ids.consumed_subtotal", "direct_consumed_total")
+    def _compute_consumed_total(self):
+        """
+        Override of _compute_consumed_total To add direct consumption.
+        """
+        for record in self:
+            record.consumed_total = (
+                sum(record.material_line_ids.mapped("consumed_subtotal"))
+                + record.direct_consumed_total
             )
