@@ -14,6 +14,7 @@
                             <field name="consumed_qty" string="Quantity"/>
                             <field name="product_uom_id"/>
                             <field name="unit_cost"/>
+                            <field name="direct_consumption_subtotal"/>                            
                         </tree>
                         <form string="Direct Consumption">
                             <group>
@@ -30,6 +31,15 @@
                             </group>
                         </form>
                     </field>
+                    <group class="oe_subtotal_footer oe_right" colspan="2" name="direct_consumption_material_lines_total">
+                        <field name="total_direct_consumption"/>
+                    </group>
+                </group>
+                <group class="oe_subtotal_footer oe_right" colspan="2" name="total_consumed_material">
+                    <div class="oe_subtotal_footer_separator oe_inline">
+                        <label for="total_consumed" />
+                    </div>
+                    <field name="total_consumed" nolabel="1" class="oe_subtotal_footer_separator"/>
                 </group>
             </group>
         </field>

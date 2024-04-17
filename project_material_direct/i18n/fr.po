@@ -106,5 +106,20 @@ msgstr ""
 msgid "Transfer"
 msgstr "Transfert"
 
+#. module: project_material_direct
+#: model:ir.model.fields,field_description:project_material_direct.field_project_task_material__direct_consumption_subtotal
+msgid "Direct Consumption Subtotal"
+msgstr "Sous-total consommé"
+
+#. module: project_material_direct
+#: model:ir.model.fields,field_description:project_material_direct.field_project_task__total_direct_consumption
+msgid "Total Direct Consumption"
+msgstr "Total consommation directe"
+
+#. module: project_material_direct
+#: model:ir.model.fields,field_description:project_material_direct.field_project_task__total_consumed
+msgid "Total Consumed"
+msgstr "Total consommé"
+
 #~ msgid "Task Material Direct Consumption"
 #~ msgstr "Consommation directe de matériel sur tâche"

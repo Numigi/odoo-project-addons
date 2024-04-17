@@ -26,8 +26,14 @@
                                 <field name="consumed_qty"/>
                                 <field name="product_uom_id"/>
                                 <field name="unit_cost"/>
+                                <field name="initial_subtotal"/>
+                                <field name="consumed_subtotal"/>
                             </tree>
                         </field>
+                        <group class="oe_subtotal_footer oe_right" colspan="2" name="material_lines_total">
+                            <field name="initial_total"/>
+                            <field name="total_consumption"/>
+                        </group>
                     </group>
                     <group>
                         <field name="procurement_disabled"/>

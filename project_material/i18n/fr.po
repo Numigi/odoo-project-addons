@@ -477,3 +477,23 @@ msgid ""
 msgstr ""
 "Vous ne pouvez pas modifier l'article ou la tâche sur la ligne de matériel "
 "{line} car elle est liée à un (des) mouvement(s) de stock au statut terminé."
+
+#. module: project_material
+#: model:ir.model.fields,field_description:project_material.field_project_task_material__initial_subtotal
+msgid "Initial Subtotal"
+msgstr "Sous-total initial"
+
+#. module: project_material
+#: model:ir.model.fields,field_description:project_material.field_project_task__initial_total
+msgid "Initial Total"
+msgstr "Total initial"
+
+#. module: project_material
+#: model:ir.model.fields,field_description:project_material.field_project_task__total_consumption
+msgid "Total Consumption"
+msgstr "Total consommation"
+
+#. module: project_material
+#: model:ir.model.fields,field_description:project_material.field_project_task_material__consumed_subtotal
+msgid "Consumed Subtotal"
+msgstr "Sous-total consommé"

@@ -47,15 +47,43 @@ class TaskMaterialLine(models.Model):
         compute_sudo=True,
     )
     product_uom_id = fields.Many2one(related="product_id.uom_id", readonly=True)
-    unit_cost = fields.Float(string="Unit Cost",
-                             compute='_compute_unit_cost',
-                             )
+    unit_cost = fields.Float(
+        string="Unit Cost",
+        compute="_compute_unit_cost",
+    )
     move_ids = fields.One2many("stock.move", "material_line_id", "Stock Moves")
+    initial_subtotal = fields.Float(
+        "Initial Subtotal",
+        digits=dp.get_precision("Product Unit of Measure"),
+        compute="_compute_initial_subtotal",
+    )
+    consumed_subtotal = fields.Float(
+        "Consumed Subtotal",
+        digits=dp.get_precision("Product Unit of Measure"),
+        compute="_compute_consumed_subtotal",
+    )
+
+    @api.depends("initial_qty", "unit_cost")
+    def _compute_initial_subtotal(self):
+        """
+        Compute the initial subtotal of the material line.
+        """
+        for record in self:
+            record.initial_subtotal = record.initial_qty * record.unit_cost
+
+    @api.depends("consumed_qty", "unit_cost")
+    def _compute_consumed_subtotal(self):
+        """
+        Compute the consumed subtotal of the material line.
+        """
+        for record in self:
+            record.consumed_subtotal = record.consumed_qty * record.unit_cost
 
     def _compute_unit_cost(self):
         for record in self:
             record.unit_cost = record.with_context(
-                force_company=record.company_id.id).product_id.standard_price
+                force_company=record.company_id.id
+            ).product_id.standard_price
 
     @api.depends(
         "move_ids.move_orig_ids",
