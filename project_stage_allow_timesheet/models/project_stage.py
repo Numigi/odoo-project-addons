@@ -13,7 +13,6 @@ class ProjectStage(models.Model):
     )
 
 
-
 class ProjectTaskType(models.Model):
 
     _inherit = 'project.task.type'
@@ -22,4 +21,3 @@ class ProjectTaskType(models.Model):
         string="Allow timesheets",
         default=True,
     )
-

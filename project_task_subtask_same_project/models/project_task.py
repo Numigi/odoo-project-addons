@@ -24,7 +24,8 @@ class ProjectTaskSubtaskSameProject(models.Model):
                 ))
 
     def write(self, vals):
-        """ Propagate the value of the project to the subtask when it is changed on the parent task."""
+        """ Propagate the value of the project to the subtask when it
+        is changed on the parent task."""
         res = super().write(vals)
         for task in self:
             if task.child_ids and 'project_id' in vals:

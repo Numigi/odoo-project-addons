@@ -15,8 +15,8 @@ class AccountAnalyticLine(models.Model):
             return
 
         error_message = _(
-            "You can't link a time sheet line to a task if its project's stage does not allow it. "
-            "(Task: {}, Project: {}, Project Stage: {})"
+            "You can't link a time sheet line to a task if its project's stage"
+            " does not allow it. (Task: {}, Project: {}, Project Stage: {})"
         )
         for rec in self:
             task = rec.task_id
@@ -34,13 +34,14 @@ class ProjectTask(models.Model):
 
     @api.constrains("project_id")
     def _check_project_move_allow_timesheet(self):
-        """ Check if a line is moved to another project, the target project must allow time sheet """
+        """ Check if a line is moved to another project,
+        the target project must allow time sheet """
         if not _should_apply_constraints(self.env):
             return
 
         error_message = _(
-            "You cannot move a task linked to a timesheet line in a project if its stage does not allow it. "
-            "(Task: {}, Project: {}, Project Stage: {})"
+            "You cannot move a task linked to a timesheet line in a project if its stage"
+            " does not allow it. (Task: {}, Project: {}, Project Stage: {})"
         )
 
         for rec in self:

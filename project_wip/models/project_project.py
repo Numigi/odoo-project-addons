@@ -1,7 +1,7 @@
 # © 2023 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
-from odoo import api, models, _
+from odoo import models, _
 from odoo.exceptions import ValidationError, AccessError
 
 
@@ -39,8 +39,8 @@ class Project(models.Model):
         if not self.env.user.has_group("project_wip.group_wip_to_cgs"):
             raise AccessError(
                 _(
-                    "Only members of the group 'Transfert WIP to CGS' are allowed to transfer WIP "
-                    "entries to CGS."
+                    "Only members of the group 'Transfert WIP to CGS' are allowed "
+                    "to transfer WIP entries to CGS."
                 )
             )
 
@@ -181,8 +181,8 @@ class Project(models.Model):
         if wip_line.matching_number == "P":
             raise ValidationError(
                 _(
-                    "The WIP entry {wip_line} ({amount}) could not be reconciled when transfering "
-                    "the amount into Costs of Goods Sold. "
+                    "The WIP entry {wip_line} ({amount}) could not be reconciled "
+                    "when transfering the amount into Costs of Goods Sold. "
                     "You should verify if the WIP entry is partially reconciled."
                 ).format(wip_line=wip_line.display_name, amount=wip_line.balance)
             )
