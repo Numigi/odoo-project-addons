@@ -54,6 +54,7 @@ class AccountCase(common.SavepointCase):
             limit=1,
         )
 
+
 class InvoiceCase(AccountCase):
     @classmethod
     def setUpClass(cls):
@@ -78,16 +79,16 @@ class InvoiceCase(AccountCase):
                 "name": "10% tax",
                 "amount_type": "percent",
                 "amount": 0.10,
-                #"account_id": cls.tax_account.id,
+                # "account_id": cls.tax_account.id,
             }
         )
 
         cls.invoice = cls.env["account.move"].create(
             {
                 "partner_id": cls.partner.id,
-                #"project_id": cls.project.id,
+                # "project_id": cls.project.id,
                 "move_type": "in_invoice",
-                #"account_id": cls.payable_account.id,
+                # "account_id": cls.payable_account.id,
                 "invoice_line_ids": [(0, 0, cls._get_invoice_line_vals())],
             }
         )
@@ -97,7 +98,7 @@ class InvoiceCase(AccountCase):
         defaults = {
             "name": "/",
             "quantity": 1,
-            #"uom_id": cls.env.ref("uom.product_uom_unit").id,
+            # "uom_id": cls.env.ref("uom.product_uom_unit").id,
             "price_unit": 100,
             "analytic_account_id": cls.analytic_account.id,
             "task_id": cls.task.id,

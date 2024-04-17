@@ -20,7 +20,6 @@ class PurchaseOrderLine(models.Model):
             result["task_id"] = self.order_id.task_id.id
         return result
 
-
     @api.constrains("is_outsourcing", "product_id")
     def _check_if_is_outsourcing__product_is_service(self):
         outsourcing_lines = self.filtered(lambda l: l.is_outsourcing)

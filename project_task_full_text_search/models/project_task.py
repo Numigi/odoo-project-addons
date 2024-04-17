@@ -58,11 +58,14 @@ class ProjectTaskWithFullTextSearch(models.Model):
         self.env.cr.execute(
             """
             SELECT id FROM project_task
-            WHERE to_tsvector(%(lang)s, full_text_content) @@ plainto_tsquery(%(lang)s, %(words)s);
-            """, {
-                'lang': lang,
-                'words': ' & '.join(words_to_search),
-            })
+            WHERE to_tsvector(%(lang)s, full_text_content) @@ plainto_tsquery(
+                %(lang)s, %(words)s);
+            """,
+            {
+                "lang": lang,
+                "words": " & ".join(words_to_search),
+            },
+        )
 
         return [r[0] for r in self.env.cr.fetchall()]
 
@@ -90,7 +93,9 @@ class ProjectTaskWithFullTextSearchIndex(models.Model):
             use for the the gin index.
         """
         _logger.info('Droping the full text search index on project_task if it exists.')
-        query = "DROP INDEX IF EXISTS {index_name}".format(index_name=FULL_TEXT_SEARCH_INDEX_NAME)
+        query = "DROP INDEX IF EXISTS {index_name}".format(
+            index_name=FULL_TEXT_SEARCH_INDEX_NAME
+        )
         self.env.cr.execute(query)
 
         lang = self._get_full_text_content_language()

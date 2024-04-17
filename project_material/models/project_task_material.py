@@ -238,8 +238,8 @@ class TaskMaterialLine(models.Model):
         if more_to_reduce_than_available:
             raise ValidationError(
                 _(
-                    "The quantity on the material line {line} can not be reduced to {new_quantity} "
-                    "(it can not be lower than the delivered quantity).\n\n"
+                    "The quantity on the material line {line} can not be reduced to "
+                    "{new_quantity} (it can not be lower than the delivered quantity).\n\n"
                     "The line may not be reduced below a minimum of {minimum_qty} {uom}."
                 ).format(
                     line=self.product_id.display_name,
@@ -288,12 +288,12 @@ class TaskMaterialLine(models.Model):
         )
 
     def _get_first_step_moves(self):
-        moves = self.env["stock.move"]
+        _moves = self.env["stock.move"]
 
-        for moves in self._iter_procurement_moves():
+        for _moves in self._iter_procurement_moves():
             pass
 
-        return moves
+        return _moves
 
     def _cancel_moves_with_zero_quantity(self):
         """Cancel the stock moves related to this line with zero quantity.
