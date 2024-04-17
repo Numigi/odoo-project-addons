@@ -2,6 +2,7 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 from odoo import api, fields, models
+from odoo.addons import decimal_precision as dp
 
 
 class Task(models.Model):
@@ -20,11 +21,13 @@ class Task(models.Model):
 
     total_direct_consumption = fields.Float(
         "Total Direct Consumption",
+        digits=dp.get_precision("Product Price"),
         compute="_compute_total_direct_consumption",
     )
 
     total_consumed = fields.Float(
         "Total Consumed",
+        digits=dp.get_precision("Product Price"),
         compute="_compute_total_consumed",
     )
 
