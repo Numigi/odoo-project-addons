@@ -54,12 +54,10 @@ class TaskMaterialLine(models.Model):
     move_ids = fields.One2many("stock.move", "material_line_id", "Stock Moves")
     initial_subtotal = fields.Float(
         "Initial Subtotal",
-        digits=dp.get_precision("Product Unit of Measure"),
         compute="_compute_initial_subtotal",
     )
     consumed_subtotal = fields.Float(
         "Consumed Subtotal",
-        digits=dp.get_precision("Product Unit of Measure"),
         compute="_compute_consumed_subtotal",
     )
 

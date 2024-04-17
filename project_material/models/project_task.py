@@ -3,7 +3,6 @@
 
 from datetime import date
 from odoo import api, fields, models
-from odoo.addons import decimal_precision as dp
 
 
 class TaskWithMaterialLines(models.Model):
@@ -47,12 +46,10 @@ class TaskWithMaterialLines(models.Model):
 
     initial_total = fields.Float(
         "Initial Total",
-        digits=dp.get_precision("Product Unit of Measure"),
         compute="_compute_initial_total",
     )
     total_consumption = fields.Float(
         "Total Consumption",
-        digits=dp.get_precision("Product Unit of Measure"),
         compute="_compute_total_consumption",
     )
 
