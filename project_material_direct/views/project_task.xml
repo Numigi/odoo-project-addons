@@ -4,24 +4,27 @@
     <record id="task_form_with_direct_material_consumption" model="ir.ui.view">
         <field name="name">Task Form: add direct material consumption</field>
         <field name="model">project.task</field>
-        <field name="inherit_id" ref="project.view_task_form2"/>
+        <field name="inherit_id" ref="project_material.task_form_with_material"/>
         <field name="arch" type="xml">
             <group name="material_group" position="after">
                 <group name="direct_material_group" string="Direct Consumption">
                     <field name="direct_material_line_ids" nolabel="1" col="2">
                         <tree editable="bottom">
+                            <field name="currency_id" invisible="1"/>
                             <field name="product_id"/>
                             <field name="consumed_qty" string="Quantity"/>
                             <field name="product_uom_id"/>
-                            <field name="unit_cost"/>
+                            <field name="unit_cost" widget="monetary"/>
+                            <field name="consumed_subtotal" widget="monetary" string="Direct Consumed Subtotal"/>                            
                         </tree>
                         <form string="Direct Consumption">
                             <group>
                                 <group>
+                                    <field name="currency_id" invisible="1"/>
                                     <field name="product_id"/>
                                     <field name="consumed_qty" string="Quantity"/>
                                     <field name="product_uom_id"/>
-                                    <field name="unit_cost"/>
+                                    <field name="unit_cost" widget="monetary"/>
                                 </group>
                                 <group>
                                     <field name="origin_stock_picking_id"/>
@@ -30,6 +33,9 @@
                             </group>
                         </form>
                     </field>
+                    <group class="oe_subtotal_footer oe_right" colspan="2" name="direct_consumed_material_lines_total">
+                        <field name="direct_consumed_total"  widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                    </group>
                 </group>
             </group>
         </field>

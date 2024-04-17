@@ -123,7 +123,7 @@ class TestGenerateProcurementsFromTask(TaskMaterialCase):
         assert len(line.move_ids) == 2
 
     def test_if_raise_initial_quantity__if_move_is_done__new_move_has_missing_quantity(
-        self
+        self,
     ):
         line = self._create_material_line(initial_qty=10)
         self._force_transfer_move(line.move_ids)
@@ -272,6 +272,22 @@ class TestGenerateProcurementsFromTask(TaskMaterialCase):
         assert move_1
         assert move_2
         assert move_1 != move_2
+
+    def test_material_line_subtotal_and_total(self):
+        line_1 = self._create_material_line()
+        line_2 = self._create_material_line()
+        # We have initially 50 as standard price
+        line_1.initial_qty = 9
+        line_2.initial_qty = 2
+        assert line_1.initial_subtotal == 450
+        assert line_2.initial_subtotal == 100
+        assert line_1.task_id.initial_total == 550
+
+    def test_material_line_consumed_subtotal(self):
+        line = self._create_material_line(initial_qty=10)
+        self._force_transfer_move(line.move_ids, 8)
+        assert line.consumed_qty == 8
+        assert line.consumed_subtotal == 400  # 8 * 50
 
 
 class TestPreparationStep(TaskMaterialCase):

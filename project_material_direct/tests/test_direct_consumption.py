@@ -14,32 +14,43 @@ class TestDirectConsumption(TaskMaterialCase):
     def setUpClass(cls):
         super().setUpClass()
 
-        cls.direct_picking_type = cls.env['stock.picking.type'].create({
-            'name': 'Direct Consumption',
-            'warehouse_id': cls.warehouse.id,
-            'code': 'consumption',
-            'is_direct_consumption': True,
-            'sequence_id': cls.env['ir.sequence'].sudo().create({
-                'name': 'Direct Consumption',
-            }).id,
-        })
+        cls.direct_picking_type = cls.env["stock.picking.type"].create(
+            {
+                "name": "Direct Consumption",
+                "warehouse_id": cls.warehouse.id,
+                "code": "consumption",
+                "is_direct_consumption": True,
+                "sequence_id": cls.env["ir.sequence"]
+                .sudo()
+                .create(
+                    {
+                        "name": "Direct Consumption",
+                    }
+                )
+                .id,
+            }
+        )
 
-        cls.picking = cls.env['stock.picking'].create({
-            'picking_type_id': cls.direct_picking_type.id,
-            'location_id': cls.warehouse.lot_stock_id.id,
-            'location_dest_id': cls.env.ref('stock.location_production').id,
-            'task_id': cls.task.id,
-        })
+        cls.picking = cls.env["stock.picking"].create(
+            {
+                "picking_type_id": cls.direct_picking_type.id,
+                "location_id": cls.warehouse.lot_stock_id.id,
+                "location_dest_id": cls.env.ref("stock.location_production").id,
+                "task_id": cls.task.id,
+            }
+        )
         cls.quantity = 10
-        cls.move = cls.env['stock.move'].create({
-            'name': '/',
-            'picking_id': cls.picking.id,
-            'product_id': cls.product_a.id,
-            'product_uom': cls.product_a.uom_id.id,
-            'location_id': cls.warehouse.lot_stock_id.id,
-            'location_dest_id': cls.env.ref('stock.location_production').id,
-            'product_uom_qty': cls.quantity,
-        })
+        cls.move = cls.env["stock.move"].create(
+            {
+                "name": "/",
+                "picking_id": cls.picking.id,
+                "product_id": cls.product_a.id,
+                "product_uom": cls.product_a.uom_id.id,
+                "location_id": cls.warehouse.lot_stock_id.id,
+                "location_dest_id": cls.env.ref("stock.location_production").id,
+                "product_uom_qty": cls.quantity,
+            }
+        )
 
     def test_stock_move_is_direct_consumption(self):
         assert self.move.is_direct_consumption
@@ -62,18 +73,18 @@ class TestDirectConsumption(TaskMaterialCase):
         assert line.is_direct_consumption
 
     @data(
-        ('task_readonly', False),
-        ('task_invisible', False),
-        ('task_required', True),
+        ("task_readonly", False),
+        ("task_invisible", False),
+        ("task_required", True),
     )
     @unpack
     def test_picking_task_modifiers__before_transfer(self, modifier_field, value):
         assert self.picking[modifier_field] is value
 
     @data(
-        ('task_readonly', True),
-        ('task_invisible', False),
-        ('task_required', False),
+        ("task_readonly", True),
+        ("task_invisible", False),
+        ("task_required", False),
     )
     @unpack
     def test_picking_task_modifiers__after_transfer(self, modifier_field, value):
@@ -93,3 +104,17 @@ class TestDirectConsumption(TaskMaterialCase):
 
         with pytest.raises(AccessError):
             direct_material_line.unlink()
+
+    def test_direct_material_line_subtotal_and_task_total(self):
+        self._force_transfer_move(self.move)
+        line_1 = self.task.direct_material_line_ids
+        # We have initially 50 as standard price
+        # and 10 as consumed quantity
+        assert line_1.consumed_subtotal == 500
+
+        line_2 = self._create_material_line(initial_qty=10)
+        self._force_transfer_move(line_2.move_ids, 7)
+        assert line_2.consumed_qty == 7
+
+        # 500 + (7*50) = 850
+        assert line_2.task_id.consumed_total == 850
