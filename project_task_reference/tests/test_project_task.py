@@ -66,10 +66,11 @@ class TestProjectTask(common.SavepointCase):
 
     def test_if_task_id_wongly_named__raise_missing_error(self):
         regex_with_typo = r"TA#(?P<task_id>\d+)"  # task_id instead of id
-        self.env['ir.config_parameter'].set_param('project_task_reference.regex', regex_with_typo)
-
+        self.env['ir.config_parameter'].set_param(
+            'project_task_reference.regex', regex_with_typo)
         format_with_typo = "TA#{task_id}"
-        self.env['ir.config_parameter'].set_param('project_task_reference.format', format_with_typo)
+        self.env['ir.config_parameter'].set_param(
+            'project_task_reference.format', format_with_typo)
 
         text = "TA#{} Some text".format(self.task_1.id)
 

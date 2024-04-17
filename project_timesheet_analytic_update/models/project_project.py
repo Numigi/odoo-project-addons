@@ -27,9 +27,9 @@ class ProjectTimesheetAnalyticUpdate(models.Model):
                     "title": _("Warning!"),
                     "message": _(
                         "Please note, you have modified the analytic account. \n"
-                        "When saving, the project timelines will be updated with the new analytic "
-                        "account < %s >."
+                        "When saving, the project timelines will be updated with "
+                        "the new analytic account < %s >."
                     )
-                               % self.analytic_account_id.name,
+                    % self.analytic_account_id.name,
                 }
             }

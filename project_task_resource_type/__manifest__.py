@@ -10,7 +10,7 @@
     "author": "Numigi",
     "maintainer": "Numigi",
     "website": "www.numigi.com",
-    "depends": ["project",],
+    "depends": ["project"],
     "data": [
         "security/ir.model.access.csv",
         "views/project_resource_views.xml",

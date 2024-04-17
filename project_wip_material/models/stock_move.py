@@ -27,7 +27,7 @@ class StockMove(models.Model):
         else:
             super()._account_entry_move(qty, description, svl_id, cost)
 
-    def _prepare_account_move_line(self, qty, cost, credit_account_id, 
+    def _prepare_account_move_line(self, qty, cost, credit_account_id,
                                    debit_account_id, description):
         """Add the analytic to WIP account move lines."""
         move_line_vals = super()._prepare_account_move_line(
@@ -57,8 +57,8 @@ class StockMove(models.Model):
         wip_account = self._get_wip_account()
         journal_id, dummy, dummy, acc_valuation = self._get_accounting_data_for_valuation()
         self.with_company(self.project_id.company_id.id)._create_account_move_line(
-            credit_account_id=acc_valuation,
-            debit_account_id=wip_account.id,
+            credit_account_id=wip_account.id,
+            debit_account_id=acc_valuation,
             journal_id=journal_id,
             qty=qty,
             description=description,
