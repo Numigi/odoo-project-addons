@@ -14,8 +14,8 @@
                             <field name="product_id"/>
                             <field name="consumed_qty" string="Quantity"/>
                             <field name="product_uom_id"/>
-                            <field name="unit_cost" widget="monetary"/>
-                            <field name="consumed_subtotal" widget="monetary" string="Direct Consumed Subtotal"/>                            
+                            <field name="unit_cost"/>
+                            <field name="consumed_subtotal" string="Direct Consumed Subtotal"/>                            
                         </tree>
                         <form string="Direct Consumption">
                             <group>
@@ -24,7 +24,7 @@
                                     <field name="product_id"/>
                                     <field name="consumed_qty" string="Quantity"/>
                                     <field name="product_uom_id"/>
-                                    <field name="unit_cost" widget="monetary"/>
+                                    <field name="unit_cost"/>
                                 </group>
                                 <group>
                                     <field name="origin_stock_picking_id"/>
