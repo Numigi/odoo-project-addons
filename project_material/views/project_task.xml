@@ -29,9 +29,9 @@
                                     attrs="{'column_invisible': [('parent.show_material_prepared_qty', '=', False)]}"/>
                                 <field name="consumed_qty"/>
                                 <field name="product_uom_id"/>
-                                <field name="unit_cost" widget="monetary"/>
-                                <field name="initial_subtotal" widget="monetary"/>
-                                <field name="consumed_subtotal" widget="monetary"/>
+                                <field name="unit_cost"/>
+                                <field name="initial_subtotal"/>
+                                <field name="consumed_subtotal"/>
                             </tree>
                         </field>
                         <group class="oe_subtotal_footer oe_right" colspan="2" name="material_lines_initial_total">
