@@ -9,7 +9,8 @@ class TestMilestoneProgress(SavepointCase):
     def setUpClass(cls):
         super().setUpClass()
 
-        cls.project = cls.env["project.project"].create({"name": "My Project"})
+        cls.project = cls.env["project.project"].create(
+            {"name": "My Project", "use_milestones": True})
 
         cls.milestone_1 = cls.env["project.milestone"].create(
             {"name": "My Milestone 1",
@@ -49,17 +50,14 @@ class TestMilestoneProgress(SavepointCase):
     def test_progress_calculation(self):
         self.assertEqual(self.milestone_1.progress, 25)
 
-    # def test_show_progress_info(self):
-    #     self.env["account.analytic.line"].create(
-    #         {
-    #             "name": "My Timesheet 2",
-    #             "task_id": self.task_2.id,
-    #             "unit_amount": 20,
-    #             "project_id": self.project.id,
-    #         }
-    #     )
-    #     self.assertEqual(self.milestone_2.show_progress_info_message, True)
-
-
-
-
+    def test_show_progress_info(self):
+        self.env["account.analytic.line"].create(
+            {
+                "name": "My Timesheet 2",
+                "task_id": self.task_2.id,
+                "unit_amount": 20,
+                "project_id": self.project.id,
+            }
+        )
+        self.assertEqual(self.milestone_2.progress, 0)
+        self.assertEqual(self.milestone_2.show_progress_info_message, False)
