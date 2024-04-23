@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-17 22:35+0000\n"
-"PO-Revision-Date: 2024-04-17 22:35+0000\n"
+"POT-Creation-Date: 2024-04-23 17:48+0000\n"
+"PO-Revision-Date: 2024-04-23 17:48+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -437,6 +437,11 @@ msgstr "L'entrepôt {warehouse} n'a pas d'emplacement de consommation."
 #: model_terms:ir.ui.view,arch_db:project_material.stock_production_type_kanban
 msgid "To Process"
 msgstr "A traiter"
+
+#. module: project_material
+#: model:ir.model.fields,field_description:project_material.field_project_task__consumption_total
+msgid "Consumption Total"
+msgstr "Total consommation"
 
 #. module: project_material
 #: model:ir.model,name:project_material.model_stock_picking

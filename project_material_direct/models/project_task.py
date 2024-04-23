@@ -19,31 +19,29 @@ class Task(models.Model):
         domain=[("is_direct_consumption", "=", True)],
     )
 
-    direct_consumed_total = fields.Monetary(
-        "Direct Consumed Total",
-        digits=dp.get_precision("Product Price"),
-        compute="_compute_direct_consumed_total",
+    direct_consumption_total = fields.Monetary(
+        "Direct Consumption Total",
+        compute="_compute_direct_consumption_total",
         store=True,
         track_visibility="onchange",
     )
 
     @api.depends("direct_material_line_ids.consumed_subtotal")
-    def _compute_direct_consumed_total(self):
+    def _compute_direct_consumption_total(self):
         """
         Total of all material lines direct consumption.
         """
         for record in self:
-            record.direct_consumed_total = sum(
+            record.direct_consumption_total = sum(
                 record.direct_material_line_ids.mapped("consumed_subtotal")
             )
 
-    @api.depends("material_line_ids.consumed_subtotal", "direct_consumed_total")
+    @api.depends("consumption_total", "direct_consumption_total")
     def _compute_consumed_total(self):
         """
-        Override of _compute_consumed_total To add direct consumption.
+        Override of _compute_consumed_total To add direct consumption total.
         """
         for record in self:
             record.consumed_total = (
-                sum(record.material_line_ids.mapped("consumed_subtotal"))
-                + record.direct_consumed_total
+                record.consumption_total + record.direct_consumption_total
             )

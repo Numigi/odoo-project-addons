@@ -57,22 +57,18 @@ class TaskWithMaterialLines(models.Model):
         store=True,
         track_visibility="onchange",
     )
+    consumption_total = fields.Monetary(
+        "Consumption Total",
+        compute="_compute_consumption_total",
+        store=True,
+        track_visibility="onchange",
+    )
     consumed_total = fields.Monetary(
         "Consumed Total",
         compute="_compute_consumed_total",
         store=True,
         track_visibility="onchange",
     )
-
-    @api.depends("material_line_ids.consumed_subtotal")
-    def _compute_consumed_total(self):
-        """
-        Total of all material lines consumption.
-        """
-        for record in self:
-            record.consumed_total = sum(
-                record.material_line_ids.mapped("consumed_subtotal")
-            )
 
     @api.depends("material_line_ids.initial_subtotal")
     def _compute_initial_total(self):
@@ -82,6 +78,26 @@ class TaskWithMaterialLines(models.Model):
         for record in self:
             record.initial_total = sum(
                 record.material_line_ids.mapped("initial_subtotal")
+            )
+
+    @api.depends("material_line_ids.consumed_subtotal")
+    def _compute_consumption_total(self):
+        """
+        Total of all material lines consumption.
+        """
+        for record in self:
+            record.consumption_total = sum(
+                record.material_line_ids.mapped("consumed_subtotal")
+            )
+
+    @api.depends("material_line_ids.consumed_subtotal")
+    def _compute_consumed_total(self):
+        """
+        Total of all material lines consumption.
+        """
+        for record in self:
+            record.consumed_total = sum(
+                record.material_line_ids.mapped("consumed_subtotal")
             )
 
     def _compute_preparation_pickings(self):
