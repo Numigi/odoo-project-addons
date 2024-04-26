@@ -9,17 +9,22 @@ class ProjectTask(models.Model):
 
     @api.model
     def create(self, vals):
-        task = super().create(vals)
-        # If milestone is set, propagate its target_date to the date_deadline of task
-        if task.milestone_id:
-            task.date_deadline = task.milestone_id.target_date
-        return task
+        if "milestone_id" in vals and vals.get("milestone_id"):
+            milestone_id = self.env["project.milestone"].browse(vals["milestone_id"])
+            if milestone_id.target_date:
+                vals["date_deadline"] = milestone_id.target_date
+        return super(ProjectTask, self).create(vals)
 
-    @api.onchange("milestone_id")
-    def _onchange_milestone_propagate_target_date(self):
-        # Change to milestone target_date if its set on task
-        # If milestone was removed, date_deadline will be set to project date
-        if self.milestone_id:
+    def write(self, vals):
+        if "milestone_id" in vals and vals.get("milestone_id"):
+            milestone_id = self.env["project.milestone"].browse(vals["milestone_id"])
+            if milestone_id.target_date:
+                vals["date_deadline"] = milestone_id.target_date
+        return super(ProjectTask, self).write(vals)
+
+    @api.onchange("project_id", "milestone_id")
+    def _onchange_project_propagate_deadline(self):
+        if self.milestone_id and self.milestone_id.target_date:
             self.date_deadline = self.milestone_id.target_date
-        elif self.project_id:
-            self.date_deadline = self.project_id.date
+        else:
+            super(ProjectTask, self)._onchange_project_propagate_deadline()

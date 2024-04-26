@@ -39,11 +39,11 @@ class TestProjectTaskDeadline(common.SavepointCase):
         self.assertEqual(task.date_deadline, self.project_with_deadline.date)
         # Add milestone and check if task deadline is set to milestone target_date
         task.milestone_id = self.test_project_milestone.id
-        task._onchange_milestone_propagate_target_date()
+        task._onchange_project_propagate_deadline()
         self.assertEqual(task.date_deadline, self.test_project_milestone.target_date)
         # Then try to remove milestone and restore task deadline to project date automatically
         task.milestone_id = False
-        task._onchange_milestone_propagate_target_date()
+        task._onchange_project_propagate_deadline()
         self.assertEqual(task.date_deadline, self.project_with_deadline.date)
 
     def test_03_create_task_without_milestone(self):
