@@ -84,6 +84,7 @@
         "project_task_analytic_lines_stock",
         "project_task_customer_reference",
         "project_task_date_planned",
+        "project_task_deadline_from_milestone",
         "project_task_deadline_from_project",
         "project_task_dependency_more_info",
         "project_task_description_template",
