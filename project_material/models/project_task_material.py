@@ -20,6 +20,12 @@ class TaskMaterialLine(models.Model):
         "project.project", related="task_id.project_id", store=True, readonly=True
     )
     task_id = fields.Many2one("project.task", "Task", index=True, required=True)
+    currency_id = fields.Many2one(
+        "res.currency",
+        related="project_id.currency_id",
+        string="Currency",
+        readonly=True,
+    )
     product_id = fields.Many2one(
         "product.product",
         "Product",
@@ -47,15 +53,43 @@ class TaskMaterialLine(models.Model):
         compute_sudo=True,
     )
     product_uom_id = fields.Many2one(related="product_id.uom_id", readonly=True)
-    unit_cost = fields.Float(string="Unit Cost",
-                             compute='_compute_unit_cost',
-                             )
+    unit_cost = fields.Monetary(
+        string="Unit Cost",
+        compute="_compute_unit_cost",
+    )
     move_ids = fields.One2many("stock.move", "material_line_id", "Stock Moves")
+    initial_subtotal = fields.Monetary(
+        "Initial Subtotal",
+        compute="_compute_initial_subtotal",
+        store=True,
+    )
+    consumed_subtotal = fields.Monetary(
+        "Consumed Subtotal",
+        compute="_compute_consumed_subtotal",
+        store=True,
+    )
+
+    @api.depends("initial_qty", "unit_cost")
+    def _compute_initial_subtotal(self):
+        """
+        Compute the initial subtotal of the material line.
+        """
+        for record in self:
+            record.initial_subtotal = record.initial_qty * record.unit_cost
+
+    @api.depends("consumed_qty", "unit_cost")
+    def _compute_consumed_subtotal(self):
+        """
+        Compute the consumed subtotal of the material line.
+        """
+        for record in self:
+            record.consumed_subtotal = record.consumed_qty * record.unit_cost
 
     def _compute_unit_cost(self):
         for record in self:
             record.unit_cost = record.with_context(
-                force_company=record.company_id.id).product_id.standard_price
+                force_company=record.company_id.id
+            ).product_id.standard_price
 
     @api.depends(
         "move_ids.move_orig_ids",

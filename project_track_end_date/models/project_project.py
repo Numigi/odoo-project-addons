@@ -13,7 +13,7 @@ class ProjectProject(models.Model):
         string="Historics Associated to this Project",
     )
     project_end_history_count = fields.Integer(
-        string="Expiration Date Changes Historics",
+        string="End Date Changes Historics",
         compute="_compute_project_end_history",
         groups="project.group_project_manager",
     )

@@ -24,6 +24,9 @@ As member of the group ``Project / User``, I go to the form view of a task.
 
 I see a ``Material`` containing a table of products to consume for this task.
 
+Since version ``1.3.3`` of the module, I can see two new columns in it: `Inital Subtotal` and `Consumed Subtotal`
+And two total fields, `Total Consumption` and `Initial Total`.
+
 .. image:: static/description/task_material_tab.png
 
 I can only select stockable or consumable products.
@@ -44,6 +47,10 @@ After saving, a new smart button ``Stock Pickings`` appears.
 
 .. image:: static/description/task_stock_picking_smart_button.png
 
+In addition, I see that the field `Initial Subtotal` and the `Inital Total` are computed.
+
+.. image:: static/description/material_initial_subtotal_and_total.png
+
 Consumption Stock Picking
 -------------------------
 After clicking on the button, I see the form view of a stock picking.
@@ -60,6 +67,10 @@ I validate the stock picking.
 Back to the task, I notice that the consumed quantities were updated.
 
 .. image:: static/description/task_with_consumed_qty.png
+
+In addition, I see that the field `Consumed Subtotal` and the `Total Consumption` are computed.*
+
+.. image:: static/description/material_consumption_subtotal_and_total.png
 
 Preparation Step
 ----------------
