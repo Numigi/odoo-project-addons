@@ -16,7 +16,6 @@ class ProjectMeetingMinutes(models.Model):
         ondelete="cascade",
     )
 
-    @api.multi
     def load_steering_data(self):
         self.ensure_one()
         self._get_steering_data()

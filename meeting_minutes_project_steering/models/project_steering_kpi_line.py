@@ -11,7 +11,7 @@ class ProjectSteeringKpiLine(models.Model):
     meeting_minutes_id = fields.Many2one(
         "project.meeting.minutes", string="Project Meeting Minutes", index=True
     )
-    name = fields.Text(string="Note")
+    name = fields.Text(string="Notes")
     display_type = fields.Selection(
         [("line_section", "Section"), ("line_note", "Note")],
         default=False,

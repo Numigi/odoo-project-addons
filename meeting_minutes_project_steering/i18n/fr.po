@@ -112,7 +112,7 @@ msgstr "Nom du modèle"
 #. module: meeting_minutes_project_steering
 #: model:ir.model.fields,field_description:meeting_minutes_project_steering.field_project_steering_kpi_line__name
 #: selection:project.steering.kpi.line,display_type:0
-msgid "Note"
+msgid "Notes"
 msgstr "Notes"
 
 #. module: meeting_minutes_project_steering
