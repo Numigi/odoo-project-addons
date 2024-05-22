@@ -1,0 +1,195 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* meeting_minutes_project_steering
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-01-22 13:38+0000\n"
+"PO-Revision-Date: 2024-01-22 13:38+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: meeting_minutes_project_steering
+#: model_terms:ir.ui.view,arch_db:meeting_minutes_project_steering.project_meeting_minutes_view_form_inherit
+msgid "<span class=\"fa fa-play\"/>\n"
+"                                       Load Data"
+msgstr "<span class=\"fa fa-play\"/>\n"
+"                                       Charger les données"
+
+#. module: meeting_minutes_project_steering
+#: model:ir.model.fields,field_description:meeting_minutes_project_steering.field_project_steering_kpi__active
+msgid "Active"
+msgstr "Actif"
+
+#. module: meeting_minutes_project_steering
+#: model_terms:ir.ui.view,arch_db:meeting_minutes_project_steering.project_meeting_minutes_view_form_inherit
+msgid "Add a line"
+msgstr "Ajouter une ligne"
+
+#. module: meeting_minutes_project_steering
+#: model_terms:ir.ui.view,arch_db:meeting_minutes_project_steering.project_meeting_minutes_view_form_inherit
+msgid "Add a section"
+msgstr "Ajouter une section"
+
+#. module: meeting_minutes_project_steering
+#: model:ir.model.fields,field_description:meeting_minutes_project_steering.field_project_steering_kpi__create_uid
+#: model:ir.model.fields,field_description:meeting_minutes_project_steering.field_project_steering_kpi_line__create_uid
+msgid "Created by"
+msgstr "Créé par"
+
+#. module: meeting_minutes_project_steering
+#: model:ir.model.fields,field_description:meeting_minutes_project_steering.field_project_steering_kpi__create_date
+#: model:ir.model.fields,field_description:meeting_minutes_project_steering.field_project_steering_kpi_line__create_date
+msgid "Created on"
+msgstr "Créé le"
+
+#. module: meeting_minutes_project_steering
+#: model:ir.model.fields,field_description:meeting_minutes_project_steering.field_project_steering_kpi_line__task_date_deadline
+msgid "Deadline"
+msgstr "Echéance"
+
+#. module: meeting_minutes_project_steering
+#: model:ir.model.fields,field_description:meeting_minutes_project_steering.field_project_steering_kpi__display_name
+#: model:ir.model.fields,field_description:meeting_minutes_project_steering.field_project_steering_kpi_line__display_name
+msgid "Display Name"
+msgstr "Nom affiché"
+
+#. module: meeting_minutes_project_steering
+#: model:ir.model.fields,field_description:meeting_minutes_project_steering.field_project_steering_kpi_line__display_type
+msgid "Display Type"
+msgstr "Type d'affichage"
+
+#. module: meeting_minutes_project_steering
+#: model:ir.model.fields,field_description:meeting_minutes_project_steering.field_project_steering_kpi__filter_domain
+msgid "Filter"
+msgstr "Filtrer"
+
+#. module: meeting_minutes_project_steering
+#: model:ir.model.fields,field_description:meeting_minutes_project_steering.field_project_steering_kpi__id
+#: model:ir.model.fields,field_description:meeting_minutes_project_steering.field_project_steering_kpi_line__id
+msgid "ID"
+msgstr ""
+
+#. module: meeting_minutes_project_steering
+#: model:ir.model.fields,field_description:meeting_minutes_project_steering.field_project_steering_kpi__name
+msgid "Label"
+msgstr "Libellé"
+
+#. module: meeting_minutes_project_steering
+#: model:ir.model.fields,field_description:meeting_minutes_project_steering.field_project_steering_kpi____last_update
+#: model:ir.model.fields,field_description:meeting_minutes_project_steering.field_project_steering_kpi_line____last_update
+msgid "Last Modified on"
+msgstr "Dernière modification le"
+
+#. module: meeting_minutes_project_steering
+#: model:ir.model.fields,field_description:meeting_minutes_project_steering.field_project_steering_kpi__write_uid
+#: model:ir.model.fields,field_description:meeting_minutes_project_steering.field_project_steering_kpi_line__write_uid
+msgid "Last Updated by"
+msgstr "Dernière mise à jour par"
+
+#. module: meeting_minutes_project_steering
+#: model:ir.model.fields,field_description:meeting_minutes_project_steering.field_project_steering_kpi__write_date
+#: model:ir.model.fields,field_description:meeting_minutes_project_steering.field_project_steering_kpi_line__write_date
+msgid "Last Updated on"
+msgstr "Dernière mise à jour le"
+
+#. module: meeting_minutes_project_steering
+#: model:ir.model.fields,field_description:meeting_minutes_project_steering.field_project_steering_kpi__model_id
+msgid "Model"
+msgstr "Modèle"
+
+#. module: meeting_minutes_project_steering
+#: model:ir.model.fields,field_description:meeting_minutes_project_steering.field_project_steering_kpi__model
+msgid "Model Name"
+msgstr "Nom du modèle"
+
+#. module: meeting_minutes_project_steering
+#: model:ir.model.fields,field_description:meeting_minutes_project_steering.field_project_steering_kpi_line__name
+#: selection:project.steering.kpi.line,display_type:0
+msgid "Notes"
+msgstr "Notes"
+
+#. module: meeting_minutes_project_steering
+#: model:ir.model.fields,field_description:meeting_minutes_project_steering.field_project_steering_kpi_line__task_date_planned
+msgid "Planned Date"
+msgstr "Date planifiée"
+
+#. module: meeting_minutes_project_steering
+#: model:ir.model.fields,field_description:meeting_minutes_project_steering.field_project_steering_kpi_line__project_id
+msgid "Project"
+msgstr "Projet"
+
+#. module: meeting_minutes_project_steering
+#: model:ir.model.fields,field_description:meeting_minutes_project_steering.field_project_steering_kpi_line__project_end_date
+msgid "Project Deadline"
+msgstr "Échéance projet"
+
+#. module: meeting_minutes_project_steering
+#: model:ir.model.fields,field_description:meeting_minutes_project_steering.field_project_steering_kpi_line__meeting_minutes_id
+msgid "Project Meeting Minutes"
+msgstr "Compte-rendu"
+
+#. module: meeting_minutes_project_steering
+#: model:ir.model.fields,field_description:meeting_minutes_project_steering.field_project_meeting_minutes__project_steering_enabled
+#: model:ir.model.fields,field_description:meeting_minutes_project_steering.field_project_meeting_minutes__project_steering_ids
+msgid "Project Steering"
+msgstr "Pilotage projet"
+
+#. module: meeting_minutes_project_steering
+#: model:ir.model,name:meeting_minutes_project_steering.model_project_steering_kpi
+msgid "Project Steering KPI"
+msgstr "KPI de pilotage projet"
+
+#. module: meeting_minutes_project_steering
+#: model:ir.model,name:meeting_minutes_project_steering.model_project_steering_kpi_line
+msgid "Project Steering KPI Line"
+msgstr "Ligne de KPI de pilotage"
+
+#. module: meeting_minutes_project_steering
+#: model:ir.model,name:meeting_minutes_project_steering.model_project_steering_line
+msgid "Project Steering Line"
+msgstr "Ligne de pilotage de projet"
+
+#. module: meeting_minutes_project_steering
+#: selection:project.steering.kpi.line,display_type:0
+msgid "Section"
+msgstr "Section"
+
+#. module: meeting_minutes_project_steering
+#: model:ir.model.fields,field_description:meeting_minutes_project_steering.field_project_steering_kpi__sequence
+msgid "Sequence"
+msgstr "Séquence"
+
+#. module: meeting_minutes_project_steering
+#: model_terms:ir.ui.view,arch_db:meeting_minutes_project_steering.project_meeting_minutes_view_form_inherit
+msgid "Steering"
+msgstr "Pilotage"
+
+#. module: meeting_minutes_project_steering
+#: model:ir.actions.act_window,name:meeting_minutes_project_steering.action_steering_indicators
+#: model:ir.ui.menu,name:meeting_minutes_project_steering.menu_steering_indicators
+#: model_terms:ir.ui.view,arch_db:meeting_minutes_project_steering.steering_indicators_view_form
+#: model_terms:ir.ui.view,arch_db:meeting_minutes_project_steering.steering_indicators_view_tree
+msgid "Steering Indicators"
+msgstr "Indicateurs de pilotage"
+
+#. module: meeting_minutes_project_steering
+#: model:ir.model.fields,field_description:meeting_minutes_project_steering.field_project_steering_kpi_line__task_id
+msgid "Task"
+msgstr "Tâche"
+
+#. module: meeting_minutes_project_steering
+#: model:ir.model.fields,help:meeting_minutes_project_steering.field_project_steering_kpi_line__display_type
+msgid "Technical field for UX purpose."
+msgstr "Champ technique utilisé à des fins ergonomiques"
+
+#. module: meeting_minutes_project_steering
+#: model:ir.model,name:meeting_minutes_project_steering.model_project_meeting_minutes
+msgid "project.meeting.minutes"
+msgstr ""
