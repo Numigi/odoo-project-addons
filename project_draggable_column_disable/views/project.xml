@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+  <!-- Kanban View -->
+  <record id="view_project_kanban" model="ir.ui.view">
+    <field name="name">project.lock.kanban.record</field>
+    <field name="model">project.project</field>
+    <field name="inherit_id" ref="project.view_project_kanban"/>
+    <field name="arch" type="xml">
+      <data>
+        <xpath expr="/kanban" position="attributes">
+          <attribute name="disable_sort_column">true</attribute>
+        </xpath>
+      </data>
+    </field>
+  </record>
+
+</odoo>

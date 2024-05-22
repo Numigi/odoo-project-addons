@@ -63,6 +63,18 @@ In the form view of my task, I notice that the product was added to the list of 
 
 .. image:: static/description/task_form_with_consumed_material.png
 
+Since version ``1.1.1`` of the module, I can see three new fields :
+*Direct Consumption Subtotal* (a new column in the section of `Direct Consumption`)
+*Total Direct Consumption*
+*Total Consumed* (which is the sum of `Total Consumption` and `Total Direct Consumption`)
+
+.. image:: static/description/direct_consumption_with_total_and_subtotal.png
+
+!!! IMPORTANT !!!
+-----------------
+The field `Total Consumption` on project task is only available since the version `1.3.3` of the module ``project_material``.
+It will occur an error if you try to use the module `project_material_direct` (version `1.1.1` or newer) , without the version `1.3.3`, or newer, of the module `project_material`.
+
 Contributors
 ------------
 * Numigi (tm) and all its contributors (https://bit.ly/numigiens)

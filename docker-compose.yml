@@ -12,7 +12,7 @@ services:
       - "8071:8071"
     depends_on:
       - db
-    command: odoo
+    command:  odoo
     environment:
       - LOG_ODOO=/var/log/odoo
     networks:
@@ -20,7 +20,7 @@ services:
         aliases:
           - odoo.localtest.me
   db:
-    image: postgres:9.6
+    image: postgres:16.0
     environment:
       - POSTGRES_PASSWORD=odoo
       - POSTGRES_USER=odoo

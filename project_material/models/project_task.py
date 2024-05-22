@@ -44,6 +44,62 @@ class TaskWithMaterialLines(models.Model):
 
     procurement_disabled = fields.Boolean()
 
+    currency_id = fields.Many2one(
+        "res.currency",
+        related="project_id.currency_id",
+        string="Currency",
+        readonly=True,
+    )
+
+    initial_total = fields.Monetary(
+        "Initial Total",
+        compute="_compute_initial_total",
+        store=True,
+        track_visibility="onchange",
+    )
+    consumption_total = fields.Monetary(
+        "Consumption Total",
+        compute="_compute_consumption_total",
+        store=True,
+        track_visibility="onchange",
+    )
+    consumed_total = fields.Monetary(
+        "Consumed Total",
+        compute="_compute_consumed_total",
+        store=True,
+        track_visibility="onchange",
+    )
+
+    @api.depends("material_line_ids.initial_subtotal")
+    def _compute_initial_total(self):
+        """
+        Total of all material lines initial subtotal.
+        """
+        for record in self:
+            record.initial_total = sum(
+                record.material_line_ids.mapped("initial_subtotal")
+            )
+
+    @api.depends("material_line_ids.consumed_subtotal")
+    def _compute_consumption_total(self):
+        """
+        Total of all material lines consumption.
+        """
+        for record in self:
+            record.consumption_total = sum(
+                record.material_line_ids.mapped("consumed_subtotal")
+            )
+
+    @api.depends("material_line_ids.consumed_subtotal")
+    def _compute_consumed_total(self):
+        """
+        Total of all material lines consumption.
+        """
+        for record in self:
+            record.consumed_total = sum(
+                record.material_line_ids.mapped("consumed_subtotal")
+            )
+
     def _compute_preparation_pickings(self):
         tasks_with_procurement_group = self.filtered(lambda t: t.procurement_group_id)
         for task in tasks_with_procurement_group:

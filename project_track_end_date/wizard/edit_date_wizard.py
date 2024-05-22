@@ -9,7 +9,7 @@ class EditDateWizard(models.TransientModel):
     _description = "Edit Date Wizard"
 
     initial_date = fields.Date(string="Initial Date")
-    date = fields.Date(string="Expiration Date")
+    date = fields.Date(string="End Date")
     company_id = fields.Many2one("res.company", string="Company")
     user_id = fields.Many2one("res.users", string="Author")
     reason = fields.Text("Reason")
