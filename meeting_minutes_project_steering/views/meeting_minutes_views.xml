@@ -17,7 +17,7 @@
                         </button>
                         <group>
 
-                        <field name="project_steering_ids" widget="section_and_note_one2many" nolabel="1">
+                        <field name="project_steering_ids" widget="section_and_note_one2many" mode="tree,kanban" nolabel="1">
                             <tree editable="bottom">
                                 <control>
                                     <create string="Add a line"/>
