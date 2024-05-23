@@ -9,16 +9,13 @@ class TestProjectChecklist(SavepointCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        # New task
-        cls.task = cls.env["project.task"].create({"name": "Test Task"})
-        # New project.checklist
+        cls.project = cls.env["project.project"].create({"name": "Test Project"})
         cls.checklist = cls.env["project.checklist"].create(
             {
                 "name": "Test Checklist",
                 "description": "Test Description",
             }
         )
-        # Project.checklist.item
         cls.checklist_item = cls.env["project.checklist.item"].create(
             {
                 "checklist_id": cls.checklist.id,
@@ -26,8 +23,6 @@ class TestProjectChecklist(SavepointCase):
                 "description": "Description for Test Checklist Item",
             }
         )
-        # assign checklist to task
-        cls.task.checklist_id = cls.checklist.id
 
     def test__01_task_click_done(self):
         task = self.create_task_on_form()
@@ -46,7 +41,8 @@ class TestProjectChecklist(SavepointCase):
         self.assertEqual(len(task.checklist_item_ids), 1)
 
     def test__04_make_checklist_item_vals(self):
-        vals = self.task._make_checklist_item_vals(self.checklist_item)
+        task = self.create_task_on_form()
+        vals = task._make_checklist_item_vals(self.checklist_item)
         self.assertEqual(vals["name"], "Test Checklist Item")
         self.assertEqual(vals["description"], "Description for Test Checklist Item")
         self.assertEqual(vals["sequence"], 1)  # default value is 1
@@ -55,5 +51,6 @@ class TestProjectChecklist(SavepointCase):
         with Form(self.env["project.task"]) as rec:
             rec.name = "Test Task"
             rec.checklist_id = self.checklist
+            rec.project_id = self.project
         task = rec.save()
         return task
