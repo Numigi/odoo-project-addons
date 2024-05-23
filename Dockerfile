@@ -16,6 +16,7 @@ USER odoo
 COPY account_analytic_enhanced  /mnt/extra-addons/account_analytic_enhanced
 COPY analytic_line_employee  /mnt/extra-addons/analytic_line_employee
 COPY analytic_line_revenue  /mnt/extra-addons/analytic_line_revenue
+COPY project_advanced_checklist /mnt/extra-addons/project_advanced_checklist
 COPY project_analytic_group  /mnt/extra-addons/project_analytic_group
 COPY project_chatter  /mnt/extra-addons/project_chatter
 COPY project_closed  /mnt/extra-addons/project_closed

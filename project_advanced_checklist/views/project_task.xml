@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_project_task_checklist_tree" model="ir.ui.view">
+        <field name="name">project.task.checklist.tree</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_tree2"/>
+        <field name="arch" type="xml">
+
+            <field name="user_id" position="after">
+                <field name="checklist_id" invisible="1"/>
+                <field name="checklist_progress" widget="progressbar" attrs="{'invisible' : [('checklist_id', '=', False)]}"/>
+            </field>
+
+        </field>
+    </record>
+
+    <record id="view_project_task_checklist_kanban" model="ir.ui.view">
+        <field name="name">project.task.checklist.kanban</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_kanban"/>
+        <field name="arch" type="xml">
+
+            <field name="activity_state" position="after">
+                <field name="checklist_id"/>
+                <field name="checklist_progress"/>
+            </field>
+
+            <xpath expr="//div[hasclass('o_kanban_record_body')]" position="inside">
+                <div t-if="record.checklist_id.raw_value">
+                    <field name="checklist_progress" widget="percentpie"/>
+                </div>
+            </xpath>
+
+        </field>
+    </record>
+
+    <record id="view_project_task_checklist_form" model="ir.ui.view">
+        <field name="name">project.task.checklist.form</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_form2"/>
+        <field name="arch" type="xml">
+            <field name="user_id" position="after">
+                <field name="checklist_id"/>
+            </field>
+            <page name="description_page" position="after">
+                <page string="Checklist" attrs="{'invisible' : [('checklist_id', '=', False)]}">
+                    <div class="row mt4">
+                        <div class="col-sm-3 text-center">
+                            <field name="checklist_progress" widget="gauge" style="width:120px;height:90px;cursor:pointer;"/>
+                        </div>
+                        <div class="col-sm-9">
+                            <field name="checklist_item_ids">
+                                <tree
+                                    decoration-success="result == 'done'"
+                                    decoration-bf="result == 'done' or result == 'cancel'"
+                                    decoration-danger="result == 'cancel'"
+                                    create="0" edit="0" delete="0"
+                                    >
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="name"/>
+                                    <field name="description"/>
+                                    <button type="object" name="click_done" confirm="Mark completed?"
+                                        icon="fa-check" class="text-success"
+                                        attrs="{'invisible': [('result', 'in', ('cancel', 'complete'))]}"
+                                        />
+                                    <button type="object" name="click_cancel" confirm="Mark cancelled?"
+                                        icon="fa-times" class="text-danger"
+                                        attrs="{'invisible': [('result', 'in', ('cancel', 'complete'))]}"
+                                        />
+                                    <field name="result"/>
+                                </tree>
+                            </field>
+                        </div> 
+                    </div> 
+                </page>
+            </page>   
+        </field>
+    </record>  
+
+</odoo>
