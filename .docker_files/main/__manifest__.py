@@ -22,6 +22,7 @@
         "meeting_minutes_project_steering",
         "portal_project_list_hours_spent",
         "portal_project_timesheet_conditional",
+        "project_advanced_checklist",
         "project_analytic_group",
         "project_chatter",
         "project_closed",
