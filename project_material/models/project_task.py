@@ -175,7 +175,7 @@ class TaskWithMaterialLines(models.Model):
         This method is intended to be inherited to show the list/form view
         of different types of picking related to the task.
         """
-        action = self.env.ref("stock.action_picking_tree_all").read()[0]
+        action = self.env.ref("stock.action_picking_tree_all").sudo().read()[0]
 
         if len(pickings) > 1:
             action["domain"] = [("id", "in", pickings.ids)]

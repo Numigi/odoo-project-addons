@@ -41,7 +41,7 @@ class TestProject(SavepointCase):
         project = self.project.copy({})
         tasks = project.with_context(active_test=False).task_ids
         milestone = project.milestone_ids.filtered(
-            lambda milestone: not "2" in milestone.name
+            lambda milestone: "2" not in milestone.name
         )
         assert tasks[0].milestone_id == milestone and tasks[1].milestone_id == milestone
 

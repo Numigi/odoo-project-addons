@@ -29,9 +29,8 @@ class StockMove(models.Model):
         else:
             super()._account_entry_move(qty, description, svl_id, cost)
 
-    def _prepare_account_move_line(
-        self, qty, cost, credit_account_id, debit_account_id, description
-    ):
+    def _prepare_account_move_line(self, qty, cost, credit_account_id,
+                                   debit_account_id, description):
         """Add the analytic to WIP account move lines."""
         move_line_vals = super()._prepare_account_move_line(
             qty, cost, credit_account_id, debit_account_id, description

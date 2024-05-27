@@ -1,7 +1,7 @@
 # © 2023 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
-from odoo import models, api, fields, _
+from odoo import models, fields, _
 from datetime import datetime
 
 
@@ -24,11 +24,11 @@ class ProjectTask(models.Model):
     def _check_outsourcing_pol(self):
         existing_pol = self.timesheet_ids.mapped('purchase_order_line_id')
         outsourcing_pol = self.outsourcing_line_ids.filtered(
-                lambda pol: pol.order_id.is_outsourcing and
-                pol.state in ['purchase', 'done'] and
-                pol.partner_id.subcontracting_auto_time_entries and
-                pol.product_id.automate_time_entries and
-                pol.id not in existing_pol.ids
+            lambda pol: pol.order_id.is_outsourcing
+            and pol.state in ['purchase', 'done']
+            and pol.partner_id.subcontracting_auto_time_entries
+            and pol.product_id.automate_time_entries
+            and pol.id not in existing_pol.ids
         )
         if outsourcing_pol:
             return outsourcing_pol
@@ -74,11 +74,7 @@ class ProjectTask(models.Model):
         for record in self:
             if 'stage_id' in vals and self.env['project.task.type'].browse(
                     vals['stage_id']).create_subcontractors_time_entries:
-                print('====================stage name', self.env['project.task.type'].browse(
-                    vals['stage_id']).name)
                 outsourcing_pol = record._check_outsourcing_pol()
-                print('====================outsourcing_pol',
-                      outsourcing_pol)
                 if outsourcing_pol:
                     record._create_timesheet_line(outsourcing_pol)
         return res

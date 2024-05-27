@@ -15,7 +15,8 @@ class ProjectStage(models.Model):
     active = fields.Boolean(default=True)
     fold = fields.Boolean(
         string='Folded in Kanban',
-        help='This stage is folded in the kanban view when there are no records in that stage to display.'
+        help="""This stage is folded in the kanban view when there are
+         no records in that stage to display."""
     )
 
 
@@ -23,8 +24,10 @@ class ProjectWithStage(models.Model):
     _inherit = 'project.project'
 
     def compute_default_stage(self):
-        return self.env['project.stage'].search([('fold', '=', False)], order='sequence', limit=1).id
+        return self.env['project.stage'].search(
+            [('fold', '=', False)], order='sequence', limit=1).id
 
     stage_id = fields.Many2one(
-        'project.stage', 'Stage', ondelete='restrict', index=True, default=compute_default_stage,
+        'project.stage', 'Stage', ondelete='restrict', index=True,
+        default=compute_default_stage,
         tracking=True)

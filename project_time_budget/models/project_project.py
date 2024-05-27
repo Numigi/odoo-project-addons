@@ -42,5 +42,5 @@ class Project(models.Model):
     def _compute_budget_remaining_hours(self):
         for project in self:
             project.budget_remaining_hours = (
-                    project.budget_planned_hours - project.consumed_hours
+                project.budget_planned_hours - project.consumed_hours
             )
