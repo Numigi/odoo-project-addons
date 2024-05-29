@@ -25,9 +25,11 @@ When I click on the `Create` button, I arrive at a form view offering the follow
 -Sequence
 -Model
 -Active
--Filter
+-Primary Filter
+-Date Filter
 
 Notice : `Model` field have only two possible options, `Project` and `Task`.
+`Date Filter` will be applied after the `Primary Filter` to filter the records.
 
 .. image:: static/description/steering_indicator_form.png
 
