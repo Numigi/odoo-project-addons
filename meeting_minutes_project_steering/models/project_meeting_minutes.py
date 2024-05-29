@@ -3,8 +3,6 @@
 
 from odoo import fields, models
 from odoo.tools.safe_eval import safe_eval
-
-# !!! Do not remove this import, it is used in the eval
 from dateutil.relativedelta import relativedelta
 
 
@@ -56,7 +54,15 @@ class ProjectMeetingMinutes(models.Model):
             )
             # Execute all the python code in normalized_domain
             # and replace it by its result
-            last_domain = eval(normalized_domain)
+            last_domain = safe_eval(
+                normalized_domain,
+                {
+                    "fields": fields,
+                    "relativedelta": relativedelta,
+                    "self": self,
+                    "context": self.env.context,
+                },
+            )
             records = records.search(last_domain)
 
         # Append data after section
