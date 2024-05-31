@@ -13,6 +13,8 @@
         "meeting_minutes_project",
         "project_form_with_dates",
         "project_task_date_planned",
+        "web_search_date_range",
+        "web_widget_domain_editor_dialog",
     ],
     "summary": "Using project meeting minutes for steering project.",
     "data": [
