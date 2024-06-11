@@ -14,6 +14,7 @@ When I click on this menu entry, I arrive at a list view displaying the followin
 -Sequence
 -Label
 -Model
+-Available on Portal
 -Active
 
 The list view contains a handle component to order the rows and adjust the sequence from the list view.
@@ -24,12 +25,25 @@ When I click on the `Create` button, I arrive at a form view offering the follow
 -Label
 -Sequence
 -Model
+-Available on Portal 
 -Active
 -Filter
 
 Notice : `Model` field have only two possible options, `Project` and `Task`.
 
 .. image:: static/description/steering_indicator_form.png
+
+Since the version 1.1.0, the option `Available on Portal` is available, it's a checkbox field that allows 
+the user to use the indicator filter on the portal.
+
+.. image:: static/description/steering_indicator_on_portal_option_tree.png
+
+.. image:: static/description/steering_indicator_on_portal_option_form.png
+
+As a user with access to the portal, I access the list of tasks and projects.
+I notice a new filter option `Indicators`.
+
+.. image:: static/description/steering_indicator_on_portal.png
 
 *New 'Steering' tab in the Meeting Minutes form*
 ------------------------------------------------

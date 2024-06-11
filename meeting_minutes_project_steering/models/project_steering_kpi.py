@@ -22,6 +22,7 @@ class ProjectSteeringKpi(models.Model):
     )
     active = fields.Boolean(default=True)
     filter_domain = fields.Char(string="Filter")
+    available_on_portal = fields.Boolean(string="Available on Portal")
 
     def _get_allowed_model(self):
         return [("model", "in", ("project.task", "project.project"))]
