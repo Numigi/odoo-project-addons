@@ -3,13 +3,14 @@
 
 {
     "name": "Meeting Minutes Project Steering",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "author": "Numigi",
     "maintainer": "Numigi",
     "website": "https://bit.ly/numigi-com",
     "license": "AGPL-3",
     "category": "project",
     "depends": [
+        "portal",
         "meeting_minutes_project",
         "project_form_with_dates",
         "project_task_date_planned",
@@ -21,6 +22,7 @@
         "security/ir.model.access.csv",
         "views/project_steering_kpi_views.xml",
         "views/meeting_minutes_views.xml",
+        "views/portal_templates.xml",
     ],
     "installable": True,
 }

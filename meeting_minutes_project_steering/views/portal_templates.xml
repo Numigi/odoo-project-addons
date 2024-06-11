@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="portal_searchbar" name="bus tests" inherit_id="portal.portal_searchbar">
+        <xpath expr="//div[@t-if='searchbar_groupby']" position="after">
+            <div t-if="searchbar_indicators" class="form-inline ml-lg-2">
+                <span class="small mr-1 navbar-text">Indicators:</span>
+                <div class="btn-group">
+                    <button id="portal_searchbar_indicators" data-toggle="dropdown" class="btn btn-secondary btn-sm dropdown-toggle">
+                        <t t-esc="searchbar_indicators[indicator].get('label', 'None')"/>
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="portal_searchbar_indicators">
+                        <t t-foreach="searchbar_indicators" t-as="option">
+                            <a t-att-href="default_url + '?' +  keep_query( 'search', 'sorting', indicator=option)"
+                                t-attf-class="dropdown-item#{indicator == option and ' active' or ''}">
+                                <span t-esc="searchbar_indicators[option].get('label')"/>
+                            </a>
+                        </t>
+                    </div>
+                </div>
+            </div>
+        </xpath>
+    </template>
+</odoo>

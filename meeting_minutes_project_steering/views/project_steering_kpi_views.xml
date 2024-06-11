@@ -21,6 +21,7 @@
                         <field name="sequence"/>
                         <field name="model" invisible="1"/>
                         <field name="model_id" options="{'no_create_edit': True}"/>
+                        <field name="available_on_portal"/>
                         <field name="filter_domain" widget="domain" options="{'model': 'model'}"/>
                     </group>
                 </sheet>
@@ -36,6 +37,7 @@
                 <field name="sequence" widget="handle"/>
                 <field name="name"/>
                 <field name="model_id"/>
+                <field name="available_on_portal"/>
                 <field name="active"/>
             </tree>
         </field>

@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-22 13:38+0000\n"
-"PO-Revision-Date: 2024-01-22 13:38+0000\n"
+"POT-Creation-Date: 2024-06-11 05:18+0000\n"
+"PO-Revision-Date: 2024-06-11 05:18+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,11 +16,16 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: meeting_minutes_project_steering
-#: model_terms:ir.ui.view,arch_db:meeting_minutes_project_steering.project_meeting_minutes_view_form_inherit
+#: model_terms:ir.ui.view,arch_db:meeting_minutes_project_steering.meeting_minutes_project_view_form_inherit
 msgid "<span class=\"fa fa-play\"/>\n"
-"                                       Load Data"
+"                                Load Data"
 msgstr "<span class=\"fa fa-play\"/>\n"
-"                                       Charger les données"
+"                                Charger les données"
+
+#. module: meeting_minutes_project_steering
+#: model_terms:ir.ui.view,arch_db:meeting_minutes_project_steering.portal_searchbar
+msgid "<span class=\"small mr-1 navbar-text\">Indicators:</span>"
+msgstr "<span class=\"small mr-1 navbar-text\">Indicateurs:</span>"
 
 #. module: meeting_minutes_project_steering
 #: model:ir.model.fields,field_description:meeting_minutes_project_steering.field_project_steering_kpi__active
@@ -28,14 +33,25 @@ msgid "Active"
 msgstr "Actif"
 
 #. module: meeting_minutes_project_steering
-#: model_terms:ir.ui.view,arch_db:meeting_minutes_project_steering.project_meeting_minutes_view_form_inherit
+#: model_terms:ir.ui.view,arch_db:meeting_minutes_project_steering.meeting_minutes_project_view_form_inherit
 msgid "Add a line"
 msgstr "Ajouter une ligne"
 
 #. module: meeting_minutes_project_steering
-#: model_terms:ir.ui.view,arch_db:meeting_minutes_project_steering.project_meeting_minutes_view_form_inherit
+#: model_terms:ir.ui.view,arch_db:meeting_minutes_project_steering.meeting_minutes_project_view_form_inherit
 msgid "Add a section"
 msgstr "Ajouter une section"
+
+#. module: meeting_minutes_project_steering
+#: code:addons/meeting_minutes_project_steering/controllers/portal.py:33
+#, python-format
+msgid "All"
+msgstr "Tous"
+
+#. module: meeting_minutes_project_steering
+#: model:ir.model.fields,field_description:meeting_minutes_project_steering.field_project_steering_kpi__available_on_portal
+msgid "Available on Portal"
+msgstr "Disponible sur portail"
 
 #. module: meeting_minutes_project_steering
 #: model:ir.model.fields,field_description:meeting_minutes_project_steering.field_project_steering_kpi__create_uid
@@ -52,7 +68,7 @@ msgstr "Créé le"
 #. module: meeting_minutes_project_steering
 #: model:ir.model.fields,field_description:meeting_minutes_project_steering.field_project_steering_kpi_line__task_date_deadline
 msgid "Deadline"
-msgstr "Echéance"
+msgstr "Date limite"
 
 #. module: meeting_minutes_project_steering
 #: model:ir.model.fields,field_description:meeting_minutes_project_steering.field_project_steering_kpi__display_name
@@ -88,6 +104,12 @@ msgid "Last Modified on"
 msgstr "Dernière modification le"
 
 #. module: meeting_minutes_project_steering
+#: code:addons/meeting_minutes_project_steering/controllers/portal.py:29
+#, python-format
+msgid "Last Stage Update"
+msgstr "Dernière étape de mise à jour"
+
+#. module: meeting_minutes_project_steering
 #: model:ir.model.fields,field_description:meeting_minutes_project_steering.field_project_steering_kpi__write_uid
 #: model:ir.model.fields,field_description:meeting_minutes_project_steering.field_project_steering_kpi_line__write_uid
 msgid "Last Updated by"
@@ -107,13 +129,44 @@ msgstr "Modèle"
 #. module: meeting_minutes_project_steering
 #: model:ir.model.fields,field_description:meeting_minutes_project_steering.field_project_steering_kpi__model
 msgid "Model Name"
-msgstr "Nom du modèle"
+msgstr "Nom de Modèle"
+
+#. module: meeting_minutes_project_steering
+#: code:addons/meeting_minutes_project_steering/controllers/portal.py:167
+#, python-format
+msgid "Name"
+msgstr "Nom"
+
+#. module: meeting_minutes_project_steering
+#: code:addons/meeting_minutes_project_steering/controllers/portal.py:26
+#: code:addons/meeting_minutes_project_steering/controllers/portal.py:166
+#, python-format
+msgid "Newest"
+msgstr "Le plus récent"
+
+#. module: meeting_minutes_project_steering
+#: code:addons/meeting_minutes_project_steering/controllers/portal.py:44
+#: code:addons/meeting_minutes_project_steering/controllers/portal.py:57
+#: code:addons/meeting_minutes_project_steering/controllers/portal.py:179
+#, python-format
+msgid "None"
+msgstr "Aucun"
+
+#. module: meeting_minutes_project_steering
+#: selection:project.steering.kpi.line,display_type:0
+msgid "Note"
+msgstr "Note"
 
 #. module: meeting_minutes_project_steering
 #: model:ir.model.fields,field_description:meeting_minutes_project_steering.field_project_steering_kpi_line__name
-#: selection:project.steering.kpi.line,display_type:0
 msgid "Notes"
 msgstr "Notes"
+
+#. module: meeting_minutes_project_steering
+#: code:addons/meeting_minutes_project_steering/controllers/portal.py:75
+#, python-format
+msgid "Others"
+msgstr "Autres"
 
 #. module: meeting_minutes_project_steering
 #: model:ir.model.fields,field_description:meeting_minutes_project_steering.field_project_steering_kpi_line__task_date_planned
@@ -121,7 +174,9 @@ msgid "Planned Date"
 msgstr "Date planifiée"
 
 #. module: meeting_minutes_project_steering
+#: code:addons/meeting_minutes_project_steering/controllers/portal.py:45
 #: model:ir.model.fields,field_description:meeting_minutes_project_steering.field_project_steering_kpi_line__project_id
+#, python-format
 msgid "Project"
 msgstr "Projet"
 
@@ -136,8 +191,8 @@ msgid "Project Meeting Minutes"
 msgstr "Compte-rendu"
 
 #. module: meeting_minutes_project_steering
-#: model:ir.model.fields,field_description:meeting_minutes_project_steering.field_project_meeting_minutes__project_steering_enabled
-#: model:ir.model.fields,field_description:meeting_minutes_project_steering.field_project_meeting_minutes__project_steering_ids
+#: model:ir.model.fields,field_description:meeting_minutes_project_steering.field_meeting_minutes_project__project_steering_enabled
+#: model:ir.model.fields,field_description:meeting_minutes_project_steering.field_meeting_minutes_project__project_steering_ids
 msgid "Project Steering"
 msgstr "Pilotage projet"
 
@@ -152,9 +207,34 @@ msgid "Project Steering KPI Line"
 msgstr "Ligne de KPI de pilotage"
 
 #. module: meeting_minutes_project_steering
-#: model:ir.model,name:meeting_minutes_project_steering.model_project_steering_line
-msgid "Project Steering Line"
-msgstr "Ligne de pilotage de projet"
+#: code:addons/meeting_minutes_project_steering/controllers/portal.py:36
+#, python-format
+msgid "Search <span class=\"nolabel\"> (in Content)</span>"
+msgstr "Chercher<span class=\"nolabel\"> (dans le Contenu)</span>"
+
+#. module: meeting_minutes_project_steering
+#: code:addons/meeting_minutes_project_steering/controllers/portal.py:41
+#, python-format
+msgid "Search in All"
+msgstr "Chercher dans Tout"
+
+#. module: meeting_minutes_project_steering
+#: code:addons/meeting_minutes_project_steering/controllers/portal.py:39
+#, python-format
+msgid "Search in Customer"
+msgstr "Rechercher dans Client"
+
+#. module: meeting_minutes_project_steering
+#: code:addons/meeting_minutes_project_steering/controllers/portal.py:38
+#, python-format
+msgid "Search in Messages"
+msgstr "Rechercher dans Messages"
+
+#. module: meeting_minutes_project_steering
+#: code:addons/meeting_minutes_project_steering/controllers/portal.py:40
+#, python-format
+msgid "Search in Stages"
+msgstr "Rechercher dans Étapes"
 
 #. module: meeting_minutes_project_steering
 #: selection:project.steering.kpi.line,display_type:0
@@ -167,7 +247,13 @@ msgid "Sequence"
 msgstr "Séquence"
 
 #. module: meeting_minutes_project_steering
-#: model_terms:ir.ui.view,arch_db:meeting_minutes_project_steering.project_meeting_minutes_view_form_inherit
+#: code:addons/meeting_minutes_project_steering/controllers/portal.py:28
+#, python-format
+msgid "Stage"
+msgstr "Étape"
+
+#. module: meeting_minutes_project_steering
+#: model_terms:ir.ui.view,arch_db:meeting_minutes_project_steering.meeting_minutes_project_view_form_inherit
 msgid "Steering"
 msgstr "Pilotage"
 
@@ -190,6 +276,12 @@ msgid "Technical field for UX purpose."
 msgstr "Champ technique utilisé à des fins ergonomiques"
 
 #. module: meeting_minutes_project_steering
-#: model:ir.model,name:meeting_minutes_project_steering.model_project_meeting_minutes
-msgid "project.meeting.minutes"
+#: code:addons/meeting_minutes_project_steering/controllers/portal.py:27
+#, python-format
+msgid "Title"
+msgstr "Titre"
+
+#. module: meeting_minutes_project_steering
+#: model:ir.model,name:meeting_minutes_project_steering.model_meeting_minutes_project
+msgid "meeting.minutes.project"
 msgstr ""
