@@ -7,7 +7,7 @@ from odoo import api, fields, models, SUPERUSER_ID
 class ProjectStage(models.Model):
     _name = "project.stage"
     _description = "Project Stage"
-    _order = "sequence"
+    _order = "sequence, id"
 
     name = fields.Char(required=True, translate=True)
     sequence = fields.Integer()
@@ -20,10 +20,10 @@ class ProjectStage(models.Model):
     )
 
 
-class ProjectWithStage(models.Model):
+class ProjectProject(models.Model):
     _inherit = "project.project"
 
-    def compute_default_stage(self):
+    def _get_default_stage_id(self):
         return (
             self.env["project.stage"]
             .search([("fold", "=", False)], order="sequence", limit=1)
@@ -40,10 +40,11 @@ class ProjectWithStage(models.Model):
 
     stage_id = fields.Many2one(
         "project.stage",
-        "Stage",
+        string="Stage",
         ondelete="restrict",
         index=True,
-        default=compute_default_stage,
+        default=_get_default_stage_id,
         group_expand="_read_group_stage_ids",
         tracking=True,
+        copy=False
     )
