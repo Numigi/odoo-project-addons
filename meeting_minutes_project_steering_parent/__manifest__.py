@@ -1,7 +1,7 @@
 # Copyright 2024 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License: AGPL-3.0 or later. See http://www.gnu.org/licenses/agpl
 
-{  # noqa: W0104
+{
     "name": "Meeting Minutes Project Steering Parent",
     "version": "14.0.1.0.0",
     "author": "Numigi",
@@ -16,4 +16,4 @@
     "summary": "Extract data from a parent project and all its subprojects for steering project",
     "data": [],
     "installable": True,
-}
+}  # noqa: W0104
