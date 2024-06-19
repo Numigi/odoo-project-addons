@@ -16,4 +16,4 @@
     "summary": "Extract data from a parent project and all its subprojects for steering project",
     "data": [],
     "installable": True,
-}  # noqa: W0104
+}
