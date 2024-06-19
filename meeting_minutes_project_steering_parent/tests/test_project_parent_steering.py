@@ -7,11 +7,10 @@ from odoo.addons.meeting_minutes_project_steering.tests.test_project_steering im
 
 
 class TestProjectParentSteering(TestProjectSteering):
-    @classmethod
-    def setUpClass(cls):
-        super().setUpClass()
-        cls.project_2 = cls.env["project.project"].create({"name": "Project 2"})
-        cls.project_parent = cls.env["project.project"].create(
+    def setUp(self):
+        super().setUp()
+        self.project_2 = self.env["project.project"].create({"name": "Project 2"})
+        self.project_parent = self.env["project.project"].create(
             {"name": "Project Parent"}
         )
 
