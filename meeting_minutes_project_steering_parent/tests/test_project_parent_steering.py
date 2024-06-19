@@ -1,5 +1,5 @@
 # Copyright 2024 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+# License: AGPL-3.0 or later. See http://www.gnu.org/licenses/agpl
 
 from odoo.addons.meeting_minutes_project_steering.tests.test_project_steering import (
     TestProjectSteering,

@@ -1,5 +1,5 @@
 # Copyright 2024 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+# License: AGPL-3.0 or later. See http://www.gnu.org/licenses/agpl
 
 {
     "name": "Meeting Minutes Project Steering Parent",
@@ -14,10 +14,6 @@
         "project_iteration",
     ],
     "summary": "Extract data from a parent project and all its subprojects for steering project",
-    "data": [
-        # "security/ir.model.access.csv",
-        # "views/project_steering_kpi_views.xml",
-        # "views/meeting_minutes_views.xml",
-    ],
+    "data": [],
     "installable": True,
 }
