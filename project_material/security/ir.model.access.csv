@@ -1,3 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_task_material_project_user,Project / User: access task material lines,model_project_task_material,project.group_project_user,1,1,1,1
-access_warehouse_project_user,Project / User: allow selecting a warehouse on a project,stock.model_stock_warehouse,project.group_project_user,1,0,0,0

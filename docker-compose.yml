@@ -1,11 +1,11 @@
-version: '2'
+version: '3'
 services:
   odoo:
     build:
       context: .
       dockerfile: Dockerfile
     volumes:
-      - odoo-web-data:/var/lib/odoo
+      - odoo16-web-data:/var/lib/odoo
       - ./.log:/var/log/odoo
     ports:
       - "8069:8069"
@@ -15,10 +15,6 @@ services:
     command: odoo
     environment:
       - LOG_ODOO=/var/log/odoo
-    networks:
-      default:
-        aliases:
-          - odoo.localtest.me
   db:
     image: postgres:16.0
     environment:
@@ -26,10 +22,10 @@ services:
       - POSTGRES_USER=odoo
       - PGDATA=/var/lib/postgresql/data/pgdata
     volumes:
-      - odoo-db-data:/var/lib/postgresql/data/pgdata
+      - odoo16-db-data:/var/lib/postgresql/data/pgdata
     expose:
       - 5432
 
 volumes:
-  odoo-web-data:
-  odoo-db-data:
+  odoo16-web-data:
+  odoo16-db-data:

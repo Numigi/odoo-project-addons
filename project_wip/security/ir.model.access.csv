@@ -1,3 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_ir_property_project_manager,Project / Manager: ir.property,base.model_ir_property,project.group_project_manager,1,1,1,1
-access_project_wip_transfer,Transfer : project.wip.transfer,project_wip.model_project_wip_transfer,project_wip.group_wip_to_cgs,1,1,1,1

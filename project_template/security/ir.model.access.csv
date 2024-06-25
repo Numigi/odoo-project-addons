@@ -1,2 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_project_task_template_add_manager,access_project_task_template_add,model_project_task_template_add,project.group_project_manager,1,0,1,0
