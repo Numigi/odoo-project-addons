@@ -1,4 +1,4 @@
-# © 2024 Numigi
+# Copyright 2024-today Numigi and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 {
@@ -11,7 +11,7 @@
     "category": "Other",
     "summary": "Install all addons required for testing.",
     "depends": [
-        "project",
+        "project_task_type",
     ],
     "installable": True,
 }
