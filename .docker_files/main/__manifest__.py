@@ -11,7 +11,7 @@
     "category": "Other",
     "summary": "Install all addons required for testing.",
     "depends": [
-        "project",
+        "project_task_full_text_search",
     ],
     "installable": True,
 }

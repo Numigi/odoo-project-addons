@@ -1,0 +1,48 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* project_task_full_text_search
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 11.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-06-16 11:39-0400\n"
+"PO-Revision-Date: 2024-06-16 11:42-0400\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"X-Generator: Poedit 2.0.6\n"
+
+#. module: project_task_full_text_search
+#: model:ir.model.fields,field_description:project_task_full_text_search.field_project_task__full_text_search
+msgid "Full Text"
+msgstr "Plein texte"
+
+#. module: project_task_full_text_search
+#: model:ir.model.fields,field_description:project_task_full_text_search.field_project_task__full_text_content
+msgid "Indexed Content"
+msgstr "Contenu indexé"
+
+#. module: project_task_full_text_search
+#: model:ir.model,name:project_task_full_text_search.model_ir_config_parameter
+msgid "System Parameter"
+msgstr ""
+
+#. module: project_task_full_text_search
+#: model:ir.model,name:project_task_full_text_search.model_project_task
+msgid "Task"
+msgstr "Tâche"
+
+#. module: project_task_full_text_search
+#: code:addons/project_task_full_text_search/models/project_task.py:44
+#, python-format
+msgid ""
+"The operator {operator} is not supported for full text search on tasks. You "
+"may use the equal operator instead."
+msgstr ""
+"L'opérateur {operator} n'est pas supporté pour la recherche plein texte sur "
+"les tâches. Vous pouvez toutefois utiliser l'opérateur d'égalité."
