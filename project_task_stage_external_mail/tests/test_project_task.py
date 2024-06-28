@@ -51,7 +51,7 @@ class TestProjectTask(common.SavepointCase):
                 "stage_id": cls.stage1.id,
                 "partner_id": cls.user_demo.partner_id.id,
                 "project_id": cls.project.id,
-                "allowed_user_ids": [(4, cls.user_demo.id)],
+                "user_ids": [(4, cls.user_demo.id)],
             }
         )
         cls.task2 = cls.env["project.task"].create(
@@ -60,7 +60,7 @@ class TestProjectTask(common.SavepointCase):
                 "stage_id": cls.stage2.id,
                 "partner_id": cls.user_demo.partner_id.id,
                 "project_id": cls.project.id,
-                "allowed_user_ids": [(4, cls.user_demo.id)],
+                "user_ids": [(4, cls.user_demo.id)],
             }
         )
 
