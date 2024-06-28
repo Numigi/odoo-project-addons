@@ -1,3 +1,4 @@
+================================
 Project Task Stage External Mail
 ================================
 
@@ -7,7 +8,7 @@ Context
 -------
 In Odoo, you are able to attach an email template to a task stage.
 
-.. image:: project_task_stage_external_mail/static/description/vanilla_odoo_task_stage.png
+.. image:: static/description/vanilla_odoo_task_stage_form.png
 
 Since version 12.0, instead of publishing an email, an internal note is sent.
 
@@ -21,26 +22,17 @@ Usage
 As ``Project / Manager``, I go to the form view of a task stage.
 
 I select an email template to be sent for this stage.
-
-.. image:: project_task_stage_external_mail/static/description/task_stage_mail_template.png
-
 I notice a new checkbox ``External Mail``. This box is unchecked by default.
-
-.. image:: project_task_stage_external_mail/static/description/task_stage_external_mail.png
-
 I check the box then save.
 
-.. image:: project_task_stage_external_mail/static/description/task_stage_external_mail_checked.png
+.. image:: static/description/task_stage_external_mail_checked.png
 
 As ``Project / User``, I go to the form view of a task.
 
 I set move the task to the stage ``Open``.
-
-.. image:: project_task_stage_external_mail/static/description/task.png
-
 I notice that an external email was sent.
 
-.. image:: project_task_stage_external_mail/static/description/task_external_email.png
+.. image:: static/description/task_to_open_with_external_email.png
 
 Contributors
 ------------

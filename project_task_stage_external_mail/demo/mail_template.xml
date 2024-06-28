@@ -5,7 +5,7 @@
         <record id="demo_mail_template_task_open" model="mail.template">
             <field name="name">Task Open</field>
             <field name="model_id" ref="project.model_project_task"/>
-            <field name="subject">Task Open: ${object.display_name}</field>
+            <field name="subject">Task Open: {{object.display_name}}</field>
             <field name="use_default_to" eval="True"/>
             <field name="body_html" type="html">
                 <div>

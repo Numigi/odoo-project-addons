@@ -7,7 +7,7 @@
         <field name="inherit_id" ref="project.task_type_edit"/>
         <field name="arch" type="xml">
             <field name="mail_template_id" position="after">
-                <field name="external_mail" attrs="{'invisible': [('mail_template_id', '=', False)]}"/>
+                <field name="external_mail" attrs="{'invisible': [('mail_template_id', '=', False)]}" />
             </field>
         </field>
     </record>
