@@ -9,6 +9,7 @@ jobs:
     machine: true
     steps:
        - checkout
+
        - run:
            <<: *quay_io_login
 
@@ -44,13 +45,14 @@ jobs:
           name: Set tag
           command: |
             ./nws circleci create-tag -t odoo-base
-
+            
 workflows:
   version: 2
   odoo:
     jobs:
       - tests:
           context: quay.io
+
       - auto-tag:
           context: nws
           requires:
