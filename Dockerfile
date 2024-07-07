@@ -14,6 +14,7 @@ RUN gitoo install-all --conf_file /gitoo.yml --destination "${THIRD_PARTY_ADDONS
 USER odoo
 
 COPY project_task_date_planned /mnt/extra-addons/project_task_date_planned
+COPY project_task_stage_external_mail /mnt/extra-addons/project_task_stage_external_mail
 COPY project_task_type /mnt/extra-addons/project_task_type
 
 COPY .docker_files/main /mnt/extra-addons/main
