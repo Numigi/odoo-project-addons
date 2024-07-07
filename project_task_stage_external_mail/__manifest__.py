@@ -1,4 +1,4 @@
-# Copyright 2023-today Numigi and all its contributors (https://bit.ly/numigiens)
+# Copyright 2024-today Numigi and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 {
@@ -7,6 +7,7 @@
     "category": "Project",
     "summary": "Send an external email for a task stage",
     "author": "Numigi",
+    "license": "LGPL-3",
     "depends": [
         "project",
         "mail",
@@ -17,6 +18,5 @@
     "demo": [
         "demo/mail_template.xml",
     ],
-    "license": "LGPL-3",
     "application": False,
 }
