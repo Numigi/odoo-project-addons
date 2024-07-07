@@ -11,6 +11,8 @@
     "category": "Other",
     "summary": "Install all addons required for testing.",
     "depends": [
+        "project",
+        "project_task_date_planned",
         "project_task_type",
     ],
     "installable": True,
