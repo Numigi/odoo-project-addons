@@ -11,7 +11,7 @@
     "category": "Other",
     "summary": "Install all addons required for testing.",
     "depends": [
-        "project",
+        "project_stage_allow_timesheet",
         "project_task_date_planned",
         "project_task_full_text_search",
         "project_task_stage_external_mail",
