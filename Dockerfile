@@ -17,6 +17,7 @@ COPY project_task_date_planned /mnt/extra-addons/project_task_date_planned
 COPY project_task_full_text_search /mnt/extra-addons/project_task_full_text_search
 COPY project_task_stage_external_mail /mnt/extra-addons/project_task_stage_external_mail
 COPY project_task_type /mnt/extra-addons/project_task_type
+COPY project_type_advanced /mnt/extra-addons/project_type_advanced
 
 COPY .docker_files/main /mnt/extra-addons/main
 COPY .docker_files/odoo.conf /etc/odoo
