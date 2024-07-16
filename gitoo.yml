@@ -6,9 +6,9 @@
 - url: https://github.com/OCA/project
   branch: "16.0"
   includes:
-    - project_category
     - project_task_dependency
     - project_timesheet_time_control
+    - project_type
 
 - url: https://github.com/OCA/timesheet
   branch: "16.0"

@@ -16,6 +16,7 @@
         "project_task_full_text_search",
         "project_task_stage_external_mail",
         "project_task_type",
+        "project_type_advanced",
     ],
     "installable": True,
 }
