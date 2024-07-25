@@ -14,7 +14,6 @@
         "project",
         "project_task_date_planned",
         "project_task_full_text_search",
-        "project_task_stage_external_mail",
         "project_task_type",
         "project_type_advanced",
     ],
