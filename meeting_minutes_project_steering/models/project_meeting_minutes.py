@@ -21,6 +21,9 @@ class ProjectMeetingMinutes(models.Model):
         self._get_steering_data()
         return True
 
+    def _get_project_domain(self):
+        return [("project_id", "=", self.project_id.id or False)]
+
     def _get_steering_data(self):
         # Level to check is on task
         steering_kpis = self.env["project.steering.kpi"].search(
@@ -30,7 +33,7 @@ class ProjectMeetingMinutes(models.Model):
         self.project_steering_ids = [(5, 0)]
 
         for kpi in steering_kpis:
-            domain = [("project_id", "=", self.project_id.id or False)]
+            domain = self._get_project_domain()
             if kpi.filter_domain:
                 domain += safe_eval(kpi.filter_domain)
             self._add_record_from_domain(domain, kpi)
