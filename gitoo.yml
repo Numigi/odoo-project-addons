@@ -3,7 +3,7 @@
   includes:
     - base_extended_security
     - base_xml_rename
-    - meeting_minutes
+    - base_meeting_minutes
     - test_http_request
 
 - url: https://github.com/Numigi/aeroo_reports

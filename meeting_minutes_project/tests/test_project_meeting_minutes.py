@@ -55,7 +55,7 @@ class TestMeetingMinutesProject(SavepointCase):
         self.task_2._message_subscribe(unified_partners)
         minutes.task_id = self.task_2.id
         minutes.on_change_task_id()
-        assert len(minutes.partner_ids.ids) == 2
+        assert len(minutes.partner_ids.ids) == 3
         assert self.partner in minutes.partner_ids
         assert self.partner_extra in minutes.partner_ids
 
