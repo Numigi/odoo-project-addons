@@ -34,7 +34,7 @@ class MeetingMinutesProject(models.Model):
     action_ids = fields.One2many(
         "mail.activity",
         compute="_compute_action_ids",
-        string="Actions", readonly=True
+        string="Pending Actions", readonly=True
     )
     homework_ids = fields.One2many(
         "mail.activity",
