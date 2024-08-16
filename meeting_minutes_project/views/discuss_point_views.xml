@@ -8,7 +8,8 @@
             <form string="Discussed Point">
                 <sheet>
                     <group>
-                        <field name="minutes_task_id" string="Task"/>
+                        <field name="task_id"/>
+                        <field name="sequence"/>
                         <field name="notes"/>
                     </group>
                 </sheet>
@@ -22,7 +23,7 @@
         <field name="arch" type="xml">
             <tree string="Discussed Points">
                 <field name="sequence" widget="handle"/>
-                <field name="minutes_task_id" string="Task"/>
+                <field name="task_id" string="Task"/>
                 <field name="notes" widget="html"/>
             </tree>
         </field>
