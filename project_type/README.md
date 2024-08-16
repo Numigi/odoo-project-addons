@@ -1,4 +1,4 @@
-# Project Project Type
+# Project Type
 
 This module adds the fields  `sequence`, `active` and `color` to the project type Form view.
 
