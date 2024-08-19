@@ -27,7 +27,7 @@ msgstr "Nécessite une action"
 
 #. module: meeting_minutes_project
 #: model:ir.model.fields,field_description:meeting_minutes_project.field_meeting_minutes_project__action_ids
-msgid "Actions"
+msgid "Pending Actions"
 msgstr "Rappel actions en attente"
 
 #. module: meeting_minutes_project

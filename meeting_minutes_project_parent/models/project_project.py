@@ -11,14 +11,11 @@ class ProjectProject(models.Model):
     def _compute_nbr_meeting(self):
         super()._compute_nbr_meeting()
         for project in self:
-            if project.child_ids:
-                project.meeting_minutes_project_ids = self.env[
-                    "meeting.minutes.project"
-                ].search(
-                    [
-                        "|",
-                        ("parent_project_id", "=", project.id),
-                        ("project_id", "=", project.id),
-                    ]
+            if project.is_parent:
+                meeting_minutes_childs_count = sum(
+                    project.child_ids.mapped("meeting_minutes_count")
                 )
-                project.meeting_minutes_count = len(project.meeting_minutes_project_ids)
+                meeting_minutes_parent_count = len(project.meeting_minutes_ids)
+                project.meeting_minutes_count = (
+                    meeting_minutes_childs_count + meeting_minutes_parent_count
+                )
