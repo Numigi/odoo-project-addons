@@ -10,7 +10,7 @@ This button allows to create project task meeting minutes.
 
 .. image:: static/description/meeting_minutes_button.png
 
-This button allows to view all project tasks meeting minutes and also allows to 
+This button allows to view all project tasks meeting minutes and also allows to
 create for meeting, meetnig minutes.
 
 .. image:: static/description/meeting_minutes_project_button.png
