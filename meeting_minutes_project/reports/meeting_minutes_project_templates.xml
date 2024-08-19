@@ -19,7 +19,7 @@
                 </div>
                 <div class="col-6">
                     <a t-attf-href="/my/task/#{o.task_id.id}" class="text-dark">
-                        <span t-field="o.task_id.id" />
+                        #<span t-field="o.task_id.id" />
                     </a>
                 </div>
             </div>

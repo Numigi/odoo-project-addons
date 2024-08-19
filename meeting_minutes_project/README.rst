@@ -19,6 +19,14 @@ Meeting minutes form view.
 
 .. image:: static/description/meeting_minutes.png
 
+From the button `Print`, you can print the PDF report of the meeting minutes:
+
+.. image:: static/description/print_meeting_minutes.png
+
+Result:
+
+.. image:: static/description/meeting_minutes_report.png
+
 Mentions
 ********
 
