@@ -9,8 +9,14 @@ class TestMeetingMinutesProjectParent(SavepointCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.project_1 = cls.env["project.project"].create({"name": "Project 1"})
-        cls.project_2 = cls.env["project.project"].create({"name": "Project 2"})
+        cls.project_1 = cls.env["project.project"].create(
+            {"name": "Project 1"}
+        )
+        cls.project_2 = cls.env["project.project"].create(
+            {"name": "Project 2", "parent_id": cls.project_1.id}
+        )
+
+        cls.MeetingMinutesObj = cls.env["meeting.minutes.project"]
 
         cls.task_1 = cls.env["project.task"].create(
             {
@@ -18,7 +24,6 @@ class TestMeetingMinutesProjectParent(SavepointCase):
                 "name": "Task 1",
             }
         )
-
         cls.task_2 = cls.env["project.task"].create(
             {
                 "project_id": cls.project_1.id,
@@ -33,26 +38,17 @@ class TestMeetingMinutesProjectParent(SavepointCase):
         )
 
     def test_project_child_meeting_minutes(self):
-        minutes_1 = (
-            self.env["meeting.minutes.project"]
-            .with_context(default_task_id=self.task_1.id)
-            .create({})
-        )
-        minutes_1.on_change_task_id()
-        minutes_2 = (
-            self.env["meeting.minutes.project"]
-            .with_context(default_task_id=self.task_2.id)
-            .create({})
-        )
-        minutes_2.on_change_task_id()
-        self.project_1.write({"parent_id": self.project_2.id})
-        self.project_2._compute_nbr_meeting()
-        assert 2 == self.project_2.meeting_minutes_count
-        minutes = (
-            self.env["meeting.minutes.project"]
-            .with_context(default_task_id=self.task_3.id)
-            .create({})
-        )
-        minutes.on_change_task_id()
-        self.project_2._compute_nbr_meeting()
-        assert 3 == self.project_2.meeting_minutes_count
+        self.MeetingMinutesObj.create({
+                'task_id': self.task_1.id,
+                'project_id': self.project_1.id,
+            })
+        self.MeetingMinutesObj.create({
+                'task_id': self.task_2.id,
+                'project_id': self.project_1.id,
+            })
+        self.MeetingMinutesObj.create({
+                'task_id': self.task_2.id,
+                'project_id': self.project_2.id
+            })
+        assert self.project_1.meeting_minutes_count == 3
+        assert self.project_2.meeting_minutes_count == 1

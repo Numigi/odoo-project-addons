@@ -2,14 +2,42 @@
 <odoo>
 
     <record id="meeting_minutes_project_parent_view_form" model="ir.ui.view">
-        <field name="name">meeting.minutes.project.form</field>
+        <field name="name">meeting.minutes.project.inherit.form</field>
         <field name="model">meeting.minutes.project</field>
         <field name="inherit_id" ref="meeting_minutes_project.meeting_minutes_project_view_form"/>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='project_id']" position="before">
-                <field name="parent_project_id"/>
+                <field name="parent_project_id" readonly="1" />
             </xpath>
         </field>
+    </record>
+
+    <record id="view_meeting_minutes_project_parent_search" model="ir.ui.view">
+        <field name="name">meeting.minutes.project.inherit.search</field>
+        <field name="model">meeting.minutes.project</field>
+        <field name="inherit_id" ref="meeting_minutes_project.meeting_minutes_project_view_search"/>
+        <field name="arch" type="xml">
+            <field name="project_id" position="before">
+                <field name="parent_project_id" />
+            </field>
+            <filter name="group_by_project" position="before">
+                <filter string="Parent Project" name="group_by_parent_project" context="{'group_by':'parent_project_id'}"/>
+            </filter>
+        </field>
+    </record>
+
+    <record id="action_view_meeting_minutes_parent_project" model="ir.actions.act_window">
+        <field name="name">Meeting minutes</field>
+        <field name="res_model">meeting.minutes.project</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{
+            'search_default_parent_project_id': [active_id],
+            'default_parent_project_id': active_id,
+            'default_user_id': uid,
+            'default_res_model': 'project.project',
+        }
+        </field>
+        <field name="domain">['|', ('parent_project_id', '=', active_id), ('project_id', '=', active_id)]</field>
     </record>
 
 </odoo>
