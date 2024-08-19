@@ -10,7 +10,7 @@ This button allows to create project task meeting minutes.
 
 .. image:: static/description/meeting_minutes_button.png
 
-This button allows to view all project tasks meeting minutes and also allows to 
+This button allows to view all project tasks meeting minutes and also allows to
 create for meeting, meetnig minutes.
 
 .. image:: static/description/meeting_minutes_project_button.png
@@ -18,6 +18,14 @@ create for meeting, meetnig minutes.
 Meeting minutes form view.
 
 .. image:: static/description/meeting_minutes.png
+
+From the button `Print`, you can print the PDF report of the meeting minutes:
+
+.. image:: static/description/print_meeting_minutes.png
+
+Result:
+
+.. image:: static/description/meeting_minutes_report.png
 
 Mentions
 ********

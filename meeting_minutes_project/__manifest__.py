@@ -18,6 +18,8 @@
         "views/discuss_point_views.xml",
         "views/project_project_views.xml",
         "views/project_task_views.xml",
+        "reports/meeting_minutes_project_templates.xml",
+        "reports/reports.xml",
     ],
     "installable": True,
 }
