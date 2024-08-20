@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-22 13:38+0000\n"
-"PO-Revision-Date: 2024-01-22 13:38+0000\n"
+"POT-Creation-Date: 2024-08-20 09:35+0000\n"
+"PO-Revision-Date: 2024-08-20 09:35+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -51,6 +51,7 @@ msgstr "Créé le"
 
 #. module: meeting_minutes_project_steering
 #: model:ir.model.fields,field_description:meeting_minutes_project_steering.field_project_steering_kpi_line__task_date_deadline
+#: model_terms:ir.ui.view,arch_db:meeting_minutes_project_steering.meeting_minutes_project_template
 msgid "Deadline"
 msgstr "Echéance"
 
@@ -107,21 +108,28 @@ msgstr "Modèle"
 #. module: meeting_minutes_project_steering
 #: model:ir.model.fields,field_description:meeting_minutes_project_steering.field_project_steering_kpi__model
 msgid "Model Name"
-msgstr "Nom du modèle"
+msgstr "Nom de Modèle"
+
+#. module: meeting_minutes_project_steering
+#: selection:project.steering.kpi.line,display_type:0
+msgid "Note"
+msgstr ""
 
 #. module: meeting_minutes_project_steering
 #: model:ir.model.fields,field_description:meeting_minutes_project_steering.field_project_steering_kpi_line__name
-#: selection:project.steering.kpi.line,display_type:0
+#: model_terms:ir.ui.view,arch_db:meeting_minutes_project_steering.meeting_minutes_project_template
 msgid "Notes"
 msgstr "Notes"
 
 #. module: meeting_minutes_project_steering
+#: model_terms:ir.ui.view,arch_db:meeting_minutes_project_steering.meeting_minutes_project_template
 #: model:ir.model.fields,field_description:meeting_minutes_project_steering.field_project_steering_kpi_line__task_date_planned
-msgid "Planned Date"
+msgid "Planned date"
 msgstr "Date planifiée"
 
 #. module: meeting_minutes_project_steering
 #: model:ir.model.fields,field_description:meeting_minutes_project_steering.field_project_steering_kpi_line__project_id
+#: model_terms:ir.ui.view,arch_db:meeting_minutes_project_steering.meeting_minutes_project_template
 msgid "Project"
 msgstr "Projet"
 
@@ -152,9 +160,9 @@ msgid "Project Steering KPI Line"
 msgstr "Ligne de KPI de pilotage"
 
 #. module: meeting_minutes_project_steering
-#: model:ir.model,name:meeting_minutes_project_steering.model_project_steering_line
-msgid "Project Steering Line"
-msgstr "Ligne de pilotage de projet"
+#: model_terms:ir.ui.view,arch_db:meeting_minutes_project_steering.meeting_minutes_project_template
+msgid "Project deadline"
+msgstr "Echéance projet"
 
 #. module: meeting_minutes_project_steering
 #: selection:project.steering.kpi.line,display_type:0
@@ -167,7 +175,8 @@ msgid "Sequence"
 msgstr "Séquence"
 
 #. module: meeting_minutes_project_steering
-#: model_terms:ir.ui.view,arch_db:meeting_minutes_project_steering.project_meeting_minutes_view_form_inherit
+#: model_terms:ir.ui.view,arch_db:meeting_minutes_project_steering.meeting_minutes_project_template
+#: model_terms:ir.ui.view,arch_db:meeting_minutes_project_steering.meeting_minutes_project_view_form_inherit
 msgid "Steering"
 msgstr "Pilotage"
 
@@ -193,3 +202,9 @@ msgstr "Champ technique utilisé à des fins ergonomiques"
 #: model:ir.model,name:meeting_minutes_project_steering.model_project_meeting_minutes
 msgid "project.meeting.minutes"
 msgstr ""
+
+#. module: meeting_minutes_project_steering
+#: model_terms:ir.ui.view,arch_db:meeting_minutes_project_steering.meeting_minutes_project_template
+msgid "n/a"
+msgstr ""
+
