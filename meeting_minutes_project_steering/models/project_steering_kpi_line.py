@@ -21,6 +21,6 @@ class ProjectSteeringKpiLine(models.Model):
     project_end_date = fields.Date(related="project_id.date", string="Project Deadline")
     task_id = fields.Many2one("project.task", string="Task")
     task_date_planned = fields.Date(
-        related="task_id.date_planned", string="Planned Date"
+        related="task_id.date_planned", string="Planned date"
     )
     task_date_deadline = fields.Date(related="task_id.date_deadline", string="Deadline")
