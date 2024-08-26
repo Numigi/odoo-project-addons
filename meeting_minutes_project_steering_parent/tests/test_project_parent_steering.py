@@ -38,7 +38,7 @@ class TestProjectParentSteering(TestProjectSteering):
         self.project_parent.refresh()
 
         minutes.project_steering_enabled = True
-        minutes.load_steering_data()
+        minutes.action_load_steering_data()
         minutes.refresh()
 
         # Three sections to have
@@ -54,10 +54,6 @@ class TestProjectParentSteering(TestProjectSteering):
         self.assertEqual(len(minutes.project_steering_ids.ids), 13)
 
     def _new_minutes(self):
-        self.env["meeting.minutes.project"].search(
-            [("task_id", "=", self.task_2_1.id)]
-        ).unlink()
-
         minutes = (
             self.env["meeting.minutes.project"]
             .with_context(default_task_id=self.task_2_1.id)

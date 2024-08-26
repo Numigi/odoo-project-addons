@@ -11,7 +11,7 @@
     "category": "Project",
     "depends": [
         "meeting_minutes_project_steering",
-        "project_iteration",
+        "meeting_minutes_project_parent",
     ],
     "summary": "Extract data from a parent project and all its subprojects for steering project",
     "data": [],

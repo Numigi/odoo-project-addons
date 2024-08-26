@@ -8,19 +8,22 @@ class ProjectSteeringKpiLine(models.Model):
     _name = "project.steering.kpi.line"
     _description = "Project Steering KPI Line"
 
+    name = fields.Char(string="Name")
     meeting_minutes_id = fields.Many2one(
-        "project.meeting.minutes", string="Project Meeting Minutes", index=True
+        "meeting.minutes.project", string="Project Meeting Minutes", index=True
     )
-    name = fields.Text(string="Notes")
     display_type = fields.Selection(
         [("line_section", "Section"), ("line_note", "Note")],
         default=False,
         help="Technical field for UX purpose.",
     )
     project_id = fields.Many2one("project.project", string="Project")
-    project_end_date = fields.Date(related="project_id.date", string="Project Deadline")
+    project_end_date = fields.Date(related="project_id.date",
+                                   string="Project Deadline")
     task_id = fields.Many2one("project.task", string="Task")
     task_date_planned = fields.Date(
         related="task_id.date_planned", string="Planned date"
     )
-    task_date_deadline = fields.Date(related="task_id.date_deadline", string="Deadline")
+    task_date_deadline = fields.Date(
+        related="task_id.date_deadline", string="Task Deadline")
+    notes = fields.Text(string="Notes")

@@ -7,9 +7,9 @@ from odoo import models
 class ProjectMeetingMinutes(models.Model):
     _inherit = "meeting.minutes.project"
 
-    def _get_project_domain(self):
-        # if project has a parent, get all subprojects
-        if self.project_id.parent_id:
-            return [("project_id", "child_of", self.project_id.parent_id.id)]
+    def _get_records_from_domain(self, domain, kpi):
+        if self.project_id and self.project_id.parent_id:
+            domain += [("project_id", "child_of", self.project_id.parent_id.id or False)]
+            return self.env[kpi.model].search(domain) if domain else False
         else:
-            return super(ProjectMeetingMinutes, self)._get_project_domain()
+            return super(ProjectMeetingMinutes, self)._get_records_from_domain(domain, kpi)

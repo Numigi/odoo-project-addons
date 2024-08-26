@@ -1,9 +1,10 @@
 # Copyright 2023 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo import fields, models
-from odoo.tools.safe_eval import safe_eval
+from datetime import datetime
 from dateutil.relativedelta import relativedelta
+from odoo import api, fields, models
+from odoo.tools.safe_eval import safe_eval
 
 
 class ProjectMeetingMinutes(models.Model):
@@ -17,64 +18,11 @@ class ProjectMeetingMinutes(models.Model):
         ondelete="cascade",
     )
 
-    def load_steering_data(self):
-        self.ensure_one()
-        self._get_steering_data()
-        return True
-
-    def _get_project_domain(self):
-        return [("project_id", "=", self.project_id.id or False)]
-
-    def _get_steering_data(self):
-        # Level to check is on task
-        steering_kpis = self.env["project.steering.kpi"].search(
-            [("model", "=", "project.task")], order="sequence"
-        )
-        # Reset one2many field before loading data
-        self.project_steering_ids = [(5, 0)]
-
-        for kpi in steering_kpis:
-            domain = [("project_id", "=", self.project_id.id or False)]
-            if kpi.primary_filter_domain:
-                domain += safe_eval(kpi.primary_filter_domain)
-            domain = self._get_project_domain()
-            if kpi.filter_domain:
-                domain += safe_eval(kpi.filter_domain)
-            self._add_record_from_domain(domain, kpi)
-
-    def _add_record_from_domain(self, domain, kpi):
-        records = self.env[kpi.model].search(domain)
-        if records:
-            # Add the section from KPI name
-            self.project_steering_ids = [
-                (0, 0, {"name": kpi.name, "display_type": "line_section"}),
-            ]
-
-        # Filter with date_filter_domain if set and result of primary filter not empty
-        if kpi.date_filter_domain_id and records:
-            domain = kpi.date_filter_domain_id.domain
-            normalized_domain = (
-                domain.replace("\n", "")
-                .replace(" ", "")
-                .replace("context_today()", "fields.Date.context_today(self)")
-            )
-            # Execute all the python code in normalized_domain
-            # and replace it by its result
-            last_domain = safe_eval(
-                normalized_domain,
-                {
-                    "fields": fields,
-                    "relativedelta": relativedelta,
-                    "self": self,
-                    "context": self.env.context,
-                },
-            )
-            records = records.search(last_domain)
-
-        # Append data after section
-        self._prepare_data_in_section(records)
-
-    def _prepare_data_in_section(self, records):
+    def _set_project_steering_ids(self, kpi, records):
+        # Add the section from KPI name
+        self.project_steering_ids = [
+            (0, 0, {"name": kpi.name, "display_type": "line_section"}),
+        ]
         for rec in records:
             self.project_steering_ids = [
                 (
@@ -82,8 +30,48 @@ class ProjectMeetingMinutes(models.Model):
                     0,
                     {
                         "meeting_minutes_id": self.id,
-                        "project_id": rec.project_id.id,
+                        "project_id": self.project_id.id,
+                        "name": self.project_id.display_name,
                         "task_id": rec.id,
                     },
                 ),
             ]
+        return True
+
+    def _get_records_from_domain(self, domain, kpi):
+        if self.project_id:
+            domain += [("project_id", "=", self.project_id.id or False)]
+        return self.env[kpi.model].search(domain) if domain else False
+
+    @api.model
+    def _get_domain_context(self):
+        return {
+            "context_today": datetime.now,
+            "relativedelta": relativedelta,
+        }
+
+    def _get_filter_domain(self, kpi):
+        domain = []
+        if kpi.primary_filter_domain:
+            domain += safe_eval(kpi.primary_filter_domain)
+        if kpi.date_filter_domain:
+            domain += safe_eval(
+                kpi.date_filter_domain, self._get_domain_context()
+            )
+        return domain
+
+    def action_load_steering_data(self):
+        self.ensure_one()
+        steering_kpis = self.env["project.steering.kpi"].search([
+            ("model", "=", "project.task")
+        ], order="sequence")
+        # Reset one2many field before loading data
+        self.project_steering_ids = [
+            (2, line.id, False) for line in self.project_steering_ids
+        ]
+        for kpi in steering_kpis:
+            domain = self._get_filter_domain(kpi)
+            records = self._get_records_from_domain(domain, kpi)
+            if records:
+                self._set_project_steering_ids(kpi, records)
+        return True

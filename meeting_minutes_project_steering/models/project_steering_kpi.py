@@ -1,13 +1,16 @@
 # Copyright 2024 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo import api, fields, models, _
+from odoo import fields, models
 
 
 class ProjectSteeringKpi(models.Model):
     _name = "project.steering.kpi"
     _description = "Project Steering KPI"
-    _order = "sequence, id"
+    _order = "sequence, name"
+
+    def _get_allowed_model(self):
+        return [("model", "in", ("project.task", "project.project"))]
 
     name = fields.Char(string="Label", translate=True)
     sequence = fields.Integer(string="Sequence")
@@ -26,33 +29,12 @@ class ProjectSteeringKpi(models.Model):
         "search.date.range.filter",
         string="Date Filter",
         domain="[('model_id', '=', model_id)]",
-        store=True,
         help="Filter domain applied on the selected model and the primary filter.",
     )
     date_filter_domain = fields.Char(
-        compute="_get_domain", string="Date Filter Domain", store=True
+        compute="_get_date_filter_domain", string="Date Filter Domain"
     )
 
-    def _get_allowed_model(self):
-        return [("model", "in", ("project.task", "project.project"))]
-
-    @api.depends("date_filter_domain_id")
-    def _get_domain(self):
+    def _get_date_filter_domain(self):
         for record in self:
             record.date_filter_domain = record.date_filter_domain_id.domain
-
-
-class SearchDateRangeFilter(models.Model):
-    _inherit = "search.date.range.filter"
-
-    @api.multi
-    def name_get(self):
-        result = []
-        for record in self:
-            name = _("'%s' applied on '%s'") % (
-                record.range_id.label,
-                record.field_id.field_description,
-            )
-
-            result.append((record.id, name))
-        return result
