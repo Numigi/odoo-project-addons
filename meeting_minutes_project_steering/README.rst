@@ -64,6 +64,18 @@ The recording lines are grouped by `Steering Indicator`, and each group is order
 *NB: This module is intended to work on a single project per meeting minute. 
 Another module will be made to allow the notion of parent project to be used in project steering.*
 
+
+*Reports*
+----------
+From the button `Print`, you can print the PDF report of the meeting minutes:
+
+.. image:: static/description/print_meeting_minutes.png
+
+Result:
+
+.. image:: static/description/meeting_minutes_report.png
+
+
 Contributors
 ------------
 * Numigi (tm) and all its contributors (https://bit.ly/numigiens)

@@ -20,6 +20,7 @@
         "meeting_minutes_project",
         "meeting_minutes_project_parent",
         "meeting_minutes_project_steering",
+        "meeting_minutes_project_steering_parent",
         "portal_project_list_hours_spent",
         "portal_project_timesheet_conditional",
         "project_advanced_checklist",

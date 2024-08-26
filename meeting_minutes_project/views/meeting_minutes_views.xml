@@ -6,11 +6,14 @@
         <field name="arch" type="xml">
             <form string="Communication">
                 <header>
+                    <field name="res_id" invisible="1"/>
+                    <field name="res_model_id" invisible="1"/>
+                    <field name="res_model" invisible="1" force_save="1"/>
                 </header>
                 <sheet>
                     <div class="oe_title pr-0">
                         <h1 class="d-flex flex-row justify-content-between">
-                            <field name="name"/>
+                            <field name="name" readonly="1" force_save="1"/>
                         </h1>
                     </div>
 
@@ -23,7 +26,7 @@
                         </group>
 
                         <group>
-                            <field name="mean_communication_id"/>
+                            <field name="meeting_channel_id"/>
                             <field name="project_id"/>
                             <field name="task_id"/>
 
@@ -38,30 +41,12 @@
                         <page name="meeting_minutes" string="Meeting Minutes">
                             <h2>Planned Points</h2>
                             <group>
-                                <field name="planned_point" nolabel="1"/>
+                                <field name="planned_points" nolabel="1" colspan="4"/>
                             </group>
 
-                            <h2>Discussed Points</h2>
+                            <h2>Pending Actions</h2>
                             <group>
-                                <field name="discuss_point_ids" nolabel="1" colspan="4">
-                                    <tree>
-                                        <field name="sequence" widget="handle"/>
-                                        <field name="task_id"/>
-                                        <field name="notes" widget="html"/>
-                                    </tree>
-                                    <form>
-                                        <group>
-                                            <field name="task_id"/>
-                                            <field name="notes" widget="html"/>
-                                        </group>
-                                    </form>
-                                </field>
-                                <field name="additional_note" nolabel="1" colspan="4"/>
-                            </group>
-
-                            <h2>Homework</h2>
-                            <group>
-                                <field name="homework_ids" nolabel="1">
+                                <field name="action_ids" nolabel="1">
                                     <tree>
                                         <field name="task_id"/>
                                         <field name="summary"/>
@@ -103,6 +88,68 @@
                                 </field>
                             </group>
 
+                            <h2>Discussed Points</h2>
+                            <group>
+                                <field name="discuss_point_ids" nolabel="1" colspan="4">
+                                    <tree>
+                                        <field name="sequence" widget="handle"/>
+                                        <field name="task_id"/>
+                                        <field name="notes" widget="html"/>
+                                    </tree>
+                                    <form>
+                                        <group>
+                                            <field name="task_id"/>
+                                            <field name="notes" widget="html"/>
+                                        </group>
+                                    </form>
+                                </field>
+                                <field name="discussed_points" nolabel="1" colspan="4"/>
+                            </group>
+
+                            <h2>Duties</h2>
+                            <group>
+                                <field name="homework_ids" nolabel="1">
+                                    <tree>
+                                        <field name="task_id"/>
+                                        <field name="summary"/>
+                                        <field name="note"/>
+                                        <field name="user_id"/>
+                                        <field name="date_deadline"/>
+                                    </tree>
+                                    <form string="Log an Activity">
+                                        <sheet string="Activity">
+                                            <group invisible="1">
+                                                <field name="activity_category" invisible="1"/>
+                                                <field name="res_model" invisible="1"/>
+                                                <field name="res_model_id" invisible="1"/>
+                                                <field name="res_id" invisible="1"/>
+                                                <field name="force_next" invisible="1"/>
+                                                <field name="previous_activity_type_id"/>
+                                                <field name="has_recommended_activities"/>
+                                            </group>
+                                            <group attrs="{'invisible': [('has_recommended_activities','=',False)]}">
+                                                <div class="o_row">
+                                                    <strong>Recommended Activities</strong>
+                                                    <field name="recommended_activity_type_id" widget="selection_badge" domain="[('previous_type_ids', '=', previous_activity_type_id)]" nolabel="1"/>
+                                                </div>
+                                            </group>
+                                            <group>
+                                                <group>
+                                                    <field name="task_id" required="1"/>
+                                                    <field name="activity_type_id" required="1" invisible="1" options="{'no_create': True, 'no_open': True}"/>
+                                                    <field name="summary"/>
+                                                </group>
+                                                <group>
+                                                    <field name="date_deadline"/>
+                                                    <field name="user_id"/>
+                                                </group>
+                                            </group>
+                                            <field name="note" placeholder="Log a note..."/>
+                                        </sheet>
+                                    </form>
+                                </field>
+                                <field name="duties" nolabel="1" colspan="4"/>
+                            </group>
                             <h2>Resources</h2>
                             <group>
                                 <field name="resources" nolabel="1"/>
@@ -132,7 +179,7 @@
                 <field name="name"/>
                 <field name="start_date"/>
                 <field name="end_date"/>
-                <field name="mean_communication_id"/>
+                <field name="meeting_channel_id"/>
                 <field name="partner_ids" widget="many2many_tags"/>
             </tree>
         </field>
@@ -142,7 +189,7 @@
         <field name="name">meeting.minutes.project.search</field>
         <field name="model">meeting.minutes.project</field>
         <field name="arch" type="xml">
-            <search string="Activities Analysis">
+            <search string="Meeting Minute">
                 <field name="project_id" string="Project"/>
                 <field name="task_id" string="Task"/>
                 <group expand="1" string="Group By">
@@ -151,6 +198,37 @@
                 </group>
             </search>
         </field>
+    </record>
+
+    <record id="ir_actions_meeting_minutes_project_tree" model="ir.ui.view">
+        <field name="model">meeting.minutes.project</field>
+        <field name="name">Meeting minutes</field>
+        <field name="arch" type="xml">
+            <tree string="Meeting Minutes">
+                <field name="name"/>
+                <field name="start_date"/>
+                <field name="end_date"/>
+                <field name="meeting_channel_id"/>
+                <field name="partner_ids" widget="many2many_tags"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_view_meeting_minutes_project" model="ir.actions.act_window">
+        <field name="name">Meeting minutes</field>
+        <field name="res_model">meeting.minutes.project</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="ir_actions_meeting_minutes_project_tree"/>
+        <field name="context">{
+            'search_default_user_id': [uid],
+            'search_default_project_id': [active_id],
+            'default_project_id': active_id,
+            'default_user_id': uid,
+            'default_res_id': active_id,
+            'default_res_model': 'project.project',
+        }
+        </field>
+        <field name="domain">[('project_id', '=', active_id)]</field>
     </record>
 
     <record id="action_meeting_minutes" model="ir.actions.act_window">

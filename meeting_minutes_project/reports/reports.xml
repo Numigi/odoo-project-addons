@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <report
+        id="action_report_meeting_minutes_project"
+        string="Meeting minutes"
+        model="meeting.minutes.project"
+        report_type="qweb-pdf"
+        name="meeting_minutes_project.meeting_minutes_project_template"
+        file="meeting_minutes_project.meeting_minutes_project_template"
+        print_report_name="(object.name)"
+    />
+</odoo>

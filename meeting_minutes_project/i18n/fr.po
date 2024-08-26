@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-07 11:30+0000\n"
-"PO-Revision-Date: 2023-11-07 11:30+0000\n"
+"POT-Creation-Date: 2024-08-19 16:28+0000\n"
+"PO-Revision-Date: 2024-08-19 16:28+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -23,18 +23,27 @@ msgstr "<strong>Activités recommandées</strong>"
 #. module: meeting_minutes_project
 #: model:ir.model.fields,field_description:meeting_minutes_project.field_meeting_minutes_project__message_needaction
 msgid "Action Needed"
-msgstr "Action requise"
+msgstr "Nécessite une action"
 
 #. module: meeting_minutes_project
 #: model:ir.model.fields,field_description:meeting_minutes_project.field_meeting_minutes_project__action_ids
-#: model_terms:ir.ui.view,arch_db:meeting_minutes_project.meeting_minutes_project_view_form
-msgid "Actions"
+msgid "Pending Actions"
 msgstr "Rappel actions en attente"
+
+#. module: meeting_minutes_project
+#: model:ir.model.fields,field_description:meeting_minutes_project.field_meeting_minutes_project__active
+msgid "Active"
+msgstr "Actif"
 
 #. module: meeting_minutes_project
 #: model:ir.model.fields,field_description:meeting_minutes_project.field_meeting_minutes_project__activity_ids
 msgid "Activities"
 msgstr "Activités"
+
+#. module: meeting_minutes_project
+#: model_terms:ir.ui.view,arch_db:meeting_minutes_project.meeting_minutes_project_view_search
+msgid "Activities Analysis"
+msgstr ""
 
 #. module: meeting_minutes_project
 #: model:ir.model,name:meeting_minutes_project.model_mail_activity
@@ -45,22 +54,12 @@ msgstr "Activité"
 #. module: meeting_minutes_project
 #: model:ir.model.fields,field_description:meeting_minutes_project.field_meeting_minutes_project__activity_state
 msgid "Activity State"
-msgstr "État de l'activité"
-
-#. module: meeting_minutes_project
-#: model:ir.model.fields,field_description:meeting_minutes_project.field_meeting_minutes_project__additional_note
-msgid "Additional Note"
-msgstr "Note additionnelle"
-
-#. module: meeting_minutes_project
-#: model:ir.model.fields,field_description:meeting_minutes_project.field_meeting_minutes_project__agenda
-msgid "Agenda"
-msgstr ""
+msgstr "Status de l'Activité"
 
 #. module: meeting_minutes_project
 #: model:ir.model.fields,field_description:meeting_minutes_project.field_meeting_minutes_project__message_attachment_count
 msgid "Attachment Count"
-msgstr ""
+msgstr "Nombre de pièces jointes"
 
 #. module: meeting_minutes_project
 #: model:ir.model.fields,field_description:meeting_minutes_project.field_meeting_minutes_project__partner_ids
@@ -68,16 +67,14 @@ msgid "Attendees"
 msgstr "Participants"
 
 #. module: meeting_minutes_project
-#: model_terms:ir.ui.view,arch_db:meeting_minutes_project.means_communication_view_form
-#: model_terms:ir.ui.view,arch_db:meeting_minutes_project.means_communication_view_tree
 #: model_terms:ir.ui.view,arch_db:meeting_minutes_project.meeting_minutes_project_view_form
 msgid "Communication"
 msgstr ""
 
 #. module: meeting_minutes_project
-#: model:ir.model.fields,field_description:meeting_minutes_project.field_meeting_minutes_project__mean_communication_id
+#: model:ir.model.fields,field_description:meeting_minutes_project.field_meeting_minutes_project__meeting_channel_id
 msgid "Communication channel"
-msgstr ""
+msgstr "Moyen de communication"
 
 #. module: meeting_minutes_project
 #: model_terms:ir.ui.view,arch_db:meeting_minutes_project.meeting_minutes_project_view_form
@@ -87,7 +84,7 @@ msgstr "Contexte"
 #. module: meeting_minutes_project
 #: model_terms:ir.actions.act_window,help:meeting_minutes_project.action_meeting_minutes
 msgid "Create a new meeting minutes"
-msgstr "Créer un nouveau compte-rendu"
+msgstr "Créer un nouveau compte rendu"
 
 #. module: meeting_minutes_project
 #: model:ir.model.fields,field_description:meeting_minutes_project.field_meeting_minutes_discuss_point__create_uid
@@ -102,18 +99,15 @@ msgid "Created on"
 msgstr "Créé le"
 
 #. module: meeting_minutes_project
-#: model:ir.model,name:meeting_minutes_project.model_meeting_minutes_discuss_point
-msgid "Discuss Points"
-msgstr "Points abordés"
-
-#. module: meeting_minutes_project
 #: model_terms:ir.ui.view,arch_db:meeting_minutes_project.meeting_minutes_discuss_point_view_form
 msgid "Discussed Point"
 msgstr "Point abordé"
 
 #. module: meeting_minutes_project
 #: model:ir.actions.act_window,name:meeting_minutes_project.meeting_minutes_discuss_point_action
+#: model:ir.model,name:meeting_minutes_project.model_meeting_minutes_discuss_point
 #: model:ir.model.fields,field_description:meeting_minutes_project.field_meeting_minutes_project__discuss_point_ids
+#: model:ir.model.fields,field_description:meeting_minutes_project.field_meeting_minutes_project__discussed_points
 #: model_terms:ir.ui.view,arch_db:meeting_minutes_project.meeting_minutes_discuss_point_view_tree
 #: model_terms:ir.ui.view,arch_db:meeting_minutes_project.meeting_minutes_project_view_form
 msgid "Discussed Points"
@@ -126,13 +120,29 @@ msgid "Display Name"
 msgstr "Nom affiché"
 
 #. module: meeting_minutes_project
-#: model:ir.model.fields,field_description:meeting_minutes_project.field_meeting_minutes_project__duty
+#: model:ir.model.fields,field_description:meeting_minutes_project.field_meeting_minutes_project__res_id
+msgid "Document ID"
+msgstr "Référence du document"
+
+#. module: meeting_minutes_project
+#: model:ir.model.fields,field_description:meeting_minutes_project.field_meeting_minutes_project__res_model_id
+msgid "Document Model"
+msgstr "Modèle de document"
+
+#. module: meeting_minutes_project
+#: model:ir.model.fields,field_description:meeting_minutes_project.field_meeting_minutes_project__res_model
+msgid "Document Model Name"
+msgstr ""
+
+#. module: meeting_minutes_project
+#: model:ir.model.fields,field_description:meeting_minutes_project.field_meeting_minutes_project__duties
+#: model_terms:ir.ui.view,arch_db:meeting_minutes_project.meeting_minutes_project_view_form
 msgid "Duties"
 msgstr "Devoirs"
 
 #. module: meeting_minutes_project
 #: model:ir.model.fields,field_description:meeting_minutes_project.field_meeting_minutes_project__end_date
-msgid "End time"
+msgid "End"
 msgstr "Fin"
 
 #. module: meeting_minutes_project
@@ -151,8 +161,12 @@ msgid "Followers (Partners)"
 msgstr "Abonnés (Partenaires)"
 
 #. module: meeting_minutes_project
+#: model_terms:ir.ui.view,arch_db:meeting_minutes_project.meeting_minutes_project_view_search
+msgid "Group By"
+msgstr "Regrouper par"
+
+#. module: meeting_minutes_project
 #: model:ir.model.fields,field_description:meeting_minutes_project.field_meeting_minutes_project__homework_ids
-#: model_terms:ir.ui.view,arch_db:meeting_minutes_project.meeting_minutes_project_view_form
 #: model:mail.activity.type,name:meeting_minutes_project.activity_homework
 msgid "Homework"
 msgstr "Devoirs"
@@ -166,17 +180,17 @@ msgstr ""
 #. module: meeting_minutes_project
 #: model:ir.model.fields,help:meeting_minutes_project.field_meeting_minutes_project__message_unread
 msgid "If checked new messages require your attention."
-msgstr "Si coché, les nouveaux messages nécessitent votre attention."
+msgstr "Si coché, de nouveaux messages demandent votre attention."
 
 #. module: meeting_minutes_project
 #: model:ir.model.fields,help:meeting_minutes_project.field_meeting_minutes_project__message_needaction
 msgid "If checked, new messages require your attention."
-msgstr "Si coché, les nouveaux messages nécessitent votre attention."
+msgstr "Si coché, de nouveaux messages demandent votre attention."
 
 #. module: meeting_minutes_project
 #: model:ir.model.fields,help:meeting_minutes_project.field_meeting_minutes_project__message_has_error
 msgid "If checked, some messages have a delivery error."
-msgstr "Si coché, certains messages ont une erreur de livraison."
+msgstr "Si actif, certains messages ont une erreur de livraison."
 
 #. module: meeting_minutes_project
 #: model:ir.model.fields,field_description:meeting_minutes_project.field_meeting_minutes_project__message_is_follower
@@ -204,12 +218,12 @@ msgstr "Dernière mise à jour le"
 #. module: meeting_minutes_project
 #: model_terms:ir.ui.view,arch_db:meeting_minutes_project.meeting_minutes_project_view_form
 msgid "Log a note..."
-msgstr "Enregistrer une note..."
+msgstr "Enregistrer une note"
 
 #. module: meeting_minutes_project
 #: model_terms:ir.ui.view,arch_db:meeting_minutes_project.meeting_minutes_project_view_form
 msgid "Log an Activity"
-msgstr "Enregistrer une activité"
+msgstr "Planifier une Activité"
 
 #. module: meeting_minutes_project
 #: model:ir.model.fields,field_description:meeting_minutes_project.field_meeting_minutes_project__message_main_attachment_id
@@ -217,10 +231,9 @@ msgid "Main Attachment"
 msgstr "Pièce jointe principale"
 
 #. module: meeting_minutes_project
-#: model:ir.actions.act_window,name:meeting_minutes_project.means_communication_action
-#: model:ir.ui.menu,name:meeting_minutes_project.mean_communication_menu
-msgid "Means of Communication"
-msgstr "Moyens de communication"
+#: model:ir.model.fields,field_description:meeting_minutes_project.field_meeting_minutes_project__meeting_minute_id
+msgid "Meeting Minute"
+msgstr "Compte Rendu"
 
 #. module: meeting_minutes_project
 #: model:ir.actions.act_window,name:meeting_minutes_project.action_meeting_minutes
@@ -228,43 +241,42 @@ msgstr "Moyens de communication"
 #: model:ir.model.fields,field_description:meeting_minutes_project.field_meeting_minutes_discuss_point__meeting_minutes_id
 #: model:ir.ui.menu,name:meeting_minutes_project.menu_meeting_minutes
 #: model_terms:ir.ui.view,arch_db:meeting_minutes_project.ir_actions_meeting_minutes_project_tree
-#: model_terms:ir.ui.view,arch_db:meeting_minutes_project.ir_actions_task_meeting_minutes_tree
 #: model_terms:ir.ui.view,arch_db:meeting_minutes_project.meeting_minutes_project_view_form
 #: model_terms:ir.ui.view,arch_db:meeting_minutes_project.meeting_minutes_project_view_tree
-#: model_terms:ir.ui.view,arch_db:meeting_minutes_project.project_task_form_view_inherit
+#: model_terms:ir.ui.view,arch_db:meeting_minutes_project.task_meeting_minutes_tree
 msgid "Meeting Minutes"
-msgstr "Compte-rendus"
+msgstr "Compte Rendu"
 
 #. module: meeting_minutes_project
-#: model:ir.model.fields,field_description:meeting_minutes_project.field_meeting_minutes_discuss_point__minutes_task_id
-msgid "Meeting Minutes Task"
-msgstr "Compte-rendu de tâche"
-
-#. module: meeting_minutes_project
-#: code:addons/meeting_minutes_project/models/meeting_minutes_project.py:30
+#: code:addons/meeting_minutes_project/models/meeting_minutes_project.py:47
 #, python-format
-msgid "Meeting Minutes: {task} - {create_datetime}"
-msgstr "Compte-rendu: {task} - {create_datetime}"
+msgid "Meeting Minutes: {record_name} - {create_datetime}"
+msgstr "Compte rendu: {record_name} - {create_datetime}"
+
+#. module: meeting_minutes_project
+#: model:ir.actions.report,name:meeting_minutes_project.action_report_meeting_minutes_project
+msgid "Meeting minutes"
+msgstr "Compte rendu"
 
 #. module: meeting_minutes_project
 #: model:ir.actions.act_window,name:meeting_minutes_project.action_view_meeting_minutes_project
-#: model:ir.actions.act_window,name:meeting_minutes_project.action_view_task_meeting_minutes
+#: model:ir.actions.act_window,name:meeting_minutes_project.task_meeting_minutes_action
 #: model:ir.model.fields,field_description:meeting_minutes_project.field_project_project__meeting_minutes_count
 #: model:ir.model.fields,field_description:meeting_minutes_project.field_project_task__meeting_minutes_count
 #: model_terms:ir.ui.view,arch_db:meeting_minutes_project.meeting_minutes_project_form
 #: model_terms:ir.ui.view,arch_db:meeting_minutes_project.project_task_form_view_inherit
 msgid "Meeting minutes"
-msgstr "Compte-rendus"
+msgstr "Comptes rendus"
 
 #. module: meeting_minutes_project
 #: model:ir.model.fields,field_description:meeting_minutes_project.field_project_project__meeting_minutes_ids
 msgid "Meeting minutes associated to this project"
-msgstr "Compte-rendu lié à un project"
+msgstr "Compte rendu lié à un project"
 
 #. module: meeting_minutes_project
 #: model:ir.model.fields,field_description:meeting_minutes_project.field_project_task__meeting_minutes_ids
 msgid "Meeting minutes associated to this task"
-msgstr "Compte-rendu lié à une tâche"
+msgstr "Compte rendu lié à une tâche"
 
 #. module: meeting_minutes_project
 #: model:ir.model.fields,field_description:meeting_minutes_project.field_project_task__mentions_count
@@ -275,7 +287,7 @@ msgstr ""
 #. module: meeting_minutes_project
 #: model:ir.model.fields,field_description:meeting_minutes_project.field_meeting_minutes_project__message_has_error
 msgid "Message Delivery error"
-msgstr "Erreur de remise du message"
+msgstr "Erreur d'envoi du message"
 
 #. module: meeting_minutes_project
 #: model:ir.model.fields,field_description:meeting_minutes_project.field_meeting_minutes_project__message_ids
@@ -290,17 +302,17 @@ msgstr "Nom"
 #. module: meeting_minutes_project
 #: model:ir.model.fields,field_description:meeting_minutes_project.field_meeting_minutes_project__activity_date_deadline
 msgid "Next Activity Deadline"
-msgstr "Date limite de la prochaine activité"
+msgstr "Date limite de l'Activité à Venir"
 
 #. module: meeting_minutes_project
 #: model:ir.model.fields,field_description:meeting_minutes_project.field_meeting_minutes_project__activity_summary
 msgid "Next Activity Summary"
-msgstr "Résumé de l'activité suivante"
+msgstr "Résumé d'activité suivant"
 
 #. module: meeting_minutes_project
 #: model:ir.model.fields,field_description:meeting_minutes_project.field_meeting_minutes_project__activity_type_id
 msgid "Next Activity Type"
-msgstr "Type d'activité suivant"
+msgstr "Type d'Activités à Venir"
 
 #. module: meeting_minutes_project
 #: model:ir.model.fields,field_description:meeting_minutes_project.field_meeting_minutes_discuss_point__notes
@@ -315,17 +327,17 @@ msgstr "Nombre d'actions"
 #. module: meeting_minutes_project
 #: model:ir.model.fields,field_description:meeting_minutes_project.field_meeting_minutes_project__message_has_error_counter
 msgid "Number of error"
-msgstr "Nombre d'erreur"
+msgstr "Nombre d'erreurs"
 
 #. module: meeting_minutes_project
 #: model:ir.model.fields,help:meeting_minutes_project.field_meeting_minutes_project__message_needaction_counter
 msgid "Number of messages which requires an action"
-msgstr "Nombre de messages nécessitant une action"
+msgstr "Nombre de messages exigeant une action"
 
 #. module: meeting_minutes_project
 #: model:ir.model.fields,help:meeting_minutes_project.field_meeting_minutes_project__message_has_error_counter
 msgid "Number of messages with delivery error"
-msgstr "Nombre de messages avec erreur de livraison"
+msgstr "Nombre de messages avec des erreurs d'envoi"
 
 #. module: meeting_minutes_project
 #: model:ir.model.fields,help:meeting_minutes_project.field_meeting_minutes_project__message_unread_counter
@@ -338,8 +350,8 @@ msgid "Overdue"
 msgstr "En retard"
 
 #. module: meeting_minutes_project
-#: model:ir.model.fields,field_description:meeting_minutes_project.field_project_project__pending_actions_ids
-#: model_terms:ir.ui.view,arch_db:meeting_minutes_project.meeting_minutes_project_form
+#: model_terms:ir.ui.view,arch_db:meeting_minutes_project.meeting_minutes_project_template
+#: model_terms:ir.ui.view,arch_db:meeting_minutes_project.meeting_minutes_project_view_form
 msgid "Pending Actions"
 msgstr "Rappel des actions en attente"
 
@@ -349,7 +361,7 @@ msgid "Planned"
 msgstr "Plannifié"
 
 #. module: meeting_minutes_project
-#: model:ir.model.fields,field_description:meeting_minutes_project.field_meeting_minutes_project__planned_point
+#: model:ir.model.fields,field_description:meeting_minutes_project.field_meeting_minutes_project__planned_points
 #: model_terms:ir.ui.view,arch_db:meeting_minutes_project.meeting_minutes_project_view_form
 msgid "Planned Points"
 msgstr "Points prévus"
@@ -357,6 +369,7 @@ msgstr "Points prévus"
 #. module: meeting_minutes_project
 #: model:ir.model,name:meeting_minutes_project.model_project_project
 #: model:ir.model.fields,field_description:meeting_minutes_project.field_meeting_minutes_project__project_id
+#: model_terms:ir.ui.view,arch_db:meeting_minutes_project.meeting_minutes_project_template
 #: model_terms:ir.ui.view,arch_db:meeting_minutes_project.meeting_minutes_project_view_search
 msgid "Project"
 msgstr "Projet"
@@ -370,7 +383,7 @@ msgstr "Ressources"
 #. module: meeting_minutes_project
 #: model:ir.model.fields,field_description:meeting_minutes_project.field_meeting_minutes_project__activity_user_id
 msgid "Responsible User"
-msgstr "Utilisateur responsable"
+msgstr "Responsable"
 
 #. module: meeting_minutes_project
 #: model:ir.model.fields,field_description:meeting_minutes_project.field_meeting_minutes_project__risks
@@ -385,7 +398,7 @@ msgstr "Séquence"
 
 #. module: meeting_minutes_project
 #: model:ir.model.fields,field_description:meeting_minutes_project.field_meeting_minutes_project__start_date
-msgid "Start time"
+msgid "Start"
 msgstr "Début"
 
 #. module: meeting_minutes_project
@@ -394,23 +407,15 @@ msgid "Status based on activities\n"
 "Overdue: Due date is already passed\n"
 "Today: Activity date is today\n"
 "Planned: Future activities."
-msgstr "Statut basé sur les activités\n"
-"En retard : la date d'échéance est déjà dépassée\n"
-"Aujourd'hui : la date de l'activité est aujourd'hui\n"
-"Planifié : activités futures."
-
-#. module: meeting_minutes_project
-#: model_terms:ir.ui.view,arch_db:meeting_minutes_project.meeting_minutes_project_view_search
-msgid "Group By"
-msgstr "Grouper Par"
+msgstr "Activités futures"
 
 #. module: meeting_minutes_project
 #: model:ir.model,name:meeting_minutes_project.model_project_task
 #: model:ir.model.fields,field_description:meeting_minutes_project.field_mail_activity__task_id
 #: model:ir.model.fields,field_description:meeting_minutes_project.field_meeting_minutes_discuss_point__task_id
 #: model:ir.model.fields,field_description:meeting_minutes_project.field_meeting_minutes_project__task_id
-#: model_terms:ir.ui.view,arch_db:meeting_minutes_project.meeting_minutes_discuss_point_view_form
 #: model_terms:ir.ui.view,arch_db:meeting_minutes_project.meeting_minutes_discuss_point_view_tree
+#: model_terms:ir.ui.view,arch_db:meeting_minutes_project.meeting_minutes_project_template
 #: model_terms:ir.ui.view,arch_db:meeting_minutes_project.meeting_minutes_project_view_search
 msgid "Task"
 msgstr "Tâche"
@@ -428,19 +433,29 @@ msgstr "Messages non lus"
 #. module: meeting_minutes_project
 #: model:ir.model.fields,field_description:meeting_minutes_project.field_meeting_minutes_project__message_unread_counter
 msgid "Unread Messages Counter"
-msgstr ""
+msgstr "Compteur de messages non lus"
+
+#. module: meeting_minutes_project
+#: model:ir.model.fields,field_description:meeting_minutes_project.field_meeting_minutes_project__user_id
+msgid "User"
+msgstr "Utilisateur"
 
 #. module: meeting_minutes_project
 #: model:ir.model.fields,field_description:meeting_minutes_project.field_meeting_minutes_project__website_message_ids
 msgid "Website Messages"
-msgstr "Messages du site Web"
+msgstr "Messages du site web"
 
 #. module: meeting_minutes_project
 #: model:ir.model.fields,help:meeting_minutes_project.field_meeting_minutes_project__website_message_ids
 msgid "Website communication history"
-msgstr "Historique des communications du site Web"
+msgstr "Historique de communication du site web"
 
 #. module: meeting_minutes_project
 #: model:ir.model,name:meeting_minutes_project.model_meeting_minutes_project
 msgid "meeting.minutes.project"
+msgstr ""
+
+#. module: meeting_minutes_project
+#: model_terms:ir.ui.view,arch_db:meeting_minutes_project.meeting_minutes_project_template
+msgid "n/a"
 msgstr ""

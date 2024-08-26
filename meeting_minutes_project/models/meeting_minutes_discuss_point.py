@@ -6,17 +6,19 @@ from odoo import fields, models
 
 class DiscussPoint(models.Model):
     _name = "meeting.minutes.discuss.point"
-    _description = "Discuss Points"
-    _rec_name = "minutes_task_id"
+    _description = "Discussed Points"
+    _rec_name = "task_id"
+    _order = "sequence"
 
     meeting_minutes_id = fields.Many2one(
-        "meeting.minutes.project", string="Meeting Minutes"
+        "meeting.minutes.project",
+        string="Meeting Minutes",
+        ondelete="cascade"
     )
     sequence = fields.Integer(string="Sequence")
-    task_id = fields.Many2one("project.task", ondelete="restrict")
-    minutes_task_id = fields.Many2one(
+    task_id = fields.Many2one(
         "project.task",
-        related="meeting_minutes_id.task_id",
-        string="Meeting Minutes Task",
+        string="Task",
+        ondelete="restrict"
     )
     notes = fields.Html(string="Notes")

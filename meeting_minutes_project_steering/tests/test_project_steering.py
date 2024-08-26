@@ -5,14 +5,13 @@ from odoo.tests.common import SavepointCase
 from odoo import fields
 
 
-class TestProjectSteering(SavepointCase):
-    @classmethod
-    def setUpClass(cls):
-        super().setUpClass()
-        task_model = cls.env["ir.model"].search([("model", "=", "project.task")]).id
+class TestProjectSteering(TransactionCase):
+    def setUp(self):
+        super().setUp()
+        task_model = self.env["ir.model"].search([("model", "=", "project.task")]).id
 
-        cls.project_1 = cls.env["project.project"].create({"name": "Project 1"})
-        cls.steering_kpi_1 = cls.env["project.steering.kpi"].create(
+        self.project_1 = self.env["project.project"].create({"name": "Project 1"})
+        self.steering_kpi_1 = self.env["project.steering.kpi"].create(
             {
                 "name": "Steering KPI 1",
                 "sequence": 2,
@@ -21,7 +20,7 @@ class TestProjectSteering(SavepointCase):
             }
         )
 
-        cls.steering_kpi_2 = cls.env["project.steering.kpi"].create(
+        self.steering_kpi_2 = self.env["project.steering.kpi"].create(
             {
                 "name": "Steering KPI 2",
                 "sequence": 1,
@@ -30,7 +29,7 @@ class TestProjectSteering(SavepointCase):
             }
         )
 
-        cls.steering_kpi_3 = cls.env["project.steering.kpi"].create(
+        self.steering_kpi_3 = self.env["project.steering.kpi"].create(
             {
                 "name": "Steering KPI 3",
                 "sequence": 3,
@@ -39,7 +38,7 @@ class TestProjectSteering(SavepointCase):
             }
         )
 
-        cls.steering_kpi_4 = cls.env["project.steering.kpi"].create(
+        self.steering_kpi_4 = self.env["project.steering.kpi"].create(
             {
                 "name": "Steering KPI 4",
                 "sequence": 5,
@@ -49,33 +48,33 @@ class TestProjectSteering(SavepointCase):
             }
         )
 
-        cls.task_1 = cls.env["project.task"].create(
+        self.task_1 = self.env["project.task"].create(
             {
-                "project_id": cls.project_1.id,
+                "project_id": self.project_1.id,
                 "name": "Room Task 1",
                 "planned_hours": 7,
             }
         )
 
-        cls.task_2 = cls.env["project.task"].create(
+        self.task_2 = self.env["project.task"].create(
             {
-                "project_id": cls.project_1.id,
+                "project_id": self.project_1.id,
                 "name": "Task 2",
                 "date_deadline": "2024-01-01",
             }
         )
 
-        cls.task_3 = cls.env["project.task"].create(
+        self.task_3 = self.env["project.task"].create(
             {
-                "project_id": cls.project_1.id,
+                "project_id": self.project_1.id,
                 "name": "Room Task 3",
                 "planned_hours": 5,
             }
         )
 
-        cls.task_4 = cls.env["project.task"].create(
+        self.task_4 = self.env["project.task"].create(
             {
-                "project_id": cls.project_1.id,
+                "project_id": self.project_1.id,
                 "name": "Room Task 4",
                 "planned_hours": 2,
                 "date_deadline": "2024-01-02",

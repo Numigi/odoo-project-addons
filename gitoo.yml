@@ -3,7 +3,7 @@
   includes:
     - base_extended_security
     - base_xml_rename
-    - meeting_minutes
+    - base_meeting_minutes
     - test_http_request
 
 - url: https://github.com/Numigi/odoo-web-addons
@@ -17,11 +17,11 @@
   includes:
     - report_aeroo 
 
-- url: https://github.com/OCA/timesheet
+- url: https://github.com/Numigi/odoo-web-addons
   branch: "12.0"
   includes:
-    - hr_timesheet_task_domain
-    - hr_timesheet_task_stage
+    - web_search_date_range
+    - web_contextual_search_favorite
 
 - url: https://github.com/OCA/partner-contact
   branch: "12.0"
@@ -39,6 +39,18 @@
     - project_timeline
     - project_risk
 
+- url: https://github.com/OCA/server-tools
+  branch: "12.0"
+  includes:
+    - datetime_formatter
+    - html_text
+
+- url: https://github.com/OCA/timesheet
+  branch: "12.0"
+  includes:
+    - hr_timesheet_task_domain
+    - hr_timesheet_task_stage
+
 - url: https://github.com/OCA/web
   branch: "12.0"
   includes:
@@ -47,7 +59,8 @@
     - web_timeline
     - web_widget_color
     - web_widget_digitized_signature
-
+    - web_widget_domain_editor_dialog
+    
 - url: https://github.com/Navybits/kanban_draggable
   branch: "11.0"
   includes:

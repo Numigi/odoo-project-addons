@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="meeting_minutes_project_template"
+        inherit_id="base_meeting_minutes.base_template_meeting_minutes" primary="True">
+        <xpath expr="//div[@name='object_details']" position="inside">
+            <div class="row mb-2 text-end ">
+                <div class="col-6 font-weight-bold text-uppercase">
+                    Project
+                </div>
+                <div class="col-6">
+                    <a t-attf-href="/my/project/#{o.project_id.id}"
+                        class="text-dark">
+                        <p t-field="o.project_id.display_name" />
+                    </a>
+                </div>
+            </div>
+            <div class="row mb-2">
+                <div class="col-6 font-weight-bold text-uppercase"> Task
+                </div>
+                <div class="col-6">
+                    <a t-attf-href="/my/task/#{o.task_id.id}" class="text-dark">
+                        #<span t-field="o.task_id.id" />
+                    </a>
+                </div>
+            </div>
+        </xpath>
+        <xpath expr="//div[@name='discussed_points']" position="before">
+            <div name="actions" class="mb-4">
+                <h4 class="font-weight-bold text-uppercase">Pending Actions
+                </h4>
+                <t t-if="o.action_ids">
+                    <t t-foreach="o.action_ids" t-as="action">
+                        <div class="mb-1">
+                            <h6 class="font-weight-bold">
+                                <a t-attf-href="/my/task/#{action.task_id.id}" class="text-dark"> [<span
+                                        t-field="action.task_id.id" />] <span
+                                        t-field="action.task_id.display_name" /></a>
+                            </h6>
+                            <div>
+                                <span t-field="action.note" class="text-muted" />
+                            </div>
+                        </div>
+                    </t>
+                </t>
+                <t t-else="">
+                    <div>n/a</div>
+                </t>
+            </div>
+        </xpath>
+        <xpath expr="//div[@name='discussed_points']/h4" position="after">
+            <div name="discuss_points" class="mb-3">
+                <t t-foreach="o.discuss_point_ids" t-as="point">
+                    <div class="mb-1">
+                        <h6 class="font-weight-bold">
+                            <a t-attf-href="/my/task/#{point.task_id.id}" class="text-dark"> [<span
+                                    t-field="point.task_id.id" />] <span
+                                    t-field="point.task_id.display_name" /></a>
+                        </h6>
+                        <div>
+                            <span t-field="point.notes" class="text-muted" />
+                        </div>
+                    </div>
+                </t>
+            </div>
+        </xpath>
+        <xpath expr="//div[@name='duties']/h4" position="after">
+            <div name="homework_ids" class="mb-3">
+                <t t-foreach="o.homework_ids" t-as="homework">
+                    <div class="mb-1">
+                        <h6 class="font-weight-bold">
+                            <a t-attf-href="/my/task/#{homework.task_id.id}" class="text-dark"> [<span
+                                    t-field="homework.task_id.id" />] <span
+                                    t-field="homework.task_id.display_name" /></a>
+                        </h6>
+                        <div>
+                            <span t-field="homework.note" class="text-muted" />
+                        </div>
+                    </div>
+                </t>
+            </div>
+        </xpath>
+    </template>
+</odoo>
