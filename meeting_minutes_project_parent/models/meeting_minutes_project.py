@@ -10,17 +10,14 @@ class MeetingMinutesProject(models.Model):
     parent_project_id = fields.Many2one(
         "project.project",
         string="Parent Project",
+        compute="_compute_parent_project_id",
         store=True,
     )
 
-    @api.onchange("project_id")
-    def on_change_project_id(self):
-        super().on_change_project_id()
-        if self.project_id:
-            self.parent_project_id = self.project_id.parent_id.id
-
-    @api.onchange("parent_project_id")
-    def on_change_parent_project_id(self):
-        if self.parent_project_id and not self.project_id:
-            self._set_document_ref(self.parent_project_id, "project.project")
-            self._set_meeting_minutes_name(self.parent_project_id)
+    @api.depends("project_id", "project_id.parent_id")
+    def _compute_parent_project_id(self):
+        for record in self:
+            record.parent_project_id = (
+                record.project_id.parent_id if record.project_id and
+                record.project_id.parent_id else False
+            )
