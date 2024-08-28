@@ -7,7 +7,7 @@
         <field name="inherit_id" ref="meeting_minutes_project.meeting_minutes_project_view_form"/>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='project_id']" position="before">
-                <field name="parent_project_id" readonly="1" />
+                <field name="parent_project_id" readonly="1" force_save="1"/>
             </xpath>
         </field>
     </record>
@@ -31,9 +31,11 @@
         <field name="res_model">meeting.minutes.project</field>
         <field name="view_mode">tree,form</field>
         <field name="context">{
-            'search_default_parent_project_id': [active_id],
-            'default_parent_project_id': active_id,
+            'search_default_user_id': [uid],
+            'search_default_project_id': [active_id],
+            'default_project_id': active_id,
             'default_user_id': uid,
+            'default_res_id': active_id,
             'default_res_model': 'project.project',
         }
         </field>
