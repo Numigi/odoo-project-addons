@@ -65,7 +65,7 @@ class MeetingMinutesProject(models.Model):
                 lambda f: f.partner_id
                 and not f.channel_id
                 and not f.partner_id.is_company
-                and f.partner_id.id != odoobot_id
+                and f.partner_id != odoobot_id
             )
         self.partner_ids = [
             (6, 0, [follower.partner_id.id for follower in partner_follower_ids])

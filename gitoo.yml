@@ -6,6 +6,12 @@
     - base_meeting_minutes
     - test_http_request
 
+- url: https://github.com/Numigi/odoo-web-addons
+  branch: "12.0"
+  includes:
+    - web_search_date_range
+    - web_contextual_search_favorite
+
 - url: https://github.com/Numigi/aeroo_reports
   branch: "12.0"
   includes:
