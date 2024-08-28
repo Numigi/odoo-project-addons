@@ -10,8 +10,16 @@ class MeetingMinutesProject(models.Model):
     parent_project_id = fields.Many2one(
         "project.project",
         string="Parent Project",
+        compute="_compute_parent_project_id",
         store=True,
     )
+
+    @api.depends("project_id" , "project_id.parent_id")
+    def _compute_parent_project_id(self):
+        for record in self:
+            record.parent_project_id = (
+                record.project_id.parent_id if record.project_id else False
+            )
 
     @api.onchange("project_id")
     def on_change_project_id(self):

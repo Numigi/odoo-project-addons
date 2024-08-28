@@ -15,6 +15,9 @@ class TestMeetingMinutesProjectParent(SavepointCase):
         cls.project_2 = cls.env["project.project"].create(
             {"name": "Project 2", "parent_id": cls.project_1.id}
         )
+        cls.project_3 = cls.env["project.project"].create(
+            {"name": "Project 3"}
+        )
 
         cls.MeetingMinutesObj = cls.env["meeting.minutes.project"]
 
@@ -46,9 +49,17 @@ class TestMeetingMinutesProjectParent(SavepointCase):
                 'task_id': self.task_2.id,
                 'project_id': self.project_1.id,
             })
-        self.MeetingMinutesObj.create({
+        meeting_minutes_3 = self.MeetingMinutesObj.create({
                 'task_id': self.task_2.id,
                 'project_id': self.project_2.id
             })
+
         assert self.project_1.meeting_minutes_count == 3
         assert self.project_2.meeting_minutes_count == 1
+        assert meeting_minutes_3.parent_project_id == self.project_1
+
+        self.project_2.write({'parent_id': self.project_3.id})
+        assert meeting_minutes_3.parent_project_id == self.project_3
+
+        self.project_2.write({'parent_id': False})
+        self.assertFalse(meeting_minutes_3.parent_project_id)
