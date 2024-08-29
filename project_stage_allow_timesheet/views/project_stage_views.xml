@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+
+    <record id="project_stage_allow_timesheet_tree" model="ir.ui.view">
+        <field name="name">Project stage: allow timesheet</field>
+        <field name="model">project.project.stage</field>
+        <field name="inherit_id" ref="project.project_project_stage_view_tree" />
+        <field type="xml" name="arch">
+            <field name="name" position="after">
+                <field name="allow_timesheet" />
+            </field>
+        </field>
+    </record>
+
+    <record id="project_project_stage_view_tree" model="ir.ui.view">
+        <field name="name">Project stage: allow timesheet</field>
+        <field name="model">project.project.stage</field>
+        <field name="inherit_id" ref="project.project_project_stage_view_form" />
+        <field type="xml" name="arch">
+            <field name="mail_template_id" position="after">
+                <field name="allow_timesheet" />
+            </field>
+        </field>
+    </record>
+
+</odoo>
