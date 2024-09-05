@@ -8,8 +8,17 @@ from odoo import fields, models, api, _
 
 class MeetingMinutesProject(models.Model):
     _name = "meeting.minutes.project"
-    _inherit = ['mail.thread', 'mail.activity.mixin']
+    _inherit = ["mail.thread", "mail.activity.mixin"]
     _inherits = {"meeting.minutes.mixin": "meeting_minute_id"}
+
+    def _get_actions_domain(self):
+        homework = self.env.ref("meeting_minutes_project.activity_homework")
+        domain = [
+            ("res_model", "=", "project.task"),
+            ("activity_type_id", "=", homework.id),
+            ("date_deadline", "<", fields.Date.context_today(self)),
+        ]
+        return domain
 
     task_id = fields.Many2one(
         "project.task",
@@ -22,24 +31,23 @@ class MeetingMinutesProject(models.Model):
     )
     meeting_minute_id = fields.Many2one(
         "meeting.minutes.mixin",
-        string='Meeting Minute',
+        string="Meeting Minute",
         required=True,
-        ondelete='cascade'
+        ondelete="cascade",
     )
     discuss_point_ids = fields.One2many(
-        "meeting.minutes.discuss.point",
-        "meeting_minutes_id",
-        string="Discussed Points"
+        "meeting.minutes.discuss.point", "meeting_minutes_id", string="Discussed Points"
     )
-    action_ids = fields.One2many(
+
+    action_ids = fields.Many2many(
         "mail.activity",
-        compute="_compute_action_ids",
-        string="Pending Actions", readonly=True
+        string="Pending Actions",
+        domain=lambda self: self._get_actions_domain(),
     )
     homework_ids = fields.One2many(
         "mail.activity",
         "meeting_minutes_id",
-        string="Homework"
+        string="Homework",
     )
 
     def _set_meeting_minutes_name(self, record):
@@ -62,11 +70,11 @@ class MeetingMinutesProject(models.Model):
         # Filter odoobot to avoid displaying it on edit mode then disappear on save
         odoobot_id = self.env.ref("base.partner_root")
         partner_follower_ids = record.message_follower_ids.filtered(
-                lambda f: f.partner_id
-                and not f.channel_id
-                and not f.partner_id.is_company
-                and f.partner_id != odoobot_id
-            )
+            lambda f: f.partner_id
+            and not f.channel_id
+            and not f.partner_id.is_company
+            and f.partner_id != odoobot_id
+        )
         self.partner_ids = [
             (6, 0, [follower.partner_id.id for follower in partner_follower_ids])
         ]
@@ -86,15 +94,31 @@ class MeetingMinutesProject(models.Model):
             self._set_document_ref(self.project_id, "project.project")
             self._set_meeting_minutes_name(self.project_id)
 
-    @api.multi
-    def _compute_action_ids(self):
-        homework = self.env.ref("meeting_minutes_project.activity_homework")
-        today = fields.Date.context_today(self)
+    @api.model
+    def create(self, vals):
+        if vals.get("project_id"):
+            project_id = self.env["project.project"].browse(vals.get("project_id"))
+            homework = self.env.ref("meeting_minutes_project.activity_homework")
+            domain = [
+                ("res_model", "=", "project.task"),
+                ("res_id", "in", project_id.task_ids.ids),
+                ("activity_type_id", "=", homework.id),
+                ("date_deadline", "<", fields.Date.context_today(self)),
+            ]
+            activity_ids = self.env["mail.activity"].search(domain)
+            vals["action_ids"] = [(6, 0, activity_ids.ids)]
+        res = super(MeetingMinutesProject, self).create(vals)
+        return res
+
+    def action_load_pending_action(self):
         for rec in self:
-            activities = self.env["mail.activity"].search([
+            homework = self.env.ref("meeting_minutes_project.activity_homework")
+            domain = [
                 ("res_model", "=", "project.task"),
                 ("res_id", "in", rec.project_id.task_ids.ids),
                 ("activity_type_id", "=", homework.id),
-                ("date_deadline", "<", today),
-            ])
-            rec.action_ids = activities
+                ("date_deadline", "<", fields.Date.context_today(self)),
+            ]
+
+            activity_ids = self.env["mail.activity"].search(domain).ids
+            rec.action_ids = [(6, 0, rec.action_ids.ids + activity_ids)]

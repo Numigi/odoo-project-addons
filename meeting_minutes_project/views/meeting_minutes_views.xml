@@ -45,6 +45,10 @@
                             </group>
 
                             <h2>Pending Actions</h2>
+                            <button name="action_load_pending_action" type="object" >
+                                <span class="fa fa-play"/>
+                                    Load pending actions
+                            </button>
                             <group>
                                 <field name="action_ids" nolabel="1">
                                     <tree>

@@ -119,15 +119,22 @@ class TestMeetingMinutesProject(SavepointCase):
         minutes = self._create_minutes()
         assert activity not in minutes.action_ids
 
+    def test_action_load_pending_action(self):
+        minutes = self._create_minutes()
+        activity = self._create_homework_activity(self.yesterday)
+        minutes.action_load_pending_action()
+        assert activity in minutes.action_ids
+
     def _create_minutes(self):
         self.env["meeting.minutes.project"].search(
             [("task_id", "=", self.task_1.id)]
         ).unlink()
 
         minutes = (
-            self.env["meeting.minutes.project"]
-            .with_context(default_task_id=self.task_1.id)
-            .create({})
+            self.env["meeting.minutes.project"].create({
+                "task_id" : self.task_1.id,
+                "project_id" : self.project_1.id
+            })
         )
         minutes.on_change_task_id()
         return minutes
