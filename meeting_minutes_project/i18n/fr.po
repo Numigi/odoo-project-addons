@@ -6,14 +6,21 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-19 16:28+0000\n"
-"PO-Revision-Date: 2024-08-19 16:28+0000\n"
+"POT-Creation-Date: 2024-09-05 08:21+0000\n"
+"PO-Revision-Date: 2024-09-05 08:21+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
+
+#. module: meeting_minutes_project
+#: model_terms:ir.ui.view,arch_db:meeting_minutes_project.meeting_minutes_project_view_form
+msgid "<span class=\"fa fa-play\"/>\n"
+"                                    Load pending actions"
+msgstr "<span class=\"fa fa-play\"/>\n"
+"                                    Charger les actions en attente"
 
 #. module: meeting_minutes_project
 #: model_terms:ir.ui.view,arch_db:meeting_minutes_project.meeting_minutes_project_view_form
@@ -232,6 +239,7 @@ msgstr "Pièce jointe principale"
 
 #. module: meeting_minutes_project
 #: model:ir.model.fields,field_description:meeting_minutes_project.field_meeting_minutes_project__meeting_minute_id
+#: model_terms:ir.ui.view,arch_db:meeting_minutes_project.meeting_minutes_project_view_search
 msgid "Meeting Minute"
 msgstr "Compte Rendu"
 
@@ -261,6 +269,7 @@ msgstr "Compte rendu"
 #. module: meeting_minutes_project
 #: model:ir.actions.act_window,name:meeting_minutes_project.action_view_meeting_minutes_project
 #: model:ir.actions.act_window,name:meeting_minutes_project.task_meeting_minutes_action
+#: model:ir.actions.report,name:meeting_minutes_project.action_report_meeting_minutes_project
 #: model:ir.model.fields,field_description:meeting_minutes_project.field_project_project__meeting_minutes_count
 #: model:ir.model.fields,field_description:meeting_minutes_project.field_project_task__meeting_minutes_count
 #: model_terms:ir.ui.view,arch_db:meeting_minutes_project.meeting_minutes_project_form
@@ -350,6 +359,7 @@ msgid "Overdue"
 msgstr "En retard"
 
 #. module: meeting_minutes_project
+#: model:ir.model.fields,field_description:meeting_minutes_project.field_meeting_minutes_project__action_ids
 #: model_terms:ir.ui.view,arch_db:meeting_minutes_project.meeting_minutes_project_template
 #: model_terms:ir.ui.view,arch_db:meeting_minutes_project.meeting_minutes_project_view_form
 msgid "Pending Actions"
