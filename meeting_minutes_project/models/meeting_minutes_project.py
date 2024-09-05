@@ -94,31 +94,28 @@ class MeetingMinutesProject(models.Model):
             self._set_document_ref(self.project_id, "project.project")
             self._set_meeting_minutes_name(self.project_id)
 
+    def _get_activities(self, project_id):
+        homework = self.env.ref("meeting_minutes_project.activity_homework")
+        domain = [
+            ("res_model", "=", "project.task"),
+            ("res_id", "in", project_id.task_ids.ids),
+            ("activity_type_id", "=", homework.id),
+            ("date_deadline", "<", fields.Date.context_today(self)),
+        ]
+        return self.env["mail.activity"].search(domain)
+
     @api.model
     def create(self, vals):
         if vals.get("project_id"):
             project_id = self.env["project.project"].browse(vals.get("project_id"))
-            homework = self.env.ref("meeting_minutes_project.activity_homework")
-            domain = [
-                ("res_model", "=", "project.task"),
-                ("res_id", "in", project_id.task_ids.ids),
-                ("activity_type_id", "=", homework.id),
-                ("date_deadline", "<", fields.Date.context_today(self)),
+            activity_ids = self._get_activities(project_id)
+            vals["action_ids"] = [
+                (4, activity_id.id) for activity_id in activity_ids
             ]
-            activity_ids = self.env["mail.activity"].search(domain)
-            vals["action_ids"] = [(6, 0, activity_ids.ids)]
         res = super(MeetingMinutesProject, self).create(vals)
         return res
 
     def action_load_pending_action(self):
-        for rec in self:
-            homework = self.env.ref("meeting_minutes_project.activity_homework")
-            domain = [
-                ("res_model", "=", "project.task"),
-                ("res_id", "in", rec.project_id.task_ids.ids),
-                ("activity_type_id", "=", homework.id),
-                ("date_deadline", "<", fields.Date.context_today(self)),
-            ]
-
-            activity_ids = self.env["mail.activity"].search(domain).ids
-            rec.action_ids = [(6, 0, rec.action_ids.ids + activity_ids)]
+        self.ensure_one()
+        activity_ids = self._get_activities(self.project_id)
+        self.action_ids = [(4, activity_id.id) for activity_id in activity_ids]

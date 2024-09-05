@@ -132,8 +132,8 @@ class TestMeetingMinutesProject(SavepointCase):
 
         minutes = (
             self.env["meeting.minutes.project"].create({
-                "task_id" : self.task_1.id,
-                "project_id" : self.project_1.id
+                "task_id": self.task_1.id,
+                "project_id": self.project_1.id
             })
         )
         minutes.on_change_task_id()
