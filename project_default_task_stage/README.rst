@@ -4,7 +4,7 @@ This module allows to define default task stages on projects.
 
 Dependencies
 ------------
-This module depends on modules ``project_type`` and ``project_stage_no_quick_create`` from the same repository.
+This module depends on module ``project_type`` from the same repository.
 
 Usage
 -----
