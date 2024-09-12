@@ -1,0 +1,17 @@
+.table-bordered-2 {
+    border: 2px solid black !important;
+    thead {
+        th {
+            border: 2px solid black !important;
+            background: gray("200") !important;
+        }
+    }
+    tbody {
+        td {
+            border-right: 2px solid black !important;
+        }
+        #last-record {
+            border-bottom: 2px solid black;
+        }
+    }
+}

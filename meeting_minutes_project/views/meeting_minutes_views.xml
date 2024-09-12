@@ -152,7 +152,6 @@
                                         </sheet>
                                     </form>
                                 </field>
-                                <field name="duties" nolabel="1" colspan="4"/>
                             </group>
                             <h2>Resources</h2>
                             <group>
