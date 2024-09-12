@@ -58,6 +58,8 @@ class MeetingMinutesProject(models.Model):
         self.ensure_one()
         self.res_id = record.id
         self.res_model = model
+        if self.meeting_minute_id :
+            self.meeting_minute_id.res_mode = model
 
     def _set_attendees(self, record):
         self.ensure_one()

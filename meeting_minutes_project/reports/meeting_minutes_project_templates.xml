@@ -132,6 +132,9 @@
                     </table>
                 </div>
             </t>
+            <t t-else="">
+                <div>n/a</div>
+            </t>
         </xpath>
     </template>
 </odoo>

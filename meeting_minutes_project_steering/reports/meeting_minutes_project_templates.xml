@@ -3,65 +3,69 @@
     <template id="meeting_minutes_project_template"
         inherit_id="meeting_minutes_project.meeting_minutes_project_template">
         <xpath expr="//div[@name='discussed_points']" position="after">
-            <div name="project_steerings" class="mb-4">
-                <h4 class="font-weight-bold text-uppercase">Steering</h4>
+            <t t-if="o.project_steering_enabled">
+                <div name="project_steerings" class="mb-4">
+                    <h4 class="font-weight-bold text-uppercase">Steering</h4>
 
-                <t t-if="o.project_steering_ids">
-                    <div class="table-responsive-sm">
-                        <table class="table-sm table-bordered">
-                            <thead class="text-center bg-dark text-white">
-                                <tr class="text-center ">
-                                    <th class="pt-3 pb-3">Project</th>
-                                    <th class="pt-3 pb-3">Project deadline</th>
-                                    <th class="pt-3 pb-3">Task</th>
-                                    <th class="pt-3 pb-3">Planned date</th>
-                                    <th class="pt-3 pb-3">Deadline</th>
-                                    <th class="pt-3 pb-3">Notes</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <t t-foreach="o.project_steering_ids" t-as="line">
-                                    <tr class="text-center"
-                                        t-att-class="'bg-light font-weight-bold o_line_section' if line.display_type == 'line_section' else 'font-italic o_line_note' if line.display_type == 'line_note' else ''">
-                                        <t t-if="not line.display_type">
-                                            <td>
-                                                <span t-esc="line.project_id.name" />
-                                            </td>
-                                            <td>
-                                                <span t-field="line.project_end_date" />
-                                            </td>
-                                            <td name="task">
-                                                <a t-attf-href="/my/task/#{line.task_id.id}"
-                                                    class="text-dark"> [<span
-                                                        t-field="line.task_id.id" />] <span
-                                                        t-field="line.task_id.display_name" />
-                                                </a>
-                                            </td>
-                                            <td>
-                                                <span t-field="line.task_date_planned" />
-                                            </td>
-                                            <td>
-                                                <span t-field="line.task_date_deadline" />
-                                            </td>
-                                            <td>
-                                                <span t-field="line.name" />
-                                            </td>
-                                        </t>
-                                        <t t-if="line.display_type == 'line_section' and line.name">
-                                            <td colspan="6" class="text-start">
-                                                <span t-field="line.name" />
-                                            </td>
-                                        </t>
+                    <t t-if="o.project_steering_ids">
+                        <div class="table-responsive">
+                            <table class="table-sm table-bordered" id="table-project-steering">
+                                <thead class="text-center">
+                                    <tr class="text-center ">
+                                        <th class="pt-3 pb-3">Project</th>
+                                        <th class="pt-3 pb-3">Project deadline</th>
+                                        <th class="pt-3 pb-3">Task</th>
+                                        <th class="pt-3 pb-3">Planned date</th>
+                                        <th class="pt-3 pb-3">Deadline</th>
+                                        <th class="pt-3 pb-3">Notes</th>
                                     </tr>
-                                </t>
-                            </tbody>
-                        </table>
-                    </div>
-                </t>
-                <t t-else="">
-                    <div>n/a</div>
-                </t>
-            </div>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="o.project_steering_ids" t-as="line">
+                                        <tr 
+                                            t-att-class="'bg-light font-weight-bold o_line_section' if line.display_type == 'line_section' else 'font-italic o_line_note' if line.display_type == 'line_note' else ''">
+                                            <t t-if="not line.display_type">
+                                                <td class="text-left">
+                                                    <span t-esc="line.project_id.name" />
+                                                </td>
+                                                <td class="text-center">
+                                                    <span t-field="line.project_end_date" />
+                                                </td>
+                                                <td name="task" class="text-left">
+                                                    <a t-attf-href="/my/task/#{line.task_id.id}"
+                                                        class="text-dark"> [<span
+                                                            t-field="line.task_id.id" />] <span
+                                                            t-field="line.task_id.display_name" />
+                                                    </a>
+                                                </td>
+                                                <td class="text-center">
+                                                    <span t-field="line.task_date_planned" />
+                                                </td>
+                                                <td class="text-center">
+                                                    <span t-field="line.task_date_deadline" />
+                                                </td>
+                                                <td class="text-left"> 
+                                                    <span t-field="line.notes" />
+                                                </td>
+                                            </t>
+                                            <t
+                                                t-if="line.display_type == 'line_section' and line.name">
+                                                <td colspan="6" class="text-start">
+                                                    <span t-field="line.name" />
+                                                </td>
+                                            </t>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                            </table>
+                        </div>
+                    </t>
+                    <t t-else="">
+                        <div>n/a</div>
+                    </t>
+                </div>
+            </t>
+
         </xpath>
     </template>
 </odoo>
