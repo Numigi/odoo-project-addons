@@ -11,48 +11,92 @@ class ProjectWIPMaterialCase(TaskMaterialCase):
         super().setUpClass()
         cls.manager.groups_id |= cls.env.ref('account.group_account_manager')
 
-        cls.journal = cls.env['account.journal'].create({
-            'name': 'Stock Journal',
-            'type': 'general',
-            'code': 'STOCK',
-            'company_id': cls.company.id,
-        })
+        cls.journal = (
+            cls.env["account.journal"]
+            .with_user(cls.manager)
+            .create(
+                {
+                    "name": "Stock Journal",
+                    "type": "general",
+                    "code": "STOCK",
+                    "company_id": cls.company.id,
+                }
+            )
+        )
 
-        cls.stock_account = cls.env['account.account'].create({
-            'name': 'Raw Material Stocks',
-            'code': '130101',
-            'user_type_id': cls.env.ref('account.data_account_type_non_current_assets').id,
-            'company_id': cls.company.id,
-        })
+        cls.stock_account = (
+            cls.env["account.account"]
+            .with_user(cls.manager)
+            .create(
+                {
+                    "name": "Raw Material Stocks",
+                    "code": "130101",
+                    "user_type_id": cls.env.ref(
+                        "account.data_account_type_non_current_assets"
+                    ).id,
+                    "company_id": cls.company.id,
+                }
+            )
+        )
 
-        cls.input_account = cls.env['account.account'].create({
-            'name': 'Stock Received / Not Invoiced',
-            'code': '230102',
-            'user_type_id': cls.env.ref('account.data_account_type_non_current_assets').id,
-            'company_id': cls.company.id,
-        })
+        cls.input_account = (
+            cls.env["account.account"]
+            .with_user(cls.manager)
+            .create(
+                {
+                    "name": "Stock Received / Not Invoiced",
+                    "code": "230102",
+                    "user_type_id": cls.env.ref(
+                        "account.data_account_type_non_current_assets"
+                    ).id,
+                    "company_id": cls.company.id,
+                }
+            )
+        )
 
-        cls.output_account = cls.env['account.account'].create({
-            'name': 'Stock Delivered / Not Invoiced',
-            'code': '130102',
-            'user_type_id': cls.env.ref('account.data_account_type_non_current_assets').id,
-            'company_id': cls.company.id,
-        })
+        cls.output_account = (
+            cls.env["account.account"]
+            .with_user(cls.manager)
+            .create(
+                {
+                    "name": "Stock Delivered / Not Invoiced",
+                    "code": "130102",
+                    "user_type_id": cls.env.ref(
+                        "account.data_account_type_non_current_assets"
+                    ).id,
+                    "company_id": cls.company.id,
+                }
+            )
+        )
 
-        cls.wip_account = cls.env['account.account'].create({
-            'name': 'Work In Progress',
-            'code': '140101',
-            'user_type_id': cls.env.ref('account.data_account_type_non_current_assets').id,
-            'reconcile': True,
-            'company_id': cls.company.id,
-        })
+        cls.wip_account = (
+            cls.env["account.account"]
+            .with_user(cls.manager)
+            .create(
+                {
+                    "name": "Work In Progress",
+                    "code": "140101",
+                    "user_type_id": cls.env.ref(
+                        "account.data_account_type_non_current_assets"
+                    ).id,
+                    "reconcile": True,
+                    "company_id": cls.company.id,
+                }
+            )
+        )
 
-        cls.project_type = cls.env['project.type'].create({
-            'name': 'Trailer Refurb',
-            'wip_account_id': cls.wip_account.id,
-        })
+        cls.project_type = (
+            cls.env["project.type"]
+            .with_user(cls.manager)
+            .create(
+                {
+                    "name": "Trailer Refurb",
+                    "wip_account_id": cls.wip_account.id,
+                }
+            )
+        )
 
-        cls.project.type_id = cls.project_type
+        cls.project.with_user(cls.manager).write({"type_id": cls.project_type})
 
         cls.product_category.write({
             'property_valuation': 'real_time',
