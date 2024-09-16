@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-05 08:21+0000\n"
-"PO-Revision-Date: 2024-09-05 08:21+0000\n"
+"POT-Creation-Date: 2024-09-12 10:05+0000\n"
+"PO-Revision-Date: 2024-09-12 10:05+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -23,6 +23,11 @@ msgstr "<span class=\"fa fa-play\"/>\n"
 "                                    Charger les actions en attente"
 
 #. module: meeting_minutes_project
+#: model_terms:ir.ui.view,arch_db:meeting_minutes_project.meeting_minutes_project_template
+msgid "<span>Note here :</span>"
+msgstr "<span>Notes ici :</span>
+
+#. module: meeting_minutes_project
 #: model_terms:ir.ui.view,arch_db:meeting_minutes_project.meeting_minutes_project_view_form
 msgid "<strong>Recommended Activities</strong>"
 msgstr "<strong>Activités recommandées</strong>"
@@ -31,11 +36,6 @@ msgstr "<strong>Activités recommandées</strong>"
 #: model:ir.model.fields,field_description:meeting_minutes_project.field_meeting_minutes_project__message_needaction
 msgid "Action Needed"
 msgstr "Nécessite une action"
-
-#. module: meeting_minutes_project
-#: model:ir.model.fields,field_description:meeting_minutes_project.field_meeting_minutes_project__action_ids
-msgid "Pending Actions"
-msgstr "Rappel actions en attente"
 
 #. module: meeting_minutes_project
 #: model:ir.model.fields,field_description:meeting_minutes_project.field_meeting_minutes_project__active
@@ -48,12 +48,8 @@ msgid "Activities"
 msgstr "Activités"
 
 #. module: meeting_minutes_project
-#: model_terms:ir.ui.view,arch_db:meeting_minutes_project.meeting_minutes_project_view_search
-msgid "Activities Analysis"
-msgstr ""
-
-#. module: meeting_minutes_project
 #: model:ir.model,name:meeting_minutes_project.model_mail_activity
+#: model_terms:ir.ui.view,arch_db:meeting_minutes_project.meeting_minutes_project_template
 #: model_terms:ir.ui.view,arch_db:meeting_minutes_project.meeting_minutes_project_view_form
 msgid "Activity"
 msgstr "Activité"
@@ -62,6 +58,11 @@ msgstr "Activité"
 #: model:ir.model.fields,field_description:meeting_minutes_project.field_meeting_minutes_project__activity_state
 msgid "Activity State"
 msgstr "Status de l'Activité"
+
+#. module: meeting_minutes_project
+#: model_terms:ir.ui.view,arch_db:meeting_minutes_project.meeting_minutes_project_template
+msgid "Assigned"
+msgstr "Assigné"
 
 #. module: meeting_minutes_project
 #: model:ir.model.fields,field_description:meeting_minutes_project.field_meeting_minutes_project__message_attachment_count
@@ -142,6 +143,11 @@ msgid "Document Model Name"
 msgstr ""
 
 #. module: meeting_minutes_project
+#: model_terms:ir.ui.view,arch_db:meeting_minutes_project.meeting_minutes_project_template
+msgid "Due date"
+msgstr "Echeance"
+
+#. module: meeting_minutes_project
 #: model:ir.model.fields,field_description:meeting_minutes_project.field_meeting_minutes_project__duties
 #: model_terms:ir.ui.view,arch_db:meeting_minutes_project.meeting_minutes_project_view_form
 msgid "Duties"
@@ -200,6 +206,11 @@ msgid "If checked, some messages have a delivery error."
 msgstr "Si actif, certains messages ont une erreur de livraison."
 
 #. module: meeting_minutes_project
+#: model_terms:ir.ui.view,arch_db:meeting_minutes_project.meeting_minutes_project_template
+msgid "Internal ref"
+msgstr "Réf. interne"
+
+#. module: meeting_minutes_project
 #: model:ir.model.fields,field_description:meeting_minutes_project.field_meeting_minutes_project__message_is_follower
 msgid "Is Follower"
 msgstr "Est un abonné"
@@ -253,18 +264,7 @@ msgstr "Compte Rendu"
 #: model_terms:ir.ui.view,arch_db:meeting_minutes_project.meeting_minutes_project_view_tree
 #: model_terms:ir.ui.view,arch_db:meeting_minutes_project.task_meeting_minutes_tree
 msgid "Meeting Minutes"
-msgstr "Compte Rendu"
-
-#. module: meeting_minutes_project
-#: code:addons/meeting_minutes_project/models/meeting_minutes_project.py:47
-#, python-format
-msgid "Meeting Minutes: {record_name} - {create_datetime}"
-msgstr "Compte rendu: {record_name} - {create_datetime}"
-
-#. module: meeting_minutes_project
-#: model:ir.actions.report,name:meeting_minutes_project.action_report_meeting_minutes_project
-msgid "Meeting minutes"
-msgstr "Compte rendu"
+msgstr "Comptes Rendus"
 
 #. module: meeting_minutes_project
 #: model:ir.actions.act_window,name:meeting_minutes_project.action_view_meeting_minutes_project
@@ -425,7 +425,6 @@ msgstr "Activités futures"
 #: model:ir.model.fields,field_description:meeting_minutes_project.field_meeting_minutes_discuss_point__task_id
 #: model:ir.model.fields,field_description:meeting_minutes_project.field_meeting_minutes_project__task_id
 #: model_terms:ir.ui.view,arch_db:meeting_minutes_project.meeting_minutes_discuss_point_view_tree
-#: model_terms:ir.ui.view,arch_db:meeting_minutes_project.meeting_minutes_project_template
 #: model_terms:ir.ui.view,arch_db:meeting_minutes_project.meeting_minutes_project_view_search
 msgid "Task"
 msgstr "Tâche"

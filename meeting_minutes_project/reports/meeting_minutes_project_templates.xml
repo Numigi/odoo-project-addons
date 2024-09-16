@@ -15,39 +15,62 @@
                 </div>
             </div>
             <div class="row mb-2">
-                <div class="col-6 font-weight-bold text-uppercase"> Task
+                <div class="col-6 font-weight-bold text-uppercase"> Internal ref
                 </div>
                 <div class="col-6">
-                    <a t-attf-href="/my/task/#{o.task_id.id}" class="text-dark">
-                        #<span t-field="o.task_id.id" />
+                    <a t-attf-href="/my/task/#{o.task_id.id}" class="text-dark"> TA#<span
+                            t-field="o.task_id.id" />
                     </a>
                 </div>
             </div>
         </xpath>
         <xpath expr="//div[@name='discussed_points']" position="before">
             <div name="actions" class="mb-4">
-                <h4 class="font-weight-bold text-uppercase">Pending Actions
-                </h4>
+                <h3 class="font-weight-bold text-uppercase">Pending Actions
+                </h3>
                 <t t-if="o.action_ids">
-                    <t t-foreach="o.action_ids" t-as="action">
-                        <div class="mb-1">
-                            <h6 class="font-weight-bold">
-                                <a t-attf-href="/my/task/#{action.task_id.id}" class="text-dark"> [<span
-                                        t-field="action.task_id.id" />] <span
-                                        t-field="action.task_id.display_name" /></a>
-                            </h6>
-                            <div>
-                                <span t-field="action.note" class="text-muted" />
-                            </div>
-                        </div>
-                    </t>
+                    <div class="table-responsive">
+                        <table class="table table-sm table-bordered table-bordered-2">
+                            <thead class="text-center font-weight-bold">
+                                <tr>
+                                    <th class="pt-3 pb-3">Activity</th>
+                                    <th class="pt-3 pb-3">Assigned</th>
+                                    <th class="pt-3 pb-3">Due date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="o.action_ids" t-as="action">
+                                    <tr class="text-left" id="account_payment_term_immediatd">
+                                        <td>
+                                            <span t-esc="action.task_id.display_name" />
+                                        </td>
+                                        <td>
+                                            <span t-esc="action.user_id.name" />
+                                        </td>
+                                        <td>
+                                            <span t-esc="action.date_deadline" />
+                                        </td>
+                                    </tr>
+                                    <tr class="text-left" id="last-record"
+                                        t-if="action.summary or env['ir.fields.converter'].text_from_html(action.note)">
+                                        <td>
+                                            <span t-esc="action.summary" />
+                                        </td>
+                                        <td colspan="2">
+                                            <span t-esc="env['ir.fields.converter'].text_from_html(action.note)" />
+                                        </td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                    </div>
                 </t>
                 <t t-else="">
                     <div>n/a</div>
                 </t>
             </div>
         </xpath>
-        <xpath expr="//div[@name='discussed_points']/h4" position="after">
+        <xpath expr="//div[@name='discussed_points']/h3" position="after">
             <div name="discuss_points" class="mb-3">
                 <t t-foreach="o.discuss_point_ids" t-as="point">
                     <div class="mb-1">
@@ -62,22 +85,56 @@
                     </div>
                 </t>
             </div>
-        </xpath>
-        <xpath expr="//div[@name='duties']/h4" position="after">
-            <div name="homework_ids" class="mb-3">
-                <t t-foreach="o.homework_ids" t-as="homework">
-                    <div class="mb-1">
-                        <h6 class="font-weight-bold">
-                            <a t-attf-href="/my/task/#{homework.task_id.id}" class="text-dark"> [<span
-                                    t-field="homework.task_id.id" />] <span
-                                    t-field="homework.task_id.display_name" /></a>
-                        </h6>
-                        <div>
-                            <span t-field="homework.note" class="text-muted" />
-                        </div>
-                    </div>
-                </t>
+            <div t-if="o.discuss_point_ids">
+                <span>Note here :</span>
             </div>
+        </xpath>
+        <xpath expr="//t[@t-if=&quot;env['ir.fields.converter'].text_from_html(o.duties)&quot;]"
+            position="replace">
+            <t t-if="1==1">
+            </t>
+        </xpath>
+        <xpath expr="//div[@name='duties']/h3" position="after">
+            <t t-if="o.homework_ids">
+                <div class="table-responsive">
+                    <table class="table table-sm table-bordered table-bordered-2">
+                        <thead class="text-center font-weight-bold">
+                            <tr>
+                                <th class="pt-3 pb-3">Activity</th>
+                                <th class="pt-3 pb-3">Assigned</th>
+                                <th class="pt-3 pb-3">Due date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="o.homework_ids" t-as="homework_id">
+                                <tr class="text-left" id="account_payment_term_immediatd">
+                                    <td>
+                                        <span t-esc="homework_id.task_id.display_name" />
+                                    </td>
+                                    <td>
+                                        <span t-esc="homework_id.user_id.name" />
+                                    </td>
+                                    <td>
+                                        <span t-esc="homework_id.date_deadline" />
+                                    </td>
+                                </tr>
+                                <tr class="text-left" id="last-record"
+                                    t-if="homework_id.summary or env['ir.fields.converter'].text_from_html(homework_id.note)">
+                                    <td>
+                                        <span t-esc="homework_id.summary" />
+                                    </td>
+                                    <td colspan="2">
+                                        <span t-esc="env['ir.fields.converter'].text_from_html(homework_id.note)" />
+                                    </td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                </div>
+            </t>
+            <t t-else="">
+                <div>n/a</div>
+            </t>
         </xpath>
     </template>
 </odoo>

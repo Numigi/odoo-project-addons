@@ -52,18 +52,14 @@ class MeetingMinutesProject(models.Model):
 
     def _set_meeting_minutes_name(self, record):
         self.ensure_one()
-        name_format = _("Meeting Minutes: {record_name} - {create_datetime}")
-        create_date = self.create_date or datetime.today()
-        create_date = create_date.astimezone(timezone(self.env.user.tz))
-        self.name = name_format.format(
-            record_name=record.display_name,
-            create_datetime=create_date.strftime("%Y-%m-%d %H:%M:%S"),
-        )
+        self.name = record.display_name
 
     def _set_document_ref(self, record, model):
         self.ensure_one()
         self.res_id = record.id
         self.res_model = model
+        if self.meeting_minute_id :
+            self.meeting_minute_id.res_mode = model
 
     def _set_attendees(self, record):
         self.ensure_one()

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <template id="report_assets_common" name="Meetting Minutes Report Assets" inherit_id="web.report_assets_common">
+            <xpath expr="link[last()]" position="after">
+                <link rel="stylesheet" type="text/scss" href="/meeting_minutes_project/static/src/scss/report_custom.scss"/>
+            </xpath>
+        </template>
+        
+    </data>
+</odoo>

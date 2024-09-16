@@ -84,13 +84,7 @@ class TestMeetingMinutesProject(SavepointCase):
 
     def test_meeting_minutes_display_name(self):
         minutes = self._create_minutes()
-        date = minutes.create_date.astimezone(timezone(self.env.user.tz))
-        expected_name = "Meeting Minutes: {task} - {create_datetime}".format(
-            task=self.task_1.display_name,
-            create_datetime=date.strftime("%Y-%m-%d %H:%M:%S"),
-        )
-
-        assert minutes.display_name == expected_name
+        assert minutes.display_name == self.task_1.display_name
 
     def test_homework_activity_in_waiting_actions(self):
         activity = self._create_homework_activity(self.yesterday)
