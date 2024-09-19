@@ -57,7 +57,7 @@ msgstr "Activité"
 #. module: meeting_minutes_project
 #: model:ir.model.fields,field_description:meeting_minutes_project.field_meeting_minutes_project__activity_state
 msgid "Activity State"
-msgstr "Status de l'Activité"
+msgstr "Status de l'activité"
 
 #. module: meeting_minutes_project
 #: model_terms:ir.ui.view,arch_db:meeting_minutes_project.meeting_minutes_project_template
@@ -140,12 +140,12 @@ msgstr "Modèle de document"
 #. module: meeting_minutes_project
 #: model:ir.model.fields,field_description:meeting_minutes_project.field_meeting_minutes_project__res_model
 msgid "Document Model Name"
-msgstr ""
+msgstr "Nom du modèle de document"
 
 #. module: meeting_minutes_project
 #: model_terms:ir.ui.view,arch_db:meeting_minutes_project.meeting_minutes_project_template
 msgid "Due date"
-msgstr "Echeance"
+msgstr "Échéance"
 
 #. module: meeting_minutes_project
 #: model:ir.model.fields,field_description:meeting_minutes_project.field_meeting_minutes_project__duties
@@ -241,7 +241,7 @@ msgstr "Enregistrer une note"
 #. module: meeting_minutes_project
 #: model_terms:ir.ui.view,arch_db:meeting_minutes_project.meeting_minutes_project_view_form
 msgid "Log an Activity"
-msgstr "Planifier une Activité"
+msgstr "Planifier une activité"
 
 #. module: meeting_minutes_project
 #: model:ir.model.fields,field_description:meeting_minutes_project.field_meeting_minutes_project__message_main_attachment_id
@@ -252,7 +252,7 @@ msgstr "Pièce jointe principale"
 #: model:ir.model.fields,field_description:meeting_minutes_project.field_meeting_minutes_project__meeting_minute_id
 #: model_terms:ir.ui.view,arch_db:meeting_minutes_project.meeting_minutes_project_view_search
 msgid "Meeting Minute"
-msgstr "Compte Rendu"
+msgstr "Compte rendu"
 
 #. module: meeting_minutes_project
 #: model:ir.actions.act_window,name:meeting_minutes_project.action_meeting_minutes
@@ -264,7 +264,7 @@ msgstr "Compte Rendu"
 #: model_terms:ir.ui.view,arch_db:meeting_minutes_project.meeting_minutes_project_view_tree
 #: model_terms:ir.ui.view,arch_db:meeting_minutes_project.task_meeting_minutes_tree
 msgid "Meeting Minutes"
-msgstr "Comptes Rendus"
+msgstr "Comptes rendus"
 
 #. module: meeting_minutes_project
 #: model:ir.actions.act_window,name:meeting_minutes_project.action_view_meeting_minutes_project
@@ -311,7 +311,7 @@ msgstr "Nom"
 #. module: meeting_minutes_project
 #: model:ir.model.fields,field_description:meeting_minutes_project.field_meeting_minutes_project__activity_date_deadline
 msgid "Next Activity Deadline"
-msgstr "Date limite de l'Activité à Venir"
+msgstr "Date limite de l'activité à venir"
 
 #. module: meeting_minutes_project
 #: model:ir.model.fields,field_description:meeting_minutes_project.field_meeting_minutes_project__activity_summary
@@ -321,7 +321,7 @@ msgstr "Résumé d'activité suivant"
 #. module: meeting_minutes_project
 #: model:ir.model.fields,field_description:meeting_minutes_project.field_meeting_minutes_project__activity_type_id
 msgid "Next Activity Type"
-msgstr "Type d'Activités à Venir"
+msgstr "Type d'activités à venir"
 
 #. module: meeting_minutes_project
 #: model:ir.model.fields,field_description:meeting_minutes_project.field_meeting_minutes_discuss_point__notes
@@ -368,7 +368,7 @@ msgstr "Rappel des actions en attente"
 #. module: meeting_minutes_project
 #: selection:meeting.minutes.project,activity_state:0
 msgid "Planned"
-msgstr "Plannifié"
+msgstr "Planifié"
 
 #. module: meeting_minutes_project
 #: model:ir.model.fields,field_description:meeting_minutes_project.field_meeting_minutes_project__planned_points
