@@ -58,8 +58,8 @@ class MeetingMinutesProject(models.Model):
         self.ensure_one()
         self.res_id = record.id
         self.res_model = model
-        if self.meeting_minute_id :
-            self.meeting_minute_id.res_mode = model
+        if self.meeting_minute_id:
+            self.meeting_minute_id.res_model = model
 
     def _set_attendees(self, record):
         self.ensure_one()
@@ -105,10 +105,14 @@ class MeetingMinutesProject(models.Model):
         if vals.get("project_id"):
             project_id = self.env["project.project"].browse(vals.get("project_id"))
             activity_ids = self._get_activities(project_id)
-            vals["action_ids"] = [
-                (4, activity_id.id) for activity_id in activity_ids
-            ]
+            vals["action_ids"] = [(4, activity_id.id) for activity_id in activity_ids]
+
         res = super(MeetingMinutesProject, self).create(vals)
+        if res.task_id:
+            res._set_document_ref(res.task_id, "project.task")
+        elif res.project_id:
+            res._set_document_ref(res.project_id, "project.project")
+
         return res
 
     def action_load_pending_action(self):

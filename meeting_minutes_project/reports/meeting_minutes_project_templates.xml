@@ -10,7 +10,7 @@
                 <div class="col-6">
                     <a t-attf-href="/my/project/#{o.project_id.id}"
                         class="text-dark">
-                        <p t-field="o.project_id.display_name" />
+                        <span t-field="o.project_id.display_name" />
                     </a>
                 </div>
             </div>
@@ -30,34 +30,35 @@
                 </h3>
                 <t t-if="o.action_ids">
                     <div class="table-responsive">
-                        <table class="table table-sm table-bordered table-bordered-2">
-                            <thead class="text-center font-weight-bold">
-                                <tr>
-                                    <th class="pt-3 pb-3">Activity</th>
-                                    <th class="pt-3 pb-3">Assigned</th>
-                                    <th class="pt-3 pb-3">Due date</th>
+                        <table class="table table-sm table-borderless table-bordered-2">
+                            <thead class="font-weight-bold">
+                                <tr class="bordered-tr">
+                                    <th class="text-left pt-3 pb-3">Activity</th>
+                                    <th class="pt-3 text-left  pb-3">Assigned</th>
+                                    <th class="pt-3 text-right pb-3">Due date</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <t t-foreach="o.action_ids" t-as="action">
-                                    <tr class="text-left" id="account_payment_term_immediatd">
-                                        <td>
+                                    <tr class="font-weight-bold" id="account_payment_term_immediatd">
+                                        <td class="text-left">
                                             <span t-esc="action.task_id.display_name" />
                                         </td>
-                                        <td>
+                                        <td class="text-left">
                                             <span t-esc="action.user_id.name" />
                                         </td>
-                                        <td>
+                                        <td class="text-right">
                                             <span t-esc="action.date_deadline" />
                                         </td>
                                     </tr>
-                                    <tr class="text-left" id="last-record"
+                                    <tr class="text-left bordered-tr text-muted"
                                         t-if="action.summary or env['ir.fields.converter'].text_from_html(action.note)">
                                         <td>
                                             <span t-esc="action.summary" />
                                         </td>
                                         <td colspan="2">
-                                            <span t-esc="env['ir.fields.converter'].text_from_html(action.note)" />
+                                            <span
+                                                t-esc="env['ir.fields.converter'].text_from_html(action.note)" />
                                         </td>
                                     </tr>
                                 </t>
@@ -86,7 +87,7 @@
                 </t>
             </div>
             <div t-if="o.discuss_point_ids">
-                <span>Note here :</span>
+                <span>Notes :</span>
             </div>
         </xpath>
         <xpath expr="//t[@t-if=&quot;env['ir.fields.converter'].text_from_html(o.duties)&quot;]"
@@ -97,34 +98,35 @@
         <xpath expr="//div[@name='duties']/h3" position="after">
             <t t-if="o.homework_ids">
                 <div class="table-responsive">
-                    <table class="table table-sm table-bordered table-bordered-2">
+                    <table class="table table-sm  table-borderless table-bordered-2">
                         <thead class="text-center font-weight-bold">
-                            <tr>
-                                <th class="pt-3 pb-3">Activity</th>
-                                <th class="pt-3 pb-3">Assigned</th>
-                                <th class="pt-3 pb-3">Due date</th>
+                            <tr class="bordered-tr">
+                                <th class="text-left pt-3 pb-3">Activity</th>
+                                <th class="pt-3 text-left  pb-3">Assigned</th>
+                                <th class="pt-3 text-right pb-3">Due date</th>
                             </tr>
                         </thead>
                         <tbody>
                             <t t-foreach="o.homework_ids" t-as="homework_id">
-                                <tr class="text-left" id="account_payment_term_immediatd">
-                                    <td>
+                                <tr class="font-weight-bold" id="account_payment_term_immediatd">
+                                    <td class="text-left" >
                                         <span t-esc="homework_id.task_id.display_name" />
                                     </td>
-                                    <td>
+                                    <td class="text-left">
                                         <span t-esc="homework_id.user_id.name" />
                                     </td>
-                                    <td>
+                                    <td class="text-right">
                                         <span t-esc="homework_id.date_deadline" />
                                     </td>
                                 </tr>
-                                <tr class="text-left" id="last-record"
+                                <tr class="text-left text-muted bordered-tr"
                                     t-if="homework_id.summary or env['ir.fields.converter'].text_from_html(homework_id.note)">
                                     <td>
                                         <span t-esc="homework_id.summary" />
                                     </td>
                                     <td colspan="2">
-                                        <span t-esc="env['ir.fields.converter'].text_from_html(homework_id.note)" />
+                                        <span
+                                            t-esc="env['ir.fields.converter'].text_from_html(homework_id.note)" />
                                     </td>
                                 </tr>
                             </t>
