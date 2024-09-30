@@ -24,8 +24,8 @@ msgstr "<span class=\"fa fa-play\"/>\n"
 
 #. module: meeting_minutes_project
 #: model_terms:ir.ui.view,arch_db:meeting_minutes_project.meeting_minutes_project_template
-msgid "<span>Note here :</span>"
-msgstr "<span>Notes ici :</span>
+msgid "<span>Notes :</span>"
+msgstr "<span>Notes :</span>
 
 #. module: meeting_minutes_project
 #: model_terms:ir.ui.view,arch_db:meeting_minutes_project.meeting_minutes_project_view_form
@@ -58,6 +58,11 @@ msgstr "Activité"
 #: model:ir.model.fields,field_description:meeting_minutes_project.field_meeting_minutes_project__activity_state
 msgid "Activity State"
 msgstr "Status de l'activité"
+
+#. module: meeting_minutes_project
+#: model_terms:ir.ui.view,arch_db:meeting_minutes_project.meeting_minutes_project_template
+msgid "Assigned"
+msgstr "Assigné"
 
 #. module: meeting_minutes_project
 #: model_terms:ir.ui.view,arch_db:meeting_minutes_project.meeting_minutes_project_template
@@ -146,6 +151,11 @@ msgstr "Nom du modèle de document"
 #: model_terms:ir.ui.view,arch_db:meeting_minutes_project.meeting_minutes_project_template
 msgid "Due date"
 msgstr "Échéance"
+
+#. module: meeting_minutes_project
+#: model_terms:ir.ui.view,arch_db:meeting_minutes_project.meeting_minutes_project_template
+msgid "Due date"
+msgstr "Echeance"
 
 #. module: meeting_minutes_project
 #: model:ir.model.fields,field_description:meeting_minutes_project.field_meeting_minutes_project__duties
