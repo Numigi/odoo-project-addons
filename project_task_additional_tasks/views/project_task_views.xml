@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="view_task_form2_additional" model="ir.ui.view">
+        <field name="name">project.task.form2.inherit</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_form2" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='email_from']" position="after">
+                <field name="is_additional" />
+            </xpath>
+            <xpath expr="//div[hasclass('oe_title')]" position="after">
+                <div 
+                    style="background-color: lightblue; float: right; margin-right: 30px; width: fit-content;  padding: 5px; border-radius: 3px;"
+                    attrs="{'invisible' : [('is_additional', '=', False)]}">
+                        Additional
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_task_kanban_additional" model="ir.ui.view">
+        <field name="name">project.task.kanban.inherit</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_kanban" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='tag_ids']"  position="after">
+                <field name="is_additional" invisible="1" />
+                <div 
+                    style="background-color: lightblue; width: fit-content;  padding: 5px; border-radius: 3px;"
+                    attrs="{'invisible' : [('is_additional', '=', False)]}">
+                    Additional
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_task_filter_additional" model="ir.ui.view">
+        <field name="name">project.task.filter.additional</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_search_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='starred']" position="after">
+                <separator/>
+                <filter string="Additional" name="filter_additional" domain="[('is_additional', '=', True)]" />
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
