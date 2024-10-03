@@ -15,7 +15,8 @@
         "project_task_date_planned",
         "project_task_full_text_search",
         "project_type_advanced",
-        "project_stage_allow_timesheet"
+        "project_default_task_stage",
+        "project_stage_allow_timesheet",
     ],
     "installable": True,
 }

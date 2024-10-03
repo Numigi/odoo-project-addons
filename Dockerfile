@@ -17,6 +17,7 @@ COPY project_stage_allow_timesheet mnt/extra-addons/project_stage_allow_timeshee
 COPY project_task_date_planned /mnt/extra-addons/project_task_date_planned
 COPY project_task_full_text_search /mnt/extra-addons/project_task_full_text_search
 COPY project_type_advanced /mnt/extra-addons/project_type_advanced
+COPY project_default_task_stage /mnt/extra-addons/project_default_task_stage
 
 
 COPY .docker_files/main /mnt/extra-addons/main
