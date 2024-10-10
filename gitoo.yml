@@ -42,8 +42,10 @@
 - url: https://github.com/OCA/server-tools
   branch: "12.0"
   includes:
+    - base_view_inheritance_extension
     - datetime_formatter
     - html_text
+    - onchange_helper
 
 - url: https://github.com/OCA/timesheet
   branch: "12.0"
