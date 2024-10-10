@@ -5,7 +5,7 @@ from datetime import datetime
 from odoo.tests import common
 
 
-class TaskMaterialCase(common.SavepointCase):
+class TaskMaterialCase(common.TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
