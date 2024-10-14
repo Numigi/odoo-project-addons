@@ -18,11 +18,11 @@ jobs:
 
        - run:
           name: Setup Log Folder For Reports
-          command: sudo mkdir -p .log && sudo chmod 777 .log
+          command: sudo mkdir -p .log && sudo chmod 777 .log && pip install -U pytest-odoo
 
        - run:
           name: Run Test
-          command: pip install -U pytest-odoo && docker-compose run --rm odoo run_pytest.sh
+          command:  docker-compose run --rm odoo run_pytest.sh
 
        - run:
           name: Codacy Coverage
