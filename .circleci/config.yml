@@ -22,7 +22,7 @@ jobs:
 
        - run:
           name: Run Test
-          command: docker-compose run --rm odoo run_pytest.sh
+          command: pip install -U pytest-odoo && docker-compose run --rm odoo run_pytest.sh
 
        - run:
           name: Codacy Coverage
