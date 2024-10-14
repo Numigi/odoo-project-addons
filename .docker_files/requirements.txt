@@ -3,4 +3,4 @@ unidecode==1.0.22
 ddt==1.2.0
 Genshi==0.7.5
 freezegun==1.2.2
-pytest-odoo==2.1.1
+#pytest-odoo==2.1.1
