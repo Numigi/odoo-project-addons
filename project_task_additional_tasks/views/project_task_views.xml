@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
 
+    <!-- Form view -->
     <record id="view_task_form2_additional" model="ir.ui.view">
         <field name="name">project.task.form2.inherit</field>
         <field name="model">project.task</field>
@@ -19,6 +20,7 @@
         </field>
     </record>
 
+    <!-- Kanban view -->
     <record id="view_task_kanban_additional" model="ir.ui.view">
         <field name="name">project.task.kanban.inherit</field>
         <field name="model">project.task</field>
@@ -35,6 +37,7 @@
         </field>
     </record>
 
+    <!-- Filter -->
     <record id="view_task_filter_additional" model="ir.ui.view">
         <field name="name">project.task.filter.additional</field>
         <field name="model">project.task</field>
