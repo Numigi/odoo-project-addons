@@ -84,6 +84,7 @@
         "project_stage",
         "project_stage_allow_timesheet",
         "project_stage_no_quick_create",
+        "project_task_additional_tasks",
         "project_task_analytic_lines",
         "project_task_analytic_lines_stock",
         "project_task_customer_reference",
