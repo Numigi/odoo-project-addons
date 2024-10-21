@@ -3,7 +3,7 @@
 
 {
     "name": "Main Module",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "author": "Numigi",
     "maintainer": "Numigi",
     "website": "https://www.numigi.com",
@@ -21,6 +21,7 @@
         "meeting_minutes_project_parent",
         "meeting_minutes_project_steering",
         "meeting_minutes_project_steering_parent",
+        "onchange_helper",
         "portal_project_list_hours_spent",
         "portal_project_timesheet_conditional",
         "project_advanced_checklist",
