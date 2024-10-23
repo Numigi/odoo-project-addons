@@ -32,6 +32,7 @@
         "project_lump_sum",
         "project_material",
         "project_material_direct",
+        "project_material_enhanced",
         "project_milestone_enhanced",
         "project_milestone_estimated_hours",
         "project_milestone_spent_hours",
