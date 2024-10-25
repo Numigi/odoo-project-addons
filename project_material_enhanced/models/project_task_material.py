@@ -14,9 +14,9 @@ class ProjectTaskMaterial(models.Model):
         store=True,
     )
 
-    manufacturer_pname = fields.Char(
-        string='Manuf. Product Name',
-        related='product_id.manufacturer_pname',
+    manufacturer_pref = fields.Char(
+        string='Manuf. Product Code',
+        related='product_id.manufacturer_pref',
         store=True,
     )
 
