@@ -36,9 +36,9 @@ msgid "Last Modified on"
 msgstr "Dernière modification le"
 
 #. module: project_material_enhanced
-#: model:ir.model.fields,field_description:project_material_enhanced.field_project_task_material__manufacturer_pname
-msgid "Manuf. Product Name"
-msgstr "Nom chez le fabricant"
+#: model:ir.model.fields,field_description:project_material_enhanced.field_project_task_material__manufacturer_pref
+msgid "Manuf. Product Code"
+msgstr "Code chez le fabricant"
 
 #. module: project_material_enhanced
 #: model:ir.model.fields,field_description:project_material_enhanced.field_project_task_material__manufacturer
