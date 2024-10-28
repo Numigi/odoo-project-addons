@@ -8,7 +8,7 @@ from odoo import fields
 class TestProjectSteering(TransactionCase):
     def setUp(self):
         super().setUp()
-        self.task_model = self.env.ref("project.model_project_task").id,
+        self.task_model = (self.env.ref("project.model_project_task").id,)
 
         self.steering_kpi_1 = self.env["project.steering.kpi"].create(
             {
@@ -107,6 +107,10 @@ class TestProjectSteering(TransactionCase):
         self.assertEqual(minutes.project_steering_ids[0].name, "Steering KPI 2")
         self.assertEqual(minutes.project_steering_ids[3].name, "Steering KPI 1")
         self.assertEqual(minutes.project_steering_ids[7].name, "Steering KPI 3")
+
+        # Test few project name for each project_steering_ids
+        self.assertEqual(minutes.project_steering_ids[1].name, "Project 1")
+        self.assertEqual(minutes.project_steering_ids[2].name, "Project 1")
 
         # Test returned records of each KPI
         domain = minutes._get_filter_domain(self.steering_kpi_1)

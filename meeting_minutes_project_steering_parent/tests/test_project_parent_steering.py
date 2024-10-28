@@ -53,6 +53,18 @@ class TestProjectParentSteering(TestProjectSteering):
         # Total of lines
         self.assertEqual(len(minutes.project_steering_ids.ids), 13)
 
+        # Test few project name for each project_steering_ids
+        # linked to the project_parent
+        self.assertEqual(
+            minutes.project_steering_ids[1].name, "Project Parent, Project 2"
+        )
+        self.assertEqual(
+            minutes.project_steering_ids[2].name, "Project Parent, Project 1"
+        )
+        self.assertEqual(
+            minutes.project_steering_ids[3].name, "Project Parent, Project 1"
+        )
+
     def _new_minutes(self):
         minutes = (
             self.env["meeting.minutes.project"]
