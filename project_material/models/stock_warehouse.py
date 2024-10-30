@@ -14,11 +14,9 @@ class Warehouse(models.Model):
     _inherit = "stock.warehouse"
 
     def _get_default_consumption_location_id(self):
-        property_stock_production = self.env['ir.property'].sudo().search(
-            [('name', '=', 'property_stock_production'),
-             ('company_id', '=', self.env.company.id)])
-        location_id = property_stock_production.value_reference.split(',')[-1]
-        return location_id
+        return self.env.ref(
+            "stock.location_production", raise_if_not_found=False
+        ).id
 
     consu_steps = fields.Selection(
         [(ONE_STEP_KEY, ONE_STEP_DESCRIPTION)], default=ONE_STEP_KEY
@@ -32,23 +30,27 @@ class Warehouse(models.Model):
         "Consumption Location",
         domain=[("usage", "=", "production")],
         ondelete="restrict",
-        default=_get_default_consumption_location_id,
+        default=_get_default_consumption_location_id, check_company=True
     )
 
     consu_type_id = fields.Many2one(
-        "stock.picking.type", "Consumption Picking Type", ondelete="restrict"
+        "stock.picking.type", "Consumption Picking Type", ondelete="restrict",
+            check_company=True
     )
 
     consu_return_type_id = fields.Many2one(
-        "stock.picking.type", "Consumption Return Picking Type", ondelete="restrict"
+        "stock.picking.type", "Consumption Return Picking Type", ondelete="restrict",
+        check_company=True
     )
 
     consu_route_id = fields.Many2one(
-        "stock.location.route", "Consumption Route", ondelete="restrict"
+        "stock.location.route", "Consumption Route", ondelete="restrict",
+        check_company=True
     )
 
     consu_mto_pull_id = fields.Many2one(
-        "stock.rule", "Consumption MTO Pull", ondelete="restrict"
+        "stock.rule", "Consumption MTO Pull", ondelete="restrict",
+        check_company=True
     )
 
     @api.model
@@ -105,7 +107,7 @@ class Warehouse(models.Model):
         vals.update(
             {
                 "name": _("Consumption"),
-                "company_id": self.env.company.id,
+                "company_id": self.company_id.id,
                 "use_create_lots": True,
                 "sequence_code": "CO",
                 "use_existing_lots": True,
@@ -122,7 +124,7 @@ class Warehouse(models.Model):
                 "name": _("Consumption Return"),
                 "use_create_lots": False,
                 "use_existing_lots": False,
-                "company_id": self.env.company.id,
+                "company_id": self.company_id.id,
                 "sequence_code": "COR",
                 "sequence": 101,
                 "sequence_id": self._create_consumption_return_sequence().id,
@@ -150,14 +152,11 @@ class Warehouse(models.Model):
         return {
             "warehouse_id": self.id,
             "code": "consumption_return",
-            "default_location_src_id": self.with_context(
-                company_id=self.env.company.id).consu_location_id.id,
+            "default_location_src_id": self.consu_location_id.id,
             "default_location_dest_id": (
-                self.with_context(
-                company_id=self.env.company.id).lot_stock_id.id
+                self.lot_stock_id.id
                 if self._has_one_step_consumption()
-                else self.with_context(
-                company_id=self.env.company.id).consu_prep_location_id.id
+                else self.consu_prep_location_id.id
             ),
         }
 
@@ -174,7 +173,7 @@ class Warehouse(models.Model):
             "name": "{}: Consumption".format(self.name),
             "prefix": "{}/CO/".format(self.code),
             "padding": 5,
-            "company_id": self.env.company.id,
+            "company_id": self.company_id.id,
         }
 
     def _get_consumption_return_sequence_values(self):
@@ -182,7 +181,7 @@ class Warehouse(models.Model):
             "name": "{}: Consumption Return".format(self.name),
             "prefix": "{}/COR/".format(self.code),
             "padding": 5,
-            "company_id": self.env.company.id,
+            "company_id": self.company_id.id,
         }
 
     def _create_or_update_consumption_route(self):
@@ -209,7 +208,7 @@ class Warehouse(models.Model):
                 description=self._get_consumption_route_description(),
             ),
             "active": True,
-            "company_id": self.env.company.id,
+            "company_id": self.company_id.id,
             "product_categ_selectable": True,
             "warehouse_selectable": True,
             "product_selectable": False,
@@ -248,7 +247,7 @@ class Warehouse(models.Model):
             "picking_type_id": self.consu_type_id.id,
             "action": "pull",
             "active": True,
-            "company_id": self.env.company.id,
+            "company_id": self.company_id.id,
             "sequence": 1,
             "propagate_cancel": True,
             "procure_method": procure_method,
@@ -279,7 +278,7 @@ class Warehouse(models.Model):
             "picking_type_id": self.consu_type_id.id,
             "action": "pull",
             "active": True,
-            "company_id": self.env.company.id,
+            "company_id": self.company_id.id,
             "sequence": 1,
             "propagate_cancel": True,
             "procure_method": "make_to_order",
@@ -332,7 +331,7 @@ class WarehouseWithPickingStep(models.Model):
 
     def _update_consumption_prep_pull(self):
         existing_pull = self.consu_route_id.with_context(
-            active_test=False,company_id = self.env.company.id
+            active_test=False
         ).rule_ids.filtered(lambda p: p.location_id == self.consu_prep_location_id)
 
         pull_required = self._has_two_steps_consumption()
@@ -358,7 +357,7 @@ class WarehouseWithPickingStep(models.Model):
             "picking_type_id": self.consu_prep_type_id.id,
             "action": "pull",
             "active": True,
-            "company_id": self.env.company.id,
+            "company_id": self.company_id.id,
             "sequence": 2,
             "propagate_cancel": True,
             "procure_method": "make_to_stock",
@@ -447,20 +446,16 @@ class WarehouseWithPickingStep(models.Model):
         return {
             "warehouse_id": self.id,
             "code": "internal",
-            "default_location_src_id": self.with_context(
-                company_id=self.env.company.id).lot_stock_id.id,
-            "default_location_dest_id": self.with_context(
-                company_id=self.env.company.id).consu_prep_location_id.id,
+            "default_location_src_id": self.lot_stock_id.id,
+            "default_location_dest_id": self.consu_prep_location_id.id,
         }
 
     def _get_consumption_prep_return_picking_type_values(self):
         return {
             "warehouse_id": self.id,
             "code": "internal",
-            "default_location_src_id": self.with_context(
-                company_id=self.env.company.id).consu_prep_location_id.id,
-            "default_location_dest_id": self.with_context(
-                company_id=self.env.company.id).lot_stock_id.id,
+            "default_location_src_id": self.consu_prep_location_id.id,
+            "default_location_dest_id": self.lot_stock_id.id,
         }
 
     def _create_consumption_prep_sequence(self):
