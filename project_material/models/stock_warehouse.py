@@ -81,6 +81,7 @@ class Warehouse(models.Model):
         return True
 
     def _create_or_update_consumption_picking_types(self):
+        self = self.with_company(self.company_id)
         if self.consu_type_id:
             self._update_consumption_picking_types()
         else:
@@ -187,6 +188,7 @@ class Warehouse(models.Model):
         }
 
     def _create_or_update_consumption_route(self):
+        self = self.with_company(self.company_id)
         if self.consu_route_id:
             self._update_consumption_route()
         else:
