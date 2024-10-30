@@ -16,7 +16,7 @@ class Warehouse(models.Model):
     def _get_default_consumption_location_id(self):
         property_stock_production = self.env['ir.property'].sudo().search(
             [('name', '=', 'property_stock_production'),
-             ('company_id', '=',self.env.company.id)])
+             ('company_id', '=', self.env.company.id)])
         location_id = property_stock_production.value_reference.split(',')[-1]
         return location_id
 
