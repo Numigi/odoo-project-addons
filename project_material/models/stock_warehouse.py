@@ -14,9 +14,11 @@ class Warehouse(models.Model):
     _inherit = "stock.warehouse"
 
     def _get_default_consumption_location_id(self):
-        return self.env.ref(
-            "stock_location_production.location_production", raise_if_not_found=False
-        ).id
+        property_stock_production = self.env['ir.property'].sudo().search(
+            [('name', '=', 'property_stock_production'),
+             ('company_id', '=',self.env.company.id)])
+        location_id = property_stock_production.value_reference.split(',')[-1]
+        return location_id
 
     consu_steps = fields.Selection(
         [(ONE_STEP_KEY, ONE_STEP_DESCRIPTION)], default=ONE_STEP_KEY

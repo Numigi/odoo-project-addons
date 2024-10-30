@@ -12,7 +12,6 @@
     "summary": "Consume material on projects",
     "depends": [
         "project_task_date_planned",
-        "stock_location_production",
         "stock_account",
         "purchase_stock",
     ],
