@@ -150,11 +150,14 @@ class Warehouse(models.Model):
         return {
             "warehouse_id": self.id,
             "code": "consumption_return",
-            "default_location_src_id": self.consu_location_id.id,
+            "default_location_src_id": self.with_context(
+                company_id=self.env.company.id).consu_location_id.id,
             "default_location_dest_id": (
-                self.lot_stock_id.id
+                self.with_context(
+                company_id=self.env.company.id).lot_stock_id.id
                 if self._has_one_step_consumption()
-                else self.consu_prep_location_id.id
+                else self.with_context(
+                company_id=self.env.company.id).consu_prep_location_id.id
             ),
         }
 
@@ -444,16 +447,20 @@ class WarehouseWithPickingStep(models.Model):
         return {
             "warehouse_id": self.id,
             "code": "internal",
-            "default_location_src_id": self.lot_stock_id.id,
-            "default_location_dest_id": self.consu_prep_location_id.id,
+            "default_location_src_id": self.with_context(
+                company_id=self.env.company.id).lot_stock_id.id,
+            "default_location_dest_id": self.with_context(
+                company_id=self.env.company.id).consu_prep_location_id.id,
         }
 
     def _get_consumption_prep_return_picking_type_values(self):
         return {
             "warehouse_id": self.id,
             "code": "internal",
-            "default_location_src_id": self.consu_prep_location_id.id,
-            "default_location_dest_id": self.lot_stock_id.id,
+            "default_location_src_id": self.with_context(
+                company_id=self.env.company.id).consu_prep_location_id.id,
+            "default_location_dest_id": self.with_context(
+                company_id=self.env.company.id).lot_stock_id.id,
         }
 
     def _create_consumption_prep_sequence(self):
