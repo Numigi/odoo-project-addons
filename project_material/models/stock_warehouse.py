@@ -105,7 +105,7 @@ class Warehouse(models.Model):
         vals.update(
             {
                 "name": _("Consumption"),
-                "company_id": self.company_id.id,
+                "company_id": self.env.company.id,
                 "use_create_lots": True,
                 "sequence_code": "CO",
                 "use_existing_lots": True,
@@ -122,7 +122,7 @@ class Warehouse(models.Model):
                 "name": _("Consumption Return"),
                 "use_create_lots": False,
                 "use_existing_lots": False,
-                "company_id": self.company_id.id,
+                "company_id": self.env.company.id,
                 "sequence_code": "COR",
                 "sequence": 101,
                 "sequence_id": self._create_consumption_return_sequence().id,
@@ -171,7 +171,7 @@ class Warehouse(models.Model):
             "name": "{}: Consumption".format(self.name),
             "prefix": "{}/CO/".format(self.code),
             "padding": 5,
-            "company_id": self.company_id.id,
+            "company_id": self.env.company.id,
         }
 
     def _get_consumption_return_sequence_values(self):
@@ -179,7 +179,7 @@ class Warehouse(models.Model):
             "name": "{}: Consumption Return".format(self.name),
             "prefix": "{}/COR/".format(self.code),
             "padding": 5,
-            "company_id": self.company_id.id,
+            "company_id": self.env.company.id,
         }
 
     def _create_or_update_consumption_route(self):
@@ -206,7 +206,7 @@ class Warehouse(models.Model):
                 description=self._get_consumption_route_description(),
             ),
             "active": True,
-            "company_id": self.company_id.id,
+            "company_id": self.env.company.id,
             "product_categ_selectable": True,
             "warehouse_selectable": True,
             "product_selectable": False,
@@ -245,7 +245,7 @@ class Warehouse(models.Model):
             "picking_type_id": self.consu_type_id.id,
             "action": "pull",
             "active": True,
-            "company_id": self.company_id.id,
+            "company_id": self.env.company.id,
             "sequence": 1,
             "propagate_cancel": True,
             "procure_method": procure_method,
@@ -276,7 +276,7 @@ class Warehouse(models.Model):
             "picking_type_id": self.consu_type_id.id,
             "action": "pull",
             "active": True,
-            "company_id": self.company_id.id,
+            "company_id": self.env.company.id,
             "sequence": 1,
             "propagate_cancel": True,
             "procure_method": "make_to_order",
@@ -355,7 +355,7 @@ class WarehouseWithPickingStep(models.Model):
             "picking_type_id": self.consu_prep_type_id.id,
             "action": "pull",
             "active": True,
-            "company_id": self.company_id.id,
+            "company_id": self.env.company.id,
             "sequence": 2,
             "propagate_cancel": True,
             "procure_method": "make_to_stock",
