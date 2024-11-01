@@ -86,7 +86,6 @@ class Warehouse(models.Model):
         return location_id
 
     def _create_or_update_consumption_picking_types(self):
-        self = self.with_company(self.company_id)
         if self.consu_type_id:
             self._update_consumption_picking_types()
         else:
