@@ -2,6 +2,7 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 from odoo import api, fields, models, _
+from odoo.exceptions import ValidationError
 
 
 ONE_STEP_KEY = "one_step"
@@ -75,6 +76,13 @@ class Warehouse(models.Model):
         location_id = self.env["ir.property"].with_company(
             self.company_id.id)._get(
             "property_stock_production", "product.template").id
+        if not location_id:
+            raise ValidationError(
+                _(
+                    "You need to have a property_stock_production for product.template."
+                    " Please contact your administrator or manager."
+                )
+            )
         return location_id
 
     def _create_or_update_consumption_picking_types(self):

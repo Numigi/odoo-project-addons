@@ -17,14 +17,17 @@ class ConsumptionRouteCase(common.SavepointCase):
         cls.new_warehouse = cls.env["stock.warehouse"].search(
             [("company_id", "=", cls.new_company.id)], limit=1
         )
-        cls.location_id = cls.env["ir.property"].with_company(
-            cls.new_warehouse.company_id.id)._get(
-            "property_stock_production", "product.template").id
 
 
 class TestConsumptionStep(ConsumptionRouteCase):
+    def test_property_stock_production_exist(self):
+        property = self.env["ir.property"].with_company(self.company_id.id)._get(
+            "property_stock_production", "product.template")
+        self.assertTrue(property.exists())
+
     def test_default_consumption_location(self):
-        assert self.new_warehouse.consu_location_id.id == self.location_id
+        location_id = self.new_warehouse._get_consu_location_id()
+        assert self.new_warehouse.consu_location_id.id == location_id
 
     def test_main_warehouse_has_consumption_route(self):
         assert self.main_warehouse.consu_route_id
