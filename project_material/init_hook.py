@@ -12,9 +12,6 @@ def post_init_hook(cr, registry):
 def _setup_warehouses_consumption_routes(env):
     warehouses = env["stock.warehouse"].search([])
     for warehouse in warehouses:
-        location_id = env["ir.property"].with_company(
-            warehouse.company_id.id)._get(
-            "property_stock_production", "product.template")
-        warehouse.consu_location_id = location_id.id
+        warehouse.consu_location_id = warehouse._get_consu_location_id()
         warehouse._create_or_update_consumption_picking_types()
         warehouse._create_or_update_consumption_route()

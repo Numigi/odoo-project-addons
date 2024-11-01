@@ -50,6 +50,8 @@ class Warehouse(models.Model):
         Use sudo to prevent errors related to access rights.
         """
         warehouse = super().create(vals)
+     
+        warehouse.consu_location_id = warehouse._get_consu_location_id()
         warehouse.sudo()._create_consumption_picking_types()
         warehouse.sudo()._create_consumption_route()
         warehouse.sudo()._create_consumption_mto_pull()
@@ -63,10 +65,18 @@ class Warehouse(models.Model):
         super().write(vals)
         if "consu_steps" in vals:
             for warehouse in self:
+                warehouse.consu_location_id = warehouse._get_consu_location_id()
                 warehouse.sudo()._create_or_update_consumption_picking_types()
                 warehouse.sudo()._create_or_update_consumption_route()
                 warehouse.sudo()._create_or_update_consumption_mto_pull()
         return True
+    
+    @api.model
+    def _get_consu_location_id(self):
+        location_id = self.env["ir.property"].with_company(
+            self.company_id.id)._get(
+            "property_stock_production","product.template").id
+        return location_id
 
     def _create_or_update_consumption_picking_types(self):
         self = self.with_company(self.company_id)
