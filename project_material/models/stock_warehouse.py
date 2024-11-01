@@ -13,13 +13,6 @@ class Warehouse(models.Model):
 
     _inherit = "stock.warehouse"
 
-    def _get_default_consumption_location_id(self):
-        property_stock_production = self.env['ir.property'].sudo().search(
-            [('name', '=', 'property_stock_production'),
-             ('company_id', '=', self.env.company.id)])
-        location_id = property_stock_production.value_reference.split(',')[-1]
-        return location_id
-
     consu_steps = fields.Selection(
         [(ONE_STEP_KEY, ONE_STEP_DESCRIPTION)], default=ONE_STEP_KEY
     )
@@ -32,27 +25,22 @@ class Warehouse(models.Model):
         "Consumption Location",
         domain=[("usage", "=", "production")],
         ondelete="restrict",
-        default=_get_default_consumption_location_id, check_company=True
     )
 
     consu_type_id = fields.Many2one(
         "stock.picking.type", "Consumption Picking Type", ondelete="restrict",
-            check_company=True
     )
 
     consu_return_type_id = fields.Many2one(
         "stock.picking.type", "Consumption Return Picking Type", ondelete="restrict",
-        check_company=True
     )
 
     consu_route_id = fields.Many2one(
         "stock.location.route", "Consumption Route", ondelete="restrict",
-        check_company=True
     )
 
     consu_mto_pull_id = fields.Many2one(
         "stock.rule", "Consumption MTO Pull", ondelete="restrict",
-        check_company=True
     )
 
     @api.model
@@ -90,7 +78,6 @@ class Warehouse(models.Model):
     def _create_consumption_picking_types(self):
         vals = self._get_consumption_picking_type_create_values()
         self.consu_type_id = self.env["stock.picking.type"].create(vals)
-
         vals = self._get_consumption_return_picking_type_create_values()
         self.consu_return_type_id = self.env["stock.picking.type"].create(vals)
 
@@ -148,7 +135,7 @@ class Warehouse(models.Model):
                 if self._has_one_step_consumption()
                 else self.consu_prep_location_id.id
             ),
-            "default_location_dest_id": self.consu_location_id.id,
+            "default_location_dest_id": self.with_company(self.company_id).consu_location_id.id,
         }
 
     def _get_consumption_return_picking_type_values(self):
