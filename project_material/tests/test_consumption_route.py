@@ -19,7 +19,7 @@ class ConsumptionRouteCase(common.SavepointCase):
         )
         cls.location_id = cls.env["ir.property"].with_company(
             cls.new_warehouse.company_id.id)._get(
-            "property_stock_production", "product.template")
+            "property_stock_production", "product.template").id
 
 
 class TestConsumptionStep(ConsumptionRouteCase):
