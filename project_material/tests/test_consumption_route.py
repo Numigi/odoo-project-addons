@@ -22,7 +22,6 @@ class ConsumptionRouteCase(common.SavepointCase):
             "property_stock_production", "product.template")
 
 
-
 class TestConsumptionStep(ConsumptionRouteCase):
     def test_default_consumption_location(self):
         assert self.new_warehouse.consu_location_id.id == self.location_id
