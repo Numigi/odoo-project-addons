@@ -20,8 +20,8 @@ class ConsumptionRouteCase(common.SavepointCase):
 
 
 class TestConsumptionStep(ConsumptionRouteCase):
-    def test_property_stock_production_exist(self):
-        property = self.env["ir.property"].with_company(self.company_id.id)._get(
+    def test_property_stock_production_if_exists(self):
+        property = self.env["ir.property"].with_company(self.new_company.id)._get(
             "property_stock_production", "product.template")
         self.assertTrue(property.exists())
 

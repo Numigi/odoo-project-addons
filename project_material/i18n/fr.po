@@ -480,7 +480,7 @@ msgstr ""
 
 
 #. module: project_material
-#: code:addons/project_material/models/stock_warehouse.py:251
+#: code:addons/project_material/models/stock_warehouse.py:73
 #, python-format
 msgid "You need to have a property_stock_production for product.template. Please contact your administrator or manager."
 msgstr "Vous devez définir une property_stock_production pour product.template. Veuillez contacter votre administrateur ou manager."
