@@ -17,10 +17,10 @@ class ConsumptionRouteCase(common.SavepointCase):
         cls.new_warehouse = cls.env["stock.warehouse"].search(
             [("company_id", "=", cls.new_company.id)], limit=1
         )
-        property_stock_production = cls.env['ir.property'].sudo().search(
-            [('name', '=', 'property_stock_production'),
-             ('company_id', '=', cls.env.user.company_id.id)])
-        cls.location_id = property_stock_production.value_reference.split(',')[-1]
+        cls.location_id = cls.env["ir.property"].with_company(
+            cls.new_warehouse.company_id.id)._get(
+            "property_stock_production", "product.template")
+
 
 
 class TestConsumptionStep(ConsumptionRouteCase):
