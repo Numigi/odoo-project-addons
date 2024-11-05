@@ -30,8 +30,8 @@ class ProjectMeetingMinutes(models.Model):
                     0,
                     {
                         "meeting_minutes_id": self.id,
-                        "project_id": self.project_id.id,
-                        "name": self.project_id.display_name,
+                        "project_id": rec.project_id.id,
+                        "name": rec.project_id.display_name,
                         "task_id": rec.id,
                     },
                 ),
@@ -55,16 +55,14 @@ class ProjectMeetingMinutes(models.Model):
         if kpi.primary_filter_domain:
             domain += safe_eval(kpi.primary_filter_domain)
         if kpi.date_filter_domain:
-            domain += safe_eval(
-                kpi.date_filter_domain, self._get_domain_context()
-            )
+            domain += safe_eval(kpi.date_filter_domain, self._get_domain_context())
         return domain
 
     def action_load_steering_data(self):
         self.ensure_one()
-        steering_kpis = self.env["project.steering.kpi"].search([
-            ("model", "=", "project.task")
-        ], order="sequence")
+        steering_kpis = self.env["project.steering.kpi"].search(
+            [("model", "=", "project.task")], order="sequence"
+        )
         # Reset one2many field before loading data
         self.project_steering_ids = [
             (2, line.id, False) for line in self.project_steering_ids

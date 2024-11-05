@@ -87,7 +87,7 @@
                 </t>
             </div>
             <div t-if="o.discuss_point_ids">
-                <span>Notes :</span>
+                <span>Additional Notes :</span>
             </div>
         </xpath>
         <xpath expr="//t[@t-if=&quot;env['ir.fields.converter'].text_from_html(o.duties)&quot;]"

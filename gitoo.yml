@@ -44,6 +44,7 @@
   includes:
     - datetime_formatter
     - html_text
+    - base_view_inheritance_extension
 
 - url: https://github.com/OCA/timesheet
   branch: "12.0"
