@@ -65,6 +65,11 @@ msgid "Assigned"
 msgstr "Assigné"
 
 #. module: meeting_minutes_project
+#: model_terms:ir.ui.view,arch_db:meeting_minutes_project.meeting_minutes_project_template
+msgid "Assigned"
+msgstr "Assigné"
+
+#. module: meeting_minutes_project
 #: model:ir.model.fields,field_description:meeting_minutes_project.field_meeting_minutes_project__message_attachment_count
 msgid "Attachment Count"
 msgstr "Nombre de pièces jointes"
@@ -146,6 +151,11 @@ msgstr "Nom du modèle de document"
 #: model_terms:ir.ui.view,arch_db:meeting_minutes_project.meeting_minutes_project_template
 msgid "Due date"
 msgstr "Échéance"
+
+#. module: meeting_minutes_project
+#: model_terms:ir.ui.view,arch_db:meeting_minutes_project.meeting_minutes_project_template
+msgid "Due date"
+msgstr "Echeance"
 
 #. module: meeting_minutes_project
 #: model:ir.model.fields,field_description:meeting_minutes_project.field_meeting_minutes_project__duties
