@@ -7,4 +7,4 @@ from odoo import fields, models
 class ProjectWithType(models.Model):
     _inherit = 'project.project'
 
-    type_id = fields.Many2one(tracking=True)
+    type_id = fields.Many2one(tracking=True, copy=True)
