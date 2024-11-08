@@ -23,6 +23,8 @@
         "views/project_steering_kpi_views.xml",
         "views/meeting_minutes_views.xml",
         "views/portal_templates.xml",
+        "reports/assets.xml",
+        "reports/meeting_minutes_project_templates.xml",
     ],
     "installable": True,
 }

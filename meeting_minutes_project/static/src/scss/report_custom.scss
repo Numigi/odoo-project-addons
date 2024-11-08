@@ -1,0 +1,10 @@
+.table-bordered-2 {
+    thead {
+        th {
+            background: gray("200") !important;
+        }
+    }
+    .bordered-tr {
+        border-bottom: 1px solid black !important;
+    }
+}

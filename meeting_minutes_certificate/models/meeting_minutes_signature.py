@@ -30,6 +30,7 @@ class MeetingMinutesSignature(models.Model):
             ("trainer", "Trainer"),
             ("participant", "Participant"),
         ],
+        string="Type",
         default="participant",
         required=True,
     )

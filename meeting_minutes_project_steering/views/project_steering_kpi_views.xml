@@ -23,6 +23,9 @@
                         <field name="model_id" options="{'no_create_edit': True}"/>
                         <field name="available_on_portal"/>
                         <field name="filter_domain" widget="domain" options="{'model': 'model'}"/>
+                        <field name="primary_filter_domain" widget="domain" options="{'model': 'model'}"/>
+                        <field name="date_filter_domain_id"/>
+                        <field name="date_filter_domain"  widget="domain" options="{'model': 'model'}"/>
                     </group>
                 </sheet>
             </form>

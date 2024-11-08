@@ -1,4 +1,4 @@
-# © 2023 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+# Copyright 2023 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 
@@ -84,13 +84,7 @@ class TestMeetingMinutesProject(SavepointCase):
 
     def test_meeting_minutes_display_name(self):
         minutes = self._create_minutes()
-        date = minutes.create_date.astimezone(timezone(self.env.user.tz))
-        expected_name = "Meeting Minutes: {task} - {create_datetime}".format(
-            task=self.task_1.display_name,
-            create_datetime=date.strftime("%Y-%m-%d %H:%M:%S"),
-        )
-
-        assert minutes.display_name == expected_name
+        assert minutes.display_name == self.task_1.display_name
 
     def test_homework_activity_in_waiting_actions(self):
         activity = self._create_homework_activity(self.yesterday)
@@ -119,15 +113,22 @@ class TestMeetingMinutesProject(SavepointCase):
         minutes = self._create_minutes()
         assert activity not in minutes.action_ids
 
+    def test_action_load_pending_action(self):
+        minutes = self._create_minutes()
+        activity = self._create_homework_activity(self.yesterday)
+        minutes.action_load_pending_action()
+        assert activity in minutes.action_ids
+
     def _create_minutes(self):
         self.env["meeting.minutes.project"].search(
             [("task_id", "=", self.task_1.id)]
         ).unlink()
 
         minutes = (
-            self.env["meeting.minutes.project"]
-            .with_context(default_task_id=self.task_1.id)
-            .create({})
+            self.env["meeting.minutes.project"].create({
+                "task_id": self.task_1.id,
+                "project_id": self.project_1.id
+            })
         )
         minutes.on_change_task_id()
         return minutes

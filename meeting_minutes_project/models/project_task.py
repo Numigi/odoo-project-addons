@@ -7,7 +7,10 @@ from odoo import fields, models, api
 class ProjectTask(models.Model):
     _inherit = "project.task"
 
-    mentions_count = fields.Integer(string="Mentions", compute="_compute_mentions")
+    mentions_count = fields.Integer(
+        string="Mentions",
+        compute="_compute_mentions"
+    )
     meeting_minutes_ids = fields.One2many(
         "meeting.minutes.project",
         "task_id",

@@ -1,0 +1,40 @@
+#table-project-steering {
+    font-size: 13 px;
+    tr {
+        border-bottom: 1px solid black !important;
+    }
+    thead {
+        th {
+            background: gray("200") !important;
+        }
+    }
+
+    th:nth-child(1),
+    td:nth-child(1) {
+        width: 15% !important;
+    }
+    th:nth-child(2),
+    td:nth-child(2) {
+        width: 15% !important;
+    }
+
+    th:nth-child(3),
+    td:nth-child(3) {
+        width: 15% !important;
+    }
+
+    th:nth-child(4),
+    td:nth-child(4) {
+        width: 15% !important;
+    }
+
+    th:nth-child(5),
+    td:nth-child(5) {
+        width: 15% !important;
+    }
+
+    th:nth-child(6),
+    td:nth-child(6) {
+        width: 25% !important;
+    }
+}

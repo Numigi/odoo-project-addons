@@ -27,9 +27,11 @@ When I click on the `Create` button, I arrive at a form view offering the follow
 -Model
 -Available on Portal 
 -Active
--Filter
+-Primary Filter
+-Date Filter
 
 Notice : `Model` field have only two possible options, `Project` and `Task`.
+`Date Filter` will be applied after the `Primary Filter` to filter the records.
 
 .. image:: static/description/steering_indicator_form.png
 
@@ -75,6 +77,18 @@ The recording lines are grouped by `Steering Indicator`, and each group is order
 
 *NB: This module is intended to work on a single project per meeting minute. 
 Another module will be made to allow the notion of parent project to be used in project steering.*
+
+
+*Reports*
+----------
+From the button `Print`, you can print the PDF report of the meeting minutes:
+
+.. image:: static/description/print_meeting_minutes.png
+
+Result:
+
+.. image:: static/description/meeting_minutes_report.png
+
 
 Contributors
 ------------

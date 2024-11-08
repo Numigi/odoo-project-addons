@@ -7,7 +7,10 @@ from odoo import fields, models
 class ProjectSteeringKpi(models.Model):
     _name = "project.steering.kpi"
     _description = "Project Steering KPI"
-    _order = "sequence, id"
+    _order = "sequence, name"
+
+    def _get_allowed_model(self):
+        return [("model", "in", ("project.task", "project.project"))]
 
     name = fields.Char(string="Label", translate=True)
     sequence = fields.Integer(string="Sequence")
@@ -23,6 +26,17 @@ class ProjectSteeringKpi(models.Model):
     active = fields.Boolean(default=True)
     filter_domain = fields.Char(string="Filter")
     available_on_portal = fields.Boolean(string="Available on Portal")
+    primary_filter_domain = fields.Char(string="Primary Filter")
+    date_filter_domain_id = fields.Many2one(
+        "search.date.range.filter",
+        string="Date Filter",
+        domain="[('model_id', '=', model_id)]",
+        help="Filter domain applied on the selected model and the primary filter.",
+    )
+    date_filter_domain = fields.Char(
+        compute="_get_date_filter_domain", string="Date Filter Domain"
+    )
 
-    def _get_allowed_model(self):
-        return [("model", "in", ("project.task", "project.project"))]
+    def _get_date_filter_domain(self):
+        for record in self:
+            record.date_filter_domain = record.date_filter_domain_id.domain
