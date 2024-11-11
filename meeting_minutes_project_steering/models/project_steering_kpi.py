@@ -1,7 +1,7 @@
 # Copyright 2024 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo import fields, models
+from odoo import api, fields, models
 
 
 class ProjectSteeringKpi(models.Model):
@@ -34,9 +34,10 @@ class ProjectSteeringKpi(models.Model):
         help="Filter domain applied on the selected model and the primary filter.",
     )
     date_filter_domain = fields.Char(
-        compute="_get_date_filter_domain", string="Date Filter Domain"
+        compute="_compute_date_filter_domain", string="Date Filter Domain"
     )
 
-    def _get_date_filter_domain(self):
+    @api.depends("date_filter_domain_id")
+    def _compute_date_filter_domain(self):
         for record in self:
             record.date_filter_domain = record.date_filter_domain_id.domain

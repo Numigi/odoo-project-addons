@@ -278,7 +278,8 @@ class CustomerPortal(CustomerPortal):
 
         # Filter by indicator
         if indicator != "empty":
-            domain += safe_eval(searchbar_indicators[indicator]["domain"])
+            if searchbar_indicators[indicator]["domain"] :
+                domain += safe_eval(searchbar_indicators[indicator]["domain"] )
 
         # projects count
         project_count = Project.search_count(domain)

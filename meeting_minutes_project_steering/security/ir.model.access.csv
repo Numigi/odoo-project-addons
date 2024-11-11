@@ -1,4 +1,6 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_project_steering_kpi_user,project.steering.kpi.user,model_project_steering_kpi,project.group_project_user,1,0,0,0
+access_project_steering_kpi_portal,project.steering.kpi.user.portal,model_project_steering_kpi,base.group_portal,1,0,0,0
+access_ir_model_portal,ir.model.user.portal,base.model_ir_model,base.group_portal,1,0,0,0
 access_project_steering_kpi_manager,project.steering.kpi.manager,model_project_steering_kpi,project.group_project_manager,1,1,1,1
 access_project_steering_kpi_line_user,project.steering.kpi.line.user,model_project_steering_kpi_line,project.group_project_user,1,1,1,1
