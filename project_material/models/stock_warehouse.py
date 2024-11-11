@@ -2,7 +2,6 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 from odoo import api, fields, models, _
-from odoo.exceptions import ValidationError
 
 
 ONE_STEP_KEY = "one_step"
@@ -24,25 +23,46 @@ class Warehouse(models.Model):
     consu_location_id = fields.Many2one(
         "stock.location",
         "Consumption Location",
-        domain=[("usage", "=", "production")],
+        domain="[('usage', '=', 'production'), ('company_id', '=', company_id)]",
+        compute='_compute_consu_location_id',
         ondelete="restrict",
+        store=True,
+        check_company=True,
     )
 
     consu_type_id = fields.Many2one(
-        "stock.picking.type", "Consumption Picking Type", ondelete="restrict",
+        "stock.picking.type",
+        "Consumption Picking Type",
+        ondelete="restrict",
+        check_company=True,
     )
 
     consu_return_type_id = fields.Many2one(
-        "stock.picking.type", "Consumption Return Picking Type", ondelete="restrict",
+        "stock.picking.type",
+        "Consumption Return Picking Type",
+        ondelete="restrict",
+        check_company=True,
     )
 
     consu_route_id = fields.Many2one(
-        "stock.location.route", "Consumption Route", ondelete="restrict",
+        "stock.location.route",
+        "Consumption Route",
+        ondelete="restrict",
+        domain="[('warehouse_selectable', '=', True), '|', ('company_id', '=', False), ('company_id', '=', company_id)]",
+        check_company=True,
     )
 
     consu_mto_pull_id = fields.Many2one(
         "stock.rule", "Consumption MTO Pull", ondelete="restrict",
     )
+
+    @api.depends('company_id')
+    def _compute_consu_location_id(self):
+        for record in self:
+            Proprerty = self.env["ir.property"].with_company(record.company_id)
+            record.consu_location_id = Proprerty._get(
+                "property_stock_production", "product.template"
+            ).id
 
     @api.model
     def create(self, vals):
@@ -51,7 +71,6 @@ class Warehouse(models.Model):
         Use sudo to prevent errors related to access rights.
         """
         warehouse = super().create(vals)
-        warehouse.consu_location_id = warehouse._get_consu_location_id()
         warehouse.sudo()._create_consumption_picking_types()
         warehouse.sudo()._create_consumption_route()
         warehouse.sudo()._create_consumption_mto_pull()
@@ -65,25 +84,10 @@ class Warehouse(models.Model):
         super().write(vals)
         if "consu_steps" in vals:
             for warehouse in self:
-                warehouse.consu_location_id = warehouse._get_consu_location_id()
                 warehouse.sudo()._create_or_update_consumption_picking_types()
                 warehouse.sudo()._create_or_update_consumption_route()
                 warehouse.sudo()._create_or_update_consumption_mto_pull()
         return True
-
-    @api.model
-    def _get_consu_location_id(self):
-        location_id = self.env["ir.property"].with_company(
-            self.company_id.id)._get(
-            "property_stock_production", "product.template").id
-        if not location_id:
-            raise ValidationError(
-                _(
-                    "You need to have a property_stock_production for product.template."
-                    " Please contact your administrator or manager."
-                )
-            )
-        return location_id
 
     def _create_or_update_consumption_picking_types(self):
         if self.consu_type_id:
@@ -151,7 +155,7 @@ class Warehouse(models.Model):
                 if self._has_one_step_consumption()
                 else self.consu_prep_location_id.id
             ),
-            "default_location_dest_id": self.with_company(self.company_id).consu_location_id.id,
+            "default_location_dest_id": self.consu_location_id.id,
         }
 
     def _get_consumption_return_picking_type_values(self):
@@ -313,16 +317,23 @@ class WarehouseWithPickingStep(models.Model):
     consu_prep_location_id = fields.Many2one(
         "stock.location",
         "Preparation Picking Location",
-        domain=[("usage", "=", "internal")],
+        domain="[('usage', '=', 'internal'), ('company_id', '=', company_id)]",
         ondelete="restrict",
+        check_company=True,
     )
 
     consu_prep_type_id = fields.Many2one(
-        "stock.picking.type", "Preparation Picking Type", ondelete="restrict"
+        "stock.picking.type",
+        "Preparation Picking Type",
+        ondelete="restrict",
+        check_company=True,
     )
 
     consu_prep_return_type_id = fields.Many2one(
-        "stock.picking.type", "Preparation Return Picking Type", ondelete="restrict"
+        "stock.picking.type",
+        "Preparation Return Picking Type",
+        ondelete="restrict",
+        check_company=True,
     )
 
     def _create_consumption_route(self):
