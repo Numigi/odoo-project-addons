@@ -48,7 +48,7 @@ class Warehouse(models.Model):
         "stock.location.route",
         "Consumption Route",
         ondelete="restrict",
-        domain="[('warehouse_selectable', '=', True), '|', ('company_id', '=', False), ('company_id', '=', company_id)]",
+        domain="[('company_id', '=', company_id)]",
         check_company=True,
     )
 
