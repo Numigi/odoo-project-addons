@@ -477,10 +477,3 @@ msgid ""
 msgstr ""
 "Vous ne pouvez pas modifier l'article ou la tâche sur la ligne de matériel "
 "{line} car elle est liée à un (des) mouvement(s) de stock au statut terminé."
-
-
-#. module: project_material
-#: code:addons/project_material/models/stock_warehouse.py:73
-#, python-format
-msgid "You need to have a property_stock_production for product.template. Please contact your administrator or manager."
-msgstr "Vous devez définir une property_stock_production pour product.template. Veuillez contacter votre administrateur ou manager."
