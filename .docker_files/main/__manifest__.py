@@ -70,6 +70,7 @@
         "project_time_range",
         "project_timesheet_analytic_update",
         "project_type",
+        "stock_location_production",
         "project_wip",
         "project_wip_material",
         "timesheet_task_project_no_change",

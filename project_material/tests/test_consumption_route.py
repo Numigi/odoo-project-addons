@@ -21,13 +21,9 @@ class ConsumptionRouteCase(common.SavepointCase):
 
 class TestConsumptionStep(ConsumptionRouteCase):
     def test_default_consumption_location(self):
-        consu_location_id = (
-            self.env["ir.property"]
-            .with_company(self.new_company.id)
-            ._get("property_stock_production", "product.template")
+        assert self.new_warehouse.consu_location_id == self.env.ref(
+            "stock_location_production.location_production"
         )
-        self.assertTrue(consu_location_id.exists())
-        assert self.new_warehouse.consu_location_id.id == consu_location_id.id
 
     def test_main_warehouse_has_consumption_route(self):
         assert self.main_warehouse.consu_route_id

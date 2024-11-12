@@ -72,6 +72,7 @@ COPY project_timesheet_analytic_update  /mnt/extra-addons/project_timesheet_anal
 COPY project_type  /mnt/extra-addons/project_type
 COPY project_wip /mnt/extra-addons/project_wip
 COPY project_wip_material  /mnt/extra-addons/project_wip_material
+COPY stock_location_production  /mnt/extra-addons/stock_location_production
 COPY timesheet_task_project_no_change  /mnt/extra-addons/timesheet_task_project_no_change
 
 
