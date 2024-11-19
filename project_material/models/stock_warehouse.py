@@ -32,14 +32,14 @@ class Warehouse(models.Model):
 
     consu_type_id = fields.Many2one(
         "stock.picking.type",
-        "Consumption Picking Type",
+        "Consumption Type",
         ondelete="restrict",
         check_company=True,
     )
 
     consu_return_type_id = fields.Many2one(
         "stock.picking.type",
-        "Consumption Return Picking Type",
+        "Consumption Return Type",
         ondelete="restrict",
         check_company=True,
     )
@@ -48,12 +48,16 @@ class Warehouse(models.Model):
         "stock.location.route",
         "Consumption Route",
         ondelete="restrict",
-        domain="[('warehouse_selectable', '=', True), '|', ('company_id', '=', False), ('company_id', '=', company_id)]",
+        domain="[('company_id', '=', company_id)]",
         check_company=True,
     )
 
     consu_mto_pull_id = fields.Many2one(
-        "stock.rule", "Consumption MTO Pull", ondelete="restrict",
+        "stock.rule",
+        "Consumption MTO Pull",
+        ondelete="restrict",
+        domain="[('company_id', '=', company_id)]",
+        check_company=True,
     )
 
     @api.depends('company_id')
@@ -195,7 +199,6 @@ class Warehouse(models.Model):
         }
 
     def _create_or_update_consumption_route(self):
-        self = self.with_company(self.company_id)
         if self.consu_route_id:
             self._update_consumption_route()
         else:
