@@ -12,6 +12,7 @@ class AccountAnalyticLine(models.Model):
     def _should_apply_constraints(self, env):
         def _is_testing():
             return getattr(threading.current_thread(), "testing", False)
+
         return not _is_testing() or env.context.get(
             "enable_project_stage_allow_timesheet_constraint"
         )

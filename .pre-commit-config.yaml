@@ -22,6 +22,10 @@ default_language_version:
   python: python3
   node: "14.13.0"
 repos:
+  - repo: https://github.com/psf/black
+    rev: 22.8.0
+    hooks:
+      - id: black
   - repo: https://github.com/PyCQA/flake8
     rev: 3.8.3
     hooks:
