@@ -12,9 +12,7 @@ class TestTask(TransactionCase):
         context = dict(
             cls.env.context, enable_project_stage_allow_timesheet_constraint=True
         )
-        cls.employee = cls.env["hr.employee"].create(
-            {"name": "Employee"}
-        )
+        cls.employee = cls.env["hr.employee"].create({"name": "Employee"})
         cls.env = cls.env(context=context)
         cls.project_stage_timesheet = cls.env["project.project.stage"].create(
             {"name": "project_stage", "allow_timesheet": True}
@@ -42,7 +40,7 @@ class TestTask(TransactionCase):
                 "name": "line",
                 "task_id": cls.task_timesheet.id,
                 "project_id": cls.project_timesheet.id,
-                "employee_id": cls.employee.id
+                "employee_id": cls.employee.id,
             }
         )
 

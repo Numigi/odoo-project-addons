@@ -7,7 +7,6 @@ from ..models.project_task import FULL_TEXT_SEARCH_INDEX_NAME
 
 
 class TestFullTextSearchParamKey(common.SavepointCase):
-
     @classmethod
     def setUpClass(cls):
         super().setUpClass()

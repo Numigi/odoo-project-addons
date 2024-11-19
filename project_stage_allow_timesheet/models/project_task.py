@@ -1,4 +1,3 @@
-
 # Copyright 2024 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
@@ -13,14 +12,15 @@ class ProjectTask(models.Model):
     def _should_apply_constraints(self, env):
         def _is_testing():
             return getattr(threading.current_thread(), "testing", False)
+
         return not _is_testing() or env.context.get(
             "enable_project_stage_allow_timesheet_constraint"
         )
 
     @api.constrains("project_id")
     def _check_project_move_allow_timesheet(self):
-        """ Check if a line is moved to another project,
-        the target project must allow time sheet """
+        """Check if a line is moved to another project,
+        the target project must allow time sheet"""
         if not self._should_apply_constraints(self.env):
             return
 

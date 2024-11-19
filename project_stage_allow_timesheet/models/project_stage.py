@@ -5,7 +5,7 @@ from odoo import fields, models
 
 
 class ProjectStage(models.Model):
-    _inherit = 'project.project.stage'
+    _inherit = "project.project.stage"
 
     allow_timesheet = fields.Boolean(
         default=True,

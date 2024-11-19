@@ -5,7 +5,6 @@ from odoo.tests import common
 
 
 class TestTaskFullTextSearch(common.SavepointCase):
-
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
