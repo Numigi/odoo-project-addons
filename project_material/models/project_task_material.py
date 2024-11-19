@@ -318,13 +318,9 @@ class TaskMaterialLine(models.Model):
             moves_to_update = moves.filtered(
                 lambda m: m.state not in ("done", "cancel")
             )
-
             delay = moves_to_update.mapped("rule_id.delay")
             if delay:
                 date_planned = date_planned - timedelta(delay[0])
-
-            # FIX ME : update date_expected on v12 but use what field on v14 instead
-            # Maybe `date`  ?
             moves_to_update.with_context(do_not_propagate=True).write(
                 {"date": date_planned}
             )

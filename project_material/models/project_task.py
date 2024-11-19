@@ -103,24 +103,21 @@ class TaskWithMaterialLines(models.Model):
 
     def copy(self, vals=None):
         task = super().copy(vals)
-
         if self.material_line_ids:
             task.procurement_disabled = True
             task._copy_material_lines_from(self)
-
         return task
+
+    def _copy_material_lines_from(self, task):
+        if not self.date_planned:
+            self.date_planned = date(2099, 1, 1)
+        for line in task.material_line_ids:
+            line.copy({"task_id": self.id})
 
     @api.onchange("project_id")
     def _onchange_project_enable_procurements(self):
         if self.project_id:
             self.procurement_disabled = False
-
-    def _copy_material_lines_from(self, task):
-        if not self.date_planned:
-            self.date_planned = date(2099, 1, 1)
-
-        for line in task.material_line_ids:
-            line.copy({"task_id": self.id})
 
     def _run_procurements(self):
         for line in self.mapped("material_line_ids"):
