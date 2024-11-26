@@ -17,6 +17,7 @@
         "project_type_advanced",
         "project_default_task_stage",
         "project_stage_allow_timesheet",
+        "project_task_stage_external_mail",
     ],
     "installable": True,
 }
