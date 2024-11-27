@@ -18,8 +18,8 @@ When the milestone progress reaches the rate limit, an email is sent to the proj
 
 .. image:: static/description/mail_notification.png
 
-Use case
---------
+Use cases
+---------
 1. Initial rate for notification configured is 60%.
 I have a project with a milestone. The milestone have 2 tasks : 1 task is closed and the another one is open.
 The milestone is having progress of 50%.
