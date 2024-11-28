@@ -13,6 +13,7 @@
     "depends": [
         "project",
         "project_task_date_planned",
+        "project_task_editable_list_view",
         "project_task_full_text_search",
         "project_type_advanced",
         "project_default_task_stage",
