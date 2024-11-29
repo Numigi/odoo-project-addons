@@ -4,9 +4,9 @@
         <field name="name">res.config.settings.view.form.inherit.project</field>
         <field name="model">res.config.settings</field>
         <field name="priority" eval="50"/>
-        <field name="inherit_id" ref="base.res_config_settings_view_form" />
+        <field name="inherit_id" ref="project.res_config_settings_view_form" />
         <field name="arch" type="xml">
-        <xpath expr="//div[hasclass('settings')]/div[hasclass('app_settings_block')]" position="inside">
+        <xpath expr="//div[@data-key='project']" position="inside">
                     <h2>Notifications</h2>
                     <div class="row mt16 o_settings_container" name="project_time">
                         <div class="col-12 col-lg-6 o_setting_box" name="project_time_management">
