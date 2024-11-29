@@ -5,37 +5,36 @@
 from odoo.tests import common
 
 
-class TestProjectMilestoneNotification(common.SavepointCase):
-    @classmethod
-    def setUpClass(cls):
-        super(TestProjectMilestoneNotification, cls).setUpClass()
-        cls.test_project = cls.env['project.project'].create({'name': 'NumiProject'})
-        cls.test_project_milestone_1 = cls.env['project.milestone'].create(
-            {'name': 'TestMilestone_1', 'project_id': cls.test_project.id}
+class TestProjectMilestoneNotification(common.TransactionCase):
+    def setUp(self):
+        super().setUp()
+        self.test_project = self.env['project.project'].create({'name': 'NumiProject'})
+        self.test_project_milestone_1 = self.env['project.milestone'].create(
+            {'name': 'TestMilestone_1', 'project_id': self.test_project.id}
         )
-        cls.test_task = cls.env['project.task'].create(
+        self.test_task = self.env['project.task'].create(
             {
                 'name': 'TestNumigiTask1',
-                'project_id': cls.test_project.id,
-                'milestone_id': cls.test_project_milestone_1.id,
+                'project_id': self.test_project.id,
+                'milestone_id': self.test_project_milestone_1.id,
             }
         )
-        cls.env['project.task'].create(
+        self.env['project.task'].create(
             {
                 'name': 'TestNumigiTask2',
-                'project_id': cls.test_project.id,
-                'milestone_id': cls.test_project_milestone_1.id,
+                'project_id': self.test_project.id,
+                'milestone_id': self.test_project_milestone_1.id,
             }
         )
-        cls.env['ir.config_parameter'].set_param(
+        self.env['ir.config_parameter'].set_param(
             'project_milestone_progress_notification.default_notify_manager', True
         )
-        cls.env['ir.config_parameter'].set_param(
+        self.env['ir.config_parameter'].set_param(
             'project_milestone_progress_notification.default_rate', 60.0
         )
-        cls.env['ir.config_parameter'].set_param(
+        self.env['ir.config_parameter'].set_param(
             'project_milestone_progress_notification.default_mail_template',
-            cls.env.ref(
+            self.env.ref(
                 'project_milestone_progress_notification.mail_template_project_milestone_progress_notification'
             ).id,
         )

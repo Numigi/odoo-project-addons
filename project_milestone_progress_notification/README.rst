@@ -21,19 +21,19 @@ When the milestone progress reaches the rate limit, an email is sent to the proj
 Use cases
 ---------
 1. Initial rate for notification configured is 60%.
-I have a project with a milestone. The milestone have 2 tasks : 1 task is closed and the another one is open.
-The milestone is having progress of 50%.
-I create a new task for the milestone, make it closed, to increase the progress.
+I have a project with a milestone. The milestone have 2 tasks.
+The milestone progress is 50%.
+I do some changes on tasks to increase the progress.
 Now, milestone progress reaches 67%, a notification email is sent.
 
-If all tasks are closed, the milestone progress should be 100%, and no additional email is sent.
-But if I reopen all tasks, this make the progress to 0%.
-But if the milestone progress is back to 67% or greater by closing 2 tasks or more, another notification email is sent.
+Il all task was completed, the milestone progress should be 100%, and no additional email is sent.
+
+I can have the progress to 0%, with a specific reason.
+But if the milestone progress is back to 67% or greater by completing tasks, another notification email is sent.
 
 
-2. If I change the notification rate to 33% and all tasks are kept open.
-I close one task, the milestone progress should be 33.33%, triggering another notification email.
-But after that I change the notification rate to 90%, close all tasks, and the milestone progress should be 100%, triggering a final notification email.
+2. If I change the notification rate to 33%. And progress change to 33.33%, triggering another notification email.
+But after that I change the notification rate to 90%, and the milestone progress is 100%, this should trigger a final notification email.
 
 Contributors
 ------------
