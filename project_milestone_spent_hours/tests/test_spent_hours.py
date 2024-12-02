@@ -1,47 +1,46 @@
 # © 2022 - today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
-from odoo.tests.common import SavepointCase
+from odoo.tests.common import TransactionCase
 
 
-class TestMilestoneTotalHours(SavepointCase):
-    @classmethod
-    def setUpClass(cls):
-        super().setUpClass()
+class TestMilestoneTotalHours(TransactionCase):
+    def setUp(self):
+        super().setUp()
 
-        cls.project = cls.env["project.project"].create({"name": "My Project"})
+        self.project = self.env["project.project"].create({"name": "My Project"})
 
-        cls.milestone_1 = cls.env["project.milestone"].create(
-            {"name": "My Milestone 1", "project_id": cls.project.id}
+        self.milestone_1 = self.env["project.milestone"].create(
+            {"name": "My Milestone 1", "project_id": self.project.id}
         )
 
-        cls.milestone_2 = cls.env["project.milestone"].create(
-            {"name": "My Milestone 2", "project_id": cls.project.id}
+        self.milestone_2 = self.env["project.milestone"].create(
+            {"name": "My Milestone 2", "project_id": self.project.id}
         )
 
-        cls.task = cls.env["project.task"].create(
+        self.task = self.env["project.task"].create(
             {
                 "name": "My Task",
-                "project_id": cls.project.id,
-                "milestone_id": cls.milestone_1.id,
+                "project_id": self.project.id,
+                "milestone_id": self.milestone_1.id,
             }
         )
 
-        cls.analytic_line_1 = cls.env["account.analytic.line"].create(
+        self.analytic_line_1 = self.env["account.analytic.line"].create(
             {
                 "name": "My Timesheet 1",
-                "task_id": cls.task.id,
+                "task_id": self.task.id,
                 "unit_amount": 10,
-                "project_id": cls.project.id,
+                "project_id": self.project.id,
             }
         )
 
-        cls.analytic_line_2 = cls.env["account.analytic.line"].create(
+        self.analytic_line_2 = self.env["account.analytic.line"].create(
             {
                 "name": "My Timesheet 2",
-                "task_id": cls.task.id,
+                "task_id": self.task.id,
                 "unit_amount": 20,
-                "project_id": cls.project.id,
+                "project_id": self.project.id,
             }
         )
 
