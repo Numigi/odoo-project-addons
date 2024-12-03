@@ -56,6 +56,7 @@
         "project_milestone_dependency",
         "project_milestone_enhanced",
         "project_milestone_estimated_hours",
+        "project_milestone_progress_notification",
         "project_milestone_remaining_hours",
         "project_milestone_responsible",
         "project_milestone_role",

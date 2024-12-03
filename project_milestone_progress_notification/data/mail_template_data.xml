@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo noupdate="1">
+    <record id="mail_template_project_milestone_progress_notification" model="mail.template">
+        <field name="name">Project Milestone Progress Notification</field>
+        <field name="model_id" ref="project_milestone.model_project_milestone"/>
+        <field name="auto_delete" eval="False"/>
+        <field name="email_from">${('&lt;%s&gt;' % (object.env.user.company_id.email or '')) | safe}</field>
+        <field name="email_to">${object.project_id.user_id.email}</field>
+        <field name="subject">Milestone Progress Notification</field>
+        <field name="body_html"><![CDATA[
+            <p>Dear ${object.project_id.user_id.name},</p>
+            <p>This is to inform you that the milestone <strong>${object.name}</strong> of the project <strong>${object.project_id.name}</strong> is <strong>${round(object.progress)}%</strong> completed.</p>
+            <p>Thank you.</p>
+        ]]></field>
+    </record>
+</odoo>
