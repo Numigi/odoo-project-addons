@@ -1,44 +1,43 @@
 # © 2021 - today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
-from odoo.tests.common import SavepointCase
+from odoo.tests.common import TransactionCase
 
 
-class TestProject(SavepointCase):
-    @classmethod
-    def setUpClass(cls):
-        super().setUpClass()
-        cls.project = cls.env["project.project"].create(
+class TestProject(TransactionCase):
+    def setUp(self):
+        super().setUp()
+        self.project = self.env["project.project"].create(
             {"name": "My Project", "use_milestones": True}
         )
 
-        cls.project_template = cls.env["project.project"].create(
+        self.project_template = self.env["project.project"].create(
             {
                 "name": "My Template Project",
             }
         )
 
-        cls.milestone = cls.env["project.milestone"].create(
-            {"name": "My Milestone", "project_id": cls.project.id}
+        self.milestone = self.env["project.milestone"].create(
+            {"name": "My Milestone", "project_id": self.project.id}
         )
 
-        cls.milestone_2 = cls.env["project.milestone"].create(
-            {"name": "My Milestone 2", "project_id": cls.project.id}
+        self.milestone_2 = self.env["project.milestone"].create(
+            {"name": "My Milestone 2", "project_id": self.project.id}
         )
 
-        cls.task = cls.env["project.task"].create(
+        self.task = self.env["project.task"].create(
             {
                 "name": "My Task",
-                "project_id": cls.project.id,
-                "milestone_id": cls.milestone.id,
+                "project_id": self.project.id,
+                "milestone_id": self.milestone.id,
             }
         )
 
-        cls.task_2 = cls.env["project.task"].create(
+        self.task_2 = self.env["project.task"].create(
             {
                 "name": "My Task 1",
-                "project_id": cls.project.id,
-                "milestone_id": cls.milestone.id,
+                "project_id": self.project.id,
+                "milestone_id": self.milestone.id,
                 "active": False,
             }
         )
@@ -46,7 +45,9 @@ class TestProject(SavepointCase):
     def test_copy_project(self):
         project = self.project.copy({})
         tasks = project.with_context(active_test=False).task_ids
-        milestone = project.milestone_ids.filtered(lambda milestone: not "2" in milestone.name)
+        milestone = project.milestone_ids.filtered(
+            lambda milestone: not "2" in milestone.name
+        )
         assert tasks[0].milestone_id == milestone and tasks[1].milestone_id == milestone
 
     def test_copy_project_not_milestones(self):
