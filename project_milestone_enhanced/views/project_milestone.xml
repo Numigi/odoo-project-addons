@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Form View -->
+    <record id="project_milestone_active_view_form" model="ir.ui.view">
+        <field name="name">Project Milestone Active Form</field>
+        <field name="model">project.milestone</field>
+        <field name="inherit_id" ref="project.project_milestone_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[hasclass('oe_button_box')]" position="inside">
+                    <field name="active" invisible="1"/>
+                    <button name="toggle_active" string="Archive" type="object" attrs="{'invisible': [('active', '=', False)]}"
+                            icon="fa-archive"/>
+                    <button name="toggle_active" type="object"
+                            class="oe_stat_button"
+                            string="Unarchive"
+                            icon="fa-archive"
+                            attrs="{'invisible': [('active', '=', True)]}" >
+                    </button>
+            </xpath>
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="project_id"/>
+            </xpath>
+            <xpath expr="//sheet" position="inside">
+                <notebook>
+                    <page name="tasks" string="Tasks">
+                        <field name="task_ids" context="{'default_project_id': project_id, 'default_date_end': deadline, 'default_milestone_id': active_id}"/>
+                    </page>
+                </notebook>
+            </xpath>
+        </field>
+    </record>
+</odoo>

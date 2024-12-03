@@ -1,0 +1,79 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* project_milestone_enhanced
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-12-03 06:25+0000\n"
+"PO-Revision-Date: 2024-12-03 06:25+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: project_milestone_enhanced
+#: model:ir.model.fields,field_description:project_milestone_enhanced.field_project_milestone__active
+msgid "Active"
+msgstr "Actif"
+
+#. module: project_milestone_enhanced
+#: model_terms:ir.ui.view,arch_db:project_milestone_enhanced.project_active_view_form
+#: model_terms:ir.ui.view,arch_db:project_milestone_enhanced.project_milestone_active_view_form
+msgid "Archive"
+msgstr "Archiver"
+
+#. module: project_milestone_enhanced
+#: model_terms:ir.ui.view,arch_db:project_milestone_enhanced.project_active_view_form
+msgid ""
+"Archiving a project automatically archives its tasks and milestones. Do you "
+"want to proceed ?"
+msgstr ""
+"Archiver un projet archivera automatiquement ses tâches et jalons. Voulez-vous continuer ?"
+
+#. module: project_milestone_enhanced
+#: model_terms:ir.ui.view,arch_db:project_milestone_enhanced.project_active_view_form
+msgid "Milestones"
+msgstr "Jalons"
+
+#. module: project_milestone_enhanced
+#: model:ir.model,name:project_milestone_enhanced.model_project_project
+msgid "Project"
+msgstr "Projet"
+
+#. module: project_milestone_enhanced
+#: model:ir.model,name:project_milestone_enhanced.model_project_milestone
+msgid "Project Milestone"
+msgstr "Jalon du projet"
+
+#. module: project_milestone_enhanced
+#: model:ir.model.fields,field_description:project_milestone_enhanced.field_project_project__show_milestones
+msgid "Show milestones"
+msgstr "Afficher les jalons"
+
+#. module: project_milestone_enhanced
+#: model_terms:ir.ui.view,arch_db:project_milestone_enhanced.project_milestone_active_view_form
+msgid "Tasks"
+msgstr "Tâches"
+
+#. module: project_milestone_enhanced
+#: model:ir.model.fields,field_description:project_milestone_enhanced.field_project_milestone__active_toggle
+msgid "Toggle active"
+msgstr "Toggle actif"
+
+#. module: project_milestone_enhanced
+#: model_terms:ir.ui.view,arch_db:project_milestone_enhanced.project_active_view_form
+#: model_terms:ir.ui.view,arch_db:project_milestone_enhanced.project_milestone_active_view_form
+msgid "Unarchive"
+msgstr "Désarchiver"
+
+#. module: project_milestone_enhanced
+#: model_terms:ir.ui.view,arch_db:project_milestone_enhanced.project_active_view_form
+msgid ""
+"Unarchiving a project automatically unarchives its tasks and milestones. Do "
+"you want to proceed ?"
+msgstr ""
+""Désarchiver un projet désarchivera automatiquement ses tâches et jalons. Voulez-vous continuer ?"
