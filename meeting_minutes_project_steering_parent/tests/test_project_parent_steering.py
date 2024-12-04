@@ -14,6 +14,16 @@ class TestProjectParentSteering(TestProjectSteering):
             {"name": "Project Parent"}
         )
 
+        # Kpi indicator for project
+        self.steering_kpi_project = self.env["project.steering.kpi"].create(
+            {
+                "name": "Steering KPI Project",
+                "sequence": 6,
+                "model_id": self.env.ref("project.model_project_project").id,
+                "primary_filter_domain": '[["name","ilike","Project"]]',
+            }
+        )
+
     def test_steering_from_project_parent(self):
         self.project_2.parent_id = self.project_parent.id
         self.project_1.parent_id = self.project_parent.id
@@ -51,7 +61,7 @@ class TestProjectParentSteering(TestProjectSteering):
             3,
         )
         # Total of lines
-        self.assertEqual(len(minutes.project_steering_ids.ids), 13)
+        self.assertEqual(len(minutes.project_steering_ids.ids), 16)
 
         # Test few project name for each project_steering_ids
         # linked to the project_parent
