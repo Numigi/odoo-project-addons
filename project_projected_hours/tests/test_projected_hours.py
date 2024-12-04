@@ -37,13 +37,14 @@ class TestCustomerReference(TransactionCase):
 
         self.assertEqual(self.task_2.real_progress, 15)
 
-    def _create_analytic_line(self, datetime_, tz=None, task_id=False, unit_amount=0):
+    def _create_analytic_line(self, date, tz=None, task_id=False, unit_amount=0):
         self.env["account.analytic.line"].with_context(tz=tz).create(
             {
-                "date_time": datetime_,
+                "date": date,
                 "project_id": self.project.id,
                 "task_id": task_id.id,
                 "name": "Test line",
                 "unit_amount": unit_amount,
+                "employee_id": self.ref("hr.employee_admin"),
             }
         )
