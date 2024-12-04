@@ -28,6 +28,7 @@
                             <field name="deadline"/>
                             <field name="is_reached"/>
                             <field name="task_ids" widget="many2many_tags"/>
+                            <field name="progress" widget="progressbar"/>
                         </tree>
                     </field>
                 </page>

@@ -1,40 +1,54 @@
 # Copyright 2023 - today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
-from odoo.tests.common import SavepointCase
+from odoo.tests import common
 
 
-class TestProject(SavepointCase):
-    @classmethod
-    def setUpClass(cls):
-        super().setUpClass()
-        cls.project = cls.env["project.project"].create(
+class TestProject(common.TransactionCase):
+    def setUp(self):
+        super().setUp()
+        self.project = self.env["project.project"].create(
             {"name": "My Project", "allow_milestones": True}
         )
 
-        cls.milestone = cls.env["project.milestone"].create(
-            {"name": "My Milestone", "project_id": cls.project.id}
+        self.milestone = self.env["project.milestone"].create(
+            {"name": "My Milestone", "project_id": self.project.id}
         )
 
-        cls.milestone_2 = cls.env["project.milestone"].create(
-            {"name": "My Milestone 2", "project_id": cls.project.id}
+        self.milestone_2 = self.env["project.milestone"].create(
+            {"name": "My Milestone 2", "project_id": self.project.id}
         )
 
-        cls.task = cls.env["project.task"].create(
+        self.task = self.env["project.task"].create(
             {
                 "name": "My Task",
-                "project_id": cls.project.id,
-                "milestone_id": cls.milestone.id,
+                "project_id": self.project.id,
+                "milestone_id": self.milestone.id,
             }
         )
 
-        cls.task_2 = cls.env["project.task"].create(
+        self.task_2 = self.env["project.task"].create(
             {
                 "name": "My Task 1",
-                "project_id": cls.project.id,
-                "milestone_id": cls.milestone.id,
+                "project_id": self.project.id,
+                "milestone_id": self.milestone.id,
                 "active": False,
             }
+        )
+
+        self.task_3 = self.env["project.task"].create(
+            {
+                "name": "My Task 2",
+                "project_id": self.project.id,
+                "milestone_id": self.milestone.id,
+            }
+        )
+
+        self.test_open_stage = self.env['project.task.type'].create(
+            {'name': 'TestOpenStage'}
+        )
+        self.test_close_stage = self.env['project.task.type'].create(
+            {'name': 'TestCloseStage', 'closed': True}
         )
 
     def test_copy_project(self):
@@ -69,3 +83,12 @@ class TestProject(SavepointCase):
         self.project.toggle_active()
         assert self.milestone.active
         assert not self.milestone_2.active
+
+    def test_milestone_progress(self):
+        milestone1 = self.milestone
+
+        self.task.stage_id = self.test_close_stage.id
+        self.assertEqual(milestone1.progress, 50)
+
+        self.task_3.stage_id = self.test_close_stage.id
+        self.assertEqual(milestone1.progress, 100)
