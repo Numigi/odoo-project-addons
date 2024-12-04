@@ -5,7 +5,7 @@ from odoo import models, fields
 
 
 class ProjectTaskType(models.Model):
-    _inherit = 'project.task.type'
+    _inherit = "project.task.type"
 
     closed = fields.Boolean(
         help="Tasks in this stage are considered closed.",

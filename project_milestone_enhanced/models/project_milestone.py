@@ -7,7 +7,7 @@ from odoo import api, models, fields
 class ProjectMilestone(models.Model):
     _name = "project.milestone"
 
-    _inherit = ['project.milestone', 'mail.thread', 'mail.activity.mixin']
+    _inherit = ["project.milestone", "mail.thread", "mail.activity.mixin"]
 
     active = fields.Boolean(string="Active", default=True)
     active_toggle = fields.Boolean(string="Toggle active", default=True)
@@ -47,7 +47,7 @@ class ProjectMilestone(models.Model):
             {"active": False}
         )
 
-    @api.depends('task_ids.stage_id')
+    @api.depends("task_ids.stage_id")
     def _compute_milestone_progress(self):
         total_tasks_count = 0.0
         closed_tasks_count = 0.0

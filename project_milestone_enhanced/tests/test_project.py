@@ -44,11 +44,11 @@ class TestProject(common.TransactionCase):
             }
         )
 
-        self.test_open_stage = self.env['project.task.type'].create(
-            {'name': 'TestOpenStage'}
+        self.test_open_stage = self.env["project.task.type"].create(
+            {"name": "TestOpenStage"}
         )
-        self.test_close_stage = self.env['project.task.type'].create(
-            {'name': 'TestCloseStage', 'closed': True}
+        self.test_close_stage = self.env["project.task.type"].create(
+            {"name": "TestCloseStage", "closed": True}
         )
 
     def test_copy_project(self):
