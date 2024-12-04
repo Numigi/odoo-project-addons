@@ -37,6 +37,8 @@ when a project change field "Milestones", milestones are set to same value if fi
 
 When a project is (de)activated, milestones too if field "active toggle" is set to True.
 
+In addition, milestone has progress field which is calculated from their tasks in closed state.
+
 Overview
 --------
 I open the form of a project with milestones and tasks.
