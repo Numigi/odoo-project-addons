@@ -62,7 +62,7 @@ class TestProjectParentSteering(TestProjectSteering):
             4,
         )
         # Total of lines
-        self.assertEqual(len(minutes.project_steering_ids.ids), 16)
+        self.assertEqual(len(minutes.project_steering_ids.ids), 17)
 
         # Test few project name for each project_steering_ids
         # linked to the project_parent
