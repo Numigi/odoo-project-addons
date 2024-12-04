@@ -51,14 +51,15 @@ class TestProjectParentSteering(TestProjectSteering):
         minutes.action_load_steering_data()
         minutes.refresh()
 
-        # Three sections to have
+        # Four sections to have
+        # 1 for project and 3 for tasks
         self.assertEqual(
             len(
                 minutes.project_steering_ids.filtered(
                     lambda t: t.display_type == "line_section"
                 ).ids
             ),
-            3,
+            4,
         )
         # Total of lines
         self.assertEqual(len(minutes.project_steering_ids.ids), 16)
