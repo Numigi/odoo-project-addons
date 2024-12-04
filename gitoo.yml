@@ -20,3 +20,8 @@
   branch: "16.0"
   includes:
     - web_ir_actions_act_multi
+
+- url: https://github.com/Numigi/odoo-base-addons
+  branch: "16.0"
+  includes:
+    - base_extended_security
