@@ -14,8 +14,9 @@ class ProjectMeetingMinutes(models.Model):
                 domain += [(field, "child_of", self.project_id.parent_id.id or False)]
             return self.env[kpi.model].search(domain) if domain else False
         else:
-            return super(ProjectMeetingMinutes, self)._get_records_from_domain(domain,
-                                                                               kpi)
+            return super(ProjectMeetingMinutes, self)._get_records_from_domain(
+                domain, kpi
+            )
 
     def _get_steering_kpis(self, model_list):
         model_list = [model_list]
@@ -31,8 +32,6 @@ class ProjectMeetingMinutes(models.Model):
                 "task_id": False,
             }
         else:
-            return super(ProjectMeetingMinutes, self)._prepare_project_steering_line_values(rec)
-
-
-
-
+            return super(
+                ProjectMeetingMinutes, self
+            )._prepare_project_steering_line_values(rec)
