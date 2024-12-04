@@ -9,7 +9,7 @@
     "license": "LGPL-3",
     "category": "Project",
     "summary": "Add possibility to set estimated hours in a project milestone",
-    "depends": ["project"],
+    "depends": ["project_milestone_enhanced"],
     "data": [
         "views/project_milestone.xml",
         "views/project.xml",
