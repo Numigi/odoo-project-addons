@@ -39,6 +39,10 @@ When a project is (de)activated, milestones too if field "active toggle" is set 
 
 In addition, milestone has progress field which is calculated from their tasks in closed state.
 
+.. image:: static/description/project_milestone_progress.png
+
+.. image:: static/description/milestone_progress.png
+
 Overview
 --------
 I open the form of a project with milestones and tasks.
