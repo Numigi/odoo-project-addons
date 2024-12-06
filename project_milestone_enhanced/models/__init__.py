@@ -3,4 +3,3 @@
 
 from . import project
 from . import project_milestone
-from . import task_stage

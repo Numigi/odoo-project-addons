@@ -48,7 +48,7 @@ class TestProject(common.TransactionCase):
             {"name": "TestOpenStage"}
         )
         self.test_close_stage = self.env["project.task.type"].create(
-            {"name": "TestCloseStage", "closed": True}
+            {"name": "TestCloseStage", "fold": True}
         )
 
     def test_copy_project(self):

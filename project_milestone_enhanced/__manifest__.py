@@ -13,7 +13,6 @@
     "data": [
         "views/project_milestone.xml",
         "views/project.xml",
-        "views/task_stage.xml",
     ],
     "installable": True,
 }

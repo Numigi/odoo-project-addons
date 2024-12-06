@@ -7,7 +7,7 @@ from odoo import api, models, fields
 class Project(models.Model):
     _inherit = "project.project"
 
-    # show_milestones is not restricted by group
+    # `show_milestones` is not restricted by group
     # like allow_milestones to use it in views
     show_milestones = fields.Boolean(
         related="allow_milestones", string="Show milestones", readonly=True

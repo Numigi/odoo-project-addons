@@ -49,14 +49,14 @@ class ProjectMilestone(models.Model):
 
     @api.depends("task_ids.stage_id")
     def _compute_milestone_progress(self):
-        total_tasks_count = 0.0
-        closed_tasks_count = 0.0
-        for record in self:
-            for task_record in record.task_ids:
-                total_tasks_count += 1
-                if task_record.stage_id.closed:
-                    closed_tasks_count += 1
-            if total_tasks_count > 0:
-                record.progress = (closed_tasks_count / total_tasks_count) * 100
+        task_total = 0.0
+        task_closed = 0.0
+        for milestone in self:
+            for task in milestone.task_ids:
+                task_total += 1
+                if task.stage_id.fold:
+                    task_closed += 1
+            if task_total > 0:
+                milestone.progress = (task_closed / task_total) * 100
             else:
-                record.progress = 0.0
+                milestone.progress = 0.0

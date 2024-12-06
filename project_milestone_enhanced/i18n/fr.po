@@ -69,10 +69,6 @@ msgstr ""
 msgid "Attachment Count"
 msgstr "Nombre de pièces jointes"
 
-#. module: project_milestone_enhanced
-#: model:ir.model.fields,field_description:project_milestone_enhanced.field_project_task_type__closed
-msgid "Closed"
-msgstr "Clôturé"
 
 #. module: project_milestone_enhanced
 #: model:ir.model.fields,field_description:project_milestone_enhanced.field_project_milestone__message_follower_ids
@@ -244,19 +240,9 @@ msgstr "Statut basé sur les activités\n"
 "Planifié : activités futures."
 
 #. module: project_milestone_enhanced
-#: model:ir.model,name:project_milestone_enhanced.model_project_task_type
-msgid "Task Stage"
-msgstr "Étape de tâche"
-
-#. module: project_milestone_enhanced
 #: model_terms:ir.ui.view,arch_db:project_milestone_enhanced.project_milestone_active_view_form
 msgid "Tasks"
 msgstr "Tâches"
-
-#. module: project_milestone_enhanced
-#: model:ir.model.fields,help:project_milestone_enhanced.field_project_task_type__closed
-msgid "Tasks in this stage are considered closed."
-msgstr "Les tâches dans cette étape sont considérées comme clôturées."
 
 #. module: project_milestone_enhanced
 #: model:ir.model.fields,field_description:project_milestone_enhanced.field_project_milestone__active_toggle
