@@ -16,6 +16,7 @@
         "project_task_full_text_search",
         "project_type_advanced",
         "project_default_task_stage",
+        "project_task_milestone_mandatory",
         "project_stage_allow_timesheet",
     ],
     "installable": True,
