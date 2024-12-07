@@ -4,9 +4,9 @@
     <record id="project_milestone_estimated_hours_view_list" model="ir.ui.view">
         <field name="name">Project Milestone Estimated Hours List</field>
         <field name="model">project.milestone</field>
-        <field name="inherit_id" ref="project.project_milestone_view_tree" />
+        <field name="inherit_id" ref="project_milestone_enhanced.project_milestone_view_list" />
         <field name="arch" type="xml">
-            <field name="can_be_marked_as_done" position="after">
+            <field name="task_ids" position="after">
                 <field name="estimated_hours" widget="float_time" />
             </field>
         </field>

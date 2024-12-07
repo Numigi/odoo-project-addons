@@ -1,14 +1,14 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* project_milestone_estimated_hours
+# 	* project_milestone_estimated_hours
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-03-03 11:46+0000\n"
-"PO-Revision-Date: 2022-03-03 11:46+0000\n"
-"Last-Translator: <>\n"
+"POT-Creation-Date: 2024-12-07 04:32+0000\n"
+"PO-Revision-Date: 2024-12-07 04:32+0000\n"
+"Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -24,4 +24,3 @@ msgstr "Heures estimées"
 #: model:ir.model,name:project_milestone_estimated_hours.model_project_milestone
 msgid "Project Milestone"
 msgstr "Jalon"
-

@@ -12,11 +12,11 @@
     "summary": "Install all addons required for testing.",
     "depends": [
         "project",
-        "project_milestone_estimated_hours",
         "project_task_date_planned",
         "project_task_full_text_search",
         "project_type_advanced",
         "project_default_task_stage",
+        "project_milestone_estimated_hours",
         "project_stage_allow_timesheet",
     ],
     "installable": True,

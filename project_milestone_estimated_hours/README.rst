@@ -5,10 +5,9 @@ Project Milestone Estimated Hours
 
 Context
 -------
-The module `project_milestone <https://github.com/OCA/project/tree/14.0/project_milestone>`_ allows to define milestones for a project.
+Natively, Odoo allows to define milestones for a project.
 
 Multiple tasks in the project can be linked to a given milestone.
-
 
 
 Description
