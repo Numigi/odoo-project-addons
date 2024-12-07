@@ -12,7 +12,7 @@ class TestMilestoneTotalHours(SavepointCase):
         cls.employee_manager = cls.env["hr.employee"].create(
             {
                 "name": "Employee Manager",
-                'hourly_cost': 808,
+                "hourly_cost": 808,
             }
         )
 
