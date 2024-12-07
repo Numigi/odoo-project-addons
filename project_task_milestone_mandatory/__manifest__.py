@@ -12,8 +12,8 @@
     "summary": """In task form view, field milestone is required if field
         `Allow milestones` is True in project else invisible.""",
     "depends": ["project"],
-    'data': [
-        'views/project_task.xml',
+    "data": [
+        "views/project_task.xml",
     ],
     "installable": True,
 }
