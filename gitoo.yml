@@ -7,6 +7,7 @@
   branch: "16.0"
   includes:
     - project_task_dependency
+    - project_timeline
     - project_timesheet_time_control
     - project_type
 
@@ -20,3 +21,4 @@
   branch: "16.0"
   includes:
     - web_ir_actions_act_multi
+    - web_timeline
