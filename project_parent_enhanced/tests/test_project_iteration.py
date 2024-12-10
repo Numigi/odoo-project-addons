@@ -48,5 +48,5 @@ class TestProjectIteration(TransactionCase):
             self.project_1.parent_id = self.project_2
 
     def test_iteration_can_not_have_child_projects(self):
-        with pytest.raises(ValidationError):
+        with self.assertRaises(ValidationError):
             self.iteration_2.parent_id = self.iteration_1.id

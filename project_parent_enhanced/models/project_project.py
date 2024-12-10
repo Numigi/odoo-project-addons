@@ -9,34 +9,10 @@ class ProjectProject(models.Model):
 
     _inherit = "project.project"
 
-    is_parent = fields.Boolean(
-        "Is Parent", compute="_compute_is_parent", store=True, compute_sudo=True
-    )
-
-    def write(self, vals):
-        super().write(vals)
-
-        if vals.get("parent_id"):
-            for project in self:
-                project._propagate_followers_from_parent()
-
-        return True
-
-    def name_get(self):
-        """Add the parent project before the name of the iteration.
-
-        Check the access rights for the projects to read.
-        Then, bypass access checks to prevent errors related to the parent project.
-        """
-        self.check_access_rights("read")
-        self.check_access_rule("read")
-        self = self.sudo()
-
-        iterations = self.filtered(lambda p: p.parent_id)
-        other_projects = self.filtered(lambda p: not p.parent_id)
-        res = super(ProjectProject, other_projects).name_get()
-        res.extend((p.id, ", ".join([p.parent_id.name, p.name])) for p in iterations)
-        return res
+    @api.depends("child_ids")
+    def _compute_is_parent(self):
+        for project in self:
+            project.is_parent = bool(project.child_ids)
 
     @api.constrains("parent_id", "child_ids_count")
     def _check_child_project_has_no_child(self):
@@ -71,10 +47,32 @@ class ProjectProject(models.Model):
         if self.parent_id:
             self.partner_id = self.parent_id.partner_id
 
-    @api.depends("child_ids")
-    def _compute_is_parent(self):
-        for project in self:
-            project.is_parent = bool(project.child_ids)
+    def write(self, vals):
+        super().write(vals)
+        if vals.get("parent_id"):
+            for project in self:
+                project._propagate_followers_from_parent()
+        return True
+
+    def name_get(self):
+        """Add the parent project before the name of the iteration.
+
+        Check the access rights for the projects to read.
+        Then, bypass access checks to prevent errors related to the parent project.
+        """
+        self.check_access_rights("read")
+        self.check_access_rule("read")
+        self = self.sudo()
+
+        iterations = self.filtered(lambda p: p.parent_id)
+        other_projects = self.filtered(lambda p: not p.parent_id)
+        res = super(ProjectProject, other_projects).name_get()
+        res.extend((p.id, ", ".join([p.parent_id.name, p.name])) for p in iterations)
+        return res
+
+    is_parent = fields.Boolean(
+        "Is Parent", compute="_compute_is_parent", store=True, compute_sudo=True
+    )
 
     def _propagate_followers_from_parent(self):
         self.message_unsubscribe(self.message_partner_ids.ids)
