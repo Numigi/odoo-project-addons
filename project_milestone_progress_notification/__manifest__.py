@@ -15,6 +15,7 @@
     "summary": "Sends email notification when reaching project milestone progression.",
     "data": [
         "views/res_config_settings_views.xml",
+        "data/cron_data.xml",
         "data/mail_template_data.xml",
         "data/res_config_settings_data.xml",
     ],

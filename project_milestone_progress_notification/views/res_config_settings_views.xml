@@ -7,27 +7,28 @@
         <field name="inherit_id" ref="project.res_config_settings_view_form" />
         <field name="arch" type="xml">
         <xpath expr="//div[@data-key='project']" position="inside">
-                    <h2>Notifications</h2>
+                    <h2>Milestone Progress Notification</h2>
                     <div class="row mt16 o_settings_container" name="project_time">
-                        <div class="col-12 col-lg-6 o_setting_box" name="project_time_management">
-                            <div class="o_setting_left_pane">
-                                <field name="notify_manager"/>
-                            </div>
+                        <div class="col-12 col-lg-6 o_setting_box">
                             <div class="o_setting_right_pane">
-                                <label string="Milestone progression notification" for="notify_manager"/>
-                                <div class="text-muted" id="msg_modul">
-                                    Notify the manager when the milestone is reached
+                                <div class="content-group">
+                                    <label for="rate"/>
+                                    <field name="rate" class="oe_inline"/>
+                                    <span class="ml-2">%</span>
                                 </div>
-                                <div class="content-group" attrs="{'invisible': [('notify_manager','=',False)]}">
-                                    <div class="row mt16">
-                                        <label for="rate" class="o_form_label col-lg-3 o_light_label"/>
-                                        <field name="rate" class="o_field_float o_field_number o_field_widget o_input"/>
-                                        <span class="ml-2">%</span>
-                                    </div>
-                                    <div class="row mt16">
-                                        <label for="mail_template_id" class="o_form_label col-lg-3 o_light_label"/>
-                                        <field name="mail_template_id" class="o_input"/>
-                                    </div>
+                                <div class="text-muted" id="msg_modul">
+                                    Configure the 'Achievement Rate' to notify the project manager when the value is reached
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_right_pane">
+                                <div class="content-group">
+                                    <label for="mail_template_id"/>
+                                    <field name="mail_template_id" class="oe_inline"/>
+                                </div>
+                                <div class="text-muted" id="msg_modul">
+                                    Choose the email template to be sent for notifications
                                 </div>
                             </div>
                         </div>

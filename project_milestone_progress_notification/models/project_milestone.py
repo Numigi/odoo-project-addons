@@ -1,45 +1,32 @@
 # Copyright 2024 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo import api, fields, models
+from odoo import fields, models
 
 
 class ProjectMilestone(models.Model):
     _inherit = 'project.milestone'
 
-    notification_sent = fields.Boolean(string="Notification Sent")
-    last_rate = fields.Float(string="Last Rate")
-    progress_check = fields.Boolean(
-        string="Last Progress Rate",
-        store=True,
-        compute='_compute_progress_check',
+    notification_sent = fields.Boolean(
+        string="Notification Sent",
+        default=False,
     )
 
-    @api.depends('progress')
-    def _compute_progress_check(self):
-        rate = float(
-            self.env['ir.config_parameter']
-            .sudo()
-            .get_param('project_milestone_progress_notification.default_rate')
+    # Methode called by the corn "Check and Send Milestone Progress Notification"
+    def _check_and_send_progress_notification(self):
+        config_param = self.env["ir.config_parameter"].sudo()
+        rate = float(config_param.get_param(
+            "project_milestone_progress_notification.default_rate"
+        ))
+        template_id = config_param.get_param(
+            "project_milestone_progress_notification.default_mail_template"
         )
-        for milestone in self:
-            should_send_notification = milestone.progress >= rate and (
-                not milestone.notification_sent or milestone.last_rate < rate
-            )
-            if should_send_notification:
-                template_id = (
-                    self.env['ir.config_parameter']
-                    .sudo()
-                    .get_param(
-                        'project_milestone_progress_notification.default_mail_template'
-                    )
-                )
+        milestones = self.search([])
+        for milestone in milestones:
+            if milestone.progress >= rate and not milestone.notification_sent:
+                # Send notification if it hasn't been sent or rate was updated
                 milestone.message_post_with_template(int(template_id))
-                milestone.write({'notification_sent': True, 'last_rate': rate})
+                milestone.notification_sent = True
             elif milestone.progress < rate and milestone.notification_sent:
-                milestone.write({'notification_sent': False, 'last_rate': rate})
-            else:
-                pass
-
-            self.env.cr.commit()
-            milestone.progress_check = True
+                # Reset notification if progress drops below the rate
+                milestone.notification_sent = False

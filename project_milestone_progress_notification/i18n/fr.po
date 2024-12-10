@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-27 08:14+0000\n"
-"PO-Revision-Date: 2024-11-27 08:14+0000\n"
+"POT-Creation-Date: 2024-12-11 16:19+0000\n"
+"PO-Revision-Date: 2024-12-11 16:19+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -23,36 +23,47 @@ msgid "\n"
 "            <p>Thank you.</p>\n"
 "        "
 msgstr "\n"
-"            <p>Cher ${object.project_id.user_id.name},</p>\n"
-"            <p>Ceci est pour vous informer que l'étape <strong>${object.name}</strong> du projet <strong>${object.project_id.name}</strong> est <strong>${round(object.progress)}%</strong> complétée.</p>\n"
+"            <p>Cher/Chère ${object.project_id.user_id.name},</p>\n"
+"            <p>Nous vous informons que l'étape <strong>${object.name}</strong> du projet <strong>${object.project_id.name}</strong> est réalisée à <strong>${round(object.progress)}%</strong>.</p>\n"
 "            <p>Merci.</p>\n"
 "        "
+
+#. module: project_milestone_progress_notification
+#: model:ir.actions.server,name:project_milestone_progress_notification.cron_check_and_send_progress_notification_ir_actions_server
+#: model:ir.cron,cron_name:project_milestone_progress_notification.cron_check_and_send_progress_notification
+#: model:ir.cron,name:project_milestone_progress_notification.cron_check_and_send_progress_notification
+msgid "Check and Send Milestone Progress Notification"
+msgstr "Validation et Envoi de notification d'avancement de l'étape"
+
+#. module: project_milestone_progress_notification
+#: model:ir.model.fields,field_description:project_milestone_progress_notification.field_res_config_settings__rate
+msgid "Achievement Rate"
+msgstr "Taux d'atteinte"
+
+#. module: project_milestone_progress_notification
+#: model_terms:ir.ui.view,arch_db:project_milestone_progress_notification.res_config_settings_view_form_inherit
+msgid "Choose the email template to be sent for notifications"
+msgstr "Choisissez le modèle d'email à envoyer pour les notifications"
 
 #. module: project_milestone_progress_notification
 #: model:ir.model,name:project_milestone_progress_notification.model_res_config_settings
 msgid "Config Settings"
 msgstr "Paramètres de configuration"
 
-
 #. module: project_milestone_progress_notification
-#: model:ir.model.fields,field_description:project_milestone_progress_notification.field_project_milestone__last_rate
-msgid "Last Rate"
-msgstr "Dernier taux"
-
-#. module: project_milestone_progress_notification
-#: model:ir.model.fields,field_description:project_milestone_progress_notification.field_res_config_settings__mail_template_id
-msgid "Mail Template"
-msgstr "Modèle de courriel"
+#: model_terms:ir.ui.view,arch_db:project_milestone_progress_notification.res_config_settings_view_form_inherit
+msgid "Configure the 'Achievement Rate' to notify the project manager when the value is reached"
+msgstr "Configurez le 'Taux d'atteinte' pour notifier le chef de projet lorsque la valeur est atteinte"
 
 #. module: project_milestone_progress_notification
 #: model:mail.template,subject:project_milestone_progress_notification.mail_template_project_milestone_progress_notification
 msgid "Milestone Progress Notification"
-msgstr "Notification de progression de l'étape de projet"
+msgstr "Notification de progression des étapes"
 
 #. module: project_milestone_progress_notification
 #: model_terms:ir.ui.view,arch_db:project_milestone_progress_notification.res_config_settings_view_form_inherit
-msgid "Milestone progression notification"
-msgstr "Notification de progression de l'étape de projet"
+msgid "Milestone Progress Notification"
+msgstr "Notification de progression des étapes"
 
 #. module: project_milestone_progress_notification
 #: model:ir.model.fields,field_description:project_milestone_progress_notification.field_project_milestone__notification_sent
@@ -60,26 +71,11 @@ msgid "Notification Sent"
 msgstr "Notification envoyée"
 
 #. module: project_milestone_progress_notification
-#: model_terms:ir.ui.view,arch_db:project_milestone_progress_notification.res_config_settings_view_form_inherit
-msgid "Notifications"
-msgstr "Notifications"
-
-#. module: project_milestone_progress_notification
-#: model:ir.model.fields,field_description:project_milestone_progress_notification.field_res_config_settings__notify_manager
-msgid "Notify Manager"
-msgstr "Notifier le responsable"
-
-#. module: project_milestone_progress_notification
-#: model_terms:ir.ui.view,arch_db:project_milestone_progress_notification.res_config_settings_view_form_inherit
-msgid "Notify the manager when the milestone is reached"
-msgstr "Notifier le responsable lorsque l'étape est atteinte"
-
-#. module: project_milestone_progress_notification
 #: model:ir.model,name:project_milestone_progress_notification.model_project_milestone
 msgid "Project Milestone"
-msgstr "Étape de projet"
+msgstr "Étape du projet"
 
 #. module: project_milestone_progress_notification
-#: model:ir.model.fields,field_description:project_milestone_progress_notification.field_res_config_settings__rate
-msgid "Rate"
-msgstr "Taux d'atteinte"
+#: model:ir.model.fields,field_description:project_milestone_progress_notification.field_res_config_settings__mail_template_id
+msgid "Template"
+msgstr "Modèle"

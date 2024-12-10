@@ -1,100 +1,106 @@
-# Copyright 2024 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
-
-
 from odoo.tests import common
 
 
-class TestProjectMilestoneNotification(common.TransactionCase):
+class TestMilestoneProgressNotification(common.TransactionCase):
     def setUp(self):
         super().setUp()
-        self.test_project = self.env['project.project'].create({'name': 'NumiProject'})
-        self.test_project_milestone_1 = self.env['project.milestone'].create(
-            {'name': 'TestMilestone_1', 'project_id': self.test_project.id}
+        self.test_project = self.env["project.project"].create({"name": "NumiProject"})
+        self.test_project_milestone_1 = self.env["project.milestone"].create(
+            {"name": "TestMilestone_1", "project_id": self.test_project.id}
         )
-        self.test_task = self.env['project.task'].create(
-            {
-                'name': 'TestNumigiTask1',
-                'project_id': self.test_project.id,
-                'milestone_id': self.test_project_milestone_1.id,
-            }
+        self.env["ir.config_parameter"].sudo().set_param(
+            "project_milestone_progress_notification.default_rate", "75.0"
         )
-        self.env['project.task'].create(
-            {
-                'name': 'TestNumigiTask2',
-                'project_id': self.test_project.id,
-                'milestone_id': self.test_project_milestone_1.id,
-            }
-        )
-        self.env['ir.config_parameter'].set_param(
-            'project_milestone_progress_notification.default_notify_manager', True
-        )
-        self.env['ir.config_parameter'].set_param(
-            'project_milestone_progress_notification.default_rate', 60.0
-        )
-        self.env['ir.config_parameter'].set_param(
-            'project_milestone_progress_notification.default_mail_template',
+        self.env["ir.config_parameter"].sudo().set_param(
+            "project_milestone_progress_notification.default_mail_template",
             self.env.ref(
-                'project_milestone_progress_notification.mail_template_project_milestone_progress_notification'
+                "project_milestone_progress_notification.mail_template_project_milestone_progress_notification"
             ).id,
         )
 
-    def test_project_milestone_notification(self):
-        # Test is directly linked to the milestone progress to avoid checking if
-        # the progress is updated by the task or not. The calculation of the progress
-        # may vary depending on modules installed. Like project_milestone_time_progress
-        # module will update the progress based on the task hours, not the task stage.
+    def test_notification_sent_on_progress_reach(self):
+        """
+        Test if notification is sent when milestone progress reaches 75%
+        with configuration rate set to 75%.
+        """
+        milestone = self.env["project.milestone"].create(
+            {"name": "TestMilestone_1", "project_id": self.test_project.id}
+        )
+        milestone.progress = 74.9  # Progress below 75%
+        self.assertFalse(milestone.notification_sent)
 
-        milestone1 = self.test_project_milestone_1
+        milestone.progress = 75.0  # Progress reaches 75%
+        milestone._check_and_send_progress_notification()
+        self.assertTrue(milestone.notification_sent)
 
-        # Milestone progress is initially 50
-        milestone1.progress = 50
-
-        # Milestone progress changed to 66.66
-        milestone1.progress = 66.66
-        # Check if the mail is sent linked to the milestone.abs
-        # Check in mail.mail table, model: project.milestone, res_id: milestone1.id
-        mail = self._get_mail(milestone1)
-        # Count sent mail should be 1
-        self.assertEqual(len(mail), 1)
-        self.assertEqual(milestone1.notification_sent, True)
-
-        # Milestone progress is now 100
-        milestone1.progress = 100
-
-        mail = self._get_mail(milestone1)
-        # Count sent mail should be always 1
-        self.assertEqual(len(mail), 1)
-
-        milestone1.progress = 0
-        milestone1.notification_sent = False
-
-        self.env['ir.config_parameter'].set_param(
-            'project_milestone_progress_notification.default_rate', 33.0
+        # Check if a mail.message is created
+        self.assertTrue(len(milestone.message_ids) > 0)
+        self.assertEqual(
+            milestone.message_ids[0].subtype_id, self.env.ref("mail.mt_comment")
         )
 
-        # Milestone progress is 33.33
-        milestone1.progress = 33.33
-        mail = self._get_mail(milestone1)
-        # Count sent mail should be 2 now
-        self.assertEqual(len(mail), 2)
-        self.assertEqual(milestone1.notification_sent, True)
-
-        self.env['ir.config_parameter'].set_param(
-            'project_milestone_progress_notification.default_rate', 90.0
+    def test_notification_not_sent_below_threshold(self):
+        """
+        Test if notification is not sent when milestone progress is below 75%
+        with configuration rate set to 75%.
+        """
+        milestone = self.env["project.milestone"].create(
+            {"name": "TestMilestone_1", "project_id": self.test_project.id}
+        )
+        milestone.progress = 74.9  # Progress below 75%
+        nbr_messages = len(milestone.message_ids)
+        milestone._check_and_send_progress_notification()
+        self.assertFalse(milestone.notification_sent)
+        # No new message should be created
+        self.assertEqual(
+            len(milestone.message_ids),
+            nbr_messages,
+            msg="No new message should be created",
         )
 
-        # Milestone progress is now 100
-        milestone1.progress = 100
-        mail = self._get_mail(milestone1)
-        # Count sent mail should be 3 now
-        self.assertEqual(len(mail), 3)
-        self.assertEqual(milestone1.notification_sent, True)
+    def test_notification_not_resent_above_threshold(self):
+        """
+        Test if notification is not resent when progress is already above 75%
+        and notification_sent is True.
+        """
+        milestone = self.env["project.milestone"].create(
+            {
+                "name": "TestMilestone_1",
+                "project_id": self.test_project.id,
+                "notification_sent": True,
+            }
+        )
+        milestone.progress = 75.1  # Progress above 75%
+        nbr_messages = len(milestone.message_ids)
+        milestone._check_and_send_progress_notification()
+        self.assertTrue(milestone.notification_sent)
+        self.assertEqual(
+            len(milestone.message_ids),
+            nbr_messages,
+            msg="No new message should be created",
+        )
 
-    def _get_mail(self, milestone):
-        return self.env['mail.mail'].search(
-            [
-                ('model', '=', 'project.milestone'),
-                ('res_id', '=', milestone.id),
-            ]
+    def test_notification_resent_after_drop_and_rise(self):
+        """
+        Test if notification is resent when progress drops below 75%,
+        then rises above 75% again.
+        """
+        milestone = self.env["project.milestone"].create(
+            {
+                "name": "TestMilestone_1",
+                "project_id": self.test_project.id,
+                "notification_sent": True,
+            }
+        )
+        milestone.progress = 70.0  # Progress drops below 75%
+        milestone._check_and_send_progress_notification()
+        self.assertFalse(milestone.notification_sent)
+
+        milestone.progress = 75.1  # Progress rises above 75%
+        nbr_messages = len(milestone.message_ids)
+        milestone._check_and_send_progress_notification()
+        self.assertTrue(milestone.notification_sent)
+        self.assertTrue(
+            len(milestone.message_ids) > nbr_messages,
+            msg="New message should be created",
         )
