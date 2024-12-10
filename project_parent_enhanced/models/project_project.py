@@ -38,7 +38,7 @@ class ProjectProject(models.Model):
         res.extend((p.id, ", ".join([p.parent_id.name, p.name])) for p in iterations)
         return res
 
-    @api.constrains("parent_id", "child_ids")
+    @api.constrains("parent_id", "child_ids_count")
     def _check_child_project_has_no_child(self):
         child_projects_with_children = self.filtered(
             lambda p: p.parent_id and p.child_ids
@@ -47,8 +47,8 @@ class ProjectProject(models.Model):
         for project in child_projects_with_children:
             raise ValidationError(
                 _(
-                    "The project {project_1} can not be the child of {project_2} "
-                    "because {project_2} is a child of {project_3}."
+                    "The project [{project_1}] can not be the child of [{project_2}] "
+                    "because [{project_2}] is a child of [{project_3}]."
                 ).format(
                     project_1=project.child_ids[0].display_name,
                     project_2=project.display_name,
