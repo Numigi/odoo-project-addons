@@ -14,8 +14,12 @@ RUN gitoo install-all --conf_file /gitoo.yml --destination "${THIRD_PARTY_ADDONS
 USER odoo
 
 COPY project_stage_allow_timesheet mnt/extra-addons/project_stage_allow_timesheet
+COPY project_parent_enhanced mnt/extra-addons/project_parent_enhanced
 COPY project_task_date_planned /mnt/extra-addons/project_task_date_planned
+COPY project_task_deadline_from_project /mnt/extra-addons/project_task_deadline_from_project
+COPY project_task_editable_list_view /mnt/extra-addons/project_task_editable_list_view
 COPY project_task_full_text_search /mnt/extra-addons/project_task_full_text_search
+COPY project_track_end_date /mnt/extra-addons/project_track_end_date
 COPY project_type_advanced /mnt/extra-addons/project_type_advanced
 COPY project_default_task_stage /mnt/extra-addons/project_default_task_stage
 COPY project_milestone_enhanced /mnt/extra-addons/project_milestone_enhanced
