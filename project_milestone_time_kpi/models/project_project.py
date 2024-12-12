@@ -19,7 +19,7 @@ class Project(models.Model):
         store=True,
     )
     total_remaining_hours = fields.Float(
-        "Total Remaining Work", compute="_compute_remaining_hours", store=True
+        "Total Remaining Work", compute="_compute_total_remaining_hours", store=True
     )
 
     @api.depends(
@@ -40,7 +40,7 @@ class Project(models.Model):
             )
 
     @api.depends("task_ids", "task_ids.remaining_hours")
-    def _compute_remaining_hours(self):
+    def _compute_total_remaining_hours(self):
         for project in self:
             project.total_remaining_hours = sum(
                 project.task_ids.mapped("remaining_hours")
