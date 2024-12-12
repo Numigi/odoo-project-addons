@@ -35,4 +35,34 @@
             </xpath>
         </field>
     </record>
+
+    <!-- List View-->
+    <record id="project_milestone_view_inherit_list" model="ir.ui.view">
+        <field name="name">project.milestone.tree</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.view_project"/>
+        <field name="type">tree</field>
+        <field name="field_parent">child_ids</field>
+        <field name="arch" type="xml">
+            <field name="user_id" position="after">
+                <field name="milestone_ids"/>
+            </field>
+        </field>
+    </record>
+
+    <!-- Search View -->
+    <record id="project_enhancements_milestone_inherit_search_view" model="ir.ui.view">
+        <field name="name">project.milestone.filter</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.view_project_project_filter"/>
+        <field name="arch" type="xml">
+            <filter name="inactive" position="before">
+                <filter string="Milestone Projects"
+                        name="milestone_projects"
+                        domain="[('allow_milestones', '=', True)]"/>
+                <separator/>
+            </filter>
+        </field>
+    </record>
+
 </odoo>
