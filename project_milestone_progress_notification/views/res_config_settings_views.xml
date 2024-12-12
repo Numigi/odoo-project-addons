@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form_inherit" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.project</field>
+        <field name="model">res.config.settings</field>
+        <field name="priority" eval="50"/>
+        <field name="inherit_id" ref="project.res_config_settings_view_form" />
+        <field name="arch" type="xml">
+        <xpath expr="//div[@data-key='project']" position="inside">
+                    <h2>Milestone Progress Notification</h2>
+                    <div class="row mt16 o_settings_container" name="project_time">
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_right_pane">
+                                <div class="content-group">
+                                    <label for="rate"/>
+                                    <field name="rate" class="oe_inline"/>
+                                    <span class="ml-2">%</span>
+                                </div>
+                                <div class="text-muted" id="msg_modul">
+                                    Configure the 'Achievement Rate' to notify the project manager when the value is reached
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_right_pane">
+                                <div class="content-group">
+                                    <label for="mail_template_id"/>
+                                    <field name="mail_template_id" class="oe_inline"/>
+                                </div>
+                                <div class="text-muted" id="msg_modul">
+                                    Choose the email template to be sent for notifications
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>
