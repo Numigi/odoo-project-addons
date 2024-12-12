@@ -270,7 +270,7 @@ msgid ""
 "Unarchiving a project automatically unarchives its tasks and milestones. Do "
 "you want to proceed ?"
 msgstr ""
-""Désarchiver un projet désarchivera automatiquement ses tâches et jalons. Voulez-vous continuer ?"
+"Désarchiver un projet désarchivera automatiquement ses tâches et jalons. Voulez-vous continuer ?"
 
 #. module: project_milestone_enhanced
 #: model:ir.model.fields,field_description:project_milestone_enhanced.field_project_milestone__website_message_ids
