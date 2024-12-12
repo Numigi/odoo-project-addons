@@ -18,14 +18,14 @@ class TestProjectMilestoneTimeKPI(TransactionCase):
             }
         )
 
-        self.milestone_a = self.env['project.milestone'].create(
+        self.milestone_a = self.env["project.milestone"].create(
             {
                 "name": "Analysis",
                 "estimated_hours": 8,
                 "project_id": self.project_a.id,
             }
         )
-        self.milestone_b = self.env['project.milestone'].create(
+        self.milestone_b = self.env["project.milestone"].create(
             {
                 "name": "Realization",
                 "estimated_hours": 20,
@@ -93,7 +93,7 @@ class TestProjectMilestoneTimeKPI(TransactionCase):
         assert self.project_a.total_remaining_hours == 2
 
     def test_add_milestone(self):
-        self.env['project.milestone'].create(
+        self.env["project.milestone"].create(
             {
                 "name": "Test",
                 "estimated_hours": 8,
