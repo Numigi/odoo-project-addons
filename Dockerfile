@@ -22,6 +22,7 @@ COPY project_task_full_text_search /mnt/extra-addons/project_task_full_text_sear
 COPY project_track_end_date /mnt/extra-addons/project_track_end_date
 COPY project_type_advanced /mnt/extra-addons/project_type_advanced
 COPY project_default_task_stage /mnt/extra-addons/project_default_task_stage
+COPY project_no_quick_create /mnt/extra-addons/project_no_quick_create
 
 
 COPY .docker_files/main /mnt/extra-addons/main
