@@ -19,6 +19,7 @@
         "project_track_end_date",
         "project_type_advanced",
         "project_default_task_stage",
+        "project_milestone_enhanced",
         "project_parent_enhanced",
         "project_stage_allow_timesheet",
     ],
