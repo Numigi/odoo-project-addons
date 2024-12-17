@@ -13,6 +13,7 @@
     "depends": [
         "project_default_task_stage",
         "project_milestone_enhanced",
+        "project_milestone_estimated_hours",
         "project_milestone_spent_hours",
         "project_parent_enhanced",
         "project_stage_allow_timesheet",

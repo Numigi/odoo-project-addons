@@ -15,6 +15,7 @@ USER odoo
 
 COPY project_default_task_stage /mnt/extra-addons/project_default_task_stage
 COPY project_milestone_enhanced /mnt/extra-addons/project_milestone_enhanced
+COPY project_milestone_estimated_hours /mnt/extra-addons/project_milestone_estimated_hours
 COPY project_milestone_spent_hours /mnt/extra-addons/project_milestone_spent_hours
 COPY project_parent_enhanced mnt/extra-addons/project_parent_enhanced
 COPY project_stage_allow_timesheet mnt/extra-addons/project_stage_allow_timesheet
