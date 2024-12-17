@@ -7,8 +7,15 @@ from odoo.tests.common import TransactionCase
 class TestEstimatedHours(TransactionCase):
     def setUp(self):
         super().setUp()
+        self.project = self.env["project.project"].create(
+            {"name": "My Project", "allow_milestones": True}
+        )
         self.milestone = self.env["project.milestone"].create(
-            {"name": "My Milestone", "estimated_hours": 10}
+            {
+                "name": "My Milestone",
+                "estimated_hours": 10,
+                "project_id": self.project.id,
+            }
         )
         self.milestone_copy = self.milestone.copy()
 
