@@ -4,32 +4,37 @@
 from odoo.tests import common
 
 
-class TestProject(common.SavepointCase):
-    @classmethod
-    def setUpClass(cls):
-        super().setUpClass()
-        cls.folded_stage = cls.env["project.task.type"].create(
+class TestProject(common.TransactionCase):
+    def setUp(self):
+        super().setUp()
+        self.employee_user = self.env['hr.employee'].create(
+            {
+                'name': 'Employee User',
+                'hourly_cost': 15,
+            }
+        )
+        self.folded_stage = self.env["project.task.type"].create(
             {"name": "Done", "fold": True}
         )
-        cls.project_a = cls.env["project.project"].create({"name": "Project A"})
-        cls.task_a = cls.env["project.task"].create(
+        self.project_a = self.env["project.project"].create({"name": "Project A"})
+        self.task_a = self.env["project.task"].create(
             {
                 "name": "Task A",
-                "project_id": cls.project_a.id,
+                "project_id": self.project_a.id,
                 "min_hours": 1,
                 "planned_hours": 2,
                 "max_hours": 4,
-                "stage_id": cls.folded_stage.id,
+                "stage_id": self.folded_stage.id,
             }
         )
-        cls.task_b = cls.env["project.task"].create(
+        self.task_b = self.env["project.task"].create(
             {
                 "name": "Task B",
-                "project_id": cls.project_a.id,
+                "project_id": self.project_a.id,
                 "min_hours": 8,
                 "planned_hours": 16,
                 "max_hours": 32,
-                "stage_id": cls.folded_stage.id,
+                "stage_id": self.folded_stage.id,
             }
         )
 
@@ -80,7 +85,7 @@ class TestProject(common.SavepointCase):
                 "project_id": self.project_a.id,
                 "name": "/",
                 "unit_amount": 1,
-                "employee_id": 1,
+                "employee_id": self.employee_user.id,
             }
         )
         assert self.project_a.consumed_hours == 1
