@@ -9,7 +9,7 @@
             <tree string="Tasks" editable="top">
                 <field name="display_name"/>
                 <field name="project_id" readonly="1"/>
-                <field name="user_ids"/>
+                <field name="user_ids" widget="many2many_avatar_user"/>
                 <field name="date_planned"/>
                 <field name="planned_hours"/>
             </tree>
