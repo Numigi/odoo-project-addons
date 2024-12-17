@@ -76,7 +76,12 @@ class TestProject(common.SavepointCase):
 
     def test_consumed_and_remaining_hours(self):
         self.env["account.analytic.line"].create(
-            {"project_id": self.project_a.id, "name": "/", "unit_amount": 1}
+            {
+                "project_id": self.project_a.id,
+                "name": "/",
+                "unit_amount": 1,
+                "employee_id": 1,
+            }
         )
         assert self.project_a.consumed_hours == 1
         assert self.project_a.remaining_hours == 17  # 2 + 16 - 1
