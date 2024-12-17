@@ -11,7 +11,9 @@
     "category": "Other",
     "summary": "Install all addons required for testing.",
     "depends": [
-        "project",
+        "project_default_task_stage",
+        "project_parent_enhanced",
+        "project_stage_allow_timesheet",
         "project_task_date_planned",
         "project_task_deadline_from_project",
         "project_task_editable_list_view",
@@ -19,9 +21,6 @@
         "project_time_range",
         "project_track_end_date",
         "project_type_advanced",
-        "project_default_task_stage",
-        "project_parent_enhanced",
-        "project_stage_allow_timesheet",
     ],
     "installable": True,
 }
