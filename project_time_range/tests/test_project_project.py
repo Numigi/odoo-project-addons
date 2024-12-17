@@ -7,10 +7,10 @@ from odoo.tests import common
 class TestProject(common.TransactionCase):
     def setUp(self):
         super().setUp()
-        self.employee_user = self.env['hr.employee'].create(
+        self.employee_user = self.env["hr.employee"].create(
             {
-                'name': 'Employee User',
-                'hourly_cost': 15,
+                "name": "Employee User",
+                "hourly_cost": 15,
             }
         )
         self.folded_stage = self.env["project.task.type"].create(
