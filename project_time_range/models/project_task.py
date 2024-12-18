@@ -22,10 +22,12 @@ class ProjectTask(models.Model):
         "Sub-tasks Max", compute="_compute_subtask_max_hours"
     )
 
+    @api.depends('child_ids.min_hours')
     def _compute_subtask_min_hours(self):
         for task in self:
             task.subtask_min_hours = sum(task.child_ids.mapped("min_hours"))
 
+    @api.depends('child_ids.max_hours')
     def _compute_subtask_max_hours(self):
         for task in self:
             task.subtask_max_hours = sum(task.child_ids.mapped("max_hours"))
