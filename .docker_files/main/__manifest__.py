@@ -11,7 +11,12 @@
     "category": "Other",
     "summary": "Install all addons required for testing.",
     "depends": [
-        "project",
+        "project_default_task_stage",
+        "project_milestone_enhanced",
+        "project_milestone_estimated_hours",
+        "project_milestone_spent_hours",
+        "project_parent_enhanced",
+        "project_stage_allow_timesheet",
         "project_task_date_planned",
         "project_task_deadline_from_project",
         "project_task_editable_list_view",
