@@ -32,7 +32,7 @@
             <field name="account_id" position="after">
                 <field name="origin_task_id" string="Task" />
             </field>
-            <filter name="account_id" position="after">
+            <filter name="group_date" position="after">
                 <filter string="Task" context="{'group_by': 'origin_task_id'}" name="origin_task_id" />
             </filter>
         </field>
