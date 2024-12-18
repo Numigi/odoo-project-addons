@@ -8,6 +8,7 @@
     "maintainer": "Numigi",
     "website": "https://bit.ly/numigi-com",
     "license": "LGPL-3",
+    "summary": "Disable the quick create option from kanban view in project",
     "category": "Project",
     "depends": ["project"],
     "data": ["views/project_project.xml"],
