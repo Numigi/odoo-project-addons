@@ -1,26 +1,25 @@
 # © 2022 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
-from odoo.tests.common import SavepointCase
+from odoo.tests.common import TransactionCase
 from odoo.exceptions import ValidationError
 
 
-class TestProjectMilestoneDependencies(SavepointCase):
-    @classmethod
-    def setUpClass(cls):
-        super().setUpClass()
+class TestProjectMilestoneDependencies(TransactionCase):
+    def setUp(self):
+        super().setUp()
 
-        cls.project = cls.env["project.project"].create({"name": "My Project"})
+        self.project = self.env["project.project"].create({"name": "My Project"})
 
-        cls.milestone_1 = cls.env["project.milestone"].create(
-            {"name": "Milestone 1", "project_id": cls.project.id}
+        self.milestone_1 = self.env["project.milestone"].create(
+            {"name": "Milestone 1", "project_id": self.project.id}
         )
 
-        cls.milestone_2 = cls.env["project.milestone"].create(
+        self.milestone_2 = self.env["project.milestone"].create(
             {
                 "name": "Milestone 2",
-                "project_id": cls.project.id,
-                "child_ids": [(4, cls.milestone_1.id)],
+                "project_id": self.project.id,
+                "child_ids": [(4, self.milestone_1.id)],
             }
         )
 

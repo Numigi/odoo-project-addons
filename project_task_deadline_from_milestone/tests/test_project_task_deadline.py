@@ -6,22 +6,21 @@ from datetime import date
 from odoo.tests import common
 
 
-class TestProjectTaskDeadline(common.SavepointCase):
-    @classmethod
-    def setUpClass(cls):
-        super().setUpClass()
-        cls.deadline = date(2018, 3, 1)
-        cls.project_with_deadline = cls.env["project.project"].create(
+class TestProjectTaskDeadline(common.TransactionCase):
+    def setUp(self):
+        super().setUp()
+        self.deadline = date(2018, 3, 1)
+        self.project_with_deadline = self.env["project.project"].create(
             {
                 "name": "Project With Deadline",
-                "date": cls.deadline,
+                "date": self.deadline,
             }
         )
-        cls.task = cls.env["project.task"].create({"name": "My Task Test"})
-        cls.test_project_milestone = cls.env["project.milestone"].create(
+        self.task = self.env["project.task"].create({"name": "My Task Test"})
+        self.test_project_milestone = self.env["project.milestone"].create(
             {
                 "name": "TestMilestone",
-                "project_id": cls.project_with_deadline.id,
+                "project_id": self.project_with_deadline.id,
                 "target_date": date(2024, 6, 1),
             }
         )

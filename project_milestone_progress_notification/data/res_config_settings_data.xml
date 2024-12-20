@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo noupdate="1">
+    <record id="default_rate" model="ir.config_parameter" forcecreate="0">
+        <field name="key">project_milestone_progress_notification.default_rate</field>
+        <field name="value">75</field>
+    </record>
+    <record id="default_mail_template" model="ir.config_parameter" forcecreate="0">
+        <field name="key">project_milestone_progress_notification.default_mail_template</field>
+        <field name="value" ref="project_milestone_progress_notification.mail_template_project_milestone_progress_notification"/>
+    </record>
+</odoo>
