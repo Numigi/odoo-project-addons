@@ -28,15 +28,18 @@ class ProjectMeetingMinutes(models.Model):
                 (
                     0,
                     0,
-                    {
-                        "meeting_minutes_id": self.id,
-                        "project_id": rec.project_id.id,
-                        "name": rec.project_id.display_name,
-                        "task_id": rec.id,
-                    },
+                    self._prepare_project_steering_line_values(rec),
                 ),
             ]
         return True
+
+    def _prepare_project_steering_line_values(self, rec):
+        return {
+            "meeting_minutes_id": self.id,
+            "project_id": rec.project_id.id,
+            "name": rec.project_id.display_name,
+            "task_id": rec.id,
+        }
 
     def _get_records_from_domain(self, domain, kpi):
         if self.project_id:
@@ -58,11 +61,14 @@ class ProjectMeetingMinutes(models.Model):
             domain += safe_eval(kpi.date_filter_domain, self._get_domain_context())
         return domain
 
+    def _get_steering_kpis(self, model_list):
+        return self.env["project.steering.kpi"].search(
+            [("model", "in", model_list)], order="sequence"
+        )
+
     def action_load_steering_data(self):
         self.ensure_one()
-        steering_kpis = self.env["project.steering.kpi"].search(
-            [("model", "=", "project.task")], order="sequence"
-        )
+        steering_kpis = self._get_steering_kpis(["project.task"])
         # Reset one2many field before loading data
         self.project_steering_ids = [
             (2, line.id, False) for line in self.project_steering_ids
