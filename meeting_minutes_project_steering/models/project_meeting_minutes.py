@@ -62,15 +62,13 @@ class ProjectMeetingMinutes(models.Model):
         return domain
 
     def _get_steering_kpis(self, model_list):
-        if not isinstance(model_list, list):
-            model_list = [model_list]
         return self.env["project.steering.kpi"].search(
             [("model", "in", model_list)], order="sequence"
         )
 
     def action_load_steering_data(self):
         self.ensure_one()
-        steering_kpis = self._get_steering_kpis("project.task")
+        steering_kpis = self._get_steering_kpis(["project.task"])
         # Reset one2many field before loading data
         self.project_steering_ids = [
             (2, line.id, False) for line in self.project_steering_ids

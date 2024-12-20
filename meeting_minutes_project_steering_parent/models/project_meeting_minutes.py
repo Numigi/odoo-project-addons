@@ -19,7 +19,6 @@ class ProjectMeetingMinutes(models.Model):
             )
 
     def _get_steering_kpis(self, model_list):
-        model_list = [model_list]
         if self.project_id and self.project_id.parent_id:
             model_list.append("project.project")
         return super(ProjectMeetingMinutes, self)._get_steering_kpis(model_list)
