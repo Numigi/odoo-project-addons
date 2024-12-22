@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="account_move_form_with_outsourcing" model="ir.ui.view">
+        <field name="name">Invoice Form: add outsourcing fields</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="project_task_analytic_lines.account_move_form_with_task"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='invoice_line_ids']//tree" position="inside">
+                <field name="is_outsourcing" invisible="1"/>
+            </xpath>
+            <xpath expr="//field[@name='invoice_line_ids']//field[@name='analytic_account_id']" position="attributes">
+                <attribute name="attrs">{'readonly': [('is_outsourcing', '=', True)]}</attribute>
+                <attribute name="force_save">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='invoice_line_ids']//field[@name='task_id']" position="attributes">
+                <attribute name="attrs">{
+                    'readonly': ['|', ('is_outsourcing', '=', True), ('analytic_account_id', '=', False)]
+                    }
+                </attribute>
+                <attribute name="force_save">1</attribute>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

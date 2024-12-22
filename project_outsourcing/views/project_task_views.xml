@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="action_new_purchase_order_from_task" model="ir.actions.act_window">
+        <field name="name">New Outsourcing PO From Task</field>
+        <field name="res_model">purchase.order</field>
+        <field name="view_mode">form</field>
+        <field name="context">{
+            'default_is_outsourcing': 1,
+            'default_task_id': active_id,
+            }
+        </field>
+        <field name="target">current</field>
+    </record>
+
+    <record id="action_purchase_order_list_from_task" model="ir.actions.act_window">
+        <field name="name">Outsourcing PO List From Project</field>
+        <field name="res_model">purchase.order</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{
+            'default_is_outsourcing': 1,
+            'default_task_id': active_id,
+            'search_default_task_id': active_id,
+            }
+        </field>
+        <field name="target">current</field>
+    </record>
+
+    <record id="task_form_with_outsourcing_tab" model="ir.ui.view">
+        <field name="name">Project Task Form: add outsourcing tab</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_form2"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[hasclass('oe_button_box')]" position="inside">
+                <button
+                        class="oe_stat_button"
+                        name="%(action_purchase_order_list_from_task)d"
+                        type="action"
+                        icon="fa-shopping-cart"
+                        groups="purchase.group_purchase_user"
+                >
+                    <field string="Outsourcing" name="outsourcing_po_count" widget="statinfo"/>
+                </button>
+            </xpath>
+            <notebook position="inside">
+                <page name="outsourcing_page" string="Outsourcing" groups="purchase.group_purchase_user">
+                    <separator string="Purchase Orders"/>
+                    <button name="%(action_new_purchase_order_from_task)d" type="action" string="New PO"
+                            class="oe_read_only oe_highlight"/>
+                    <field name="outsourcing_po_ids">
+                        <tree create="0" delete="0" decoration-muted="state == 'cancel'"
+                              decoration-info="state in ('wait', 'confirmed')">
+                            <field name="name"/>
+                            <field name="partner_id"/>
+                            <field name="amount_total"/>
+                            <field name="state"/>
+                        </tree>
+                    </field>
+                    <separator string="Order Lines"/>
+                    <field name="outsourcing_line_ids">
+                        <tree edit="0" create="0" delete="0" decoration-muted="state == 'cancel'"
+                              decoration-info="state in ('wait', 'confirmed')">
+                            <field name="product_id"/>
+                            <field name="order_id" string="Reference"/>
+                            <field name="product_qty"/>
+                            <field name="product_uom"/>
+                            <field name="price_unit"/>
+                            <field name="price_total"/>
+                            <field name="state"/>
+                        </tree>
+                    </field>
+                </page>
+            </notebook>
+        </field>
+    </record>
+
+</odoo>
