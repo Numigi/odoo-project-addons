@@ -1,14 +1,11 @@
-- url: https://github.com/OCA/account-reconcile
-  branch: "16.0"
-  includes:
-    - account_reconciliation_widget
-
 - url: https://github.com/OCA/project
   branch: "16.0"
   includes:
     - project_task_dependency
+    - project_timeline
     - project_timesheet_time_control
     - project_type
+    - project_parent
 
 - url: https://github.com/OCA/timesheet
   branch: "16.0"
@@ -20,3 +17,4 @@
   branch: "16.0"
   includes:
     - web_ir_actions_act_multi
+    - web_timeline
