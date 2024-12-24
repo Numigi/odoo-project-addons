@@ -27,7 +27,7 @@ class ProjectPortalWithSearchTaskByID(CustomerPortal):
         if is_searching_by_task_id:
             task_id = search.strip()
             task = http.request.env["project.task"].search(
-                [("id_string", "=", task_id)], limit=1
+                [("id", "=", task_id)], limit=1
             )
             if task:
                 query = urllib.parse.urlencode(dict(kw))

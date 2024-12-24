@@ -1,7 +1,7 @@
 # Copyright 2024-today Numigi and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
-from odoo import api, fields, models
+from odoo import api, models
 
 
 class ProjectTask(models.Model):
@@ -14,8 +14,6 @@ class ProjectTask(models.Model):
     """
 
     _inherit = "project.task"
-
-    id_string = fields.Char("ID (String)", readonly=True)
 
     def name_get(self):
         return [(t.id, t._get_complete_name()) for t in self]
@@ -43,5 +41,4 @@ class ProjectTask(models.Model):
     @api.model
     def create(self, vals):
         task = super().create(vals)
-        task.id_string = str(task.id)
         return task
