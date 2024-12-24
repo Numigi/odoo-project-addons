@@ -14,6 +14,7 @@ RUN gitoo install-all --conf_file /gitoo.yml --destination "${THIRD_PARTY_ADDONS
 USER odoo
 
 COPY project_default_task_stage /mnt/extra-addons/project_default_task_stage
+COPY project_group_create mnt/extra-addons/project_group_create
 COPY project_milestone_enhanced /mnt/extra-addons/project_milestone_enhanced
 COPY project_milestone_estimated_hours /mnt/extra-addons/project_milestone_estimated_hours
 COPY project_milestone_spent_hours /mnt/extra-addons/project_milestone_spent_hours
