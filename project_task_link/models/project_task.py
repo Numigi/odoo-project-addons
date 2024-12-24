@@ -1,12 +1,12 @@
-# © 2022 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+# Copyriht 2022-today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 from odoo import api, models
 from urllib.parse import urljoin
-from .common import get_html_with_task_links
+from odoo.addons.project_task_link.tools.utils import get_html_with_task_links
 
 
-class Task(models.Model):
+class ProjectTask(models.Model):
 
     _inherit = "project.task"
 

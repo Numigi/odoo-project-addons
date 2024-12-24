@@ -22,6 +22,7 @@
         "project_task_deadline_from_project",
         "project_task_editable_list_view",
         "project_task_full_text_search",
+        "project_task_link",
         "project_time_range",
         "project_track_end_date",
         "project_type_advanced",

@@ -1,13 +1,13 @@
-# © 2022 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+# Copyriht 2022-today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 from ddt import ddt, data, unpack
-from odoo.tests import common
+from odoo.tests.common import TransactionCase
 from urllib.parse import urljoin
 
 
 @ddt
-class TestProjectTask(common.SavepointCase):
+class TestProjectTask(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -36,7 +36,7 @@ class TestProjectTask(common.SavepointCase):
         cls.base_url = cls.env["ir.config_parameter"].get_param("web.base.url")
 
     def test_task_url_link(self):
-        expected_url = urljoin(self.base_url, "/my/task/{}".format(self.task.id))
+        expected_url = urljoin(self.base_url, "/my/tasks/{}".format(self.task.id))
         assert self.task.get_portal_access_url() == expected_url
 
     @data(

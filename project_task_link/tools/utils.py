@@ -1,8 +1,8 @@
-# © 2022 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+# Copyriht 2022-today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 from lxml import etree
-from odoo.addons.project_task_reference.reference import TaskReference
+from odoo.addons.project_task_reference.tools.reference import TaskReference
 from typing import List
 
 
@@ -56,4 +56,6 @@ def get_html_with_task_links(env: "Environment", html: str) -> str:
     for node in nodes_not_inside_link:
         _add_task_links_to_xml_node(env, node)
 
-    return etree.tostring(html_tree, pretty_print=True, method="HTML")
+    return etree.tostring(
+        html_tree, pretty_print=True, method="html", encoding="unicode"
+    )
