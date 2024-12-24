@@ -5,13 +5,6 @@ from odoo import api, models
 
 
 class ProjectTask(models.Model):
-    """
-    Add a field to allow searching a task by its ID.
-    Odoo does not allow to properly search an integer value from a search bar.
-    This results in an exceptions because Odoo sends the searched value
-    right to the database without checking if the given string only contains digits.
-    This is why we copy the id value into a varchar column.
-    """
 
     _inherit = "project.task"
 
@@ -37,8 +30,3 @@ class ProjectTask(models.Model):
             tasks = self.search([("name", operator, name)] + args, limit=limit)
 
         return tasks.name_get()
-
-    @api.model
-    def create(self, vals):
-        task = super().create(vals)
-        return task
