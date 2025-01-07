@@ -40,7 +40,7 @@ class Task(models.Model):
         """
         self.check_access_rights("write")
         self.check_access_rule("write")
-        self.env["project.task.remaining.hours"].sudo().create_from_task(
+        self.env["project.task.remaining.hours"].create_from_task(
             self,
             new_remaining_hours,
             user,

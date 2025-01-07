@@ -36,7 +36,7 @@
     <record id="task_remaining_hours_action" model="ir.actions.act_window">
         <field name="name">Task Remaining Hours</field>
         <field name="res_model">project.task.remaining.hours</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">tree</field>
     </record>
 
     <menuitem action="task_remaining_hours_action" id="task_remaining_hours_menu" parent="project.menu_project_report"/>
