@@ -11,9 +11,9 @@
                 <sheet>
                     <group>
                         <field name="name"/>
-                        <field name="description" widget="html"/>
+                        <field name="description" widget="html" options="{'collaborative': true, 'resizable': true, 'dynamic_placeholder': true}"/>
                         <field name="sequence"/>
-                        <field name="active"/>
+                        <field name="active" widget="boolean_toggle"/>
                     </group>
                 </sheet>
             </form>
@@ -27,7 +27,7 @@
             <tree string="Task Description Templates">
                 <field name="sequence" widget="handle"/>
                 <field name="name"/>
-                <field name="active"/>
+                <field name="active" widget="boolean_toggle"/>
             </tree>
         </field>
     </record>

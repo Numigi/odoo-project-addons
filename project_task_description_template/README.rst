@@ -22,9 +22,6 @@ Each record contains a name and a HTML description.
 .. image:: static/description/description_template_form.png
 
 In the form view of a task, I can select a description template.
-
-.. image:: static/description/task_form.png
-
 The description is automatically copied from the template.
 
 .. image:: static/description/task_form_description_filled.png

@@ -11,6 +11,8 @@ class ProjectTaskDescriptionTemplate(models.Model):
     _order = "sequence"
 
     name = fields.Char(required=True)
-    description = fields.Html()
+    description = fields.Html(
+        translate=True,
+    )
     active = fields.Boolean(default=True)
     sequence = fields.Integer()
