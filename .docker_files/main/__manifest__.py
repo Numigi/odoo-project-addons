@@ -26,6 +26,7 @@
         "project_task_description_template",
         "project_task_editable_list_view",
         "project_task_full_text_search",
+        "project_task_resource_type",
         "project_time_range",
         "project_track_end_date",
         "project_type_advanced",
