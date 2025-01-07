@@ -9,4 +9,4 @@ class ProjectResource(models.Model):
     _inherit = ["mail.thread"]
     _description = "Project Resource"
 
-    name = fields.Char(string="Name")
+    name = fields.Char(string="Name", translate=False)

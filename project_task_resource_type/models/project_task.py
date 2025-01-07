@@ -7,4 +7,4 @@ from odoo import models, fields
 class ProjectTask(models.Model):
     _inherit = "project.task"
 
-    resource_id = fields.Many2one("project.resource")
+    resource_id = fields.Many2one("project.resource", ondelete="set null")

@@ -4,7 +4,7 @@
 {
     "name": "Project Task Resource Type",
     "version": "16.0.1.0.0",
-    "description": "Add the referentiel Resource and the field to the tasks.",
+    "description": "Add resource type to tasks",
     "author": "Numigi",
     "maintainer": "Numigi",
     "website": "https://bit.ly/numigi-com",
@@ -17,6 +17,5 @@
         "views/project_task_views.xml",
     ],
     "application": False,
-    "license": "LGPL-3",
     "installable": True,
 }
