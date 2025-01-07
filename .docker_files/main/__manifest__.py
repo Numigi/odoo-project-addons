@@ -28,6 +28,7 @@
         "project_task_full_text_search",
         "project_task_resource_type",
         "project_time_range",
+        "project_task_stage_external_mail",
         "project_track_end_date",
         "project_type_advanced",
     ],
