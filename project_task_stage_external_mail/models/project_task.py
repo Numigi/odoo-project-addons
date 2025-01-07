@@ -9,10 +9,9 @@ class ProjectTask(models.Model):
 
     def _track_template(self, changes):
         """Override to customize the tracking template for stage_id changes."""
-        res = super()._track_template(changes)
-        if "stage_id" in res:
-            task = self[0]
-            if task.stage_id.external_mail:
-                comment_subtype = self.env.ref("mail.mt_comment")
-                res["stage_id"][-1]["subtype_id"] = comment_subtype.id
+        res = super(ProjectTask, self)._track_template(changes)
+        task = self[0]
+        if "stage_id" in res and task.stage_id.external_mail:
+            comment_subtype = self.env.ref("mail.mt_comment", raise_if_not_found=False)
+            res["stage_id"][-1]["subtype_id"] = comment_subtype.id
         return res
