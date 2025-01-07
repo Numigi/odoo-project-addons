@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="view_project_project_filter" model="ir.ui.view">
+        <field name="name">Project Search With Parent Project</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.view_project_project_filter" />
+        <field name="arch" type="xml">
+            <field name="name" position="attributes">
+                <attribute name="filter_domain">['|', ('name', 'ilike', self), ('parent_id',
+                    'ilike', self)]</attribute>
+            </field>
+        </field>
+    </record>
+
+    <record id="view_project" model="ir.ui.view">
+        <field name="name">Project List With Display Name instead of Name</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.view_project"/>
+        <field name="arch" type="xml">
+            <field name="name" position="replace">
+                <field name="display_name" string="Project/Iteration Name"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>
