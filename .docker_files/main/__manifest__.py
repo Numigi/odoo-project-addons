@@ -18,6 +18,7 @@
         "project_milestone_estimated_hours",
         "project_milestone_spent_hours",
         "project_no_quick_create",
+        "project_portal_parent_task",
         "project_parent_enhanced",
         "project_stage_allow_timesheet",
         "project_task_date_planned",
