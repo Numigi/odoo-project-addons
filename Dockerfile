@@ -29,6 +29,7 @@ COPY project_task_editable_list_view /mnt/extra-addons/project_task_editable_lis
 COPY project_task_full_text_search /mnt/extra-addons/project_task_full_text_search
 COPY project_task_resource_type /mnt/extra-addons/project_task_resource_type
 COPY project_task_stage_external_mail /mnt/extra-addons/project_task_stage_external_mail
+COPY project_task_search_parent_subtask /mnt/extra-addons/project_task_search_parent_subtask
 COPY project_time_range /mnt/extra-addons/project_time_range
 COPY project_track_end_date /mnt/extra-addons/project_track_end_date
 COPY project_type_advanced /mnt/extra-addons/project_type_advanced
