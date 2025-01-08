@@ -25,6 +25,7 @@ COPY project_stage_allow_timesheet mnt/extra-addons/project_stage_allow_timeshee
 COPY project_task_date_planned /mnt/extra-addons/project_task_date_planned
 COPY project_task_deadline_from_project /mnt/extra-addons/project_task_deadline_from_project
 COPY project_task_description_template /mnt/extra-addons/project_task_description_template
+COPY project_task_draggable_column_disable /mnt/extra-addons/project_task_draggable_column_disable
 COPY project_task_editable_list_view /mnt/extra-addons/project_task_editable_list_view
 COPY project_task_full_text_search /mnt/extra-addons/project_task_full_text_search
 COPY project_task_resource_type /mnt/extra-addons/project_task_resource_type
