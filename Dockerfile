@@ -22,6 +22,7 @@ COPY project_no_quick_create /mnt/extra-addons/project_no_quick_create
 COPY project_parent_enhanced mnt/extra-addons/project_parent_enhanced
 COPY project_remaining_hours_update /mnt/extra-addons/project_remaining_hours_update
 COPY project_stage_allow_timesheet mnt/extra-addons/project_stage_allow_timesheet
+COPY project_stage_allow_timesheet mnt/extra-addons/project_stage_allow_timesheet
 COPY project_task_date_planned /mnt/extra-addons/project_task_date_planned
 COPY project_task_deadline_from_project /mnt/extra-addons/project_task_deadline_from_project
 COPY project_task_description_template /mnt/extra-addons/project_task_description_template
