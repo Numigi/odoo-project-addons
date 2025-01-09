@@ -24,6 +24,11 @@
   includes:
   - product_manufacturer
 
+- url: https://github.com/oca/server-tools
+  branch: "14.0"
+  includes:
+    - base_view_inheritance_extension
+
 - url: https://github.com/OCA/timesheet
   branch: "14.0"
   includes:
