@@ -15,6 +15,8 @@ On the portal, entering the task ID in the search bar will redirect you directly
 
 .. image:: static/description/portal_view.png
 
+.. image:: static/description/task_portal.png
+
 Contributors
 ------------
 * Numigi (tm) and all its contributors (https://bit.ly/numigiens)
