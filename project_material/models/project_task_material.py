@@ -63,8 +63,7 @@ class TaskMaterialLine(models.Model):
     def _compute_prepared_qty(self):
         for line in self:
             preparation_moves = line.with_company(self.company_id).mapped(
-                "move_ids.move_orig_ids"
-            )
+                "move_ids.move_orig_ids")
             preparation_moves_done = preparation_moves.filtered(
                 lambda m: m.state == "done"
             )
@@ -321,7 +320,7 @@ class TaskMaterialLine(models.Model):
             moves_to_update = moves.filtered(
                 lambda m: m.state not in ("done", "cancel")
             )
-            delay = moves_to_update.with_comany(self.company_id).mapped("rule_id.delay")
+            delay = moves_to_update.with_company(self.company_id).mapped("rule_id.delay")
             if delay:
                 date_planned = date_planned - timedelta(delay[0])
             moves_to_update.with_context(do_not_propagate=True).write(
