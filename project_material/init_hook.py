@@ -14,3 +14,4 @@ def _setup_warehouses_consumption_routes(env):
     for warehouse in warehouses:
         warehouse._create_or_update_consumption_picking_types()
         warehouse._create_or_update_consumption_route()
+        warehouse._create_consumption_mto_pull()

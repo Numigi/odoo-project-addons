@@ -12,6 +12,7 @@ class TaskMaterialLine(models.Model):
     _description = "Task Material Consumption"
     _order = "product_id, id"
     _inherit = "project.select.mixin"
+    _check_company_auto = True
 
     company_id = fields.Many2one(related="task_id.company_id", store=True)
     project_id = fields.Many2one(
@@ -25,7 +26,7 @@ class TaskMaterialLine(models.Model):
         "Product",
         required=True,
         domain="[('type', 'in', ('product', 'consu'))]",
-        ondelete="cascade",
+        ondelete="restrict",
     )
     initial_qty = fields.Float(
         "Initial Quantity",
@@ -61,7 +62,8 @@ class TaskMaterialLine(models.Model):
     )
     def _compute_prepared_qty(self):
         for line in self:
-            preparation_moves = line.mapped("move_ids.move_orig_ids")
+            preparation_moves = line.with_company(self.company_id).mapped(
+                "move_ids.move_orig_ids")
             preparation_moves_done = preparation_moves.filtered(
                 lambda m: m.state == "done"
             )
@@ -109,7 +111,7 @@ class TaskMaterialLine(models.Model):
 
         if "product_id" in vals or "task_id" in vals or "initial_qty" in vals:
             lines_with_procurement = self.filtered(
-                lambda l: l._should_generate_procurement()
+                lambda line: line._should_generate_procurement()
             )
             for line in lines_with_procurement:
                 line.sudo()._run_procurements()
@@ -182,7 +184,7 @@ class TaskMaterialLine(models.Model):
                     self._get_consumption_location(),
                     self.product_id.display_name,
                     self.task_id._get_reference_for_procurements(),
-                    self.env.company,
+                    self.company_id,
                     self._get_procurement_values(),
                 )
             ]
@@ -318,13 +320,9 @@ class TaskMaterialLine(models.Model):
             moves_to_update = moves.filtered(
                 lambda m: m.state not in ("done", "cancel")
             )
-
-            delay = moves_to_update.mapped("rule_id.delay")
+            delay = moves_to_update.with_company(self.company_id).mapped("rule_id.delay")
             if delay:
                 date_planned = date_planned - timedelta(delay[0])
-
-            # FIX ME : update date_expected on v12 but use what field on v14 instead
-            # Maybe `date`  ?
             moves_to_update.with_context(do_not_propagate=True).write(
                 {"date": date_planned}
             )
@@ -337,7 +335,7 @@ class TaskMaterialLine(models.Model):
         limit = 10
 
         while moves and limit:
-            origin_moves = moves.mapped("move_orig_ids")
+            origin_moves = moves.with_company(self.company_id).mapped("move_orig_ids")
             yield moves
             moves = origin_moves
             limit -= 1

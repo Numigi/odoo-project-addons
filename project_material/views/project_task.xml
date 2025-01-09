@@ -26,6 +26,7 @@
                                 <field name="consumed_qty"/>
                                 <field name="product_uom_id"/>
                                 <field name="unit_cost"/>
+                                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
                             </tree>
                         </field>
                     </group>

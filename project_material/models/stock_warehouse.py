@@ -13,11 +13,6 @@ class Warehouse(models.Model):
 
     _inherit = "stock.warehouse"
 
-    def _get_default_consumption_location_id(self):
-        return self.env.ref(
-            "stock_location_production.location_production", raise_if_not_found=False
-        ).id
-
     consu_steps = fields.Selection(
         [(ONE_STEP_KEY, ONE_STEP_DESCRIPTION)], default=ONE_STEP_KEY
     )
@@ -28,26 +23,50 @@ class Warehouse(models.Model):
     consu_location_id = fields.Many2one(
         "stock.location",
         "Consumption Location",
-        domain=[("usage", "=", "production")],
+        domain="[('usage', '=', 'production'), ('company_id', '=', company_id)]",
+        compute='_compute_consu_location_id',
         ondelete="restrict",
-        default=_get_default_consumption_location_id,
+        store=True,
+        check_company=True,
     )
 
     consu_type_id = fields.Many2one(
-        "stock.picking.type", "Consumption Picking Type", ondelete="restrict"
+        "stock.picking.type",
+        "Consumption Type",
+        ondelete="restrict",
+        check_company=True,
     )
 
     consu_return_type_id = fields.Many2one(
-        "stock.picking.type", "Consumption Return Picking Type", ondelete="restrict"
+        "stock.picking.type",
+        "Consumption Return Type",
+        ondelete="restrict",
+        check_company=True,
     )
 
     consu_route_id = fields.Many2one(
-        "stock.location.route", "Consumption Route", ondelete="restrict"
+        "stock.location.route",
+        "Consumption Route",
+        ondelete="restrict",
+        domain="[('company_id', '=', company_id)]",
+        check_company=True,
     )
 
     consu_mto_pull_id = fields.Many2one(
-        "stock.rule", "Consumption MTO Pull", ondelete="restrict"
+        "stock.rule",
+        "Consumption MTO Pull",
+        ondelete="restrict",
+        domain="[('company_id', '=', company_id)]",
+        check_company=True,
     )
+
+    @api.depends("company_id")
+    def _compute_consu_location_id(self):
+        for record in self:
+            Proprerty = self.env["ir.property"].with_company(record.company_id)
+            record.consu_location_id = Proprerty._get(
+                "property_stock_production", "product.template"
+            ).id
 
     @api.model
     def create(self, vals):
@@ -83,7 +102,6 @@ class Warehouse(models.Model):
     def _create_consumption_picking_types(self):
         vals = self._get_consumption_picking_type_create_values()
         self.consu_type_id = self.env["stock.picking.type"].create(vals)
-
         vals = self._get_consumption_return_picking_type_create_values()
         self.consu_return_type_id = self.env["stock.picking.type"].create(vals)
 
@@ -302,16 +320,23 @@ class WarehouseWithPickingStep(models.Model):
     consu_prep_location_id = fields.Many2one(
         "stock.location",
         "Preparation Picking Location",
-        domain=[("usage", "=", "internal")],
+        domain="[('usage', '=', 'internal'), ('company_id', '=', company_id)]",
         ondelete="restrict",
+        check_company=True,
     )
 
     consu_prep_type_id = fields.Many2one(
-        "stock.picking.type", "Preparation Picking Type", ondelete="restrict"
+        "stock.picking.type",
+        "Preparation Picking Type",
+        ondelete="restrict",
+        check_company=True,
     )
 
     consu_prep_return_type_id = fields.Many2one(
-        "stock.picking.type", "Preparation Return Picking Type", ondelete="restrict"
+        "stock.picking.type",
+        "Preparation Return Picking Type",
+        ondelete="restrict",
+        check_company=True,
     )
 
     def _create_consumption_route(self):
