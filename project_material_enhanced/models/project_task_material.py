@@ -32,7 +32,7 @@ class ProjectTaskMaterial(models.Model):
                 [
                     ('product_id', '=', self.product_id.id),
                     ('location_id.usage', '=', 'internal'),
-                    ('company_id', '=', self.task_id.company_id.id),
+                    ('company_id', '=', self.company_id.id),
                 ]
             )
             record.available_qty = sum(quant.mapped('available_quantity'))
