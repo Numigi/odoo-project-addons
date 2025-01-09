@@ -60,7 +60,7 @@ class Warehouse(models.Model):
         check_company=True,
     )
 
-    @api.depends('company_id')
+    @api.depends_context("company")
     def _compute_consu_location_id(self):
         for record in self:
             Proprerty = self.env["ir.property"].with_company(record.company_id)

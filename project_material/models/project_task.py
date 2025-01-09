@@ -55,6 +55,7 @@ class TaskWithMaterialLines(models.Model):
                 [
                     ("group_id", "=", task.procurement_group_id.id),
                     ("picking_type_code", "=", "internal"),
+                    ("company_id", "=", task.company_id.id),
                 ]
             )
             prep_picking = pickings.filtered(
@@ -75,6 +76,7 @@ class TaskWithMaterialLines(models.Model):
                 [
                     ("group_id", "=", task.procurement_group_id.id),
                     ("picking_type_code", "in", ("consumption", "consumption_return")),
+                    ("company_id", "=", task.company_id.id),
                 ]
             )
             task.consumption_picking_ids = pickings
@@ -121,11 +123,11 @@ class TaskWithMaterialLines(models.Model):
 
     def _run_procurements(self):
         for line in self.mapped("material_line_ids"):
-            line._run_procurements()
+            line.sudo()._run_procurements()
 
     def _cancel_procurements(self):
         for line in self.mapped("material_line_ids"):
-            line._cancel_procurements()
+            line.sudo()._cancel_procurements()
 
     def _propagate_planned_date_to_stock_moves(self):
         for line in self.mapped("material_line_ids"):
