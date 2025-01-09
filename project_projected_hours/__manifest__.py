@@ -3,7 +3,7 @@
 
 {
     "name": "Project Projected Hours",
-    "version": "1.0.2",
+    "version": "16.0.1.0.0",
     "author": "Numigi",
     "maintainer": "Numigi",
     "website": "https://bit.ly/numigi-com",
