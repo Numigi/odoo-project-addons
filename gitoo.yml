@@ -1,7 +1,8 @@
-- url: https://github.com/OCA/account-reconcile
+- url: https://github.com/Numigi/odoo-base-addons
   branch: "16.0"
   includes:
-    - account_reconciliation_widget
+    - base_extended_security
+    - test_http_request
 
 - url: https://github.com/OCA/project
   branch: "16.0"
