@@ -27,6 +27,7 @@
         "project_task_draggable_column_disable",
         "project_task_editable_list_view",
         "project_task_full_text_search",
+        "project_task_id_in_display_name",
         "project_task_resource_type",
         "project_time_range",
         "project_task_search_parent_subtask",
