@@ -18,8 +18,8 @@
         <field name="model">project.project</field>
         <field name="inherit_id" ref="project.view_project"/>
         <field name="arch" type="xml">
-            <field name="name" position="replace">
-                <field name="display_name" string="Project/Iteration Name"/>
+            <field name="display_name" position="attributes">
+                <attribute name="string">Project/Iteration Name</attribute>
             </field>
         </field>
     </record>

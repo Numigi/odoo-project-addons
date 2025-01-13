@@ -1,7 +1,9 @@
 Project Parent Enhanced
 =======================
 
-This module enhances the functionality of parent-child relationships between projects and tasks in Odoo. It builds upon the features of the `project_parent` module from OCA, adding new constraints, methods, and views to better manage project hierarchies.
+This module enhances the functionality of parent-child relationships between projects and tasks in Odoo. 
+It builds upon the features of the `project_parent` module from OCA.
+Adding new constraints, methods, and views to better manage project hierarchies.
 
 Dependencies
 ------------
@@ -18,16 +20,31 @@ Features
 **Follower Propagation**
    - Automatically propagate followers from a parent project to its child projects.
 
-**Search by Parent Projects**
-   - Add a new filter view to search projects by their parent projects.
+**Tasks Group by Parent Projects**
+   - Add a new group option to group tasks by their parent projects.
 
-.. image:: static/description/task_filter_by_parent.png
+.. image:: static/description/task_group_by_parent.png
 
+** Search and Filter Project by Parent Projects**
+
+   - Add a new search filter to search projects by their parent projects.
+
+.. image:: static/description/search_project_by_parent.png
+
+   - The filter by parent project is also available
+
+.. image:: static/description/filter_project_by_parent_project.png
 
 **View Adjustments**
    - Replace project names with their `display_name` to show the hierarchy in views.
 
-.. image:: static/description/parent_project.png
+In the Kanban view:
+
+.. image:: static/description/iteration_name_kanban_view.png
+
+In the List view:
+
+.. image:: static/description/iteration_name_list_view.png
 
 
 Contributors
