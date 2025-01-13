@@ -7,7 +7,7 @@
         <field name="inherit_id" ref="project_milestone_enhanced.project_milestone_view_list" />
         <field name="arch" type="xml">
             <field name="task_ids" position="after">
-                <field name="estimated_hours" widget="float_time" />
+                <field name="estimated_hours" widget="timesheet_uom_no_toggle" />
             </field>
         </field>
     </record>
@@ -26,7 +26,7 @@
                         <field name="deadline" />
                     </group>
                     <group>
-                        <field name="estimated_hours" widget="float_time" />
+                        <field name="estimated_hours" widget="timesheet_uom_no_toggle" />
                     </group>
                 </group>
             </xpath>
