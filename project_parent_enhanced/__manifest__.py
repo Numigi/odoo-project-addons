@@ -12,7 +12,7 @@
     "summary": """
         Enhances the functionality of parent-child relationships
         between projects and tasks.""",
-    "depends": ["project", "project_parent"],
+    "depends": ["project_parent"],
     "data": [
         "views/project_project_views.xml",
         "views/project_task_views.xml",
