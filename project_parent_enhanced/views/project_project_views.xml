@@ -16,7 +16,7 @@
     <record id="view_project" model="ir.ui.view">
         <field name="name">Project List With Display Name instead of Name</field>
         <field name="model">project.project</field>
-        <field name="inherit_id" ref="project.view_project"/>
+        <field name="inherit_id" ref="project.view_project" />
         <field name="arch" type="xml">
             <field name="display_name" position="attributes">
                 <attribute name="string">Project/Iteration Name</attribute>
