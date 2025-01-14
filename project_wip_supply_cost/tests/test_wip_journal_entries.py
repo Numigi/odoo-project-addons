@@ -282,6 +282,8 @@ class TestWIPJournalEntries(WIPJournalEntriesCase):
         timesheet_line = self._create_timesheet(quantity=0)
         assert not timesheet_line.shop_supply_account_move_id
 
+    # UNIT TESTING FAILED
+
     # def test_if_timesheet_deleted__account_move_reversed(self):
     #     timesheet_line = self._create_timesheet()
     #     wip_line = self._get_wip_move_line(timesheet_line)
