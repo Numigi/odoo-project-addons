@@ -42,10 +42,6 @@ class TaskWithMaterialLines(models.Model):
         compute="_compute_preparation_pickings",
     )
 
-    show_material_prepared_qty = fields.Boolean(
-        compute="_compute_show_material_prepared_qty"
-    )
-
     procurement_disabled = fields.Boolean()
 
     def _compute_preparation_pickings(self):
@@ -82,16 +78,10 @@ class TaskWithMaterialLines(models.Model):
             task.consumption_picking_ids = pickings
             task.consumption_picking_count = len(pickings)
 
-    def _compute_show_material_prepared_qty(self):
-        for task in self:
-            task.show_material_prepared_qty = (
-                task.project_id.warehouse_id.consu_steps == "two_steps"
-            )
-
     def write(self, vals):
         super().write(vals)
         for task in self:
-            if "procurement_disabled" in vals or "material_line_ids" in vals:
+            if "procurement_disabled" in vals:
                 procurement_disabled = (
                     vals.get("procurement_disabled") or self.procurement_disabled
                 )

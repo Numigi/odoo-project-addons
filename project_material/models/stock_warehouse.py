@@ -466,6 +466,7 @@ class WarehouseWithPickingStep(models.Model):
     def _get_consumption_prep_picking_type_values(self):
         return {
             "warehouse_id": self.id,
+            "company_id": self.company_id.id,
             "code": "internal",
             "default_location_src_id": self.lot_stock_id.id,
             "default_location_dest_id": self.consu_prep_location_id.id,
@@ -474,6 +475,7 @@ class WarehouseWithPickingStep(models.Model):
     def _get_consumption_prep_return_picking_type_values(self):
         return {
             "warehouse_id": self.id,
+            "company_id": self.company_id.id,
             "code": "internal",
             "default_location_src_id": self.consu_prep_location_id.id,
             "default_location_dest_id": self.lot_stock_id.id,
@@ -492,6 +494,7 @@ class WarehouseWithPickingStep(models.Model):
             "name": "{}: Consumption Preparation".format(self.name),
             "prefix": "{}/PR/".format(self.code),
             "padding": 5,
+            "company_id": self.company_id.id,
         }
 
     def _get_consumption_prep_return_sequence_values(self):
@@ -499,4 +502,5 @@ class WarehouseWithPickingStep(models.Model):
             "name": "{}: Consumption Preparation Return".format(self.name),
             "prefix": "{}/PRR/".format(self.code),
             "padding": 5,
+            "company_id": self.company_id.id,
         }

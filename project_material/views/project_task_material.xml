@@ -7,15 +7,64 @@
         <field name="arch" type="xml">
             <tree string="Task Material" editable="top">
                 <field name="project_id" invisible="1"/>
+                <field name="is_consu_two_steps" invisible="1"/>
                 <field name="project_select_id" string="Project" required="1"/>
                 <field name="task_id" domain="[('project_id', '=', project_select_id)]"/>
                 <field name="product_id"/>
                 <field name="initial_qty"/>
-                <field name="prepared_qty"/>
+                <field name="prepared_qty" attrs="{'invisible': [('is_consu_two_steps', '=', False)]}"/>
                 <field name="consumed_qty"/>
                 <field name="product_uom_id"/>
                 <field name="unit_cost"/>
             </tree>
+        </field>
+    </record>
+    <record id="task_material_form_view" model="ir.ui.view">
+        <field name="name">Task Material Form</field>
+        <field name="model">project.task.material</field>
+        <field name="arch" type="xml">
+            <form string="Task Material">
+                <sheet string="Task Material">
+                    <field name="is_consu_two_steps" invisible="1"/>
+                    <group>
+                        <group>
+                            <field name="project_id"/>
+                            <field name="project_select_id" string="Project" required="1" invisible="1"/>
+                            <field name="task_id" domain="[('project_id', '=', project_select_id)]"/>
+                            <field name="product_id"/>
+                            <field name="product_uom_id"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group>
+                            <field name="initial_qty"/>
+                            <field name="prepared_qty" attrs="{'invisible': [('is_consu_two_steps', '=', False)]}"/>
+                            <field name="consumed_qty"/>
+                            <field name="unit_cost"/>
+                        </group>
+                    </group>
+                </sheet>
+                <notebook>
+                    <page string="Operations" name="operations">
+                        <field name="move_ids" mode="tree" readonly="1">
+                            <tree string="Stock Moves">
+                                <field name="name" optional="hide"/>
+                                <field name="origin" optional="show"/>
+                                <field name="product_id" optional="show"/>
+                                <field name="date" optional="hide"/>
+                                <field name="date_deadline" optional="hide"/>
+                                <field name="product_uom_qty" string="Demand"/>
+                                <field name="reserved_availability" string="Reserved" optional="hide"/>
+                                <field name="product_uom" string="Unit of Measure" groups="uom.group_uom" optional="show"/>
+                                <field name="state" optional="show"/>
+                                <field name="location_id" optional="hide"/>
+                                <field name="location_dest_id" optional="hide"/>
+                                <field name="picking_code" optional="hide"/>
+                                <field name="company_id" optional="hide" groups="base.group_multi_company"/>
+                            </tree>
+                        </field>
+                    </page>
+                </notebook>
+            </form>
         </field>
     </record>
 
@@ -37,7 +86,7 @@
     <record id="task_material_action" model="ir.actions.act_window">
         <field name="name">Task Material</field>
         <field name="res_model">project.task.material</field>
-        <field name="view_mode">tree</field>
+        <field name="view_mode">tree, form</field>
     </record>
 
     <menuitem action="task_material_action" id="task_material_inventory_menu" parent="stock.menu_warehouse_report" sequence="200"/>
