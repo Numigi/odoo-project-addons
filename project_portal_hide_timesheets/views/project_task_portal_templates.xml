@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <template id="portal_my_task" inherit_id="hr_timesheet.portal_my_task">
+        <xpath expr="(//li[@t-if='timesheets and allow_timesheets'])[1]" position="replace" />
+        <xpath expr="//li[@id='nav-header']/following-sibling::li[1]" position="replace" />
+        <div t-if="timesheets and allow_timesheets" position="replace" />
+    </template>
+
+</odoo>

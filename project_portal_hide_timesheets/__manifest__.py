@@ -3,17 +3,18 @@
 
 {
     "name": "Project Portal Hide Timesheets",
-    "version": "16.0.0",
+    "version": "16.0.1.0.0",
     "author": "Numigi",
     "maintainer": "Numigi",
     "website": "https://bit.ly/numigi-com",
     "license": "LGPL-3",
     "category": "Project",
+    "summary": "Hide timesheet lines in the task portal view.",
     "depends": [
         "hr_timesheet",
     ],
     "data": [
-        "views/portal.xml",
+        "views/project_task_portal_templates.xml",
     ],
     "installable": True,
 }
