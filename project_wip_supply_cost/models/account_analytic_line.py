@@ -30,7 +30,8 @@ class AnalyticLine(models.Model):
         return line
 
     def write(self, vals):
-        """When updating an analytic line, create / update / delete the wip entry.
+        """
+        When updating an analytic line, create / update / delete the wip entry.
 
         Whether the wip entry must be created / updated / deleted depends
         on which field is written to. This prevents an infinite loop.
@@ -44,14 +45,18 @@ class AnalyticLine(models.Model):
         return True
 
     def unlink(self):
-        """Reverse the salary account move entry when a timesheet line is deleted."""
+        """
+        Reverse the salary account move entry when
+        a timesheet line is deleted.
+        """
         lines_with_moves = self.filtered(lambda l: l.shop_supply_account_move_id)
         for line in lines_with_moves:
             line.sudo()._reverse_shop_supply_account_move_for_deleted_timesheet()
         return super().unlink()
 
     def _create_update_or_reverse_shop_supply_move(self):
-        """Create / Update / Reverse the wip account move.
+        """
+        Create / Update / Reverse the wip account move.
 
         Depending on the status of the timesheet line,
         the wip move is either created, updated or reversed.
@@ -76,13 +81,17 @@ class AnalyticLine(models.Model):
             self._reverse_shop_supply_account_move_for_updated_timesheet()
 
     def _create_shop_supply_move(self):
-        """Create the wip journal entry."""
+        """
+        Create the wip journal entry.
+        """
         vals = self._get_shop_supply_move_vals()
         self.shop_supply_account_move_id = self.env["account.move"].create(vals)
         self.shop_supply_account_move_id.action_post()
 
     def _update_shop_supply_move(self):
-        """Update the wip journal entry."""
+        """
+        Update the wip journal entry.
+        """
         if self._is_shop_supply_account_move_reconciled():
             raise ValidationError(
                 _(
@@ -101,7 +110,9 @@ class AnalyticLine(models.Model):
         self.shop_supply_account_move_id.action_post()
 
     def _reverse_shop_supply_account_move_for_deleted_timesheet(self):
-        """Reverse the wip journal entry in the context of a deleted timesheet."""
+        """
+        Reverse the wip journal entry in the context of a deleted timesheet.
+        """
         if self._is_shop_supply_account_move_reconciled():
             raise ValidationError(
                 _(
@@ -116,7 +127,9 @@ class AnalyticLine(models.Model):
         self.shop_supply_account_move_id._reverse_moves()
 
     def _reverse_shop_supply_account_move_for_updated_timesheet(self):
-        """Reverse the wip journal entry in the context of an updated timesheet."""
+        """
+        Reverse the wip journal entry in the context of an updated timesheet.
+        """
         if self._is_shop_supply_account_move_reconciled():
             raise ValidationError(
                 _(
@@ -133,7 +146,8 @@ class AnalyticLine(models.Model):
         self.shop_supply_account_move_id = False
 
     def _requires_shop_supply_move(self):
-        """Evaluate whether the timesheet line requires a shop supply entry.
+        """
+        Evaluate whether the timesheet line requires a shop supply entry.
 
         The shop supply account must be defined on the project type and
         as well as the shop supply rate.
@@ -147,7 +161,8 @@ class AnalyticLine(models.Model):
         )
 
     def _get_shop_supply_wip_move_line_vals(self):
-        """Get the values for the wip move line (usually the debit).
+        """
+        Get the values for the wip move line (usually the debit).
 
         :rtype: dict
         """
@@ -164,7 +179,8 @@ class AnalyticLine(models.Model):
         }
 
     def _get_shop_supply_move_line_vals(self):
-        """Get the values for the shop supply move line (usually the credit).
+        """
+        Get the values for the shop supply move line (usually the credit).
 
         :rtype: dict
         """
@@ -178,14 +194,16 @@ class AnalyticLine(models.Model):
         }
 
     def _get_shop_supply_amount(self):
-        """Get the debit/credit amount for the shop supply entry.
+        """
+        Get the debit/credit amount for the shop supply entry.
 
         :rtype: float
         """
         return self.unit_amount * self._get_shop_supply_rate()
 
     def _get_shop_supply_move_vals(self):
-        """Get the values for the wip account move.
+        """
+        Get the values for the wip account move.
 
         :rtype: dict
         """
@@ -208,10 +226,12 @@ class AnalyticLine(models.Model):
         )
 
     def _is_shop_supply_account_move_reconciled(self):
-        """Evaluate whether the wip journal entry is reconciled or not.
+        """
+        Evaluate whether the wip journal entry is reconciled or not.
 
         :rtype: bool
         """
+        self = self.with_company(self.company_id)
         return any(line.reconciled for line in self.shop_supply_account_move_id.line_ids)
 
     def _get_shop_supply_move_dependent_fields(self):
