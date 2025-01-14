@@ -53,6 +53,9 @@ class TaskMaterialLine(models.Model):
         related="product_id.standard_price", string="Unit Cost", readonly=True
     )
     move_ids = fields.One2many("stock.move", "material_line_id", "Stock Moves")
+    is_consu_two_steps = fields.Boolean(
+        compute="_compute_is_consu_two_steps"
+    )
 
     @api.depends(
         "move_ids.move_orig_ids",
@@ -62,16 +65,23 @@ class TaskMaterialLine(models.Model):
     )
     def _compute_prepared_qty(self):
         for line in self:
-            preparation_moves = line.with_company(self.company_id).mapped(
-                "move_ids.move_orig_ids")
-            preparation_moves_done = preparation_moves.filtered(
-                lambda m: m.state == "done"
-            )
-            prepared_qty = sum(preparation_moves_done.mapped("product_uom_qty"))
-            return_moves = preparation_moves_done.mapped("returned_move_ids")
-            return_moves_done = return_moves.filtered(lambda m: m.state == "done")
-            returned_qty = sum(return_moves_done.mapped("product_uom_qty"))
-            line.prepared_qty = prepared_qty - returned_qty
+            if line.is_consu_two_steps:
+                preparation_moves = line.with_company(self.company_id).mapped(
+                    "move_ids.move_orig_ids")
+                preparation_moves_done = preparation_moves.filtered(
+                    lambda m: m.state == "done"
+                    and m.picking_type_id.id
+                    == line.project_id.warehouse_id.consu_prep_type_id.id
+                )
+                prepared_qty = sum(preparation_moves_done.mapped("product_uom_qty"))
+                return_moves = preparation_moves_done.mapped("returned_move_ids")
+                return_moves_done = return_moves.filtered(
+                    lambda m: m.state == "done" and m.picking_type_id.id
+                    == line.project_id.warehouse_id.consu_prep_return_type_id.id)
+                returned_qty = sum(return_moves_done.mapped("product_uom_qty"))
+                line.prepared_qty = prepared_qty - returned_qty
+            else:
+                line.prepared_qty = 0
 
     @api.depends("move_ids", "move_ids.state")
     def _compute_consumed_qty(self):
@@ -85,6 +95,12 @@ class TaskMaterialLine(models.Model):
             )
             returned_qty = sum(return_moves.mapped("product_uom_qty"))
             line.consumed_qty = consumed_qty - returned_qty
+
+    def _compute_is_consu_two_steps(self):
+        for line in self:
+            line.is_consu_two_steps = (
+                line.task_id.project_id.warehouse_id.consu_steps == "two_steps"
+            )
 
     @api.model
     def create(self, vals):
@@ -113,8 +129,9 @@ class TaskMaterialLine(models.Model):
             lines_with_procurement = self.filtered(
                 lambda line: line._should_generate_procurement()
             )
+
             for line in lines_with_procurement:
-                line.sudo()._run_procurements()
+                line.sudo().with_context(from_write=True)._run_procurements()
 
         return True
 
@@ -132,7 +149,11 @@ class TaskMaterialLine(models.Model):
         return not self.task_id.procurement_disabled
 
     def _cancel_procurements(self):
-        for moves in self._iter_procurement_moves():
+        if self.is_consu_two_steps:
+            procurement_moves = self._iter_procurement_moves()
+        else:
+            procurement_moves = self.move_ids
+        for moves in procurement_moves:
             self._cancel_stock_moves(moves)
 
     def _run_procurements(self):
@@ -143,11 +164,11 @@ class TaskMaterialLine(models.Model):
         Reduce the quantity on existing stock moves if it exceeds the initial quantity
         on the material line.
         """
+        self.ensure_one()
         self._check_date_planned()
         self._check_initial_qty_greater_than_zero()
-
-        self._check_quantity_can_be_reduced()
-
+        if self._context.get("from_write"):
+            self._check_quantity_can_be_reduced()
         self._update_procurement_quantities()
         self._cancel_moves_with_zero_quantity()
 
@@ -279,7 +300,8 @@ class TaskMaterialLine(models.Model):
 
         :rtype: stock.move
         """
-        return self._get_first_step_moves().filtered(
+        moves = self._get_first_step_moves()
+        return moves.filtered(
             lambda m: m.state not in ("done", "cancelled")
         )
 
@@ -291,11 +313,13 @@ class TaskMaterialLine(models.Model):
 
     def _get_first_step_moves(self):
         _moves = self.env["stock.move"]
-
-        for _moves in self._iter_procurement_moves():
-            pass
-
-        return _moves
+        if self.is_consu_two_steps:
+            procurement_moves = self._iter_procurement_moves()
+            for _moves in procurement_moves:
+                pass
+            return _moves
+        else:
+            return self.move_ids
 
     def _cancel_moves_with_zero_quantity(self):
         """Cancel the stock moves related to this line with zero quantity.
@@ -305,7 +329,11 @@ class TaskMaterialLine(models.Model):
         with zero quantity. Otherwise, stock moves with zero quantity
         would appear in pickings and create confusion among users.
         """
-        for moves in self._iter_procurement_moves():
+        if self.is_consu_two_steps:
+            procurement_moves = self._iter_procurement_moves()
+        else:
+            procurement_moves = self.move_ids
+        for moves in procurement_moves:
             moves_to_cancel = moves.filtered(lambda m: m.product_qty == 0)
             self._cancel_stock_moves(moves_to_cancel)
 
@@ -315,8 +343,11 @@ class TaskMaterialLine(models.Model):
 
     def _propagate_planned_date_to_stock_moves(self):
         date_planned = self.task_id.date_planned
-
-        for moves in self._iter_procurement_moves():
+        if self.is_consu_two_steps:
+            procurement_moves = self._iter_procurement_moves()
+        else:
+            procurement_moves = self.move_ids
+        for moves in procurement_moves:
             moves_to_update = moves.filtered(
                 lambda m: m.state not in ("done", "cancel")
             )
@@ -329,13 +360,21 @@ class TaskMaterialLine(models.Model):
 
     def _iter_procurement_moves(self):
         moves = self.move_ids
-
-        # Limit the recursion depth stock.move chains.
-        # A chain of more than 3 moves is unlikely.
         limit = 10
-
         while moves and limit:
-            origin_moves = moves.with_company(self.company_id).mapped("move_orig_ids")
+            origin_moves = (
+                moves.with_company(self.company_id)
+                .mapped("move_orig_ids")
+                .filtered(
+                    lambda m: m.picking_type_id.id
+                    in [
+                        self.project_id.warehouse_id.consu_type_id.id,
+                        self.project_id.warehouse_id.consu_return_type_id.id,
+                        self.project_id.warehouse_id.consu_prep_type_id.id,
+                        self.project_id.warehouse_id.consu_prep_return_type_id.id,
+                    ]
+                )
+            )
             yield moves
             moves = origin_moves
             limit -= 1
