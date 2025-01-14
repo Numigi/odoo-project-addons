@@ -5,7 +5,7 @@
         <record id="project_view_kanban" model="ir.ui.view">
             <field name="name">project.task.kanban</field>
             <field name="model">project.task</field>
-            <field name="inherit_id" ref="project.view_task_kanban"/>
+            <field name="inherit_id" ref="project.view_task_kanban" />
             <field name="arch" type="xml">
                 <kanban position="attributes">
                     <attribute name="group_create">0</attribute>
