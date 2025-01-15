@@ -7,7 +7,7 @@
     "author": "Numigi",
     "maintainer": "Numigi",
     "website": "https://bit.ly/numigi-com",
-    "licence": "LGPL-3",
+    "license": "LGPL-3",
     "category": "Project Management",
     "summary": "Add a group that manage creation rights on project",
     "depends": ["project", "base_extended_security"],
