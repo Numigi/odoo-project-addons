@@ -10,8 +10,9 @@
     "license": "LGPL-3",
     "category": "Project",
     "depends": ["project"],
+    "summary": "Shows parent task in task portal form view.",
     "data": [
-        "views/portal.xml",
+        "views/project_task_portal_template.xml",
     ],
     "installable": True,
 }

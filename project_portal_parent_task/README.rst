@@ -1,12 +1,10 @@
 Project Portal Parent Task
 ==========================
-This module displays the parent task on the task form view of the portal.
+This module displays the parent task on the task portal form view.
 
-The parent task is placed behind the project name.
+The parent task is placed after the project name.
 
-
-.. image:: static/description/portal.png
-
+.. image:: static/description/project_task_portal_form_view.png
 
 Contributors
 ------------
