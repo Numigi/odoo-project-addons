@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<odoo>
+
+    <record model="ir.ui.view" id="view_task_form2_inherited">
+        <field name="name">project.task.form.inherited</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="hr_timesheet.view_task_form2_inherited" />
+        <field name="arch" type="xml">
+            <field name="remaining_hours" position="after">
+                <span class="o_td_label float-start">
+                    <label class="fw-bold" for="projected_hours" string="Projected Hours" />
+                </span>
+                <field name="projected_hours" widget="timesheet_uom"
+                    class="oe_subtotal_footer_separator"
+                    groups="hr_timesheet.group_hr_timesheet_user" nolabel="1" />
+            </field>
+            <field name="remaining_hours" position="after">
+            </field>
+            <field name="progress" position="after">
+                <field name="real_progress" widget="progressbar"
+                    groups="hr_timesheet.group_hr_timesheet_user" />
+            </field>
+        </field>
+    </record>
+
+    <menuitem id="menu_project_report_task_progress"
+        name="Tasks Progress"
+        action="project_projected_hours.action_project_task_progress_tree"
+        parent="project.menu_project_report"
+        groups="project.group_project_manager"
+        sequence="30"
+    />
+
+</odoo>
