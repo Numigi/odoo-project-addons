@@ -86,7 +86,7 @@
     <record id="task_material_action" model="ir.actions.act_window">
         <field name="name">Task Material</field>
         <field name="res_model">project.task.material</field>
-        <field name="view_mode">tree, form</field>
+        <field name="view_mode">tree</field>
     </record>
 
     <menuitem action="task_material_action" id="task_material_inventory_menu" parent="stock.menu_warehouse_report" sequence="200"/>
