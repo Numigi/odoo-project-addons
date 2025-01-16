@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="project_form" model="ir.ui.view">
+        <field name="name">Project: add milestone time kpi</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project_milestone_enhanced.project_active_view_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='milestones']" position="inside">
+                <group name="milestone_time_kpi" class="oe_subtotal_footer oe_right" colspan="2">
+                    <field name="total_estimated_hours" widget="timesheet_uom_no_toggle" groups="hr_timesheet.group_hr_timesheet_user" />
+                    <field name="total_spent_hours" widget="timesheet_uom_no_toggle" groups="hr_timesheet.group_hr_timesheet_user" />
+                    <field name="remaining_estimated_hours" widget="timesheet_uom_no_toggle" groups="hr_timesheet.group_hr_timesheet_user" />
+                    <field name="total_remaining_hours" widget="timesheet_uom_no_toggle" groups="hr_timesheet.group_hr_timesheet_user" />
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="project_list" model="ir.ui.view">
+        <field name="name">Project: add milestone time kpi</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project_milestone_enhanced.project_milestone_view_inherit_list" />
+        <field name="arch" type="xml">
+            <field name="milestone_ids" position="after">
+                <field name="total_estimated_hours" widget="timesheet_uom_no_toggle" sum="Total Estimated Hours" optional="show" groups="hr_timesheet.group_hr_timesheet_user" />
+                <field name="total_spent_hours" widget="timesheet_uom_no_toggle" sum="Total Spent Hours" optional="show" groups="hr_timesheet.group_hr_timesheet_user" />
+                <field name="total_remaining_hours" widget="timesheet_uom_no_toggle" sum="Total Remaining Hours" optional="show" groups="hr_timesheet.group_hr_timesheet_user" />
+            </field>
+        </field>
+    </record>
+</odoo>
