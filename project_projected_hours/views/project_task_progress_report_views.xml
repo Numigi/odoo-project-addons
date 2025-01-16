@@ -11,8 +11,8 @@
                     <field name="effective_hours" widget="timesheet_uom_no_toggle" optional="show" />
                     <field name="remaining_hours" widget="timesheet_uom_no_toggle" optional="show" />
                     <field name="projected_hours" widget="timesheet_uom_no_toggle" optional="show" />
-                    <field name="progress" string="Progress (%)"/>
-                    <field name="real_progress"  string="Real Progress (%)"/>
+                    <field name="progress" widget="progressbar" string="Progress (%)" optional="show" />
+                    <field name="real_progress" widget="progressbar" string="Real Progress (%)" optional="show" />
                 </tree>
             </field>
         </record>
@@ -23,5 +23,8 @@
             <field name="view_mode">tree</field>
             <field name="view_id" ref="view_task_project_progress_tree" />
         </record>
+
+        <menuitem id="menu_project_report_task_progress" name="Tasks Progress" action="project_projected_hours.action_project_task_progress_tree" parent="project.menu_project_report" groups="project.group_project_manager" sequence="30" />
+
 
 </odoo>
