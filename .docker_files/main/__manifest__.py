@@ -20,6 +20,7 @@
         "project_milestone_time_kpi",
         "project_no_quick_create",
         "project_parent_enhanced",
+        "project_portal_hide_timesheets",
         "project_progress_variance",
         "project_projected_hours",
         "project_remaining_hours_update",
