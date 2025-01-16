@@ -30,6 +30,7 @@ COPY project_task_draggable_column_disable /mnt/extra-addons/project_task_dragga
 COPY project_task_editable_list_view /mnt/extra-addons/project_task_editable_list_view
 COPY project_task_full_text_search /mnt/extra-addons/project_task_full_text_search
 COPY project_task_id_in_display_name /mnt/extra-addons/project_task_id_in_display_name
+COPY project_task_milestone_mandatory /mnt/extra-addons/project_task_milestone_mandatory
 COPY project_task_reference /mnt/extra-addons/project_task_reference
 COPY project_task_resource_type /mnt/extra-addons/project_task_resource_type
 COPY project_task_stage_external_mail /mnt/extra-addons/project_task_stage_external_mail
