@@ -7,7 +7,7 @@
             <field name="inherit_id" ref="project_projected_hours.view_task_project_progress_tree" />
             <field name="arch" type="xml">
                 <field name="real_progress" position="after">
-                    <field name="progress_variance" groups="hr_timesheet.group_hr_timesheet_user"/>
+                    <field name="progress_variance" widget="progressbar" optional="show" groups="hr_timesheet.group_hr_timesheet_user"/>
                 </field>
             </field>
         </record>
