@@ -2,7 +2,7 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 import re
-from odoo import models, _, fields
+from odoo import models, _
 from odoo.exceptions import MissingError
 
 DEFAULT_TASK_REF_REGEX = r"[tT][aA]#?(?P<id>\d+)"
