@@ -25,6 +25,7 @@
         "project_projected_hours",
         "project_remaining_hours_update",
         "project_stage_allow_timesheet",
+        "project_stage_no_quick_create",
         "project_task_date_planned",
         "project_task_deadline_from_project",
         "project_task_description_template",
