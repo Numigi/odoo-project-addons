@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-06 13:17+0000\n"
-"PO-Revision-Date: 2024-12-06 13:17+0000\n"
+"POT-Creation-Date: 2025-01-13 05:10+0000\n"
+"PO-Revision-Date: 2025-01-13 05:10+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -18,13 +18,13 @@ msgstr ""
 #. module: project_parent_enhanced
 #: model:ir.model.fields,field_description:project_parent_enhanced.field_project_project__is_parent
 msgid "Is Parent"
-msgstr ""
+msgstr "Est parent"
 
 #. module: project_parent_enhanced
 #: model:ir.model.fields,field_description:project_parent_enhanced.field_project_task__parent_project_id
 #: model_terms:ir.ui.view,arch_db:project_parent_enhanced.view_task_search_form
 msgid "Parent Project"
-msgstr ""
+msgstr "Projet parent"
 
 #. module: project_parent_enhanced
 #: model:ir.model,name:project_parent_enhanced.model_project_project
@@ -34,7 +34,7 @@ msgstr "Projet"
 #. module: project_parent_enhanced
 #: model_terms:ir.ui.view,arch_db:project_parent_enhanced.view_project
 msgid "Project/Iteration Name"
-msgstr ""
+msgstr "Projet/Lot"
 
 #. module: project_parent_enhanced
 #: model:ir.model,name:project_parent_enhanced.model_project_task
@@ -46,12 +46,11 @@ msgstr "Tâche"
 #: code:addons/project_parent_enhanced/models/project_project.py:0
 #, python-format
 msgid ""
-"The project {project_1} can not be the child of {project_2} because "
-"{project_2} is a child of {project_3}."
+"The project [{project_1}] can not be the child of [{project_2}] because "
+"[{project_2}] is a child of [{project_3}]."
 msgstr ""
 "Le projet {project_1} ne peut pas être le parent de {project_2} parce que "
 "{project_2} est un enfant de {project_3}."
-
 
 #. module: project_parent_enhanced
 #. odoo-python
