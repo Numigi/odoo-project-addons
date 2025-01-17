@@ -39,7 +39,7 @@ As a user, from a project whose **Use milestones** box is checked, go to the tab
 
 * Analysis (estimated 10h).
 
-    .. image:: project_milestone_time_kpi/static/description/milestone_1.png
+    .. image:: static/description/milestone_1.png
         :width: 100%
         :align: center
         :height: 600px
@@ -47,7 +47,7 @@ As a user, from a project whose **Use milestones** box is checked, go to the tab
 
 * Realization (estimated 20h).
 
-    .. image:: project_milestone_time_kpi/static/description/milestone_2.png
+    .. image:: static/description/milestone_2.png
         :width: 100%
         :align: center
         :height: 600px
@@ -55,7 +55,7 @@ As a user, from a project whose **Use milestones** box is checked, go to the tab
 
 2. From the project tasks, assigned to the respective milestones, add timelines.
 
-    .. image:: project_milestone_time_kpi/static/description/milestone_spent_hours.png
+    .. image:: static/description/milestone_spent_hours.png
         :width: 100%
         :align: center
         :height: 600px

@@ -21,19 +21,19 @@ Overview
 
 I open the form of a project milestone and set value in field "Estimated hours.
 
-.. image:: project_milestone_estimated_hours/static/description/project_milestone_form.png
+.. image:: static/description/project_milestone_form.png
 
 I copy the milestone and value in field "Estimated hours is the same.
 
-.. image:: project_milestone_estimated_hours/static/description/project_milestone_copy.png
+.. image:: static/description/project_milestone_copy.png
 
 I open the list of milestones, the field is displayed.
 
-.. image:: project_milestone_estimated_hours/static/description/project_milestone_tree.png
+.. image:: static/description/project_milestone_tree.png
 
 I open the form of a project with notebook milestones, the field is displayed.
 
-.. image:: project_milestone_estimated_hours/static/description/project_form.png
+.. image:: static/description/project_form.png
 
 
 Contributors

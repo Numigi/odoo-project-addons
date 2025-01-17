@@ -20,7 +20,7 @@ services:
         aliases:
           - odoo.localtest.me
   db:
-    image: postgres:9.6
+    image: postgres:16.0
     environment:
       - POSTGRES_PASSWORD=odoo
       - POSTGRES_USER=odoo
@@ -29,13 +29,6 @@ services:
       - odoo-db-data:/var/lib/postgresql/data/pgdata
     expose:
       - 5432
-
-  testcafe:
-    build:
-      context: .testcafe
-      dockerfile: Dockerfile
-    depends_on:
-      - odoo
 
 volumes:
   odoo-web-data:

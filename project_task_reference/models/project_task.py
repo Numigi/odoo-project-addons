@@ -12,15 +12,15 @@ DEFAULT_TASK_REF_FORMAT = "TA#{id}"
 
 def _get_task_ref_regex(env: 'Environment') -> str:
     return (
-        env['ir.config_parameter'].sudo().get_param('project_task_reference.regex') or
-        DEFAULT_TASK_REF_REGEX
+        env["ir.config_parameter"].sudo().get_param("project_task_reference.regex")
+        or DEFAULT_TASK_REF_REGEX
     )
 
 
 def _get_task_ref_normalized_format(env: 'Environment') -> str:
     return (
-        env['ir.config_parameter'].sudo().get_param('project_task_reference.format') or
-        DEFAULT_TASK_REF_FORMAT
+        env["ir.config_parameter"].sudo().get_param("project_task_reference.format")
+        or DEFAULT_TASK_REF_FORMAT
     )
 
 

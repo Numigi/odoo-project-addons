@@ -12,11 +12,13 @@ class StockPicking(models.Model):
         "project.task",
         index=True,
         ondelete="restrict",
+        check_company=True,
     )
     project_id = fields.Many2one(
         related="task_id.project_id",
         store=True,
         readonly=True,
+        check_company=True,
     )
 
     task_readonly = fields.Boolean(compute="_compute_task_modifiers")

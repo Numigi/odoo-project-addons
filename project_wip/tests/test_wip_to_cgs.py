@@ -4,7 +4,6 @@
 import pytest
 from freezegun import freeze_time
 from datetime import datetime, date, timedelta
-from odoo import fields
 from odoo.tests import common
 from odoo.exceptions import ValidationError, AccessError
 

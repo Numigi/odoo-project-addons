@@ -42,11 +42,7 @@ class TaskWithMaterialLines(models.Model):
         compute="_compute_preparation_pickings",
     )
 
-    show_material_prepared_qty = fields.Boolean(
-        compute="_compute_show_material_prepared_qty"
-    )
-
-    procurement_disabled = fields.Boolean(default=False)
+    procurement_disabled = fields.Boolean()
 
     def _compute_preparation_pickings(self):
         tasks_with_procurement_group = self.filtered(lambda t: t.procurement_group_id)
@@ -55,6 +51,7 @@ class TaskWithMaterialLines(models.Model):
                 [
                     ("group_id", "=", task.procurement_group_id.id),
                     ("picking_type_code", "=", "internal"),
+                    ("company_id", "=", task.company_id.id),
                 ]
             )
             prep_picking = pickings.filtered(
@@ -75,62 +72,52 @@ class TaskWithMaterialLines(models.Model):
                 [
                     ("group_id", "=", task.procurement_group_id.id),
                     ("picking_type_code", "in", ("consumption", "consumption_return")),
+                    ("company_id", "=", task.company_id.id),
                 ]
             )
             task.consumption_picking_ids = pickings
             task.consumption_picking_count = len(pickings)
 
-    def _compute_show_material_prepared_qty(self):
-        for task in self:
-            task.show_material_prepared_qty = (
-                task.project_id.warehouse_id.consu_steps == "two_steps"
-            )
-
     def write(self, vals):
         super().write(vals)
         for task in self:
-            procurement_disabled = vals.get(
-                "procurement_disabled", task.procurement_disabled
-            )
-            if procurement_disabled is False:
-                task._run_procurements()
-
-            if procurement_disabled is True:
-                task._cancel_procurements()
-
+            if "procurement_disabled" in vals:
+                procurement_disabled = (
+                    vals.get("procurement_disabled") or self.procurement_disabled
+                )
+                if procurement_disabled:
+                    task._cancel_procurements()
+                else:
+                    task._run_procurements()
             if "date_planned" in vals:
                 task._propagate_planned_date_to_stock_moves()
-
         return True
 
     def copy(self, vals=None):
         task = super().copy(vals)
-
         if self.material_line_ids:
             task.procurement_disabled = True
             task._copy_material_lines_from(self)
-
         return task
+
+    def _copy_material_lines_from(self, task):
+        if not self.date_planned:
+            self.date_planned = date(2099, 1, 1)
+        for line in task.material_line_ids:
+            line.copy({"task_id": self.id})
 
     @api.onchange("project_id")
     def _onchange_project_enable_procurements(self):
         if self.project_id:
             self.procurement_disabled = False
 
-    def _copy_material_lines_from(self, task):
-        if not self.date_planned:
-            self.date_planned = date(2099, 1, 1)
-
-        for line in task.material_line_ids:
-            line.copy({"task_id": self.id})
-
     def _run_procurements(self):
         for line in self.mapped("material_line_ids"):
-            line._run_procurements()
+            line.sudo()._run_procurements()
 
     def _cancel_procurements(self):
         for line in self.mapped("material_line_ids"):
-            line._cancel_procurements()
+            line.sudo()._cancel_procurements()
 
     def _propagate_planned_date_to_stock_moves(self):
         for line in self.mapped("material_line_ids"):
@@ -175,7 +162,7 @@ class TaskWithMaterialLines(models.Model):
         This method is intended to be inherited to show the list/form view
         of different types of picking related to the task.
         """
-        action = self.env.ref("stock.action_picking_tree_all").read()[0]
+        action = self.env.ref("stock.action_picking_tree_all").sudo().read()[0]
 
         if len(pickings) > 1:
             action["domain"] = [("id", "in", pickings.ids)]

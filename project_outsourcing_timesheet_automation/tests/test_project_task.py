@@ -8,7 +8,6 @@ class TestProjectTask(OutsourcingCase):
     def setUp(self):
         super(TestProjectTask, self).setUp()
 
-
     def test_create_timesheet_line_automatically(self):
         self.task.outsourcing_line_ids.refresh()
         self.task.write({"stage_id": self.stage_test.id})
