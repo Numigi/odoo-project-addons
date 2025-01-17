@@ -23,6 +23,7 @@
         "report/report.xml",
         "security/ir.model.access.csv",
         "views/project_project_views.xml",
+        "views/assets.xml",
         "views/project_cost_category_views.xml",
         "views/product_category_views.xml",
         "views/task_type_views.xml",

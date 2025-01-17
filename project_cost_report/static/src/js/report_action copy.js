@@ -25,7 +25,7 @@ odoo.define("project_cost_report.report_action", function (require) {
             "click .o_project_cost_report__category_profit": "categoryProfitClicked",
             "click .o_project_cost_report__purchase_order_name": "purchaseOrderNameClicked",
         },
-        init: function (parent, action) {
+        init(parent, action) {
             this._super.apply(this, arguments);
             this.controllerURL = action.context.url;
             this.projectId = action.context.active_id || action.params.active_id;
@@ -36,34 +36,64 @@ odoo.define("project_cost_report.report_action", function (require) {
             };
             this.unfolded = false;
         },
-        willStart: async function () {
-            const reportsInfoPromise = this._rpc({
-                model: "project.cost.report",
-                method: 'get_html',
-                args: [this.reportContext],
-                context: this.getSession().user_context,
-            }).then(res => this.parse_reports_informations(res));
-            const parentPromise = this._super(...arguments);
-            return Promise.all([reportsInfoPromise, parentPromise]);
-        },
-
-        start: function () {
-            var result = this._super();
-            this.update_cp();
-            this.updateHtml();
-            // this.updateFoldButtonVisibility();
-            // this.updateSummaryButtonVisibility();
-            return result;
-        },
 
         async updateHtml() {
-            this.$el.html(this.main_html);
+            var html = await this._rpc({
+                model: "project.cost.report",
+                method: "get_html",
+                args: [this.reportContext],
+                context: this.getSession().user_context,
+            });
+            this.$el.html(html);
         },
-
-        parse_reports_informations: function (values) {
-            this.main_html = values;
+        renderPrintButton() {
+            var button = $(QWeb.render("projectCostReport.printButton", {}));
+            button.bind("click", () => this.downloadPDF());
+            return button;
         },
-
+        renderFoldButton() {
+            var button = $(QWeb.render("projectCostReport.foldButton", {}));
+            button.bind("click", () => this.fold());
+            return button;
+        },
+        renderUnfoldButton() {
+            var button = $(QWeb.render("projectCostReport.unfoldButton", {}));
+            button.bind("click", () => this.unfold());
+            return button;
+        },
+        renderShowSummaryButton() {
+            var button = $(QWeb.render("projectCostReport.showSummaryButton", {}));
+            button.bind("click", () => this.showSummary());
+            return button;
+        },
+        renderHideSummaryButton() {
+            var button = $(QWeb.render("projectCostReport.hideSummaryButton", {}));
+            button.bind("click", () => this.hideSummary());
+            return button;
+        },
+        getControlPanelButtons() {
+            if (!this.controlPanelButtons) {
+                this.printButton = this.renderPrintButton();
+                this.foldButton = this.renderFoldButton();
+                this.unfoldButton = this.renderUnfoldButton();
+                this.showSummaryButton = this.renderShowSummaryButton();
+                this.hideSummaryButton = this.renderHideSummaryButton();
+                this.controlPanelButtons = [
+                    this.printButton,
+                    this.foldButton,
+                    this.unfoldButton,
+                    this.showSummaryButton,
+                    this.hideSummaryButton,
+                ];
+            }
+            return this.controlPanelButtons;
+        },
+        updateControlPanel() {
+            this.update_control_panel({
+                breadcrumbs: this.getParent()._getBreadcrumbs(),
+                cp_content: { $buttons: this.getControlPanelButtons() },
+            });
+        },
         updateFoldButtonVisibility() {
             if (this.unfolded) {
                 this.foldButton.show();
@@ -88,11 +118,18 @@ odoo.define("project_cost_report.report_action", function (require) {
                 this.hideSummaryButton.hide();
             }
         },
-
+        start() {
+            var result = this._super();
+            this.updateControlPanel();
+            this.updateHtml();
+            this.updateFoldButtonVisibility();
+            this.updateSummaryButtonVisibility();
+            return result;
+        },
         async refresh() {
             this.updateHtml();
-            // this.updateFoldButtonVisibility();
-            // this.updateSummaryButtonVisibility();
+            this.updateFoldButtonVisibility();
+            this.updateSummaryButtonVisibility();
         },
         downloadPDF() {
             framework.blockUI();
@@ -188,69 +225,18 @@ odoo.define("project_cost_report.report_action", function (require) {
                 res_id: orderId,
             });
         },
-
-        renderPrintButton() {
-            var button = this.$el.html(QWeb.render("projectCostReport.printButton", {}));
-            button.bind("click", () => this.downloadPDF());
-            console.log(button);
-            return button;
+        /**
+         * Show the widget.
+         *
+         * This is a standard method of web.Widget.
+         * It is called when the report is reopened after a click on the breadcrumb.
+         */
+        do_show() {
+            this._super();
+            this.updateControlPanel();
         },
-        renderFoldButton() {
-            var button = $(QWeb.render("projectCostReport.foldButton", {}));
-            button.bind("click", () => this.fold());
-            return button;
-        },
-        renderUnfoldButton() {
-            var button = $(QWeb.render("projectCostReport.unfoldButton", {}));
-            button.bind("click", () => this.unfold());
-            return button;
-        },
-        renderShowSummaryButton() {
-            var button = $(QWeb.render("projectCostReport.showSummaryButton", {}));
-            button.bind("click", () => this.showSummary());
-            return button;
-        },
-        renderHideSummaryButton() {
-            var button = $(QWeb.render("projectCostReport.hideSummaryButton", {}));
-            button.bind("click", () => this.hideSummary());
-            return button;
-        },
-        getControlPanelButtons() {
-            if (!this.controlPanelButtons) {
-                this.printButton = this.renderPrintButton();
-                this.foldButton = this.renderFoldButton();
-                this.unfoldButton = this.renderUnfoldButton();
-                this.showSummaryButton = this.renderShowSummaryButton();
-                this.hideSummaryButton = this.renderHideSummaryButton();
-                this.controlPanelButtons = [
-                    this.printButton,
-                    // this.foldButton,
-                    // this.unfoldButton,
-                    // this.showSummaryButton,
-                    // this.hideSummaryButton,
-                ];
-            }
-            return this.controlPanelButtons;
-        },
-
-        update_cp: function () {
-            try {
-                this.$buttons = this.getControlPanelButtons();
-            } catch (error) {
-                console.error("Error rendering control panel buttons:", error);
-                this.$buttons = $(); 
-            }
-        
-            return this.updateControlPanel({
-                cp_content: {
-                    $buttons: this.$buttons,
-                },
-            });
-        },
-
-
-
     });
+
     function getSectionName(event) {
         return getAttribute(event, "section")
     }
@@ -273,6 +259,7 @@ odoo.define("project_cost_report.report_action", function (require) {
     }
 
     core.action_registry.add('project_cost_report', ReportAction);
+
     return ReportAction;
 
 });

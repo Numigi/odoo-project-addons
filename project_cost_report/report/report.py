@@ -3,11 +3,11 @@
 
 import babel.dates
 from datetime import datetime
-from itertools import chain
+# from itertools import chain
 from odoo import api, fields, models, _
 from odoo.exceptions import ValidationError
 from odoo.tools.float_utils import float_round
-from typing import Callable, Mapping
+# from typing import Callable, Mapping
 from .util import (
     adjust_analytic_line_amount_sign,
     get_waiting_for_invoice_total,
@@ -83,7 +83,7 @@ class ProjectCostReport(models.TransientModel):
         """
         project = self.get_project_from_report_context(report_context)
         rendering_variables = self.get_rendering_variables(project, report_context)
-        return self.env.ref("project_cost_report.cost_report_html").render(
+        return self.env.ref("project_cost_report.cost_report_html")._render(
             rendering_variables
         )
 
