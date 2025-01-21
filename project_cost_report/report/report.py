@@ -98,10 +98,10 @@ class ProjectCostReport(models.TransientModel):
         rendering_variables = self.get_rendering_variables(project, report_context)
         base_url = self.env["ir.config_parameter"].sudo().get_param("web.base.url")
         rendering_variables.update({"mode": "print", "base_url": base_url})
-        body = self.env["ir.ui.view"].render_template(
+        body = self.env["ir.ui.view"]._render_template(
             "project_cost_report.cost_report_pdf", values=rendering_variables
         )
-        header = self.env["ir.actions.report"].render_template(
+        header = self.env["ir.actions.report"]._render_template(
             "web.minimal_layout", values=rendering_variables
         )
         return self.env["ir.actions.report"]._run_wkhtmltopdf(

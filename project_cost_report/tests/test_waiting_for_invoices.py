@@ -22,7 +22,7 @@ class TestWaitingForInvoices(common.SavepointCase):
         cls.report = cls.env["project.cost.report"].create({})
 
         cls.supplier = cls.env["res.partner"].create(
-            {"name": "My Supplier", "supplier": True}
+            {"name": "My Supplier"}
         )
 
         cls.ordered_quantity = 10

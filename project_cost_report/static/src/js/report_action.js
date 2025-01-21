@@ -1,30 +1,23 @@
-/*
-    Copyright 2019 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
-    License LGPL-3.0 or later (http://www.gnu.org/licenses/LGPL.html).
-*/
 odoo.define("project_cost_report.report_action", function (require) {
     "use strict";
 
-    var core = require("web.core");
-    var framework = require("web.framework");
-    var rpc = require("web.rpc");
-    var session = require("web.session");
-    var Widget = require("web.Widget");
-    var AbstractAction = require("web.AbstractAction");
+    const core = require("web.core");
+    const framework = require("web.framework");
+    const session = require("web.session");
+    const AbstractAction = require("web.AbstractAction");
+    const QWeb = core.qweb;
 
-    var QWeb = core.qweb;
-    var _t = core._t;
-
-    var ReportAction = AbstractAction.extend({
+    const ReportAction = AbstractAction.extend({
         hasControlPanel: true,
         events: {
-            "click .o_project_cost_report__analytic_line": "analyticLineClicked",
-            "click .o_project_cost_report__category": "categoryClicked",
-            "click .o_project_cost_report__category_cost": "categoryCostClicked",
-            "click .o_project_cost_report__category_revenue": "categoryRevenueClicked",
-            "click .o_project_cost_report__category_profit": "categoryProfitClicked",
-            "click .o_project_cost_report__purchase_order_name": "purchaseOrderNameClicked",
+            "click .o_project_cost_report__analytic_line": "onAnalyticLineClick",
+            "click .o_project_cost_report__category": "onCategoryClick",
+            "click .o_project_cost_report__category_cost": "onCategoryCostClick",
+            "click .o_project_cost_report__category_revenue": "onCategoryRevenueClick",
+            "click .o_project_cost_report__category_profit": "onCategoryProfitClick",
+            "click .o_project_cost_report__purchase_order_name": "onPurchaseOrderClick",
         },
+
         init: function (parent, action) {
             this._super.apply(this, arguments);
             this.controllerURL = action.context.url;
@@ -34,153 +27,176 @@ odoo.define("project_cost_report.report_action", function (require) {
                 unfolded_categories: [],
                 show_summary: true,
             };
-            this.unfolded = false;
-        },
-        willStart: async function () {
-            const reportsInfoPromise = this._rpc({
-                model: "project.cost.report",
-                method: 'get_html',
-                args: [this.reportContext],
-                context: this.getSession().user_context,
-            }).then(res => this.parse_reports_informations(res));
-            const parentPromise = this._super(...arguments);
-            return Promise.all([reportsInfoPromise, parentPromise]);
+            this.isUnfolded = false;
         },
 
         start: function () {
-            var result = this._super();
-            this.update_cp();
-            this.updateHtml();
-            // this.updateFoldButtonVisibility();
-            // this.updateSummaryButtonVisibility();
+            const result = this._super();
+            this.refreshContent();
+            this.setupButtons();
+            this.updateFoldButtonState();
+            this.updateSummaryButtonState();
             return result;
         },
 
-        async updateHtml() {
-            this.$el.html(this.main_html);
-        },
-
-        parse_reports_informations: function (values) {
-            this.main_html = values;
-        },
-
-        updateFoldButtonVisibility() {
-            if (this.unfolded) {
-                this.foldButton.show();
-                this.foldButton.css("display", "inline-block");
-                this.unfoldButton.hide();
-            }
-            else {
-                this.foldButton.hide();
-                this.unfoldButton.show();
-                this.unfoldButton.css("display", "inline-block");
-            }
-        },
-        updateSummaryButtonVisibility() {
-            if (this.reportContext.show_summary) {
-                this.showSummaryButton.hide();
-                this.hideSummaryButton.show();
-                this.hideSummaryButton.css("display", "inline-block");
-            }
-            else {
-                this.showSummaryButton.show();
-                this.showSummaryButton.css("display", "inline-block");
-                this.hideSummaryButton.hide();
-            }
-        },
-
-        async refresh() {
-            this.updateHtml();
-            // this.updateFoldButtonVisibility();
-            // this.updateSummaryButtonVisibility();
-        },
-        downloadPDF() {
-            framework.blockUI();
-            session.get_file({
-                url: "/web/project_cost_report/" + this.projectId,
-                data: { report_context: JSON.stringify(this.reportContext) },
-                complete: framework.unblockUI,
-                // error: crashManager.rpc_error.bind(crashManager),
+        getHtml: async function () {
+            return await this._rpc({
+                model: "project.cost.report",
+                method: "get_html",
+                args: [this.reportContext],
+                context: this.getSession().user_context,
             });
         },
-        fold() {
-            this.reportContext.unfolded_categories = [];
-            this.unfolded = false;
-            this.refresh();
+
+        updateFoldButtonState: function () {
+            const $foldButton = this.$(".cost_report_fold");
+            const $unfoldButton = this.$(".cost_report_unfold");
+
+            if (this.isUnfolded) {
+                $foldButton.css("display", "inline-block").show();
+                $unfoldButton.hide();
+            } else {
+                $foldButton.hide();
+                $unfoldButton.css("display", "inline-block").show();
+            }
         },
-        async unfold() {
+
+        updateSummaryButtonState: function () {
+            const $showSummaryButton = this.$(".cost_report_show");
+            const $hideSummaryButton = this.$(".cost_report_hide");
+
+            if (this.reportContext.show_summary) {
+                $showSummaryButton.hide();
+                $hideSummaryButton.css("display", "inline-block").show();
+            } else {
+                $showSummaryButton.css("display", "inline-block").show();
+                $hideSummaryButton.hide();
+            }
+        },
+
+        setupButtons: function () {
+            this.$buttons = $(QWeb.render("projectCostReport.buttons", this));
+            this.$buttons.filter(".cost_report_print").on("click", this.onDownloadPDF.bind(this));
+            this.$buttons.filter(".cost_report_unfold").on("click", this.onUnfold.bind(this));
+            this.$buttons.filter(".cost_report_fold").on("click", this.onFold.bind(this));
+            this.$buttons.filter(".cost_report_show").on("click", this.onShowSummary.bind(this));
+            this.$buttons.filter(".cost_report_hide").on("click", this.onHideSummary.bind(this));
+
+            this.controlPanelProps.cp_content = {
+                $buttons: this.$buttons,
+            };
+        },
+
+        refreshContent: async function () {
+            const content = await this.getHtml();
+            this.$(".o_content").html(content);
+        },
+
+        refreshView: function () {
+            this.refreshContent();
+            this.setupButtons();
+            this.updateFoldButtonState();
+            this.updateSummaryButtonState();
+        },
+
+        onDownloadPDF: function () {
+            framework.blockUI();
+            session.get_file({
+                url: `/web/project_cost_report/${this.projectId}`,
+                data: { report_context: JSON.stringify(this.reportContext) },
+                complete: framework.unblockUI,
+            });
+        },
+
+        onFold: function () {
+            this.reportContext.unfolded_categories = [];
+            this.isUnfolded = false;
+            this.refreshView();
+        },
+
+        onUnfold: async function () {
             const allCategories = await this._rpc({
                 model: "project.cost.category",
                 method: "search",
                 args: [[]],
             });
-            this.reportContext.unfolded_categories = allCategories
-            this.unfolded = true;
-            this.refresh();
+            this.reportContext.unfolded_categories = allCategories;
+            this.isUnfolded = true;
+            this.refreshView();
         },
-        showSummary() {
+
+        onShowSummary: function () {
             this.reportContext.show_summary = true;
-            this.refresh();
+            this.refreshView();
         },
-        hideSummary() {
+
+        onHideSummary: function () {
             this.reportContext.show_summary = false;
-            this.refresh();
+            this.refreshView();
         },
-        categoryClicked(event) {
+
+        onCategoryClick: function (event) {
             event.preventDefault();
-            const categoryId = getCategoryId(event)
+            const categoryId = this.getEventAttribute(event, "category-id");
             if (this.isCategoryFolded(categoryId)) {
                 this.unfoldCategory(categoryId);
-            }
-            else {
+            } else {
                 this.foldCategory(categoryId);
             }
         },
-        isCategoryFolded(categoryId) {
-            return this.reportContext.unfolded_categories.indexOf(categoryId) === -1;
+
+        isCategoryFolded: function (categoryId) {
+            return !this.reportContext.unfolded_categories.includes(categoryId);
         },
-        foldCategory(categoryId) {
-            const categories = this.reportContext.unfolded_categories
-            this.reportContext.unfolded_categories = categories.filter((c) => c !== categoryId)
-            this.unfolded = false;
-            this.refresh();
+
+        foldCategory: function (categoryId) {
+            this.reportContext.unfolded_categories = this.reportContext.unfolded_categories.filter((id) => id !== categoryId);
+            this.isUnfolded = false;
+            this.refreshView();
         },
-        unfoldCategory(categoryId) {
+
+        unfoldCategory: function (categoryId) {
             this.reportContext.unfolded_categories.push(categoryId);
-            this.refresh();
+            this.refreshView();
         },
-        analyticLineClicked(event) {
-            const analyticLineId = getAnalyticLineId(event)
-            this.drilldownAmount("analytic_line_clicked", [analyticLineId])
+
+        onAnalyticLineClick: function (event) {
+            const analyticLineId = this.getEventAttribute(event, "analytic-line-id");
+            this.triggerDrilldown("analytic_line_clicked", [analyticLineId]);
         },
-        categoryCostClicked(event) {
-            const sectionName = getSectionName(event)
-            const categoryId = getCategoryId(event)
-            this.drilldownAmount("category_cost_clicked", [this.reportContext, sectionName, categoryId])
+
+        onCategoryCostClick: function (event) {
+            this.triggerCategoryDrilldown(event, "category_cost_clicked");
         },
-        categoryRevenueClicked(event) {
-            const sectionName = getSectionName(event)
-            const categoryId = getCategoryId(event)
-            this.drilldownAmount("category_revenue_clicked", [this.reportContext, sectionName, categoryId])
+
+        onCategoryRevenueClick: function (event) {
+            this.triggerCategoryDrilldown(event, "category_revenue_clicked");
         },
-        categoryProfitClicked(event) {
-            const sectionName = getSectionName(event)
-            const categoryId = getCategoryId(event)
-            this.drilldownAmount("category_profit_clicked", [this.reportContext, sectionName, categoryId])
+
+        onCategoryProfitClick: function (event) {
+            this.triggerCategoryDrilldown(event, "category_profit_clicked");
         },
-        async drilldownAmount(method, args) {
+
+        triggerCategoryDrilldown: function (event, method) {
+            const sectionName = this.getEventAttribute(event, "section");
+            const categoryId = this.getEventAttribute(event, "category-id");
+            this.triggerDrilldown(method, [this.reportContext, sectionName, categoryId]);
+        },
+
+        triggerDrilldown: async function (method, args) {
             event.preventDefault();
             const action = await this._rpc({
                 model: "project.cost.report",
                 method: method,
                 args: args,
                 context: this.getSession().user_context,
-            })
+            });
             this.do_action(action);
         },
-        purchaseOrderNameClicked(event) {
+
+        onPurchaseOrderClick: function (event) {
             event.preventDefault();
-            var orderId = getPurchaseOrderId(event);
+            const orderId = this.getEventAttribute(event, "purchase-order-id");
             this.do_action({
                 res_model: "purchase.order",
                 views: [[false, "form"]],
@@ -189,90 +205,12 @@ odoo.define("project_cost_report.report_action", function (require) {
             });
         },
 
-        renderPrintButton() {
-            var button = this.$el.html(QWeb.render("projectCostReport.printButton", {}));
-            button.bind("click", () => this.downloadPDF());
-            console.log(button);
-            return button;
+        getEventAttribute: function (event, attribute) {
+            const attributeNode = event.currentTarget.attributes[attribute];
+            return attributeNode ? parseInt(attributeNode.nodeValue) : null;
         },
-        renderFoldButton() {
-            var button = $(QWeb.render("projectCostReport.foldButton", {}));
-            button.bind("click", () => this.fold());
-            return button;
-        },
-        renderUnfoldButton() {
-            var button = $(QWeb.render("projectCostReport.unfoldButton", {}));
-            button.bind("click", () => this.unfold());
-            return button;
-        },
-        renderShowSummaryButton() {
-            var button = $(QWeb.render("projectCostReport.showSummaryButton", {}));
-            button.bind("click", () => this.showSummary());
-            return button;
-        },
-        renderHideSummaryButton() {
-            var button = $(QWeb.render("projectCostReport.hideSummaryButton", {}));
-            button.bind("click", () => this.hideSummary());
-            return button;
-        },
-        getControlPanelButtons() {
-            if (!this.controlPanelButtons) {
-                this.printButton = this.renderPrintButton();
-                this.foldButton = this.renderFoldButton();
-                this.unfoldButton = this.renderUnfoldButton();
-                this.showSummaryButton = this.renderShowSummaryButton();
-                this.hideSummaryButton = this.renderHideSummaryButton();
-                this.controlPanelButtons = [
-                    this.printButton,
-                    // this.foldButton,
-                    // this.unfoldButton,
-                    // this.showSummaryButton,
-                    // this.hideSummaryButton,
-                ];
-            }
-            return this.controlPanelButtons;
-        },
-
-        update_cp: function () {
-            try {
-                this.$buttons = this.getControlPanelButtons();
-            } catch (error) {
-                console.error("Error rendering control panel buttons:", error);
-                this.$buttons = $(); 
-            }
-        
-            return this.updateControlPanel({
-                cp_content: {
-                    $buttons: this.$buttons,
-                },
-            });
-        },
-
-
-
     });
-    function getSectionName(event) {
-        return getAttribute(event, "section")
-    }
 
-    function getCategoryId(event) {
-        return parseInt(getAttribute(event, "category-id"))
-    }
-
-    function getAnalyticLineId(event) {
-        return parseInt(getAttribute(event, "analytic-line-id"))
-    }
-
-    function getPurchaseOrderId(event) {
-        return parseInt(getAttribute(event, "purchase-order-id"))
-    }
-
-    function getAttribute(event, key) {
-        var attributeNode = event.currentTarget.attributes[key];
-        return attributeNode ? attributeNode.nodeValue : null;
-    }
-
-    core.action_registry.add('project_cost_report', ReportAction);
+    core.action_registry.add("project_cost_report", ReportAction);
     return ReportAction;
-
 });

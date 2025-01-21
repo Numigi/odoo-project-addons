@@ -4,33 +4,31 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 11.0+e\n"
+"Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-06-03 19:35+0000\n"
-"PO-Revision-Date: 2021-06-03 15:36-0400\n"
-"Last-Translator: <>\n"
+"POT-Creation-Date: 2025-01-21 11:39+0000\n"
+"PO-Revision-Date: 2025-01-21 11:39+0000\n"
+"Last-Translator: \n"
 "Language-Team: \n"
-"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
+"Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
-"X-Generator: Poedit 2.3\n"
 
 #. module: project_cost_report
-#: code:addons/project_cost_report/report/report.py:275
+#: code:addons/project_cost_report/report/report.py:0
 #, python-format
 msgid "({category}) - Cost"
 msgstr "({category}) - Coût"
 
 #. module: project_cost_report
-#: code:addons/project_cost_report/report/report.py:305
+#: code:addons/project_cost_report/report/report.py:0
 #, python-format
 msgid "({category}) - Profit"
-msgstr "({category}) - Profit"
+msgstr ""
 
 #. module: project_cost_report
-#: code:addons/project_cost_report/report/report.py:289
+#: code:addons/project_cost_report/report/report.py:0
 #, python-format
 msgid "({category}) - Revenue"
 msgstr "({category}) - Revenu"
@@ -43,7 +41,7 @@ msgstr "<span>Imprimé le</span>"
 #. module: project_cost_report
 #: model_terms:ir.ui.view,arch_db:project_cost_report.cost_report_body__cost_total
 msgid "<span>Total</span>"
-msgstr "<span>Total</span>"
+msgstr ""
 
 #. module: project_cost_report
 #: model:ir.model.fields,field_description:project_cost_report.field_project_cost_category__active
@@ -73,7 +71,7 @@ msgstr "Coût"
 #. module: project_cost_report
 #: model:ir.actions.client,name:project_cost_report.cost_report_action
 #: model_terms:ir.ui.view,arch_db:project_cost_report.cost_report_body__header
-#: model_terms:ir.ui.view,arch_db:project_cost_report.project_form_with_smart_button
+#: model_terms:ir.ui.view,arch_db:project_cost_report.edit_project
 msgid "Cost Report"
 msgstr "Rapport de coûts"
 
@@ -104,32 +102,35 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:project_cost_report.cost_report_body__costs
 #: model_terms:ir.ui.view,arch_db:project_cost_report.cost_report_body__waiting_purchase_orders
 msgid "Date"
-msgstr "Date"
+msgstr ""
 
 #. module: project_cost_report
 #: model_terms:ir.ui.view,arch_db:project_cost_report.cost_report_body__costs
 msgid "Description"
-msgstr "Description"
+msgstr ""
 
 #. module: project_cost_report
+#: model:ir.model.fields,field_description:project_cost_report.field_account_analytic_line__display_name
+#: model:ir.model.fields,field_description:project_cost_report.field_product_category__display_name
 #: model:ir.model.fields,field_description:project_cost_report.field_project_cost_category__display_name
 #: model:ir.model.fields,field_description:project_cost_report.field_project_cost_report__display_name
+#: model:ir.model.fields,field_description:project_cost_report.field_task_type__display_name
 msgid "Display Name"
-msgstr "Nom affiché"
+msgstr "Nom d'affichage"
 
 #. module: project_cost_report
 #. openerp-web
-#: code:addons/project_cost_report/static/src/xml/templates.xml:13
+#: code:addons/project_cost_report/static/src/xml/templates.xml:0
 #, python-format
-msgid "FOLD"
-msgstr "PLIER"
+msgid "Fold"
+msgstr "Plier"
 
 #. module: project_cost_report
 #. openerp-web
-#: code:addons/project_cost_report/static/src/xml/templates.xml:21
+#: code:addons/project_cost_report/static/src/xml/templates.xml:0
 #, python-format
-msgid "HIDE SUMMARY"
-msgstr "CACHER SOMMAIRE"
+msgid "Hide Summary"
+msgstr "Cacher résumé"
 
 #. module: project_cost_report
 #: selection:project.cost.category,target_type:0
@@ -137,8 +138,11 @@ msgid "Hourly Rate"
 msgstr "Taux horaire"
 
 #. module: project_cost_report
+#: model:ir.model.fields,field_description:project_cost_report.field_account_analytic_line__id
+#: model:ir.model.fields,field_description:project_cost_report.field_product_category__id
 #: model:ir.model.fields,field_description:project_cost_report.field_project_cost_category__id
 #: model:ir.model.fields,field_description:project_cost_report.field_project_cost_report__id
+#: model:ir.model.fields,field_description:project_cost_report.field_task_type__id
 msgid "ID"
 msgstr "ID"
 
@@ -153,10 +157,13 @@ msgid "Labour"
 msgstr "Main d'œuvre"
 
 #. module: project_cost_report
+#: model:ir.model.fields,field_description:project_cost_report.field_account_analytic_line____last_update
+#: model:ir.model.fields,field_description:project_cost_report.field_product_category____last_update
 #: model:ir.model.fields,field_description:project_cost_report.field_project_cost_category____last_update
 #: model:ir.model.fields,field_description:project_cost_report.field_project_cost_report____last_update
+#: model:ir.model.fields,field_description:project_cost_report.field_task_type____last_update
 msgid "Last Modified on"
-msgstr ""
+msgstr "Dernière modification le"
 
 #. module: project_cost_report
 #: model:ir.model.fields,field_description:project_cost_report.field_project_cost_category__write_uid
@@ -176,20 +183,13 @@ msgid "Name"
 msgstr "Nom"
 
 #. module: project_cost_report
-#: selection:account.analytic.line,project_cost_section:0
-#: code:addons/project_cost_report/report/report.py:24
+#: code:addons/project_cost_report/report/report.py:0
+#: model:ir.model.fields.selection,name:project_cost_report.selection__account_analytic_line__project_cost_section__outsourcing
+#: model:ir.model.fields.selection,name:project_cost_report.selection__project_cost_category__section__outsourcing
 #: model:project.cost.category,name:project_cost_report.cost_category_outsourcing
-#: selection:project.cost.category,section:0
 #, python-format
 msgid "Outsourcing"
 msgstr "Sous-traitance"
-
-#. module: project_cost_report
-#. openerp-web
-#: code:addons/project_cost_report/static/src/xml/templates.xml:5
-#, python-format
-msgid "PRINT"
-msgstr "IMPRIMER"
 
 #. module: project_cost_report
 #: model_terms:ir.ui.view,arch_db:project_cost_report.cost_report_body__costs
@@ -197,20 +197,27 @@ msgid "Partner"
 msgstr "Partenaire"
 
 #. module: project_cost_report
-#: selection:project.cost.category,target_type:0
+#: model:ir.model.fields.selection,name:project_cost_report.selection__project_cost_category__target_type__percent
 msgid "Percentage"
 msgstr "Pourcentage"
 
 #. module: project_cost_report
-#: model:ir.model,name:project_cost_report.model_product_category
-msgid "Product Category"
-msgstr ""
+#. openerp-web
+#: code:addons/project_cost_report/static/src/xml/templates.xml:0
+#, python-format
+msgid "Print"
+msgstr "Imprimer"
 
 #. module: project_cost_report
-#: selection:account.analytic.line,project_cost_section:0
-#: code:addons/project_cost_report/report/report.py:22
+#: model:ir.model,name:project_cost_report.model_product_category
+msgid "Product Category"
+msgstr "Catégorie d'article"
+
+#. module: project_cost_report
+#: code:addons/project_cost_report/report/report.py:0
+#: model:ir.model.fields.selection,name:project_cost_report.selection__account_analytic_line__project_cost_section__products
+#: model:ir.model.fields.selection,name:project_cost_report.selection__project_cost_category__section__products
 #: model:project.cost.category,name:project_cost_report.cost_category_product
-#: selection:project.cost.category,section:0
 #, python-format
 msgid "Products"
 msgstr "Articles"
@@ -263,13 +270,6 @@ msgid "Revenue"
 msgstr "Revenu"
 
 #. module: project_cost_report
-#. openerp-web
-#: code:addons/project_cost_report/static/src/xml/templates.xml:17
-#, python-format
-msgid "SHOW SUMMARY"
-msgstr "AFFICHER SOMMAIRE"
-
-#. module: project_cost_report
 #: model_terms:ir.ui.view,arch_db:project_cost_report.project_cost_category_search
 msgid "Search Project Cost Categories"
 msgstr "Chercher des catégories de rapport de coût"
@@ -285,13 +285,20 @@ msgid "Sequence"
 msgstr "Séquence"
 
 #. module: project_cost_report
-#: selection:account.analytic.line,project_cost_section:0
-#: code:addons/project_cost_report/report/report.py:21
+#: code:addons/project_cost_report/report/report.py:0
+#: model:ir.model.fields.selection,name:project_cost_report.selection__account_analytic_line__project_cost_section__supply
+#: model:ir.model.fields.selection,name:project_cost_report.selection__project_cost_category__section__supply
 #: model:project.cost.category,name:project_cost_report.cost_category_supply
-#: selection:project.cost.category,section:0
 #, python-format
 msgid "Shop Supply"
 msgstr "Matériel"
+
+#. module: project_cost_report
+#. openerp-web
+#: code:addons/project_cost_report/static/src/xml/templates.xml:0
+#, python-format
+msgid "Show Summary"
+msgstr "Afficher résumé"
 
 #. module: project_cost_report
 #: model_terms:ir.ui.view,arch_db:project_cost_report.cost_report_body__costs
@@ -326,28 +333,29 @@ msgstr "Type d'objectif"
 #. module: project_cost_report
 #: model:ir.model,name:project_cost_report.model_task_type
 msgid "Task Type"
-msgstr ""
+msgstr "Type de tâche"
 
 #. module: project_cost_report
-#: code:addons/project_cost_report/report/report.py:127
+#: code:addons/project_cost_report/report/report.py:0
 #, python-format
 msgid "The cost report was triggered without a project ID in context."
-msgstr "Le rapport de coûts a été déclenché sans passer un ID de projet en contexte."
+msgstr ""
+"Le rapport de coûts a été déclenché sans passer un ID de projet en contexte."
 
 #. module: project_cost_report
-#: selection:account.analytic.line,project_cost_section:0
-#: code:addons/project_cost_report/report/report.py:23
-#: selection:project.cost.category,section:0
+#: code:addons/project_cost_report/report/report.py:0
+#: model:ir.model.fields.selection,name:project_cost_report.selection__account_analytic_line__project_cost_section__time
+#: model:ir.model.fields.selection,name:project_cost_report.selection__project_cost_category__section__time
 #, python-format
 msgid "Time"
 msgstr "Temps"
 
 #. module: project_cost_report
 #. openerp-web
-#: code:addons/project_cost_report/static/src/xml/templates.xml:9
+#: code:addons/project_cost_report/static/src/xml/templates.xml:0
 #, python-format
-msgid "UNFOLD"
-msgstr "DÉPLIER"
+msgid "Unfold"
+msgstr "Déplier"
 
 #. module: project_cost_report
 #: model:ir.model.fields,field_description:project_cost_report.field_account_analytic_line__unit_cost
