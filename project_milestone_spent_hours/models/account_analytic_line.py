@@ -12,6 +12,5 @@ class AccountAnalytic_line(models.Model):
         related="task_id.milestone_id",
         string="Milestone",
         index=True,
-        compute_sudo=True,
         store=True,
     )

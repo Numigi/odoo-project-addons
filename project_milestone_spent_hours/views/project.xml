@@ -9,7 +9,7 @@
         <field name="arch" type="xml">
             <xpath expr="//field[@name='milestone_ids']/tree/field[@name='task_ids']"
                 position="after">
-                <field name="total_hours" />
+                <field name="total_hours" widget="timesheet_uom_no_toggle" optional="show"/>
             </xpath>
         </field>
     </record>
