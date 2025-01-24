@@ -11,10 +11,9 @@
     "website": "https://bit.ly/numigi-com",
     "license": "LGPL-3",
     "category": "Project",
-    "depends": ["hr_timesheet"],
+    "depends": ["hr_timesheet", "project_task_stage_allow_timesheet"],
     "data": [
         "views/res_config_settings.xml",
         "views/project_stage_views.xml",
-        "views/project_task_type_views.xml",
     ],
 }

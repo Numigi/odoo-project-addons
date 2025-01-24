@@ -18,6 +18,7 @@
   includes:
    - hr_timesheet_task_domain
    - hr_timesheet_task_stage
+   - project_task_stage_allow_timesheet
 
 - url: https://github.com/OCA/web
   branch: "16.0"
