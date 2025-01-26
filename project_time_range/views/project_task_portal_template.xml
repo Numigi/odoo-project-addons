@@ -6,16 +6,16 @@
             <div class="mb8">
                 <div>
                     <strong>Min:</strong>
-                    <span t-field="task.min_hours" t-field-options="{'widget': 'float_time'}" t-if="task.min_hours" />
+                    <span t-field="task.min_hours" t-options="{'widget': 'float_time'}" t-if="task.min_hours" />
                 </div>
                 <div>
                     <strong>Ideal:</strong>
-                    <span t-field="task.planned_hours" t-field-options="{'widget': 'float_time'}"
+                    <span t-field="task.planned_hours" t-options="{'widget': 'float_time'}"
                         t-if="task.planned_hours" />
                 </div>
                 <div>
                     <strong>Max:</strong>
-                    <span t-field="task.max_hours" t-field-options="{'widget': 'float_time'}" t-if="task.max_hours" />
+                    <span t-field="task.max_hours" t-options="{'widget': 'float_time'}" t-if="task.max_hours" />
                 </div>
             </div>
         </xpath>
