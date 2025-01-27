@@ -8,7 +8,7 @@ It allows to generate journal entries for indirect costs (supply cost) from time
 
 Configuration
 -------------
-As member of the group ``Project / Manager``, I go to the form view of a project type.
+As member of the group ``Project / Manager``, I go to the form view of a project type, ``Accounting`` Tab.
 
 I notice a new section ``Indirect Costs`` with the following fields:
 

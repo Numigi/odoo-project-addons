@@ -5,7 +5,7 @@ from odoo import api, fields, models, _
 from odoo.exceptions import ValidationError
 
 
-class AnalyticLine(models.Model):
+class AccountAnalyticLine(models.Model):
 
     _inherit = "account.analytic.line"
 
@@ -15,41 +15,41 @@ class AnalyticLine(models.Model):
         "account.move", "Shop Supply Entry", ondelete="restrict"
     )
 
-    @api.model
-    def create(self, vals):
+    @api.model_create_multi
+    def create(self, vals_list):
         """On timesheet create, create or update the wip journal entry.
 
         Because the creation of a timesheet is complex, the journal entry
         may be created by a write before the return of super().create(vals).
         """
-        line = super().create(vals)
-        if line._requires_shop_supply_move() and \
-                not line._context.get('shop_supply_move'):
-            line.with_context(shop_supply_move=True).sudo()\
-                ._create_update_or_reverse_shop_supply_move()
-        return line
+        lines = super(AccountAnalyticLine, self).create(vals_list)
+        for line, values in zip(lines, vals_list):
+            if line._requires_shop_supply_move() and \
+                    not line._context.get('shop_supply_move'):
+                line.with_context(shop_supply_move=True).sudo()\
+                    ._create_update_or_reverse_shop_supply_move()
+        return lines
 
-    def write(self, vals):
+    def write(self, values):
         """
         When updating an analytic line, create / update / delete the wip entry.
 
         Whether the wip entry must be created / updated / deleted depends
         on which field is written to. This prevents an infinite loop.
         """
-        super().write(vals)
+        result = super(AccountAnalyticLine, self).write(values)
         fields_to_check = self._get_shop_supply_move_dependent_fields()
-        if fields_to_check.intersection(vals):
+        if fields_to_check.intersection(values):
             for line in self:
                 line.sudo()._create_update_or_reverse_shop_supply_move()
-
-        return True
+        return result
 
     def unlink(self):
         """
         Reverse the salary account move entry when
         a timesheet line is deleted.
         """
-        lines_with_moves = self.filtered(lambda l: l.shop_supply_account_move_id)
+        lines_with_moves = self.filtered(lambda ml: ml.shop_supply_account_move_id)
         for line in lines_with_moves:
             line.sudo()._reverse_shop_supply_account_move_for_deleted_timesheet()
         return super().unlink()
@@ -155,9 +155,9 @@ class AnalyticLine(models.Model):
         :rtype: bool
         """
         return (
-            self._get_shop_supply_amount()
+            self._get_shop_supply_rate()
+            and self._get_shop_supply_amount()
             and bool(self._get_shop_supply_account())
-            and self._get_shop_supply_rate()
         )
 
     def _get_shop_supply_wip_move_line_vals(self):
@@ -211,6 +211,7 @@ class AnalyticLine(models.Model):
             "company_id": self.company_id.id,
             "journal_id": self._get_shop_supply_journal().id,
             "date": self.date,
+            "move_type": "entry",
             "no_analytic_lines": False,
             "ref": self._get_shop_supply_move_reference(),
             "line_ids": [
@@ -239,7 +240,7 @@ class AnalyticLine(models.Model):
 
         :rtype: Set
         """
-        return {"name", "unit_amount", "date", "project_id", "task_id"}
+        return {"name", "unit_amount", "date", "project_id", "task_id", "employee_id"}
 
     def _get_shop_supply_journal(self):
         self = self.with_company(self.company_id)
