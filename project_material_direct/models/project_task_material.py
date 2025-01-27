@@ -11,13 +11,12 @@ class TaskMaterialLine(models.Model):
 
     is_direct_consumption = fields.Boolean(readonly=True)
     origin_stock_move_id = fields.Many2one(
-        'stock.move',
-        'Stock Move',
+        "stock.move", "Stock Move", check_company=True, index=True
     )
     origin_stock_picking_id = fields.Many2one(
-        'stock.picking',
-        'Stock Picking',
-        related='origin_stock_move_id.picking_id',
+        "stock.picking",
+        "Stock Picking",
+        related="origin_stock_move_id.picking_id",
     )
 
     def _should_generate_procurement(self):
