@@ -12,13 +12,13 @@ class ProjectWipTransferWizard(models.TransientModel):
 
     project_id = fields.Many2one("project.project", "Project")
     cgs_journal_id = fields.Many2one(
-        related="project_id.type_id.cgs_journal_id", readonly=True, company_check=True
+        related="project_id.type_id.cgs_journal_id", readonly=True, check_company=True
     )
     wip_account_id = fields.Many2one(
-        related="project_id.type_id.wip_account_id", readonly=True, company_check=True
+        related="project_id.type_id.wip_account_id", readonly=True, check_company=True
     )
     cgs_account_id = fields.Many2one(
-        related="project_id.type_id.cgs_account_id", readonly=True, company_check=True
+        related="project_id.type_id.cgs_account_id", readonly=True, check_company=True
     )
     accounting_date = fields.Date(
         default=fields.Date.context_today,
