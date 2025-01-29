@@ -21,6 +21,7 @@ COPY project_milestone_spent_hours /mnt/extra-addons/project_milestone_spent_hou
 COPY project_milestone_time_kpi /mnt/extra-addons/project_milestone_time_kpi
 COPY project_no_quick_create /mnt/extra-addons/project_no_quick_create
 COPY project_parent_enhanced mnt/extra-addons/project_parent_enhanced
+COPY project_parent_required mnt/extra-addons/project_parent_required 
 COPY project_portal_hide_timesheets mnt/extra-addons/project_portal_hide_timesheets
 COPY project_progress_variance /mnt/extra-addons/project_progress_variance
 COPY project_projected_hours mnt/extra-addons/project_projected_hours 

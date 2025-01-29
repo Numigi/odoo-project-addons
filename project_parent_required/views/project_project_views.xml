@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="edit_project" model="ir.ui.view">
+        <field name="name">Project Form With Parent: Required</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project_parent.edit_project"/>
+        <field name="arch" type="xml">
+            <field name="parent_id" position="before">
+                <field name="is_parent_required" invisible="1"/>
+            </field>
+            <field name="parent_id" position="attributes">
+                <attribute name="attrs">{'required':[('is_parent_required', '=', True)]}</attribute>
+            </field>
+        </field>
+    </record>
+
+</odoo>
