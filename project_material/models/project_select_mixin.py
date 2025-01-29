@@ -25,6 +25,7 @@ class ProjectSelect(models.AbstractModel):
         inverse=lambda self: None,
     )
 
+    @api.depends_context("company")
     def _compute_project_select(self):
         for record in self:
             record.project_select_id = record.project_id

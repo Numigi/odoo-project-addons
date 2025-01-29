@@ -32,6 +32,7 @@ COPY project_iteration_parent_type_required  /mnt/extra-addons/project_iteration
 COPY project_lump_sum  /mnt/extra-addons/project_lump_sum
 COPY project_material  /mnt/extra-addons/project_material
 COPY project_material_direct  /mnt/extra-addons/project_material_direct
+COPY project_material_enhanced /mnt/extra-addons/project_material_enhanced
 COPY project_milestone_enhanced  /mnt/extra-addons/project_milestone_enhanced
 COPY project_milestone_estimated_hours  /mnt/extra-addons/project_milestone_estimated_hours
 COPY project_milestone_spent_hours  /mnt/extra-addons/project_milestone_spent_hours
@@ -71,7 +72,6 @@ COPY project_timesheet_analytic_update  /mnt/extra-addons/project_timesheet_anal
 COPY project_type  /mnt/extra-addons/project_type
 COPY project_wip /mnt/extra-addons/project_wip
 COPY project_wip_material  /mnt/extra-addons/project_wip_material
-COPY stock_location_production  /mnt/extra-addons/stock_location_production
 COPY timesheet_task_project_no_change  /mnt/extra-addons/timesheet_task_project_no_change
 
 

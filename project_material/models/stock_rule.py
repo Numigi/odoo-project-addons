@@ -7,30 +7,7 @@ from odoo import models
 class StockRule(models.Model):
     _inherit = "stock.rule"
 
-    def _get_stock_move_values(
-        self,
-        product_id,
-        product_qty,
-        product_uom,
-        location_id,
-        name,
-        origin,
-        company_id,
-        values,
-    ):
-        result = super()._get_stock_move_values(
-            product_id,
-            product_qty,
-            product_uom,
-            location_id,
-            name,
-            origin,
-            company_id,
-            values,
-        )
-        result["material_line_id"] = values.get("material_line_id")
-        result["task_id"] = values.get("task_id")
-        if self.group_propagation_option == "propagate":
-            group_id = values.get("group_id", False) and values["group_id"].id
-            result["group_id"] = group_id
-        return result
+    def _get_custom_move_fields(self):
+        fields = super(StockRule, self)._get_custom_move_fields()
+        fields += ["material_line_id", "task_id"]
+        return fields

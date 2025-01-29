@@ -9,7 +9,7 @@ class AccountMoveLine(models.Model):
 
     def create_analytic_lines(self):
         """Prevent creating analytic lines for moves with no_analytic_lines checked."""
-        lines_with_no_analytic = self.filtered(lambda l: l.move_id.no_analytic_lines)
+        lines_with_no_analytic = self.filtered(lambda line: line.move_id.no_analytic_lines)
         lines_with_analytic = self - lines_with_no_analytic
 
         if lines_with_no_analytic:

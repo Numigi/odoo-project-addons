@@ -20,6 +20,7 @@ class TestAccountMoveNoAnalytic(common.SavepointCase):
                 "name": "Cost of Goods Sold",
                 "code": "510101",
                 "user_type_id": cls.env.ref("account.data_account_type_expenses").id,
+                "reconcile": True,
             }
         )
         cls.account_wip = cls.env["account.account"].create(
@@ -29,6 +30,7 @@ class TestAccountMoveNoAnalytic(common.SavepointCase):
                 "user_type_id": cls.env.ref(
                     "account.data_account_type_non_current_assets"
                 ).id,
+                "reconcile": True,
             }
         )
 
@@ -58,18 +60,18 @@ class TestAccountMoveNoAnalytic(common.SavepointCase):
             }
         )
         cls.line_1_1 = cls.move_1.line_ids.filtered(
-            lambda l: l.account_id == cls.account_wip
+            lambda line: line.account_id == cls.account_wip
         )
         cls.line_1_2 = cls.move_1.line_ids.filtered(
-            lambda l: l.account_id == cls.account_expense
+            lambda line: line.account_id == cls.account_expense
         )
 
         cls.move_2 = cls.move_1.copy()
         cls.line_2_1 = cls.move_2.line_ids.filtered(
-            lambda l: l.account_id == cls.account_wip
+            lambda line: line.account_id == cls.account_wip
         )
         cls.line_2_2 = cls.move_2.line_ids.filtered(
-            lambda l: l.account_id == cls.account_expense
+            lambda line: line.account_id == cls.account_expense
         )
 
         cls.moves = cls.move_1 | cls.move_2
