@@ -46,6 +46,10 @@ In the List view:
 
 .. image:: static/description/iteration_name_list_view.png
 
+   - Add a domain on the `parent_id` field in the project form view to display only parent projects.
+
+.. image:: static/description/project_view_form.png
+
 
 Contributors
 ------------
