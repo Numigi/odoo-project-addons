@@ -87,7 +87,7 @@ class ProjectWIPMaterialCase(TaskMaterialCase):
 
         cls.project_type = (
             cls.env["project.type"]
-            .with_user(cls.manager)
+            .with_company(cls.company)
             .create(
                 {
                     "name": "Trailer Refurb",
@@ -96,9 +96,9 @@ class ProjectWIPMaterialCase(TaskMaterialCase):
             )
         )
 
-        cls.project.with_user(cls.manager).write({"type_id": cls.project_type})
+        cls.project.with_company(cls.company).write({"type_id": cls.project_type})
 
-        cls.product_category.write({
+        cls.product_category.with_company(cls.company).write({
             'property_valuation': 'real_time',
             'property_stock_journal': cls.journal.id,
             'property_stock_valuation_account_id': cls.stock_account.id,

@@ -66,8 +66,9 @@ class TestConsumptionJournalEntry(ProjectWIPMaterialCase):
         assert self.credit_line.product_id == self.product_a
 
     def test_move_line_ref_is_picking_name(self):
-        assert self.debit_line.ref == self.move.picking_id.name
-        assert self.credit_line.ref == self.move.picking_id.name
+        description = self.move.picking_id.name + " - " + self.move.product_id.name
+        assert self.debit_line.ref == description
+        assert self.credit_line.ref == description
 
     def test_one_analytic_line_created_for_debit(self):
         assert len(self.debit_line.analytic_line_ids) == 1
@@ -122,8 +123,9 @@ class TestConsumptionReturnJournalEntry(ProjectWIPMaterialCase):
         assert self.debit_line.product_id == self.product_a
 
     def test_move_line_ref_is_picking_name(self):
-        assert self.credit_line.ref == self.move.picking_id.name
-        assert self.debit_line.ref == self.move.picking_id.name
+        description = self.move.picking_id.name + " - " + self.move.product_id.name
+        assert self.credit_line.ref == description
+        assert self.debit_line.ref == description
 
     def test_one_analytic_line_created_for_credit(self):
         assert len(self.credit_line.analytic_line_ids) == 1
