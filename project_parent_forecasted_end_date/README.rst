@@ -1,5 +1,5 @@
 Project Parent Forcasted End Date
-====================================
+=================================
 
 This module allows you to automatically calculate the project end date from the end dates of the different project child that constitute it.
 
@@ -10,14 +10,13 @@ After Installing this module, a new field is added to the project form view:
 
 - *Forecasted End Date*: Takes the maximum end dates of the active child, visible only for parent project 
 
-.. image:: static/description/project_forecasted_end_date.png
+.. image:: https://raw.githubusercontent.com/Numigi/odoo-project-addons/16.0/project_parent_forecasted_end_date/static/description/project_forecasted_end_date.png
 
 From `Project / Configuration / Project Type` Form View, I can see a new field added:
 
 - *Exclude From Forecasted End Date*: a Boolean field allowing to exclude the project iteration of this type from `Forcasted End Date` calculation
 
-.. image:: static/description/project_type_config.png
-
+.. image:: https://raw.githubusercontent.com/Numigi/odoo-project-addons/16.0/project_parent_forecasted_end_date/static/description/project_type_config.png
 
 
 Contributors

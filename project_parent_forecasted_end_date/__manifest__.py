@@ -9,9 +9,11 @@
     "website": "https://bit.ly/numigi-com",
     "license": "LGPL-3",
     "category": "Project",
-    "summary": "Automatically calculate the project Forecasted End Date from chis childs",
+    "summary": """
+        Automatically calculate the project Forecasted End Date from its child.
+        """,
     "depends": [
-        "project_parent",
+        "project_type",
         "project_parent_enhanced",
     ],
     "data": ["views/project_project_views.xml", "views/project_type_views.xml"],
