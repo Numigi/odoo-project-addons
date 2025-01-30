@@ -1,20 +1,19 @@
-# Copyright 2023 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+# Copyright 2023 - Today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 {
-    "name": "Project Time Range",
+    "name": "Project Parent Required by Type",
     "version": "16.0.1.0.0",
     "author": "Numigi",
     "maintainer": "Numigi",
     "website": "https://bit.ly/numigi-com",
     "license": "LGPL-3",
     "category": "Project",
-    "summary": "Add fields Min and Max on project tasks.",
-    "depends": ["hr_timesheet"],
+    "summary": "Allow to tag projet types to force to have project parent.",
+    "depends": ["project_parent", "project_type"],
     "data": [
-        "views/project_task_portal_template.xml",
-        "views/project_task_views.xml",
         "views/project_project_views.xml",
+        "views/project_type_views.xml",
     ],
     "installable": True,
 }
