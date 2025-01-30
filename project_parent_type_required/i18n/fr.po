@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* project_parent_required_by_type
+# 	* project_parent_type_required
 #
 msgid ""
 msgstr ""
@@ -15,18 +15,18 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
 
-#. module: project_parent_required_by_type
-#: model:ir.model.fields,field_description:project_parent_required_by_type.field_project_project__is_parent_required
-#: model:ir.model.fields,field_description:project_parent_required_by_type.field_project_type__is_project_parent_required
+#. module: project_parent_type_required
+#: model:ir.model.fields,field_description:project_parent_type_required.field_project_project__is_parent_required
+#: model:ir.model.fields,field_description:project_parent_type_required.field_project_type__is_project_parent_required
 msgid "Is project parent required"
 msgstr "Projet parent requis"
 
-#. module: project_parent_required_by_type
-#: model:ir.model,name:project_parent_required_by_type.model_project_project
+#. module: project_parent_type_required
+#: model:ir.model,name:project_parent_type_required.model_project_project
 msgid "Project"
 msgstr "Projet"
 
-#. module: project_parent_required_by_type
-#: model:ir.model,name:project_parent_required_by_type.model_project_type
+#. module: project_parent_type_required
+#: model:ir.model,name:project_parent_type_required.model_project_type
 msgid "Project Type"
 msgstr "Type de projet"
