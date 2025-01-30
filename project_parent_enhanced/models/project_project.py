@@ -9,6 +9,10 @@ class ProjectProject(models.Model):
 
     _inherit = "project.project"
 
+    is_parent = fields.Boolean(
+        "Is Parent", compute="_compute_is_parent", store=True, compute_sudo=True
+    )
+
     @api.depends("child_ids")
     def _compute_is_parent(self):
         for project in self:
@@ -69,10 +73,6 @@ class ProjectProject(models.Model):
         res = super(ProjectProject, other_projects).name_get()
         res.extend((p.id, ", ".join([p.parent_id.name, p.name])) for p in iterations)
         return res
-
-    is_parent = fields.Boolean(
-        "Is Parent", compute="_compute_is_parent", store=True, compute_sudo=True
-    )
 
     def _propagate_followers_from_parent(self):
         self.message_unsubscribe(self.message_partner_ids.ids)

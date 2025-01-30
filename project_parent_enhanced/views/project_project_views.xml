@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
 
+    <record id="edit_project_parent_projet_only" model="ir.ui.view">
+        <field name="name">Project Form With Parent Only</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project_parent.edit_project"/>
+        <field name="arch" type="xml">
+            <field name="parent_id" position="attributes">
+                <attribute name="domain">[("parent_id", "=", False)]</attribute>
+            </field>
+        </field>
+    </record>
+    
     <record id="view_project_project_filter" model="ir.ui.view">
         <field name="name">Project Search With Parent Project</field>
         <field name="model">project.project</field>
