@@ -19,7 +19,18 @@ class StockMove(models.Model):
         return super()._is_out() or self._is_consumption()
 
     def _account_entry_move(self, qty, description, svl_id, cost):
+        """Accounting Valuation Entries"""
         self.ensure_one()
+        if self.product_id.type != "product":
+            # no stock valuation for consumable products
+            return False
+        if (
+            self.restrict_partner_id
+            and self.restrict_partner_id != self.company_id.partner_id
+        ):
+            # if the move isn't owned by the company, we don't make any valuation
+            return False
+        # add consumption logic
         if self._is_consumption():
             self._generate_consumption_account_move(qty, description, svl_id, cost)
         elif self._is_consumption_return():
@@ -29,9 +40,11 @@ class StockMove(models.Model):
         else:
             super()._account_entry_move(qty, description, svl_id, cost)
 
-    def _prepare_account_move_line(self, qty, cost, credit_account_id,
-                                   debit_account_id, description):
+    def _prepare_account_move_line(
+        self, qty, cost, credit_account_id, debit_account_id, description
+    ):
         """Add the analytic to WIP account move lines."""
+        self.ensure_one()
         move_line_vals = super()._prepare_account_move_line(
             qty, cost, credit_account_id, debit_account_id, description
         )
@@ -59,25 +72,28 @@ class StockMove(models.Model):
     def _generate_consumption_account_move(self, qty, description, svl_id, cost):
         self._check_project_has_wip_account()
         wip_account = self._get_wip_account()
-        journal_id, dummy, dummy, acc_valuation = (
+        journal_id, acc_src, acc_dest, acc_valuation = (
             self._get_accounting_data_for_valuation()
         )
+        # Create Journal Entry for consuming products
+        cost = -1 * cost
         self.with_company(self.project_id.company_id.id)._create_account_move_line(
-            credit_account_id=wip_account.id,
-            debit_account_id=acc_valuation,
+            credit_account_id=acc_valuation,
+            debit_account_id=wip_account.id,
             journal_id=journal_id,
             qty=qty,
             description=description,
             svl_id=svl_id,
-            cost=cost
+            cost=cost,
         )
 
     def _generate_consumption_return_account_move(self, qty, description, svl_id, cost):
         self._check_project_has_wip_account()
         wip_account = self._get_wip_account()
-        journal_id, dummy, dummy, acc_valuation = (
+        journal_id, acc_src, acc_dest, acc_valuation = (
             self._get_accounting_data_for_valuation()
         )
+        # Create Journal Entry for products returning to the company;
         self.with_company(self.project_id.company_id.id)._create_account_move_line(
             credit_account_id=wip_account.id,
             debit_account_id=acc_valuation,
