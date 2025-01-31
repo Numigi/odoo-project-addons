@@ -395,6 +395,13 @@ class TestPreparationStep(TaskMaterialCase):
         self._return_stock_move(move, 2)
         assert line.prepared_qty == 5  # 7 - 2
 
+    def test_on_task__if_2_steps__show_prepared_qty(self):
+        assert self.task.show_material_prepared_qty
+
+    def test_on_task__if_1_step__hide_prepared_qty(self):
+        self.warehouse.consu_steps = "one_step"
+        assert not self.task.show_material_prepared_qty
+
     def test_destination_material_line(self):
         line = self._create_material_line(initial_qty=10)
         consumption_move = line.move_ids

@@ -3,7 +3,7 @@
 
 {
     'name': 'Project Material Direct Consumption',
-    'version': '1.1.1',
+    'version': '1.1.0',
     'author': 'Numigi',
     'maintainer': 'Numigi',
     'website': 'https://bit.ly/numigi-com',

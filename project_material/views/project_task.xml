@@ -16,22 +16,26 @@
             </header>
             <notebook position="inside">
                 <page name="material_page" string="Consumption">
-                    <field name="material_line_ids" nolabel="1" col="2">
-                        <tree editable="bottom" limit="200">
-                            <field name="product_id"/>
-                            <field name="initial_qty"/>
-                            <field name="prepared_qty" attrs="{'invisible': [('is_consu_two_steps', '=', False)]}"/>
-                            <field name="consumed_qty"/>
-                            <field name="product_uom_id"/>
-                            <field name="unit_cost"/>
-                            <field name="company_id" groups="base.group_multi_company" optional="hide"/>
-                            <field name="is_consu_two_steps" invisible="1"/>
-                        </tree>
-                    </field>
+                    <group name="material_group" string="Products">
+                        <field name="material_line_ids" nolabel="1" col="2">
+                            <tree editable="bottom" limit="200">
+                                <field name="product_id"/>
+                                <field name="initial_qty"/>
+                                <field name="prepared_qty"
+                                    attrs="{'column_invisible': [('parent.show_material_prepared_qty', '=', False)]}"/>
+                                <field name="consumed_qty"/>
+                                <field name="product_uom_id"/>
+                                <field name="unit_cost"/>
+                                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+                            </tree>
+                        </field>
+                    </group>
                     <group>
                         <field name="procurement_disabled"/>
                     </group>
                 </page>
+
+                <field name="show_material_prepared_qty" invisible="1"/>
             </notebook>
         </field>
     </record>
