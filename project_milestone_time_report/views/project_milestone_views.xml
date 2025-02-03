@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+    <!-- Search View -->
+    <record id="project_milestone_view_search" model="ir.ui.view">
+        <field name="name">Project Milestone With Parent Project</field>
+        <field name="model">project.milestone</field>
+        <field name="inherit_id" ref="project_milestone.project_milestone_view_search"/>
+        <field name="arch" type="xml">
+            <field name="project_id" position="after">
+                <field name="parent_project_id"/>
+            </field>
+        </field>
+    </record>
+</odoo>
