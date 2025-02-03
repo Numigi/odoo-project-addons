@@ -2,7 +2,7 @@
 <odoo>
 
     <template id="portal_my_task" inherit_id="project.portal_my_task">
-         <xpath expr="//div[@class='col-12 col-md-6']/div[not(@t-if)][preceding-sibling::div[@t-if='project_accessible']]" position="after">
+        <xpath expr="//div[@class='col-12 col-md-6']/div[not(@t-if)][preceding-sibling::div[@t-if='project_accessible']]" position="after">
             <div t-if="parent_accessible">
                 <strong>Parent Task:</strong>
                 <a t-attf-href="/my/tasks/#{task.parent_id.id}" t-field="task.parent_id.display_name" />
