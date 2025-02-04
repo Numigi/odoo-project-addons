@@ -22,7 +22,9 @@ COPY project_milestone_time_kpi /mnt/extra-addons/project_milestone_time_kpi
 COPY project_no_quick_create /mnt/extra-addons/project_no_quick_create
 COPY project_parent_enhanced mnt/extra-addons/project_parent_enhanced
 COPY project_parent_forecasted_end_date mnt/extra-addons/project_parent_forecasted_end_date 
+COPY project_parent_type_required mnt/extra-addons/project_parent_type_required 
 COPY project_portal_hide_timesheets mnt/extra-addons/project_portal_hide_timesheets
+COPY project_portal_parent_task mnt/extra-addons/project_portal_parent_task 
 COPY project_progress_variance /mnt/extra-addons/project_progress_variance
 COPY project_projected_hours mnt/extra-addons/project_projected_hours 
 COPY project_remaining_hours_update /mnt/extra-addons/project_remaining_hours_update
@@ -36,6 +38,7 @@ COPY project_task_editable_list_view /mnt/extra-addons/project_task_editable_lis
 COPY project_task_full_text_search /mnt/extra-addons/project_task_full_text_search
 COPY project_task_id_in_display_name /mnt/extra-addons/project_task_id_in_display_name
 COPY project_task_milestone_mandatory /mnt/extra-addons/project_task_milestone_mandatory
+COPY project_task_parent_domain /mnt/extra-addons/project_task_parent_domain
 COPY project_task_reference /mnt/extra-addons/project_task_reference
 COPY project_task_resource_type /mnt/extra-addons/project_task_resource_type
 COPY project_task_stage_external_mail /mnt/extra-addons/project_task_stage_external_mail
