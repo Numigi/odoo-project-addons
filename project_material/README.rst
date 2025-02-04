@@ -64,7 +64,7 @@ Back to the task, I notice that the consumed quantities were updated.
 
 Preparation Step
 ----------------
-Since version ``1.1.0`` of the module, a ``Preparation`` step is introduced to the ``Consumption`` route.
+A ``Preparation`` step is introduced to the ``Consumption`` route.
 
 To use this step, as ``Inventory / Manager``, I go to the form view of a warehouse.
 
@@ -128,7 +128,7 @@ By clicking on ``Preparation Returns``, I am redirected to the form view of the 
 
 Material List View
 ------------------
-Since version ``1.2.0`` of the module, a new list view of all task material is available.
+A new list view of all task material is available.
 
 .. image:: static/description/global_material_list_view.png
 

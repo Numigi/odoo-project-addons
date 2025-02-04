@@ -12,7 +12,8 @@ class TestProjectTask(common.SavepointCase):
         cls.user_demo = cls.env.ref('base.user_demo')
         cls.discussion_type = cls.env.ref('mail.mt_comment')
         cls.internal_note_type = cls.env.ref('mail.mt_note')
-        cls.template = cls.env.ref('project_task_stage_external_mail.demo_mail_template_task_open')
+        cls.template = cls.env.ref(
+            'project_task_stage_external_mail.demo_mail_template_task_open')
         cls.project = cls.env['project.project'].create({
             'name': 'Project 1',
         })
@@ -53,8 +54,9 @@ class TestProjectTask(common.SavepointCase):
         })
 
     def _get_sent_message(self, task):
-        messages = task.message_ids.filtered(lambda m: 'Task Open: ' in (m.subject or '')).sorted(key=lambda s: s.id,
-                                                                                                  reverse=True)
+        messages = task.message_ids.filtered(
+            lambda m: 'Task Open: ' in (m.subject or '')).sorted(
+                key=lambda s: s.id, reverse=True)
         return messages
 
     def _get_message_recipients(self, task):

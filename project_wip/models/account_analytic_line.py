@@ -1,7 +1,7 @@
 # © 2020 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
-from odoo import fields, models, _
+from odoo import models, _
 
 
 class AccountAnalyticLine(models.Model):
@@ -12,5 +12,4 @@ class AccountAnalyticLine(models.Model):
         return "{} {}".format(self.name, task) if self.name else task
 
     def _get_wip_account(self):
-        self = self.with_company(self.company_id)
         return self.project_id.type_id.wip_account_id

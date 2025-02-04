@@ -23,9 +23,8 @@ class AnalyticLine(models.Model):
     def _check_origin_task_and_project_match(self):
         for line in self:
             task_not_matching_project = (
-                    line.origin_task_id
-                    and line.origin_task_id.project_id.analytic_account_id
-                    != line.account_id
+                line.origin_task_id
+                and line.origin_task_id.project_id.analytic_account_id != line.account_id
             )
             if task_not_matching_project:
                 raise ValidationError(

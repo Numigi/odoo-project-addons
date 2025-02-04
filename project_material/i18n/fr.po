@@ -4,21 +4,19 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 14.0+e\n"
+"Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-09-28 14:22+0000\n"
-"PO-Revision-Date: 2021-09-28 10:24-0400\n"
-"Last-Translator: <>\n"
+"POT-Creation-Date: 2025-01-14 15:22+0000\n"
+"PO-Revision-Date: 2025-01-14 15:22+0000\n"
+"Last-Translator: \n"
 "Language-Team: \n"
-"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
+"Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
-"X-Generator: Poedit 2.3\n"
 
 #. module: project_material
-#: code:addons/project_material/models/project_task_material.py:157
+#: code:addons/project_material/models/project_task_material.py:0
 #, python-format
 msgid "Before adding material to the task, you must set a planned date."
 msgstr ""
@@ -26,7 +24,7 @@ msgstr ""
 "date prévue."
 
 #. module: project_material
-#: code:addons/project_material/models/project_task_material.py:201
+#: code:addons/project_material/models/project_task_material.py:0
 #, python-format
 msgid ""
 "Before adding products to consume on a task, a warehouse must be defined on "
@@ -51,11 +49,11 @@ msgid "Consumed Quantity"
 msgstr "Quantités consommées"
 
 #. module: project_material
-#: code:addons/project_material/models/stock_warehouse.py:104
+#: code:addons/project_material/models/stock_warehouse.py:0
+#: model:ir.model.fields.selection,name:project_material.selection__stock_picking_type__code__consumption
 #: model_terms:ir.ui.view,arch_db:project_material.task_form_with_material
 #: model_terms:ir.ui.view,arch_db:project_material.task_form_with_picking_smart_button
 #: model_terms:ir.ui.view,arch_db:project_material.warehouse_form_with_consumption_steps
-#: selection:stock.picking.type,code:0
 #, python-format
 msgid "Consumption"
 msgstr "Consommation"
@@ -68,7 +66,7 @@ msgstr "Emplacement de consommation"
 #. module: project_material
 #: model:ir.model.fields,field_description:project_material.field_stock_warehouse__consu_mto_pull_id
 msgid "Consumption MTO Pull"
-msgstr ""
+msgstr "Consommation MTO Pull"
 
 #. module: project_material
 #: model:ir.model.fields,field_description:project_material.field_project_task__consumption_picking_count
@@ -76,26 +74,21 @@ msgid "Consumption Picking Count"
 msgstr "Nombre d'opérations de consommation"
 
 #. module: project_material
-#: model:ir.model.fields,field_description:project_material.field_stock_warehouse__consu_type_id
-msgid "Consumption Picking Type"
-msgstr "Type d'opération de consommation"
-
-#. module: project_material
 #: model:ir.model.fields,field_description:project_material.field_project_task__consumption_picking_ids
 msgid "Consumption Pickings"
 msgstr "Opérations de consommation"
 
 #. module: project_material
-#: code:addons/project_material/models/stock_warehouse.py:117
-#: selection:stock.picking.type,code:0
+#: code:addons/project_material/models/stock_warehouse.py:0
+#: model:ir.model.fields.selection,name:project_material.selection__stock_picking_type__code__consumption_return
 #, python-format
 msgid "Consumption Return"
 msgstr "Retour de consommation"
 
 #. module: project_material
 #: model:ir.model.fields,field_description:project_material.field_stock_warehouse__consu_return_type_id
-msgid "Consumption Return Picking Type"
-msgstr "Type d'opération de retour consommation"
+msgid "Consumption Return Type"
+msgstr "Type de retour de consommation"
 
 #. module: project_material
 #: model:ir.model.fields,field_description:project_material.field_stock_warehouse__consu_route_id
@@ -103,12 +96,9 @@ msgid "Consumption Route"
 msgstr "Route de consommation"
 
 #. module: project_material
-#: model:ir.model.fields,help:project_material.field_project_task_material__unit_cost
-msgid ""
-"Cost used for stock valuation in standard price and as a first price to set "
-"in average/fifo. Also used as a base price for pricelists. Expressed in the "
-"default unit of measure of the product."
-msgstr ""
+#: model:ir.model.fields,field_description:project_material.field_stock_warehouse__consu_type_id
+msgid "Consumption Type"
+msgstr "Type de consommation"
 
 #. module: project_material
 #: model:ir.model.fields,field_description:project_material.field_project_task_material__create_uid
@@ -121,14 +111,14 @@ msgid "Created on"
 msgstr "Créé le"
 
 #. module: project_material
-#: selection:stock.picking.type,code:0
-msgid "Customers"
-msgstr ""
-
-#. module: project_material
 #: model:ir.model.fields,help:project_material.field_project_task_material__product_uom_id
 msgid "Default unit of measure used for all stock operations."
-msgstr ""
+msgstr "Unité de mesure par défaut utilisée pour toutes les opérations de stock."
+
+#. module: project_material
+#: model_terms:ir.ui.view,arch_db:project_material.task_material_form_view
+msgid "Demand"
+msgstr "Demande"
 
 #. module: project_material
 #: model:ir.model.fields,field_description:project_material.field_stock_move__destination_material_line_id
@@ -136,23 +126,54 @@ msgid "Destination Material Line"
 msgstr "Ligne de matériel de destination"
 
 #. module: project_material
-#: code:addons/project_material/models/stock_warehouse.py:8
-#: selection:stock.warehouse,consu_steps:0
+#: code:addons/project_material/models/stock_warehouse.py:0
+#: model:ir.model.fields.selection,name:project_material.selection__stock_warehouse__consu_steps__one_step
 #, python-format
 msgid "Direct consumption from stocks (1 step)"
 msgstr "Consommation directe depuis les stocks (1 étape)"
 
 #. module: project_material
+#: model:ir.model.fields,field_description:project_material.field_procurement_group__display_name
+#: model:ir.model.fields,field_description:project_material.field_project_project__display_name
 #: model:ir.model.fields,field_description:project_material.field_project_select_mixin__display_name
+#: model:ir.model.fields,field_description:project_material.field_project_task__display_name
 #: model:ir.model.fields,field_description:project_material.field_project_task_material__display_name
+#: model:ir.model.fields,field_description:project_material.field_stock_move__display_name
+#: model:ir.model.fields,field_description:project_material.field_stock_move_line__display_name
+#: model:ir.model.fields,field_description:project_material.field_stock_picking__display_name
+#: model:ir.model.fields,field_description:project_material.field_stock_picking_type__display_name
+#: model:ir.model.fields,field_description:project_material.field_stock_rule__display_name
+#: model:ir.model.fields,field_description:project_material.field_stock_warehouse__display_name
 msgid "Display Name"
-msgstr "Nom affiché"
+msgstr "Nom d'affichage"
 
 #. module: project_material
+#: model:ir.model.fields,field_description:project_material.field_procurement_group__id
+#: model:ir.model.fields,field_description:project_material.field_project_project__id
 #: model:ir.model.fields,field_description:project_material.field_project_select_mixin__id
+#: model:ir.model.fields,field_description:project_material.field_project_task__id
 #: model:ir.model.fields,field_description:project_material.field_project_task_material__id
+#: model:ir.model.fields,field_description:project_material.field_stock_move__id
+#: model:ir.model.fields,field_description:project_material.field_stock_move_line__id
+#: model:ir.model.fields,field_description:project_material.field_stock_picking__id
+#: model:ir.model.fields,field_description:project_material.field_stock_picking_type__id
+#: model:ir.model.fields,field_description:project_material.field_stock_rule__id
+#: model:ir.model.fields,field_description:project_material.field_stock_warehouse__id
 msgid "ID"
-msgstr "ID"
+msgstr ""
+
+#. module: project_material
+#: model:ir.model.fields,help:project_material.field_project_task_material__unit_cost
+msgid ""
+"In Standard Price & AVCO: value of the product (automatically computed in AVCO).\n"
+"        In FIFO: value of the next unit that will leave the stock (automatically computed).\n"
+"        Used to value the product when the purchase cost is not known (e.g. inventory adjustment).\n"
+"        Used to compute margins on sale orders."
+msgstr ""
+"Dans le prix standard et l'AVCO : valeur du produit (calculée automatiquement dans l'AVCO).\n"
+" Dans le FIFO : valeur de la prochaine unité qui sortira du stock (calculée automatiquement).\n"
+" Utilisé pour valoriser le produit lorsque le coût d'achat n'est pas connu (par exemple, ajustement des stocks).\n"
+" Utilisé pour calculer les marges sur les commandes de vente."
 
 #. module: project_material
 #: model:ir.model.fields,field_description:project_material.field_project_task_material__initial_qty
@@ -160,13 +181,22 @@ msgid "Initial Quantity"
 msgstr "Quantité initiale"
 
 #. module: project_material
-#: selection:stock.picking.type,code:0
-msgid "Internal"
-msgstr ""
+#: model:ir.model.fields,field_description:project_material.field_project_task_material__is_consu_two_steps
+msgid "Is Consu Two Steps"
+msgstr "Est une Consommation à deux étapes"
 
 #. module: project_material
+#: model:ir.model.fields,field_description:project_material.field_procurement_group____last_update
+#: model:ir.model.fields,field_description:project_material.field_project_project____last_update
 #: model:ir.model.fields,field_description:project_material.field_project_select_mixin____last_update
+#: model:ir.model.fields,field_description:project_material.field_project_task____last_update
 #: model:ir.model.fields,field_description:project_material.field_project_task_material____last_update
+#: model:ir.model.fields,field_description:project_material.field_stock_move____last_update
+#: model:ir.model.fields,field_description:project_material.field_stock_move_line____last_update
+#: model:ir.model.fields,field_description:project_material.field_stock_picking____last_update
+#: model:ir.model.fields,field_description:project_material.field_stock_picking_type____last_update
+#: model:ir.model.fields,field_description:project_material.field_stock_rule____last_update
+#: model:ir.model.fields,field_description:project_material.field_stock_warehouse____last_update
 msgid "Last Modified on"
 msgstr "Dernière modification le"
 
@@ -193,7 +223,7 @@ msgid "Material Line"
 msgstr "Ligne de matériel"
 
 #. module: project_material
-#: code:addons/project_material/models/project_task_material.py:164
+#: code:addons/project_material/models/project_task_material.py:0
 #, python-format
 msgid ""
 "Material consumption lines can not have an initial quantity below zero. The "
@@ -210,12 +240,17 @@ msgstr ""
 "tâche."
 
 #. module: project_material
+#: model_terms:ir.ui.view,arch_db:project_material.task_material_form_view
+msgid "Operations"
+msgstr "Opérations"
+
+#. module: project_material
 #: model:ir.model,name:project_material.model_stock_picking_type
 msgid "Picking Type"
 msgstr "Type d'opération"
 
 #. module: project_material
-#: code:addons/project_material/models/stock_warehouse.py:406
+#: code:addons/project_material/models/stock_warehouse.py:0
 #, python-format
 msgid "Preparation"
 msgstr "Préparation"
@@ -246,7 +281,7 @@ msgid "Preparation Pickings"
 msgstr "Préparations"
 
 #. module: project_material
-#: code:addons/project_material/models/stock_warehouse.py:419
+#: code:addons/project_material/models/stock_warehouse.py:0
 #, python-format
 msgid "Preparation Return"
 msgstr "Retour de préparation"
@@ -277,8 +312,8 @@ msgid "Preparations"
 msgstr "Préparations"
 
 #. module: project_material
-#: code:addons/project_material/models/stock_warehouse.py:280
-#: selection:stock.warehouse,consu_steps:0
+#: code:addons/project_material/models/stock_warehouse.py:0
+#: model:ir.model.fields.selection,name:project_material.selection__stock_warehouse__consu_steps__two_steps
 #, python-format
 msgid "Prepare the stock before consumption (2 steps)"
 msgstr "Préparer le stock avant la consommation (2 étapes)"
@@ -308,7 +343,7 @@ msgstr "Article"
 #. module: project_material
 #: model:ir.model,name:project_material.model_stock_move_line
 msgid "Product Moves (Stock Move Line)"
-msgstr ""
+msgstr "Mouvements d'article (Ligne de mouvement de stock)"
 
 #. module: project_material
 #: model_terms:ir.ui.view,arch_db:project_material.task_form_with_material
@@ -328,8 +363,8 @@ msgstr "Articles"
 #: model_terms:ir.ui.view,arch_db:project_material.stock_move_with_project_tree
 #: model_terms:ir.ui.view,arch_db:project_material.stock_move_with_project_tree_2
 #: model_terms:ir.ui.view,arch_db:project_material.stock_move_with_project_tree_3
-#: model_terms:ir.ui.view,arch_db:project_material.stock_move_with_project_tree_4
 #: model_terms:ir.ui.view,arch_db:project_material.stock_picking_form
+#: model_terms:ir.ui.view,arch_db:project_material.task_material_form_view
 #: model_terms:ir.ui.view,arch_db:project_material.task_material_list_view
 #: model_terms:ir.ui.view,arch_db:project_material.task_material_search
 msgid "Project"
@@ -348,24 +383,25 @@ msgid "Project Selection Mixin"
 msgstr "Mixin de sélection de projet"
 
 #. module: project_material
-#: model:ir.model.fields,field_description:project_material.field_project_task__show_material_prepared_qty
-msgid "Show Material Prepared Qty"
-msgstr "Afficher les quantités préparées de matériel"
+#: model_terms:ir.ui.view,arch_db:project_material.task_material_form_view
+msgid "Reserved"
+msgstr "Réservé"
 
 #. module: project_material
 #: model:ir.model,name:project_material.model_stock_move
 msgid "Stock Move"
-msgstr "Mouvement d'inventaire"
+msgstr "Mouvement de stock"
 
 #. module: project_material
 #: model:ir.model.fields,field_description:project_material.field_project_task_material__move_ids
+#: model_terms:ir.ui.view,arch_db:project_material.task_material_form_view
 msgid "Stock Moves"
 msgstr "Mouvements d'inventaire"
 
 #. module: project_material
 #: model:ir.model,name:project_material.model_stock_rule
 msgid "Stock Rule"
-msgstr ""
+msgstr "Règle de stock minimum"
 
 #. module: project_material
 #: model:ir.model,name:project_material.model_project_task
@@ -387,6 +423,7 @@ msgstr "Tâche invisible"
 #: model:ir.actions.act_window,name:project_material.task_material_from_project_action
 #: model:ir.ui.menu,name:project_material.task_material_inventory_menu
 #: model:ir.ui.menu,name:project_material.task_material_project_menu
+#: model_terms:ir.ui.view,arch_db:project_material.task_material_form_view
 #: model_terms:ir.ui.view,arch_db:project_material.task_material_list_view
 #: model_terms:ir.ui.view,arch_db:project_material.task_material_search
 msgid "Task Material"
@@ -408,7 +445,7 @@ msgid "Task Required"
 msgstr "Tâche obligatoire"
 
 #. module: project_material
-#: code:addons/project_material/models/project_task_material.py:261
+#: code:addons/project_material/models/project_task_material.py:0
 #, python-format
 msgid ""
 "The material line {line} can not be deleted because it is bound to stock "
@@ -418,24 +455,27 @@ msgstr ""
 "un (des) mouvement(s) de stock au statut terminé."
 
 #. module: project_material
-#: code:addons/project_material/models/project_task_material.py:236
+#: code:addons/project_material/models/project_task_material.py:0
 #, python-format
 msgid ""
-"The quantity on the material line {line} can not be reduced to "
-"{new_quantity} (it can not be lower than the delivered quantity).\n"
+"The quantity on the material line {line} can not be reduced to {new_quantity} (it can not be lower than the delivered quantity).\n"
 "\n"
 "The line may not be reduced below a minimum of {minimum_qty} {uom}."
 msgstr ""
-"La quantité sur la ligne de matériel {line} ne peut pas être réduite à "
-"{new_quantity} (elle ne peut pas être plus petite que la quantité livrée).\n"
+"La quantité sur la ligne de matériel {line} ne peut pas être réduite à {new_quantity} (elle ne peut pas être plus petite que la quantité livrée).\n"
 "\n"
 "La ligne ne peut pas être réduite en dessous de {minimum_qty} {uom}."
 
 #. module: project_material
-#: code:addons/project_material/models/project_task_material.py:192
+#: code:addons/project_material/models/project_task_material.py:0
 #, python-format
 msgid "The warehouse {warehouse} does not have a consumption location."
 msgstr "L'entrepôt {warehouse} n'a pas d'emplacement de consommation."
+
+#. module: project_material
+#: model_terms:ir.ui.view,arch_db:project_material.stock_production_type_kanban
+msgid "To Process"
+msgstr "À traiter"
 
 #. module: project_material
 #: model:ir.model,name:project_material.model_stock_picking
@@ -454,13 +494,9 @@ msgstr "Coût unitaire"
 
 #. module: project_material
 #: model:ir.model.fields,field_description:project_material.field_project_task_material__product_uom_id
+#: model_terms:ir.ui.view,arch_db:project_material.task_material_form_view
 msgid "Unit of Measure"
 msgstr "Unité de mesure"
-
-#. module: project_material
-#: selection:stock.picking.type,code:0
-msgid "Vendors"
-msgstr ""
 
 #. module: project_material
 #: model:ir.model,name:project_material.model_stock_warehouse
@@ -469,7 +505,7 @@ msgid "Warehouse"
 msgstr "Entrepôt"
 
 #. module: project_material
-#: code:addons/project_material/models/project_task_material.py:251
+#: code:addons/project_material/models/project_task_material.py:0
 #, python-format
 msgid ""
 "You may not change the product or the task on the material line {line} "

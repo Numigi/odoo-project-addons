@@ -12,18 +12,21 @@ class StockMove(models.Model):
         index=True,
         ondelete="restrict",
         readonly=True,
+        check_company=True,
     )
 
     project_id = fields.Many2one(
         related="task_id.project_id",
         store=True,
         readonly=True,
+        check_company=True,
     )
     material_line_id = fields.Many2one(
         "project.task.material",
         "Material Line",
         index=True,
         ondelete="restrict",
+        check_company=True,
     )
 
     def _get_new_picking_values(self):
@@ -51,6 +54,7 @@ class StockMoveWithNoAggregation(models.Model):
         "Destination Material Line",
         compute="_compute_destination_material_line_id",
         store=True,
+        check_company=True,
     )
 
     @api.depends("material_line_id", "move_dest_ids")

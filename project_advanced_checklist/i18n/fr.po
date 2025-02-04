@@ -1,0 +1,168 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* project_advanced_checklist
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-05-22 22:24+0000\n"
+"PO-Revision-Date: 2024-05-22 22:24+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: project_advanced_checklist
+#: selection:project.task.checklist.item,result:0
+msgid "Cancel"
+msgstr "Annulé"
+
+#. module: project_advanced_checklist
+#: model:ir.model.fields,field_description:project_advanced_checklist.field_project_checklist_item__checklist_id
+#: model:ir.model.fields,field_description:project_advanced_checklist.field_project_task__checklist_id
+#: model_terms:ir.ui.view,arch_db:project_advanced_checklist.view_checklist_form
+#: model_terms:ir.ui.view,arch_db:project_advanced_checklist.view_project_task_checklist_form
+msgid "Checklist"
+msgstr "Checklist"
+
+#. module: project_advanced_checklist
+#: model_terms:ir.ui.view,arch_db:project_advanced_checklist.view_task_checklist_item_form
+msgid "Checklist Item"
+msgstr "Élément de checklist"
+
+#. module: project_advanced_checklist
+#: model:ir.model.fields,field_description:project_advanced_checklist.field_project_task__checklist_progress
+msgid "Checklist Progress"
+msgstr "Progrès de la checklist"
+
+#. module: project_advanced_checklist
+#: model_terms:ir.ui.view,arch_db:project_advanced_checklist.view_checklist_form
+msgid "Checklist Title..."
+msgstr "Titre de la checklist..."
+
+#. module: project_advanced_checklist
+#: model:ir.actions.act_window,name:project_advanced_checklist.action_checklist_tree
+#: model:ir.ui.menu,name:project_advanced_checklist.menu_checklist
+#: model_terms:ir.ui.view,arch_db:project_advanced_checklist.view_checklist_tree
+msgid "Checklists"
+msgstr "Checklists"
+
+#. module: project_advanced_checklist
+#: selection:project.task.checklist.item,result:0
+msgid "Complete"
+msgstr "Complété"
+
+#. module: project_advanced_checklist
+#: model:ir.model.fields,field_description:project_advanced_checklist.field_project_checklist__create_uid
+#: model:ir.model.fields,field_description:project_advanced_checklist.field_project_checklist_item__create_uid
+#: model:ir.model.fields,field_description:project_advanced_checklist.field_project_task_checklist_item__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: project_advanced_checklist
+#: model:ir.model.fields,field_description:project_advanced_checklist.field_project_checklist__create_date
+#: model:ir.model.fields,field_description:project_advanced_checklist.field_project_checklist_item__create_date
+#: model:ir.model.fields,field_description:project_advanced_checklist.field_project_task_checklist_item__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: project_advanced_checklist
+#: model:ir.model.fields,field_description:project_advanced_checklist.field_project_checklist__description
+#: model:ir.model.fields,field_description:project_advanced_checklist.field_project_checklist_item__description
+#: model:ir.model.fields,field_description:project_advanced_checklist.field_project_task_checklist_item__description
+msgid "Description"
+msgstr "Description"
+
+#. module: project_advanced_checklist
+#: model:ir.model.fields,field_description:project_advanced_checklist.field_project_checklist__display_name
+#: model:ir.model.fields,field_description:project_advanced_checklist.field_project_checklist_item__display_name
+#: model:ir.model.fields,field_description:project_advanced_checklist.field_project_task_checklist_item__display_name
+msgid "Display Name"
+msgstr "Nom affiché"
+
+#. module: project_advanced_checklist
+#: model:ir.model.fields,field_description:project_advanced_checklist.field_project_checklist__id
+#: model:ir.model.fields,field_description:project_advanced_checklist.field_project_checklist_item__id
+#: model:ir.model.fields,field_description:project_advanced_checklist.field_project_task_checklist_item__id
+msgid "ID"
+msgstr "ID"
+
+#. module: project_advanced_checklist
+#: model:ir.model.fields,field_description:project_advanced_checklist.field_project_checklist__item_ids
+#: model:ir.model.fields,field_description:project_advanced_checklist.field_project_task__checklist_item_ids
+#: model_terms:ir.ui.view,arch_db:project_advanced_checklist.view_checklist_form
+msgid "Items"
+msgstr "Éléments"
+
+#. module: project_advanced_checklist
+#: model:ir.model.fields,field_description:project_advanced_checklist.field_project_checklist____last_update
+#: model:ir.model.fields,field_description:project_advanced_checklist.field_project_checklist_item____last_update
+#: model:ir.model.fields,field_description:project_advanced_checklist.field_project_task_checklist_item____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: project_advanced_checklist
+#: model:ir.model.fields,field_description:project_advanced_checklist.field_project_checklist__write_uid
+#: model:ir.model.fields,field_description:project_advanced_checklist.field_project_checklist_item__write_uid
+#: model:ir.model.fields,field_description:project_advanced_checklist.field_project_task_checklist_item__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: project_advanced_checklist
+#: model:ir.model.fields,field_description:project_advanced_checklist.field_project_checklist__write_date
+#: model:ir.model.fields,field_description:project_advanced_checklist.field_project_checklist_item__write_date
+#: model:ir.model.fields,field_description:project_advanced_checklist.field_project_task_checklist_item__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: project_advanced_checklist
+#: model_terms:ir.ui.view,arch_db:project_advanced_checklist.view_project_task_checklist_form
+msgid "Mark cancelled?"
+msgstr "Marquer annulé"
+
+#. module: project_advanced_checklist
+#: model_terms:ir.ui.view,arch_db:project_advanced_checklist.view_project_task_checklist_form
+msgid "Mark completed?"
+msgstr "Marquer complété"
+
+#. module: project_advanced_checklist
+#: model:ir.model.fields,field_description:project_advanced_checklist.field_project_checklist__name
+#: model:ir.model.fields,field_description:project_advanced_checklist.field_project_checklist_item__name
+#: model:ir.model.fields,field_description:project_advanced_checklist.field_project_task_checklist_item__name
+msgid "Name"
+msgstr "Nom"
+
+#. module: project_advanced_checklist
+#: model:ir.model,name:project_advanced_checklist.model_project_checklist
+msgid "Project Checklist"
+msgstr "Checklist (projets)"
+
+#. module: project_advanced_checklist
+#: model:ir.model,name:project_advanced_checklist.model_project_checklist_item
+msgid "Project Checklist Item"
+msgstr "Élément de checklist"
+
+#. module: project_advanced_checklist
+#: model:ir.model,name:project_advanced_checklist.model_project_task_checklist_item
+msgid "Project Task Checklist Item"
+msgstr "Élément de checklist sur tâche"
+
+#. module: project_advanced_checklist
+#: model:ir.model.fields,field_description:project_advanced_checklist.field_project_task_checklist_item__result
+msgid "Result"
+msgstr "Résultat"
+
+#. module: project_advanced_checklist
+#: model:ir.model.fields,field_description:project_advanced_checklist.field_project_checklist_item__sequence
+#: model:ir.model.fields,field_description:project_advanced_checklist.field_project_task_checklist_item__sequence
+msgid "Sequence"
+msgstr "Séquence"
+
+#. module: project_advanced_checklist
+#: model:ir.model,name:project_advanced_checklist.model_project_task
+#: model:ir.model.fields,field_description:project_advanced_checklist.field_project_task_checklist_item__task_id
+msgid "Task"
+msgstr "Tâche"

@@ -27,8 +27,8 @@ class AccountMoveLine(models.Model):
 
     def _check_task_matches_with_project(self):
         task_not_matching_project = (
-                self.task_id
-                and self.task_id.project_id.analytic_account_id != self.analytic_account_id
+            self.task_id
+            and self.task_id.project_id.analytic_account_id != self.analytic_account_id
         )
         if task_not_matching_project:
             raise ValidationError(

@@ -1,7 +1,7 @@
 # © 2023 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
-from odoo import api, models, _
+from odoo import models, _
 from odoo.exceptions import ValidationError, AccessError
 
 
@@ -17,7 +17,7 @@ class Project(models.Model):
             "res_model": "project.wip.transfer",
             "context": {
                 "default_project_id": self.id,
-                "default_company_id": self.env.user.company_id.id,
+                "default_company_id": self.company_id.id,
             },
             "target": "new",
         }
@@ -39,8 +39,8 @@ class Project(models.Model):
         if not self.env.user.has_group("project_wip.group_wip_to_cgs"):
             raise AccessError(
                 _(
-                    "Only members of the group 'Transfert WIP to CGS' are allowed to transfer WIP "
-                    "entries to CGS."
+                    "Only members of the group 'Transfert WIP to CGS' are allowed "
+                    "to transfer WIP entries to CGS."
                 )
             )
 
@@ -60,7 +60,7 @@ class Project(models.Model):
                 move.date = accounting_date
 
             wip_reversal_line = move.line_ids.filtered(
-                lambda l: l.account_id == self.type_id.wip_account_id
+                lambda line: line.account_id == self.type_id.wip_account_id
             )
 
             move.action_post()
@@ -137,13 +137,13 @@ class Project(models.Model):
 
         :rtype: account.move.line recordset
         """
-        self = self.with_company(self.company_id)
         return self.env["account.move.line"].search(
             [
                 ("analytic_account_id", "=", self.analytic_account_id.id),
                 ("account_id", "=", self.type_id.wip_account_id.id),
                 ("reconciled", "=", False),
                 ("move_id.state", "=", "posted"),
+                ("company_id", "=", self.company_id.id)
             ]
         )
 
@@ -170,10 +170,10 @@ class Project(models.Model):
 
         data = [
             {
-                "id": None,
+                "id": wip_line.account_id.id,
                 "mv_line_ids": [wip_line.id, wip_reversal_line.id],
                 "new_mv_line_dicts": [],
-                "type": None,
+                "type": "account",
             }
         ]
         self.env["account.reconciliation.widget"].process_move_lines(data)
@@ -181,8 +181,8 @@ class Project(models.Model):
         if wip_line.matching_number == "P":
             raise ValidationError(
                 _(
-                    "The WIP entry {wip_line} ({amount}) could not be reconciled when transfering "
-                    "the amount into Costs of Goods Sold. "
+                    "The WIP entry {wip_line} ({amount}) could not be reconciled "
+                    "when transfering the amount into Costs of Goods Sold. "
                     "You should verify if the WIP entry is partially reconciled."
                 ).format(wip_line=wip_line.display_name, amount=wip_line.balance)
             )

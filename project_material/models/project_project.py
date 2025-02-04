@@ -21,6 +21,7 @@ class Project(models.Model):
         "Warehouse",
         ondelete="restrict",
         default=_get_default_warehouse,
+        check_company=True,
     )
 
     material_line_ids = fields.One2many(

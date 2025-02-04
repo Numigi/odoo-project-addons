@@ -32,36 +32,36 @@ class TestReport(common.SavepointCase):
             "project_id": cls.lot.id,
         })
         cls.task_a = cls.env["project.task"].create({
-                "name": "Task A",
-                "project_id": cls.lot.id,
-                "milestone_id": cls.milestone_a.id,
-                "planned_hours": 4,
-                "stage_id": cls.folded_stage.id,
+            "name": "Task A",
+            "project_id": cls.lot.id,
+            "milestone_id": cls.milestone_a.id,
+            "planned_hours": 4,
+            "stage_id": cls.folded_stage.id,
         })
         cls.task_b = cls.env["project.task"].create({
-                "name": "Task B",
-                "project_id": cls.lot.id,
-                "milestone_id": cls.milestone_b.id,
-                "planned_hours": 8,
-                "stage_id": cls.folded_stage.id,
-            })
+            "name": "Task B",
+            "project_id": cls.lot.id,
+            "milestone_id": cls.milestone_b.id,
+            "planned_hours": 8,
+            "stage_id": cls.folded_stage.id,
+        })
         # Add timelines to created tasks
         cls.timesheet_a = cls.env["account.analytic.line"].create({
-                "name": "Analyse",
-                "project_id": cls.lot.id,
-                "task_id": cls.task_a.id,
-                "unit_amount": 3,
-                "employee_id": 1,
-                "date": "2022-06-25",
-            })
+            "name": "Analyse",
+            "project_id": cls.lot.id,
+            "task_id": cls.task_a.id,
+            "unit_amount": 3,
+            "employee_id": 1,
+            "date": "2022-06-25",
+        })
         cls.timesheet_b = cls.env["account.analytic.line"].create({
-                "name": "Conception",
-                "project_id": cls.lot.id,
-                "task_id": cls.task_b.id,
-                "unit_amount": 4,
-                "employee_id": 1,
-                "date": "2022-06-30",
-            })
+            "name": "Conception",
+            "project_id": cls.lot.id,
+            "task_id": cls.task_b.id,
+            "unit_amount": 4,
+            "employee_id": 1,
+            "date": "2022-06-30",
+        })
         cls.report = cls.env["project.milestone.time.report"]
 
     def test_amounts(self):

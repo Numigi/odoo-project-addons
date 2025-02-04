@@ -2,7 +2,7 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 from odoo import api, fields, models, _
-from odoo.exceptions import ValidationError, AccessError
+from odoo.exceptions import ValidationError
 
 
 class ProjectType(models.Model):
@@ -30,7 +30,7 @@ class ProjectType(models.Model):
     @api.constrains("wip_account_id")
     def _check_wip_account_allows_reconcile(self):
         """Check that the wip account on project type allows reconciliation."""
-        self = self.with_company(self.env.user.company_id)
+        self = self.with_company(self.env.company)
         project_types_with_wip_accounts = self.filtered(lambda t: t.wip_account_id)
         for project_type in project_types_with_wip_accounts:
             if not project_type.wip_account_id.reconcile:

@@ -37,7 +37,7 @@ class ProjectTask(models.Model):
             restored_tasks = self.filtered(lambda t: not t.active)
 
         changing_estimates = (
-                "min_hours" in vals or "planned_hours" in vals or "max_hours" in vals
+            "min_hours" in vals or "planned_hours" in vals or "max_hours" in vals
         )
 
         res = super(ProjectTask, self).write(vals)

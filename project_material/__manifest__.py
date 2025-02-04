@@ -3,7 +3,7 @@
 
 {
     "name": "Project Material",
-    "version": "14.0.1.2.0",
+    "version": "14.0.1.4.1",
     "author": "Numigi",
     "maintainer": "Numigi",
     "website": "https://bit.ly/numigi-com",
@@ -12,7 +12,6 @@
     "summary": "Consume material on projects",
     "depends": [
         "project_task_date_planned",
-        "stock_location_production",
         "stock_account",
         "purchase_stock",
     ],
