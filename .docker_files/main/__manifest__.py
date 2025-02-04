@@ -19,6 +19,7 @@
         "project_milestone_spent_hours",
         "project_milestone_time_kpi",
         "project_no_quick_create",
+        "project_portal_parent_task",
         "project_parent_enhanced",
         "project_parent_type_required",
         "project_portal_hide_timesheets",
