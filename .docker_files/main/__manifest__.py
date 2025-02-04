@@ -21,6 +21,7 @@
         "project_no_quick_create",
         "project_portal_parent_task",
         "project_parent_enhanced",
+        "project_parent_type_required",
         "project_portal_hide_timesheets",
         "project_progress_variance",
         "project_projected_hours",
