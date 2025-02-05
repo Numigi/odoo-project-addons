@@ -64,7 +64,7 @@ class AnalyticLine(models.Model):
         for a timesheet line.
         """
         lines_to_update = self.filtered(
-            lambda line: line.employee_id
+            lambda line: line.user_id
             and line.task_id
             and line.origin_task_id != line.task_id
         )
