@@ -54,6 +54,16 @@ class AccountAnalyticLine(models.Model):
             line.sudo()._reverse_shop_supply_account_move_for_deleted_timesheet()
         return super().unlink()
 
+    def _timesheet_postprocess_values(self, values):
+        """Override method to calculate amount based on timesheet cost instead of
+        employee cost if account_analytic_line does'nt have an employee
+        """
+        result = {id_: {} for id_ in self.ids}
+        if self.project_id and "employee_id" not in values:
+            return result
+        else:
+            return super()._timesheet_postprocess_values(values)
+
     def _create_update_or_reverse_shop_supply_move(self):
         """
         Create / Update / Reverse the wip account move.
@@ -124,7 +134,14 @@ class AccountAnalyticLine(models.Model):
                     move_name=self.shop_supply_account_move_id.name,
                 )
             )
-        self.shop_supply_account_move_id._reverse_moves()
+        move = self.shop_supply_account_move_id
+        default_values_list = [
+            {
+                "date": move._get_accounting_date(move.date, move._affect_tax_report()),
+                "ref": _("Reversal of: %s") % move.name,
+            }
+        ]
+        move._reverse_moves(default_values_list, cancel=True)
 
     def _reverse_shop_supply_account_move_for_updated_timesheet(self):
         """
@@ -142,7 +159,16 @@ class AccountAnalyticLine(models.Model):
                     move_name=self.shop_supply_account_move_id.name,
                 )
             )
-        self.shop_supply_account_move_id._reverse_moves()
+        move = self.shop_supply_account_move_id
+        default_values_list = [
+            {
+                "date": move._get_accounting_date(move.date, move._affect_tax_report()),
+                "ref": _("Reversal of: %s") % move.name,
+            }
+        ]
+        self.shop_supply_account_move_id._reverse_moves(
+            default_values_list, cancel=True
+        )
         self.shop_supply_account_move_id = False
 
     def _requires_shop_supply_move(self):
@@ -240,7 +266,7 @@ class AccountAnalyticLine(models.Model):
 
         :rtype: Set
         """
-        return {"name", "unit_amount", "date", "project_id", "task_id", "employee_id"}
+        return {"name", "unit_amount", "date", "project_id", "task_id"}
 
     def _get_shop_supply_journal(self):
         self = self.with_company(self.company_id)

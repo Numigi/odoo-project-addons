@@ -2,7 +2,7 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 import pytest
-from datetime import datetime  # timedelta
+from datetime import datetime
 from odoo.tests.common import SavepointCase
 from odoo.exceptions import ValidationError
 
@@ -57,7 +57,6 @@ class WIPJournalEntriesCase(SavepointCase):
             {
                 "name": "Work in Progress",
                 "code": "WIP",
-                # "update_posted": True,
                 "type": "general",
                 "company_id": cls.company.id,
             }
@@ -80,6 +79,7 @@ class WIPJournalEntriesCase(SavepointCase):
                 "name": "Cost of Goods Sold",
                 "code": "510101",
                 "user_type_id": cls.env.ref("account.data_account_type_expenses").id,
+                "reconcile": True,
                 "company_id": cls.company.id,
             }
         )
@@ -89,27 +89,28 @@ class WIPJournalEntriesCase(SavepointCase):
                 "name": "Shop Supply",
                 "code": "510201",
                 "user_type_id": cls.env.ref("account.data_account_type_expenses").id,
+                "reconcile": True,
                 "company_id": cls.company.id,
             }
         )
 
         cls.env = cls.env(user=cls.manager.with_company(cls.company))
 
-        cls.env["project.project"].create(
-            {"name": "Job 123", "company_id": cls.company.id}
-        )
-
         cls.shop_supply_rate = 15
-        cls.project_type = cls.env["project.type"].create(
-            {
-                "name": "Trailer Refurb",
-                "wip_account_id": cls.wip_account.id,
-                "shop_supply_journal_id": cls.shop_supply_journal.id,
-                "shop_supply_account_id": cls.shop_supply_account.id,
-                "shop_supply_rate": cls.shop_supply_rate,
-                "cgs_account_id": cls.cgs_account.id,
-                "cgs_journal_id": cls.cgs_journal.id,
-            }
+        cls.project_type = (
+            cls.env["project.type"]
+            .with_company(cls.company)
+            .create(
+                {
+                    "name": "Trailer Refurb",
+                    "wip_account_id": cls.wip_account.id,
+                    "shop_supply_journal_id": cls.shop_supply_journal.id,
+                    "shop_supply_account_id": cls.shop_supply_account.id,
+                    "shop_supply_rate": cls.shop_supply_rate,
+                    "cgs_account_id": cls.cgs_account.id,
+                    "cgs_journal_id": cls.cgs_journal.id,
+                }
+            )
         )
 
         cls.project = cls.env["project.project"].create(
@@ -186,12 +187,12 @@ class TestWIPJournalEntries(WIPJournalEntriesCase):
 
     def _get_wip_move_line(self, timesheet_line):
         return timesheet_line.shop_supply_account_move_id.line_ids.filtered(
-            lambda l: l.account_id == self.wip_account
+            lambda line: line.account_id == self.wip_account
         )
 
     def _get_shop_supply_move_line(self, timesheet_line):
         return timesheet_line.shop_supply_account_move_id.line_ids.filtered(
-            lambda l: l.account_id == self.shop_supply_account
+            lambda line: line.account_id == self.shop_supply_account
         )
 
     def test_wip_move_line_analytic_account_is_project(self):
@@ -301,6 +302,8 @@ class TestWIPJournalEntries(WIPJournalEntriesCase):
     #     )
     #     assert wip_line.reconciled
 
+    # In odoo 16 we can't change an account move date because the constrainte
+    # _constrains_date_sequence in 'sequence.mixin'
     # def test_on_change_timesheet_a_date__account_move_date_updated(self):
     #     timesheet_line = self._create_timesheet()
     #     new_date = datetime.now().date() + timedelta(30)
