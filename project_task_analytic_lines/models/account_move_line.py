@@ -9,8 +9,23 @@ class AccountMoveLine(models.Model):
     _inherit = "account.move.line"
 
     task_id = fields.Many2one(
-        "project.task", string="Task", ondelete="restrict", index=True
+        "project.task", string="Task", ondelete="restrict", index=True,
+
     )
+
+    analytic_distribution_ids = fields.Many2many('account.analytic.account',
+        compute='_compute_analytic_distribution_ids', store=False,
+        string="Analytic Distribution IDs")
+
+    @api.depends('analytic_distribution')
+    def _compute_analytic_distribution_ids(self):
+        for rec in self:
+            if rec.analytic_distribution:
+                print( rec.product_id.name,list(map(int, rec.analytic_distribution.keys())) )
+                rec.analytic_distribution_ids = [
+                    (6, 0, list(map(int, rec.analytic_distribution.keys())))]
+            else:
+                rec.analytic_distribution_ids = [(6, 0, [])]
 
     @api.onchange("analytic_account_id")
     def _onchange_analytic_account_empty_task(self):
