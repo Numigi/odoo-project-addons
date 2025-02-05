@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
 
-    <record id="project_type_form_with_salary_account" model="ir.ui.view">
+    <record id="project_type_form_with_accounting_tab" model="ir.ui.view">
         <field name="name">Project Type Form: add salary account</field>
         <field name="model">project.type</field>
         <field name="inherit_id" ref="project_wip.project_type_form_with_accounting_tab"/>

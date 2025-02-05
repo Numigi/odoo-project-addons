@@ -1,9 +1,8 @@
-# © 2024 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+# Copyright 2024 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 import pytest
 from datetime import datetime, timedelta
-from odoo import fields
 from odoo.tests import common
 from odoo.exceptions import ValidationError
 
@@ -97,9 +96,7 @@ class WIPJournalEntriesCase(common.SavepointCase):
             }
         )
 
-        cls.env = cls.env(user=cls.manager, context={"force_company": cls.company.id})
-
-        cls.project_type = cls.env["project.type"].create(
+        cls.project_type = cls.env["project.type"].with_user(cls.manager.id).create(
             {
                 "name": "Trailer Refurb",
                 "wip_account_id": cls.wip_account.id,
@@ -110,7 +107,7 @@ class WIPJournalEntriesCase(common.SavepointCase):
             }
         )
 
-        cls.project = cls.env["project.project"].create(
+        cls.project = cls.env["project.project"].with_user(cls.manager.id).create(
             {
                 "name": "Job 123",
                 "type_id": cls.project_type.id,
@@ -118,7 +115,7 @@ class WIPJournalEntriesCase(common.SavepointCase):
             }
         )
 
-        cls.task = cls.env["project.task"].create(
+        cls.task = cls.env["project.task"].with_user(cls.manager.id).create(
             {
                 "name": "Task 450",
                 "project_id": cls.project.id,

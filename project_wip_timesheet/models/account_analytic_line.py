@@ -1,4 +1,4 @@
-# © 2024 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+# Copyright 2024 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 from odoo import api, fields, models, _
@@ -207,7 +207,7 @@ class TimesheetLine(models.Model):
 
         :rtype: account.journal
         """
-        self = self.with_context(force_company=self.company_id.id)
+        self = self.with_company(self.company_id.id)
         return self.project_id.type_id.salary_journal_id
 
     def _get_salary_account(self):
@@ -215,4 +215,5 @@ class TimesheetLine(models.Model):
 
         :rtype: account.account
         """
+        self = self.with_company(self.company_id.id)
         return self.project_id.type_id.salary_account_id
