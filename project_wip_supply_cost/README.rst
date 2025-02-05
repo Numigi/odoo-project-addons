@@ -46,7 +46,7 @@ I add a timesheet line.
 
 Journal Entries
 ~~~~~~~~~~~~~~~
-As member of the group `Accounting / Billing`, I go to the general ledger and filter to see only entries for my project.
+As member of the group `Invoicing / Accounting`, I go to the `general ledger` and filter to see only entries for my project.
 
 I see one entry for my timesheet line.
 
@@ -65,7 +65,7 @@ I notice that 2 analytic line were generated for my timesheet line.
 The first line is the shop supply (6.25 USD).
 
 The second line is the timesheet line itself.
-Note that the amount is 0.00 USD. The reason is that the timesheet cost was not defined on the employee.
+Note that the amount is 33.33 USD is calculated base in the Timesheet Cost configured in the employee form.
 
 Deleting / Updating Timesheets
 ------------------------------
