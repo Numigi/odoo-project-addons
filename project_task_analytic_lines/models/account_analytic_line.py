@@ -39,21 +39,21 @@ class AnalyticLine(models.Model):
                     )
                 )
 
-    @api.model
-    def create(self, vals):
-        if vals.get("task_id"):
-            vals["origin_task_id"] = vals["task_id"]
-        return super(AnalyticLine, self).create(vals)
+    @api.model_create_multi
+    def create(self, vals_list):
+        lines = super(AnalyticLine, self).create(vals_list)
+        for line, values in zip(lines, vals_list):
+            if line.task_id:
+                line.origin_task_id = line.task_id
+        return lines
 
     def write(self, vals):
         if vals.get("task_id"):
             vals["origin_task_id"] = vals["task_id"]
 
         super(AnalyticLine, self).write(vals)
-
         if vals.get("origin_task_id"):
             self._propagate_origin_task_to_timesheet_lines()
-
         return True
 
     def _propagate_origin_task_to_timesheet_lines(self):
@@ -64,7 +64,9 @@ class AnalyticLine(models.Model):
         for a timesheet line.
         """
         lines_to_update = self.filtered(
-            lambda l: l.task_id and l.origin_task_id != l.task_id
+            lambda line: line.user_id
+            and line.task_id
+            and line.origin_task_id != line.task_id
         )
         for line in lines_to_update:
             line.task_id = line.origin_task_id
