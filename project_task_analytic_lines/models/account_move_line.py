@@ -34,7 +34,8 @@ class AccountMoveLine(models.Model):
 
     @api.onchange("analytic_distribution")
     def _onchange_analytic_account_empty_task(self):
-        if self.task_id.project_id.analytic_account_id not in list(map(int, self.analytic_distribution.keys())):
+        if (self.task_id.project_id.analytic_account_id.id not in
+                self.analytic_distribution_ids.ids):
             self.task_id = False
 
     def _prepare_analytic_line(self):
@@ -45,9 +46,10 @@ class AccountMoveLine(models.Model):
         return result
 
     def _check_task_matches_with_project(self):
+        print('_check_task_matches_with_project',self.analytic_distribution_ids.ids,self.task_id.project_id.analytic_account_id.id)
         task_not_matching_project = (
             self.task_id
-            and self.task_id.project_id.analytic_account_id not in list(map(int, self.analytic_distribution.keys()))
+            and self.task_id.project_id.analytic_account_id.id not in self.analytic_distribution_ids.ids
         )
         if task_not_matching_project:
             raise ValidationError(
