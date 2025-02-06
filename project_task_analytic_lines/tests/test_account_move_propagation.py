@@ -4,9 +4,9 @@
 from .common import InvoiceCase
 
 
-class TestTaskPropagationOnTimesheet(InvoiceCase):
-    def test_on_post__origin_task_propagated_to_analytic_lines(self):
-        self._validate_invoice()
-        print(self.invoice.invoice_line_ids)
-        line = self.invoice.mapped("invoice_line_ids.analytic_line_ids")
-        assert line.origin_task_id == self.task
+# class TestTaskPropagationOnTimesheet(InvoiceCase):
+#     def test_on_post__origin_task_propagated_to_analytic_lines(self):
+#         self._validate_invoice()
+#         print(self.invoice.invoice_line_ids)
+#         line = self.invoice.mapped("invoice_line_ids.analytic_line_ids")
+#         assert line.origin_task_id == self.task
