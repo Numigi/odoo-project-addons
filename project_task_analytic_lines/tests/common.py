@@ -13,9 +13,15 @@ class AccountCase(common.SavepointCase):
                 "name": "Account User",
                 "login": "account_user",
                 "email": "account_user@test.com",
-                "groups_id": [(4, cls.env.ref("account.group_account_invoice").id)],
+                "groups_id": [(4, cls.env.ref("account.group_account_invoice").id),
+                              (6, 0, [cls.env.ref('hr_timesheet.group_hr_timesheet_user').id])],
             }
         )
+        cls.account_employee = cls.env['hr.employee'].create(
+            {
+                'name': 'User Empl Employee',
+                'user_id': cls.account_user.id,
+            })
 
         cls.project = cls.env["project.project"].create({"name": "Job 1"})
 
