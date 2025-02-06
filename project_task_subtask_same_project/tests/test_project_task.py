@@ -1,4 +1,4 @@
-# Copyright 2024 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+# Copyright 2025 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 import pytest
@@ -31,20 +31,26 @@ class TestProjectTaskSubTaskSameProject(TransactionCase):
                 "planned_hours": 1.0,
             }
         )
+        cls.subtask_3 = cls.env["project.task"].create(
+            {
+                "name": "Task Child 2",
+                "project_id": cls.task_parent.project_id.id,
+                "parent_id": cls.subtask_2.id,
+                "planned_hours": 1.0,
+            }
+        )
 
     def test_whenParentTaskChangeProject_thenSubTaskInheritNewProject(self):
-        """
-        Given a parent task is on project A
-        And the subtasks are on project A too
-
-        When the parent task is changed to project B
-
-        Then the subtasks are changed to project B too.
-        """
         self.task_parent.project_id = self.project_b.id
 
         assert self.subtask_1.project_id == self.project_b
+        assert self.subtask_1.display_project_id == self.project_b
+
         assert self.subtask_2.project_id == self.project_b
+        assert self.subtask_2.display_project_id == self.project_b
+
+        assert self.subtask_3.project_id == self.project_b
+        assert self.subtask_3.display_project_id == self.project_b
 
     def test_onUpdateSubtask_ifNotSameProject_raiseError(self):
         with pytest.raises(ValidationError):
