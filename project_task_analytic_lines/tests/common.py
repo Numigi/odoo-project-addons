@@ -107,4 +107,4 @@ class InvoiceCase(AccountCase):
 
     def _validate_invoice(self):
         self.invoice.invoice_date = "2023-01-01"
-        self.invoice.sudo(self.account_user).action_post()
+        self.invoice.sudo().action_post()
