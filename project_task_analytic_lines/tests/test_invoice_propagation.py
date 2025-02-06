@@ -5,7 +5,6 @@ from .common import InvoiceCase
 
 
 class TestTaskPropagationFromInvoice(InvoiceCase):
-
     def test_task_propagated_to_expense_move_line(self):
         self._validate_invoice()
         move_line = self.invoice.line_ids.filtered(

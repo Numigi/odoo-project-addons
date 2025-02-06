@@ -7,7 +7,6 @@ from odoo.exceptions import ValidationError
 
 
 class TestInvoiceValidationConstraints(InvoiceCase):
-
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -16,17 +15,17 @@ class TestInvoiceValidationConstraints(InvoiceCase):
     def test_if_task_on_invoice_line_matches_project__error_not_raised(self):
         assert self.invoice.invoice_line_ids.task_id == self.task
         self._validate_invoice()
-        assert self.invoice.state == 'posted'
+        assert self.invoice.state == "posted"
 
     def test_if_invoice_line_has_project_but_no_task__error_not_raised(self):
         self.invoice.invoice_line_ids.task_id = False
         self._validate_invoice()
-        assert self.invoice.state == 'posted'
+        assert self.invoice.state == "posted"
 
     def test_if_lines_ids_has_project_but_no_task__error_not_raised(self):
         self.invoice.line_ids.task_id = False
         self._validate_invoice()
-        assert self.invoice.state == 'posted'
+        assert self.invoice.state == "posted"
 
     def test_if_task_on_invoice_line_not_matching_project__raise_error(self):
         self.invoice.invoice_line_ids.task_id = self.task_2
@@ -56,16 +55,15 @@ class TestInvoiceValidationConstraints(InvoiceCase):
 
 
 class TestAnalyticLineConstraints(AccountCase):
-
     def test_after_changing_project__if_task_not_matching_analytic_account__raise_error(
         self,
     ):
-        line = self.env['account.analytic.line'].create(
+        line = self.env["account.analytic.line"].create(
             {
-                'name': '/',
-                'project_id': self.project.id,
-                'task_id': self.task.id,
-                'user_id': self.account_user.id,
+                "name": "/",
+                "project_id": self.project.id,
+                "task_id": self.task.id,
+                "user_id": self.account_user.id,
             }
         )
         with pytest.raises(ValidationError):
@@ -74,12 +72,12 @@ class TestAnalyticLineConstraints(AccountCase):
     def test_after_changing_task__if_task_not_matching_analytic_account__raise_error(
         self,
     ):
-        line = self.env['account.analytic.line'].create(
+        line = self.env["account.analytic.line"].create(
             {
-                'name': '/',
-                'project_id': self.project.id,
-                'task_id': self.task.id,
-                'user_id': self.account_user.id,
+                "name": "/",
+                "project_id": self.project.id,
+                "task_id": self.task.id,
+                "user_id": self.account_user.id,
             }
         )
         self.task_2.project_id = self.project_2
