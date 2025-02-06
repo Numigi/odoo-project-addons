@@ -34,9 +34,9 @@ class AccountCase(common.SavepointCase):
         cls.expense_account = cls.env["account.account"].search(
             [
                 (
-                    "user_type_id",
+                    "account_type",
                     "=",
-                    cls.env.ref("account.data_account_type_expenses").id,
+                    "expense",
                 )
             ],
             limit=1,
@@ -45,9 +45,9 @@ class AccountCase(common.SavepointCase):
         cls.payable_account = cls.env["account.account"].search(
             [
                 (
-                    "user_type_id",
+                    "account_type",
                     "=",
-                    cls.env.ref("account.data_account_type_payable").id,
+                    "liability_payable",
                 )
             ],
             limit=1,
@@ -63,9 +63,9 @@ class InvoiceCase(AccountCase):
         cls.tax_account = cls.env["account.account"].search(
             [
                 (
-                    "user_type_id",
+                    "account_type",
                     "=",
-                    cls.env.ref("account.data_account_type_receivable").id,
+                   "asset_receivable",
                 )
             ],
             limit=1,
