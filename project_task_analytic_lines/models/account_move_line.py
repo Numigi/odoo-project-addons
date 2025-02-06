@@ -53,10 +53,10 @@ class AccountMoveLine(models.Model):
             raise ValidationError(
                 _(
                     "The task {task} is set on the invoice line {line}. "
-                    "This task does not match the project ({project}) set on the line."
+                    "This task does not match the project ids ({project}) set on the line."
                 ).format(
                     line=self.display_name,
                     task=self.task_id.display_name,
-                    project=self.analytic_account_id.display_name,
+                    project=self.analytic_distribution_ids.ids,
                 )
             )
