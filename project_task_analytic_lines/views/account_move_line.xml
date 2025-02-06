@@ -43,10 +43,6 @@
                        groups="analytic.group_analytic_accounting"
                 />
             </xpath>
-
-
-
-
             <!--
                 In vanilla Odoo, when hr_timesheet is installed, the list view
                 of timesheet lines is shown instead of the standard analytic line view.
