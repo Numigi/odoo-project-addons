@@ -26,19 +26,15 @@ class AccountMoveLine(models.Model):
     def _compute_analytic_distribution_ids(self):
         for rec in self:
             if rec.analytic_distribution:
-                print(
-                    rec.product_id.name,
-                    list(map(int, rec.analytic_distribution.keys())),
-                )
                 rec.analytic_distribution_ids = [
                     (6, 0, list(map(int, rec.analytic_distribution.keys())))
                 ]
             else:
                 rec.analytic_distribution_ids = [(6, 0, [])]
 
-    @api.onchange("analytic_account_id")
+    @api.onchange("analytic_distribution")
     def _onchange_analytic_account_empty_task(self):
-        if self.analytic_account_id != self.task_id.project_id.analytic_account_id:
+        if self.task_id.project_id.analytic_account_id not in self.analytic_distribution.keys():
             self.task_id = False
 
     def _prepare_analytic_line(self):
@@ -51,7 +47,7 @@ class AccountMoveLine(models.Model):
     def _check_task_matches_with_project(self):
         task_not_matching_project = (
             self.task_id
-            and self.task_id.project_id.analytic_account_id != self.analytic_account_id
+            and self.task_id.project_id.analytic_account_id not in self.analytic_distribution.keys()
         )
         if task_not_matching_project:
             raise ValidationError(
