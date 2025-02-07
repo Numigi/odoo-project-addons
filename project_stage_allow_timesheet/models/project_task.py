@@ -31,9 +31,9 @@ class ProjectTask(models.Model):
 
         for rec in self:
             project = rec.project_id
-            time_sheets = rec.timesheet_ids
+            timesheets = rec.timesheet_ids
 
-            if time_sheets and project and not project.allow_timesheets:
+            if timesheets and project and not project.allow_timesheets:
                 stage = project.stage_id
                 message = error_message.format(
                     rec.display_name, project.display_name, stage.display_name
