@@ -6,7 +6,10 @@ from odoo.exceptions import ValidationError
 
 
 class AnalyticLine(models.Model):
-    """Prevent an analytic line with a task and analytic account that don't match."""
+    """
+    Prevent an analytic line with a task
+    and analytic account that don't match.
+    """
 
     _inherit = "account.analytic.line"
 
