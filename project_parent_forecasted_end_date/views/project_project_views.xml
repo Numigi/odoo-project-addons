@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+
+    <record id="edit_project" model="ir.ui.view">
+        <field name="name">Project Forecasted End Date</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.edit_project" />
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='dates']" position="after">
+                <field name="is_parent" invisible="1" />
+                <field name="forecasted_end_date" attrs="{'invisible': [('is_parent', '=', False)]}" />
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
