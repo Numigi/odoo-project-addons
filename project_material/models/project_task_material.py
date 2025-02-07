@@ -53,9 +53,7 @@ class TaskMaterialLine(models.Model):
         related="product_id.standard_price", string="Unit Cost", readonly=True
     )
     move_ids = fields.One2many("stock.move", "material_line_id", "Stock Moves")
-    is_consu_two_steps = fields.Boolean(
-        compute="_compute_is_consu_two_steps"
-    )
+    is_consu_two_steps = fields.Boolean(compute="_compute_is_consu_two_steps")
 
     @api.depends(
         "move_ids.move_orig_ids",
@@ -66,7 +64,8 @@ class TaskMaterialLine(models.Model):
     def _compute_prepared_qty(self):
         for line in self:
             preparation_moves = line.with_company(self.company_id).mapped(
-                "move_ids.move_orig_ids")
+                "move_ids.move_orig_ids"
+            )
             preparation_moves_done = preparation_moves.filtered(
                 lambda m: m.state == "done"
             )
@@ -250,9 +249,9 @@ class TaskMaterialLine(models.Model):
         if more_to_reduce_than_available:
             raise ValidationError(
                 _(
-                    "The quantity on the material line {line} can not be reduced to "
-                    "{new_quantity} (it can not be lower than the delivered quantity).\n\n"
-                    "The line may not be reduced below a minimum of {minimum_qty} {uom}."
+                    "The quantity on the material line '{line}' can not be reduced to "
+                    "'{new_quantity}' (it can not be lower than the delivered quantity).\n\n"
+                    "The line may not be reduced below a minimum of '{minimum_qty} {uom}'."
                 ).format(
                     line=self.product_id.display_name,
                     new_quantity=self.initial_qty,
@@ -291,7 +290,8 @@ class TaskMaterialLine(models.Model):
         """
         moves = self._get_first_step_moves()
         return moves.filtered(
-            lambda m: m.state not in ("done", "cancelled")
+            lambda m: m.state
+            not in ("assigned", "done", "cancelled")
         )
 
     def _get_total_move_qty(self):
@@ -327,9 +327,11 @@ class TaskMaterialLine(models.Model):
         date_planned = self.task_id.date_planned
         for moves in self._iter_procurement_moves():
             moves_to_update = moves.filtered(
-                lambda m: m.state not in ("done", "cancel")
+                lambda m: m.state not in ("assigned", "done", "cancel")
             )
-            delay = moves_to_update.with_company(self.company_id).mapped("rule_id.delay")
+            delay = moves_to_update.with_company(self.company_id).mapped(
+                "rule_id.delay"
+            )
             if delay:
                 date_planned = date_planned - timedelta(delay[0])
             moves_to_update.with_context(do_not_propagate=True).write(
