@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
 
-    <record id="analytic_line_form_with_origin_task" model="ir.ui.view">
+    <record id="view_account_analytic_line_form" model="ir.ui.view">
         <field name="name">Analytic Line Form: add field origin task</field>
         <field name="model">account.analytic.line</field>
         <field name="inherit_id" ref="analytic.view_account_analytic_line_form" />
@@ -13,7 +13,7 @@
         </field>
     </record>
 
-    <record id="analytic_line_list_with_origin_task" model="ir.ui.view">
+    <record id="view_account_analytic_line_tree" model="ir.ui.view">
         <field name="name">Analytic Line List: add field origin task</field>
         <field name="model">account.analytic.line</field>
         <field name="inherit_id" ref="analytic.view_account_analytic_line_tree" />
@@ -24,7 +24,7 @@
         </field>
     </record>
 
-    <record id="analytic_line_search_with_origin_task" model="ir.ui.view">
+    <record id="view_account_analytic_line_filter" model="ir.ui.view">
         <field name="name">Analytic Line Search: add origin task filter and group by</field>
         <field name="model">account.analytic.line</field>
         <field name="inherit_id" ref="analytic.view_account_analytic_line_filter" />

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
 
-    <record id="account_move_form_with_task" model="ir.ui.view">
+    <record id="view_move_form" model="ir.ui.view">
         <field name="name">account.move.form.inherits.add.task</field>
         <field name="model">account.move</field>
         <field name="inherit_id" ref="account.view_move_form" />
@@ -27,7 +27,7 @@
         </field>
     </record>
 
-    <record id="account_move_line_form_with_task" model="ir.ui.view">
+    <record id="view_move_line_form" model="ir.ui.view">
         <field name="name">Journal Item Form: add field task</field>
         <field name="model">account.move.line</field>
         <field name="inherit_id" ref="account.view_move_line_form" />
@@ -67,7 +67,7 @@
     </record>
 
 
-    <record id="account_move_line_list_with_task" model="ir.ui.view">
+    <record id="view_move_line_tree" model="ir.ui.view">
         <field name="name">Journal Item List: add field task</field>
         <field name="model">account.move.line</field>
         <field name="inherit_id" ref="account.view_move_line_tree" />
@@ -79,7 +79,7 @@
     </record>
 
     <!--    TO FIX : find analytic_account_id that not exist anymore in account.move.line or deleting it-->
-    <record id="account_move_line_search_with_task" model="ir.ui.view">
+    <record id="view_account_move_line_filter" model="ir.ui.view">
         <field name="name">Journal Item Search: add field task</field>
         <field name="model">account.move.line</field>
         <field name="inherit_id" ref="account.view_account_move_line_filter" />
