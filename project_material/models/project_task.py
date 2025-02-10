@@ -41,11 +41,9 @@ class TaskWithMaterialLines(models.Model):
         string="Preparation Return Pickings",
         compute="_compute_preparation_pickings",
     )
-
     show_material_prepared_qty = fields.Boolean(
         compute="_compute_show_material_prepared_qty"
     )
-
     procurement_disabled = fields.Boolean()
 
     def _compute_preparation_pickings(self):
@@ -90,17 +88,17 @@ class TaskWithMaterialLines(models.Model):
 
     def write(self, vals):
         super().write(vals)
-        for task in self:
-            if "procurement_disabled" in vals or "material_line_ids" in vals:
-                procurement_disabled = (
-                    vals.get("procurement_disabled") or self.procurement_disabled
-                )
-                if procurement_disabled:
-                    task._cancel_procurements()
-                else:
-                    task._run_procurements()
-            if "date_planned" in vals:
-                task._propagate_planned_date_to_stock_moves()
+
+        procurement_disabled = vals.get("procurement_disabled")
+        if procurement_disabled is False:
+            self._run_procurements()
+
+        if procurement_disabled is True:
+            self._cancel_procurements()
+
+        if "date_planned" in vals:
+            self._propagate_planned_date_to_stock_moves()
+
         return True
 
     def copy(self, vals=None):
