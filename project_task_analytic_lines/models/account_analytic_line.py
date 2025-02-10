@@ -47,11 +47,11 @@ class AnalyticLine(models.Model):
     def create(self, vals_list):
         for vals in vals_list:
             self._set_origin_task_id(vals)
-        return super(AnalyticLine, self).create(vals_list)
+        return super().create(vals_list)
 
     def write(self, vals):
         self._set_origin_task_id(vals)
-        super(AnalyticLine, self).write(vals)
+        super().write(vals)
         if vals.get("origin_task_id"):
             self._propagate_origin_task_to_timesheet_lines()
 

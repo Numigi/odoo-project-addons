@@ -10,4 +10,4 @@ class AccountMove(models.Model):
     def action_post(self):
         for line in self.mapped("invoice_line_ids"):
             line._check_task_matches_with_project()
-        return super(AccountMove, self).action_post()
+        return super().action_post()
