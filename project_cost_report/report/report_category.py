@@ -16,13 +16,14 @@ class CostReportCategory:
         self.name = category.name
         self.lines = lines
         self.folded = folded
-        self.cost = float_round(sum(-l.amount for l in lines if not l.revenue), 2)
-        self.revenue = float_round(sum(l.amount for l in lines if l.revenue), 2)
+        self.cost = float_round(sum(-line.amount for line in lines if not line.revenue), 2)
+
+        self.revenue = float_round(sum(line.amount for line in lines if line.revenue), 2)
         self.profit = float_round((self.revenue - self.cost), 2)
 
     @property
     def total_hours(self):
-        return float_round(sum(l.unit_amount for l in self.lines if not l.revenue), 2)
+        return float_round(sum(line.unit_amount for line in self.lines if not line.revenue), 2)
 
     @property
     def target_type(self):

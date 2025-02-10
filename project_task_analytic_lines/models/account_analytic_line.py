@@ -42,7 +42,7 @@ class AnalyticLine(models.Model):
     @api.model_create_multi
     def create(self, vals_list):
         lines = super(AnalyticLine, self).create(vals_list)
-        for line, values in zip(lines, vals_list):
+        for line in lines:
             if line.task_id:
                 line.origin_task_id = line.task_id
         return lines

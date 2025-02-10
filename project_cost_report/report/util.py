@@ -60,8 +60,8 @@ def get_waiting_for_invoice_total(order, projects):
     )
     return float_round(
         sum(
-            l.price_unit * _get_purchase_line_waiting_qty(l)
-            for l in lines_waiting_invoices
+            line.price_unit * _get_purchase_line_waiting_qty(l)
+            for line in lines_waiting_invoices
         ),
         2,
     )

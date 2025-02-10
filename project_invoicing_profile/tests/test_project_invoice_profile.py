@@ -11,8 +11,12 @@ class TestProjectInvoiceProfile(SavepointCase):
 
         user_group_employee = cls.env.ref('base.group_user')
         user_group_project_user = cls.env.ref('project.group_project_user')
-        user_group_project_manager = cls.env.ref('project.group_project_manager')
-        user_group_project_profile = cls.env.ref('project_invoicing_profile.group_project_invoicing_profile')
+        user_group_project_manager = cls.env.ref(
+            'project.group_project_manager'
+        )
+        user_group_project_profile = cls.env.ref(
+            'project_invoicing_profile.group_project_invoicing_profile'
+        )
 
         cls.profile_1 = cls.env['project.invoice.profile'].create({
             'name': 'Numigi',
@@ -37,10 +41,14 @@ class TestProjectInvoiceProfile(SavepointCase):
             'groups_id': [(6, 0, [user_group_employee.id, user_group_project_manager.id,
                                   user_group_project_profile.id])]})
 
-        cls.project_1 = cls.env['project.project'].with_context({'mail_create_nolog': True}).create({
-            'name': 'Project1',
-            'invoicing_profile_id': cls.profile_1.id
+        cls.project_1 = (
+            cls.env["project.project"]
+            .with_context(mail_create_nolog=True)
+            .create({
+                "name": "Project1",
+                "invoicing_profile_id": cls.profile_1.id,
             })
+        )
 
         cls.task_1 = cls.env['project.task'].with_context({'mail_create_nolog': True}).create({
             'name': 'Task1',
