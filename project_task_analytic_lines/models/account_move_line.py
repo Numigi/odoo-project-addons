@@ -18,7 +18,7 @@ class AccountMoveLine(models.Model):
     analytic_distribution_ids = fields.Many2many(
         "account.analytic.account",
         compute="_compute_analytic_distribution_ids",
-        store=False,
+        store=True,
         string="Analytic Distribution IDs",
     )
 
@@ -48,11 +48,6 @@ class AccountMoveLine(models.Model):
         return result
 
     def _check_task_matches_with_project(self):
-        print(
-            "_check_task_matches_with_project",
-            self.analytic_distribution_ids.ids,
-            self.task_id.project_id.analytic_account_id.id,
-        )
         task_not_matching_project = (
             self.task_id
             and self.task_id.project_id.analytic_account_id.id
