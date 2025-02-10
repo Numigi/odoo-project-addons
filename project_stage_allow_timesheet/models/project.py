@@ -9,6 +9,8 @@ class Project(models.Model):
     _inherit = "project.project"
 
     allow_timesheets = fields.Boolean(
+        string="Allow Timesheets",
         related="stage_id.allow_timesheets",
+        readonly=True,
         store=True,
     )

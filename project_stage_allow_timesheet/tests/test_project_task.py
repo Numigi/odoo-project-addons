@@ -10,12 +10,7 @@ class TestTask(TransactionCase):
     def setUpClass(cls):
         super().setUpClass()
 
-        context = dict(
-            cls.env.context, enable_project_stage_allow_timesheet_constraint=True
-        )
-
         cls.employee = cls.env["hr.employee"].create({"name": "Employee"})
-        cls.env = cls.env(context=context)
         cls.project_stage_timesheet = cls.env["project.project.stage"].create(
             {"name": "project_stage", "allow_timesheets": True}
         )
@@ -50,9 +45,5 @@ class TestTask(TransactionCase):
         )
 
     def test_whenTaskWithTimeSheetIsSetToProjectNoTimeSheet_thenRaiseError(self):
-        with self.assertRaises(ValidationError):
-            self.task_timesheet.project_id = self.project_no_timesheet
-
-    def test_whenAALMovedToProjectNoTimeSheet_thenRaiseError(self):
         with self.assertRaises(ValidationError):
             self.task_timesheet.project_id = self.project_no_timesheet.id
