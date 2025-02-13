@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="task_form_with_material_inherit" model="ir.ui.view">
+        <field name="name">Task Form: add material consumption Inherit</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project_material.task_form_with_material"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='material_line_ids']//field[@name='unit_cost']" position="before">
+                <field name="purchase_id" optional="show" groups="purchase.group_purchase_user"/>
+                <field name="purchase_line_id" optional="hide" groups="purchase.group_purchase_user"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

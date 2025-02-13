@@ -34,6 +34,7 @@ COPY project_lump_sum  /mnt/extra-addons/project_lump_sum
 COPY project_material  /mnt/extra-addons/project_material
 COPY project_material_direct  /mnt/extra-addons/project_material_direct
 COPY project_material_enhanced /mnt/extra-addons/project_material_enhanced
+COPY project_material_purchase_link /mnt/extra-addons/project_material_purchase_link
 COPY project_milestone_enhanced  /mnt/extra-addons/project_milestone_enhanced
 COPY project_milestone_estimated_hours  /mnt/extra-addons/project_milestone_estimated_hours
 COPY project_milestone_spent_hours  /mnt/extra-addons/project_milestone_spent_hours
