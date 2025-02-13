@@ -23,11 +23,13 @@ class AccountAnalyticLine(models.Model):
         may be created by a write before the return of super().create(vals).
         """
         lines = super(AccountAnalyticLine, self).create(vals_list)
-        for line, values in zip(lines, vals_list):
-            if line._requires_shop_supply_move() and \
-                    not line._context.get('shop_supply_move'):
-                line.with_context(shop_supply_move=True).sudo()\
-                    ._create_update_or_reverse_shop_supply_move()
+        for line, _values in zip(lines, vals_list):
+            if line._requires_shop_supply_move() and not line._context.get(
+                "shop_supply_move"
+            ):
+                line.with_context(
+                    shop_supply_move=True
+                ).sudo()._create_update_or_reverse_shop_supply_move()
         return lines
 
     def write(self, values):
@@ -259,7 +261,9 @@ class AccountAnalyticLine(models.Model):
         :rtype: bool
         """
         self = self.with_company(self.company_id)
-        return any(line.reconciled for line in self.shop_supply_account_move_id.line_ids)
+        return any(
+            line.reconciled for line in self.shop_supply_account_move_id.line_ids
+        )
 
     def _get_shop_supply_move_dependent_fields(self):
         """Get the fields that trigger an update of the wip entry.
