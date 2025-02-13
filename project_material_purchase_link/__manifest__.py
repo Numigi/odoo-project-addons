@@ -12,6 +12,7 @@
     "summary": "Link project material and purchase using procurement",
     "depends": [
         "project_material",
+        "purchase_line_procurement_no_grouping",
     ],
     "data": [
         "views/project_task_material_views.xml",

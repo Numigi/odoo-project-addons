@@ -7,7 +7,8 @@
         <field name="inherit_id" ref="project_material.task_form_with_material"/>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='material_line_ids']//field[@name='unit_cost']" position="before">
-                <field name="purchase_id" optional="show"/>
+                <field name="purchase_id" optional="show" groups="purchase.group_purchase_user"/>
+                <field name="purchase_line_id" optional="hide" groups="purchase.group_purchase_user"/>
             </xpath>
         </field>
     </record>

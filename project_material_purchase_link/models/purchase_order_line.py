@@ -13,9 +13,6 @@ class PurchaseOrderLine(models.Model):
     material_line_id = fields.Many2one(
         "project.task.material", string="Material Line", index=True, copy=False
     )
-    group_id = fields.Many2one(
-        "procurement.group", string="Procurement Group", index=True, copy=False
-    )
 
     @api.model
     def _prepare_purchase_order_line_from_procurement(
@@ -24,54 +21,17 @@ class PurchaseOrderLine(models.Model):
         vals = super()._prepare_purchase_order_line_from_procurement(
             product_id, product_qty, product_uom, company_id, values, po
         )
-        if "group_id" in values and values["group_id"]:
-            vals["group_id"] = values["group_id"].id
         if "task_id" in values and values["task_id"]:
             vals["task_id"] = values["task_id"]
-        if (
-            "move_dest_ids" in values
-            and values["move_dest_ids"]
-            and values["move_dest_ids"].mapped("material_line_id")
-        ):
-            vals["material_line_id"] = values["move_dest_ids"].mapped(
-                "material_line_id.id"
-            )[0]
+        vals["material_line_id"] = values["move_dest_ids"].material_line_id.id
         return vals
-
-    def _find_candidate(
-        self,
-        product_id,
-        product_qty,
-        product_uom,
-        location_id,
-        name,
-        origin,
-        company_id,
-        values,
-    ):
-        """No grouping by line, so we filter a bit more by procurement group.
-        """
-        self = self.filtered(lambda x: x.group_id == values.get("group_id"))
-        return super(PurchaseOrderLine, self)._find_candidate(
-            product_id,
-            product_qty,
-            product_uom,
-            location_id,
-            name,
-            origin,
-            company_id,
-            values,
-        )
 
     @api.model_create_multi
     def create(self, vals_list):
         lines = super(PurchaseOrderLine, self).create(vals_list)
         for line in lines:
             if line.material_line_id:
-                material_line_id = self.env["project.task.material"].browse(
-                    line.material_line_id.id
-                )
-                material_line_id.purchase_line_id = line.id
+                line.material_line_id.purchase_line_id = line.id
         return lines
 
     def write(self, values):
@@ -81,5 +41,4 @@ class PurchaseOrderLine(models.Model):
                     values.get("material_line_id")
                 )
                 material_line_id.purchase_line_id = line.id
-        result = super(PurchaseOrderLine, self).write(values)
-        return result
+        return super(PurchaseOrderLine, self).write(values)

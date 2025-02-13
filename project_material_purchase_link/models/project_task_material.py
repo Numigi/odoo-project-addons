@@ -8,11 +8,16 @@ class TaskMaterialLine(models.Model):
     _inherit = "project.task.material"
 
     purchase_line_id = fields.Many2one(
-        "purchase.order.line", "Purchase Order Line", ondelete="set null", index=True
+        "purchase.order.line",
+        "Purchase Order Line",
+        ondelete="set null",
+        index=True,
+        copy=False,
     )
     purchase_id = fields.Many2one(
         "purchase.order",
         related="purchase_line_id.order_id",
         string="Related Document",
         store=True,
+        readonly=True
     )

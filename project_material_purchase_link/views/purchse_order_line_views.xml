@@ -7,12 +7,11 @@
         <field name="arch" type="xml">
             <xpath expr="//field[@name='order_line']//tree//field[@name='product_qty']" position="before">
                 <field name="task_id" optional="show"/>
-                <field name="material_line_id" optional="hide"/>
-                <field name="group_id" optional="hide"/>
+                <field name="material_line_id" invisible="1" groups="project.group_project_user"/>
             </xpath>
             <xpath expr="//field[@name='order_line']//form//field[@name='date_planned']" position="after">
                 <field name="task_id"/>
-                <field name="material_line_id"/>
+                <field name="material_line_id" invisible="1" groups="project.group_project_user"/>
             </xpath>
         </field>
     </record>
