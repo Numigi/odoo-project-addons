@@ -2,7 +2,7 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 import pytest
-from datetime import datetime
+from datetime import datetime, timedelta
 from odoo.tests.common import SavepointCase
 from odoo.exceptions import ValidationError
 
@@ -283,38 +283,34 @@ class TestWIPJournalEntries(WIPJournalEntriesCase):
         timesheet_line = self._create_timesheet(quantity=0)
         assert not timesheet_line.shop_supply_account_move_id
 
-    # UNIT TESTING FAILED
+    def test_if_timesheet_deleted__account_move_reversed(self):
+        timesheet_line = self._create_timesheet()
+        wip_line = self._get_wip_move_line(timesheet_line)
+        timesheet_line.unlink()
+        assert wip_line.reconciled
 
-    # def test_if_timesheet_deleted__account_move_reversed(self):
-    #     timesheet_line = self._create_timesheet()
-    #     wip_line = self._get_wip_move_line(timesheet_line)
-    #     timesheet_line.unlink()
-    #     assert wip_line.reconciled
+    def test_if_new_project_requires_no_timesheet__account_move_reversed(self):
+        timesheet_line = self._create_timesheet()
+        new_project = self.project.copy({"type_id": False})
+        new_task = self.task.copy({"project_id": new_project.id})
 
-    # def test_if_new_project_requires_no_timesheet__account_move_reversed(self):
-    #     timesheet_line = self._create_timesheet()
-    #     new_project = self.project.copy({"type_id": False})
-    #     new_task = self.task.copy({"project_id": new_project.id})
+        wip_line = self._get_wip_move_line(timesheet_line)
+        timesheet_line.with_user(self.timesheet_user).write(
+            {"project_id": new_project.id, "task_id": new_task.id}
+        )
+        assert wip_line.reconciled
 
-    #     wip_line = self._get_wip_move_line(timesheet_line)
-    #     timesheet_line.with_user(self.timesheet_user).write(
-    #         {"project_id": new_project.id, "task_id": new_task.id}
-    #     )
-    #     assert wip_line.reconciled
+    def test_on_change_timesheet_a_date__account_move_date_updated(self):
+        timesheet_line = self._create_timesheet()
+        new_date = datetime.now().date() + timedelta(30)
+        timesheet_line.with_user(self.timesheet_user).date = new_date
+        assert timesheet_line.shop_supply_account_move_id.date == new_date
 
-    # In odoo 16 we can't change an account move date because the constrainte
-    # _constrains_date_sequence in 'sequence.mixin'
-    # def test_on_change_timesheet_a_date__account_move_date_updated(self):
-    #     timesheet_line = self._create_timesheet()
-    #     new_date = datetime.now().date() + timedelta(30)
-    #     timesheet_line.with_user(self.timesheet_user).date = new_date
-    #     assert timesheet_line.shop_supply_account_move_id.date == new_date
-
-    # def test_reversal_move_wip_line_has_task(self):
-    #     timesheet_line = self._create_timesheet()
-    #     wip_line = self._get_wip_move_line(timesheet_line)
-    #     timesheet_line.unlink()
-    #     assert wip_line.matched_credit_ids.credit_move_id.task_id == self.task
+    def test_reversal_move_wip_line_has_task(self):
+        timesheet_line = self._create_timesheet()
+        wip_line = self._get_wip_move_line(timesheet_line)
+        timesheet_line.unlink()
+        assert wip_line.matched_credit_ids.credit_move_id.task_id == self.task
 
 
 class TestTimesheetEntryTransferedToWip(WIPJournalEntriesCase):
@@ -324,9 +320,9 @@ class TestTimesheetEntryTransferedToWip(WIPJournalEntriesCase):
     def setUpClass(cls):
         super().setUpClass()
         cls.timesheet_line = cls._create_timesheet()
-        wip_group = cls.env.ref('project_wip.group_wip_to_cgs')
-        if not cls.env.user.has_group('project_wip.group_wip_to_cgs'):
-            cls.env.user.write({'groups_id': [(4, wip_group.id)]})
+        wip_group = cls.env.ref("project_wip.group_wip_to_cgs")
+        if not cls.env.user.has_group("project_wip.group_wip_to_cgs"):
+            cls.env.user.write({"groups_id": [(4, wip_group.id)]})
 
         cls.project.sudo().action_wip_to_cgs()
 
