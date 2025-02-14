@@ -116,7 +116,8 @@ class AccountAnalyticLine(models.Model):
                 )
             )
 
-        self.shop_supply_account_move_id.state = "draft"
+        self.shop_supply_account_move_id.button_draft()
+
         vals = self._get_shop_supply_move_vals()
         self.shop_supply_account_move_id.write(vals)
         self.shop_supply_account_move_id.action_post()
@@ -239,6 +240,8 @@ class AccountAnalyticLine(models.Model):
             "company_id": self.company_id.id,
             "journal_id": self._get_shop_supply_journal().id,
             "date": self.date,
+            # Clearing name to repost move for new sequence (draft > posted)
+            "name": "",
             "move_type": "entry",
             "no_analytic_lines": False,
             "ref": self._get_shop_supply_move_reference(),
