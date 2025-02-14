@@ -2,7 +2,7 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 import pytest
-from datetime import datetime
+from datetime import datetime, timedelta
 from odoo.tests.common import SavepointCase
 from odoo.exceptions import ValidationError
 
@@ -300,13 +300,11 @@ class TestWIPJournalEntries(WIPJournalEntriesCase):
         )
         assert wip_line.reconciled
 
-    # In odoo 14 we can't change an account move date because the constrains
-    # _constrains_date_sequence in 'sequence.mixin'
-    # def test_on_change_timesheet_a_date__account_move_date_updated(self):
-    #     timesheet_line = self._create_timesheet()
-    #     new_date = datetime.now().date() + timedelta(30)
-    #     timesheet_line.with_user(self.timesheet_user).date = new_date
-    #     assert timesheet_line.shop_supply_account_move_id.date == new_date
+    def test_on_change_timesheet_a_date__account_move_date_updated(self):
+        timesheet_line = self._create_timesheet()
+        new_date = datetime.now().date() + timedelta(30)
+        timesheet_line.with_user(self.timesheet_user).date = new_date
+        assert timesheet_line.shop_supply_account_move_id.date == new_date
 
     def test_reversal_move_wip_line_has_task(self):
         timesheet_line = self._create_timesheet()
