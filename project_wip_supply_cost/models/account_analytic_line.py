@@ -23,13 +23,13 @@ class AccountAnalyticLine(models.Model):
         may be created by a write before the return of super().create(vals).
         """
         lines = super(AccountAnalyticLine, self).create(vals_list)
-        for line, _values in zip(lines, vals_list):
-            if line._requires_shop_supply_move() and not line._context.get(
-                "shop_supply_move"
-            ):
-                line.with_context(
-                    shop_supply_move=True
-                ).sudo()._create_update_or_reverse_shop_supply_move()
+
+        for line in lines:
+            if line._requires_shop_supply_move() and \
+                    not line._context.get('shop_supply_move'):
+                line.with_context(shop_supply_move=True).sudo()\
+                    ._create_update_or_reverse_shop_supply_move()
+
         return lines
 
     def write(self, values):

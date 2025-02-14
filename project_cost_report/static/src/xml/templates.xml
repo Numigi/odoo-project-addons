@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates>
+    <t t-name="projectCostReport.buttons">
+        <button type="button" class="btn btn-primary cost_report_button cost_report_print">Print</button>
+        <button type="button" class="btn btn-primary cost_report_button cost_report_unfold">Unfold</button>
+        <button type="button" class="btn btn-primary cost_report_button cost_report_fold">Fold</button>
+        <button type="button" class="btn btn-primary cost_report_button cost_report_show">Show Summary</button>
+        <button type="button" class="btn btn-primary cost_report_button cost_report_hide">Hide Summary</button>
+    </t>
+</templates>
