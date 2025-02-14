@@ -7,7 +7,7 @@ class TestProjectInvoiceProfile(SavepointCase):
     @classmethod
     def setUpClass(cls):
         super(TestProjectInvoiceProfile, cls).setUpClass()
-   
+
         user_group_employee = cls.env.ref("base.group_user")
         user_group_project_user = cls.env.ref("project.group_project_user")
         user_group_project_manager = cls.env.ref("project.group_project_manager")
