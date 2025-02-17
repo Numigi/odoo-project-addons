@@ -23,11 +23,13 @@ class AccountAnalyticLine(models.Model):
         may be created by a write before the return of super().create(vals).
         """
         lines = super(AccountAnalyticLine, self).create(vals_list)
-        for line, values in zip(lines, vals_list):
+
+        for line in lines:
             if line._requires_shop_supply_move() and \
                     not line._context.get('shop_supply_move'):
                 line.with_context(shop_supply_move=True).sudo()\
                     ._create_update_or_reverse_shop_supply_move()
+
         return lines
 
     def write(self, values):
@@ -114,7 +116,8 @@ class AccountAnalyticLine(models.Model):
                 )
             )
 
-        self.shop_supply_account_move_id.state = "draft"
+        self.shop_supply_account_move_id.button_draft()
+
         vals = self._get_shop_supply_move_vals()
         self.shop_supply_account_move_id.write(vals)
         self.shop_supply_account_move_id.action_post()
@@ -237,6 +240,8 @@ class AccountAnalyticLine(models.Model):
             "company_id": self.company_id.id,
             "journal_id": self._get_shop_supply_journal().id,
             "date": self.date,
+            # Clearing name to repost move for new sequence (draft > posted)
+            "name": "",
             "move_type": "entry",
             "no_analytic_lines": False,
             "ref": self._get_shop_supply_move_reference(),
@@ -259,7 +264,9 @@ class AccountAnalyticLine(models.Model):
         :rtype: bool
         """
         self = self.with_company(self.company_id)
-        return any(line.reconciled for line in self.shop_supply_account_move_id.line_ids)
+        return any(
+            line.reconciled for line in self.shop_supply_account_move_id.line_ids
+        )
 
     def _get_shop_supply_move_dependent_fields(self):
         """Get the fields that trigger an update of the wip entry.

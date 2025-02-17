@@ -55,6 +55,7 @@ def get_waiting_for_invoice_total(order, projects):
     """
     analytic_accounts = projects.mapped("analytic_account_id")
     lines_waiting_invoices = order.order_line.filtered(
+<<<<<<< HEAD
         lambda l: purchase_line_is_waiting_invoice(l)
         and l.account_analytic_id in analytic_accounts
     )
@@ -62,6 +63,15 @@ def get_waiting_for_invoice_total(order, projects):
         sum(
             l.price_unit * _get_purchase_line_waiting_qty(l)
             for l in lines_waiting_invoices
+=======
+        lambda line: purchase_line_is_waiting_invoice(line)
+        and line.account_analytic_id in analytic_accounts
+    )
+    return float_round(
+        sum(
+            line.price_unit * _get_purchase_line_waiting_qty(line)
+            for line in lines_waiting_invoices
+>>>>>>> 4c5e2c523ec69c771b8ebcec4ee02ccb73f54038
         ),
         2,
     )

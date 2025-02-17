@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo><data>
+    <record id="purchase_order_inherited_form_sale" model="ir.ui.view">
+        <field name="name">purchase.order.inherited.form.sale</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='order_line']//tree//field[@name='product_qty']" position="before">
+                <field name="task_id" optional="show"/>
+                <field name="material_line_id" invisible="1" groups="project.group_project_user"/>
+            </xpath>
+            <xpath expr="//field[@name='order_line']//form//field[@name='date_planned']" position="after">
+                <field name="task_id"/>
+                <field name="material_line_id" invisible="1" groups="project.group_project_user"/>
+            </xpath>
+        </field>
+    </record>
+</data></odoo>

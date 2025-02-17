@@ -24,7 +24,8 @@ class AnalyticLine(models.Model):
         for line in self:
             task_not_matching_project = (
                 line.origin_task_id
-                and line.origin_task_id.project_id.analytic_account_id != line.account_id
+                and line.origin_task_id.project_id.analytic_account_id
+                != line.account_id
             )
             if task_not_matching_project:
                 raise ValidationError(
@@ -42,7 +43,8 @@ class AnalyticLine(models.Model):
     @api.model_create_multi
     def create(self, vals_list):
         lines = super(AnalyticLine, self).create(vals_list)
-        for line, values in zip(lines, vals_list):
+
+        for line in lines:
             if line.task_id:
                 line.origin_task_id = line.task_id
         return lines
