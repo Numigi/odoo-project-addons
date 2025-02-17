@@ -53,10 +53,6 @@
                     <field name="name" />
                     <field name="account_id" />
                     <field name="origin_task_id" string="Task" />
-
-                    <!-- TO FIX : no more exist -->
-                    <!-- <field name="tag_ids" /> -->
-
                     <field name="unit_amount" />
                     <field name="amount" />
                 </tree>
@@ -76,7 +72,7 @@
         </field>
     </record>
 
-    <!--    TO FIX : find analytic_account_id that not exist anymore in account.move.line or deleting it-->
+    <!--    TO FIX in TA#75303 : find analytic_account_id that not exist anymore in account.move.line or deleting it-->
     <record id="view_account_move_line_filter" model="ir.ui.view">
         <field name="name">Journal Item Search: add field task</field>
         <field name="model">account.move.line</field>
