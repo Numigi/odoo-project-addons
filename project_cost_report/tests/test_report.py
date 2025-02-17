@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-# Copyright 2019 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
-=======
 # Copyright 2019-today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
->>>>>>> 4c5e2c523ec69c771b8ebcec4ee02ccb73f54038
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 from odoo.tests import common
@@ -174,13 +170,10 @@ class ProjectCostReportCase(common.SavepointCase):
         return self._get_time_section(context)["categories"][0]
 
     def _get_supply_section(self, context=None):
-<<<<<<< HEAD
-        return next(s for s in self._get_variables(context)["sections"] if s["name"] == "supply")
-=======
         return next(
             s for s in self._get_variables(context)["sections"] if s["name"] == "supply"
         )
->>>>>>> 4c5e2c523ec69c771b8ebcec4ee02ccb73f54038
+
 
     def _get_time_section(self, context=None):
         return next(s for s in self._get_variables(context)["sections"] if s["name"] == "time")
