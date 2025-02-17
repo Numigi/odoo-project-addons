@@ -11,7 +11,7 @@ class AccountAnalyticLine(models.Model):
     @api.constrains("task_id", "project_id")
     def _check_task_project_allow_timesheets(self):
         error_message = _(
-            "You can't link a time sheet line to a task if its project's stage"
+            "You can't link a timesheet line to a task if its project's stage"
             " does not allow it. (Task: {}, Project: {}, Project Stage: {})"
         )
         for rec in self:

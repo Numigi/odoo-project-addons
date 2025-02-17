@@ -11,10 +11,10 @@ class ProjectTask(models.Model):
     @api.constrains("project_id")
     def _check_project_move_allow_timesheet(self):
         """Check if a line is moved to another project,
-        the target project must allow time sheet"""
+        the target project must allow timesheet"""
 
         error_message = _(
-            "You cannot move a task linked to a timesheet line in a project if its"
+            "You cannot move a task linked to a timesheet line in a project if its "
             "stage does not allow it. (Task: {}, Project: {}, Project Stage: {})"
         )
 
