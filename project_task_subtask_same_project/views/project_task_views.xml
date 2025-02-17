@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="view_task_form2" model="ir.ui.view">
+        <field name="name">Project task: Project Readonly for Subtasks</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_form2"/>
+        <field name="arch" type="xml">
+            <field name="display_project_id" position="attributes">
+                <attribute name="attrs">{'readonly': [('parent_id', '!=', False)],'invisible': [('parent_id', '=', False)]}</attribute>
+            </field>
+        </field>
+    </record>
+
+    <record id="view_task_kanban" model="ir.ui.view">
+        <field name="name">Project task: Project Readonly for Subtasks Kanban</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_kanban"/>
+        <field name="arch" type="xml">
+            <field name="project_id" position="after">
+                <field name="parent_id" invisible="1"/>
+            </field>
+            <field name="project_id" position="attributes">
+                <attribute name="attrs">{'readonly': [('parent_id', '!=', False)]}</attribute>
+            </field>
+        </field>
+    </record>
+
+</odoo>
