@@ -30,6 +30,6 @@ class ProjectTaskMaterial(models.Model):
     def _compute_available_qty(self):
         for rec in self:
             warehouse_id = self.env['stock.warehouse'].search([
-                ('company_id', '=', self.company_id.id)], limit=1)
+                ('company_id', '=', rec.company_id.id)], limit=1)
             rec.available_qty = rec.product_id.with_context(
                 warehouse=warehouse_id.id).free_qty
