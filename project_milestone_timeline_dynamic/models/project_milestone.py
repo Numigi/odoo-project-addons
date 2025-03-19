@@ -34,14 +34,12 @@ class ProjectMilestone(models.Model):
                 )
 
     def _check_child_milestones_target_date(self):
-        child_last_end_dates = self.child_ids.mapped("target_date")
-        if (
-            child_last_end_dates
-            and self.start_date
-            and self.start_date <= max(child_last_end_dates)
-        ):
+        child_last_end_dates = self.child_ids.sorted(key='target_date',
+            reverse=True).mapped('target_date')
+        if child_last_end_dates and (not self.start_date or self.start_date <= \
+                                     child_last_end_dates[0]):
             milestone_duration = self.target_date - self.start_date
-            self.start_date = max(child_last_end_dates) + timedelta(days=1)
+            self.start_date = child_last_end_dates[0] + timedelta(days=1)
             self.target_date = self.start_date + milestone_duration
 
     def _get_parent_milestone(self):
