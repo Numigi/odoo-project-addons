@@ -45,6 +45,7 @@ class TestProjectMilestoneTimelineDynamic(SavepointCase):
         self.milestone_abc.write({
             'child_ids': [(4, self.milestone_zzz.id)]
         })
+        self.milestone_abc._onchange_child_ids()
         assert self.milestone_abc.start_date == \
                fields.Date.from_string("2022-09-16")
         assert self.milestone_abc.target_date == \
