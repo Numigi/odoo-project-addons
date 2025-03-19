@@ -3,7 +3,7 @@
 
 {
     "name": "Project Milestone Timeline Dynamic",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "author": "Numigi",
     "maintainer": "Numigi",
     "website": "https://bit.ly/numigi-com",
