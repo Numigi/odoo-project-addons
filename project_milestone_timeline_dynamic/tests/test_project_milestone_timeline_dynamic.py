@@ -67,6 +67,7 @@ class TestProjectMilestoneTimelineDynamic(SavepointCase):
         self.milestone_1.write({
             'target_date': "2022-10-15"
         })
+        self.milestone_3._onchange_child_ids()
         # Date start and Date end of Milestone 3 must change
         assert self.milestone_3.start_date == \
                fields.Date.from_string("2022-10-16")
@@ -77,7 +78,7 @@ class TestProjectMilestoneTimelineDynamic(SavepointCase):
             'start_date': "2022-09-01",
             'target_date': "2022-10-30"
         })
-
+        self.milestone_3._onchange_child_ids()
         # Date start and Date end of Milestone 3 must change
         assert self.milestone_3.start_date == \
                fields.Date.from_string("2022-10-31")
