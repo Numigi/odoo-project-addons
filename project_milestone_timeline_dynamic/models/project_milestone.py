@@ -33,6 +33,11 @@ class ProjectMilestone(models.Model):
                     )
                 )
 
+    @api.onchange('child_ids')
+    def _onchange_child_ids(self):
+        self._check_child_milestones_target_date()
+        return
+
     def _check_child_milestones_target_date(self):
         child_last_end_dates = self.child_ids.sorted(key='target_date',
             reverse=True).mapped('target_date')
@@ -57,11 +62,9 @@ class ProjectMilestone(models.Model):
 
     def write(self, vals):
         for milestone in self:
-            if "child_ids" in vals:
-                milestone._check_child_milestones_target_date()
             if "target_date" in vals:
                 parent_milestone = milestone._get_parent_milestone()
                 if parent_milestone:
+                    print("parent_milestone")
                     parent_milestone._check_child_milestones_target_date()
-
         return super(ProjectMilestone, self).write(vals)
