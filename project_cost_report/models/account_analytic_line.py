@@ -18,9 +18,13 @@ class AnalyticLine(models.Model):
         ],
         compute="_compute_project_cost_section",
         store=True,
+        compute_sudo=True
     )
     project_cost_category_id = fields.Many2one(
-        "project.cost.category", compute="_compute_project_cost_category", store=True
+        "project.cost.category",
+        compute="_compute_project_cost_category",
+        store=True,
+        compute_sudo=True
     )
 
     @api.depends("amount", "unit_amount")
