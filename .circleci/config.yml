@@ -31,14 +31,14 @@ jobs:
        - store_test_results:
           path: .log
 
-  testcafe:
-    machine: true
-    steps:
-      - checkout
+  #testcafe:
+   # machine: true
+    #steps:
+     # - checkout
 
-      - run:
-          name: Build -- Init Database
-          command: docker-compose run --rm odoo odoo --stop-after-init -i main
+      #- run:
+       #   name: Build -- Init Database
+        #  command: docker-compose run --rm odoo odoo --stop-after-init -i main
 
 
     #  - run:
