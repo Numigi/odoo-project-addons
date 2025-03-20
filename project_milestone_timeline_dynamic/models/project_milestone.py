@@ -1,7 +1,9 @@
 # © 2022 - Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
-from odoo import models, api, fields, _
+
 from datetime import timedelta
+
+from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
 
 
@@ -33,17 +35,29 @@ class ProjectMilestone(models.Model):
                     )
                 )
 
-    @api.onchange('child_ids')
+    @api.onchange("child_ids")
     def _onchange_child_ids(self):
-        self._check_child_milestones_target_date()
-        return
+        child_last_end_dates = self.child_ids.sorted(
+            key="target_date", reverse=True
+        ).mapped("target_date")
 
-    def _check_child_milestones_target_date(self):
-        child_last_end_dates = self.child_ids.sorted(key='target_date',
-            reverse=True).mapped('target_date')
-        if child_last_end_dates and (not self.start_date or self.start_date <= \
-                                     child_last_end_dates[0]):
-            milestone_duration = self.target_date - self.start_date
+        self._assign_new_timeline(
+            self.start_date, self.target_date, child_last_end_dates
+        )
+
+    def write(self, vals):
+        for milestone in self:
+            if "target_date" in vals:
+                parent_milestone = milestone._get_parent_milestone()
+                if parent_milestone:
+                    parent_milestone.update_parent_timeline(milestone, vals)
+        return super(ProjectMilestone, self).write(vals)
+
+    def _assign_new_timeline(self, start_date, target_date, child_last_end_dates):
+        if child_last_end_dates and (
+            not start_date or start_date <= child_last_end_dates[0]
+        ):
+            milestone_duration = target_date - start_date
             self.start_date = child_last_end_dates[0] + timedelta(days=1)
             self.target_date = self.start_date + milestone_duration
 
@@ -60,11 +74,16 @@ class ProjectMilestone(models.Model):
             else None
         )
 
-    def write(self, vals):
-        for milestone in self:
-            if "target_date" in vals:
-                parent_milestone = milestone._get_parent_milestone()
-                if parent_milestone:
-                    print("parent_milestone")
-                    parent_milestone._check_child_milestones_target_date()
-        return super(ProjectMilestone, self).write(vals)
+    def update_parent_timeline(self, child_milestone, updated_val):
+        child_ids = self.child_ids - child_milestone
+        child_last_end_dates = child_ids.sorted(key="target_date", reverse=True).mapped(
+            "target_date"
+        )
+        child_target_date = fields.Date.from_string(updated_val["target_date"])
+
+        if child_target_date not in child_last_end_dates:
+            child_last_end_dates.append(child_target_date)
+            child_last_end_dates.sort(reverse=True)
+            self._assign_new_timeline(
+                self.start_date, self.target_date, child_last_end_dates
+            )
