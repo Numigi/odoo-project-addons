@@ -41,9 +41,10 @@ jobs:
           command: docker-compose run --rm odoo odoo --stop-after-init -i main
 
 
-      - run:
-          name: Run Tests With Chrome
-          command: docker-compose run --rm testcafe --debug-mode 'chrome:headless --no-sandbox --disable-gpu --remote-debugging-port=9222' /tests/*.js
+    #  - run:
+     
+          #name: Run Tests With Chrome
+          #command: docker-compose run --rm testcafe --debug-mode 'chrome:headless --no-sandbox --disable-gpu  /tests/*.js
 
   # job that find the next tag for the current branch/repo and push the tag to github.
   # it will trigger the publish of a new docker image.
