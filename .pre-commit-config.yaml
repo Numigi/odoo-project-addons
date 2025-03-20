@@ -20,7 +20,7 @@ exclude: |
   (LICENSE.*|COPYING.*)
 default_language_version:
   python: python3
-  node: "14.13.0"
+  node: "10.24.1"
 repos:
   - repo: https://github.com/PyCQA/flake8
     rev: 3.8.3
