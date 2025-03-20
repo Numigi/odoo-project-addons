@@ -3,7 +3,7 @@
 
 {
     "name": "Project Cost Report",
-    "version": "1.4.0",
+    "version": "12.0.2.0.0",
     "author": "Numigi",
     "maintainer": "Numigi",
     "website": "https://bit.ly/numigi-com",
