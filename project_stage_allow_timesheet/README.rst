@@ -6,7 +6,6 @@ This module introduces the concept of timesheets on project stages.
 With this implementation:
 
 - The field ``allow_timesheets`` on the project is now readonly and automatically computed based on the ``allow_timesheets`` field of the project's stage.
-- Additionally, the ``allow_timesheets`` field in the project form view is now readonly, ensuring it reflects the project's stage configuration.
 
 .. image:: https://raw.githubusercontent.com/Numigi/odoo-project-addons/16.0/project_stage_allow_timesheet/static/description/project_form_view.png
 
