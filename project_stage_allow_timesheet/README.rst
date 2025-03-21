@@ -1,7 +1,7 @@
 Project Stage Allow Timesheet
 =============================
 
-This module adds the notion of timesheet on project stages.
+This module adds the notion of timesheet on project stage.
 With this implementation, the field `allow_timesheets` on project is now readonly and
 it is driven by the stage the project is in.
 
