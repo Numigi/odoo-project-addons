@@ -20,9 +20,6 @@ class AccountMoveLine(models.Model):
         compute="_compute_analytic_distribution_ids",
         store=True,
         string="Analytic Distribution IDs",
-        relation="account_move_line_distribution_rel",
-        column1="line_id",
-        column2="account_id",
     )
 
     @api.depends("analytic_distribution")
