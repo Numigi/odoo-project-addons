@@ -61,7 +61,7 @@ class ProjectTaskWithFullTextSearch(models.Model):
         self.env.cr.execute(
             """
             SELECT id FROM project_task
-            WHERE to_tsvector(%(lang)s, full_text_content) 
+            WHERE to_tsvector(%(lang)s, full_text_content)
             @@ plainto_tsquery(%(lang)s, %(words)s);
             """,
             {
