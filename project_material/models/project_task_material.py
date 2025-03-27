@@ -325,7 +325,7 @@ class TaskMaterialLine(models.Model):
     def _get_first_step_moves(self):
         moves = self.env["stock.move"]
 
-        for moves in self._iter_procurement_moves():
+        for moves in self._iter_procurement_moves():  # noqa B007
             pass
 
         return moves
