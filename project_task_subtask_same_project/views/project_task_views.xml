@@ -10,9 +10,9 @@
                 <attribute name="attrs">{'readonly': [('parent_id', '!=', False)]}</attribute>
                 <attribute name="invisible">1</attribute>
             </field>
-              <field name="project_id" position="attributes">
+            <field name="project_id" position="attributes">
                 <attribute name="attrs">{'readonly': [('parent_id', '!=', False)]}</attribute>
-                 <attribute name="invisible">0</attribute>
+                <attribute name="invisible">0</attribute>
             </field>
         </field>
     </record>
