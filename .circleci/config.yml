@@ -24,9 +24,9 @@ jobs:
           name: Run Test
           command: docker-compose run --rm odoo run_pytest.sh
 
-      #  - run:
-      #     name: Codacy Coverage
-      #     command: bash <(curl -Ls https://coverage.codacy.com/get.sh) report -l python -r .log/coverage.xml
+       - run:
+          name: Codacy Coverage
+          command: bash <(curl -Ls https://coverage.codacy.com/get.sh) report -l python -r .log/coverage.xml
 
        - store_test_results:
           path: .log
