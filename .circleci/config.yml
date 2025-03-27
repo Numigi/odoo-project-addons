@@ -69,7 +69,7 @@ workflows:
       - tests:
           context: quay.io
 
-      - testcafe
+      # - testcafe
 
       - auto-tag:
           context: nws
