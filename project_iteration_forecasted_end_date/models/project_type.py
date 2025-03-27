@@ -9,4 +9,5 @@ class ProjectType(models.Model):
     _inherit = "project.type"
 
     exclude_forecasted_end_date = fields.Boolean(
-        "Exclude From Forecasted End Date Computation")
+        "Exclude From Forecasted End Date Computation"
+    )

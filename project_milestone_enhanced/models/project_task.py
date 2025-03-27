@@ -8,7 +8,7 @@ class ProjectTask(models.Model):
 
     _inherit = "project.task"
 
-    @api.onchange('project_id')
+    @api.onchange("project_id")
     def _onchange_project(self):
         result = super(ProjectTask, self)._onchange_project()
         self.milestone_id = False

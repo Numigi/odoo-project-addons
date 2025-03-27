@@ -9,7 +9,7 @@
     <record id="project_form_with_smart_button" model="ir.ui.view">
         <field name="name">Project Form: Milestone time report</field>
         <field name="model">project.project</field>
-        <field name="inherit_id" ref="project.edit_project"/>
+        <field name="inherit_id" ref="project.edit_project" />
         <field name="arch" type="xml">
             <button name="toggle_active" position="before">
                 <button class="oe_stat_button"

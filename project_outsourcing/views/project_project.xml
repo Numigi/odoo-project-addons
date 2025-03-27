@@ -16,7 +16,7 @@
     <record id="project_form_with_outsourcing_smart_button" model="ir.ui.view">
         <field name="name">Project Form: add outsourcing smart button</field>
         <field name="model">project.project</field>
-        <field name="inherit_id" ref="project.edit_project"/>
+        <field name="inherit_id" ref="project.edit_project" />
         <field name="arch" type="xml">
             <button name="toggle_active" position="before">
                 <button
@@ -26,7 +26,7 @@
                     icon="fa-shopping-cart"
                     groups="purchase.group_purchase_user"
                     >
-                    <field string="Outsourcing" name="outsourcing_po_count" widget="statinfo"/>
+                    <field string="Outsourcing" name="outsourcing_po_count" widget="statinfo" />
                 </button>
             </button>
         </field>

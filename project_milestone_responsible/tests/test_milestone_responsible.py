@@ -9,8 +9,7 @@ class TestMilestoneResponsible(SavepointCase):
     def setUpClass(cls):
         super().setUpClass()
         cls.user = cls.env["res.users"].create(
-            {"name": "Test", "email": "testing@testmail.com",
-             "login": "testing"}
+            {"name": "Test", "email": "testing@testmail.com", "login": "testing"}
         )
         cls.project_1 = cls.env["project.project"].create(
             {
@@ -25,7 +24,4 @@ class TestMilestoneResponsible(SavepointCase):
 
     def test_onchange_milestone_project(self):
         self.milestone_1._onchange_project_id()
-        assert (
-            self.milestone_1.user_id.id
-            == self.project_1.user_id.id
-        )
+        assert self.milestone_1.user_id.id == self.project_1.user_id.id

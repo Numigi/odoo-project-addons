@@ -20,14 +20,16 @@ class TestOutsourcingPurchaseOrder(OutsourcingCase):
         assert self.order.order_line.account_analytic_id.project_ids == self.project
 
     def test_on_line_create__project_propagated(self):
-        new_line = self.order.order_line.copy({'account_analytic_id': False})
+        new_line = self.order.order_line.copy({"account_analytic_id": False})
         assert new_line.account_analytic_id.project_ids == self.project
 
     def test_on_project_changed__project_propagated_to_order_lines(self):
         new_project = self.project.copy()
-        new_task = self.task.copy({'project_id': new_project.id})
-        self.order.write({
-            'project_id': new_project.id,
-            'task_id': new_task.id,
-        })
+        new_task = self.task.copy({"project_id": new_project.id})
+        self.order.write(
+            {
+                "project_id": new_project.id,
+                "task_id": new_task.id,
+            }
+        )
         assert self.order.order_line.account_analytic_id.project_ids == new_project

@@ -5,6 +5,6 @@ from odoo import fields, models
 
 
 class ProductTemplate(models.Model):
-    _inherit = 'product.template'
+    _inherit = "product.template"
 
     automate_time_entries = fields.Boolean("Automate Time Entries")

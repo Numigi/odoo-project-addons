@@ -6,34 +6,35 @@ from odoo import api, fields, models
 
 class StockMove(models.Model):
 
-    _inherit = 'stock.move'
+    _inherit = "stock.move"
 
     task_id = fields.Many2one(
-        'project.task',
+        "project.task",
         index=True,
-        ondelete='restrict',
+        ondelete="restrict",
         readonly=True,
     )
 
     project_id = fields.Many2one(
-        related='task_id.project_id', store=True,
+        related="task_id.project_id",
+        store=True,
         readonly=True,
     )
     material_line_id = fields.Many2one(
-        'project.task.material',
-        'Material Line',
+        "project.task.material",
+        "Material Line",
         index=True,
-        ondelete='restrict',
+        ondelete="restrict",
     )
 
     def _get_new_picking_values(self):
         vals = super()._get_new_picking_values()
-        vals['task_id'] = self.task_id.id
+        vals["task_id"] = self.task_id.id
         return vals
 
     def _prepare_procurement_values(self):
         vals = super()._prepare_procurement_values()
-        vals['task_id'] = self.task_id.id
+        vals["task_id"] = self.task_id.id
         return vals
 
 
@@ -44,12 +45,12 @@ class StockMoveWithNoAggregation(models.Model):
     a separate chain of stock moves.
     """
 
-    _inherit = 'stock.move'
+    _inherit = "stock.move"
 
     destination_material_line_id = fields.Many2one(
-        'project.task.material',
-        'Destination Material Line',
-        compute='_compute_destination_material_line_id',
+        "project.task.material",
+        "Destination Material Line",
+        compute="_compute_destination_material_line_id",
         store=True,
     )
 
@@ -65,12 +66,12 @@ class StockMoveWithNoAggregation(models.Model):
         if self.origin_returned_move_id:
             return self.origin_returned_move_id._find_destination_material_line()
 
-        return self.mapped('move_dest_ids.material_line_id')[:1]
+        return self.mapped("move_dest_ids.material_line_id")[:1]
 
     @api.model
     def _prepare_merge_moves_distinct_fields(self):
         result = super()._prepare_merge_moves_distinct_fields()
-        result.append('destination_material_line_id')
+        result.append("destination_material_line_id")
         return result
 
     @api.model
@@ -78,4 +79,3 @@ class StockMoveWithNoAggregation(models.Model):
         result = super()._prepare_merge_move_sort_method(move)
         result.append(move.destination_material_line_id.id)
         return result
-    

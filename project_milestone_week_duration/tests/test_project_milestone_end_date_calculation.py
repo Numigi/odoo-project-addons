@@ -8,7 +8,7 @@ from odoo import fields
 class TestProjectMilestoneTimeKPI(TransactionCase):
 
     def test_project_milestone_end_date_calculation(self):
-        milestone = self.env['project.milestone'].create(
+        milestone = self.env["project.milestone"].create(
             {
                 "name": "Test End Date Calculation",
                 "start_date": fields.Date.from_string("2022-08-01"),

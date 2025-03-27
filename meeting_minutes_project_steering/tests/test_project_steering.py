@@ -9,22 +9,24 @@ class TestProjectSteering(TransactionCase):
     def setUp(self):
         super().setUp()
         self.task_model = (self.env.ref("project.model_project_task").id,)
-
+        domain_1 = '["&",["name","ilike","Room"],["user_id","!=",False]]'
         self.steering_kpi_1 = self.env["project.steering.kpi"].create(
             {
                 "name": "Steering KPI 1",
                 "sequence": 2,
                 "model_id": self.task_model,
-                "primary_filter_domain": '["&",["name","ilike","Room"],["user_id","!=",False]]',
+                "primary_filter_domain": domain_1,
             }
         )
-
+        domain_2 = (
+            '["&",["date_deadline","<","2024-01-03"],["date_deadline","!=",False]]'
+        )
         self.steering_kpi_2 = self.env["project.steering.kpi"].create(
             {
                 "name": "Steering KPI 2",
                 "sequence": 1,
                 "model_id": self.task_model,
-                "primary_filter_domain": '["&",["date_deadline","<","2024-01-03"],["date_deadline","!=",False]]',
+                "primary_filter_domain": domain_2,
             }
         )
 

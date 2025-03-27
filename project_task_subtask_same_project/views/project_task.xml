@@ -6,7 +6,7 @@
     <record id="task_form_project_id_readonly_for_subtasks" model="ir.ui.view">
         <field name="name">Project task: Project Readonly for Subtasks</field>
         <field name="model">project.task</field>
-        <field name="inherit_id" ref="project.view_task_form2"/>
+        <field name="inherit_id" ref="project.view_task_form2" />
         <field name="arch" type="xml">
             <field name="project_id" position="attributes">
                 <attribute name="attrs">{'readonly': [('parent_id', '!=', False)]}</attribute>
@@ -20,10 +20,10 @@
     <record id="task_kanban_project_id_readonly_for_subtasks" model="ir.ui.view">
         <field name="name">Project task: Project Readonly for Subtasks Kanban</field>
         <field name="model">project.task</field>
-        <field name="inherit_id" ref="project.view_task_kanban"/>
+        <field name="inherit_id" ref="project.view_task_kanban" />
         <field name="arch" type="xml">
             <field name="project_id" position="after">
-                <field name="parent_id" invisible="1"/>
+                <field name="parent_id" invisible="1" />
             </field>
             <field name="project_id" position="attributes">
                 <attribute name="attrs">{'readonly': [('parent_id', '!=', False)]}</attribute>

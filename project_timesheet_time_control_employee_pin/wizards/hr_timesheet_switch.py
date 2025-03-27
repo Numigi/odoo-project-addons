@@ -24,15 +24,15 @@ class HrTimesheetSwitch(models.TransientModel):
         self.read(_fields)
         values = self._convert_to_write(self._cache)
         # check if user selected a valid employee PIN
-        if not values.get('pin'):
+        if not values.get("pin"):
             employee = None
         else:
-            employee = self.env['hr.employee'].search(
-                [('pin', '=', values.get('pin'))], limit=1)
-        values['employee_id'] = employee.id if employee else None
+            employee = self.env["hr.employee"].search(
+                [("pin", "=", values.get("pin"))], limit=1
+            )
+        values["employee_id"] = employee.id if employee else None
         if not employee:
-            raise UserError(_(
-                "Please enter an existing employee PIN."))
+            raise UserError(_("Please enter an existing employee PIN."))
         # Stop old timer
         self.with_context(
             resuming_lines=self.ids,
@@ -40,10 +40,9 @@ class HrTimesheetSwitch(models.TransientModel):
         ).running_timer_id.button_end_work()
 
         # Start new timer
-        new = self.env["account.analytic.line"].create({
-            field: value for (field, value) in values.items()
-            if field in _fields
-        })
+        new = self.env["account.analytic.line"].create(
+            {field: value for (field, value) in values.items() if field in _fields}
+        )
         # Display created timer record if requested
         if self.env.context.get("show_created_timer"):
             form_view = self.env.ref("hr_timesheet.hr_timesheet_line_form")
@@ -66,9 +65,11 @@ class HrTimesheetSwitch(models.TransientModel):
             ],
         }
 
-    @api.onchange('pin')
+    @api.onchange("pin")
     def _onchange_pin(self):
-        self.employee_id = self.env['hr.employee'].search(
-                [('pin', '=', self.pin)], limit=1).id if self.pin else False
-        self.running_timer_id = \
-            self._default_running_timer_id(self.employee_id)
+        self.employee_id = (
+            self.env["hr.employee"].search([("pin", "=", self.pin)], limit=1).id
+            if self.pin
+            else False
+        )
+        self.running_timer_id = self._default_running_timer_id(self.employee_id)

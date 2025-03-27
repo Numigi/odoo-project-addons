@@ -3,15 +3,15 @@
     <record id="meeting_minutes_project_form" model="ir.ui.view">
         <field name="name">Project Form With Meeting Minutes</field>
         <field name="model">project.project</field>
-        <field name="inherit_id" ref="project.edit_project"/>
+        <field name="inherit_id" ref="project.edit_project" />
         <field name="arch" type="xml">
             <xpath expr="//header" position="inside">
-                <field name="meeting_minutes_count" invisible="1"/>
+                <field name="meeting_minutes_count" invisible="1" />
             </xpath>
             <xpath expr="//div[hasclass('oe_button_box')]" position="inside">
                 <button name="%(action_view_meeting_minutes_project)d"
                     type="action" class="oe_stat_button order-9"  icon="fa-exchange" groups="project.group_project_user">
-                    <field name="meeting_minutes_count" widget="statinfo" string="Meeting minutes"/>
+                    <field name="meeting_minutes_count" widget="statinfo" string="Meeting minutes" />
                 </button>
             </xpath>
         </field>

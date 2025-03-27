@@ -148,7 +148,7 @@ class TaskMaterialLine(models.Model):
 
         if "product_id" in vals or "task_id" in vals or "initial_qty" in vals:
             lines_with_procurement = self.filtered(
-                lambda l: l._should_generate_procurement()
+                lambda line: line._should_generate_procurement()
             )
             for line in lines_with_procurement:
                 line.sudo()._run_procurements()
@@ -200,8 +200,8 @@ class TaskMaterialLine(models.Model):
         if float_compare(self.initial_qty, 0, precision_digits=precision) < 0:
             raise ValidationError(
                 _(
-                    "Material consumption lines can not have an initial quantity below zero. "
-                    "The line {line} has a quantity of {qty}."
+                    "Material consumption lines can not have an initial quantity "
+                    "below zero. The line {line} has a quantity of {qty}."
                 ).format(line=self.product_id.display_name, qty=self.initial_qty)
             )
 
@@ -237,8 +237,8 @@ class TaskMaterialLine(models.Model):
         if not self.task_id.project_id.warehouse_id:
             raise ValidationError(
                 _(
-                    "Before adding products to consume on a task, a warehouse must be defined "
-                    "on the project ({project})."
+                    "Before adding products to consume on a task, a warehouse"
+                    " must be defined on the project ({project})."
                 ).format(project=self.task_id.project_id.display_name)
             )
         return self.task_id.project_id.warehouse_id
@@ -272,9 +272,10 @@ class TaskMaterialLine(models.Model):
         if more_to_reduce_than_available:
             raise ValidationError(
                 _(
-                    "The quantity on the material line {line} can not be reduced to {new_quantity} "
-                    "(it can not be lower than the delivered quantity).\n\n"
-                    "The line may not be reduced below a minimum of {minimum_qty} {uom}."
+                    "The quantity on the material line {line} can not be reduced"
+                    " to {new_quantity} (it can not be lower than the delivered"
+                    " quantity).\n\nThe line may not be reduced below a minimum"
+                    " of {minimum_qty} {uom}."
                 ).format(
                     line=self.product_id.display_name,
                     new_quantity=self.initial_qty,
@@ -324,7 +325,7 @@ class TaskMaterialLine(models.Model):
     def _get_first_step_moves(self):
         moves = self.env["stock.move"]
 
-        for moves in self._iter_procurement_moves():
+        for _moves in self._iter_procurement_moves():
             pass
 
         return moves

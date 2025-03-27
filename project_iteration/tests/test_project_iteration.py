@@ -2,6 +2,7 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 import pytest
+
 from odoo.exceptions import ValidationError
 from .common import ProjectIterationCase
 
@@ -22,7 +23,7 @@ class TestProjectIteration(ProjectIterationCase):
         assert not self.project_2.is_parent
 
     def test_project_with_children_removed_is_not_parent(self):
-        self.project_1.write({'child_ids': [(5, 0)]})
+        self.project_1.write({"child_ids": [(5, 0)]})
         assert not self.project_1.is_parent
 
     def test_iteration_can_not_have_child_projects(self):

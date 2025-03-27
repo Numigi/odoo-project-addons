@@ -23,10 +23,12 @@ class AnalyticLine(models.Model):
         may be created by a write before the return of super().create(vals).
         """
         line = super().create(vals)
-        if line._requires_shop_supply_move() and \
-                not line._context.get('shop_supply_move'):
-            line.with_context(shop_supply_move=True).sudo()\
-                ._create_update_or_reverse_shop_supply_move()
+        if line._requires_shop_supply_move() and not line._context.get(
+            "shop_supply_move"
+        ):
+            line.with_context(
+                shop_supply_move=True
+            ).sudo()._create_update_or_reverse_shop_supply_move()
         return line
 
     @api.multi
@@ -48,7 +50,7 @@ class AnalyticLine(models.Model):
     @api.multi
     def unlink(self):
         """Reverse the salary account move entry when a timesheet line is deleted."""
-        lines_with_moves = self.filtered(lambda l: l.shop_supply_account_move_id)
+        lines_with_moves = self.filtered(lambda line: line.shop_supply_account_move_id)
         for line in lines_with_moves:
             line.sudo()._reverse_shop_supply_account_move_for_deleted_timesheet()
         return super().unlink()
@@ -215,7 +217,9 @@ class AnalyticLine(models.Model):
 
         :rtype: bool
         """
-        return any(l.reconciled for l in self.shop_supply_account_move_id.line_ids)
+        return any(
+            line.reconciled for line in self.shop_supply_account_move_id.line_ids
+        )
 
     def _get_shop_supply_move_dependent_fields(self):
         """Get the fields that trigger an update of the wip entry.

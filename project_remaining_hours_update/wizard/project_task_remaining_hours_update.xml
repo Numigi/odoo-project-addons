@@ -8,14 +8,14 @@
             <form string="Update Remaining Hours">
                 <sheet>
                     <group>
-                        <field name="task_id" readonly="1"/>
-                        <field name="new_remaining_hours" widget="float_time" required="1"/>
-                        <field name="comment"/>
+                        <field name="task_id" readonly="1" />
+                        <field name="new_remaining_hours" widget="float_time" required="1" />
+                        <field name="comment" />
                     </group>
                 </sheet>
                 <footer>
-                    <button name="validate" class="oe_highlight" string="Validate" type="object"/>
-                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    <button name="validate" class="oe_highlight" string="Validate" type="object" />
+                    <button string="Cancel" class="btn-secondary" special="cancel" />
                 </footer>
             </form>
         </field>

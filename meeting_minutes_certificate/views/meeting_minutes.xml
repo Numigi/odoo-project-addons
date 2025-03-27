@@ -4,13 +4,13 @@
     <record id="meeting_minutes_view_form" model="ir.ui.view">
         <field name="name">Meeting Minutes: add training certificate</field>
         <field name="model">meeting.minutes.project</field>
-        <field name="inherit_id" ref="meeting_minutes_project.meeting_minutes_project_view_form"/>
+        <field name="inherit_id" ref="meeting_minutes_project.meeting_minutes_project_view_form" />
         <field name="arch" type="xml">
             <header position="inside">
-                <button name="preview_on_portal" type="object" string="Preview"/>
+                <button name="preview_on_portal" type="object" string="Preview" />
             </header>
             <field name="end_date" position="after">
-                <field name="certificate_enabled"/>
+                <field name="certificate_enabled" />
             </field>
             <notebook position="inside">
                 <page
@@ -18,7 +18,7 @@
                     string="Training Certificate"
                     attrs="{'invisible': [('certificate_enabled', '=', False)]}"
                     >
-                    <field name="signed_by_all" invisible="1"/>
+                    <field name="signed_by_all" invisible="1" />
                     <group>
                         <group>
                             <div class="oe_inline">
@@ -62,14 +62,14 @@
                                 attrs="{'readonly': [('state', '!=', 'draft')]}"
                                 force_save="1"
                                 />
-                            <field name="type_"/>
-                            <field name="signature_datetime" string="Signature Date"/>
-                            <field name="signature" widget="image"/>
-                            <field name="state"/>
+                            <field name="type_" />
+                            <field name="signature_datetime" string="Signature Date" />
+                            <field name="signature" widget="image" />
+                            <field name="state" />
                             <button name="request_signature" type="object" string="Resend"
                                 attrs="{'invisible': [('state', '!=', 'sent')]}"
                                 />
-                            <button name="get_formview_action" type="object" icon="fa-info"/>
+                            <button name="get_formview_action" type="object" icon="fa-info" />
                         </tree>
                     </field>
                 </page>

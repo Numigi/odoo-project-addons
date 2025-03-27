@@ -29,7 +29,7 @@ require("web.FormRenderer").include({
      * The shortcut is to use the attribute `invisible_on_template`
      * instead of attrs="{'project_template_invisible': [('is_template', '=', True)]}".
      *
-     * <field name="my_field" invisible_on_template="1"/>
+     * <field name="my_field" invisible_on_template="1" />
      *
      * This improves the readability and prevents having to rewrite the whole attrs
      * for each node.

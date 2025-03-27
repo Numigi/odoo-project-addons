@@ -15,9 +15,7 @@ class OutsourcingCase(common.TransactionCase):
                 "name": "Project User",
                 "login": "project_user",
                 "email": "project_user@test.com",
-                "groups_id": [
-                    (4, self.env.ref("project.group_project_user").id)
-                ],
+                "groups_id": [(4, self.env.ref("project.group_project_user").id)],
             }
         )
 
@@ -26,49 +24,48 @@ class OutsourcingCase(common.TransactionCase):
                 "name": "Purchase User",
                 "login": "purchase_user",
                 "email": "purchase_user@test.com",
-                "groups_id": [
-                    (4, self.env.ref("purchase.group_purchase_user").id)
-                ],
+                "groups_id": [(4, self.env.ref("purchase.group_purchase_user").id)],
             }
         )
 
-        self.supplier = self.env["res.partner"].create({
-            "name": "Supplier A",
-            "is_company": True,
-            "supplier": True,
-            "subcontracting_auto_time_entries": True,
-            "employee_id": self.env.ref("hr.employee_admin").id,
-        })
+        self.supplier = self.env["res.partner"].create(
+            {
+                "name": "Supplier A",
+                "is_company": True,
+                "supplier": True,
+                "subcontracting_auto_time_entries": True,
+                "employee_id": self.env.ref("hr.employee_admin").id,
+            }
+        )
 
-        self.supplier_child = self.env["res.partner"].create({
-            "name": "Supplier Child A",
-            "company_type": 'person',
-            "supplier": True,
-            "parent_id": self.supplier.id,
-        })
+        self.supplier_child = self.env["res.partner"].create(
+            {
+                "name": "Supplier Child A",
+                "company_type": "person",
+                "supplier": True,
+                "parent_id": self.supplier.id,
+            }
+        )
 
         self.project = self.env["project.project"].create({"name": "Job 123"})
 
         self.stage_new = self.env.ref("project.project_stage_data_0")
         self.stage_done = self.env.ref("project.project_stage_2")
-        self.stage_done.write({
-            "create_subcontractors_time_entries": True
-        })
-        self.stage_test = self.env["project.task.type"].create({
-            "name": "Client Test",
-            "create_subcontractors_time_entries": True
-        })
-        self.task = self.env["project.task"].create({
-            "name": "Task 450",
-            "project_id": self.project.id,
-            "stage_id": self.stage_new.id,
-        })
+        self.stage_done.write({"create_subcontractors_time_entries": True})
+        self.stage_test = self.env["project.task.type"].create(
+            {"name": "Client Test", "create_subcontractors_time_entries": True}
+        )
+        self.task = self.env["project.task"].create(
+            {
+                "name": "Task 450",
+                "project_id": self.project.id,
+                "stage_id": self.stage_new.id,
+            }
+        )
 
-        self.product = self.env["product.product"].create({
-            "name": "Outsourcing",
-            "type": "service",
-            "automate_time_entries": True
-        })
+        self.product = self.env["product.product"].create(
+            {"name": "Outsourcing", "type": "service", "automate_time_entries": True}
+        )
 
         self.po_order = self.env["purchase.order"].create(
             {
@@ -76,7 +73,7 @@ class OutsourcingCase(common.TransactionCase):
                 "is_outsourcing": True,
                 "project_id": self.project.id,
                 "task_id": self.task.id,
-                "state": 'purchase',
+                "state": "purchase",
                 "order_line": [
                     (
                         0,
@@ -85,8 +82,7 @@ class OutsourcingCase(common.TransactionCase):
                             "product_id": self.product.id,
                             "name": "/",
                             "product_qty": 1,
-                            "product_uom": self.env.ref(
-                                "uom.product_uom_unit").id,
+                            "product_uom": self.env.ref("uom.product_uom_unit").id,
                             "price_unit": 100,
                             "date_planned": datetime.now(),
                         },
@@ -100,7 +96,7 @@ class OutsourcingCase(common.TransactionCase):
                 "is_outsourcing": True,
                 "project_id": self.project.id,
                 "task_id": self.task.id,
-                "state": 'draft',
+                "state": "draft",
                 "order_line": [
                     (
                         0,
@@ -109,8 +105,7 @@ class OutsourcingCase(common.TransactionCase):
                             "product_id": self.product.id,
                             "name": "/",
                             "product_qty": 1,
-                            "product_uom": self.env.ref(
-                                "uom.product_uom_unit").id,
+                            "product_uom": self.env.ref("uom.product_uom_unit").id,
                             "price_unit": 100,
                             "date_planned": datetime.now(),
                         },

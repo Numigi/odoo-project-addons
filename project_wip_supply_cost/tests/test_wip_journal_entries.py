@@ -3,7 +3,7 @@
 
 import pytest
 from datetime import datetime, timedelta
-from odoo import fields
+
 from odoo.tests import common
 from odoo.exceptions import ValidationError
 
@@ -187,12 +187,12 @@ class TestWIPJournalEntries(WIPJournalEntriesCase):
 
     def _get_wip_move_line(self, timesheet_line):
         return timesheet_line.shop_supply_account_move_id.line_ids.filtered(
-            lambda l: l.account_id == self.wip_account
+            lambda line: line.account_id == self.wip_account
         )
 
     def _get_shop_supply_move_line(self, timesheet_line):
         return timesheet_line.shop_supply_account_move_id.line_ids.filtered(
-            lambda l: l.account_id == self.shop_supply_account
+            lambda line: line.account_id == self.shop_supply_account
         )
 
     def test_wip_move_line_analytic_account_is_project(self):

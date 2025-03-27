@@ -4,7 +4,7 @@
     <record id="supplier_invoice_form_with_task" model="ir.ui.view">
         <field name="name">Supplier Invoice Form: add field task</field>
         <field name="model">account.invoice</field>
-        <field name="inherit_id" ref="account.invoice_supplier_form"/>
+        <field name="inherit_id" ref="account.invoice_supplier_form" />
         <field name="arch" type="xml">
             <xpath expr="//field[@name='invoice_line_ids']//field[@name='account_analytic_id']" position="after">
                 <field name="task_id"
@@ -28,7 +28,7 @@
     <record id="invoice_line_form_with_task" model="ir.ui.view">
         <field name="name">Invoice Line Form: add field task</field>
         <field name="model">account.invoice.line</field>
-        <field name="inherit_id" ref="account.view_invoice_line_form"/>
+        <field name="inherit_id" ref="account.view_invoice_line_form" />
         <field name="arch" type="xml">
             <field name="account_analytic_id" position="after">
                 <field name="task_id"

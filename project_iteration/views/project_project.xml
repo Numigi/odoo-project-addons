@@ -4,12 +4,12 @@
     <record id="project_form_with_parent" model="ir.ui.view">
         <field name="name">Project Form With Parent</field>
         <field name="model">project.project</field>
-        <field name="inherit_id" ref="project.edit_project"/>
+        <field name="inherit_id" ref="project.edit_project" />
         <field name="arch" type="xml">
             <xpath expr="//field[@name='name']/.." position="after">
                 <field name="parent_id" placeholder="Parent Project"
-                    attrs="{'invisible': [('is_parent', '=', True)]}"/>
-                <field name="is_parent" invisible="1"/>
+                    attrs="{'invisible': [('is_parent', '=', True)]}" />
+                <field name="is_parent" invisible="1" />
             </xpath>
         </field>
     </record>
@@ -23,17 +23,17 @@
             'search_default_parent_id': [active_id],
             'default_parent_id': active_id,
         }</field>
-        <field name="search_view_id" ref="project.view_project_project_filter"/>
+        <field name="search_view_id" ref="project.view_project_project_filter" />
     </record>
 
     <record id="project_form_with_iterations" model="ir.ui.view">
         <field name="name">Project Form With Iterations</field>
         <field name="model">project.project</field>
-        <field name="inherit_id" ref="project.edit_project"/>
+        <field name="inherit_id" ref="project.edit_project" />
         <field name="arch" type="xml">
             <div class="oe_button_box" name="button_box" groups="base.group_user">
                 <button class="oe_stat_button" type="action" icon="fa-puzzle-piece" name="%(action_project_iterations)d" attrs="{'invisible': [('parent_id', '!=', False)]}">
-                    <field string="Iterations" name="children_count" widget="statinfo"/>
+                    <field string="Iterations" name="children_count" widget="statinfo" />
                 </button>
             </div>
         </field>
@@ -42,7 +42,7 @@
     <record id="view_project_project_filter" model="ir.ui.view">
         <field name="name">Project Search With Parent Project</field>
         <field name="model">project.project</field>
-        <field name="inherit_id" ref="project.view_project_project_filter"/>
+        <field name="inherit_id" ref="project.view_project_project_filter" />
         <field name="arch" type="xml">
             <field name="name" position="attributes">
                 <attribute name="filter_domain">['|', ('name', 'ilike', self), ('parent_id', 'ilike', self)]</attribute>
@@ -54,10 +54,10 @@
     <record id="search_project_parent_id" model="ir.ui.view">
         <field name="name">Search Project with Parent ID</field>
         <field name="model">project.project</field>
-        <field name="inherit_id" ref="project.view_project_project_filter"/>
+        <field name="inherit_id" ref="project.view_project_project_filter" />
         <field name="arch" type="xml">
             <field name="partner_id" position="after">
-                <field name="parent_id"/>
+                <field name="parent_id" />
             </field>
         </field>
     </record>
@@ -65,10 +65,10 @@
     <record id="project_view_list_with_display_name" model="ir.ui.view">
         <field name="name">Project List With Display Name instead of Name</field>
         <field name="model">project.project</field>
-        <field name="inherit_id" ref="project.view_project"/>
+        <field name="inherit_id" ref="project.view_project" />
         <field name="arch" type="xml">
             <field name="name" position="replace">
-                <field name="display_name" string="Project/Iteration Name"/>
+                <field name="display_name" string="Project/Iteration Name" />
             </field>
         </field>
     </record>
@@ -76,10 +76,10 @@
     <record id="project_view_kanban_with_display_name" model="ir.ui.view">
         <field name="name">Project Kanban With Display Name instead of Name</field>
         <field name="model">project.project</field>
-        <field name="inherit_id" ref="project.view_project_kanban"/>
+        <field name="inherit_id" ref="project.view_project_kanban" />
         <field name="arch" type="xml">
             <xpath expr="//t[@t-esc='record.name.value']" position="replace">
-                <field name="display_name"/>
+                <field name="display_name" />
             </xpath>
         </field>
     </record>

@@ -13,7 +13,9 @@ class TestConsumptionJournalEntryConstraints(ProjectWIPMaterialCase):
         with pytest.raises(ValidationError):
             self._create_material_line()
 
-    def test_if_project_type_has_no_wip_account__constraint_raised_on_task_material(self):
+    def test_if_project_type_has_no_wip_account__constraint_raised_on_task_material(
+        self,
+    ):
         self.project_type.wip_account_id = False
         with pytest.raises(ValidationError):
             self._create_material_line()

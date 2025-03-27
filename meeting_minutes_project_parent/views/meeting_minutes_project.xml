@@ -4,10 +4,10 @@
     <record id="meeting_minutes_project_parent_view_form" model="ir.ui.view">
         <field name="name">meeting.minutes.project.inherit.form</field>
         <field name="model">meeting.minutes.project</field>
-        <field name="inherit_id" ref="meeting_minutes_project.meeting_minutes_project_view_form"/>
+        <field name="inherit_id" ref="meeting_minutes_project.meeting_minutes_project_view_form" />
         <field name="arch" type="xml">
             <xpath expr="//field[@name='project_id']" position="before">
-                <field name="parent_project_id" readonly="1" force_save="1"/>
+                <field name="parent_project_id" readonly="1" force_save="1" />
             </xpath>
         </field>
     </record>
@@ -15,13 +15,13 @@
     <record id="view_meeting_minutes_project_parent_search" model="ir.ui.view">
         <field name="name">meeting.minutes.project.inherit.search</field>
         <field name="model">meeting.minutes.project</field>
-        <field name="inherit_id" ref="meeting_minutes_project.meeting_minutes_project_view_search"/>
+        <field name="inherit_id" ref="meeting_minutes_project.meeting_minutes_project_view_search" />
         <field name="arch" type="xml">
             <field name="project_id" position="before">
                 <field name="parent_project_id" />
             </field>
             <filter name="group_by_project" position="before">
-                <filter string="Parent Project" name="group_by_parent_project" context="{'group_by':'parent_project_id'}"/>
+                <filter string="Parent Project" name="group_by_parent_project" context="{'group_by':'parent_project_id'}" />
             </filter>
         </field>
     </record>

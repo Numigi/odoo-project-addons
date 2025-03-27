@@ -14,7 +14,8 @@ class TestMilestoneProgressNotification(common.TransactionCase):
         self.env["ir.config_parameter"].sudo().set_param(
             "project_milestone_progress_notification.default_mail_template",
             self.env.ref(
-                "project_milestone_progress_notification.mail_template_project_milestone_progress_notification"
+                "project_milestone_progress_notification."
+                "mail_template_project_milestone_progress_notification"
             ).id,
         )
 

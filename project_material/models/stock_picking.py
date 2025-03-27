@@ -6,22 +6,23 @@ from odoo import fields, models
 
 class StockPicking(models.Model):
 
-    _name = 'stock.picking'
-    _inherit = ['stock.picking', 'project.select.mixin']
+    _name = "stock.picking"
+    _inherit = ["stock.picking", "project.select.mixin"]
 
     task_id = fields.Many2one(
-        'project.task',
+        "project.task",
         index=True,
-        ondelete='restrict',
+        ondelete="restrict",
     )
     project_id = fields.Many2one(
-        related='task_id.project_id', store=True,
+        related="task_id.project_id",
+        store=True,
         readonly=True,
     )
 
-    task_readonly = fields.Boolean(compute='_compute_task_modifiers')
-    task_invisible = fields.Boolean(compute='_compute_task_modifiers')
-    task_required = fields.Boolean(compute='_compute_task_modifiers')
+    task_readonly = fields.Boolean(compute="_compute_task_modifiers")
+    task_invisible = fields.Boolean(compute="_compute_task_modifiers")
+    task_required = fields.Boolean(compute="_compute_task_modifiers")
 
     def _compute_task_modifiers(self):
         for picking in self:

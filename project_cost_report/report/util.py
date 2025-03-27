@@ -1,3 +1,6 @@
+# © 2020 - today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+# License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
+
 from odoo.tools.float_utils import float_round, float_compare
 
 
@@ -55,13 +58,13 @@ def get_waiting_for_invoice_total(order, projects):
     """
     analytic_accounts = projects.mapped("analytic_account_id")
     lines_waiting_invoices = order.order_line.filtered(
-        lambda l: purchase_line_is_waiting_invoice(l)
-        and l.account_analytic_id in analytic_accounts
+        lambda line: purchase_line_is_waiting_invoice(line)
+        and line.account_analytic_id in analytic_accounts
     )
     return float_round(
         sum(
-            l.price_unit * _get_purchase_line_waiting_qty(l)
-            for l in lines_waiting_invoices
+            line.price_unit * _get_purchase_line_waiting_qty(line)
+            for line in lines_waiting_invoices
         ),
         2,
     )

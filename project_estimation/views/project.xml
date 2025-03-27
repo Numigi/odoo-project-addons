@@ -24,10 +24,10 @@
     <record id="project_form" model="ir.ui.view">
         <field name="name">Project Form: Add estimation mode</field>
         <field name="model">project.project</field>
-        <field name="inherit_id" ref="project.edit_project"/>
+        <field name="inherit_id" ref="project.edit_project" />
         <field name="arch" type="xml">
             <button name="toggle_active" position="before">
-                <field name="estimation_mode_active" invisible="1"/>
+                <field name="estimation_mode_active" invisible="1" />
                 <button
                     class="oe_stat_button text-info"
                     type="action"
@@ -53,11 +53,11 @@
     <record id="project_kanban" model="ir.ui.view">
         <field name="name">Project Kanban: add estimation mode</field>
         <field name="model">project.project</field>
-        <field name="inherit_id" ref="project.view_project_kanban"/>
+        <field name="inherit_id" ref="project.view_project_kanban" />
         <field name="arch" type="xml">
             <xpath expr="//div[hasclass('o_project_kanban_boxes')]" position="before">
                 <div>
-                    <field name="estimation_mode_active" invisible="1"/>
+                    <field name="estimation_mode_active" invisible="1" />
                     <span
                         class="badge-pill badge-info"
                         attrs="{'invisible': [('estimation_mode_active', '=', False)]}"
@@ -72,11 +72,11 @@
     <record id="project_search" model="ir.ui.view">
         <field name="name">Project Search: add estimation mode</field>
         <field name="model">project.project</field>
-        <field name="inherit_id" ref="project.view_project_project_filter"/>
+        <field name="inherit_id" ref="project.view_project_project_filter" />
         <field name="arch" type="xml">
             <search position="inside">
                 <separator/>
-                <filter string="Estimation" name="estimation" domain="[('estimation_mode_active', '=', True)]"/>
+                <filter string="Estimation" name="estimation" domain="[('estimation_mode_active', '=', True)]" />
             </search>
         </field>
     </record>

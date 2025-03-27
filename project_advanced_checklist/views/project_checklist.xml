@@ -9,11 +9,11 @@
                 <sheet>
                     <group>
                         <group>
-                            <field name="name" readonly="1"/>
-                            <field name="description" readonly="1"/>
+                            <field name="name" readonly="1" />
+                            <field name="description" readonly="1" />
                         </group> 
                         <group>
-                            <field name="result" readonly="1"/>
+                            <field name="result" readonly="1" />
                         </group> 
                     </group>
                 </sheet>
@@ -29,19 +29,19 @@
                 <sheet>
                     <div class="oe_title">
                         <h1 class="o_row">
-                            <field name="name" required="1" placeholder="Checklist Title..."/>
+                            <field name="name" required="1" placeholder="Checklist Title..." />
                         </h1>
                     </div>
                     <group>
-                        <field name="description" type="html"/>
+                        <field name="description" type="html" />
                     </group>  
-                    <div class="oe_clear"/>
-                    <label for="item_ids" string="Items"/>
+                    <div class="oe_clear" />
+                    <label for="item_ids" string="Items" />
                     <field name="item_ids">
                         <tree editable="1">
-                            <field name="sequence" widget="handle"/>
-                            <field name="name" required="1"/>
-                            <field name="description"/>
+                            <field name="sequence" widget="handle" />
+                            <field name="name" required="1" />
+                            <field name="description" />
                         </tree>
                     </field>
                 </sheet>
@@ -54,8 +54,8 @@
         <field name="model">project.checklist</field>
         <field name="arch" type="xml">
             <tree string="Checklists">
-                <field name="name"/>
-                <field name="description"/>
+                <field name="name" />
+                <field name="description" />
             </tree>
         </field>
     </record>
@@ -67,6 +67,6 @@
         <field name="view_mode">tree,form</field>
     </record>
 
-    <menuitem id="menu_checklist" name="Checklists" parent="project.menu_project_config" sequence="20" action="action_checklist_tree"/>
+    <menuitem id="menu_checklist" name="Checklists" parent="project.menu_project_config" sequence="20" action="action_checklist_tree" />
 
 </odoo>

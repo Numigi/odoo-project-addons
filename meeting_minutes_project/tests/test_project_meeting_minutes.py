@@ -3,7 +3,7 @@
 
 
 from datetime import timedelta
-from pytz import timezone
+
 from odoo import fields
 from odoo.tests.common import SavepointCase
 
@@ -124,11 +124,8 @@ class TestMeetingMinutesProject(SavepointCase):
             [("task_id", "=", self.task_1.id)]
         ).unlink()
 
-        minutes = (
-            self.env["meeting.minutes.project"].create({
-                "task_id": self.task_1.id,
-                "project_id": self.project_1.id
-            })
+        minutes = self.env["meeting.minutes.project"].create(
+            {"task_id": self.task_1.id, "project_id": self.project_1.id}
         )
         minutes.on_change_task_id()
         return minutes

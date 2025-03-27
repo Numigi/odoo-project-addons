@@ -4,7 +4,7 @@
     <record id="project_project_view_form_always_show_sale_information" model="ir.ui.view">
         <field name="name">Project Project Form: always show sale information</field>
         <field name="model">project.project</field>
-        <field name="inherit_id" ref="sale_timesheet.project_project_view_form"/>
+        <field name="inherit_id" ref="sale_timesheet.project_project_view_form" />
         <field name="arch" type="xml">
             <page name="billing_employee_rate" position="attributes">
                 <attribute name="attrs">{}</attribute>

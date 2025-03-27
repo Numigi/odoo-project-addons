@@ -12,18 +12,18 @@
                         to the costs of goods sold for the selected project.
                     </div>
                     <group>
-                        <field name="project_id" readonly="1"/>
-                        <field name="cgs_journal_id" readonly="1"/>
-                        <field name="wip_account_id" readonly="1"/>
-                        <field name="cgs_account_id" readonly="1"/>
-                        <field name="costs_to_transfer" readonly="1"/>
-                        <field name="currency_id" invisible="1"/>
-                        <field name="accounting_date" required="1"/>
+                        <field name="project_id" readonly="1" />
+                        <field name="cgs_journal_id" readonly="1" />
+                        <field name="wip_account_id" readonly="1" />
+                        <field name="cgs_account_id" readonly="1" />
+                        <field name="costs_to_transfer" readonly="1" />
+                        <field name="currency_id" invisible="1" />
+                        <field name="accounting_date" required="1" />
                     </group>
                 </sheet>
                 <footer>
-                    <button name="validate" string="Validate" class="oe_highlight" type="object"/>
-                    <button name="cancel" string="Cancel" special="cancel"/>
+                    <button name="validate" string="Validate" class="oe_highlight" type="object" />
+                    <button name="cancel" string="Cancel" special="cancel" />
                 </footer>
             </form>
         </field>

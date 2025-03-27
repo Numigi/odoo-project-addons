@@ -9,10 +9,12 @@ class TestTaskParentProject(ProjectIterationCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.task = cls.env['project.task'].create({
-            'name': 'Task 1',
-            'project_id': cls.project_1.id,
-        })
+        cls.task = cls.env["project.task"].create(
+            {
+                "name": "Task 1",
+                "project_id": cls.project_1.id,
+            }
+        )
 
     def test_parent_project_without_iteration(self):
         assert self.task.parent_project_id == self.project_1

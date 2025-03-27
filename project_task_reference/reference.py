@@ -11,7 +11,7 @@ class TaskReference:
         self._string = string
         self._normalized_string = format_.format(**values)
         self._values = values
-        self._task_id = int(values['id']) if 'id' in values else None
+        self._task_id = int(values["id"]) if "id" in values else None
 
     def __str__(self):
         return self._string

@@ -8,8 +8,7 @@ from werkzeug.datastructures import Headers
 
 class PrintProjectCostReport(http.Controller):
     @http.route(
-        "/web/project_milestone_time_report/<int:project_id>",
-        type="http", auth="user"
+        "/web/project_milestone_time_report/<int:project_id>", type="http", auth="user"
     )
     def project_milestone_time_report_pdf(self, project_id, token):
         report = request.env["project.milestone.time.report"]

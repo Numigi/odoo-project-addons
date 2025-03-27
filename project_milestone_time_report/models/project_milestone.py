@@ -8,12 +8,15 @@ class ProjectMilestone(models.Model):
     _inherit = "project.milestone"
 
     parent_project_id = fields.Many2one(
-        'project.project', 'Parent Project',
-        compute='_compute_parent_project_id', store=True, index=True,
+        "project.project",
+        "Parent Project",
+        compute="_compute_parent_project_id",
+        store=True,
+        index=True,
         compute_sudo=True,
     )
 
-    @api.depends('project_id', 'project_id.is_parent', 'project_id.parent_id')
+    @api.depends("project_id", "project_id.is_parent", "project_id.parent_id")
     def _compute_parent_project_id(self):
         """Compute the parent project of a milestone.
 
@@ -22,6 +25,7 @@ class ProjectMilestone(models.Model):
         """
         for record in self:
             record.parent_project_id = (
-                record.project_id if record.project_id.is_parent else
-                record.project_id.parent_id
+                record.project_id
+                if record.project_id.is_parent
+                else record.project_id.parent_id
             )

@@ -5,7 +5,7 @@
   <record id="view_project_kanban" model="ir.ui.view">
     <field name="name">project.lock.kanban.record</field>
     <field name="model">project.project</field>
-    <field name="inherit_id" ref="project.view_project_kanban"/>
+    <field name="inherit_id" ref="project.view_project_kanban" />
     <field name="arch" type="xml">
       <data>
         <xpath expr="/kanban" position="attributes">

@@ -18,6 +18,7 @@ class MeetingMinutesProject(models.Model):
     def _compute_parent_project_id(self):
         for record in self:
             record.parent_project_id = (
-                record.project_id.parent_id if record.project_id and
-                record.project_id.parent_id else False
+                record.project_id.parent_id
+                if record.project_id and record.project_id.parent_id
+                else False
             )

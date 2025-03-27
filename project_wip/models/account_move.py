@@ -9,5 +9,6 @@ class AccountMove(models.Model):
     _inherit = "account.move"
 
     no_analytic_lines = fields.Boolean(
-        help="If checked, analytic lines will not be generated when posting this journal entry."
+        help="If checked, analytic lines will not be generated when "
+        "posting this journal entry."
     )

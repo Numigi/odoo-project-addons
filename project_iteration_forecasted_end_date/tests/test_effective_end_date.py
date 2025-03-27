@@ -10,32 +10,36 @@ class TestForecastedEndDate(SavepointCase):
     def setUpClass(cls):
         super().setUpClass()
         cls.today = datetime.now().date()
-        cls.project_type_a = cls.env["project.type"].create({
-            "name": "My Project Type A",
-            "exclude_forecasted_end_date": False,
-        }
+        cls.project_type_a = cls.env["project.type"].create(
+            {
+                "name": "My Project Type A",
+                "exclude_forecasted_end_date": False,
+            }
         )
-        cls.project = cls.env["project.project"].create({
-            "name": "My Project",
-            "date_start": datetime.now(),
-            "date":  cls.today + timedelta(days=365)
-        }
+        cls.project = cls.env["project.project"].create(
+            {
+                "name": "My Project",
+                "date_start": datetime.now(),
+                "date": cls.today + timedelta(days=365),
+            }
         )
 
         cls.iteration_1 = cls.env["project.project"].create(
-            {"name": "Interation  1",
-             "parent_id": cls.project.id,
-             "date_start": datetime.now().date(),
-             "date":  cls.today+timedelta(days=60)
-             }
+            {
+                "name": "Interation  1",
+                "parent_id": cls.project.id,
+                "date_start": datetime.now().date(),
+                "date": cls.today + timedelta(days=60),
+            }
         )
 
         cls.iteration_2 = cls.env["project.project"].create(
-            {"name": "Interation  2",
-             "date_start": datetime.now(),
-             "parent_id": cls.project.id,
-             "project_type_id": cls.project_type_a.id,
-             }
+            {
+                "name": "Interation  2",
+                "date_start": datetime.now(),
+                "parent_id": cls.project.id,
+                "project_type_id": cls.project_type_a.id,
+            }
         )
 
     def test_forecasted_end_date(self):

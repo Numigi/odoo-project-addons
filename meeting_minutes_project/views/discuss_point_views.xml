@@ -8,9 +8,9 @@
             <form string="Discussed Point">
                 <sheet>
                     <group>
-                        <field name="task_id"/>
-                        <field name="sequence"/>
-                        <field name="notes"/>
+                        <field name="task_id" />
+                        <field name="sequence" />
+                        <field name="notes" />
                     </group>
                 </sheet>
             </form>
@@ -22,9 +22,9 @@
         <field name="model">meeting.minutes.discuss.point</field>
         <field name="arch" type="xml">
             <tree string="Discussed Points">
-                <field name="sequence" widget="handle"/>
-                <field name="task_id" string="Task"/>
-                <field name="notes" widget="html"/>
+                <field name="sequence" widget="handle" />
+                <field name="task_id" string="Task" />
+                <field name="notes" widget="html" />
             </tree>
         </field>
     </record>

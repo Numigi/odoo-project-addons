@@ -9,10 +9,10 @@
     "website": "https://bit.ly/numigi-com",
     "license": "LGPL-3",
     "category": "Project",
-    "summary": """Calculate progress of the milestone
-     based on past and estimated hours.""",
-    "depends": ["project_milestone_estimated_hours",
-                "project_milestone_spent_hours"],
+    "summary": """
+        Calculate progress of the milestone based on past and estimated hours.
+    """,
+    "depends": ["project_milestone_estimated_hours", "project_milestone_spent_hours"],
     "data": [
         "views/project_milestone.xml",
     ],

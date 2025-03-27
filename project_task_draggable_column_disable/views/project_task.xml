@@ -5,7 +5,7 @@
   <record id="project_task_locked_kanban_column" model="ir.ui.view">
     <field name="name">project.task.lock.kanban.column</field>
     <field name="model">project.task</field>
-    <field name="inherit_id" ref="project.view_task_kanban"/>
+    <field name="inherit_id" ref="project.view_task_kanban" />
     <field name="arch" type="xml">
       <data>
         <xpath expr="/kanban" position="attributes">
