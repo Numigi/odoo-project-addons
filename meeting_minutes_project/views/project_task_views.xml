@@ -5,11 +5,11 @@
         <field name="name">Meeting minutes</field>
         <field name="arch" type="xml">
             <tree string="Meeting Minutes">
-                <field name="name"/>
-                <field name="start_date"/>
-                <field name="end_date"/>
-                <field name="meeting_channel_id"/>
-                <field name="partner_ids" widget="many2many_tags"/>
+                <field name="name" />
+                <field name="start_date" />
+                <field name="end_date" />
+                <field name="meeting_channel_id" />
+                <field name="partner_ids" widget="many2many_tags" />
             </tree>
         </field>
     </record>
@@ -18,7 +18,7 @@
         <field name="name">Meeting minutes</field>
         <field name="res_model">meeting.minutes.project</field>
         <field name="view_mode">tree,form</field>
-        <field name="view_id" ref="task_meeting_minutes_tree"/>
+        <field name="view_id" ref="task_meeting_minutes_tree" />
         <field name="context">{
             'search_default_user_id': [uid],
             'search_default_task_id': [active_id],
@@ -34,18 +34,18 @@
     <record id="project_task_form_view_inherit" model="ir.ui.view">
         <field name="name">project.task.form.inherit</field>
         <field name="model">project.task</field>
-        <field name="inherit_id" ref="project.view_task_form2"/>
+        <field name="inherit_id" ref="project.view_task_form2" />
         <field name="arch" type="xml">
             <div class="oe_button_box" position="inside">
                 <button name="%(meeting_minutes_discuss_point_action)d" type="action" attrs="{'invisible': [('mentions_count', '=', 0)]}"
                         class="oe_stat_button" icon="fa-quote-right">
-                    <field name="mentions_count" string="Mentions" widget="statinfo"/>
+                    <field name="mentions_count" string="Mentions" widget="statinfo" />
                 </button>
             </div>
             <xpath expr="//div[hasclass('oe_button_box')]" position="inside">
                 <button name="%(task_meeting_minutes_action)d"
                     type="action" class="oe_stat_button order-9"  icon="fa-exchange" groups="project.group_project_user">
-                    <field name="meeting_minutes_count" widget="statinfo" string="Meeting minutes"/>
+                    <field name="meeting_minutes_count" widget="statinfo" string="Meeting minutes" />
                 </button>
             </xpath>
         </field>

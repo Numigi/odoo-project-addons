@@ -5,11 +5,8 @@ from odoo import fields, models
 
 
 class StockMoveLine(models.Model):
-    _inherit = 'stock.move.line'
+    _inherit = "stock.move.line"
 
     project_id = fields.Many2one(
-        related='move_id.project_id', store=True,
-        readonly=True
+        related="move_id.project_id", store=True, readonly=True
     )
-
-

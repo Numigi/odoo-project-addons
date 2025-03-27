@@ -9,8 +9,8 @@ class ProjectMeetingMinutes(models.Model):
 
     def _get_records_from_domain(self, domain, kpi):
         if self.project_id and self.project_id.parent_id:
-            if kpi.model in ['project.task', 'project.project']:
-                field = "project_id" if kpi.model == 'project.task' else "id"
+            if kpi.model in ["project.task", "project.project"]:
+                field = "project_id" if kpi.model == "project.task" else "id"
                 domain += [(field, "child_of", self.project_id.parent_id.id or False)]
             return self.env[kpi.model].search(domain) if domain else False
         else:

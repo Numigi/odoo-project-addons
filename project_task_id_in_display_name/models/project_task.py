@@ -7,7 +7,7 @@ from odoo import api, fields, models
 
 class ProjectTaskWithCode(models.Model):
 
-    _inherit = 'project.task'
+    _inherit = "project.task"
 
     @api.multi
     def name_get(self):
@@ -18,19 +18,19 @@ class ProjectTaskWithCode(models.Model):
 
         :return: a string containing the id and the name of the task.
         """
-        return '[{id}] {name}'.format(id=self.id, name=self.name)
+        return "[{id}] {name}".format(id=self.id, name=self.name)
 
     @api.model
-    def name_search(self, name, args=None, operator='ilike', limit=100):
+    def name_search(self, name, args=None, operator="ilike", limit=100):
         """Search tasks using the code before searching for a name."""
         args = args or []
         tasks = self.browse()
 
         if name and name.isdigit():
-            tasks = self.search([('id', '=', int(name))] + args, limit=limit)
+            tasks = self.search([("id", "=", int(name))] + args, limit=limit)
 
         if not tasks:
-            tasks = self.search([('name', operator, name)] + args, limit=limit)
+            tasks = self.search([("name", operator, name)] + args, limit=limit)
 
         return tasks.name_get()
 
@@ -46,9 +46,9 @@ class ProjectTaskWithIdSearchable(models.Model):
     This is why we copy the id value into a varchar column.
     """
 
-    _inherit = 'project.task'
+    _inherit = "project.task"
 
-    id_string = fields.Char('ID (String)', readonly=True)
+    id_string = fields.Char("ID (String)", readonly=True)
 
     @api.model
     def create(self, vals):

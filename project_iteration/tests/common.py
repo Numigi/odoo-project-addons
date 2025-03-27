@@ -9,14 +9,18 @@ class ProjectIterationCase(common.SavepointCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.project_1 = cls.env['project.project'].create({'name': 'Project 1'})
-        cls.project_2 = cls.env['project.project'].create({'name': 'Project 2'})
+        cls.project_1 = cls.env["project.project"].create({"name": "Project 1"})
+        cls.project_2 = cls.env["project.project"].create({"name": "Project 2"})
 
-        cls.iteration_1 = cls.env['project.project'].create({
-            'name': 'Iteration 1',
-            'parent_id': cls.project_1.id,
-        })
-        cls.iteration_2 = cls.env['project.project'].create({
-            'name': 'Iteration 2',
-            'parent_id': cls.project_1.id,
-        })
+        cls.iteration_1 = cls.env["project.project"].create(
+            {
+                "name": "Iteration 1",
+                "parent_id": cls.project_1.id,
+            }
+        )
+        cls.iteration_2 = cls.env["project.project"].create(
+            {
+                "name": "Iteration 2",
+                "parent_id": cls.project_1.id,
+            }
+        )

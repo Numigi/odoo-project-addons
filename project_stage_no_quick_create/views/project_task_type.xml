@@ -4,9 +4,9 @@
         <record id="task_type_edit" model="ir.ui.view">
             <field name="name">project.task.type.form</field>
             <field name="model">project.task.type</field>
-            <field name="inherit_id" ref="project.task_type_edit"/>
+            <field name="inherit_id" ref="project.task_type_edit" />
             <field name="arch" type="xml">
-                <field name="project_ids" position="replace"/>
+                <field name="project_ids" position="replace" />
             </field>
         </record>
     </data>

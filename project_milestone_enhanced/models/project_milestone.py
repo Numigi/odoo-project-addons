@@ -40,4 +40,6 @@ class ProjectMilestone(models.Model):
         ).write({"milestone_id": False})
 
     def _milestone_not_active(self):
-        self.filtered(lambda milestone: not milestone.active_toggle).write({"active": False})
+        self.filtered(lambda milestone: not milestone.active_toggle).write(
+            {"active": False}
+        )

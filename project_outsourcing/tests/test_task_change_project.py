@@ -2,6 +2,7 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 import pytest
+
 from odoo.exceptions import ValidationError
 from .common import OutsourcingCase
 
@@ -19,7 +20,10 @@ class TestChangeProjectOnTask(OutsourcingCase):
 
     def test_if_not_po_confirmed__analytic_account_changed_on_po_line(self):
         self.task.sudo(self.project_user).project_id = self.new_project
-        assert self.order.order_line.account_analytic_id == self.new_project.analytic_account_id
+        assert (
+            self.order.order_line.account_analytic_id
+            == self.new_project.analytic_account_id
+        )
 
     def test_if_po_confirmed__project_can_not_be_changed_on_task(self):
         self.order.sudo(self.purchase_user).button_confirm()

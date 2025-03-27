@@ -12,9 +12,11 @@ class TestMilestoneProgress(SavepointCase):
         cls.project = cls.env["project.project"].create({"name": "My Project"})
 
         cls.milestone_1 = cls.env["project.milestone"].create(
-            {"name": "My Milestone 1",
-             "project_id": cls.project.id,
-             "estimated_hours": 80.00}
+            {
+                "name": "My Milestone 1",
+                "project_id": cls.project.id,
+                "estimated_hours": 80.00,
+            }
         )
 
         cls.milestone_2 = cls.env["project.milestone"].create(
@@ -59,7 +61,3 @@ class TestMilestoneProgress(SavepointCase):
     #         }
     #     )
     #     self.assertEqual(self.milestone_2.show_progress_info_message, True)
-
-
-
-

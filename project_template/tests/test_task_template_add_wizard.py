@@ -12,23 +12,41 @@ class TestTaskTemplateAddWizard(common.SavepointCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.stage_1 = cls.env['project.task.type'].create({'name': 'Stage 1', 'sequence': 1})
-        cls.stage_2 = cls.env['project.task.type'].create({'name': 'Stage 2', 'sequence': 2})
+        cls.stage_1 = cls.env["project.task.type"].create(
+            {"name": "Stage 1", "sequence": 1}
+        )
+        cls.stage_2 = cls.env["project.task.type"].create(
+            {"name": "Stage 2", "sequence": 2}
+        )
 
-        cls.project = cls.env['project.project'].create({
-            'name': 'Project A',
-            'type_ids': [(4, cls.stage_1.id), (4, cls.stage_2.id)],
-        })
+        cls.project = cls.env["project.project"].create(
+            {
+                "name": "Project A",
+                "type_ids": [(4, cls.stage_1.id), (4, cls.stage_2.id)],
+            }
+        )
 
-        cls.template_a = cls.env['project.task'].create({'name': 'Task A', 'is_template': True})
-        cls.template_b = cls.env['project.task'].create({'name': 'Task B', 'is_template': True})
+        cls.template_a = cls.env["project.task"].create(
+            {"name": "Task A", "is_template": True}
+        )
+        cls.template_b = cls.env["project.task"].create(
+            {"name": "Task B", "is_template": True}
+        )
 
-        cls.wizard = cls.env['project.task.template.add'].create({'project_id': cls.project.id})
+        cls.wizard = cls.env["project.task.template.add"].create(
+            {"project_id": cls.project.id}
+        )
 
     def _get_new_generated_tasks(self):
-        return self.env['project.task'].with_context(**{SHOW_TASK_TEMPLATES: True}).search([
-            ('project_id', '=', self.project.id),
-        ])
+        return (
+            self.env["project.task"]
+            .with_context(**{SHOW_TASK_TEMPLATES: True})
+            .search(
+                [
+                    ("project_id", "=", self.project.id),
+                ]
+            )
+        )
 
     def test_one_task_created_per_template(self):
         self.wizard.task_template_ids = self.template_a | self.template_b

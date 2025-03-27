@@ -17,9 +17,9 @@ msgstr ""
 
 #. module: meeting_minutes_project
 #: model_terms:ir.ui.view,arch_db:meeting_minutes_project.meeting_minutes_project_view_form
-msgid "<span class=\"fa fa-play\"/>\n"
+msgid "<span class=\"fa fa-play\" />\n"
 "                                    Load pending actions"
-msgstr "<span class=\"fa fa-play\"/>\n"
+msgstr "<span class=\"fa fa-play\" />\n"
 "                                    Charger les actions en attente"
 
 #. module: meeting_minutes_project

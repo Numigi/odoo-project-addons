@@ -8,7 +8,6 @@ class ProjectMilestoneType(models.Model):
     _name = "project.milestone.type"
     _description = "Milestone Types"
 
-    name = fields.Char('Name', required=True)
-    description = fields.Char('Description')
-    active = fields.Boolean('Active', default=True)
-
+    name = fields.Char("Name", required=True)
+    description = fields.Char("Description")
+    active = fields.Boolean("Active", default=True)

@@ -8,12 +8,12 @@
             <form string="Exit From Estimation Mode">
                 <sheet>
                     <group name="top">
-                        <field name="project_id" readonly="1"/>
+                        <field name="project_id" readonly="1" />
                     </group>
                 </sheet>
                 <footer>
-                    <button name="validate" class="oe_highlight" string="Validate" type="object"/>
-                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    <button name="validate" class="oe_highlight" string="Validate" type="object" />
+                    <button string="Cancel" class="btn-secondary" special="cancel" />
                 </footer>
             </form>
         </field>

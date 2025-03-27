@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # © 2018 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
@@ -16,7 +15,7 @@ def post_init_hook(cr, pool):
 
 def setup_task_id_string(cr):
     """Setup the field id_string on all tasks."""
-    _logger.info('Setting field id_string on model project.task.')
+    _logger.info("Setting field id_string on model project.task.")
     env = Environment(cr, SUPERUSER_ID, {})
-    for task in env['project.task'].with_context(active_test=False).search([]):
+    for task in env["project.task"].with_context(active_test=False).search([]):
         task.id_string = str(task.id)

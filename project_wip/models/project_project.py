@@ -40,7 +40,8 @@ class Project(models.Model):
         if not self.env.user.has_group("project_wip.group_wip_to_cgs"):
             raise AccessError(
                 _(
-                    "Only members of the group 'Transfert WIP to CGS' are allowed to transfer WIP "
+                    "Only members of the group 'Transfert WIP to CGS' are "
+                    "allowed to transfer WIP "
                     "entries to CGS."
                 )
             )
@@ -61,7 +62,7 @@ class Project(models.Model):
                 move.date = accounting_date
 
             wip_reversal_line = move.line_ids.filtered(
-                lambda l: l.account_id == self.project_type_id.wip_account_id
+                lambda line: line.account_id == self.project_type_id.wip_account_id
             )
             _reconcile_wip_move_lines(wip_line, wip_reversal_line)
 

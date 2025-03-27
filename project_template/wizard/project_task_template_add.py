@@ -7,31 +7,35 @@ from odoo.exceptions import ValidationError
 
 class ProjectTaskTemplateAdd(models.TransientModel):
 
-    _name = 'project.task.template.add'
-    _description = 'Task Template Selection Wizard'
+    _name = "project.task.template.add"
+    _description = "Task Template Selection Wizard"
 
-    project_id = fields.Many2one('project.project')
+    project_id = fields.Many2one("project.project")
     task_template_ids = fields.Many2many(
-        'project.task',
-        'project_task_template_add_rel',
-        'wizard_id',
-        'task_id',
+        "project.task",
+        "project_task_template_add_rel",
+        "wizard_id",
+        "task_id",
     )
 
     def _check_only_task_template_selected(self):
         normal_tasks = self.task_template_ids.filtered(lambda t: not t.is_template)
         if normal_tasks:
-            raise ValidationError(_(
-                'The selected task {} is not a template.'
-            ).format(normal_tasks[0].display_name))
+            raise ValidationError(
+                _("The selected task {} is not a template.").format(
+                    normal_tasks[0].display_name
+                )
+            )
 
     def _copy_task_template(self, task):
-        return task.copy({
-            'project_id': self.project_id.id,
-            'name': task.name,  # prevent `(copy)` in task name
-            'stage_id': False,
-            'parent_id': False,
-        })
+        return task.copy(
+            {
+                "project_id": self.project_id.id,
+                "name": task.name,  # prevent `(copy)` in task name
+                "stage_id": False,
+                "parent_id": False,
+            }
+        )
 
     def validate(self):
         self._check_only_task_template_selected()

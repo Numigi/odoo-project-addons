@@ -2,9 +2,9 @@
 
     <record id="mail_template_request" model="mail.template">
         <field name="name">Training Certificate - Signature Request</field>
-        <field name="model_id" ref="model_meeting_minutes_signature"/>
-        <field name="user_signature" eval="False"/>
-        <field name="auto_delete" eval="True"/>
+        <field name="model_id" ref="model_meeting_minutes_signature" />
+        <field name="user_signature" eval="False" />
+        <field name="auto_delete" eval="True" />
         <field name="subject">Training Certificate - ${object.task_id.name} - ${object.partner_id.display_name} - ${format_date(object.minutes_id.start_date, "MM-dd-yyyy")}</field>
         <field name="body_html" type="html">
             <div>
@@ -35,9 +35,9 @@
 
     <record id="mail_template_signed" model="mail.template">
         <field name="name">Training Certificate - Signed</field>
-        <field name="model_id" ref="model_meeting_minutes_signature"/>
-        <field name="user_signature" eval="False"/>
-        <field name="auto_delete" eval="True"/>
+        <field name="model_id" ref="model_meeting_minutes_signature" />
+        <field name="user_signature" eval="False" />
+        <field name="auto_delete" eval="True" />
         <field name="subject">Training Certificate - ${object.task_id.name} - ${object.partner_id.display_name} - ${format_date(object.minutes_id.start_date, "MM-dd-yyyy")} - Signed</field>
         <field name="body_html" type="html">
             <div>

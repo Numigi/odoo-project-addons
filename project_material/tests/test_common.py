@@ -11,7 +11,7 @@ class TestTaskMaterialFixture(TaskMaterialCase):
         """Test the _return_stock_move utility method."""
         move = self._create_material_line(initial_qty=1).move_ids
         self._force_transfer_move(move, 1)
-        assert move.state == 'done'
+        assert move.state == "done"
 
     def test_force_transfer_move__expected_moved_quantity(self):
         """Test the _return_stock_move utility method."""
@@ -24,13 +24,13 @@ class TestTaskMaterialFixture(TaskMaterialCase):
         move = self._create_material_line(initial_qty=1).move_ids
         self._force_transfer_move(move, 1)
         return_move = self._return_stock_move(move, 1)
-        assert return_move.picking_code == 'consumption_return'
+        assert return_move.picking_code == "consumption_return"
 
     def test_return_stock_move__picking_state_is_done(self):
         move = self._create_material_line(initial_qty=1).move_ids
         self._force_transfer_move(move, 1)
         return_move = self._return_stock_move(move, 1)
-        assert return_move.state == 'done'
+        assert return_move.state == "done"
 
     def test_return_stock_move__expected_quantity_moved(self):
         move = self._create_material_line(initial_qty=10).move_ids

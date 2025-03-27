@@ -1,10 +1,9 @@
 # © 2023 - Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
-import base64
-from contextlib import contextmanager
 from datetime import datetime
 from uuid import uuid4
+
 from odoo import fields, models, api, _
 from odoo.exceptions import ValidationError
 

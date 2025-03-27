@@ -14,16 +14,16 @@
                     </div>
                     <div class="oe_title">
                         <h1>
-                            <field name="name"/>
+                            <field name="name" />
                         </h1>
                     </div>
                     <group>
-                        <field name="sequence"/>
-                        <field name="model" invisible="1"/>
-                        <field name="model_id" options="{'no_create_edit': True}"/>
-                        <field name="primary_filter_domain" widget="domain" options="{'model': 'model'}"/>
-                        <field name="date_filter_domain_id"/>
-                        <field name="date_filter_domain"  widget="domain" options="{'model': 'model'}"/>
+                        <field name="sequence" />
+                        <field name="model" invisible="1" />
+                        <field name="model_id" options="{'no_create_edit': True}" />
+                        <field name="primary_filter_domain" widget="domain" options="{'model': 'model'}" />
+                        <field name="date_filter_domain_id" />
+                        <field name="date_filter_domain"  widget="domain" options="{'model': 'model'}" />
                     </group>
                 </sheet>
             </form>
@@ -35,10 +35,10 @@
         <field name="model">project.steering.kpi</field>
         <field name="arch" type="xml">
             <tree string="Steering Indicators">
-                <field name="sequence" widget="handle"/>
-                <field name="name"/>
-                <field name="model_id"/>
-                <field name="active"/>
+                <field name="sequence" widget="handle" />
+                <field name="name" />
+                <field name="model_id" />
+                <field name="active" />
             </tree>
         </field>
     </record>
@@ -48,16 +48,16 @@
         <field name="res_model">project.steering.kpi</field>
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
-        <field name="view_id" ref="steering_indicators_view_tree"/>
+        <field name="view_id" ref="steering_indicators_view_tree" />
         <field name="view_ids" eval="[(5, 0, 0),
                 (0, 0, {'view_mode': 'tree', 'view_id': ref('steering_indicators_view_tree')}),
-                (0, 0, {'view_mode': 'form', 'view_id': ref('steering_indicators_view_form')})]"/>
+                (0, 0, {'view_mode': 'form', 'view_id': ref('steering_indicators_view_form')})]" />
 
     </record>
 
     <menuitem action="action_steering_indicators" name="Steering Indicators"
             id="menu_steering_indicators"
             parent="project.menu_project_config"
-            groups="project.group_project_user" sequence="4"/>
+            groups="project.group_project_user" sequence="4" />
 
 </odoo>

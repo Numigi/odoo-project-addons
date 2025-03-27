@@ -6,6 +6,6 @@ from odoo import fields, models
 
 class ProjectTaskType(models.Model):
 
-    _inherit = 'project.task.type'
+    _inherit = "project.task.type"
 
     set_remaining_hours_to_0 = fields.Boolean()

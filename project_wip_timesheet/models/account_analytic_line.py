@@ -44,7 +44,7 @@ class TimesheetLine(models.Model):
     @api.multi
     def unlink(self):
         """Reverse the salary account move entry when a timesheet line is deleted."""
-        lines_with_moves = self.filtered(lambda l: l.salary_account_move_id)
+        lines_with_moves = self.filtered(lambda line: line.salary_account_move_id)
         for line in lines_with_moves:
             line.sudo()._reverse_salary_account_move_for_deleted_timesheet()
         return super().unlink()
@@ -132,7 +132,7 @@ class TimesheetLine(models.Model):
         self.salary_account_move_id.reverse_moves()
 
     def _is_salary_account_move_reconciled(self):
-        return any(l.reconciled for l in self.salary_account_move_id.line_ids)
+        return any(line.reconciled for line in self.salary_account_move_id.line_ids)
 
     def _get_salary_account_move_vals(self):
         """Get the values for the wip account move.

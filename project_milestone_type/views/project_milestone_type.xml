@@ -10,13 +10,13 @@
             <form string="Milestone type">
                 <sheet>
                     <group>
-                        <field name="name"/>
+                        <field name="name" />
                     </group>
                     <group>
-                        <field name="active"/>
+                        <field name="active" />
                     </group>
                     <group string="Description">
-                        <field name="description" placeholder="Add a description..." nolabel="1" colspan="2"/>
+                        <field name="description" placeholder="Add a description..." nolabel="1" colspan="2" />
                     </group>
                 </sheet>
             </form>
@@ -29,8 +29,8 @@
         <field name="model">project.milestone.type</field>
         <field name="arch" type="xml">
             <tree string="Milestone type">
-                <field name="name"/>
-                <field name="active"/>
+                <field name="name" />
+                <field name="active" />
             </tree>
         </field>
     </record>
@@ -56,13 +56,13 @@
             id="milestones_menu"
             name="Milestones"
             parent="project.menu_project_config"
-            sequence="20"/>
+            sequence="20" />
 
     <menuitem
             id="milestone_type_menu"
             name="Milestone Types"
             parent="milestones_menu"
             sequence="20"
-            action="project_milestone_type_action"/>
+            action="project_milestone_type_action" />
 
 </odoo>

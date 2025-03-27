@@ -9,7 +9,10 @@
     "website": "https://bit.ly/numigi-com",
     "license": "LGPL-3",
     "category": "Project",
-    "summary": "Update analytic account on analytic lines of a project when the analytic account is changed on the project.",
+    "summary": """
+    Update analytic account on analytic lines of a project
+    when the analytic account is changed on the project.
+    """,
     "depends": ["project", "hr_timesheet"],
     "installable": True,
 }

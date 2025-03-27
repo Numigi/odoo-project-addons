@@ -5,8 +5,8 @@ from odoo import fields, models
 
 
 class AccountAnalyticLine(models.Model):
-    _inherit = 'account.analytic.line'
+    _inherit = "account.analytic.line"
 
     purchase_order_line_id = fields.Many2one(
-        'purchase.order.line', "PO line", ondelete="restrict"
+        "purchase.order.line", "PO line", ondelete="restrict"
     )

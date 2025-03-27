@@ -17,9 +17,9 @@ msgstr ""
 
 #. module: meeting_minutes_project_steering
 #: model_terms:ir.ui.view,arch_db:meeting_minutes_project_steering.meeting_minutes_project_view_form_inherit
-msgid "<span class=\"fa fa-play\"/>\n"
+msgid "<span class=\"fa fa-play\" />\n"
 "                                Load Data"
-msgstr "<span class=\"fa fa-play\"/>\n"
+msgstr "<span class=\"fa fa-play\" />\n"
 "                                Charger les données"
 
 #. module: meeting_minutes_project_steering

@@ -18,12 +18,12 @@ class ProjectSteeringKpiLine(models.Model):
         help="Technical field for UX purpose.",
     )
     project_id = fields.Many2one("project.project", string="Project")
-    project_end_date = fields.Date(related="project_id.date",
-                                   string="Project Deadline")
+    project_end_date = fields.Date(related="project_id.date", string="Project Deadline")
     task_id = fields.Many2one("project.task", string="Task")
     task_date_planned = fields.Date(
         related="task_id.date_planned", string="Planned date"
     )
     task_date_deadline = fields.Date(
-        related="task_id.date_deadline", string="Task Deadline")
+        related="task_id.date_deadline", string="Task Deadline"
+    )
     notes = fields.Text(string="Notes")

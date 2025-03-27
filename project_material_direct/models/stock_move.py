@@ -6,10 +6,10 @@ from odoo import fields, models
 
 class StockMove(models.Model):
 
-    _inherit = 'stock.move'
+    _inherit = "stock.move"
 
     is_direct_consumption = fields.Boolean(
-        related='picking_id.is_direct_consumption',
+        related="picking_id.is_direct_consumption",
     )
 
     def _action_done(self):
@@ -32,13 +32,13 @@ class StockMove(models.Model):
 
     def _generate_direct_task_material_line(self):
         vals = self._get_direct_material_line_vals()
-        self.task_id.write({'direct_material_line_ids': [(0, 0, vals)]})
+        self.task_id.write({"direct_material_line_ids": [(0, 0, vals)]})
 
     def _get_direct_material_line_vals(self):
         return {
-            'product_id': self.product_id.id,
-            'initial_qty': 0,
-            'move_ids': [(4, self.id)],
-            'origin_stock_move_id': self.id,
-            'is_direct_consumption': True,
+            "product_id": self.product_id.id,
+            "initial_qty": 0,
+            "move_ids": [(4, self.id)],
+            "origin_stock_move_id": self.id,
+            "is_direct_consumption": True,
         }

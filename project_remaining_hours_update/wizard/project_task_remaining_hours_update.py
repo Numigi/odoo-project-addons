@@ -6,10 +6,10 @@ from odoo import fields, models, _
 
 class TaskRemainingHoursUpdate(models.TransientModel):
 
-    _name = 'project.task.remaining.hours.update'
-    _description = 'Task Remaining Hours Update Wizard'
+    _name = "project.task.remaining.hours.update"
+    _description = "Task Remaining Hours Update Wizard"
 
-    task_id = fields.Many2one('project.task')
+    task_id = fields.Many2one("project.task")
     new_remaining_hours = fields.Float()
     comment = fields.Text()
 
@@ -22,12 +22,12 @@ class TaskRemainingHoursUpdate(models.TransientModel):
             comment=self.comment,
         )
 
-        message = _('Remaining hours updated from {previous} to {new}.').format(
+        message = _("Remaining hours updated from {previous} to {new}.").format(
             previous=previous_value,
             new=self.new_remaining_hours,
         )
 
         if self.comment:
-            message += '<br><br>{}'.format(self.comment)
+            message += "<br><br>{}".format(self.comment)
 
         self.task_id.message_post(body=message)

@@ -9,8 +9,9 @@
     "website": "https://bit.ly/numigi-com",
     "license": "LGPL-3",
     "category": "Project",
-    "summary": "Calculate Milestone End Date Automatically "
-               "from Start Date and Duration",
+    "summary": """
+        Calculate Milestone End Date Automatically from Start Date and Duration
+    """,
     "depends": ["project_milestone_start_date"],
     "data": [
         "views/project.xml",

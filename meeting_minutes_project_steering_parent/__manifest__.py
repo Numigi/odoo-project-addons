@@ -13,7 +13,9 @@
         "meeting_minutes_project_steering",
         "meeting_minutes_project_parent",
     ],
-    "summary": "Extract data from a parent project and all its subprojects for steering project",
+    "summary": """
+        Extract data from a parent project and all its subprojects for steering project
+    """,
     "data": [],
     "installable": True,
 }

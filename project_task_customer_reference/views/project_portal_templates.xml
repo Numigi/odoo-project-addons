@@ -3,7 +3,7 @@
     <template id="portal_my_task" inherit_id="project.portal_my_task" name="My Task">
         <xpath expr="//span[@t-field='task.date_deadline']/.." position="after">
             <div class="col-12 col-md-6">
-                <strong >Customer Reference:</strong> <span style="padding-right:30px;" t-field="task.customer_reference"/>
+                <strong >Customer Reference:</strong> <span style="padding-right:30px;" t-field="task.customer_reference" />
                 <button
                 role="button"
                 class="btn btn-sm btn-secondary mb8"
@@ -26,7 +26,7 @@
                             class="js_accept_json modal-content js_website_submit_form"
                             t-att-action="task.get_portal_url('/modify_reference')"
                             >
-                            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()" />
                             <header class="modal-header">
                                 <h4 class="modal-title">Modify Customer Reference</h4>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -35,8 +35,8 @@
                             </header>
                             <main class="modal-body" id="reference-dialog">
                                 <div class="d-flex align-items-center">
-                                    <input name="reference" type="text" class="form-control"/>
-                                    <input type="submit" class="btn btn-sm btn-secondary mb8 m-2" value="Submit"/>
+                                    <input name="reference" type="text" class="form-control" />
+                                    <input type="submit" class="btn btn-sm btn-secondary mb8 m-2" value="Submit" />
                                 </div>
                             </main>
                         </form>

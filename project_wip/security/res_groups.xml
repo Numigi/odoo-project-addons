@@ -3,7 +3,7 @@
 
 	<record id="group_wip_to_cgs" model="res.groups">
         <field name="name">Transfer WIP To CGS</field>
-        <field name="users" eval="[(4, ref('base.user_root'))]"/>
+        <field name="users" eval="[(4, ref('base.user_root'))]" />
         <field name="comment">Allow to transfer WIP journal entries to CGS</field>
 	</record>
 

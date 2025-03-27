@@ -7,43 +7,44 @@ from odoo.exceptions import ValidationError
 
 class ProjectTaskSubtaskSameProject(models.Model):
 
-    _inherit = 'project.task'
+    _inherit = "project.task"
 
     @api.multi
     def write(self, vals):
-        """ Propagate the value of the project to the subtask when it is changed on the parent task."""
+        """Propagate the value of the project to the subtask
+        when it is changed on the parent task."""
         res = super().write(vals)
         for task in self:
-            if task.child_ids and 'project_id' in vals:
-                task.child_ids.write({'project_id': vals['project_id']})
+            if task.child_ids and "project_id" in vals:
+                task.child_ids.write({"project_id": vals["project_id"]})
         return res
 
     def action_subtask(self):
         """Remove project filters from the subtask action context."""
         res = super().action_subtask()
 
-        context_vars_to_remove = (
-            'search_default_project_id',
-        )
+        context_vars_to_remove = ("search_default_project_id",)
 
-        res['context'] = {
-            k: v for k, v in res['context'].items() if k not in context_vars_to_remove
+        res["context"] = {
+            k: v for k, v in res["context"].items() if k not in context_vars_to_remove
         }
 
         return res
 
-    @api.constrains('project_id')
+    @api.constrains("project_id")
     def _check_subtask_not_in_different_project(self):
         subtasks = self.filtered(lambda t: t.parent_id)
 
         for subtask in subtasks:
             task = subtask.parent_id
             if subtask.project_id != task.project_id:
-                raise ValidationError(_(
-                    'The task {task} is in the project {task_project}. '
-                    'The subtask {subtask} must be in the same project.'
-                ).format(
-                    task=task.display_name,
-                    task_project=task.project_id.display_name,
-                    subtask=subtask.display_name,
-                ))
+                raise ValidationError(
+                    _(
+                        "The task {task} is in the project {task_project}. "
+                        "The subtask {subtask} must be in the same project."
+                    ).format(
+                        task=task.display_name,
+                        task_project=task.project_id.display_name,
+                        subtask=subtask.display_name,
+                    )
+                )

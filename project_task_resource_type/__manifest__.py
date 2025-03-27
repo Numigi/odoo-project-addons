@@ -7,7 +7,9 @@
     "author": "Numigi",
     "maintainer": "Numigi",
     "website": "www.numigi.com",
-    "depends": ["project",],
+    "depends": [
+        "project",
+    ],
     "data": [
         "data/ir_model.xml",
         "data/ir_model_fields.xml",

@@ -1,9 +1,7 @@
 # © 2021 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
-from odoo import api, fields, models
-from uuid import uuid4
-from odoo.exceptions import AccessError
+from odoo import fields, models
 
 
 class Task(models.Model):

@@ -69,7 +69,7 @@
 
 
     <menuitem id="menu_project_invoice_profile" name="Project invoicing profile" parent="project.menu_project_config"
-              action="action_project_invoice_profile" groups="group_project_invoicing_profile"/>
+              action="action_project_invoice_profile" groups="group_project_invoicing_profile" />
 
 
 </odoo>

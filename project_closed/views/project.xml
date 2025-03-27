@@ -4,11 +4,11 @@
     <record id="view_project_search" model="ir.ui.view">
         <field name="name">Project Search: add field closed</field>
         <field name="model">project.project</field>
-        <field name="inherit_id" ref="project.view_project_project_filter"/>
+        <field name="inherit_id" ref="project.view_project_project_filter" />
         <field name="arch" type="xml">
             <separator position="after">
-                <filter string="Open" name="open" domain="[('closed', '=', False)]"/>
-                <filter string="Closed" name="closed" domain="[('closed', '=', True)]"/>
+                <filter string="Open" name="open" domain="[('closed', '=', False)]" />
+                <filter string="Closed" name="closed" domain="[('closed', '=', True)]" />
                 <separator/>
             </separator>
         </field>

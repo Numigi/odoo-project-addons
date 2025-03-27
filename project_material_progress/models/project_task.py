@@ -33,18 +33,18 @@ class ProjectTask(models.Model):
         units = self.env.ref("uom.product_uom_unit")
         units_category = units.category_id
         material_lines = self.material_line_ids.filtered(
-            lambda l: l.product_uom_id.category_id == units_category
+            lambda line: line.product_uom_id.category_id == units_category
         )
         prepared = sum(
-            l.product_uom_id._compute_quantity(l.prepared_qty, units)
-            for l in material_lines
+            line.product_uom_id._compute_quantity(line.prepared_qty, units)
+            for line in material_lines
         )
         consumed = sum(
-            l.product_uom_id._compute_quantity(l.consumed_qty, units)
-            for l in material_lines
+            line.product_uom_id._compute_quantity(line.consumed_qty, units)
+            for line in material_lines
         )
         initial = sum(
-            l.product_uom_id._compute_quantity(l.initial_qty, units)
-            for l in material_lines
+            line.product_uom_id._compute_quantity(line.initial_qty, units)
+            for line in material_lines
         )
         return max(prepared, consumed) * 100 / initial if initial else 0

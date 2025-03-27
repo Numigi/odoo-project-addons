@@ -9,11 +9,11 @@ class TestRemainingHours(SavepointCase):
     def setUpClass(cls):
         super().setUpClass()
         cls.milestone = cls.env["project.milestone"].create(
-            {"name": "My Milestone",
-             "estimated_hours": 10,
-             "total_hours": 8}
+            {"name": "My Milestone", "estimated_hours": 10, "total_hours": 8}
         )
 
     def test_remaining_hours_copy(self):
-        assert self.milestone.remaining_hours == \
-               self.milestone.estimated_hours - self.milestone.total_hours
+        assert (
+            self.milestone.remaining_hours
+            == self.milestone.estimated_hours - self.milestone.total_hours
+        )
