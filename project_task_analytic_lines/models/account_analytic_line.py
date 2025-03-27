@@ -71,5 +71,6 @@ class AnalyticLine(models.Model):
         lines_to_update = self.filtered(
             lambda line: line.task_id and line.origin_task_id != line.task_id
         )
+
         for line in lines_to_update:
             line.task_id = line.origin_task_id
