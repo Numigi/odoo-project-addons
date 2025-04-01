@@ -7,7 +7,11 @@
         <field name="inherit_id" ref="project.view_task_form2"/>
         <field name="arch" type="xml">
             <field name="display_project_id" position="attributes">
-                <attribute name="attrs">{'readonly': [('parent_id', '!=', False)],'invisible': [('parent_id', '=', False)]}</attribute>
+                <attribute name="invisible">1</attribute>
+            </field>
+            <field name="project_id" position="attributes">
+                <attribute name="attrs">{'readonly': [('parent_id', '!=', False)]}</attribute>
+                <attribute name="invisible">0</attribute>
             </field>
         </field>
     </record>
