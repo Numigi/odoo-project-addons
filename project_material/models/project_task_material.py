@@ -229,7 +229,6 @@ class TaskMaterialLine(models.Model):
             "warehouse_id": self.task_id.project_id.warehouse_id,
             "material_line_id": self.id,
             "task_id": self.task_id.id,
-            "supplierinfo_name": self.task_id.partner_id,
         }
 
     def _check_quantity_can_be_reduced(self):
