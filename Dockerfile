@@ -20,6 +20,7 @@ COPY project_milestone_estimated_hours /mnt/extra-addons/project_milestone_estim
 COPY project_milestone_spent_hours /mnt/extra-addons/project_milestone_spent_hours
 COPY project_milestone_time_kpi /mnt/extra-addons/project_milestone_time_kpi
 COPY project_no_quick_create /mnt/extra-addons/project_no_quick_create
+COPY project_outsourcing /mnt/extra-addons/project_outsourcing
 COPY project_parent_enhanced mnt/extra-addons/project_parent_enhanced
 COPY project_parent_forecasted_end_date mnt/extra-addons/project_parent_forecasted_end_date
 COPY project_parent_type_required mnt/extra-addons/project_parent_type_required
