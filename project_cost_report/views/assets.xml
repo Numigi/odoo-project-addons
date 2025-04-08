@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <template id="assets_backend" name="cost_report assets" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <script type="text/javascript"
+                    src="/project_cost_report/static/src/js/report_action.js"></script>
+                <link rel="stylesheet" type="text/scss"
+                    href="/project_cost_report/static/src/scss/cost_report.scss" />
+            </xpath>
+        </template>
+
+        <template id="cost_report_assets_pdf" name="Cost Report PDF Assets">
+            <t t-call="web._assets_helpers" />
+            <link rel="stylesheet" type="text/scss"
+                href="/project_cost_report/static/src/scss/cost_report.scss" />
+            <link
+                rel="stylesheet" type="text/scss"
+                href="/project_cost_report/static/src/scss/cost_report_pdf.scss" />
+        </template>
+
+    </data>
+</odoo>

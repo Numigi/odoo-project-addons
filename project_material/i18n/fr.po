@@ -458,13 +458,13 @@ msgstr ""
 #: code:addons/project_material/models/project_task_material.py:0
 #, python-format
 msgid ""
-"The quantity on the material line {line} can not be reduced to {new_quantity} (it can not be lower than the delivered quantity).\n"
+"The quantity on the material line '{line}' can not be reduced to '{new_quantity}' (it can not be lower than the delivered quantity).\n"
 "\n"
-"The line may not be reduced below a minimum of {minimum_qty} {uom}."
+"The line may not be reduced below a minimum of '{minimum_qty} {uom}'."
 msgstr ""
-"La quantité sur la ligne de matériel {line} ne peut pas être réduite à {new_quantity} (elle ne peut pas être plus petite que la quantité livrée).\n"
+"La quantité sur la ligne de matériel '{line}' ne peut pas être réduite à '{new_quantity}' (elle ne peut pas être inférieure à la quantité livrée).\n"
 "\n"
-"La ligne ne peut pas être réduite en dessous de {minimum_qty} {uom}."
+"La quantité sur la ligne ne peut pas être inférieure à un minimum de '{minimum_qty} {uom}'."
 
 #. module: project_material
 #: code:addons/project_material/models/project_task_material.py:0

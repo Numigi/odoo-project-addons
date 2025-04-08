@@ -20,12 +20,14 @@ COPY project_advanced_checklist /mnt/extra-addons/project_advanced_checklist
 COPY project_analytic_group  /mnt/extra-addons/project_analytic_group
 COPY project_chatter  /mnt/extra-addons/project_chatter
 COPY project_closed  /mnt/extra-addons/project_closed
+COPY project_cost_report  /mnt/extra-addons/project_cost_report
 COPY project_cost_smart_button  /mnt/extra-addons/project_cost_smart_button
 COPY project_default_task_stage  /mnt/extra-addons/project_default_task_stage
 COPY project_enhanced  /mnt/extra-addons/project_enhanced
 COPY project_form_with_dates  /mnt/extra-addons/project_form_with_dates
 COPY project_group_create  /mnt/extra-addons/project_group_create
 COPY project_hide_create_sale_order  /mnt/extra-addons/project_hide_create_sale_order
+COPY project_invoicing_profile  /mnt/extra-addons/project_invoicing_profile
 COPY project_iteration  /mnt/extra-addons/project_iteration
 COPY project_iteration_parent_only  /mnt/extra-addons/project_iteration_parent_only
 COPY project_iteration_parent_type_required  /mnt/extra-addons/project_iteration_parent_type_required
@@ -33,6 +35,7 @@ COPY project_lump_sum  /mnt/extra-addons/project_lump_sum
 COPY project_material  /mnt/extra-addons/project_material
 COPY project_material_direct  /mnt/extra-addons/project_material_direct
 COPY project_material_enhanced /mnt/extra-addons/project_material_enhanced
+COPY project_material_purchase_link /mnt/extra-addons/project_material_purchase_link
 COPY project_milestone_enhanced  /mnt/extra-addons/project_milestone_enhanced
 COPY project_milestone_estimated_hours  /mnt/extra-addons/project_milestone_estimated_hours
 COPY project_milestone_spent_hours  /mnt/extra-addons/project_milestone_spent_hours
@@ -72,8 +75,7 @@ COPY project_timesheet_analytic_update  /mnt/extra-addons/project_timesheet_anal
 COPY project_type  /mnt/extra-addons/project_type
 COPY project_wip /mnt/extra-addons/project_wip
 COPY project_wip_material  /mnt/extra-addons/project_wip_material
-#COPY project_wip_outsourcing  /mnt/extra-addons/project_wip_outsourcing
-#COPY project_wip_supply_cost  /mnt/extra-addons/project_wip_supply_cost
+COPY project_wip_supply_cost  /mnt/extra-addons/project_wip_supply_cost
 COPY project_wip_timesheet  /mnt/extra-addons/project_wip_timesheet
 COPY timesheet_task_project_no_change  /mnt/extra-addons/timesheet_task_project_no_change
 

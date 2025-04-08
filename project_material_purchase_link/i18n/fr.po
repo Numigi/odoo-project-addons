@@ -1,0 +1,64 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* project_material_purchase_link
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-02-13 18:57+0000\n"
+"PO-Revision-Date: 2025-02-13 18:57+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: project_material_purchase_link
+#: model:ir.model.fields,field_description:project_material_purchase_link.field_project_task_material__display_name
+#: model:ir.model.fields,field_description:project_material_purchase_link.field_purchase_order_line__display_name
+msgid "Display Name"
+msgstr "Nom d'affichage"
+
+#. module: project_material_purchase_link
+#: model:ir.model.fields,field_description:project_material_purchase_link.field_project_task_material__id
+#: model:ir.model.fields,field_description:project_material_purchase_link.field_purchase_order_line__id
+msgid "ID"
+msgstr ""
+
+#. module: project_material_purchase_link
+#: model:ir.model.fields,field_description:project_material_purchase_link.field_project_task_material____last_update
+#: model:ir.model.fields,field_description:project_material_purchase_link.field_purchase_order_line____last_update
+msgid "Last Modified on"
+msgstr "Dernière modification le"
+
+#. module: project_material_purchase_link
+#: model:ir.model.fields,field_description:project_material_purchase_link.field_purchase_order_line__material_line_id
+msgid "Material Line"
+msgstr "Ligne de matériel"
+
+#. module: project_material_purchase_link
+#: model:ir.model,name:project_material_purchase_link.model_purchase_order_line
+#: model:ir.model.fields,field_description:project_material_purchase_link.field_project_task_material__purchase_line_id
+#: model_terms:ir.ui.view,arch_db:project_material_purchase_link.task_material_list_view_inherit
+msgid "Purchase Order Line"
+msgstr "Ligne de commande fournisseur"
+
+#. module: project_material_purchase_link
+#: model:ir.model.fields,field_description:project_material_purchase_link.field_project_task_material__purchase_id
+#: model_terms:ir.ui.view,arch_db:project_material_purchase_link.task_material_form_view_inherit
+#: model_terms:ir.ui.view,arch_db:project_material_purchase_link.task_material_list_view_inherit
+#: model_terms:ir.ui.view,arch_db:project_material_purchase_link.task_material_search_inherit
+msgid "Related Document"
+msgstr "Document lié"
+
+#. module: project_material_purchase_link
+#: model:ir.model.fields,field_description:project_material_purchase_link.field_purchase_order_line__task_id
+msgid "Task"
+msgstr "Tâche"
+
+#. module: project_material_purchase_link
+#: model:ir.model,name:project_material_purchase_link.model_project_task_material
+msgid "Task Material Consumption"
+msgstr "Consommation matériel sur tâche"
