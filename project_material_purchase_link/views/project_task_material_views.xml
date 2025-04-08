@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="task_material_list_view_inherit" model="ir.ui.view">
+        <field name="name">Task Material List Inherit</field>
+        <field name="model">project.task.material</field>
+        <field name="inherit_id" ref="project_material.task_material_list_view"/>
+        <field name="arch" type="xml">
+            <field name="unit_cost" position="before">
+                <field name="purchase_id" string="Related Document" optional="show"/>
+                <field name="purchase_line_id" string="Purchase Order Line" optional="hide"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="task_material_form_view_inherit" model="ir.ui.view">
+        <field name="name">Task Material Form Inherit</field>
+        <field name="model">project.task.material</field>
+        <field name="inherit_id" ref="project_material.task_material_form_view"/>
+        <field name="arch" type="xml">
+            <field name="product_id" position="before">
+                <field name="purchase_id" string="Related Document" groups="purchase.group_purchase_user"/>
+                <field name="purchase_line_id" invisible="1" groups="purchase.group_purchase_user"/>
+            </field>
+        </field>
+    </record>
+    
+    <record id="task_material_search_inherit" model="ir.ui.view">
+        <field name="name">Task Material Search Inherit</field>
+        <field name="model">project.task.material</field>
+        <field name="inherit_id" ref="project_material.task_material_search"/>
+        <field name="arch" type="xml">
+            <field name="product_id" position="after">
+                <field name="purchase_id" string="Related Document" groups="purchase.group_purchase_user"/>
+            </field>
+            <filter name="group_by_project_id" position="after">
+                <filter string="Related Document" name="group_by_purchase_id" context="{'group_by': 'purchase_id'}" groups="purchase.group_purchase_user"/>
+            </filter>
+        </field>
+    </record>
+
+</odoo>

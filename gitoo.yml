@@ -19,6 +19,11 @@
    - test_http_request
    - base_xml_rename
 
+- url: https://github.com/Numigi/odoo-purchase-addons
+  branch: "14.0"
+  includes:
+   - purchase_line_procurement_no_grouping
+
 - url: https://github.com/OCA/product-attribute
   branch: "14.0"
   includes:
