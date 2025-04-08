@@ -12,6 +12,7 @@
     "summary": "Generate outsourcing purchase orders from tasks",
     "depends": ["purchase_stock", "sale_management"],
     "data": [
+        # "views/account_move_views.xml",
         "views/project_project_views.xml",
         "views/project_task_views.xml",
         "views/purchase_order_views.xml",

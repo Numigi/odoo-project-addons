@@ -14,7 +14,7 @@
         <field name="target">current</field>
     </record>
 
-    <record id="project_form_with_outsourcing_smart_button" model="ir.ui.view">
+    <record id="edit_project" model="ir.ui.view">
         <field name="name">Project Form: add outsourcing smart button</field>
         <field name="model">project.project</field>
         <field name="inherit_id" ref="project.edit_project"/>

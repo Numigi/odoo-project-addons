@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
-    <record id="account_move_form_with_outsourcing" model="ir.ui.view">
+    <record id="account_move_form_with_task" model="ir.ui.view">
         <field name="name">Invoice Form: add outsourcing fields</field>
         <field name="model">account.move</field>
         <field name="inherit_id" ref="project_task_analytic_lines.account_move_form_with_task"/>

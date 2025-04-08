@@ -26,7 +26,7 @@
         <field name="target">current</field>
     </record>
 
-    <record id="task_form_with_outsourcing_tab" model="ir.ui.view">
+    <record id="view_task_form2" model="ir.ui.view">
         <field name="name">Project Task Form: add outsourcing tab</field>
         <field name="model">project.task</field>
         <field name="inherit_id" ref="project.view_task_form2"/>
