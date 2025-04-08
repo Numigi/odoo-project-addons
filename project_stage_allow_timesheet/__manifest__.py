@@ -15,6 +15,5 @@
     "data": [
         "views/res_config_settings.xml",
         "views/project_stage_views.xml",
-        "views/project_task_type_views.xml",
     ],
 }

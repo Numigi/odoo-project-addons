@@ -7,7 +7,7 @@
         <field name="inherit_id" ref="project_milestone_enhanced.project_milestone_view_list" />
         <field name="arch" type="xml">
             <field name="task_ids" position="after">
-                <field name="total_hours" widget="float_time" />
+                <field name="total_hours" widget="timesheet_uom_no_toggle" />
             </field>
         </field>
     </record>
@@ -16,11 +16,11 @@
     <record id="project_milestone_spent_hours_form" model="ir.ui.view">
         <field name="name">Project Milestone Spent Hours Form</field>
         <field name="model">project.milestone</field>
-        <field name="inherit_id" ref="project.project_milestone_view_form" />
+        <field name="inherit_id" ref="project_milestone_enhanced.project_milestone_active_view_form" />
         <field name="arch" type="xml">
-            <field name="is_reached" position="after">
-                <field name="total_hours" widget="float_time" />
-            </field>
+            <xpath expr="//field[@name='progress']" position="before">
+                <field name="total_hours" widget="timesheet_uom_no_toggle" />
+            </xpath>
         </field>
     </record>
 </odoo>
