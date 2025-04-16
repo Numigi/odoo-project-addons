@@ -3,3 +3,4 @@
 
 from . import common
 from . import test_wip_journal_entries
+from . import test_wip_to_cgs
