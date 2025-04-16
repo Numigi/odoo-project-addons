@@ -88,7 +88,7 @@ class Project(models.Model):
             {
                 "company_id": self.company_id.id,
                 "journal_id": self.type_id.cgs_journal_id.id,
-                "no_analytic_lines": True,
+                "no_analytic_lines": False,
                 "line_ids": [(0, 0, wip_reversal_vals), (0, 0, cgs_vals)],
             }
         )
