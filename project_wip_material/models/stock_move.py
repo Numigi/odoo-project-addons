@@ -19,6 +19,7 @@ class StockMove(models.Model):
         return super()._is_out() or self._is_consumption()
 
     def _account_entry_move(self, qty, description, svl_id, cost):
+        """Accounting Valuation Entries"""
         self.ensure_one()
         if self.product_id.type != "product":
             # no stock valuation for consumable products
