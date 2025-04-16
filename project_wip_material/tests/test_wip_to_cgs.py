@@ -1,7 +1,7 @@
 import pytest
 from odoo.tests import tagged
 from odoo.exceptions import ValidationError, AccessError
-from project_wip.tests.test_project_wip_to_cgs import TestWIPTrasferToCGS
+from project_wip.tests.test_wip_to_cgs import TestWIPTrasferToCGS
 
 
 @tagged('post_install', '-at_install')
