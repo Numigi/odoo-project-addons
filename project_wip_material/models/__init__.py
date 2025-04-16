@@ -3,5 +3,6 @@
 
 from . import (
     project_task_material,
+    project_project,
     stock_move,
 )
