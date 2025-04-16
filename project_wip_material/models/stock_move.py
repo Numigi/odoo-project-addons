@@ -19,31 +19,24 @@ class StockMove(models.Model):
         return super()._is_out() or self._is_consumption()
 
     def _account_entry_move(self, qty, description, svl_id, cost):
-        print("""Accounting Valuation Entries""")
         self.ensure_one()
         if self.product_id.type != "product":
             # no stock valuation for consumable products
-            print("1111111111111111111")
             return False
         if (
             self.restrict_partner_id
             and self.restrict_partner_id != self.company_id.partner_id
         ):
             # if the move isn't owned by the company, we don't make any valuation
-            print("222222222222222222222",self.restrict_partner_id)
             return False
         # add consumption logic
         if self._is_consumption():
-            print("33333333333333333")
             self._generate_consumption_account_move(qty, description, svl_id, cost)
-            print("3333333344444444")
         elif self._is_consumption_return():
-            print("44444444444444444444")
             self._generate_consumption_return_account_move(
                 qty, description, svl_id, cost
             )
         else:
-            print("555555555555555555")
             super()._account_entry_move(qty, description, svl_id, cost)
 
     def _prepare_account_move_line(
