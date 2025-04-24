@@ -7,6 +7,7 @@
         <field name="email_from">${('&lt;%s&gt;' % (object.env.user.company_id.email or '')) | safe}</field>
         <field name="email_to">${object.project_id.user_id.email}</field>
         <field name="subject">Milestone Progress Notification</field>
+        <field name="lang">${object.user_id.partner_id.lang}</field>
         <field name="body_html"><![CDATA[
             <p>Dear ${object.project_id.user_id.name},</p>
             <p>This is to inform you that the milestone <strong>${object.name}</strong> of the project <strong>${object.project_id.name}</strong> is <strong>${round(object.progress)}%</strong> completed.</p>
