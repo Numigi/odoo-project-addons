@@ -12,46 +12,46 @@ class TestInvoiceValidationConstraints(InvoiceCase):
         super().setUpClass()
         cls.task_2.project_id = cls.project_2
 
-    # def test_if_task_on_invoice_line_matches_project__error_not_raised(self):
-    #     assert self.invoice.invoice_line_ids.task_id == self.task
-    #     self._validate_invoice()
-    #     assert self.invoice.state == "posted"
+    def test_if_task_on_invoice_line_matches_project__error_not_raised(self):
+        assert self.invoice.invoice_line_ids.task_id == self.task
+        self._validate_invoice()
+        assert self.invoice.state == "posted"
 
-    # def test_if_invoice_line_has_project_but_no_task__error_not_raised(self):
-    #     self.invoice.invoice_line_ids.task_id = False
-    #     self._validate_invoice()
-    #     assert self.invoice.state == "posted"
+    def test_if_invoice_line_has_project_but_no_task__error_not_raised(self):
+        self.invoice.invoice_line_ids.task_id = False
+        self._validate_invoice()
+        assert self.invoice.state == "posted"
 
-    # def test_if_lines_ids_has_project_but_no_task__error_not_raised(self):
-    #     self.invoice.line_ids.task_id = False
-    #     self._validate_invoice()
-    #     assert self.invoice.state == "posted"
+    def test_if_lines_ids_has_project_but_no_task__error_not_raised(self):
+        self.invoice.line_ids.task_id = False
+        self._validate_invoice()
+        assert self.invoice.state == "posted"
 
-    # def test_if_task_on_invoice_line_not_matching_project__raise_error(self):
-    #     self.invoice.invoice_line_ids.task_id = self.task_2
+    def test_if_task_on_invoice_line_not_matching_project__raise_error(self):
+        self.invoice.invoice_line_ids.task_id = self.task_2
 
-    #     with pytest.raises(ValidationError):
-    #         self._validate_invoice()
+        with pytest.raises(ValidationError):
+            self._validate_invoice()
 
-    # def test_if_task_on_line_ids_not_matching_project__raise_error(self):
-    #     self.invoice.line_ids.task_id = self.task_2
+    def test_if_task_on_line_ids_not_matching_project__raise_error(self):
+        self.invoice.line_ids.task_id = self.task_2
 
-    #     with pytest.raises(ValidationError):
-    #         self._validate_invoice()
+        with pytest.raises(ValidationError):
+            self._validate_invoice()
 
-    # def test_if_task_has_draft_invoice__changing_project_not_blocked(self):
-    #     self.task.project_id = self.project_2
-    #     self.env.invalidate_all()
-    #     assert self.task.project_id == self.project_2
+    def test_if_task_has_draft_invoice__changing_project_not_blocked(self):
+        self.task.project_id = self.project_2
+        self.env.invalidate_all()
+        assert self.task.project_id == self.project_2
 
-    # def test_if_task_has_posted_invoice__changing_project_blocked(self):
-    #     self._validate_invoice()
-    #     with pytest.raises(ValidationError):
-    #         self.task.project_id = self.project_2
+    def test_if_task_has_posted_invoice__changing_project_blocked(self):
+        self._validate_invoice()
+        with pytest.raises(ValidationError):
+            self.task.project_id = self.project_2
 
-    # def test_if_is_same_project__changing_project_not_blocked(self):
-    #     self._validate_invoice()
-    #     self.task.project_id = self.task.project_id
+    def test_if_is_same_project__changing_project_not_blocked(self):
+        self._validate_invoice()
+        self.task.project_id = self.task.project_id
 
 
 class TestAnalyticLineConstraints(AccountCase):
