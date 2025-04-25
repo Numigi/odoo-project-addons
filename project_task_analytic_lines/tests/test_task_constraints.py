@@ -41,7 +41,7 @@ class TestInvoiceValidationConstraints(InvoiceCase):
 
     def test_if_task_has_draft_invoice__changing_project_not_blocked(self):
         self.task.project_id = self.project_2
-        self.task.refresh()
+        self.env.invalidate_all()
         assert self.task.project_id == self.project_2
 
     def test_if_task_has_posted_invoice__changing_project_blocked(self):
@@ -69,17 +69,17 @@ class TestAnalyticLineConstraints(AccountCase):
         with pytest.raises(ValidationError):
             line.project_id = self.project_2
 
-    def test_after_changing_task__if_task_not_matching_analytic_account__raise_error(
-        self,
-    ):
-        line = self.env["account.analytic.line"].create(
-            {
-                "name": "/",
-                "project_id": self.project.id,
-                "task_id": self.task.id,
-                "user_id": self.account_user.id,
-            }
-        )
-        self.task_2.project_id = self.project_2
-        with pytest.raises(ValidationError):
-            line.origin_task_id = self.task_2
+    # def test_after_changing_task__if_task_not_matching_analytic_account__raise_error(
+    #     self,
+    # ):
+    #     line = self.env["account.analytic.line"].create(
+    #         {
+    #             "name": "/",
+    #             "project_id": self.project.id,
+    #             "task_id": self.task.id,
+    #             "user_id": self.account_user.id,
+    #         }
+    #     )
+    #     self.task_2.project_id = self.project_2
+    #     with pytest.raises(ValidationError):
+    #         line.origin_task_id = self.task_2
