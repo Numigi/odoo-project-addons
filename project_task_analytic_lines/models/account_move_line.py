@@ -40,10 +40,10 @@ class AccountMoveLine(models.Model):
         ):
             self.task_id = False
 
-    def _prepare_analytic_line(self):
-        result = super()._prepare_analytic_line()
+    def _prepare_analytic_lines(self):
+        result = super()._prepare_analytic_lines()
         for vals in result:
-            move_line = self.browse(vals["move_id"])
+            move_line = self.browse(vals["move_line_id"])
             vals["origin_task_id"] = move_line.task_id.id
         return result
 

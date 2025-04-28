@@ -30,7 +30,7 @@ class ProjectTask(models.Model):
             if task.parent_id and task.project_id != task.parent_id.project_id:
                 raise ValidationError(
                     _(
-                        "The subtask '{subtask}' must be in the same project"
+                        "The subtask '{subtask}' must be in the same project "
                         "as its parent task '{parent_task}'."
                     ).format(
                         subtask=task.display_name,
