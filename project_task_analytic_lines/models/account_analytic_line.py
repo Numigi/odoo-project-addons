@@ -54,15 +54,17 @@ class AnalyticLine(models.Model):
         super().write(vals)
         if vals.get("origin_task_id"):
             self._propagate_origin_task_to_timesheet_lines()
-
         return True
 
     def _set_origin_task_id(self, vals):
         if vals.get("task_id"):
             vals["origin_task_id"] = vals["task_id"]
+        elif vals.get("origin_task_id") and not vals.get("task_id"):
+            vals["task_id"] = vals["origin_task_id"]
 
     def _propagate_origin_task_to_timesheet_lines(self):
-        """Backward propagation of origin_task_id to task_id.
+        """
+        Backward propagation of origin_task_id to task_id.
 
         This allows the system to behave in a more transparent way
         when manually changing the value of origin_task_id
