@@ -226,7 +226,10 @@ class ProjectCostReport(models.TransientModel):
             section_lines, lambda l: l.project_cost_category_id
         )
 
-        sorted_categories = sorted(grouped_lines.keys(), key=lambda c: c.sequence or 0)
+        sorted_categories = sorted(
+            [cat for cat in grouped_lines.keys() if cat],
+            key=lambda c: c.sequence or 0
+        )
 
         unfolded_categories = report_context.get("unfolded_categories") or []
 
