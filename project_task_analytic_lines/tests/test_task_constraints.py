@@ -71,7 +71,7 @@ class TestAnalyticLineConstraints(AccountCase):
 
     def test_after_changing_task__if_task_not_matching_analytic_account__raise_error(
         self,
-     ):
+    ):
         line = self.env["account.analytic.line"].create(
             {
                 "name": "/",
