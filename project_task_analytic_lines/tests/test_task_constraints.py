@@ -72,15 +72,16 @@ class TestAnalyticLineConstraints(AccountCase):
     def test_after_changing_task__if_task_not_matching_analytic_account__raise_error(
         self,
     ):
+        project_1 = self.env["project.project"].create({"name": "P1"})
+        project_2 = self.env["project.project"].create({"name": "P2"})
 
-        self.task_2.project_id = self.project_2
-        with pytest.raises(ValidationError):
-            line = self.env["account.analytic.line"].create(
-                {
-                    "name": "/",
-                    "project_id": self.project.id,
-                    "task_id": self.task.id,
-                    "user_id": self.account_user.id,
-                    "origin_task_id": self.task_2.id,
-                }
-            )
+        analytic_account_1 = project_1.analytic_account_id
+
+        task = self.env["project.task"].create(
+            {"name": "Task from P2", "project_id": project_2.id, })
+
+        with self.assertRaises(ValidationError):
+            self.env["account.analytic.line"].create(
+                {"name": "Invalid Line", "user_id": self.account_user.id,
+                    "account_id": analytic_account_1.id,
+                    "origin_task_id": task.id, })
