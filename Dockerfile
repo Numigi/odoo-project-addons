@@ -6,7 +6,7 @@ USER root
 COPY .docker_files/requirements.txt .
 COPY .docker_files/test-requirements.txt .
 RUN pip3 install -r requirements.txt
-   && pip3 install -r test-requirements.txt && rm test-requirements.txt
+RUN pip3 install -r test-requirements.txt
 RUN apt-get update && apt-get install -y --no-install-recommends \
         # Required for aeroo reports
         libreoffice \
