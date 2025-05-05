@@ -82,5 +82,5 @@ class TestAnalyticLineConstraints(AccountCase):
         )
         self.task_2.project_id = self.project_2
         with pytest.raises(ValidationError):
-            line.origin_task_id = self.task_2
-            line.flush()
+            line.write({"origin_task_id": self.task_2.id})
+
