@@ -72,15 +72,15 @@ class TestAnalyticLineConstraints(AccountCase):
     def test_after_changing_task__if_task_not_matching_analytic_account__raise_error(
         self,
     ):
-        line = self.env["account.analytic.line"].create(
-            {
-                "name": "/",
-                "project_id": self.project.id,
-                "task_id": self.task.id,
-                "user_id": self.account_user.id,
-            }
-        )
+
         self.task_2.project_id = self.project_2
         with pytest.raises(ValidationError):
-            line.write({"origin_task_id": self.task_2.id})
-
+            line = self.env["account.analytic.line"].create(
+                {
+                    "name": "/",
+                    "project_id": self.project.id,
+                    "task_id": self.task.id,
+                    "user_id": self.account_user.id,
+                    "origin_task_id": self.task_2.id,
+                }
+            )
