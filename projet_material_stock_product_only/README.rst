@@ -9,16 +9,11 @@ and ensure newly created products default to stockable.
 #. Only stockable products appear; new products are created as stockable.
 
 .. image:: static/description/projec_task_form.png
-:alt: Task form consumption
-:align: center
 
 .. image:: static/description/new_product.png
-:alt: New Product
-:align: center
 
 .. image:: static/description/product_form.png
-:alt: Product 
-:align: center
+
 
 
 Contributors
