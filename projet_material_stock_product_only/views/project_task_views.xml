@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="task_form_with_material" model="ir.ui.view">
+        <field name="name">Project Task Form: add material consumption</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project_material.task_form_with_material"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='material_line_ids']/tree/field[@name='product_id']" position="attributes">
+                    <attribute name="domain">[('type', '=', 'product')]</attribute>
+                    <attribute name="context">{'default_type': 'product'}</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>
