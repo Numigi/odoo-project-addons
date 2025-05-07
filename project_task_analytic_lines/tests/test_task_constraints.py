@@ -69,17 +69,53 @@ class TestAnalyticLineConstraints(AccountCase):
         with pytest.raises(ValidationError):
             line.project_id = self.project_2
 
-    # def test_after_changing_task__if_task_not_matching_analytic_account__raise_error(
-    #     self,
-    # ):
-    #     line = self.env["account.analytic.line"].create(
-    #         {
-    #             "name": "/",
-    #             "project_id": self.project.id,
-    #             "task_id": self.task.id,
-    #             "user_id": self.account_user.id,
-    #         }
-    #     )
-    #     self.task_2.project_id = self.project_2
-    #     with pytest.raises(ValidationError):
-    #         line.origin_task_id = self.task_2
+    def test_after_changing_task__if_task_not_matching_analytic_account__raise_error(
+        self,
+    ):
+        # ON CREATE
+        analytic_account_1 = self.project.analytic_account_id
+        task = self.env["project.task"].create(
+            {
+                "name": "Task from P2",
+                "project_id": self.project_2.id,
+            }
+        )
+        with self.assertRaises(ValidationError):
+            self.env["account.analytic.line"].create(
+                {
+                    "name": "Invalid Line",
+                    "user_id": self.account_user.id,
+                    "account_id": analytic_account_1.id,
+                    "origin_task_id": task.id,
+                }
+            )
+
+        # ON WRITE
+
+        line = self.env["account.analytic.line"].create(
+            {
+                "name": "/",
+                "project_id": self.project.id,
+                "task_id": self.task.id,
+                "user_id": self.account_user.id,
+            }
+        )
+        self.task_2.project_id = self.project_2
+
+        # If some operations (like direct ORM) that updating only project_id are done
+        # it will raise an error, or even adding after the task
+        # to the line will raise an error
+        with self.assertRaises(ValidationError):
+            line.project_id = self.project_2
+        with self.assertRaises(ValidationError):
+            line.project_id = self.project_2
+            line.task_id = self.task_2
+
+        # Using write method will not raise an error
+        # because the task_id will be propagated to the line
+        # with self.assertRaises(ValidationError):
+        line.write({"project_id": self.project_2.id, "task_id": self.task_2.id})
+
+        # This could pass cause it will be propagated to task_id
+        # so it will match the analytic account of the task
+        line.origin_task_id = self.task_2
