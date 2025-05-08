@@ -35,6 +35,7 @@
         "project_material",
         "project_material_direct",
         "project_material_enhanced",
+        "project_material_stock_product_only",
         "project_milestone_enhanced",
         "project_milestone_estimated_hours",
         "project_milestone_spent_hours",
