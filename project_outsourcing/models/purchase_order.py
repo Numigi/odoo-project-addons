@@ -85,14 +85,14 @@ class PurchaseOrderWithOutSourcing(models.Model):
     @api.model
     def create(self, vals):
         order = super().create(vals)
-        order._propagate_project_to_order_lines()
+        # order._propagate_project_to_order_lines()
         return order
 
     def write(self, vals):
         super().write(vals)
-        outsourcing_orders = self.filtered(lambda o: o.is_outsourcing)
-        for order in outsourcing_orders:
-            order._propagate_project_to_order_lines()
+        # outsourcing_orders = self.filtered(lambda o: o.is_outsourcing)
+        # for order in outsourcing_orders:
+        # order._propagate_project_to_order_lines()
         return True
 
     @api.onchange("project_id")

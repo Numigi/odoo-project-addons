@@ -4,5 +4,5 @@
 from . import common
 from . import test_no_stockable_product
 from . import test_project_task
-from . import test_purchase_order
 from . import test_task_change_project
+from . import test_purchase_order
