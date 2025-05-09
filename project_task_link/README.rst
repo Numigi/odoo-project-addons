@@ -8,10 +8,10 @@ Overview
 --------
 As member of the group ``Project / User``, I go the form view of a task.
 
-.. image:: static/description/task_formpng.png
+.. image:: static/description/task_form.png
 
-In the description, I need to reference the task ID=18.
-Therefore, I write ``TA#18`` in the description.
+In the description, I need to reference the task ID=60.
+Therefore, I write ``TA#60`` in the description.
 
 .. image:: static/description/task_form_edit_mode.png
 

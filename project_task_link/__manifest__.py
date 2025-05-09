@@ -12,12 +12,6 @@
     "summary": "Dynamically add links to tasks in the web interface.",
     "depends": [
         "project_task_reference",
-        "web_editor",
     ],
-    "assets": {
-        "web.assets_backend": [
-            "/project_task_link/static/src/js/html_field.js",
-        ],
-    },
     "installable": True,
 }
