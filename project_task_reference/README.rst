@@ -1,63 +1,66 @@
-Project Task Reference
-======================
+Project Task Reference Extract
+==============================
 This is a technical module. It has no functional use on its own.
 
-It allows to extract a reference to a task from a string and provides tools to normalize and locate tasks based on these references.
+It allows to extract a reference to a task from a string.
 
 .. contents:: Table of Contents
 
 Basic Usage
 -----------
-The module adds a method ``_search_references_from_text`` in the ``project.task`` model.
+The module adds a method ``_search_references_from_text`` on ``project.task``.
 
-This method allows you to extract and validate references to tasks from a given text input.
+This method takes a string and returns a list of TaskReference (a python class defined in the module).
 
 .. code-block:: python
 
+    from odoo.addons.project_task_reference.reference import TaskReference
+
     some_text = "ta#123 Some commit message"
     reference = env['project.task']._search_references_from_text(some_text)[0]
-    assert reference[task] == env['project.task'].browse(123)
-    assert reference[string] == "ta#123"
-    assert reference[normalized_string] == "TA#123"
+    assert isinstance(reference, TaskReference)
+    assert reference.task == env['project.task'].browse(123)
+    assert reference.string == "ta#123"
+    assert reference.normalized_string == "TA#123"
 
+The reference(s) can be located anywhere in the given text.
 
-The method identifies references anywhere within the given text.
-It is flexible and tolerant of minor variations, such as case differences or missing # symbols.
+The method is at some point tolerant to variations in the format of the reference inside the given text.
 
-Supported Reference Variations:
-- ta#123
-- TA123
-- Ta#123
+* It is insensitive to lower case.
+* The ``#`` is optional.
 
-By default, these references correspond to tasks with the ID 123 in the database.
+Thefore ``ta123`` would be recognized.
 
-Advanced Configuration
-----------------------
+Advanced Setup
+--------------
+By default, the system uses the following regex to parse the references:
 
-The reference parsing and normalization behavior can be customized using system parameters:
+..
 
-* 1- Regex for Parsing References: ``project_task_reference.regex``
+    [tT][aA]#?(?P<id>\d+)
 
-- Default: [tT][aA]#?(?P<id>\d+)
+This means that the strings ``TA#123``, ``ta#123``, ``TA123`` or ``ta123``
+will generate a reference that point to the task with ID=123.
 
-- Example: Matching TA#123 or ta123.
+Then, the following python format is used to render the reference in a normalized form:
 
-* 2- Format for Normalizing References: ``project_task_reference.format``
+..
 
-- Default: TA#{id}
+    TA#{id}
 
-- Example: Converts any recognized format into TA#123.
+The reference will always be formatted ``TA#123``.
 
-Customization Example
----------------------
+This can be tweeked by defining 2 system parameters:
 
-If your references should follow the format [ST#123], update the system parameters as follows:
+* ``project_task_reference.regex``: the REGEX used to parse the reference.
+* ``project_task_reference.format``: the python format to use for formatting the reference.
 
-``project_task_reference.regex``: \[?[sS][tT]#?(?P<id>\d+)\]?
+For example, let's suppose the format for our links must be: ``[ST#123]``.
+The system parameters could be as follow:
 
-``project_task_reference.format``: [ST#{id}]
-
-This configuration would allow parsing strings like [St#123] and normalize them to the format [ST#123].
+* ``project_task_reference.regex``: ``\[?[sS][tT]#?(?P<id>\d+)\]?``
+* ``project_task_reference.format``: ``[ST#{id}]``
 
 The regex must contain a parameter ``(?P<id>\d+)`` (the database ID of the task).
 
