@@ -5,19 +5,20 @@ from odoo.tests.common import TransactionCase
 
 
 class TestEstimatedHours(TransactionCase):
-    def setUp(self):
-        super().setUp()
-        self.project = self.env["project.project"].create(
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.project = cls.env["project.project"].create(
             {"name": "My Project", "allow_milestones": True}
         )
-        self.milestone = self.env["project.milestone"].create(
+        cls.milestone = cls.env["project.milestone"].create(
             {
                 "name": "My Milestone",
                 "estimated_hours": 10,
-                "project_id": self.project.id,
+                "project_id": cls.project.id,
             }
         )
-        self.milestone_copy = self.milestone.copy()
+        cls.milestone_copy = cls.milestone.copy()
 
     def test_estimated_hours_copy(self):
         assert (

@@ -1,0 +1,121 @@
+# Copyright 2019 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+# License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
+
+import pytest
+from .common import AccountCase, InvoiceCase
+from odoo.exceptions import ValidationError
+
+
+class TestInvoiceValidationConstraints(InvoiceCase):
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.task_2.project_id = cls.project_2
+
+    def test_if_task_on_invoice_line_matches_project__error_not_raised(self):
+        assert self.invoice.invoice_line_ids.task_id == self.task
+        self._validate_invoice()
+        assert self.invoice.state == "posted"
+
+    def test_if_invoice_line_has_project_but_no_task__error_not_raised(self):
+        self.invoice.invoice_line_ids.task_id = False
+        self._validate_invoice()
+        assert self.invoice.state == "posted"
+
+    def test_if_lines_ids_has_project_but_no_task__error_not_raised(self):
+        self.invoice.line_ids.task_id = False
+        self._validate_invoice()
+        assert self.invoice.state == "posted"
+
+    def test_if_task_on_invoice_line_not_matching_project__raise_error(self):
+        self.invoice.invoice_line_ids.task_id = self.task_2
+
+        with pytest.raises(ValidationError):
+            self._validate_invoice()
+
+    def test_if_task_on_line_ids_not_matching_project__raise_error(self):
+        self.invoice.line_ids.task_id = self.task_2
+
+        with pytest.raises(ValidationError):
+            self._validate_invoice()
+
+    def test_if_task_has_draft_invoice__changing_project_not_blocked(self):
+        self.task.project_id = self.project_2
+        self.env.invalidate_all()
+        assert self.task.project_id == self.project_2
+
+    def test_if_task_has_posted_invoice__changing_project_blocked(self):
+        self._validate_invoice()
+        with pytest.raises(ValidationError):
+            self.task.project_id = self.project_2
+
+    def test_if_is_same_project__changing_project_not_blocked(self):
+        self._validate_invoice()
+        self.task.project_id = self.task.project_id
+
+
+class TestAnalyticLineConstraints(AccountCase):
+    def test_after_changing_project__if_task_not_matching_analytic_account__raise_error(
+        self,
+    ):
+        line = self.env["account.analytic.line"].create(
+            {
+                "name": "/",
+                "project_id": self.project.id,
+                "task_id": self.task.id,
+                "user_id": self.account_user.id,
+            }
+        )
+        with pytest.raises(ValidationError):
+            line.project_id = self.project_2
+
+    def test_after_changing_task__if_task_not_matching_analytic_account__raise_error(
+        self,
+    ):
+        # ON CREATE
+        analytic_account_1 = self.project.analytic_account_id
+        task = self.env["project.task"].create(
+            {
+                "name": "Task from P2",
+                "project_id": self.project_2.id,
+            }
+        )
+        with self.assertRaises(ValidationError):
+            self.env["account.analytic.line"].create(
+                {
+                    "name": "Invalid Line",
+                    "user_id": self.account_user.id,
+                    "account_id": analytic_account_1.id,
+                    "origin_task_id": task.id,
+                }
+            )
+
+        # ON WRITE
+
+        line = self.env["account.analytic.line"].create(
+            {
+                "name": "/",
+                "project_id": self.project.id,
+                "task_id": self.task.id,
+                "user_id": self.account_user.id,
+            }
+        )
+        self.task_2.project_id = self.project_2
+
+        # If some operations (like direct ORM) that updating only project_id are done
+        # it will raise an error, or even adding after the task
+        # to the line will raise an error
+        with self.assertRaises(ValidationError):
+            line.project_id = self.project_2
+        with self.assertRaises(ValidationError):
+            line.project_id = self.project_2
+            line.task_id = self.task_2
+
+        # Using write method will not raise an error
+        # because the task_id will be propagated to the line
+        # with self.assertRaises(ValidationError):
+        line.write({"project_id": self.project_2.id, "task_id": self.task_2.id})
+
+        # This could pass cause it will be propagated to task_id
+        # so it will match the analytic account of the task
+        line.origin_task_id = self.task_2

@@ -26,9 +26,9 @@
                         <tree string="Milestones">
                             <field name="name"/>
                             <field name="deadline"/>
-                            <field name="is_reached"/>
-                            <field name="task_ids" widget="many2many_tags"/>
-                            <field name="progress" widget="progressbar"/>
+                            <field name="is_reached" optional="show"/>
+                            <field name="task_ids" widget="many2many_tags" optional="show"/>
+                            <field name="progress" widget="progressbar" optional="show"/>
                         </tree>
                     </field>
                 </page>

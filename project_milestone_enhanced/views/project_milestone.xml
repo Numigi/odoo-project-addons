@@ -27,14 +27,16 @@
                     </page>
                 </notebook>
             </xpath>
-            <xpath expr="//field[@name='is_reached']" position="after">
-                <field name="progress" widget="progressbar"/>
+            <xpath expr="//group[@name='main_details']" position="after">
+                <group name="other_details">
+                    <field name="progress" widget="progressbar"/>
+                </group>
             </xpath>
             <xpath expr="//sheet" position="after">
                 <div class="oe_chatter">
                     <field name="message_follower_ids" widget="mail_followers" />
                     <field name="activity_ids" />
-                    <field name="message_ids" widget="mail_thread" />
+                    <field name="message_ids" />
                 </div>
             </xpath>
         </field>

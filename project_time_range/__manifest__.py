@@ -11,6 +11,10 @@
     "category": "Project",
     "summary": "Add fields Min and Max on project tasks.",
     "depends": ["hr_timesheet"],
-    "data": ["views/portal.xml", "views/project_task.xml", "views/project_project.xml"],
+    "data": [
+        "views/project_task_portal_template.xml",
+        "views/project_task_views.xml",
+        "views/project_project_views.xml",
+    ],
     "installable": True,
 }
