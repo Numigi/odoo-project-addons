@@ -10,7 +10,7 @@
     "license": "LGPL-3",
     "category": "Project",
     "summary": "Categorize projects as Lump Sum",
-    "depends": ["project_type", "project_task_analytic_lines", "hr_timesheet"],
+    "depends": ["project_type", "project_task_analytic_lines"],
     "data": [
         "views/account_analytic_line_views.xml",
         "views/project_project_views.xml",
