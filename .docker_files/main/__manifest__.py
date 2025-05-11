@@ -14,6 +14,7 @@
         "project",
         "project_default_task_stage",
         "project_group_create",
+        "project_lump_sum",
         "project_milestone_enhanced",
         "project_milestone_estimated_hours",
         "project_milestone_spent_hours",
