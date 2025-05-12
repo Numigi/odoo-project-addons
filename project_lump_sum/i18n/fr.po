@@ -1,0 +1,48 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* project_lump_sum
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-05-08 19:04+0000\n"
+"PO-Revision-Date: 2025-05-08 19:04+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: project_lump_sum
+#: model:ir.model,name:project_lump_sum.model_account_analytic_line
+msgid "Analytic Line"
+msgstr "Ligne analytique"
+
+#. module: project_lump_sum
+#: model:ir.model.fields,field_description:project_lump_sum.field_account_analytic_line__lump_sum
+#: model:ir.model.fields,field_description:project_lump_sum.field_project_project__lump_sum
+#: model:ir.model.fields,field_description:project_lump_sum.field_project_type__lump_sum
+#: model_terms:ir.ui.view,arch_db:project_lump_sum.hr_timesheet_line_search
+#: model_terms:ir.ui.view,arch_db:project_lump_sum.view_account_analytic_line_filter
+#: model_terms:ir.ui.view,arch_db:project_lump_sum.view_project_project_filter
+msgid "Lump Sum"
+msgstr "Forfaitaire"
+
+#. module: project_lump_sum
+#: model_terms:ir.ui.view,arch_db:project_lump_sum.hr_timesheet_line_search
+#: model_terms:ir.ui.view,arch_db:project_lump_sum.view_account_analytic_line_filter
+#: model_terms:ir.ui.view,arch_db:project_lump_sum.view_project_project_filter
+msgid "Not Lump Sum"
+msgstr "Non forfaitaire"
+
+#. module: project_lump_sum
+#: model:ir.model,name:project_lump_sum.model_project_project
+msgid "Project"
+msgstr "Projet"
+
+#. module: project_lump_sum
+#: model:ir.model,name:project_lump_sum.model_project_type
+msgid "Project Type"
+msgstr "Type de projet"

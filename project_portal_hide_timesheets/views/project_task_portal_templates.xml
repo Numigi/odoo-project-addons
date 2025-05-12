@@ -5,7 +5,7 @@
         <xpath expr="//li[@id='nav-report']" position="replace">
             <t t-esc="False"/>
         </xpath>
-        <xpath expr="//li[@class='nav-item']" position="replace">
+        <xpath  expr="(//li[@t-if='timesheets and allow_timesheets'])[1]" position="replace">
             <t t-esc="False"/>
         </xpath>
         <xpath expr="//div[@class='container']" position="replace">
