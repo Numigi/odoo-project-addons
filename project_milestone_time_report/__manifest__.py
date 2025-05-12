@@ -11,8 +11,9 @@
     "category": "Project",
     "summary": "Add a dynamic milestone time report on projects",
     "depends": [
-        "project_iteration",
-        # "project_lump_sum", Stand By
+        "project_parent_enhanced",
+        "project_lump_sum",
+        "project_milestone",
         "project_milestone_time_kpi",
     ],
     "data": [
@@ -20,6 +21,6 @@
         "views/project_project_views.xml",
         "views/project_milestone_views.xml",
     ],
-    "qweb": ["static/src/xml/templates.xml"],
+    # "qweb": ["static/src/xml/templates.xml"],
     "installable": True,
 }

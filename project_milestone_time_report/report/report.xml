@@ -88,12 +88,12 @@
     </template>
 
 
-    <template id="assets_backend" name="backend assets" inherit_id="web.assets_backend">
+    <!-- <template id="assets_backend" name="backend assets" inherit_id="web.assets_backend">
         <xpath expr="." position="inside">
             <script type="text/javascript" src="/project_milestone_time_report/static/src/js/report_action.js"></script>
             <link rel="stylesheet" type="text/scss" href="/project_milestone_time_report/static/src/scss/report.scss"/>
         </xpath>
-    </template>
+    </template> -->
 
     <template id="project_report_report_html">
         <t t-call="project_milestone_time_report.report_body"/>

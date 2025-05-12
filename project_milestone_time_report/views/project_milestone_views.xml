@@ -2,7 +2,7 @@
 
 <odoo>
     <!-- Search View -->
-    <record id="project_milestone_view_search" model="ir.ui.view">
+    <!-- <record id="project_milestone_view_search" model="ir.ui.view">
         <field name="name">Project Milestone With Parent Project</field>
         <field name="model">project.milestone</field>
         <field name="inherit_id" ref="project_milestone.project_milestone_view_search"/>
@@ -11,5 +11,5 @@
                 <field name="parent_project_id"/>
             </field>
         </field>
-    </record>
+    </record> -->
 </odoo>
