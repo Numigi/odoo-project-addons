@@ -1,10 +1,10 @@
 # Copyright 2023 - Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
-from odoo.tests import common
+from odoo.tests.common import TransactionCase
 
 
-class TestReport(common.SavepointCase):
+class TestReport(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -17,7 +17,7 @@ class TestReport(common.SavepointCase):
             {"name": "Done", "fold": True}
         )
         cls.lot = cls.env["project.project"].create(
-            {"name": "Lot", "use_milestones": True, "parent_id": cls.parent_project.id}
+            {"name": "Lot", "parent_id": cls.parent_project.id}
         )
         cls.milestone_a = cls.env["project.milestone"].create(
             {

@@ -10,7 +10,7 @@ class PrintProjectCostReport(http.Controller):
     @http.route(
         "/web/project_milestone_time_report/<int:project_id>", type="http", auth="user"
     )
-    def project_milestone_time_report_pdf(self, project_id, token):
+    def project_milestone_time_report_pdf(self, project_id):
         report = request.env["project.milestone.time.report"]
         output_pdf = report.get_pdf(project_id)
         filename = report.get_filename(project_id)
@@ -18,5 +18,4 @@ class PrintProjectCostReport(http.Controller):
         headers.add("Content-Disposition", "attachment", filename=filename)
         headers.add("Content-Type", "application/pdf")
         response = request.make_response(output_pdf, headers=headers)
-        response.set_cookie("fileToken", token)
         return response

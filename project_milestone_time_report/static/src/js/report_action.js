@@ -1,5 +1,5 @@
-    /*
-    Copyright 2023 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+/*
+    Copyright 2025 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
     License LGPL-3.0 or later (http://www.gnu.org/licenses/LGPL.html).
 */
 odoo.define("project_milestone_time_report.project_milestone_time_report", function (require) {
@@ -10,6 +10,7 @@ odoo.define("project_milestone_time_report.project_milestone_time_report", funct
     var framework = require("web.framework");
     var session = require("web.session");;
     var AbstractAction = require("web.AbstractAction");
+    
     
     var QWeb = core.qweb;
     var _t = core._t;
@@ -58,7 +59,6 @@ odoo.define("project_milestone_time_report.project_milestone_time_report", funct
         },
         update_control_panel(){
             this.controlPanelProps.cp_content = { $buttons: this.$button };
-            this.controlPanelProps.breadcrumbs = this.getParent()._getBreadcrumbs();
             return this.updateControlPanel();
         },
     
@@ -72,6 +72,7 @@ odoo.define("project_milestone_time_report.project_milestone_time_report", funct
             return this.controlPanelButtons;
         },
         _downloadPDF: function () {
+            console.log("Download PDF");
             framework.blockUI();
             session.get_file({
                 url: "/web/project_milestone_time_report/" + this.projectId,

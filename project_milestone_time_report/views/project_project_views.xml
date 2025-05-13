@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
-
-    <record id="milestone_time_report_action" model="ir.actions.client">
+    
+    <record model="ir.actions.client" id="milestone_time_report_action">
         <field name="name">Milestone time report</field>
-        <field name="tag">project_milestone_time_report</field>
+        <field name="tag">project_milestone_time_report</field> 
     </record>
+
 
     <record id="edit_project" model="ir.ui.view">
         <field name="name">Project Form: Milestone time report</field>

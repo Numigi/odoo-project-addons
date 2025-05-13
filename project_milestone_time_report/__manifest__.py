@@ -13,7 +13,6 @@
     "depends": [
         "project_parent_enhanced",
         "project_lump_sum",
-        "project_milestone",
         "project_milestone_time_kpi",
     ],
     "data": [
@@ -21,6 +20,12 @@
         "views/project_project_views.xml",
         "views/project_milestone_views.xml",
     ],
-    # "qweb": ["static/src/xml/templates.xml"],
+    "assets": {
+        "web.assets_backend": [
+            "project_milestone_time_report/static/src/js/report_action.js",
+            "project_milestone_time_report/static/src/scss/report.scss",
+            "project_milestone_time_report/static/src/xml/**/*",
+        ]
+    },
     "installable": True,
 }

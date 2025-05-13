@@ -19,6 +19,7 @@
         "project_milestone_estimated_hours",
         "project_milestone_spent_hours",
         "project_milestone_time_kpi",
+        "project_milestone_time_report",
         "project_no_quick_create",
         "project_parent_enhanced",
         "project_parent_forecasted_end_date",

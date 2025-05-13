@@ -3,6 +3,7 @@
 
 import pytz
 from datetime import datetime
+from markupsafe import Markup
 from odoo import api, models, _
 from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT as DATETIME_FORMAT
 
@@ -15,12 +16,19 @@ class ProjectMilestoneTimeReport(models.AbstractModel):
     def get_html(self, project_id):
         project = self._get_project(project_id)
         rendering_variables = self.get_rendering_variables(project)
-        return self.env.ref(
-            "project_milestone_time_report.project_report_report_html"
-        )._render(rendering_variables)
+        return self.env["ir.qweb"]._render(
+            "project_milestone_time_report.project_report_report_html",
+            rendering_variables,
+        )
 
     @api.model
     def get_pdf(self, project_id):
+        base_url = self.env["ir.config_parameter"].sudo().get_param("web.base.url")
+        rcontext = {
+            "mode": "print",
+            "base_url": base_url,
+        }
+
         project = self._get_project(project_id)
         rendering_variables = self.get_rendering_variables(project)
         body = self.env["ir.ui.view"]._render_template(
@@ -28,8 +36,13 @@ class ProjectMilestoneTimeReport(models.AbstractModel):
             values=rendering_variables,
         )
         header = self.env["ir.actions.report"]._render_template(
-            "web.external_layout", values=rendering_variables
+            "web.external_layout", values=rcontext
         )
+        header = self.env["ir.actions.report"]._render_template(
+            "web.external_layout",
+            values=dict(rcontext, subst=True, body=Markup(header.decode())),
+        )
+        header = header.decode("utf-8") if isinstance(header, bytes) else header
         return self.env["ir.actions.report"]._run_wkhtmltopdf(
             [body],
             header=header,

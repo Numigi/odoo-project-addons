@@ -87,21 +87,8 @@
         </div>
     </template>
 
-
-    <!-- <template id="assets_backend" name="backend assets" inherit_id="web.assets_backend">
-        <xpath expr="." position="inside">
-            <script type="text/javascript" src="/project_milestone_time_report/static/src/js/report_action.js"></script>
-            <link rel="stylesheet" type="text/scss" href="/project_milestone_time_report/static/src/scss/report.scss"/>
-        </xpath>
-    </template> -->
-
     <template id="project_report_report_html">
         <t t-call="project_milestone_time_report.report_body"/>
-    </template>
-
-    <template id="report_assets_pdf" name="Trial Balance PDF Assets">
-        <t t-call="web._assets_helpers"/>
-        <link rel="stylesheet" type="text/scss" href="/project_milestone_time_report/static/src/scss/report.scss" />
     </template>
 
     <template id="project_report_report_pdf">
