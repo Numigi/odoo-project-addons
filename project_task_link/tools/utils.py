@@ -19,7 +19,7 @@ def _convert_text_to_html_with_task_links(env: "Environment", text: str) -> str:
     """
     for reference in _find_task_references(env, text):
         link = '&#8291;<a href="{url}" target="_blank">{ref}</a>&#8291;'.format(
-            url=reference.task.get_portal_access_url(),
+            url=reference.task.get_form_view_access_url(),
             ref=reference.normalized_string,
         )
         text = text.replace(reference.string, link)
