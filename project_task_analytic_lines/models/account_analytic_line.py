@@ -59,8 +59,6 @@ class AnalyticLine(models.Model):
     def _set_origin_task_id(self, vals):
         if vals.get("task_id"):
             vals["origin_task_id"] = vals["task_id"]
-        elif vals.get("origin_task_id") and not vals.get("task_id"):
-            vals["task_id"] = vals["origin_task_id"]
 
     def _propagate_origin_task_to_timesheet_lines(self):
         """
