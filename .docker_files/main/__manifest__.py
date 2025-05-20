@@ -39,6 +39,7 @@
         "project_task_draggable_column_disable",
         "project_task_editable_list_view",
         "project_task_full_text_search",
+        "project_task_link",
         "project_task_id_in_display_name",
         "project_task_milestone_mandatory",
         "project_task_parent_domain",
