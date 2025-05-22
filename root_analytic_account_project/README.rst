@@ -3,22 +3,24 @@ Root Account Analytic Project
 
 Overview
 --------
-The OCA Module `account_analytic_root`_ is a module that allows you to add a parent analytic account to the analytic accounts. 
+The OCA Module `account_analytic_root` is a module that allows you to add a parent analytic account to the analytic accounts. 
 
-With this module You can see the parent analytic account on analytic line. 
+With this module You can see the parent analytic account in the analytic account form view and in the project form view.
 
 
-    .. image:: static/description/analytic_line_search_01.png
+
+    .. image:: static/description/analytic_account_form.png
         :width: 100%
         :align: center
         :height: 600px
-        :alt: Analytic Line Search
+        :alt: Account Analytic Form
 
-    .. image:: static/description/analytic_line_search_02.png
+
+    .. image:: static/description/project_form.png
         :width: 100%
         :align: center
         :height: 600px
-        :alt: Analytic Line Search
+        :alt: Project Form
 
 Contributors
 ------------
