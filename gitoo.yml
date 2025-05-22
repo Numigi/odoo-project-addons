@@ -25,3 +25,9 @@
   includes:
     - web_ir_actions_act_multi
     - web_timeline
+
+- url: https://github.com/OCA/account-analytic
+  branch: "16.0"
+  includes:
+    - account_analytic_parent
+    - account_analytic_root

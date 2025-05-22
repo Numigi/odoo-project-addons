@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="edit_project" model="ir.ui.view">
+        <field name="name">Project Form</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.edit_project" />
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='settings']//field[@name='analytic_account_id']" position="after">
+                <field name="root_analytic_account_id" attrs="{'invisible':[('root_analytic_account_id','=',False)]}"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
