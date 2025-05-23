@@ -52,6 +52,8 @@ COPY project_task_subtask_same_project /mnt/extra-addons/project_task_subtask_sa
 COPY project_time_range /mnt/extra-addons/project_time_range
 COPY project_track_end_date /mnt/extra-addons/project_track_end_date
 COPY project_type_advanced /mnt/extra-addons/project_type_advanced
+COPY root_analytic_account_project /mnt/extra-addons/root_analytic_account_project
+COPY root_analytic_account_timesheet /mnt/extra-addons/root_analytic_account_timesheet
 
 COPY .docker_files/main /mnt/extra-addons/main
 COPY .docker_files/odoo.conf /etc/odoo

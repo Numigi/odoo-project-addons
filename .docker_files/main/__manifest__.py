@@ -51,6 +51,8 @@
         "project_time_range",
         "project_track_end_date",
         "project_type_advanced",
+        "root_analytic_account_project",
+        "root_analytic_account_timesheet",
     ],
     "installable": True,
 }
