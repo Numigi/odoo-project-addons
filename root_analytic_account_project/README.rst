@@ -9,14 +9,14 @@ With this module You can see the parent analytic account in the analytic account
 
 
 
-    .. image:: static/description/analytic_account_form.png
+    .. image:: https://raw.githubusercontent.com/Numigi/odoo-project-addons/16.0/root_analytic_account_project/static/description/analytic_account_form.png
         :width: 100%
         :align: center
         :height: 600px
         :alt: Account Analytic Form
 
 
-    .. image:: static/description/project_form.png
+    .. image:: https://raw.githubusercontent.com/Numigi/odoo-project-addons/16.0/root_analytic_account_project/static/description/project_form.png
         :width: 100%
         :align: center
         :height: 600px
