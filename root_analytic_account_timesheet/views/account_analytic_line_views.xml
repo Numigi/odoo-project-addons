@@ -4,13 +4,13 @@
     <record id="timesheet_view_search" model="ir.ui.view">
             <field name="name">account.analytic.line.search</field>
             <field name="model">account.analytic.line</field>
-            <field name="inherit_id" ref="hr_timesheet.hr_timesheet_line_search"/>
+            <field name="inherit_id" ref="hr_timesheet.hr_timesheet_line_search" />
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='task_id']" position="after">
-                    <field name="root_analytic_account_id" string="Root Analytic Account"/>
+                    <field name="root_analytic_account_id" string="Root Analytic Account" />
                 </xpath>
                  <xpath expr="//filter[@name='groupby_employee']" position="after">
-                    <filter string="Root Analytic Account" name="groupby_root_analytic_account" domain="[]" context="{'group_by': 'root_analytic_account_id'}"/>
+                    <filter string="Root Analytic Account" name="groupby_root_analytic_account" domain="[]" context="{'group_by': 'root_analytic_account_id'}" />
                 </xpath>
             </field>
     </record>
