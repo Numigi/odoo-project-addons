@@ -7,7 +7,7 @@
         <field name="inherit_id" ref="project.edit_project" />
         <field name="arch" type="xml">
             <xpath expr="//page[@name='settings']//field[@name='analytic_account_id']" position="after">
-                <field name="root_analytic_account_id" attrs="{'invisible':[('root_analytic_account_id','=',False)]}"/>
+                <field name="root_analytic_account_id" attrs="{'invisible':[('root_analytic_account_id','=',False)]}" />
             </xpath>
         </field>
     </record>
