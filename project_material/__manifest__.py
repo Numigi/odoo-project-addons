@@ -3,7 +3,7 @@
 
 {
     "name": "Project Material",
-    "version": "14.0.1.5.1",
+    "version": "14.0.1.5.2",
     "author": "Numigi",
     "maintainer": "Numigi",
     "website": "https://bit.ly/numigi-com",
