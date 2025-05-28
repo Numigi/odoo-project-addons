@@ -1,7 +1,6 @@
 # Copyright 2024 - today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
-from datetime import date
 from odoo import api, fields, models
 
 
@@ -109,8 +108,6 @@ class TaskWithMaterialLines(models.Model):
         return task
 
     def _copy_material_lines_from(self, task):
-        if not self.date_planned:
-            self.date_planned = date(2099, 1, 1)
         for line in task.material_line_ids:
             line.copy({"task_id": self.id})
 
