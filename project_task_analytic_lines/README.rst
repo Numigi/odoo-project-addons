@@ -59,7 +59,7 @@ I am able to search by task:
 
 I am able to group by task:
 
-.. image:: https://raw.githubusercontent.com/Numigi/odoo-project-addons/16.0/project_task_analytic_lines/static/description/analytic_lines_group.png
+.. image:: static/description/analytic_lines_group.png
 
 Journal Items
 ~~~~~~~~~~~~~
