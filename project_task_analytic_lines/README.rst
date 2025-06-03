@@ -21,7 +21,7 @@ Invoices
 --------
 As member of the group `Accounting / Billing`, on a draft invoice, I find a new field `Task`.
 
-.. image:: https://raw.githubusercontent.com/Numigi/odoo-project-addons/16.0/project_task_analytic_lines/static/description/invoice_form_2.png
+.. image:: https://raw.githubusercontent.com/Numigi/odoo-project-addons/16.0/project_task_analytic_lines/static/description/invoice_form.png
 
 
 If an analytic account is selected, I am able to select a task related to project of the analytic account.
