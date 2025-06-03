@@ -51,11 +51,11 @@ In the list of analytic lines, I see a new field `Task`.
     The field task_id is used by Odoo for timesheet lines.
     If task_id was used for any other purpose, some standard functionalities would be broken.
 
-.. image:: https://raw.githubusercontent.com/Numigi/odoo-project-addons/16.0/project_task_analytic_lines/static/description/analytic_lines_origin_task_column.png
+.. image:: static/description/analytic_lines_origin_task_column.png
 
 I am able to search by task:
 
-.. image:: https://raw.githubusercontent.com/Numigi/odoo-project-addons/16.0/project_task_analytic_lines/static/description/analytic_lines_search.png
+.. image:: static/description/analytic_lines_search.png
 
 I am able to group by task:
 
@@ -65,15 +65,15 @@ Journal Items
 ~~~~~~~~~~~~~
 In the list view of journal items, I see a new field `Task`.
 
-.. image:: https://raw.githubusercontent.com/Numigi/odoo-project-addons/16.0/project_task_analytic_lines/static/description/journal_items_task_column.png
+.. image:: static/description/journal_items_task_column.png
 
 I am able to search by task:
 
-.. image:: https://raw.githubusercontent.com/Numigi/odoo-project-addons/16.0/project_task_analytic_lines/static/description/journal_items_search.png
+.. image:: static/description/journal_items_search.png
 
 I am able to group by task:
 
-.. image:: https://raw.githubusercontent.com/Numigi/odoo-project-addons/16.0/project_task_analytic_lines/static/description/journal_items_group.png
+.. image:: static/description/journal_items_group.png
 
 Constraints
 -----------
@@ -81,7 +81,7 @@ Once a task is selected on an invoice, it is not possible to move the task to an
 
 Otherwise, when changing the project on the task, a blocking message is displayed.
 
-.. image:: https://raw.githubusercontent.com/Numigi/odoo-project-addons/16.0/project_task_analytic_lines/static/description/task_change_project_constraint.png
+.. image:: static/description/task_change_project_constraint.png
 
 Limits
 ------
