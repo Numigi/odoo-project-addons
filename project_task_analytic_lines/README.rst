@@ -21,7 +21,7 @@ Invoices
 --------
 As member of the group `Accounting / Billing`, on a draft invoice, I find a new field `Task`.
 
-.. image:: https://raw.githubusercontent.com/Numigi/odoo-project-addons/16.0/project_task_analytic_lines/static/description/invoice_form.png
+.. image:: https://raw.githubusercontent.com/Numigi/odoo-project-addons/16.0/project_task_analytic_lines/static/description/invoice_form_2.png
 
 The field is readonly if the analytic account is not filled.
 
