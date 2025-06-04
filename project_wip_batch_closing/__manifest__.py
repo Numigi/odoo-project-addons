@@ -12,6 +12,7 @@
     'summary': 'WIP accounting entries from consumed products',
     'depends': [
         'queue_job',
+        'queue_job_auto_requeue',
         'project_wip',
     ],
     "data": [

@@ -49,9 +49,6 @@ class ProjectWipBatchClosing(models.TransientModel):
 
     def action_select_project(self):
         self.state = 'processing_step'
-        eta = datetime.now() + timedelta(hours=1)
-        for line in self.project_ids.filtered(lambda x: x.to_process):
-            line.project_id.with_delay(eta=eta).action_wip_to_cgs(self.date_cutoff)
         return {
             'type': 'ir.actions.act_window',
             'name': 'Transfer WIP to CGS',
@@ -61,6 +58,10 @@ class ProjectWipBatchClosing(models.TransientModel):
             'target': 'new'
         }
 
+    def action_processing(self):
+        #eta = datetime.now() + timedelta(minutes=15)
+        for line in self.project_ids.filtered(lambda x: x.to_process):
+            line.project_id.with_delay(priority=0).action_wip_to_cgs(self.date_cutoff)
 
 
 class ProjectWipTransferWizard(models.TransientModel):

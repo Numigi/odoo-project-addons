@@ -35,7 +35,8 @@
                 <footer>
                     <button type="object" name="action_select_date" states="date_step" string="Select date"  class="btn-primary"/>
                     <button type="object" name="action_select_project" states="project_step"  string="Validate" class="oe_highlight" />
-                    <button  string="Approve" special="cancel"/>
+                     <button type="object" name="action_processing" states="processing_step" string="Approve"  class="btn-primary"/>
+                    <button  string="Cancel" special="cancel" class="btn-default" />
                 </footer>
             </form>
         </field>
