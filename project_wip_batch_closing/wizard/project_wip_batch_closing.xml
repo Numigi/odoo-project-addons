@@ -22,20 +22,20 @@
                         <field name="project_ids" attrs="{'invisible': [('state', '!=', 'project_step')]}" mode="tree">
                             <tree editable="top">
                                 <field name="to_process" nolabel="1"/>
-                                <field name="project_id" />
-                                <field name="cgs_journal_id" />
-                                <field name="wip_account_id" />
-                                <field name="cgs_account_id" />
-                                <field name="costs_to_transfer" />
+                                <field name="project_id" reaonly="1"/>
+                                <field name="cgs_journal_id" reaonly="1" />
+                                <field name="wip_account_id" reaonly="1" />
+                                <field name="cgs_account_id" reaonly="1" />
+                                <field name="costs_to_transfer" reaonly="1" />
                             </tree>
                         </field>
 
                     </group>
                 </sheet>
                 <footer>
-                    <button type="object" states="date_step" name="action_select_date" string="Select date"  class="btn-primary"/>
-                    <button name="action_validate" states="project_step"  string="Validate" class="oe_highlight" type="object"/>
-                    <button name="Approve" string="Cancel" special="cancel"/>
+                    <button type="object" name="action_select_date" states="date_step" string="Select date"  class="btn-primary"/>
+                    <button type="object" name="action_select_project" states="project_step"  string="Validate" class="oe_highlight" />
+                    <button  string="Approve" special="cancel"/>
                 </footer>
             </form>
         </field>

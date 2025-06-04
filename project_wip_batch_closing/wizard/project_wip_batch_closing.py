@@ -1,7 +1,8 @@
 # © 2023 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
-from odoo import api, fields, models
+from odoo import  fields, models
+from datetime import datetime, timedelta
 
 
 class ProjectWipBatchClosing(models.TransientModel):
@@ -17,13 +18,6 @@ class ProjectWipBatchClosing(models.TransientModel):
 
     date_cutoff = fields.Date("Cut Off Date", required=True)
     project_ids = fields.One2many("project.wip.transfer","batch_closing_id")
-
-
-    def action_validate(self):
-        self.state = 'processing_step'
-        return {'type': 'ir.actions.act_window', 'name': 'Transfer WIP to CGS',
-            'res_model': 'project.wip.batch.closing', 'view_mode': 'form',
-            'res_id': self.id, 'target': 'new'}
 
     def action_select_date(self):
         domain = [('company_id','=', self.env.company.id),
@@ -51,6 +45,20 @@ class ProjectWipBatchClosing(models.TransientModel):
                 'view_mode': 'form',
                 'res_id': self.id,
                 'target': 'new'
+        }
+
+    def action_select_project(self):
+        self.state = 'processing_step'
+        eta = datetime.now() + timedelta(hours=1)
+        for line in self.project_ids.filtered(lambda x: x.to_process):
+            line.project_id.with_delay(eta=eta).action_wip_to_cgs(self.date_cutoff)
+        return {
+            'type': 'ir.actions.act_window',
+            'name': 'Transfer WIP to CGS',
+            'res_model': 'project.wip.batch.closing',
+            'view_mode': 'form',
+            'res_id': self.id,
+            'target': 'new'
         }
 
 
