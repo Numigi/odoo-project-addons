@@ -10,16 +10,32 @@
                     <field name="state" widget="statusbar" invisible="0" />
                 </header>
                 <sheet>
-                    <div>
-                        When clicking on "Validate", the accumulated amounts in the work-in-progress accounts will be calculated for all projects.
-                    </div>
+                     <div attrs="{'invisible': [('state', '=', 'processing_step')]}">
+                    When clicking on "Validate", the accumulated amounts in the work-in-progress accounts will be calculated for all projects.
+                </div>
+                <div attrs="{'invisible': [('state', '!=', 'processing_step')]}">
+                    The accounting entries for WIP transfers are currently being processed.
+                    Please check the queue to validate the processing of work-in-progress.
+                </div>
                     <group>
-                        <field name="date_cutoff" />
+                        <field name="date_cutoff" attrs="{'invisible': [('state', '=', 'processing_step')]}" />
+                        <field name="project_ids" attrs="{'invisible': [('state', '!=', 'project_step')]}" mode="tree">
+                            <tree editable="top">
+                                <field name="to_process" nolabel="1"/>
+                                <field name="project_id" />
+                                <field name="cgs_journal_id" />
+                                <field name="wip_account_id" />
+                                <field name="cgs_account_id" />
+                                <field name="costs_to_transfer" />
+                            </tree>
+                        </field>
+
                     </group>
                 </sheet>
                 <footer>
-                    <button name="action_validate" string="Validate" class="oe_highlight" type="object"/>
-                    <button name="cancel" string="Cancel" special="cancel"/>
+                    <button type="object" states="date_step" name="action_select_date" string="Select date"  class="btn-primary"/>
+                    <button name="action_validate" states="project_step"  string="Validate" class="oe_highlight" type="object"/>
+                    <button name="Approve" string="Cancel" special="cancel"/>
                 </footer>
             </form>
         </field>

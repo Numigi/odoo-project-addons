@@ -5,7 +5,6 @@ from odoo import api, fields, models
 
 
 class ProjectWipBatchClosing(models.TransientModel):
-    """Wizard that allows to define a custom date to post the WIP transfer move."""
 
     _name = "project.wip.batch.closing"
     _description = "Project Transfer WIP To CGS Batch"
@@ -17,8 +16,47 @@ class ProjectWipBatchClosing(models.TransientModel):
         required=True, default="date_step", )
 
     date_cutoff = fields.Date("Cut Off Date", required=True)
+    project_ids = fields.One2many("project.wip.transfer","batch_closing_id")
 
 
     def action_validate(self):
-        return True
+        self.state = 'processing_step'
+        return {'type': 'ir.actions.act_window', 'name': 'Transfer WIP to CGS',
+            'res_model': 'project.wip.batch.closing', 'view_mode': 'form',
+            'res_id': self.id, 'target': 'new'}
 
+    def action_select_date(self):
+        domain = [('company_id','=', self.env.company.id),
+                  ('type_id.wip_account_id','!=', False),
+                  ('type_id.cgs_journal_id','!=', False),
+                  ('type_id.cgs_account_id', '!=', False)]
+
+        project_ids = self.env['project.project'].search(domain)
+        rec_vals = []
+        for project in project_ids :
+            costs_to_transfer =sum(line.balance for line in
+                project._get_posted_unreconciled_wip_lines())
+            if costs_to_transfer != 0 :
+                vals = {
+                    'project_id': project.id,
+                    'costs_to_transfer':costs_to_transfer
+                    }
+                rec_vals.append((0, 0, vals))
+        self.write({'project_ids':rec_vals})
+        self.state = 'project_step'
+        return {
+                'type': 'ir.actions.act_window',
+                'name': 'Transfer WIP to CGS',
+                'res_model': 'project.wip.batch.closing',
+                'view_mode': 'form',
+                'res_id': self.id,
+                'target': 'new'
+        }
+
+
+
+class ProjectWipTransferWizard(models.TransientModel):
+    _inherit = "project.wip.transfer"
+
+    batch_closing_id = fields.Many2one("project.wip.batch.closing", "Batch closing")
+    to_process = fields.Boolean(default=True)
