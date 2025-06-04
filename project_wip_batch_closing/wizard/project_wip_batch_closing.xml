@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="project_wip_batch_closing_form" model="ir.ui.view">
+        <field name="name">Project WIP to CGS Batch Wizard</field>
+        <field name="model">project.wip.batch.closing</field>
+        <field name="arch" type="xml">
+            <form string="Transfer WIP to CGS">
+                  <header>
+                    <field name="state" widget="statusbar" invisible="0" />
+                </header>
+                <sheet>
+                    <div>
+                        When clicking on "Validate", the accumulated amounts in the work-in-progress accounts will be calculated for all projects.
+                    </div>
+                    <group>
+                        <field name="date_cutoff" />
+                    </group>
+                </sheet>
+                <footer>
+                    <button name="action_validate" string="Validate" class="oe_highlight" type="object"/>
+                    <button name="cancel" string="Cancel" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+</odoo>

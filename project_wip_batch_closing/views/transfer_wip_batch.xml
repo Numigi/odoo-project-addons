@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="action_transfer_wip_batch" model="ir.actions.act_window">
+        <field name="name">Transfer WIP to CGS</field>
+        <field name="res_model">project.wip.batch.closing</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field> <!-- Affiche le wizard sous forme modale -->
+    </record>
+
+    <menuitem id="menu_project_transfer_wip_batch"
+              name="Transfer WIP to CGS"
+              parent="project.menu_project_report"
+              sequence="400"
+              action="action_transfer_wip_batch"/>
+</odoo>
