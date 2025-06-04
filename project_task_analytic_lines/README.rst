@@ -49,7 +49,7 @@ In the list of analytic lines, I see a new field `Task`.
     available in vanilla Odoo could not be used.
 
     The field task_id is used by Odoo for timesheet lines.
-    If task_id was used for any other purpose, some standard functionalities would be broken
+    If task_id was used for any other purpose, some standard functionalities would be broken.
 
 .. image:: static/description/analytic_lines_origin_task_column.png
 
