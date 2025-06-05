@@ -5,4 +5,3 @@ from . import test_analytic_line
 from . import test_report
 from . import test_stock_move_analytic_lines
 from . import test_waiting_for_invoices
-
