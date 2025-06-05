@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="project_wip_batch_closing_form" model="ir.ui.view">
+        <field name="name">Project WIP to CGS Batch Wizard</field>
+        <field name="model">project.wip.batch.closing</field>
+        <field name="arch" type="xml">
+            <form string="Transfer WIP to CGS">
+                  <header>
+                    <field name="state" widget="statusbar" invisible="0" />
+                </header>
+                <sheet>
+                     <div attrs="{'invisible': [('state', '=', 'processing_step')]}">
+                        When you click on Validate, the accumulated work-in-progress (WIP) amounts will be transferred to the cost of goods sold for the selected projects.
+                    </div>
+                    <div attrs="{'invisible': [('state', '!=', 'processing_step')]}">
+                        The accounting entries for WIP transfers are currently being processed and will be handled shortly by the queue job.
+                    </div>
+                    <group>
+                        <field name="date_cutoff" attrs="{'invisible': [('state', '=', 'processing_step')]}" />
+                        <field name="project_ids" attrs="{'invisible': [('state', '!=', 'project_step')]}" mode="tree">
+                            <tree editable="top">
+                                <field name="to_process" nolabel="1"/>
+                                <field name="project_id" reaonly="1"/>
+                                <field name="cgs_journal_id" reaonly="1" />
+                                <field name="wip_account_id" reaonly="1" />
+                                <field name="cgs_account_id" reaonly="1" />
+                                <field name="costs_to_transfer" reaonly="1" />
+                            </tree>
+                        </field>
+
+                    </group>
+                </sheet>
+                <footer>
+                    <button type="object" name="action_select_date" states="date_step" string="Select date"  class="btn-primary"/>
+                    <button type="object" name="action_select_project" states="project_step"  string="Validate" class="oe_highlight" />
+                     <button type="object" name="action_processing" states="processing_step" string="Approve"  class="btn-primary"/>
+                    <button  string="Cancel" special="cancel" class="btn-default" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+</odoo>
