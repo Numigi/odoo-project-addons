@@ -51,7 +51,7 @@
     - web_ir_actions_act_multi
     - web_ir_actions_act_view_reload
 
-- url: https://github.com/numigi/
+- url: https://github.com/Numigi/odoo-base-addons
   branch: "14.0"
   includes:
     - queue_job_auto_requeue
