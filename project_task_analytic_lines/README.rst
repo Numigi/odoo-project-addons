@@ -21,7 +21,7 @@ Invoices
 --------
 As member of the group `Accounting / Billing`, on a draft invoice, I find a new field `Task`.
 
-.. image:: static/description/invoice_form.png
+.. image:: https://raw.githubusercontent.com/Numigi/odoo-project-addons/16.0/project_task_analytic_lines/static/description/invoice_form.png
 
 
 If an analytic account is selected, I am able to select a task related to project of the analytic account.
@@ -31,7 +31,7 @@ If an analytic account is selected, I am able to select a task related to projec
 
 On the journal Items tab, I notice that the task was propagated to the expense line.
 
-.. image:: static/description/journal_items.png
+.. image:: https://raw.githubusercontent.com/Numigi/odoo-project-addons/16.0/project_task_analytic_lines/static/description/journal_items.png
 
 
 
@@ -51,29 +51,29 @@ In the list of analytic lines, I see a new field `Task`.
     The field task_id is used by Odoo for timesheet lines.
     If task_id was used for any other purpose, some standard functionalities would be broken.
 
-.. image:: static/description/analytic_lines_origin_task_column.png
+.. image:: https://raw.githubusercontent.com/Numigi/odoo-project-addons/16.0/project_task_analytic_lines/static/description/analytic_lines_origin_task_column.png
 
 I am able to search by task:
 
-.. image:: static/description/analytic_lines_search.png
+.. image:: https://raw.githubusercontent.com/Numigi/odoo-project-addons/16.0/project_task_analytic_lines/static/description/analytic_lines_search.png
 
 I am able to group by task:
 
-.. image:: static/description/analytic_lines_group.png
+.. image:: https://raw.githubusercontent.com/Numigi/odoo-project-addons/16.0/project_task_analytic_lines/static/description/analytic_lines_group.png
 
 Journal Items
 ~~~~~~~~~~~~~
 In the list view of journal items, I see a new field `Task`.
 
-.. image:: static/description/journal_items_task_column.png
+.. image:: https://raw.githubusercontent.com/Numigi/odoo-project-addons/16.0/project_task_analytic_lines/static/description/journal_items_task_column.png
 
 I am able to search by task:
 
-.. image:: static/description/journal_items_search.png
+.. image:: https://raw.githubusercontent.com/Numigi/odoo-project-addons/16.0/project_task_analytic_lines/static/description/journal_items_search.png
 
 I am able to group by task:
 
-.. image:: static/description/journal_items_group.png
+.. image:: https://raw.githubusercontent.com/Numigi/odoo-project-addons/16.0/project_task_analytic_lines/static/description/journal_items_group.png
 
 Constraints
 -----------
@@ -81,7 +81,7 @@ Once a task is selected on an invoice, it is not possible to move the task to an
 
 Otherwise, when changing the project on the task, a blocking message is displayed.
 
-.. image:: static/description/task_change_project_constraint.png
+.. image:: https://raw.githubusercontent.com/Numigi/odoo-project-addons/16.0/project_task_analytic_lines/static/description/task_change_project_constraint.png
 
 Limits
 ------
