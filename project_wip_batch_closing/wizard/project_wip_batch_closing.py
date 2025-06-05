@@ -2,7 +2,6 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 from odoo import  fields, models
-from datetime import datetime, timedelta
 
 
 class ProjectWipBatchClosing(models.TransientModel):
@@ -61,7 +60,7 @@ class ProjectWipBatchClosing(models.TransientModel):
     def action_processing(self):
         #eta = datetime.now() + timedelta(minutes=15)
         for line in self.project_ids.filtered(lambda x: x.to_process):
-            line.project_id.with_delay(priority=0).action_wip_to_cgs(self.date_cutoff)
+            line.project_id.with_delay(priority=1).action_wip_to_cgs(self.date_cutoff)
 
 
 class ProjectWipTransferWizard(models.TransientModel):
