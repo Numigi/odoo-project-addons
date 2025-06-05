@@ -23,25 +23,17 @@ As member of the group `Accounting / Billing`, on a draft invoice, I find a new 
 
 .. image:: https://raw.githubusercontent.com/Numigi/odoo-project-addons/16.0/project_task_analytic_lines/static/description/invoice_form.png
 
-The field is readonly if the analytic account is not filled.
-
-.. image:: https://raw.githubusercontent.com/Numigi/odoo-project-addons/16.0/project_task_analytic_lines/static/description/invoice_task_readonly.png
 
 If an analytic account is selected, I am able to select a task related to project of the analytic account.
 
 .. image:: https://raw.githubusercontent.com/Numigi/odoo-project-addons/16.0/project_task_analytic_lines/static/description/invoice_task_selected.png
 
-I validate the invoice.
-
-.. image:: https://raw.githubusercontent.com/Numigi/odoo-project-addons/16.0/project_task_analytic_lines/static/description/invoice_validated.png
 
 On the journal Items tab, I notice that the task was propagated to the expense line.
 
 .. image:: https://raw.githubusercontent.com/Numigi/odoo-project-addons/16.0/project_task_analytic_lines/static/description/journal_items.png
 
-In the list of analytic lines, I notice that the task was propagated.
 
-.. image:: https://raw.githubusercontent.com/Numigi/odoo-project-addons/16.0/project_task_analytic_lines/static/description/analytic_lines_task.png
 
 
 List Views Filters
@@ -94,12 +86,6 @@ Otherwise, when changing the project on the task, a blocking message is displaye
 Limits
 ------
 
-Purchase Orders
-~~~~~~~~~~~~~~~
-This module does not define how tasks are propagated from a purchase order to a supplier invoice.
-
-The module `project_wip_outsourcing` inherits this module and adds the business logic related to outsourcing.
-For now, outsourcing is the only known case where defining a task on a PO is relevant.
 
 Stockable Products
 ~~~~~~~~~~~~~~~~~~
