@@ -3,6 +3,11 @@
   includes:
     - account_reconciliation_widget
 
+- url: https://github.com/OCA/queue
+  branch: "14.0"
+  includes:
+    - queue_job
+
 - url: https://github.com/OCA/project
   branch: "14.0"
   includes:

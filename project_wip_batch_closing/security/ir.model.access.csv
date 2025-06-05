@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_project_wip_transfer_batch,Transfer : project.wip.transfer.batch,model_project_wip_batch_closing,project_wip.group_wip_to_cgs,1,1,1,1
