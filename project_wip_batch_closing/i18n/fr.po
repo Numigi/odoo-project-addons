@@ -101,7 +101,7 @@ msgstr "Assistant de transfert des TEC vers CMV"
 #. module: project_wip_batch_closing
 #: model_terms:ir.ui.view,arch_db:project_wip_batch_closing.project_wip_batch_closing_form
 msgid "Projects to Process"
-msgstr ""
+msgstr "Projets à traiter"
 
 #. module: project_wip_batch_closing
 #: model_terms:ir.ui.view,arch_db:project_wip_batch_closing.project_wip_batch_closing_form
