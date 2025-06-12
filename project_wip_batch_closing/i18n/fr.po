@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-05 14:37+0000\n"
-"PO-Revision-Date: 2025-06-05 14:37+0000\n"
+"POT-Creation-Date: 2025-06-12 19:04+0000\n"
+"PO-Revision-Date: 2025-06-12 19:04+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -23,7 +23,7 @@ msgstr "Approuver"
 #. module: project_wip_batch_closing
 #: model:ir.model.fields,field_description:project_wip_batch_closing.field_project_wip_transfer__batch_closing_id
 msgid "Batch closing"
-msgstr ""
+msgstr "Transfert en lot"
 
 #. module: project_wip_batch_closing
 #: model_terms:ir.ui.view,arch_db:project_wip_batch_closing.project_wip_batch_closing_form
@@ -44,6 +44,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:project_wip_batch_closing.field_project_wip_batch_closing__date_cutoff
 msgid "Cut Off Date"
 msgstr "Date d’arrêté"
+
+#. module: project_wip_batch_closing
+#: model_terms:ir.ui.view,arch_db:project_wip_batch_closing.project_wip_batch_closing_form
+msgid "Deselect All"
+msgstr "Désélectionner tout"
 
 #. module: project_wip_batch_closing
 #: model:ir.model.fields,field_description:project_wip_batch_closing.field_project_wip_batch_closing__display_name
@@ -94,14 +99,24 @@ msgid "Project WIP To CGS Wizard"
 msgstr "Assistant de transfert des TEC vers CMV"
 
 #. module: project_wip_batch_closing
+#: model_terms:ir.ui.view,arch_db:project_wip_batch_closing.project_wip_batch_closing_form
+msgid "Projects to Process"
+msgstr ""
+
+#. module: project_wip_batch_closing
+#: model_terms:ir.ui.view,arch_db:project_wip_batch_closing.project_wip_batch_closing_form
+msgid "Select All"
+msgstr "Sélectionner tout"
+
+#. module: project_wip_batch_closing
 #: model:ir.model.fields.selection,name:project_wip_batch_closing.selection__project_wip_batch_closing__state__date_step
 msgid "Select Closing Date"
-msgstr "Selection de la date"
+msgstr "Sélection de la date"
 
 #. module: project_wip_batch_closing
 #: model:ir.model.fields.selection,name:project_wip_batch_closing.selection__project_wip_batch_closing__state__project_step
 msgid "Select Project"
-msgstr "Selection de projets"
+msgstr "Sélection de projets"
 
 #. module: project_wip_batch_closing
 #: model_terms:ir.ui.view,arch_db:project_wip_batch_closing.project_wip_batch_closing_form
@@ -115,14 +130,18 @@ msgstr "Statut"
 
 #. module: project_wip_batch_closing
 #: model_terms:ir.ui.view,arch_db:project_wip_batch_closing.project_wip_batch_closing_form
-msgid "The accounting entries for WIP transfers are currently being processed and will be handled shortly by the queue job."
-
-msgstr "Les écritures comptables pour les transferts de TEC sont actuellement en cours de traitement et seront prises en charge dans quelques instants par la file d'attente"
+msgid ""
+"The accounting entries for WIP transfers are currently being processed and "
+"will be handled shortly by the queue job."
+msgstr ""
+"Les écritures comptables pour les transferts de TEC sont actuellement en "
+"cours de traitement et seront prises en charge dans quelques instants par la"
+" file d'attente."
 
 #. module: project_wip_batch_closing
 #: model:ir.model.fields,field_description:project_wip_batch_closing.field_project_wip_transfer__to_process
 msgid "To Process"
-msgstr "A traiter"
+msgstr "À traiter"
 
 #. module: project_wip_batch_closing
 #: model:ir.actions.act_window,name:project_wip_batch_closing.action_transfer_wip_batch
@@ -138,5 +157,9 @@ msgstr "Valider les projets"
 
 #. module: project_wip_batch_closing
 #: model_terms:ir.ui.view,arch_db:project_wip_batch_closing.project_wip_batch_closing_form
-msgid "When you click on Validate, the accumulated work-in-progress (WIP) amounts will be transferred to the cost of goods sold for the selected projects."
-msgstr "En cliquant sur Valider, les montants accumulés dans les travaux en cours seront transférés vers le coût des marchandises vendues pour les projets sélectionnés"
+msgid ""
+"When you click on Validate, the accumulated <b>Work-In-Progress (WIP)</b> "
+"amounts will be transferred to the <b>Cost of Goods Sold</b> for the "
+"selected projects."
+msgstr "En cliquant sur Valider, les montants accumulés dans les travaux en cours "
+"seront transférés vers le coût des marchandises vendues pour les projets sélectionnés."

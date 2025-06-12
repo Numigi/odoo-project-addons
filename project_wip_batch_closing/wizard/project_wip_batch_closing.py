@@ -82,6 +82,40 @@ class ProjectWipBatchClosing(models.TransientModel):
         for line in self.project_ids.filtered(lambda x: x.to_process):
             line.project_id.with_delay(priority=1).action_wip_to_cgs(self.date_cutoff)
 
+    def action_select_all(self):
+        """
+        Selects all projects for processing.
+        """
+        self.project_ids.write({"to_process": True})
+        return {
+            "name": "__",
+            "view_mode": "form",
+            "view_id": False,
+            "res_model": self._name,
+            "domain": [],
+            "context": dict(self._context, active_ids=self.ids),
+            "type": "ir.actions.act_window",
+            "target": "new",
+            "res_id": self.id,
+        }
+
+    def action_deselect_all(self):
+        """
+        Deselects all projects for processing.
+        """
+        self.project_ids.write({"to_process": False})
+        return {
+            "name": "__",
+            "view_mode": "form",
+            "view_id": False,
+            "res_model": self._name,
+            "domain": [],
+            "context": dict(self._context, active_ids=self.ids),
+            "type": "ir.actions.act_window",
+            "target": "new",
+            "res_id": self.id,
+        }
+
 
 class ProjectWipTransferWizard(models.TransientModel):
     """
