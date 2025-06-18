@@ -51,6 +51,7 @@
         "project_material",
         "project_material_closed",
         "project_material_direct",
+        "project_material_fifo_stock_valuation",
         "project_material_progress",
         "project_material_quantity_filters",
         "project_milestone_dependency",
