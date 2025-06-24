@@ -74,6 +74,7 @@
         "project_timesheet_analytic_update",
         "project_type",
         "project_wip",
+        "project_wip_batch_closing",
         "project_wip_material",
         "project_wip_supply_cost",
         "timesheet_task_project_no_change",
