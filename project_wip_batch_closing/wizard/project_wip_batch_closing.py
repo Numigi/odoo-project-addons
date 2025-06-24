@@ -39,7 +39,8 @@ class ProjectWipBatchClosing(models.TransientModel):
         record_values = []
         for project in project_ids:
             costs_to_transfer = sum(
-                line.balance for line in project._get_posted_unreconciled_wip_lines()
+                line.balance for line in project._get_posted_unreconciled_wip_lines() if
+                line.date < self.date_cutoff
             )
             if costs_to_transfer != 0:
                 vals = {
