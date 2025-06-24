@@ -174,7 +174,6 @@ class ProjectCostReportCase(common.SavepointCase):
             s for s in self._get_variables(context)["sections"] if s["name"] == "supply"
         )
 
-
     def _get_time_section(self, context=None):
         return next(s for s in self._get_variables(context)["sections"] if s["name"] == "time")
 
