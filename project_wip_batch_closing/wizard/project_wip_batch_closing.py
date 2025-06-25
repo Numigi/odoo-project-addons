@@ -35,7 +35,7 @@ class ProjectWipBatchClosing(models.TransientModel):
             ("type_id.cgs_account_id", "!=", False),
         ]
 
-        project_ids = self.env["project.project"].search(domain)
+        project_ids = self.env["project.project"].with_context(active_test=False).search(domain)
         record_values = []
         for project in project_ids:
             costs_to_transfer = sum(
