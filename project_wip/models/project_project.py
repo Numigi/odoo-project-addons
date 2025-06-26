@@ -138,10 +138,12 @@ class Project(models.Model):
 
         :rtype: account.move.line recordset
         """
-        domain = [("analytic_account_id", "=", self.analytic_account_id.id),
+        domain = [
+            ("analytic_account_id", "=", self.analytic_account_id.id),
             ("account_id", "=", self.type_id.wip_account_id.id),
             ("reconciled", "=", False), ("move_id.state", "=", "posted"),
-            ("company_id", "=", self.company_id.id), ]
+            ("company_id", "=", self.company_id.id)
+        ]
         if accounting_date:
             domain.append(("date", "<=", accounting_date))
         return self.env["account.move.line"].search(domain)
