@@ -51,7 +51,8 @@ class Project(models.Model):
         self._check_project_type_has_wip_account()
         self._check_project_type_has_cgs_account()
 
-        unreconciled_wip_lines = self._get_posted_unreconciled_wip_lines()
+        unreconciled_wip_lines = self._get_posted_unreconciled_wip_lines(
+            accounting_date=accounting_date)
 
         for wip_line in unreconciled_wip_lines:
             move = self._create_wip_to_cgs_account_move(wip_line)
@@ -132,20 +133,21 @@ class Project(models.Model):
                 ).format(self.type_id.name)
             )
 
-    def _get_posted_unreconciled_wip_lines(self):
+    def _get_posted_unreconciled_wip_lines(self , accounting_date=None):
         """Get WIP lines for this project that are posted and unreconciled.
 
         :rtype: account.move.line recordset
         """
-        return self.env["account.move.line"].search(
-            [
+        domain =  [
                 ("analytic_account_id", "=", self.analytic_account_id.id),
                 ("account_id", "=", self.type_id.wip_account_id.id),
                 ("reconciled", "=", False),
                 ("move_id.state", "=", "posted"),
                 ("company_id", "=", self.company_id.id)
             ]
-        )
+        if accounting_date :
+            domain.append(("date","<=",accounting_date))
+        return self.env["account.move.line"].search(domain)
 
     def _get_common_wip_to_cgs_move_line_vals(self, wip_line):
         """Get the account move line vals common to both the debit and the credit part."""
