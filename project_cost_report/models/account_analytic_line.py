@@ -14,7 +14,6 @@ class AnalyticLine(models.Model):
             ("products", "Products"),
             ("time", "Time"),
             ("outsourcing", "Outsourcing"),
-            ("supply", "Shop Supply"),
         ],
         compute="_compute_project_cost_section",
         store=True,
@@ -32,7 +31,6 @@ class AnalyticLine(models.Model):
             )
 
     @api.depends(
-        "is_shop_supply",
         "project_id",
         "product_id",
         "product_id.categ_id.project_cost_category_id.section",
@@ -42,9 +40,6 @@ class AnalyticLine(models.Model):
             line.project_cost_section = line._get_project_cost_section()
 
     def _get_project_cost_section(self):
-        if self.is_shop_supply:
-            return "supply"
-
         if self.project_id or not self.product_id:
             return "time"
 
@@ -63,9 +58,6 @@ class AnalyticLine(models.Model):
         category = self.product_id.categ_id.project_cost_category_id
         if category:
             return category
-
-        if self.project_cost_section == "supply":
-            return self.env.ref("project_cost_report.cost_category_supply", False)
 
         if self.project_cost_section == "time":
             return self._get_time_cost_category()

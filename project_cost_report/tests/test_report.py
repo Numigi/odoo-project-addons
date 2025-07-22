@@ -26,7 +26,7 @@ class ProjectCostReportCase(common.SavepointCase):
             {
                 "account_id": cls.analytic_account.id,
                 "name": "Cost",
-                "is_shop_supply": True,
+               # "is_shop_supply": True,
                 "unit_amount": 1,
                 "amount": -cls.cost,
             }
@@ -37,7 +37,7 @@ class ProjectCostReportCase(common.SavepointCase):
             {
                 "account_id": cls.analytic_account.id,
                 "name": "Revenue",
-                "is_shop_supply": True,
+               # "is_shop_supply": True,
                 "revenue": True,
                 "unit_amount": 1,
                 "amount": cls.revenue,
@@ -48,7 +48,7 @@ class ProjectCostReportCase(common.SavepointCase):
             {
                 "account_id": cls.other_project.analytic_account_id.id,
                 "name": "Cost In Other Project",
-                "is_shop_supply": True,
+                #"is_shop_supply": True,
                 "unit_amount": 1,
                 "amount": 999999,
             }
@@ -58,7 +58,7 @@ class ProjectCostReportCase(common.SavepointCase):
             {
                 "account_id": cls.other_project.analytic_account_id.id,
                 "name": "Revenue In Other Project",
-                "is_shop_supply": True,
+                #"is_shop_supply": True,
                 "unit_amount": 1,
                 "amount": 999999,
             }
@@ -72,12 +72,12 @@ class ProjectCostReportCase(common.SavepointCase):
 
     def test_sections_order(self):
         sections = self._get_variables()["sections"]
-        assert sections[0]["name"] == "supply"
+        #assert sections[0]["name"] == "supply"
         assert sections[1]["name"] == "products"
         assert sections[2]["name"] == "time"
         assert sections[3]["name"] == "outsourcing"
 
-        assert sections[0]["title"] == "Shop Supply"
+        #assert sections[0]["title"] == "Shop Supply"
         assert sections[1]["title"] == "Products"
         assert sections[2]["title"] == "Time"
         assert sections[3]["title"] == "Outsourcing"
@@ -163,16 +163,16 @@ class ProjectCostReportCase(common.SavepointCase):
     def _search_analytic_lines(self, domain):
         return self.env["account.analytic.line"].search(domain)
 
-    def _get_supply_category(self, context=None):
-        return self._get_supply_section(context)["categories"][0]
+    # def _get_supply_category(self, context=None):
+    #     return self._get_supply_section(context)["categories"][0]
 
     def _get_time_category(self, context=None):
         return self._get_time_section(context)["categories"][0]
 
-    def _get_supply_section(self, context=None):
-        return next(
-            s for s in self._get_variables(context)["sections"] if s["name"] == "supply"
-        )
+    # def _get_supply_section(self, context=None):
+    #     return next(
+    #         s for s in self._get_variables(context)["sections"] if s["name"] == "supply"
+    #     )
 
 
     def _get_time_section(self, context=None):

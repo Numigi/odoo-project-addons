@@ -19,7 +19,7 @@ class ProjectCostCategory(models.Model):
             ("products", "Products"),
             ("time", "Time"),
             ("outsourcing", "Outsourcing"),
-            ("supply", "Shop Supply"),
+          #  ("supply", "Shop Supply"),
         ],
         required=True,
         default="products",

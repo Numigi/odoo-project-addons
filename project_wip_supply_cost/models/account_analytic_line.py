@@ -41,9 +41,11 @@ class AccountAnalyticLine(models.Model):
         """
         result = super(AccountAnalyticLine, self).write(values)
         fields_to_check = self._get_shop_supply_move_dependent_fields()
+        print("11111111111111111111")
         if fields_to_check.intersection(values):
             for line in self:
                 line.sudo()._create_update_or_reverse_shop_supply_move()
+                print ("222222222222222222222222222222")
         return result
 
     def unlink(self):
@@ -84,9 +86,11 @@ class AccountAnalyticLine(models.Model):
         )
 
         if must_create_shop_supply_move:
+            print("444444444444444444444")
             self._create_shop_supply_move()
 
         elif must_update_shop_supply_move:
+            print("33333333333333333333333")
             self._update_shop_supply_move()
 
         elif must_reverse_shop_supply_move:
