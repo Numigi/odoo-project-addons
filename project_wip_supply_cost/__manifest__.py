@@ -3,7 +3,7 @@
 
 {
     "name": "Project WIP Supply Cost",
-    "version": "1.0.1",
+    "version": "14.0.0.1.0.2",
     "author": "Numigi",
     "maintainer": "Numigi",
     "website": "https://bit.ly/numigi-com",
@@ -16,7 +16,7 @@
         "hr_timesheet",
     ],
     "data": [
-        "views/project_type.xml",
+        "views/project_type_views.xml",
     ],
     "installable": True,
 }

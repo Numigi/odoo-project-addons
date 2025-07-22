@@ -19,13 +19,13 @@ class ProjectType(models.Model):
 
     shop_supply_account_id = fields.Many2one(
         "account.account",
-        "Shop Supply Account",
+        "Shop Supply Expense Account",
         company_dependent=True,
         help="Account used as counter-part (usually the credit part) in shop supply entries.",
     )
 
     shop_supply_rate = fields.Float(
-        "Shop Supply Rate",
+        "Shop Supply Hourly Rate",
         default=0,
         company_dependent=True,
         help="The rate to apply for shop supply entries.",
@@ -35,7 +35,7 @@ class ProjectType(models.Model):
         "shop_supply_account_id", "shop_supply_journal_id", "wip_account_id"
     )
     def _check_required_fields_for_shop_supply(self):
-        self = self.with_context(force_company=self.env.user.company_id.id)
+        self = self.with_company(self.env.company)
         project_types_with_shop_supply = self.filtered(
             lambda t: t.shop_supply_account_id
         )

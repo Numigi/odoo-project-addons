@@ -5,7 +5,7 @@ from odoo import api, fields, models, _
 from odoo.exceptions import ValidationError
 
 
-class AnalyticLine(models.Model):
+class AccountAnalyticLine(models.Model):
 
     _inherit = "account.analytic.line"
 
@@ -15,48 +15,62 @@ class AnalyticLine(models.Model):
         "account.move", "Shop Supply Entry", ondelete="restrict"
     )
 
-    @api.model
-    def create(self, vals):
+    @api.model_create_multi
+    def create(self, vals_list):
         """On timesheet create, create or update the wip journal entry.
 
         Because the creation of a timesheet is complex, the journal entry
         may be created by a write before the return of super().create(vals).
         """
-        line = super().create(vals)
-        if line._requires_shop_supply_move() and not line._context.get(
-            "shop_supply_move"
-        ):
-            line.with_context(
-                shop_supply_move=True
-            ).sudo()._create_update_or_reverse_shop_supply_move()
-        return line
+        lines = super(AccountAnalyticLine, self).create(vals_list)
 
-    @api.multi
-    def write(self, vals):
-        """When updating an analytic line, create / update / delete the wip entry.
+        for line in lines:
+            if line._requires_shop_supply_move() and \
+                    not line._context.get('shop_supply_move'):
+                line.with_context(shop_supply_move=True).sudo()\
+                    ._create_update_or_reverse_shop_supply_move()
+
+        return lines
+
+    def write(self, values):
+        """
+        When updating an analytic line, create / update / delete the wip entry.
 
         Whether the wip entry must be created / updated / deleted depends
         on which field is written to. This prevents an infinite loop.
         """
-        super().write(vals)
-
+        result = super(AccountAnalyticLine, self).write(values)
         fields_to_check = self._get_shop_supply_move_dependent_fields()
-        if fields_to_check.intersection(vals):
+        print("11111111111111111111")
+        if fields_to_check.intersection(values):
             for line in self:
                 line.sudo()._create_update_or_reverse_shop_supply_move()
+                print ("222222222222222222222222222222")
+        return result
 
-        return True
-
-    @api.multi
     def unlink(self):
-        """Reverse the salary account move entry when a timesheet line is deleted."""
-        lines_with_moves = self.filtered(lambda line: line.shop_supply_account_move_id)
+        """
+        Reverse the salary account move entry when
+        a timesheet line is deleted.
+        """
+        lines_with_moves = self.filtered(lambda ml: ml.shop_supply_account_move_id)
         for line in lines_with_moves:
             line.sudo()._reverse_shop_supply_account_move_for_deleted_timesheet()
         return super().unlink()
 
+    def _timesheet_postprocess_values(self, values):
+        """Override method to calculate amount based on timesheet cost instead of
+        employee cost if account_analytic_line does'nt have an employee
+        """
+        result = {id_: {} for id_ in self.ids}
+        if self.project_id and "employee_id" not in values:
+            return result
+        else:
+            return super()._timesheet_postprocess_values(values)
+
     def _create_update_or_reverse_shop_supply_move(self):
-        """Create / Update / Reverse the wip account move.
+        """
+        Create / Update / Reverse the wip account move.
 
         Depending on the status of the timesheet line,
         the wip move is either created, updated or reversed.
@@ -72,22 +86,28 @@ class AnalyticLine(models.Model):
         )
 
         if must_create_shop_supply_move:
+            print("444444444444444444444")
             self._create_shop_supply_move()
 
         elif must_update_shop_supply_move:
+            print("33333333333333333333333")
             self._update_shop_supply_move()
 
         elif must_reverse_shop_supply_move:
             self._reverse_shop_supply_account_move_for_updated_timesheet()
 
     def _create_shop_supply_move(self):
-        """Create the wip journal entry."""
+        """
+        Create the wip journal entry.
+        """
         vals = self._get_shop_supply_move_vals()
         self.shop_supply_account_move_id = self.env["account.move"].create(vals)
-        self.shop_supply_account_move_id.post()
+        self.shop_supply_account_move_id.action_post()
 
     def _update_shop_supply_move(self):
-        """Update the wip journal entry."""
+        """
+        Update the wip journal entry.
+        """
         if self._is_shop_supply_account_move_reconciled():
             raise ValidationError(
                 _(
@@ -100,13 +120,16 @@ class AnalyticLine(models.Model):
                 )
             )
 
-        self.shop_supply_account_move_id.state = "draft"
+        self.shop_supply_account_move_id.button_draft()
+
         vals = self._get_shop_supply_move_vals()
         self.shop_supply_account_move_id.write(vals)
-        self.shop_supply_account_move_id.post()
+        self.shop_supply_account_move_id.action_post()
 
     def _reverse_shop_supply_account_move_for_deleted_timesheet(self):
-        """Reverse the wip journal entry in the context of a deleted timesheet."""
+        """
+        Reverse the wip journal entry in the context of a deleted timesheet.
+        """
         if self._is_shop_supply_account_move_reconciled():
             raise ValidationError(
                 _(
@@ -118,10 +141,19 @@ class AnalyticLine(models.Model):
                     move_name=self.shop_supply_account_move_id.name,
                 )
             )
-        self.shop_supply_account_move_id.reverse_moves()
+        move = self.shop_supply_account_move_id
+        default_values_list = [
+            {
+                "date": move._get_accounting_date(move.date, move._affect_tax_report()),
+                "ref": _("Reversal of: %s") % move.name,
+            }
+        ]
+        move._reverse_moves(default_values_list, cancel=True)
 
     def _reverse_shop_supply_account_move_for_updated_timesheet(self):
-        """Reverse the wip journal entry in the context of an updated timesheet."""
+        """
+        Reverse the wip journal entry in the context of an updated timesheet.
+        """
         if self._is_shop_supply_account_move_reconciled():
             raise ValidationError(
                 _(
@@ -134,11 +166,21 @@ class AnalyticLine(models.Model):
                     move_name=self.shop_supply_account_move_id.name,
                 )
             )
-        self.shop_supply_account_move_id.reverse_moves()
+        move = self.shop_supply_account_move_id
+        default_values_list = [
+            {
+                "date": move._get_accounting_date(move.date, move._affect_tax_report()),
+                "ref": _("Reversal of: %s") % move.name,
+            }
+        ]
+        self.shop_supply_account_move_id._reverse_moves(
+            default_values_list, cancel=True
+        )
         self.shop_supply_account_move_id = False
 
     def _requires_shop_supply_move(self):
-        """Evaluate whether the timesheet line requires a shop supply entry.
+        """
+        Evaluate whether the timesheet line requires a shop supply entry.
 
         The shop supply account must be defined on the project type and
         as well as the shop supply rate.
@@ -146,13 +188,14 @@ class AnalyticLine(models.Model):
         :rtype: bool
         """
         return (
-            self._get_shop_supply_amount()
+            self._get_shop_supply_rate()
+            and self._get_shop_supply_amount()
             and bool(self._get_shop_supply_account())
-            and self._get_shop_supply_rate()
         )
 
     def _get_shop_supply_wip_move_line_vals(self):
-        """Get the values for the wip move line (usually the debit).
+        """
+        Get the values for the wip move line (usually the debit).
 
         :rtype: dict
         """
@@ -169,7 +212,8 @@ class AnalyticLine(models.Model):
         }
 
     def _get_shop_supply_move_line_vals(self):
-        """Get the values for the shop supply move line (usually the credit).
+        """
+        Get the values for the shop supply move line (usually the credit).
 
         :rtype: dict
         """
@@ -183,14 +227,16 @@ class AnalyticLine(models.Model):
         }
 
     def _get_shop_supply_amount(self):
-        """Get the debit/credit amount for the shop supply entry.
+        """
+        Get the debit/credit amount for the shop supply entry.
 
         :rtype: float
         """
         return self.unit_amount * self._get_shop_supply_rate()
 
     def _get_shop_supply_move_vals(self):
-        """Get the values for the wip account move.
+        """
+        Get the values for the wip account move.
 
         :rtype: dict
         """
@@ -198,6 +244,9 @@ class AnalyticLine(models.Model):
             "company_id": self.company_id.id,
             "journal_id": self._get_shop_supply_journal().id,
             "date": self.date,
+            # Clearing name to repost move for new sequence (draft > posted)
+            "name": "",
+            "move_type": "entry",
             "no_analytic_lines": False,
             "ref": self._get_shop_supply_move_reference(),
             "line_ids": [
@@ -213,10 +262,12 @@ class AnalyticLine(models.Model):
         )
 
     def _is_shop_supply_account_move_reconciled(self):
-        """Evaluate whether the wip journal entry is reconciled or not.
+        """
+        Evaluate whether the wip journal entry is reconciled or not.
 
         :rtype: bool
         """
+        self = self.with_company(self.company_id)
         return any(
             line.reconciled for line in self.shop_supply_account_move_id.line_ids
         )
@@ -229,13 +280,13 @@ class AnalyticLine(models.Model):
         return {"name", "unit_amount", "date", "project_id", "task_id"}
 
     def _get_shop_supply_journal(self):
-        self = self.with_context(force_company=self.company_id.id)
-        return self.project_id.project_type_id.shop_supply_journal_id
+        self = self.with_company(self.company_id)
+        return self.project_id.type_id.shop_supply_journal_id
 
     def _get_shop_supply_account(self):
-        self = self.with_context(force_company=self.company_id.id)
-        return self.project_id.project_type_id.shop_supply_account_id
+        self = self.with_company(self.company_id)
+        return self.project_id.type_id.shop_supply_account_id
 
     def _get_shop_supply_rate(self):
-        self = self.with_context(force_company=self.company_id.id)
-        return self.project_id.project_type_id.shop_supply_rate
+        self = self.with_company(self.company_id)
+        return self.project_id.type_id.shop_supply_rate

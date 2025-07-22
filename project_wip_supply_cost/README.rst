@@ -8,7 +8,7 @@ It allows to generate journal entries for indirect costs (supply cost) from time
 
 Configuration
 -------------
-As member of the group ``Project / Manager``, I go to the form view of a project type.
+As member of the group ``Project / Manager``, I go to the form view of a project type, ``Accounting`` Tab.
 
 I notice a new section ``Indirect Costs`` with the following fields:
 
@@ -46,7 +46,7 @@ I add a timesheet line.
 
 Journal Entries
 ~~~~~~~~~~~~~~~
-As member of the group `Accounting / Billing`, I go to the general ledger and filter to see only entries for my project.
+As member of the group `Invoicing / Accounting`, I go to the `general ledger` and filter to see only entries for my project.
 
 I see one entry for my timesheet line.
 
@@ -65,7 +65,7 @@ I notice that 2 analytic line were generated for my timesheet line.
 The first line is the shop supply (6.25 USD).
 
 The second line is the timesheet line itself.
-Note that the amount is 0.00 USD. The reason is that the timesheet cost was not defined on the employee.
+Note that the amount is 33.33 USD is calculated base in the Timesheet Cost configured in the employee form.
 
 Deleting / Updating Timesheets
 ------------------------------
