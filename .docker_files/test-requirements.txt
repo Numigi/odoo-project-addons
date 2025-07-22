@@ -1,0 +1,2 @@
+# pour runboat
+psycopg2-binary

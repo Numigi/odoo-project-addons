@@ -9,24 +9,34 @@ class TestConvertTemplatesToTask(common.SavepointCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.stage_1 = cls.env['project.task.type'].create({'name': 'Stage 1', 'sequence': 1})
-        cls.stage_2 = cls.env['project.task.type'].create({'name': 'Stage 2', 'sequence': 2})
+        cls.stage_1 = cls.env["project.task.type"].create(
+            {"name": "Stage 1", "sequence": 1}
+        )
+        cls.stage_2 = cls.env["project.task.type"].create(
+            {"name": "Stage 2", "sequence": 2}
+        )
 
-        cls.project = cls.env['project.project'].create({
-            'name': 'Project A',
-            'type_ids': [(4, cls.stage_1.id), (4, cls.stage_2.id)],
-        })
+        cls.project = cls.env["project.project"].create(
+            {
+                "name": "Project A",
+                "type_ids": [(4, cls.stage_1.id), (4, cls.stage_2.id)],
+            }
+        )
 
-        cls.template_a = cls.env['project.task'].create({
-            'name': 'Template Task A1',
-            'is_template': True,
-            'stage_id': False,
-        })
-        cls.template_b = cls.env['project.task'].create({
-            'name': 'Template Task A2',
-            'is_template': True,
-            'stage_id': False,
-        })
+        cls.template_a = cls.env["project.task"].create(
+            {
+                "name": "Template Task A1",
+                "is_template": True,
+                "stage_id": False,
+            }
+        )
+        cls.template_b = cls.env["project.task"].create(
+            {
+                "name": "Template Task A2",
+                "is_template": True,
+                "stage_id": False,
+            }
+        )
 
     def _get_effective_tasks(self):
         return self.project.task_ids.filtered(lambda t: not t.is_template)

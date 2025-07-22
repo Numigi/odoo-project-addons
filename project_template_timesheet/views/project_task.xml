@@ -4,7 +4,7 @@
     <record id="task_form_with_invisible_fields_on_templates" model="ir.ui.view">
         <field name="name">Task Form: make timesheet related fields invisible for task templates</field>
         <field name="model">project.task</field>
-        <field name="inherit_id" ref="hr_timesheet.view_task_form2_inherited"/>
+        <field name="inherit_id" ref="hr_timesheet.view_task_form2_inherited" />
         <field name="arch" type="xml">
             <field name="timesheet_ids" position="attributes">
                 <attribute name="invisible_on_template">1</attribute>

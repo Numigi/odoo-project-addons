@@ -9,10 +9,10 @@ _logger = logging.getLogger(__name__)
 
 
 def recompute_progress_hook(cr, registry):
-    """ Recompute existing milestones progress """
-    _logger.info('Start Recomputing Milestones Progress')
+    """Recompute existing milestones progress"""
+    _logger.info("Start Recomputing Milestones Progress")
     env = api.Environment(cr, SUPERUSER_ID, {})
-    model = env['project.milestone']
-    env.add_todo(model._fields['progress'], model.search([]))
+    model = env["project.milestone"]
+    env.add_todo(model._fields["progress"], model.search([]))
     model.recompute()
-    _logger.info('End Recomputing Milestones Progress')
+    _logger.info("End Recomputing Milestones Progress")

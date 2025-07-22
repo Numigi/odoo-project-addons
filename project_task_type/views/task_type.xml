@@ -8,10 +8,10 @@
             <form string="Task Type">
                 <sheet>
                     <group>
-                        <field name="name"/>
-                        <field name="description"/>
-                        <field name="sequence"/>
-                        <field name="active"/>
+                        <field name="name" />
+                        <field name="description" />
+                        <field name="sequence" />
+                        <field name="active" />
                     </group>
                 </sheet>
             </form>
@@ -23,9 +23,9 @@
         <field name="model">task.type</field>
         <field name="arch" type="xml">
             <tree string="Task Types">
-                <field name="sequence" widget="handle"/>
-                <field name="name"/>
-                <field name="active"/>
+                <field name="sequence" widget="handle" />
+                <field name="name" />
+                <field name="active" />
             </tree>
         </field>
     </record>
@@ -35,7 +35,7 @@
         <field name="model">task.type</field>
         <field name="arch" type="xml">
             <search string="Task Types">
-                <field name="name" string="Task Types"/>
+                <field name="name" string="Task Types" />
             </search>
         </field>
     </record>
@@ -47,6 +47,6 @@
         <field name="view_mode">tree,form</field>
     </record>
 
-    <menuitem action="task_type_action" id="task_type_menu" parent="project.menu_project_config"/>
+    <menuitem action="task_type_action" id="task_type_menu" parent="project.menu_project_config" />
 
 </odoo>

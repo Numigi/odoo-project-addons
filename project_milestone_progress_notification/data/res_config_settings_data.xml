@@ -6,6 +6,6 @@
     </record>
     <record id="default_mail_template" model="ir.config_parameter" forcecreate="0">
         <field name="key">project_milestone_progress_notification.default_mail_template</field>
-        <field name="value" ref="project_milestone_progress_notification.mail_template_project_milestone_progress_notification"/>
+        <field name="value" ref="project_milestone_progress_notification.mail_template_project_milestone_progress_notification" />
     </record>
 </odoo>

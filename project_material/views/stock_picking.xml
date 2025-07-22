@@ -4,10 +4,10 @@
     <record id="stock_picking_form" model="ir.ui.view">
         <field name="name">Stock Picking Form: add project and task</field>
         <field name="model">stock.picking</field>
-        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="inherit_id" ref="stock.view_picking_form" />
         <field name="arch" type="xml">
             <field name="origin" position="after">
-                <field name="project_id" invisible="1"/>
+                <field name="project_id" invisible="1" />
                 <field name="project_select_id" string="Project"
                     attrs="{
                         'readonly': [('task_readonly', '=', True)],
@@ -23,9 +23,9 @@
                         'invisible': [('task_invisible', '=', True)],
                     }"
                     />
-                <field name="task_readonly" invisible="1"/>
-                <field name="task_required" invisible="1"/>
-                <field name="task_invisible" invisible="1"/>
+                <field name="task_readonly" invisible="1" />
+                <field name="task_required" invisible="1" />
+                <field name="task_invisible" invisible="1" />
             </field>
         </field>
     </record>
@@ -33,11 +33,11 @@
     <record id="stock_picking_list" model="ir.ui.view">
         <field name="name">Stock Picking List: add project and task</field>
         <field name="model">stock.picking</field>
-        <field name="inherit_id" ref="stock.vpicktree"/>
+        <field name="inherit_id" ref="stock.vpicktree" />
         <field name="arch" type="xml">
             <field name="partner_id" position="after">
-                <field name="project_id"/>
-                <field name="task_id"/>
+                <field name="project_id" />
+                <field name="task_id" />
             </field>
         </field>
     </record>

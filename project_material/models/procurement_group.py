@@ -6,10 +6,11 @@ from odoo import fields, models
 
 class ProcurementGroup(models.Model):
 
-    _inherit = 'procurement.group'
+    _inherit = "procurement.group"
 
-    task_id = fields.Many2one('project.task', 'Task')
+    task_id = fields.Many2one("project.task", "Task")
     project_id = fields.Many2one(
-        related='task_id.project_id', store=True,
+        related="task_id.project_id",
+        store=True,
         readonly=True,
     )

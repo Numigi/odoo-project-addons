@@ -10,10 +10,10 @@
                 </header>
                 <sheet>
                     <group>
-                        <field name="name"/>
-                        <field name="description"/>
-                        <field name="sequence"/>
-                        <field name="active"/>
+                        <field name="name" />
+                        <field name="description" />
+                        <field name="sequence" />
+                        <field name="active" />
                     </group>
                 </sheet>
             </form>
@@ -25,9 +25,9 @@
         <field name="model">project.task.description.template</field>
         <field name="arch" type="xml">
             <tree string="Task Description Templates">
-                <field name="sequence" widget="handle"/>
-                <field name="name"/>
-                <field name="active"/>
+                <field name="sequence" widget="handle" />
+                <field name="name" />
+                <field name="active" />
             </tree>
         </field>
     </record>
@@ -37,8 +37,8 @@
         <field name="model">project.task.description.template</field>
         <field name="arch" type="xml">
             <search string="Task Description Templates">
-                <field name="name"/>
-                <filter string="Archived" name="inactive" domain="[('active', '=', False)]"/>
+                <field name="name" />
+                <filter string="Archived" name="inactive" domain="[('active', '=', False)]" />
             </search>
         </field>
     </record>

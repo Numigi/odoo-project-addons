@@ -7,4 +7,4 @@ from odoo import models, fields
 class ProjectMilestone(models.Model):
     _inherit = "project.milestone"
 
-    type_id = fields.Many2one('project.milestone.type', 'Type')
+    type_id = fields.Many2one("project.milestone.type", "Type")

@@ -42,7 +42,7 @@ class TestTwoSteps(TaskMaterialCase):
         product_b = self.product_a.copy()
         self._set_product_uom(product_b, self.uom_dozen)
         line_a = self._create_material_line(initial_qty=1, product=self.product_a)
-        line_b = self._create_material_line(initial_qty=2, product=product_b)
+        self._create_material_line(initial_qty=2, product=product_b)
         preparation_move = line_a.move_ids.move_orig_ids
         self._force_transfer_move(preparation_move, 1)
         assert self.task.material_progress == 4  # 1 / (1 + 12 * 2) * 100

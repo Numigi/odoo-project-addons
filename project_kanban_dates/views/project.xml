@@ -3,10 +3,10 @@
     <record model="ir.ui.view" id="view_project_kanban">
         <field name="name">project.project.kanban</field>
         <field name="model">project.project</field>
-        <field name="inherit_id" ref="project.view_project_kanban"/>
+        <field name="inherit_id" ref="project.view_project_kanban" />
         <field name="arch" type="xml">
             <field name="name" position="after">
-                <field name="date_start"/>
+                <field name="date_start" />
             </field>
             <xpath expr="//div[hasclass('o_primary')]" position="after">
                 <div>
@@ -21,10 +21,10 @@
     <record model="ir.ui.view" id="view_task_kanban">
         <field name="name">project.task.kanban</field>
         <field name="model">project.task</field>
-        <field name="inherit_id" ref="project.view_task_kanban"/>
+        <field name="inherit_id" ref="project.view_task_kanban" />
         <field name="arch" type="xml">
             <field name="color" position="after">
-                <field name="date_planned"/>
+                <field name="date_planned" />
             </field>
             <xpath expr="//small[hasclass('o_kanban_record_subtitle')]" position="before">
                 <span t-esc="record.date_planned.value" class="o_kanban_record_subtitle text-muted">

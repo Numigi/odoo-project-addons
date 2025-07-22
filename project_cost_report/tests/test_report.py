@@ -107,7 +107,9 @@ class ProjectCostReportCase(common.SavepointCase):
         assert variables["revenue"] == self.revenue
         assert variables["target_sale_price"] == 125
         assert variables["profit"] == 200
-        assert round(variables["profit_percent"], 2) == round((200 / self.revenue) * 100, 2)
+        assert round(variables["profit_percent"], 2) == round(
+            (200 / self.revenue) * 100, 2
+        )
         assert variables["target_profit"] == 25
         assert variables["target_margin"] == self.target_margin
         assert variables["total_hours"] == 1
@@ -170,10 +172,14 @@ class ProjectCostReportCase(common.SavepointCase):
         return self._get_time_section(context)["categories"][0]
 
     def _get_supply_section(self, context=None):
-        return next(s for s in self._get_variables(context)["sections"] if s["name"] == "supply")
+        return next(
+            s for s in self._get_variables(context)["sections"] if s["name"] == "supply"
+        )
 
     def _get_time_section(self, context=None):
-        return next(s for s in self._get_variables(context)["sections"] if s["name"] == "time")
+        return next(
+            s for s in self._get_variables(context)["sections"] if s["name"] == "time"
+        )
 
     def _get_variables(self, context=None):
         return self.report.get_rendering_variables(self.project, context or {})

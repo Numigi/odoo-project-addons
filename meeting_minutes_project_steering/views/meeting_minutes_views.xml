@@ -4,15 +4,15 @@
     <record id="meeting_minutes_project_view_form_inherit" model="ir.ui.view">
         <field name="name">meeting.minutes.project.form.inherit</field>
         <field name="model">meeting.minutes.project</field>
-        <field name="inherit_id" ref="meeting_minutes_project.meeting_minutes_project_view_form"/>
+        <field name="inherit_id" ref="meeting_minutes_project.meeting_minutes_project_view_form" />
         <field name="arch" type="xml">
              <xpath expr="//field[@name='task_id']" position="after">
-                    <field name="project_steering_enabled" attrs="{'invisible': [('project_id', '=', False)]}"/>
+                    <field name="project_steering_enabled" attrs="{'invisible': [('project_id', '=', False)]}" />
             </xpath>
             <xpath expr="//page[@name='meeting_minutes']" position="after">
                     <page name="steering" string="Steering" attrs="{'invisible': [('project_steering_enabled', '=', False)]}">
                         <button name="action_load_steering_data" type="object" >
-                            <span class="fa fa-play"/>
+                            <span class="fa fa-play" />
                                 Load Data
                         </button>
                         <group>
@@ -20,18 +20,18 @@
                         <field name="project_steering_ids" widget="section_and_note_one2many" mode="tree" nolabel="1">
                             <tree editable="bottom">
                                 <control>
-                                    <create string="Add a line"/>
-                                    <create string="Add a section" context="{'default_display_type': 'line_section'}"/>
-                                    <create string="Add a note" context="{'default_display_type': 'line_note'}"/>
+                                    <create string="Add a line" />
+                                    <create string="Add a section" context="{'default_display_type': 'line_section'}" />
+                                    <create string="Add a note" context="{'default_display_type': 'line_note'}" />
                                 </control>
-                                <field name="display_type" invisible="1"/>
-                                <field name="name" string="Project Name"/>
-                                <field name="project_id" invisible="1"/>
-                                <field name="project_end_date"/>
-                                <field name="task_id"/>
-                                <field name="task_date_planned"/>
-                                <field name="task_date_deadline"/>
-                                <field name="notes" widget="section_and_note_text"/>
+                                <field name="display_type" invisible="1" />
+                                <field name="name" string="Project Name" />
+                                <field name="project_id" invisible="1" />
+                                <field name="project_end_date" />
+                                <field name="task_id" />
+                                <field name="task_date_planned" />
+                                <field name="task_date_deadline" />
+                                <field name="notes" widget="section_and_note_text" />
                             </tree>
                         </field>
                         </group>

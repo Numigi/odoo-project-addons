@@ -3,6 +3,7 @@
 
 import pytz
 from datetime import datetime
+
 from odoo import api, models, _
 from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT as DATETIME_FORMAT
 
@@ -55,8 +56,7 @@ class ProjectMilestoneTimeReport(models.AbstractModel):
     @api.model
     def _get_report_url(self):
         config = self.env["ir.config_parameter"].sudo()
-        return config.get_param("report.url") \
-            or config.get_param("web.base.url")
+        return config.get_param("report.url") or config.get_param("web.base.url")
 
     @api.model
     def get_rendering_variables(self, project):
@@ -145,6 +145,6 @@ class ProjectMilestoneTimeReport(models.AbstractModel):
             "project": project,
             "total_estimated_hours": project.total_estimated_hours,
             "consumed_hours": project.total_spent_hours,
-            "budget_remaining":
-                project.total_estimated_hours - project.total_spent_hours,
+            "budget_remaining": project.total_estimated_hours
+            - project.total_spent_hours,
         }

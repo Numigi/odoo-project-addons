@@ -2,6 +2,7 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 import pytest
+
 from odoo.exceptions import ValidationError
 from .common import ProjectIterationCase
 
@@ -10,11 +11,13 @@ class TestProjectIterationWithTimeSheet(ProjectIterationCase):
 
     def _create_timesheet(self, project):
         analytic_account = self.env["account.analytic.account"].create({"name": "ABC"})
-        self.env["account.analytic.line"].create({
-            "name": "Do something",
-            "account_id": analytic_account.id,
-            "project_id": project.id,
-        })
+        self.env["account.analytic.line"].create(
+            {
+                "name": "Do something",
+                "account_id": analytic_account.id,
+                "project_id": project.id,
+            }
+        )
 
     def test_block_setting_parent_on_project_with_timesheet(self):
         self._create_timesheet(self.project_1)

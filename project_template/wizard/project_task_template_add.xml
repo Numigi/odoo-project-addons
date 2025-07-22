@@ -8,15 +8,15 @@
             <form string="Add Task Templates">
                 <sheet>
                     <group>
-                        <field name="project_id" readonly="1"/>
+                        <field name="project_id" readonly="1" />
                     </group>
-                    <label for="task_template_ids" string="Tasks"/>
+                    <label for="task_template_ids" string="Tasks" />
                     <field name="task_template_ids" nolabel="1"
-                        domain="[('project_id', '=', False), ('is_template', '=', True)]"/>
+                        domain="[('project_id', '=', False), ('is_template', '=', True)]" />
                 </sheet>
                 <footer>
-                    <button name="validate" class="oe_highlight" string="Validate" type="object"/>
-                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    <button name="validate" class="oe_highlight" string="Validate" type="object" />
+                    <button string="Cancel" class="btn-secondary" special="cancel" />
                 </footer>
             </form>
         </field>

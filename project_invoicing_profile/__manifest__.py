@@ -14,8 +14,7 @@
         "security/groups.xml",
         "views/project_invoice_profile.xml",
         "views/project_project.xml",
-        'security/ir.model.access.csv',
-
+        "security/ir.model.access.csv",
     ],
     "installable": True,
 }

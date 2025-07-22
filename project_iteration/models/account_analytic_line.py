@@ -10,16 +10,19 @@ class AccountAnalyticLineWithParentProject(models.Model):
     This field is used to group analytic lines by parent project in reports.
     """
 
-    _inherit = 'account.analytic.line'
+    _inherit = "account.analytic.line"
 
-    project_id = fields.Many2one(string='Iteration')
+    project_id = fields.Many2one(string="Iteration")
     parent_project_id = fields.Many2one(
-        'project.project', 'Parent Project',
-        compute='_compute_parent_project_id', store=True, index=True,
+        "project.project",
+        "Parent Project",
+        compute="_compute_parent_project_id",
+        store=True,
+        index=True,
         compute_sudo=True,
     )
 
-    @api.depends('project_id', 'project_id.is_parent', 'project_id.parent_id')
+    @api.depends("project_id", "project_id.is_parent", "project_id.parent_id")
     def _compute_parent_project_id(self):
         """Compute the parent project of an analytic line.
 
@@ -27,6 +30,7 @@ class AccountAnalyticLineWithParentProject(models.Model):
         """
         for line in self:
             line.parent_project_id = (
-                line.project_id if line.project_id.is_parent else
-                line.project_id.parent_id
+                line.project_id
+                if line.project_id.is_parent
+                else line.project_id.parent_id
             )

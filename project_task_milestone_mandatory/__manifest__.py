@@ -9,10 +9,13 @@
     "website": "https://bit.ly/numigi-com",
     "license": "LGPL-3",
     "category": "Project",
-    "summary": "In task form view, field milestone is required if field Use milestones is True in project else invisible",
+    "summary": """
+        In task form view, field milestone is required if field
+        Use milestones is True in project else invisible
+    """,
     "depends": ["project_milestone_enhanced"],
-    'data': [
-        'views/project_task.xml',
+    "data": [
+        "views/project_task.xml",
     ],
     "installable": True,
 }

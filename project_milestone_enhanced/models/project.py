@@ -20,13 +20,17 @@ class Project(models.Model):
 
     def _milestones_no_copy(self, default):
         context = dict(self.env.context or {})
-        milestones_no_copy = "milestones_no_copy" in context and context["milestones_no_copy"]
+        milestones_no_copy = (
+            "milestones_no_copy" in context and context["milestones_no_copy"]
+        )
         if milestones_no_copy:
             default["milestone_ids"] = False
         return default, milestones_no_copy
 
     def _link_tasks_to_milestones(self):
-        for task in self.with_context(active_test=False).task_ids.filtered("milestone_id"):
+        for task in self.with_context(active_test=False).task_ids.filtered(
+            "milestone_id"
+        ):
             task.milestone_id = self._find_equivalent_milestone(task.milestone_id)
 
     def _find_equivalent_milestone(self, milestone):

@@ -25,10 +25,16 @@ class TestProjectIterationSaleInheritance(common.SavepointCase):
             {
                 "name": "SO001",
                 "partner_id": self.partner.id,
-                "order_line": [(0, 0, {
-                    "product_id": self.product_a.product_variant_id.id,
-                    "product_uom_qty": 10,
-                })]
+                "order_line": [
+                    (
+                        0,
+                        0,
+                        {
+                            "product_id": self.product_a.product_variant_id.id,
+                            "product_uom_qty": 10,
+                        },
+                    )
+                ],
             }
         )
         sale_order.action_confirm()

@@ -6,18 +6,21 @@ from odoo import fields, models, api, _
 
 class Task(models.Model):
 
-    _inherit = 'project.task'
+    _inherit = "project.task"
 
     remaining_hours_ids = fields.One2many(
-        'project.task.remaining.hours',
-        'task_id',
-        'Remaining Hours History',
+        "project.task.remaining.hours",
+        "task_id",
+        "Remaining Hours History",
     )
 
     @api.depends(
-        'effective_hours', 'subtask_effective_hours', 'planned_hours',
-        'remaining_hours_ids.remaining_hours_change', 'stage_id',
-        'stage_id.set_remaining_hours_to_0',
+        "effective_hours",
+        "subtask_effective_hours",
+        "planned_hours",
+        "remaining_hours_ids.remaining_hours_change",
+        "stage_id",
+        "stage_id.set_remaining_hours_to_0",
     )
     def _compute_remaining_hours(self):
         super()._compute_remaining_hours()
@@ -25,7 +28,9 @@ class Task(models.Model):
             if task.stage_id.set_remaining_hours_to_0:
                 task.remaining_hours = 0
                 continue
-            remaining_hours_change = sum(task.mapped('remaining_hours_ids.remaining_hours_change'))
+            remaining_hours_change = sum(
+                task.mapped("remaining_hours_ids.remaining_hours_change")
+            )
             task.remaining_hours += remaining_hours_change
 
     def update_remaining_hours(self, new_remaining_hours, user, comment):
@@ -34,10 +39,13 @@ class Task(models.Model):
         :param new_remaining_hours: the new remaining hours
         :param user: the user who the task
         """
-        self.check_access_rights('write')
-        self.check_access_rule('write')
-        self.env['project.task.remaining.hours'].sudo().create_from_task(
-            self, new_remaining_hours, user, comment=comment,
+        self.check_access_rights("write")
+        self.check_access_rule("write")
+        self.env["project.task.remaining.hours"].sudo().create_from_task(
+            self,
+            new_remaining_hours,
+            user,
+            comment=comment,
         )
 
     @api.model
@@ -49,7 +57,7 @@ class Task(models.Model):
         """
         task = super().create(vals)
         task.update_remaining_hours(
-            task.remaining_hours, self.env.user, comment=_('Task created')
+            task.remaining_hours, self.env.user, comment=_("Task created")
         )
         return task
 
@@ -64,10 +72,12 @@ class Task(models.Model):
         """
         res = super().write(vals)
 
-        if 'planned_hours' in vals:
+        if "planned_hours" in vals:
             for task in self:
                 task.update_remaining_hours(
-                    task.remaining_hours, self.env.user, comment=_('Planned hours updated')
+                    task.remaining_hours,
+                    self.env.user,
+                    comment=_("Planned hours updated"),
                 )
 
         return res

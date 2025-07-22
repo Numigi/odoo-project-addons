@@ -7,9 +7,11 @@ from odoo import fields, models
 class StockPickingType(models.Model):
     """Add consumption to picking type codes."""
 
-    _inherit = 'stock.picking.type'
+    _inherit = "stock.picking.type"
 
-    code = fields.Selection(selection_add=[
-        ('consumption', 'Consumption'),
-        ('consumption_return', 'Consumption Return'),
-    ])
+    code = fields.Selection(
+        selection_add=[
+            ("consumption", "Consumption"),
+            ("consumption_return", "Consumption Return"),
+        ]
+    )

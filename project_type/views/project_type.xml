@@ -14,12 +14,12 @@
                     </div>
                     <div class="oe_title">
                         <h1>
-                            <field name="name"/>
+                            <field name="name" />
                         </h1>
                     </div>
                     <group>
-                        <field name="description"/>
-                        <field name="sequence"/>
+                        <field name="description" />
+                        <field name="sequence" />
                     </group>
                     <notebook/>
                 </sheet>
@@ -32,9 +32,9 @@
         <field name="model">project.type</field>
         <field name="arch" type="xml">
             <tree string="Project Types">
-                <field name="sequence" widget="handle"/>
-                <field name="name"/>
-                <field name="active"/>
+                <field name="sequence" widget="handle" />
+                <field name="name" />
+                <field name="active" />
             </tree>
         </field>
     </record>
@@ -44,7 +44,7 @@
         <field name="model">project.type</field>
         <field name="arch" type="xml">
             <search string="Project Types">
-                <field name="name" string="Project Types"/>
+                <field name="name" string="Project Types" />
             </search>
         </field>
     </record>
@@ -56,6 +56,6 @@
         <field name="view_mode">tree,form</field>
     </record>
 
-    <menuitem action="project_type_action" id="project_type_menu" parent="project.menu_project_config"/>
+    <menuitem action="project_type_action" id="project_type_menu" parent="project.menu_project_config" />
 
 </odoo>

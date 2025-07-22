@@ -2,12 +2,9 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 import pytest
-from base64 import b64encode
-from datetime import timedelta
 from odoo.addons.test_http_request.common import mock_odoo_request
 from odoo.exceptions import ValidationError
 from odoo.tests.common import SavepointCase
-from odoo import _
 from ..controllers.portal import (
     Portal,
     SIGN_PAGE_TEMPLATE,
@@ -173,7 +170,7 @@ class TestMeetingMinutes(SavepointCase):
         message = self._get_latest_message(self.trainer_line)
         assert "Here is the certificate" in message.body
 
-    def test_request_signatures(self):
+    def test_request_signatures_trainer_line_state(self):
         self.minutes.sudo(self.trainer).request_signatures()
         assert self.trainer_line.state == "sent"
 

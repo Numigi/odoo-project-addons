@@ -10,9 +10,11 @@
     "license": "LGPL-3",
     "category": "Project",
     "summary": "Automate Outsourcing Timesheet",
-    "depends": ["project_outsourcing",
-                "hr_timesheet",
-                "project_timesheet_time_control"],
+    "depends": [
+        "project_outsourcing",
+        "hr_timesheet",
+        "project_timesheet_time_control",
+    ],
     "data": [
         "views/product_views.xml",
         "views/res_partner_views.xml",

@@ -1,13 +1,11 @@
-# © 2019 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+# © 2019-today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 import babel.dates
 from datetime import datetime
-from itertools import chain
 from odoo import api, fields, models, _
 from odoo.exceptions import ValidationError
 from odoo.tools.float_utils import float_round
-from typing import Callable, Mapping
 from .util import (
     adjust_analytic_line_amount_sign,
     get_waiting_for_invoice_total,
@@ -220,10 +218,10 @@ class ProjectCostReport(models.TransientModel):
     def _get_section_categories(self, projects, report_context, section_name):
         all_lines = projects.mapped("analytic_account_id.line_ids")
         section_lines = all_lines.filtered(
-            lambda l: l.project_cost_section == section_name
+            lambda line: line.project_cost_section == section_name
         )
         grouped_lines = group_analytic_lines(
-            section_lines, lambda l: l.project_cost_category_id
+            section_lines, lambda line: line.project_cost_category_id
         )
 
         sorted_categories = sorted(grouped_lines.keys(), key=lambda c: c.sequence or 0)
@@ -256,7 +254,7 @@ class ProjectCostReport(models.TransientModel):
             ("order_id.state", "in", ("purchase", "done")),
         ]
         lines = self.env["purchase.order.line"].search(domain)
-        return lines.filtered(lambda l: purchase_line_is_waiting_invoice(l))
+        return lines.filtered(lambda line: purchase_line_is_waiting_invoice(line))
 
     def _get_waiting_purchase_orders(self, projects):
         """Get the purchase orders with unreceived invoices.

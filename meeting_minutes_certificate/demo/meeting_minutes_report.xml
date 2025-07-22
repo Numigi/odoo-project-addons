@@ -8,12 +8,12 @@
         <field name="report_name">meeting_certificate</field>
         <field name="report_type">aeroo</field>
         <field name="aeroo_in_format">odt</field>
-        <field name="aeroo_out_format_id" ref="report_aeroo.aeroo_mimetype_pdf_odt"/>
+        <field name="aeroo_out_format_id" ref="report_aeroo.aeroo_mimetype_pdf_odt" />
         <field name="aeroo_template_source">file</field>
         <field name="aeroo_lang_eval">user.lang</field>
         <field name="aeroo_country_eval">user.partner_id.country_id</field>
         <field name="aeroo_template_path">meeting_minutes_certificate/demo/meeting_minutes.odt</field>
-        <field name="attachment_use" eval="False"/>
+        <field name="attachment_use" eval="False" />
     </record>
 
 </odoo>

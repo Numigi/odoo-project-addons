@@ -4,7 +4,7 @@
     <record id="project_estimation_exit_form" model="ir.ui.view">
         <field name="name">Project Estimation Mode Exit Wizard: add tasks with material</field>
         <field name="model">project.estimation.exit</field>
-        <field name="inherit_id" ref="project_estimation.project_estimation_exit_form"/>
+        <field name="inherit_id" ref="project_estimation.project_estimation_exit_form" />
         <field name="arch" type="xml">
             <group name="top" position="after">
                 <div>
@@ -18,8 +18,8 @@
                 </div>
                 <field name="task_ids">
                     <tree editable="top" create="false" delete="false">
-                        <field name="display_name" string="Task"/>
-                        <field name="date_planned" required="1"/>
+                        <field name="display_name" string="Task" />
+                        <field name="date_planned" required="1" />
                     </tree>
                 </field>
             </group>

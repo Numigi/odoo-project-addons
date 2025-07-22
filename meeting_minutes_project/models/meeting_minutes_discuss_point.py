@@ -11,14 +11,8 @@ class DiscussPoint(models.Model):
     _order = "sequence"
 
     meeting_minutes_id = fields.Many2one(
-        "meeting.minutes.project",
-        string="Meeting Minutes",
-        ondelete="cascade"
+        "meeting.minutes.project", string="Meeting Minutes", ondelete="cascade"
     )
     sequence = fields.Integer(string="Sequence")
-    task_id = fields.Many2one(
-        "project.task",
-        string="Task",
-        ondelete="restrict"
-    )
+    task_id = fields.Many2one("project.task", string="Task", ondelete="restrict")
     notes = fields.Html(string="Notes")

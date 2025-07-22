@@ -16,7 +16,7 @@
         </xpath>
         <xpath expr="//tr[@t-foreach='projects']/td[last()]" position="after">
             <td>
-                <span t-field="project.total_hours_spent" t-options="{'widget': 'float_time'}" t-if="not project.lump_sum"/>
+                <span t-field="project.total_hours_spent" t-options="{'widget': 'float_time'}" t-if="not project.lump_sum" />
             </td>
         </xpath>
     </template>
@@ -27,7 +27,7 @@
         </xpath>
         <xpath expr="//t[@t-foreach='tasks']/tr/td[last()]" position="after">
             <td class="text-left">
-                <span t-field="task.effective_hours" t-options="{'widget': 'float_time'}" t-if="not task.project_id.lump_sum"/>
+                <span t-field="task.effective_hours" t-options="{'widget': 'float_time'}" t-if="not task.project_id.lump_sum" />
             </td>
         </xpath>
     </template>
@@ -36,7 +36,7 @@
         <xpath expr="//div[@t-if='task.timesheet_ids']" position="replace">
             <t t-if="not task.project_id.lump_sum">
                 <div class="container" t-if="task.timesheet_ids">
-                    <hr class="mt-4 mb-1"/>
+                    <hr class="mt-4 mb-1" />
                     <h5 class="mt-2 mb-2">Timesheets</h5>
                     <table class="table table-sm">
                         <thead>
@@ -48,9 +48,9 @@
                           </tr>
                         </thead>
                         <tr t-foreach="task.timesheet_ids" t-as="timesheet">
-                            <td><t t-esc="timesheet.date"/></td>
-                            <td><t t-esc="timesheet.name"/></td>
-                            <td><t t-esc="timesheet.sudo().user_id.name"/></td>
+                            <td><t t-esc="timesheet.date" /></td>
+                            <td><t t-esc="timesheet.name" /></td>
+                            <td><t t-esc="timesheet.sudo().user_id.name" /></td>
                             <td class="text-right"><span t-field="timesheet.unit_amount" t-options='{"widget": "duration", "unit": "hour", "round": "minute"}'/></td>
                         </tr>
                     </table>

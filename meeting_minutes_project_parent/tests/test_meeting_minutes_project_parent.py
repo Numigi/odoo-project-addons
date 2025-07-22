@@ -9,15 +9,11 @@ class TestMeetingMinutesProjectParent(SavepointCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.project_parent_1 = cls.env["project.project"].create(
-            {"name": "Project 1"}
-        )
+        cls.project_parent_1 = cls.env["project.project"].create({"name": "Project 1"})
         cls.project_2 = cls.env["project.project"].create(
             {"name": "Project 2", "parent_id": cls.project_parent_1.id}
         )
-        cls.project_3 = cls.env["project.project"].create(
-            {"name": "Project 3"}
-        )
+        cls.project_3 = cls.env["project.project"].create({"name": "Project 3"})
 
         cls.MeetingMinutesObj = cls.env["meeting.minutes.project"]
 
@@ -41,18 +37,21 @@ class TestMeetingMinutesProjectParent(SavepointCase):
         )
 
     def test_project_child_meeting_minutes(self):
-        self.MeetingMinutesObj.create({
-                'task_id': self.task_1.id,
-                'project_id': self.project_parent_1.id,
-            })
-        self.MeetingMinutesObj.create({
-                'task_id': self.task_2.id,
-                'project_id': self.project_parent_1.id,
-            })
-        meeting_minutes_3 = self.MeetingMinutesObj.create({
-                'task_id': self.task_2.id,
-                'project_id': self.project_2.id
-            })
+        self.MeetingMinutesObj.create(
+            {
+                "task_id": self.task_1.id,
+                "project_id": self.project_parent_1.id,
+            }
+        )
+        self.MeetingMinutesObj.create(
+            {
+                "task_id": self.task_2.id,
+                "project_id": self.project_parent_1.id,
+            }
+        )
+        meeting_minutes_3 = self.MeetingMinutesObj.create(
+            {"task_id": self.task_2.id, "project_id": self.project_2.id}
+        )
 
         assert meeting_minutes_3.parent_project_id == self.project_parent_1
         assert self.project_parent_1.meeting_minutes_count == 3

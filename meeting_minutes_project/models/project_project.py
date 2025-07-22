@@ -20,6 +20,4 @@ class ProjectProject(models.Model):
     @api.multi
     def _compute_nbr_meeting(self):
         for project in self:
-            project.meeting_minutes_count = len(
-                project.meeting_minutes_ids
-            )
+            project.meeting_minutes_count = len(project.meeting_minutes_ids)

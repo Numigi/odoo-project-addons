@@ -3,4 +3,3 @@
 
 from . import project_assignment
 from . import project_milestone
-
