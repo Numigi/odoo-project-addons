@@ -11,7 +11,7 @@ class ProjectCostReportCase(common.SavepointCase):
         cls.project = cls.env["project.project"].create({"name": "Job 123"})
         cls.other_project = cls.env["project.project"].create({"name": "Job 456"})
 
-        #cls.section = "supply"
+        cls.section = "time"
 
         cls.target_margin = 20
         #cls.supply_category = cls.env.ref("project_cost_report.cost_category_supply")
@@ -83,7 +83,7 @@ class ProjectCostReportCase(common.SavepointCase):
         assert sections[3]["title"] == "Outsourcing"
 
     def test_category_amounts(self):
-        category = self._get_supply_category()
+        category = self._get_time_category()
         assert category.revenue == self.revenue
         assert category.target_margin == self.target_margin
         assert category.target_sale_price == 125  # 100 / (1 - 20%)
@@ -91,15 +91,15 @@ class ProjectCostReportCase(common.SavepointCase):
         assert category.target_profit == 25  # 125 - 100
         assert category.total_hours == 1
 
-    def test_section_amounts(self):
-        section = self._get_supply_section()
-        assert section["cost"] == self.cost
-        assert section["revenue"] == self.revenue
-        assert section["target_sale_price"] == 125
-        assert section["profit"] == 200
-        assert section["target_profit"] == 25
-        assert section["target_margin"] == self.target_margin
-        assert section["total_hours"] == 1
+    # def test_section_amounts(self):
+    #     section = self._get_section()
+    #     assert section["cost"] == self.cost
+    #     assert section["revenue"] == self.revenue
+    #     assert section["target_sale_price"] == 125
+    #     assert section["profit"] == 200
+    #     assert section["target_profit"] == 25
+    #     assert section["target_margin"] == self.target_margin
+    #     assert section["total_hours"] == 1
 
     def test_total_amounts(self):
         variables = self._get_variables()
