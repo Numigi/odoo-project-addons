@@ -11,11 +11,11 @@ class ProjectCostReportCase(common.SavepointCase):
         cls.project = cls.env["project.project"].create({"name": "Job 123"})
         cls.other_project = cls.env["project.project"].create({"name": "Job 456"})
 
-        cls.section = "supply"
+        #cls.section = "supply"
 
         cls.target_margin = 20
-        cls.supply_category = cls.env.ref("project_cost_report.cost_category_supply")
-        cls.supply_category.target_margin = cls.target_margin
+        #cls.supply_category = cls.env.ref("project_cost_report.cost_category_supply")
+        #cls.supply_category.target_margin = cls.target_margin
 
         cls.time_category = cls.env.ref("project_cost_report.cost_category_labour")
 
@@ -129,27 +129,27 @@ class ProjectCostReportCase(common.SavepointCase):
         assert not variables["profit_percent"]
 
     def test_category_folded(self):
-        assert self._get_supply_category().folded is True
+        assert self._get_time_category().folded is True
 
     def test_category_unfolded(self):
-        context = {"unfolded_categories": [self.supply_category.id]}
-        assert self._get_supply_category(context).folded is False
+        context = {"unfolded_categories": [self.time_category.id]}
+        assert self._get_time_category(context).folded is False
 
     def test_category_cost_clicked(self):
         action = self.report.category_cost_clicked(
-            self.report_context, self.section, self.supply_category.id
+            self.report_context, self.section, self.time_category.id
         )
         assert self._search_analytic_lines(action["domain"]) == self.cost_line
 
     def test_category_revenue_clicked(self):
         action = self.report.category_revenue_clicked(
-            self.report_context, self.section, self.supply_category.id
+            self.report_context, self.section, self.time_category.id
         )
         assert self._search_analytic_lines(action["domain"]) == self.revenue_line
 
     def test_category_profit_clicked(self):
         action = self.report.category_profit_clicked(
-            self.report_context, self.section, self.supply_category.id
+            self.report_context, self.section, self.time_category.id
         )
         assert (
             self._search_analytic_lines(action["domain"])
