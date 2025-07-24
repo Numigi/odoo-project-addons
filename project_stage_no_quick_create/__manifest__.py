@@ -8,7 +8,7 @@
     'version': '1.0.0',
     'author': 'Savoir-faire Linux',
     'maintainer': 'Numigi',
-    'website': 'https://bit.ly/numigi-com',
+    'website': 'https://numigi.com/r/home',
     'licence': 'LGPL-3',
     'category': 'Project Management',
     'summary': 'Disable project stage quick create',

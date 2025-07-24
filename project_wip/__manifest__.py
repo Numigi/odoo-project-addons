@@ -6,7 +6,7 @@
     "version": "14.0.1.2.0",
     "author": "Numigi",
     "maintainer": "Numigi",
-    "website": "https://bit.ly/numigi-com",
+    "website": "https://numigi.com/r/home",
     "license": "LGPL-3",
     "category": "Project",
     "summary": "Manage Work In Progress Accounting",

@@ -6,7 +6,7 @@
     'version': '12.0.0',
     'author': 'Numigi',
     'maintainer': 'Numigi',
-    'website': 'https://bit.ly/numigi-com',
+    'website': 'https://numigi.com/r/home',
     'license': 'LGPL-3',
     'category': 'Project',
     'depends': [

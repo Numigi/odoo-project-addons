@@ -6,7 +6,7 @@
     "version": "1.1.2",
     "author": "Numigi",
     "maintainer": "Numigi",
-    "website": "https://bit.ly/numigi-com",
+    "website": "https://numigi.com/r/home",
     "license": "LGPL-3",
     "category": "Project",
     "summary": "Dynamically add links to tasks in the web interface.",
