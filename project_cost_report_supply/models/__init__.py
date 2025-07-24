@@ -2,6 +2,3 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 from . import account_analytic_line
-from . import product_category
-from . import project_cost_category
-from . import task_type

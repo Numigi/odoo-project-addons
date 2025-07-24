@@ -5,16 +5,6 @@ import babel.dates
 from datetime import datetime
 # from itertools import chain
 from odoo import api, fields, models, _
-from odoo.exceptions import ValidationError
-from odoo.tools.float_utils import float_round
-# from typing import Callable, Mapping
-from .util import (
-    adjust_analytic_line_amount_sign,
-    get_waiting_for_invoice_total,
-    group_analytic_lines,
-    purchase_line_is_waiting_invoice,
-)
-from .report_category import CostReportCategory
 
 
 SECTION_TITLES = {
@@ -28,8 +18,7 @@ SECTION_TITLES = {
 class ProjectCostReport(models.TransientModel):
 
 
-    _name = "project.cost.report"
-    _description = "Project Cost Report"
+    _inherit = "project.cost.report"
 
 
     def _get_sections(self, projects, report_context):
@@ -37,3 +26,6 @@ class ProjectCostReport(models.TransientModel):
             self._get_section(projects, report_context, section)
             for section in  ("supply", "products", "time", "outsourcing")
         ]
+
+    def _get_section(self, projects, report_context, section_name):
+        return super(ProjectCostReport, self)._get_section(projects, report_context, section_name)

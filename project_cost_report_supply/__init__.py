@@ -3,5 +3,4 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 from . import report
-from . import controller
 from . import models
