@@ -16,7 +16,6 @@
         "project_task_type",
         "project_type",
         "purchase",
-        "project_wip_supply_cost",
     ],
     "data": [
         "data/project_cost_category.xml",
