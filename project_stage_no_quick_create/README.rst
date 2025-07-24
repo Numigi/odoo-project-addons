@@ -20,9 +20,6 @@ Whenever you want to update the default stages, you may edit this default value.
 
 Contributors
 ------------
-* Numigi (tm) and all its contributors (https://bit.ly/numigiens)
-* Istvan Szalai (istvan.szalai@savoirfairelinux.com)
 
-More information
-----------------
-* Meet us at https://bit.ly/numigi-com
+* The `Numigi <https://numigi.com/r/home>`_ team is the contributor to this project. We help Quebec companies implement Odoo and Konvergo ERP.
+* Istvan Szalai (istvan.szalai@savoirfairelinux.com)
