@@ -12,6 +12,7 @@
     "summary": "Add a dynamic cost report to projects",
     "depends": [
         "project_cost_report",
+        "project_wip_supply_cost",
     ],
     "data": [
     ],
