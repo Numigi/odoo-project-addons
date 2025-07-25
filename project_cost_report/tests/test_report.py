@@ -79,9 +79,9 @@ class ProjectCostReportCase(common.SavepointCase):
         assert sections[2]["name"] == "outsourcing"
 
         #assert sections[0]["title"] == "Shop Supply"
-        assert sections[1]["title"] == "Products"
-        assert sections[2]["title"] == "Time"
-        assert sections[3]["title"] == "Outsourcing"
+        assert sections[0]["title"] == "Products"
+        assert sections[1]["title"] == "Time"
+        assert sections[2]["title"] == "Outsourcing"
 
     def test_category_amounts(self):
         category = self._get_time_category()
