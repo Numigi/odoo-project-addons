@@ -16,6 +16,5 @@
     ],
     "data": [
     ],
-#"qweb": ["static/src/xml/templates.xml"],
     "installable": True,
 }
