@@ -17,9 +17,6 @@ class TestAnalyticLine(common.SavepointCase):
         cls.outsourcing_cost_category = cls.env.ref(
             "project_cost_report.cost_category_outsourcing"
         )
-        # cls.supply_cost_category = cls.env.ref(
-        #     "project_cost_report.cost_category_supply"
-        # )
 
         cls.product = cls.env["product.product"].create({"name": "My Product"})
 

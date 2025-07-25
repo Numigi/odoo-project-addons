@@ -15,9 +15,10 @@ class ProjectCostReportCase(common.SavepointCase):
 
         cls.target_margin = 20
         #cls.supply_category = cls.env.ref("project_cost_report.cost_category_supply")
-        #cls.supply_category.target_margin = cls.target_margin
+
 
         cls.time_category = cls.env.ref("project_cost_report.cost_category_labour")
+        cls.time_category.target_margin = cls.target_margin
 
         cls.analytic_account = cls.project.analytic_account_id
 
@@ -72,10 +73,10 @@ class ProjectCostReportCase(common.SavepointCase):
 
     def test_sections_order(self):
         sections = self._get_variables()["sections"]
-        #assert sections[0]["name"] == "supply"
-        assert sections[1]["name"] == "products"
-        assert sections[2]["name"] == "time"
-        assert sections[3]["name"] == "outsourcing"
+        assert sections[0]["name"] == "products"
+        assert sections[1]["name"] == "time"
+        #assert sections[2]["name"] == "time"
+        assert sections[2]["name"] == "outsourcing"
 
         #assert sections[0]["title"] == "Shop Supply"
         assert sections[1]["title"] == "Products"
