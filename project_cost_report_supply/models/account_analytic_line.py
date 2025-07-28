@@ -35,7 +35,7 @@ class AnalyticLine(models.Model):
     def _get_project_cost_category(self):
         res=  super(AnalyticLine, self)._get_project_cost_category()
         if self.project_cost_section == "supply":
-            return self.env.ref("project_cost_report.cost_category_supply", False)
+            return self.env.ref("project_cost_report_supply.cost_category_supply", False)
         return res
 
 
