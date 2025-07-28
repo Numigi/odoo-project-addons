@@ -1,9 +1,8 @@
-# Copyright 2019-today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+# Copyright 2025-today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
-from odoo import api, fields, models, _
+from odoo import models, _
 from odoo.tools.float_utils import float_round
-
 
 SECTION_TITLES = {
     "supply": _("Shop Supply"),
@@ -14,15 +13,12 @@ SECTION_TITLES = {
 
 
 class ProjectCostReport(models.TransientModel):
-
-
     _inherit = "project.cost.report"
-
 
     def _get_sections(self, projects, report_context):
         return [
             self._get_section(projects, report_context, section)
-            for section in  ("supply", "products", "time", "outsourcing")
+            for section in ("supply", "products", "time", "outsourcing")
         ]
 
     def _get_section(self, projects, report_context, section_name):
