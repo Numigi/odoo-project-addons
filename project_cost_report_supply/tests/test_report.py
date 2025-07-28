@@ -12,15 +12,10 @@ class ProjectCostReportCase(common.SavepointCase):
         cls.other_project = cls.env["project.project"].create({"name": "Job 456"})
         cls.cost = 100
         cls.section = "supply"
-
         cls.target_margin = 20
         cls.supply_category = cls.env.ref("project_cost_report_supply.cost_category_supply")
         cls.supply_category.target_margin = cls.target_margin
-
-
         cls.analytic_account = cls.project.analytic_account_id
-
-
         cls.env["account.analytic.line"].create(
             {
                 "account_id": cls.other_project.analytic_account_id.id,
@@ -49,6 +44,10 @@ class ProjectCostReportCase(common.SavepointCase):
 
     def test_section_amounts(self):
         section = self._get_supply_section()
+        import logging
+        _logger = logging.getLogger(__name__)
+        _logger.info("ooooooooooo",section)
+        print("99999999999999999",section)
         assert section["cost"] == self.cost
         assert section["revenue"] == self.revenue
         assert section["target_sale_price"] == 125
@@ -62,7 +61,7 @@ class ProjectCostReportCase(common.SavepointCase):
         import logging
         _logger = logging.getLogger(__name__)
         _logger.info(self._get_supply_section(context)["categories"])
-        return self._get_supply_section(context)["categories"][3]
+        return self._get_supply_section(context)["categories"][0]
 
     def _get_supply_section(self, context=None):
         return next(
