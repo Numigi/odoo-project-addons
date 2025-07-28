@@ -10,7 +10,7 @@ class ProjectCostReportCase(common.SavepointCase):
         super().setUpClass()
         cls.project = cls.env["project.project"].create({"name": "Job 123"})
         cls.other_project = cls.env["project.project"].create({"name": "Job 456"})
-
+        cls.cost = 100
         cls.section = "supply"
 
         cls.target_margin = 20
