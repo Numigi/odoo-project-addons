@@ -14,7 +14,7 @@
         "project_cost_report",
         "project_wip_supply_cost",
     ],
-    "data": [
+    "data": ["data/project_cost_category.xml"
     ],
     "installable": True,
 }
