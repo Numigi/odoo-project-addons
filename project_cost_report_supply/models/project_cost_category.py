@@ -11,6 +11,5 @@ class ProjectCostCategory(models.Model):
 
     section =  fields.Selection(
         selection_add=[('supply', 'Shop Supply')],
-        required=True,
-        default="products",
+        ondelete={'supply': 'set default'},
     )
