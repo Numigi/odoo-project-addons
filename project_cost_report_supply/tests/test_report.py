@@ -22,7 +22,7 @@ class ProjectCostReportCase(common.SavepointCase):
                 "name": "Cost In Other Project",
                 "is_shop_supply": True,
                 "unit_amount": 1,
-                "amount": 999999,
+                "amount": -cls.cost,
             }
         )
 
@@ -44,9 +44,6 @@ class ProjectCostReportCase(common.SavepointCase):
 
     def test_section_amounts(self):
         section = self._get_supply_section()
-        import logging
-        _logger = logging.getLogger(__name__)
-        _logger.info("ooooooooooo",section)
         print("99999999999999999",section)
         assert section["cost"] == self.cost
         assert section["revenue"] == self.revenue
@@ -58,9 +55,6 @@ class ProjectCostReportCase(common.SavepointCase):
 
 
     def _get_supply_category(self, context=None):
-        import logging
-        _logger = logging.getLogger(__name__)
-        _logger.info(self._get_supply_section(context)["categories"])
         return self._get_supply_section(context)["categories"][0]
 
     def _get_supply_section(self, context=None):
