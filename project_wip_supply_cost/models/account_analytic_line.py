@@ -84,9 +84,11 @@ class AccountAnalyticLine(models.Model):
         )
 
         if must_create_shop_supply_move:
+            print("444444444444444444444")
             self._create_shop_supply_move()
 
         elif must_update_shop_supply_move:
+            print("33333333333333333333333")
             self._update_shop_supply_move()
 
         elif must_reverse_shop_supply_move:

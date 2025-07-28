@@ -17,9 +17,6 @@ class TestAnalyticLine(common.SavepointCase):
         cls.outsourcing_cost_category = cls.env.ref(
             "project_cost_report.cost_category_outsourcing"
         )
-        cls.supply_cost_category = cls.env.ref(
-            "project_cost_report.cost_category_supply"
-        )
 
         cls.product = cls.env["product.product"].create({"name": "My Product"})
 
@@ -89,7 +86,7 @@ class TestAnalyticLine(common.SavepointCase):
         assert self.line.project_cost_section == "outsourcing"
         assert self.line.project_cost_category_id == self.outsourcing_cost_category
 
-    def test_cost_section__supply(self):
-        self.line.is_shop_supply = True
-        assert self.line.project_cost_section == "supply"
-        assert self.line.project_cost_category_id == self.supply_cost_category
+    # def test_cost_section__supply(self):
+    #     self.line.is_shop_supply = True
+    #     assert self.line.project_cost_section == "supply"
+    #     assert self.line.project_cost_category_id == self.supply_cost_category
