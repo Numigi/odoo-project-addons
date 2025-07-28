@@ -17,8 +17,8 @@ class ProjectCostReportCase(common.SavepointCase):
         cls.analytic_account = cls.project.analytic_account_id
         cls.env["account.analytic.line"].create(
             {
-                "account_id": cls.analytic_account,
-                "name": "Cost In Other Project",
+                "account_id": cls.analytic_account.id,
+                "name": "Cost",
                 "is_shop_supply": True,
                 "unit_amount": 1,
                 "amount": -cls.cost,
@@ -30,7 +30,7 @@ class ProjectCostReportCase(common.SavepointCase):
                 "account_id": cls.analytic_account.id,
                  "name": "Revenue",
                  "is_shop_supply": True,
-                "revenue": True,
+                 "revenue": True,
                  "unit_amount": 1,
                  "amount": cls.revenue,
              }
