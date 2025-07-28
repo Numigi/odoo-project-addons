@@ -10,7 +10,7 @@ class TestAnalyticLine(common.SavepointCase):
         super().setUpClass()
 
         cls.supply_cost_category = cls.env.ref(
-            "project_cost_report.cost_category_supply"
+            "project_cost_report_supply.cost_category_supply"
         )
 
         cls.product = cls.env["product.product"].create({"name": "My Product"})

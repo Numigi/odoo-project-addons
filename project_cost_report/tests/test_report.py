@@ -73,15 +73,29 @@ class ProjectCostReportCase(common.SavepointCase):
 
     def test_sections_order(self):
         sections = self._get_variables()["sections"]
-        assert sections[0]["name"] == "products"
-        assert sections[1]["name"] == "time"
-        #assert sections[2]["name"] == "time"
-        assert sections[2]["name"] == "outsourcing"
+        supply_module_is_installed = self.env['ir.module.module'].search([
+            ('name', '=', 'project_cost_report_supply'),
+            ('state', '=', 'installed')
+            ], limit=1)
 
-        #assert sections[0]["title"] == "Shop Supply"
-        assert sections[0]["title"] == "Products"
-        assert sections[1]["title"] == "Time"
-        assert sections[2]["title"] == "Outsourcing"
+        if supply_module_is_installed:
+            assert sections[0]["name"] == "supply"
+            assert sections[1]["name"] == "products"
+            assert sections[2]["name"] == "time"
+            assert sections[3]["name"] == "outsourcing"
+
+            assert sections[0]["title"] == "Shop Supply"
+            assert sections[1]["title"] == "Products"
+            assert sections[2]["title"] == "Time"
+            assert sections[3]["title"] == "Outsourcing"
+        else :
+            assert sections[0]["name"] == "products"
+            assert sections[1]["name"] == "time"
+            assert sections[2]["name"] == "outsourcing"
+
+            assert sections[0]["title"] == "Products"
+            assert sections[1]["title"] == "Time"
+            assert sections[2]["title"] == "Outsourcing"
 
     def test_category_amounts(self):
         category = self._get_time_category()

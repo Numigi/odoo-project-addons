@@ -65,6 +65,8 @@ class ProjectCostReportCase(common.SavepointCase):
         return next(
             s for s in self._get_variables(context)["sections"] if s["name"] == "supply"
         )
+    def _get_variables(self, context=None):
+        return self.report.get_rendering_variables(self.project, context or {})
 
 
 
