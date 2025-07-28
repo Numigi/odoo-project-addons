@@ -12,10 +12,10 @@ class ProjectCostReportCase(common.SavepointCase):
         cls.other_project = cls.env["project.project"].create({"name": "Job 456"})
 
         cls.section = "time"
-
         cls.target_margin = 20
-        #cls.supply_category = cls.env.ref("project_cost_report.cost_category_supply")
 
+        # Note : catégorie désactivée ici
+        # cls.supply_category = cls.env.ref("project_cost_report.cost_category_supply")
 
         cls.time_category = cls.env.ref("project_cost_report.cost_category_labour")
         cls.time_category.target_margin = cls.target_margin
@@ -23,47 +23,37 @@ class ProjectCostReportCase(common.SavepointCase):
         cls.analytic_account = cls.project.analytic_account_id
 
         cls.cost = 100
-        cls.cost_line = cls.env["account.analytic.line"].create(
-            {
-                "account_id": cls.analytic_account.id,
-                "name": "Cost",
-               # "is_shop_supply": True,
-                "unit_amount": 1,
-                "amount": -cls.cost,
-            }
-        )
+        cls.cost_line = cls.env["account.analytic.line"].create({
+            "account_id": cls.analytic_account.id,
+            "name": "Cost",
+            "unit_amount": 1,
+            "amount": -cls.cost,
+        })
 
         cls.revenue = 300
-        cls.revenue_line = cls.env["account.analytic.line"].create(
-            {
-                "account_id": cls.analytic_account.id,
-                "name": "Revenue",
-               # "is_shop_supply": True,
-                "revenue": True,
-                "unit_amount": 1,
-                "amount": cls.revenue,
-            }
-        )
+        cls.revenue_line = cls.env["account.analytic.line"].create({
+            "account_id": cls.analytic_account.id,
+            "name": "Revenue",
+            "revenue": True,
+            "unit_amount": 1,
+            "amount": cls.revenue,
+        })
 
-        cls.env["account.analytic.line"].create(
-            {
-                "account_id": cls.other_project.analytic_account_id.id,
-                "name": "Cost In Other Project",
-                #"is_shop_supply": True,
-                "unit_amount": 1,
-                "amount": 999999,
-            }
-        )
+        cls.env["account.analytic.line"].create({
+            "account_id": cls.other_project.analytic_account_id.id,
+            "name": "Cost In Other Project",
+            # "is_shop_supply": True,
+            "unit_amount": 1,
+            "amount": 999999,
+        })
 
-        cls.env["account.analytic.line"].create(
-            {
-                "account_id": cls.other_project.analytic_account_id.id,
-                "name": "Revenue In Other Project",
-                #"is_shop_supply": True,
-                "unit_amount": 1,
-                "amount": 999999,
-            }
-        )
+        cls.env["account.analytic.line"].create({
+            "account_id": cls.other_project.analytic_account_id.id,
+            "name": "Revenue In Other Project",
+            # "is_shop_supply": True,
+            "unit_amount": 1,
+            "amount": 999999,
+        })
 
         cls.report = cls.env["project.cost.report"].create({})
 
@@ -76,7 +66,7 @@ class ProjectCostReportCase(common.SavepointCase):
         supply_module_is_installed = self.env['ir.module.module'].search([
             ('name', '=', 'project_cost_report_supply'),
             ('state', '=', 'installed')
-            ], limit=1)
+        ], limit=1)
 
         if supply_module_is_installed:
             assert sections[0]["name"] == "supply"
@@ -88,7 +78,7 @@ class ProjectCostReportCase(common.SavepointCase):
             assert sections[1]["title"] == "Products"
             assert sections[2]["title"] == "Time"
             assert sections[3]["title"] == "Outsourcing"
-        else :
+        else:
             assert sections[0]["name"] == "products"
             assert sections[1]["name"] == "time"
             assert sections[2]["name"] == "outsourcing"
@@ -189,9 +179,11 @@ class ProjectCostReportCase(common.SavepointCase):
     #         s for s in self._get_variables(context)["sections"] if s["name"] == "supply"
     #     )
 
-
     def _get_time_section(self, context=None):
-        return next(s for s in self._get_variables(context)["sections"] if s["name"] == "time")
+        return next(
+            s for s in self._get_variables(context)["sections"]
+            if s["name"] == "time"
+        )
 
     def _get_variables(self, context=None):
         return self.report.get_rendering_variables(self.project, context or {})

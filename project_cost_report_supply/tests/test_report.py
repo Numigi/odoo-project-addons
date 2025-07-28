@@ -15,26 +15,27 @@ class ProjectCostReportCase(common.SavepointCase):
         cls.supply_category = cls.env.ref("project_cost_report_supply.cost_category_supply")
         cls.supply_category.target_margin = cls.target_margin
         cls.analytic_account = cls.project.analytic_account_id
-        cls.env["account.analytic.line"].create(
-            {
-                "account_id": cls.analytic_account.id,
-                "name": "Cost",
-                "is_shop_supply": True,
-                "unit_amount": 1,
-                "amount": -cls.cost,
-            }
-        )
+
+        # Création de la ligne de coût
+        cls.env["account.analytic.line"].create({
+            "account_id": cls.analytic_account.id,
+            "name": "Cost",
+            "is_shop_supply": True,
+            "unit_amount": 1,
+            "amount": -cls.cost,
+        })
+
         cls.revenue = 300
-        cls.revenue_line = cls.env["account.analytic.line"].create(
-            {
-                "account_id": cls.analytic_account.id,
-                 "name": "Revenue",
-                 "is_shop_supply": True,
-                 "revenue": True,
-                 "unit_amount": 1,
-                 "amount": cls.revenue,
-             }
-        )
+
+        # Création de la ligne de revenu
+        cls.revenue_line = cls.env["account.analytic.line"].create({
+            "account_id": cls.analytic_account.id,
+            "name": "Revenue",
+            "is_shop_supply": True,
+            "revenue": True,
+            "unit_amount": 1,
+            "amount": cls.revenue,
+        })
 
         cls.report = cls.env["project.cost.report"].create({})
 
@@ -44,7 +45,6 @@ class ProjectCostReportCase(common.SavepointCase):
 
     def test_section_amounts(self):
         section = self._get_supply_section()
-        print("99999999999999999",section)
         assert section["cost"] == self.cost
         assert section["revenue"] == self.revenue
         assert section["target_sale_price"] == 125
@@ -53,16 +53,14 @@ class ProjectCostReportCase(common.SavepointCase):
         assert section["target_margin"] == self.target_margin
         assert section["total_hours"] == 1
 
-
     def _get_supply_category(self, context=None):
         return self._get_supply_section(context)["categories"][0]
 
     def _get_supply_section(self, context=None):
         return next(
-            s for s in self._get_variables(context)["sections"] if s["name"] == "supply"
+            s for s in self._get_variables(context)["sections"]
+            if s["name"] == "supply"
         )
+
     def _get_variables(self, context=None):
         return self.report.get_rendering_variables(self.project, context or {})
-
-
-

@@ -45,7 +45,6 @@ class TestAnalyticLine(common.SavepointCase):
             }
         )
 
-
     def test_cost_section__supply(self):
         self.line.is_shop_supply = True
         assert self.line.project_cost_section == "supply"

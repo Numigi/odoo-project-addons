@@ -3,4 +3,3 @@
 
 from . import test_analytic_line
 from . import test_report
-
