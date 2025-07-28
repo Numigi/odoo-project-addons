@@ -48,7 +48,7 @@ class ProjectCostReportCase(common.SavepointCase):
         self.report_context = {"active_id": self.project.id}
 
     def test_section_amounts(self):
-        section = self._get_section()
+        section = self._get_supply_section()
         assert section["cost"] == self.cost
         assert section["revenue"] == self.revenue
         assert section["target_sale_price"] == 125

@@ -25,9 +25,6 @@ class ProjectCostReport(models.TransientModel):
             for section in  ("supply", "products", "time", "outsourcing")
         ]
 
-    # def _get_section(self, projects, report_context, section_name):
-    #     return super(ProjectCostReport, self)._get_section(projects, report_context, section_name)
-
     def _get_section(self, projects, report_context, section_name):
         categories = self._get_section_categories(
             projects, report_context, section_name
