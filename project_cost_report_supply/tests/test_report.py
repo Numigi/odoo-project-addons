@@ -9,7 +9,6 @@ class ProjectCostReportCase(common.SavepointCase):
     def setUpClass(cls):
         super().setUpClass()
         cls.project = cls.env["project.project"].create({"name": "Job 123"})
-        cls.other_project = cls.env["project.project"].create({"name": "Job 456"})
         cls.cost = 100
         cls.section = "supply"
         cls.target_margin = 20
@@ -18,7 +17,7 @@ class ProjectCostReportCase(common.SavepointCase):
         cls.analytic_account = cls.project.analytic_account_id
         cls.env["account.analytic.line"].create(
             {
-                "account_id": cls.other_project.analytic_account_id.id,
+                "account_id": cls.project.analytic_account_id.id,
                 "name": "Cost In Other Project",
                 "is_shop_supply": True,
                 "unit_amount": 1,
