@@ -59,7 +59,10 @@ class ProjectCostReportCase(common.SavepointCase):
 
 
     def _get_supply_category(self, context=None):
-        return self._get_supply_section(context)["categories"][0]
+        import logging
+        _logger = logging.getLogger(__name__)
+        _logger.info(self._get_supply_section(context)["categories"])
+        return self._get_supply_section(context)["categories"][3]
 
     def _get_supply_section(self, context=None):
         return next(
