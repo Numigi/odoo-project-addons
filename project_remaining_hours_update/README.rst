@@ -70,4 +70,5 @@ When checking "Set Remaining Hours To 0" on a stage, the remaining hours of all 
 
 Contributors
 ------------
-* Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+
+The `Numigi <https://numigi.com/r/home>`_ team is the contributor to this project. We help Quebec companies implement Odoo and Konvergo ERP.
