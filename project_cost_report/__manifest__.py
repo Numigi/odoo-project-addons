@@ -3,7 +3,7 @@
 
 {
     "name": "Project Cost Report",
-    "version": "14.0.1.0.1",
+    "version": "14.0.2.0.0",
     "author": "Numigi",
     "maintainer": "Numigi",
     "website": "https://numigi.com/r/home",
@@ -16,7 +16,6 @@
         "project_task_type",
         "project_type",
         "purchase",
-        "project_wip_supply_cost",
     ],
     "data": [
         "data/project_cost_category.xml",

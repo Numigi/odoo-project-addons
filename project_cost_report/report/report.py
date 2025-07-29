@@ -18,7 +18,6 @@ from .report_category import CostReportCategory
 
 
 SECTION_TITLES = {
-    "supply": _("Shop Supply"),
     "products": _("Products"),
     "time": _("Time"),
     "outsourcing": _("Outsourcing"),
@@ -188,7 +187,7 @@ class ProjectCostReport(models.TransientModel):
     def _get_sections(self, projects, report_context):
         return [
             self._get_section(projects, report_context, section)
-            for section in ("supply", "products", "time", "outsourcing")
+            for section in ("products", "time", "outsourcing")
         ]
 
     def _get_section(self, projects, report_context, section_name):

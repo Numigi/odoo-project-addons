@@ -21,6 +21,7 @@
         "project_chatter",
         "project_closed",
         "project_cost_report",
+        "project_cost_report_supply",
         "project_cost_smart_button",
         "project_default_task_stage",
         "project_enhanced",

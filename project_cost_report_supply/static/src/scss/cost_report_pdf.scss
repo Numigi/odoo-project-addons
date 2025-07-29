@@ -1,0 +1,18 @@
+/**
+ * When printing the PDF, the document is usually printed in black and white.
+ * Therefore, the level 2 font needs extra contrast with level 3.
+ *
+ * In web version, the document is always presented in colors.
+ * Therefore, the color on level 2 is enough to contrast with level 3.
+ */
+.o_project_cost_report__level_2 {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+/**
+ * Remove colors to ensure printed pdf version is equivalent to screen pdf.
+ */
+.o_project_cost_report__link {
+    color: black;
+}
