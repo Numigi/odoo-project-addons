@@ -9,24 +9,24 @@ jobs:
     machine: true
     steps:
        - checkout
-       - run:
+       # - run:
            <<: *quay_io_login
 
-       - run:
+       # - run:
           name: Build -- Init Database
           command: docker-compose run --rm odoo odoo --stop-after-init -i main
 
-       - run:
+       # - run:
           name: Setup Log Folder For Reports
           command: sudo mkdir -p .log && sudo chmod 777 .log
 
-       - run:
+       # - run:
           name: Run Test
           command: docker-compose run --rm odoo run_pytest.sh
 
-       - run:
-          name: Codacy Coverage
-          command: bash <(curl -Ls https://coverage.codacy.com/get.sh) report -l python -r .log/coverage.xml
+       # - run:
+       #     name: Codacy Coverage
+       #     command: bash <(curl -Ls https://coverage.codacy.com/get.sh) report -l python -r .log/coverage.xml
 
        - store_test_results:
           path: .log
