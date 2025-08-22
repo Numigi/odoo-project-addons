@@ -14,7 +14,7 @@ class ProjectSteeringKpi(models.Model):
                 field,
                 operator,
                 (
-                    (value,) + ("project.project",)
+                    list(value) + ["project.project"]
                     if field == "model" and operator == "in"
                     else value
                 ),
