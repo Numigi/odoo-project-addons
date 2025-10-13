@@ -16,7 +16,7 @@ class MailActivity(models.Model):
 
     task_id = fields.Many2one("project.task", string="Task")
     meeting_minutes_id = fields.Many2one(
-        "meeting.minutes.project", string="Meeting Minutes"
+        "meeting.minutes.project", string="Meeting Minutes", ondelete="set null"
     )
 
     @api.onchange("task_id")
