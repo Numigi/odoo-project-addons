@@ -10,7 +10,7 @@ class ProjectSteeringKpi(models.Model):
     _order = "sequence, name"
 
     def _get_allowed_model(self):
-        return [("model", "in", ("project.task"))]
+        return [("model", "in", ["project.task"])]
 
     name = fields.Char(string="Label", translate=True)
     sequence = fields.Integer(string="Sequence")
