@@ -24,9 +24,13 @@ class MeetingMinutesProject(models.Model):
 
         # We only need tables with a primary key to satisfy the uninstaller.
         # The exact structure doesn't matter.
-        tables_to_recreate = ["means_communication", "meeting_minutes",
-            "meeting_minutes_discuss_point", "meeting_minutes_signature",
-            "meeting_minutes_res_partner_rel", ]
+        tables_to_recreate = [
+            "means_communication",
+            "meeting_minutes",
+            "meeting_minutes_discuss_point",
+            "meeting_minutes_signature",
+            "meeting_minutes_res_partner_rel",
+        ]
 
         for table_name in tables_to_recreate:
             self.env.cr.execute(
