@@ -80,17 +80,8 @@ def pre_init_hook(cr):
     _logger.info("END  Pre INIT HOOK")
 
 
+
 def post_init_hook(cr, registry):
-    # -*- coding: utf-8 -*-
-    # © 2023 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
-    # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
-
-    import logging
-    from odoo import api, SUPERUSER_ID
-
-    _logger = logging.getLogger(__name__)
-
-    def post_init_hook(cr, registry):
         """
         This hook is executed after the module installation.
         It migrates data from the old, backed-up tables to the new ones.
@@ -177,18 +168,6 @@ def post_init_hook(cr, registry):
             _logger.info(
                 "Migration from 'meeting.minutes' to 'meeting.minutes.project' completed.")
 
-        # --- The rest of the script remains the same ---
 
-        # Step 3: Migrate discussed points
-        # ... (code inchangé)
-
-        # Step 4: Update homeworks (mail.activity)
-        # ... (code inchangé)
-
-        # Step 5: Migrate certificate signatures
-        # ... (code inchangé)
-
-        # Step 6: Clean up old tables
-        # ... (code inchangé)
 
         _logger.info("Post-init hook completed successfully.")
