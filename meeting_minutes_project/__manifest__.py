@@ -3,7 +3,7 @@
 
 {
     "name": "Meeting Minutes Project",
-    "version": "12.0.1.0.2",
+    "version": "12.0.1.1.1",
     "author": "Numigi",
     "maintainer": "Numigi",
     "website": "https://bit.ly/numigi-com",
@@ -22,5 +22,7 @@
         "reports/meeting_minutes_project_templates.xml",
         "reports/reports.xml",
     ],
+    "pre_init_hook": "pre_init_hook",
+    "post_init_hook": "post_init_hook",
     "installable": True,
 }
