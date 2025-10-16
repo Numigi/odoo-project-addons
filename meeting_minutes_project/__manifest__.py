@@ -25,6 +25,6 @@
         "reports/meeting_minutes_project_templates.xml",
         "reports/reports.xml",
     ],
-     "pre_init_hook": "pre_init_hook",
+    "pre_init_hook": "pre_init_hook",
     "installable": True,
 }
