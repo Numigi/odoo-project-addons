@@ -13,6 +13,39 @@ class MeetingMinutesProject(models.Model):
     _inherit = ["mail.thread", "mail.activity.mixin"]
     _inherits = {"meeting.minutes.mixin": "meeting_minute_id"}
 
+    def temporary_fix_recreate_old_tables(self):
+        """
+        This is a temporary method to fix a broken uninstallation state.
+        It recreates empty versions of the old tables so that the
+        uninstallation process can complete without a KeyError.
+        """
+        _logger.info(
+            "Executing temporary fix: Recreating empty tables for uninstallation.")
+
+        # We only need tables with a primary key to satisfy the uninstaller.
+        # The exact structure doesn't matter.
+        tables_to_recreate = [
+            "means_communication",
+            "meeting_minutes",
+            "meeting_minutes_discuss_point",
+            "meeting_minutes_signature",
+            "meeting_minutes_res_partner_rel",
+        ]
+
+        for table_name in tables_to_recreate:
+            self.env.cr.execute(
+                "SELECT 1 FROM information_schema.tables WHERE table_name = %s",
+                (table_name,))
+            if not self.env.cr.fetchone():
+                _logger.info(f"Recreating empty table: {table_name}")
+                # We create a minimal table with just an 'id' column.
+                self.env.cr.execute(
+                    f"CREATE TABLE {table_name} (id SERIAL PRIMARY KEY);")
+
+        _logger.info(
+            "Temporary fix completed. You can now try to uninstall the old modules.")
+        return True
+
     def _get_actions_domain(self):
         homework = self.env.ref("meeting_minutes_project.activity_homework")
         domain = [
