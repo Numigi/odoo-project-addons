@@ -131,6 +131,12 @@ def post_init_hook(cr, registry):
     # --- Step 4: Update 'homework_ids' in mail.activity ---
     _logger.info("Updating homework_ids for migrated meetings...")
 
+    # for old_id, new_id in old_to_new_id_map.items():
+    #     activities = env["mail.activity"].search(
+    #         [("meeting_minutes_id", "=", old_id)])
+    #     for act in activities:
+    #         act.write({'meeting_minutes_id': new_id})
+
     homework_activity = env.ref("project_task_meeting_minutes.activity_homework")
 
     activities = env["mail.activity"].search(
