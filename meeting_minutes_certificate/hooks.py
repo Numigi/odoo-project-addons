@@ -129,11 +129,18 @@ def post_init_hook(cr, registry):
         _logger.info(f"Migration of 'discuss_point_ids' completed. Total: {count_total}, Linked: {count_linked}, Generic fallback: {count_generic}")
 
     # --- Step 4: Update 'homework_ids' in mail.activity ---
+    _logger.info("Updating homework_ids for migrated meetings...")
+    homework_activity = env.ref("meeting_minutes_project.activity_homework")
     for old_id, new_id in old_to_new_id_map.items():
-        cr.execute(
-            "UPDATE mail_activity SET meeting_minutes_id = %s WHERE meeting_minutes_id = %s",
-            (new_id, old_id)
-        )
+        # Cherche toutes les activités de type 'homework' liées à l'ancien ID
+        activities = env["mail.activity"].search(
+            [("activity_type_id", "=", homework_activity.id),
+                ("res_model", "=", "project.task"), ("meeting_minutes_id", "=", old_id)
+                # si tu avais un champ ancien
+            ])
+        for act in activities:
+            act.meeting_minutes_id = new_id
+
     _logger.info("Update of 'homework_ids' in 'mail.activity' completed.")
 
     # --- Step 5: Migrate 'signature_ids' ---
@@ -176,22 +183,22 @@ def post_init_hook(cr, registry):
     # _logger.info(
     #     "Recreating empty tables to allow clean uninstallation of old modules."
     #)
-    # tables_to_recreate = [
+    tables_to_recreate = [
     #     "means_communication",
-    #     "meeting_minutes",
+          "meeting_minutes",
     #     "meeting_minutes_discuss_point",
     #     "meeting_minutes_signature",
     #     "meeting_minutes_res_partner_rel",
-    # ]
-    # for table_name in tables_to_recreate:
-    #     cr.execute(
-    #         "SELECT 1 FROM information_schema.tables WHERE table_name = %s",
-    #         (table_name,)
-    #     )
-    #     if not cr.fetchone():
-    #         _logger.info(f"Recreating empty table: {table_name}")
-    #         cr.execute(
-    #             f"CREATE TABLE {table_name} (id SERIAL PRIMARY KEY);"
-    #         )
+     ]
+    for table_name in tables_to_recreate:
+        cr.execute(
+            "SELECT 1 FROM information_schema.tables WHERE table_name = %s",
+            (table_name,)
+        )
+        if not cr.fetchone():
+            _logger.info(f"Recreating empty table: {table_name}")
+            cr.execute(
+                f"CREATE TABLE {table_name} (id SERIAL PRIMARY KEY);"
+            )
 
     _logger.info("Post-init hook completed successfully.")
