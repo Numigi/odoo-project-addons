@@ -12,7 +12,6 @@
     "depends": [
         "project",
         "base_meeting_minutes"
-        "project_task_meeting_minutes",
     ],
     "summary": "Add meeting minutes for project",
     "data": [
