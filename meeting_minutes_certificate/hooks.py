@@ -131,20 +131,21 @@ def post_init_hook(cr, registry):
     # --- Step 4: Update 'homework_ids' in mail.activity ---
     _logger.info("Updating homework_ids for migrated meetings...")
 
-
     homework_activity = env['mail.activity.type'].search([('name', '=', 'Homework')],
-        limit=1)
+        order='create_date asc', limit=1)
+    _logger.info("homework_activity %s" % homework_activity)
 
-    if homework_activity:
-        for old_id, new_id in old_to_new_id_map.items():
-            activities = env["mail.activity"].search(
-                [("activity_type_id", "=", homework_activity.id),
-                    ("res_model", "=", "project.task"),
-                    ("meeting_minutes_id", "=", old_id)])
-            for act in activities:
-                act.write({'meeting_minutes_id': new_id})
-
-    _logger.info("Update of 'homework_ids' in 'mail.activity' completed.")
+    activities = env["mail.activity"].search(
+        [("activity_type_id", "=", homework_activity.id),
+            ("res_model", "=", "project.task")])
+    _logger.info("Found %d homework activities" % len(activities))
+    raise
+    for act in activities:
+        meeting = env['meeting.minutes.project'].search([('task_id', '=', act.res_id)],
+            limit=1)
+        if meeting:
+            act.write({'meeting_minutes_id': meeting.id})
+            _logger.info("activity for %s "% meeting.id )
 
     # --- Step 5: Migrate 'signature_ids' ---
     cr.execute("SELECT 1 FROM information_schema.tables WHERE table_name = 'old_meeting_minutes_signature'")
@@ -203,5 +204,4 @@ def post_init_hook(cr, registry):
             cr.execute(
                 f"CREATE TABLE {table_name} (id SERIAL PRIMARY KEY);"
             )
-
     _logger.info("Post-init hook completed successfully.")
