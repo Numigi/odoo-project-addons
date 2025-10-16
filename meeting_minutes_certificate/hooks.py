@@ -154,24 +154,29 @@ def migrate_discuss_points(env, cr, old_to_new_id_map):
         "Generic fallback: %d", count_total, count_linked, count_generic)
 
 
-def update_homework_activities(env):
+def update_homework_activities(env, cr, old_to_new_id_map):
     """Step 4: Update 'homework_ids' in mail.activity"""
     _logger.info("Updating homework_ids for migrated meetings...")
-    homework_activity = env.ref("project_task_meeting_minutes.activity_homework")
+    cr.execute(
+        "SELECT activity_id, old_meeting_minutes_id FROM temp_activity_migration_map;")
 
-    activities = env["mail.activity"].search([
-        ("activity_type_id", "=", homework_activity.id),
-        ("res_model", "=", "project.task"),
-    ])
-    _logger.info("Found %d homework activities", len(activities))
+    updates = []
+    for activity_id, old_meeting_id in cr.fetchall():
+        new_meeting_id = old_to_new_id_map.get(old_meeting_id)
+        if new_meeting_id:
+            updates.append(f"({activity_id}, {new_meeting_id})")
 
-    for act in activities:
-        meeting = env['meeting.minutes.project'].search(
-            [('task_id', '=', act.res_id)], limit=1
-        )
-        if meeting:
-            act.write({'meeting_minutes_id': meeting.id})
-            _logger.info("activity for %s", meeting.id)
+    if updates:
+        # Construit une seule grosse requête UPDATE
+        query = """
+                    UPDATE mail_activity AS ma
+                    SET meeting_minutes_id = data.new_meeting_id
+                    FROM (VALUES {updates_str}) AS data(activity_id, new_meeting_id)
+                    WHERE ma.id = data.activity_id;
+                """.format(updates_str=",".join(updates))
+
+        cr.execute(query)
+        _logger.info(f"Restored {len(updates)} homework links.")
 
 
 def migrate_signatures(env, cr, old_to_new_id_map):
@@ -221,7 +226,7 @@ def post_init_hook(cr, registry):
     channel_map = migrate_channels(env, cr)
     old_to_new_id_map = migrate_meeting_minutes(env, cr, channel_map)
     migrate_discuss_points(env, cr, old_to_new_id_map)
-    update_homework_activities(env)
+    update_homework_activities(env, cr, old_to_new_id_map)
     migrate_signatures(env, cr, old_to_new_id_map)
     recreate_empty_tables(cr)
 

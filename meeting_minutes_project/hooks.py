@@ -15,6 +15,29 @@ def pre_init_hook(cr):
     """
     _logger.info("Starting pre-init hook for meeting_minutes data migration.")
 
+    # --- STEP 0 : Mail activity Backup ---
+    _logger.info("Backing up mail.activity to meeting_minutes relationship...")
+
+    cr.execute("DROP TABLE IF EXISTS temp_activity_migration_map;")
+    cr.execute("""
+                CREATE TABLE temp_activity_migration_map (
+                    activity_id INTEGER,
+                    old_meeting_minutes_id INTEGER
+                );
+            """)
+    # Populate the temporary table
+    cr.execute("""
+                INSERT INTO temp_activity_migration_map
+                 (activity_id, old_meeting_minutes_id)
+                SELECT id, meeting_minutes_id
+                FROM mail_activity
+                WHERE meeting_minutes_id IS NOT NULL;
+            """)
+    _logger.info(f"Backed up {cr.rowcount} mail.activity relations.")
+    # Nullify the column to avoid FK constraint errors during installation
+    cr.execute("UPDATE mail_activity SET meeting_minutes_id = NULL;")
+    _logger.info("Set mail_activity.meeting_minutes_id to NULL.")
+
     # --- STEP 1: Data Cleanup ---
     _logger.info("Cleaning up orphan references in related tables...")
     tables_to_clean = {
