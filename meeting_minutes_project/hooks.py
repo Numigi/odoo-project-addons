@@ -3,7 +3,14 @@
 
 import logging
 
-from numpy.distutils.system_info import amd_info
+from odoo import api, SUPERUSER_ID
+_logger = logging.getLogger(__name__)
+
+
+# © 2025 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+
+import logging
 
 from odoo import api, SUPERUSER_ID
 
@@ -12,20 +19,20 @@ _logger = logging.getLogger(__name__)
 
 def pre_init_hook(cr):
     """
-    This hook is executed before the module installation.
-    1. It cleans up orphan foreign key references in related models to prevent
-       constraint errors during the installation of the new model structure.
-    2. It renames the old tables to preserve the data for the post-init migration.
+    Pre-init hook executed before the module installation.
+    1. Cleans up orphan foreign key references in related tables to prevent
+       constraint errors during module installation.
+    2. Renames old tables to preserve data for post-init migration.
     """
     _logger.info("Starting pre-init hook for meeting_minutes data migration.")
 
-    # --- DATA CLEANUP STEP ---
+    # --- STEP 1: Data Cleanup ---
+    _logger.info("Cleaning up orphan references in related tables...")
     tables_to_clean = {
         'mail_activity': 'meeting_minutes_id',
         'meeting_minutes_discuss_point': 'meeting_minutes_id',
     }
 
-    _logger.info("Cleaning up orphan references in related tables...")
     for table, column in tables_to_clean.items():
         cr.execute(
             "SELECT 1 FROM information_schema.tables WHERE table_name = %s", (table,)
@@ -39,7 +46,16 @@ def pre_init_hook(cr):
             "WHERE table_name = %s AND column_name = %s",
             (table, column)
         )
-        if cr.fetchone():
+        if not cr.fetchone():
+            _logger.warning(
+                f"Column '{column}' not found in table '{table}', skipping cleanup."
+            )
+            continue
+
+        if table == 'meeting_minutes_discuss_point':
+            # Orphan discuss points will be reassigned later in post-init
+            _logger.info(f"Orphan discuss points in '{table}' will be reassigned post-init.")
+        else:
             query = f"""
                 UPDATE {table}
                 SET {column} = NULL
@@ -48,14 +64,10 @@ def pre_init_hook(cr):
             """
             cr.execute(query)
             _logger.info(f"Cleaned up orphan references in '{table}.{column}'.")
-        else:
-            _logger.warning(
-                f"Column '{column}' not found in table '{table}', skipping cleanup."
-            )
 
     _logger.info("Cleanup of orphan references finished.")
 
-    # --- RENAME TABLES STEP ---
+    # --- STEP 2: Rename old tables ---
     _logger.info("Starting to rename old tables for backup.")
     tables_to_rename = [
         ('meeting_minutes', 'old_meeting_minutes'),
@@ -70,12 +82,13 @@ def pre_init_hook(cr):
             "SELECT 1 FROM information_schema.tables WHERE table_name = %s", (old_name,)
         )
         if cr.fetchone():
-            _logger.info(f"Rename the table '{old_name}' to '{new_name}'.")
+            _logger.info(f"Renaming table '{old_name}' to '{new_name}'.")
             cr.execute(f"ALTER TABLE {old_name} RENAME TO {new_name}")
         else:
             _logger.warning(f"'{old_name}' : table not found.")
 
     _logger.info("END Pre INIT HOOK")
+
 
 
 # def post_init_hook(cr, registry):

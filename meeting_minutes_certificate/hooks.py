@@ -2,64 +2,49 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 import logging
-from odoo import api, SUPERUSER_ID
+from odoo import api, SUPERUSER_ID, fields
 
 _logger = logging.getLogger(__name__)
 
 def post_init_hook(cr, registry):
     """
-    This hook is executed after the module installation.
-    It migrates data from the old, backed-up tables to the new ones,
-    and replicates the onchange logic for data consistency.
+    Post-init hook executed after module installation.
+    Migrates old data and assigns orphan discuss points to a generic meeting.
     """
     _logger.info("Starting post-init hook for meeting_minutes data migration.")
     env = api.Environment(cr, SUPERUSER_ID, {})
 
-    # Step 1: Migrate 'means_communication' to 'meeting.channel'
+    # --- Step 1: Migrate 'means_communication' to 'meeting.channel' ---
     channel_map = {}
     cr.execute(
-        "SELECT 1 FROM information_schema.tables "
-        "WHERE table_name = 'old_means_communication'"
+        "SELECT 1 FROM information_schema.tables WHERE table_name = 'old_means_communication'"
     )
     if cr.fetchone():
         cr.execute("SELECT id, name FROM old_means_communication")
         for row in cr.dictfetchall():
-            channel = env['meeting.channel'].search(
-                [('name', '=', row['name'])], limit=1
-            )
+            channel = env['meeting.channel'].search([('name', '=', row['name'])], limit=1)
             if not channel:
                 channel = env['meeting.channel'].create({'name': row['name']})
             channel_map[row['id']] = channel.id
-        _logger.info(
-            "Migration from 'means_communication' to 'meeting.channel' completed."
-        )
+        _logger.info("Migration from 'means_communication' to 'meeting.channel' completed.")
 
-    # Step 2: Migrate main records and apply business logic
+    # --- Step 2: Migrate main meeting_minutes.project records ---
     old_to_new_id_map = {}
-    cr.execute(
-        "SELECT 1 FROM information_schema.tables "
-        "WHERE table_name = 'old_meeting_minutes'"
-    )
+    cr.execute("SELECT 1 FROM information_schema.tables WHERE table_name = 'old_meeting_minutes'")
     if cr.fetchone():
         cr.execute("SELECT * FROM old_meeting_minutes")
         old_minutes_data = cr.dictfetchall()
-        _logger.info(
-            f"{len(old_minutes_data)} records to migrate from 'old_meeting_minutes'."
-        )
+        _logger.info(f"{len(old_minutes_data)} records to migrate from 'old_meeting_minutes'.")
 
         project_minute_fields = env['meeting.minutes.project']._fields
 
         for row in old_minutes_data:
             old_id = row['id']
             start_date, end_date = row.get('start_date'), row.get('end_date')
-
             if not start_date:
-                _logger.warning(
-                    f"Skipping old record id={old_id} due to missing start_date."
-                )
-                continue
+                _logger.warning(f"Missing start date:Set to False - old id={old_id} ")
+                start_date = False
             if end_date and start_date > end_date:
-                _logger.warning(f"Swapping inverted dates for old record id={old_id}.")
                 start_date, end_date = end_date, start_date
             elif not end_date:
                 end_date = start_date
@@ -68,9 +53,7 @@ def post_init_hook(cr, registry):
                 'task_id': row.get('task_id'),
                 'start_date': start_date,
                 'end_date': end_date,
-                'meeting_channel_id': channel_map.get(
-                    row.get('mean_communication_id')
-                ),
+                'meeting_channel_id': channel_map.get(row.get('mean_communication_id')),
                 'planned_points': row.get('planned_point'),
                 'discussed_points': row.get('additional_note'),
                 'resources': row.get('resources'),
@@ -101,46 +84,60 @@ def post_init_hook(cr, registry):
                     new_minute.partner_ids = [(6, 0, partner_ids)]
 
             except Exception as e:
-                _logger.error(
-                    f"Failed to create record for old_id={old_id}. Error: {e}"
-                )
+                _logger.error(f"Failed to create record for old_id={old_id}. Error: {e}")
                 continue
         _logger.info("Main records migration completed.")
 
-    # --- Step 3: Migrate 'discuss_point_ids' (CORRECTED) ---
-    cr.execute(
-        "SELECT 1 FROM information_schema.tables "
-        "WHERE table_name = 'old_meeting_minutes_discuss_point'"
-    )
+    # --- Step 3: Migrate 'discuss_point_ids' with generic fallback ---
+    cr.execute("SELECT 1 FROM information_schema.tables WHERE table_name = 'old_meeting_minutes_discuss_point'")
     if cr.fetchone():
-        cr.execute(
-            "SELECT meeting_minutes_id, sequence, task_id, notes "
-            "FROM old_meeting_minutes_discuss_point"
-        )
-        for row in cr.dictfetchall():
-            new_meeting_id = old_to_new_id_map.get(row['meeting_minutes_id'])
-            if new_meeting_id:
-                env['meeting.minutes.discuss.point'].create({
-                    'meeting_minutes_id': new_meeting_id,
-                    'sequence': row.get('sequence'),
-                    'task_id': row.get('task_id'),
-                    'notes': row.get('notes'),
-                })
-        _logger.info("Migration of 'discuss_point_ids' completed.")
+        # Create or fetch generic meeting for orphan discuss points
+        generic_meeting = env['meeting.minutes.project'].search(
+            [('name', '=', 'Generic Discuss Points')], limit=1)
+        if not generic_meeting:
+            generic_meeting = env['meeting.minutes.project'].create({
+                'name': 'Generic Discuss Points',
+                'start_date': fields.Date.today(),
+                'end_date': fields.Date.today(),
+                'planned_points': 'Auto-generated for discuss points with NULL meeting_id',
+            })
+        generic_meeting_id = generic_meeting.id
 
-    # --- Step 4: Update 'homework_ids' ---
+        cr.execute("SELECT meeting_minutes_id, sequence, task_id, notes FROM old_meeting_minutes_discuss_point")
+        count_total = count_generic = count_linked = 0
+
+        for row in cr.dictfetchall():
+            count_total += 1
+            old_meeting_id = row['meeting_minutes_id']
+            if old_meeting_id:
+                new_meeting_id = old_to_new_id_map.get(old_meeting_id, generic_meeting_id)
+                if new_meeting_id == generic_meeting_id:
+                    count_generic += 1
+                else:
+                    count_linked += 1
+            else:
+                new_meeting_id = generic_meeting_id
+                count_generic += 1
+
+            env['meeting.minutes.discuss.point'].create({
+                'meeting_minutes_id': new_meeting_id,
+                'sequence': row.get('sequence'),
+                'task_id': row.get('task_id'),
+                'notes': row.get('notes'),
+            })
+
+        _logger.info(f"Migration of 'discuss_point_ids' completed. Total: {count_total}, Linked: {count_linked}, Generic fallback: {count_generic}")
+
+    # --- Step 4: Update 'homework_ids' in mail.activity ---
     for old_id, new_id in old_to_new_id_map.items():
         cr.execute(
-            "UPDATE mail_activity SET meeting_minutes_id = %s "
-            "WHERE meeting_minutes_id = %s", (new_id, old_id)
+            "UPDATE mail_activity SET meeting_minutes_id = %s WHERE meeting_minutes_id = %s",
+            (new_id, old_id)
         )
     _logger.info("Update of 'homework_ids' in 'mail.activity' completed.")
 
-    # --- Step 5: Migrate 'signature_ids' (CORRECTED) ---
-    cr.execute(
-        "SELECT 1 FROM information_schema.tables "
-        "WHERE table_name = 'old_meeting_minutes_signature'"
-    )
+    # --- Step 5: Migrate 'signature_ids' ---
+    cr.execute("SELECT 1 FROM information_schema.tables WHERE table_name = 'old_meeting_minutes_signature'")
     if cr.fetchone():
         cr.execute("SELECT * FROM old_meeting_minutes_signature")
         for row in cr.dictfetchall():
@@ -176,25 +173,25 @@ def post_init_hook(cr, registry):
     #         cr.execute(f"DROP TABLE {table_name} CASCADE")
 
     # Step 7: Recreate empty tables for clean uninstallation
-    _logger.info(
-        "Recreating empty tables to allow clean uninstallation of old modules."
-    )
-    tables_to_recreate = [
-        "means_communication",
-        "meeting_minutes",
-        "meeting_minutes_discuss_point",
-        "meeting_minutes_signature",
-        "meeting_minutes_res_partner_rel",
-    ]
-    for table_name in tables_to_recreate:
-        cr.execute(
-            "SELECT 1 FROM information_schema.tables WHERE table_name = %s",
-            (table_name,)
-        )
-        if not cr.fetchone():
-            _logger.info(f"Recreating empty table: {table_name}")
-            cr.execute(
-                f"CREATE TABLE {table_name} (id SERIAL PRIMARY KEY);"
-            )
+    # _logger.info(
+    #     "Recreating empty tables to allow clean uninstallation of old modules."
+    #)
+    # tables_to_recreate = [
+    #     "means_communication",
+    #     "meeting_minutes",
+    #     "meeting_minutes_discuss_point",
+    #     "meeting_minutes_signature",
+    #     "meeting_minutes_res_partner_rel",
+    # ]
+    # for table_name in tables_to_recreate:
+    #     cr.execute(
+    #         "SELECT 1 FROM information_schema.tables WHERE table_name = %s",
+    #         (table_name,)
+    #     )
+    #     if not cr.fetchone():
+    #         _logger.info(f"Recreating empty table: {table_name}")
+    #         cr.execute(
+    #             f"CREATE TABLE {table_name} (id SERIAL PRIMARY KEY);"
+    #         )
 
     _logger.info("Post-init hook completed successfully.")
