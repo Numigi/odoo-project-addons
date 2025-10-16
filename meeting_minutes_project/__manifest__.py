@@ -9,7 +9,10 @@
     "website": "https://bit.ly/numigi-com",
     "license": "AGPL-3",
     "category": "Project",
-    "depends": ["project", "base_meeting_minutes"],
+    "depends": [
+        "project",
+        "base_meeting_minutes",
+    ],
     "summary": "Add meeting minutes for project",
     "data": [
         "security/ir.model.access.csv",
@@ -22,7 +25,6 @@
         "reports/meeting_minutes_project_templates.xml",
         "reports/reports.xml",
     ],
-    "pre_init_hook": "pre_init_hook",
-    "post_init_hook": "post_init_hook",
+     "pre_init_hook": "pre_init_hook",
     "installable": True,
 }

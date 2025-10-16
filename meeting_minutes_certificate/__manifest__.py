@@ -27,5 +27,6 @@
     "demo": [
         "demo/meeting_minutes_report.xml",
     ],
+    "post_init_hook": "post_init_hook",
     "installable": True,
 }
