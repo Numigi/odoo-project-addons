@@ -167,7 +167,6 @@ def update_homework_activities(env, cr, old_to_new_id_map):
             updates.append(f"({activity_id}, {new_meeting_id})")
 
     if updates:
-        # Construit une seule grosse requête UPDATE
         query = """
                     UPDATE mail_activity AS ma
                     SET meeting_minutes_id = data.new_meeting_id
@@ -226,7 +225,10 @@ def post_init_hook(cr, registry):
     channel_map = migrate_channels(env, cr)
     old_to_new_id_map = migrate_meeting_minutes(env, cr, channel_map)
     migrate_discuss_points(env, cr, old_to_new_id_map)
-    update_homework_activities(env, cr, old_to_new_id_map)
+    domain = [('name', '=', 'project_task_meeting_minutes')]
+    module = env['ir.module.module'].search(domain, limit=1)
+    if module.state == 'installed':
+        update_homework_activities(env, cr, old_to_new_id_map)
     migrate_signatures(env, cr, old_to_new_id_map)
     recreate_empty_tables(cr)
 

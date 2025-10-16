@@ -1,6 +1,7 @@
 # © 2025 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
+from odoo import api, SUPERUSER_ID
 import logging
 
 _logger = logging.getLogger(__name__)
@@ -14,29 +15,33 @@ def pre_init_hook(cr):
     2. Renames old tables to preserve data for post-init migration.
     """
     _logger.info("Starting pre-init hook for meeting_minutes data migration.")
+    env = api.Environment(cr, SUPERUSER_ID, {})
 
     # --- STEP 0 : Mail activity Backup ---
-    _logger.info("Backing up mail.activity to meeting_minutes relationship...")
+    domain = [('name', '=', 'project_task_meeting_minutes')]
+    module = env['ir.module.module'].search(domain, limit=1)
+    if module.state == 'installed':
+        _logger.info("Backing up mail.activity to meeting_minutes relationship...")
 
-    cr.execute("DROP TABLE IF EXISTS temp_activity_migration_map;")
-    cr.execute("""
-                CREATE TABLE temp_activity_migration_map (
-                    activity_id INTEGER,
-                    old_meeting_minutes_id INTEGER
-                );
-            """)
-    # Populate the temporary table
-    cr.execute("""
-                INSERT INTO temp_activity_migration_map
-                 (activity_id, old_meeting_minutes_id)
-                SELECT id, meeting_minutes_id
-                FROM mail_activity
-                WHERE meeting_minutes_id IS NOT NULL;
-            """)
-    _logger.info(f"Backed up {cr.rowcount} mail.activity relations.")
-    # Nullify the column to avoid FK constraint errors during installation
-    cr.execute("UPDATE mail_activity SET meeting_minutes_id = NULL;")
-    _logger.info("Set mail_activity.meeting_minutes_id to NULL.")
+        cr.execute("DROP TABLE IF EXISTS temp_activity_migration_map;")
+        cr.execute("""
+                    CREATE TABLE temp_activity_migration_map (
+                        activity_id INTEGER,
+                        old_meeting_minutes_id INTEGER
+                    );
+                """)
+        # Populate the temporary table
+        cr.execute("""
+                    INSERT INTO temp_activity_migration_map
+                     (activity_id, old_meeting_minutes_id)
+                    SELECT id, meeting_minutes_id
+                    FROM mail_activity
+                    WHERE meeting_minutes_id IS NOT NULL;
+                """)
+        _logger.info(f"Backed up {cr.rowcount} mail.activity relations.")
+        # Nullify the column to avoid FK constraint errors during installation
+        cr.execute("UPDATE mail_activity SET meeting_minutes_id = NULL;")
+        _logger.info("Set mail_activity.meeting_minutes_id to NULL.")
 
     # --- STEP 1: Data Cleanup ---
     _logger.info("Cleaning up orphan references in related tables...")
