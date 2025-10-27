@@ -38,4 +38,16 @@
         </field>
     </record>
 
+    <record id="hr_timesheet_groupby_task_origin_line_search" model="ir.ui.view">
+        <field name="name">hr.timesheet.groupby.task.origin.line.search</field>
+        <field name="model">account.analytic.line</field>
+        <field name="inherit_id" ref="hr_timesheet.hr_timesheet_line_search"/>
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='groupby_task']" position="replace">
+                <filter string="Task" name="groupby_origin_task" domain="[]" context="{'group_by': 'origin_task_id'}"/>
+            </xpath>
+        </field>
+    </record>
+
+
 </odoo>
