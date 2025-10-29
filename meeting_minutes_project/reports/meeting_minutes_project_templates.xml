@@ -2,15 +2,14 @@
 <odoo>
     <template id="meeting_minutes_project_template"
         inherit_id="base_meeting_minutes.base_template_meeting_minutes" primary="True">
-        <xpath expr="//div[@name='object_details']" position="inside">
+             <xpath expr="//div[@name='object_details']" position="inside">
             <div class="row mb-2 text-end ">
                 <div class="col-6 font-weight-bold text-uppercase">
                     Project
                 </div>
                 <div class="col-6">
-                    <a t-attf-href="/my/project/#{o.project_id.id}"
-                        class="text-dark">
-                        <span t-field="o.project_id.display_name" />
+                    <a t-attf-href="/my/project/#{o.project_id.id}" class="text-dark">
+                        <span t-field="o.project_id.display_name"/>
                     </a>
                 </div>
             </div>
@@ -18,17 +17,18 @@
                 <div class="col-6 font-weight-bold text-uppercase"> Internal ref
                 </div>
                 <div class="col-6">
-                    <a t-attf-href="/my/task/#{o.task_id.id}" class="text-dark"> TA#<span
-                            t-field="o.task_id.id" />
+                    <a t-attf-href="/my/task/#{o.task_id.id}" class="text-dark"> TA#<span t-field="o.task_id.id"/>
                     </a>
                 </div>
             </div>
         </xpath>
         <xpath expr="//div[@name='discussed_points']" position="before">
             <div name="actions" class="mb-4">
-                <h3 class="font-weight-bold text-uppercase">Pending Actions
-                </h3>
+              
                 <t t-if="o.action_ids">
+                  
+                    <h3 class="font-weight-bold text-uppercase">Pending Actions
+                </h3>
                     <div class="table-responsive">
                         <table class="table table-sm table-borderless table-bordered-2">
                             <thead class="font-weight-bold">
@@ -42,23 +42,21 @@
                                 <t t-foreach="o.action_ids" t-as="action">
                                     <tr class="font-weight-bold" id="account_payment_term_immediatd">
                                         <td class="text-left">
-                                            <span t-esc="action.task_id.display_name" />
+                                            <span t-esc="action.task_id.display_name"/>
                                         </td>
                                         <td class="text-left">
-                                            <span t-esc="action.user_id.name" />
+                                            <span t-esc="action.user_id.name"/>
                                         </td>
                                         <td class="text-right">
-                                            <span t-esc="action.date_deadline" />
+                                            <span t-esc="action.date_deadline"/>
                                         </td>
                                     </tr>
-                                    <tr class="text-left bordered-tr text-muted"
-                                        t-if="action.summary or env['ir.fields.converter'].text_from_html(action.note)">
+                                    <tr class="text-left bordered-tr text-muted" t-if="action.summary or env['ir.fields.converter'].text_from_html(action.note)">
                                         <td>
-                                            <span t-esc="action.summary" />
+                                            <span t-esc="action.summary"/>
                                         </td>
                                         <td colspan="2">
-                                            <span
-                                                t-esc="env['ir.fields.converter'].text_from_html(action.note)" />
+                                            <span t-esc="env['ir.fields.converter'].text_from_html(action.note)"/>
                                         </td>
                                     </tr>
                                 </t>
@@ -66,9 +64,7 @@
                         </table>
                     </div>
                 </t>
-                <t t-else="">
-                    <div>n/a</div>
-                </t>
+            
             </div>
         </xpath>
         <xpath expr="//div[@name='discussed_points']/h3" position="after">
@@ -76,12 +72,10 @@
                 <t t-foreach="o.discuss_point_ids" t-as="point">
                     <div class="mb-1">
                         <h6 class="font-weight-bold">
-                            <a t-attf-href="/my/task/#{point.task_id.id}" class="text-dark"> [<span
-                                    t-field="point.task_id.id" />] <span
-                                    t-field="point.task_id.display_name" /></a>
+                            <a t-attf-href="/my/task/#{point.task_id.id}" class="text-dark"> [<span t-field="point.task_id.id"/>] <span t-field="point.task_id.display_name"/></a>
                         </h6>
                         <div>
-                            <span t-field="point.notes" class="text-muted" />
+                            <span t-field="point.notes" class="text-muted"/>
                         </div>
                     </div>
                 </t>
@@ -90,8 +84,7 @@
                 <span>Additional Notes :</span>
             </div>
         </xpath>
-        <xpath expr="//t[@t-if=&quot;env['ir.fields.converter'].text_from_html(o.duties)&quot;]"
-            position="replace">
+        <xpath expr="//t[@t-if=&quot;env['ir.fields.converter'].text_from_html(o.duties)&quot;]" position="replace">
             <t t-if="1==1">
             </t>
         </xpath>
@@ -109,24 +102,22 @@
                         <tbody>
                             <t t-foreach="o.homework_ids" t-as="homework_id">
                                 <tr class="font-weight-bold" id="account_payment_term_immediatd">
-                                    <td class="text-left" >
-                                        <span t-esc="homework_id.task_id.display_name" />
+                                    <td class="text-left">
+                                        <span t-esc="homework_id.task_id.display_name"/>
                                     </td>
                                     <td class="text-left">
-                                        <span t-esc="homework_id.user_id.name" />
+                                        <span t-esc="homework_id.user_id.name"/>
                                     </td>
                                     <td class="text-right">
-                                        <span t-esc="homework_id.date_deadline" />
+                                        <span t-esc="homework_id.date_deadline"/>
                                     </td>
                                 </tr>
-                                <tr class="text-left text-muted bordered-tr"
-                                    t-if="homework_id.summary or env['ir.fields.converter'].text_from_html(homework_id.note)">
+                                <tr class="text-left text-muted bordered-tr" t-if="homework_id.summary or env['ir.fields.converter'].text_from_html(homework_id.note)">
                                     <td>
-                                        <span t-esc="homework_id.summary" />
+                                        <span t-esc="homework_id.summary"/>
                                     </td>
                                     <td colspan="2">
-                                        <span
-                                            t-esc="env['ir.fields.converter'].text_from_html(homework_id.note)" />
+                                        <span t-esc="env['ir.fields.converter'].text_from_html(homework_id.note)"/>
                                     </td>
                                 </tr>
                             </t>
@@ -134,9 +125,7 @@
                     </table>
                 </div>
             </t>
-            <t t-else="">
-                <div>n/a</div>
-            </t>
+         
         </xpath>
     </template>
 </odoo>
