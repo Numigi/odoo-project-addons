@@ -3,7 +3,7 @@
 
 {
     'name': 'Project Task Analytic Lines',
-    'version': '14.0.1.1.0',
+    'version': '14.0.1.1.1',
     'author': 'Numigi',
     'maintainer': 'Numigi',
     'website': 'https://numigi.com/r/home',
