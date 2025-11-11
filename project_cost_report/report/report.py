@@ -1,4 +1,4 @@
-# Copyright 2019-today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+# © Numigi (tm) and all its contributors (https://numigi.com/r/home)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 import babel.dates
@@ -18,7 +18,6 @@ from .report_category import CostReportCategory
 
 
 SECTION_TITLES = {
-    "supply": _("Shop Supply"),
     "products": _("Products"),
     "time": _("Time"),
     "outsourcing": _("Outsourcing"),
@@ -188,7 +187,7 @@ class ProjectCostReport(models.TransientModel):
     def _get_sections(self, projects, report_context):
         return [
             self._get_section(projects, report_context, section)
-            for section in ("supply", "products", "time", "outsourcing")
+            for section in ("products", "time", "outsourcing")
         ]
 
     def _get_section(self, projects, report_context, section_name):

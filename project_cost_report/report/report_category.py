@@ -17,8 +17,8 @@ class CostReportCategory:
         self.lines = lines
         self.folded = folded
         self.cost = float_round(sum(-line.amount for line in lines if not line.revenue), 2)
-
         self.revenue = float_round(sum(line.amount for line in lines if line.revenue), 2)
+
         self.profit = float_round((self.revenue - self.cost), 2)
 
     @property

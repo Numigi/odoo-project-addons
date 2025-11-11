@@ -1,4 +1,4 @@
-# Copyright 2019-today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+# © Numigi (tm) and all its contributors (https://numigi.com/r/home)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 from odoo.tests import common
@@ -16,9 +16,6 @@ class TestAnalyticLine(common.SavepointCase):
         )
         cls.outsourcing_cost_category = cls.env.ref(
             "project_cost_report.cost_category_outsourcing"
-        )
-        cls.supply_cost_category = cls.env.ref(
-            "project_cost_report.cost_category_supply"
         )
 
         cls.product = cls.env["product.product"].create({"name": "My Product"})
@@ -89,7 +86,7 @@ class TestAnalyticLine(common.SavepointCase):
         assert self.line.project_cost_section == "outsourcing"
         assert self.line.project_cost_category_id == self.outsourcing_cost_category
 
-    def test_cost_section__supply(self):
-        self.line.is_shop_supply = True
-        assert self.line.project_cost_section == "supply"
-        assert self.line.project_cost_category_id == self.supply_cost_category
+    # def test_cost_section__supply(self):
+    #     self.line.is_shop_supply = True
+    #     assert self.line.project_cost_section == "supply"
+    #     assert self.line.project_cost_category_id == self.supply_cost_category
