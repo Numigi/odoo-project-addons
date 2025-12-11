@@ -3,7 +3,7 @@
 
 {
     "name": "Project Task Meeting Certificate",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "author": "Numigi",
     "maintainer": "Numigi",
     "website": "https://bit.ly/numigi-com",
@@ -27,5 +27,6 @@
     "demo": [
         "demo/meeting_minutes_report.xml",
     ],
+    "post_init_hook": "post_init_hook",
     "installable": True,
 }
