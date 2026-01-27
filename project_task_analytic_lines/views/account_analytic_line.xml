@@ -43,6 +43,9 @@
         <field name="model">account.analytic.line</field>
         <field name="inherit_id" ref="hr_timesheet.hr_timesheet_line_search"/>
         <field name="arch" type="xml">
+            <field name="task_id" position="replace">
+                <field name="origin_task_id" string="Task"/>
+            </field>
             <xpath expr="//filter[@name='groupby_task']" position="replace">
                 <filter string="Task" name="groupby_origin_task" domain="[]" context="{'group_by': 'origin_task_id'}"/>
             </xpath>
