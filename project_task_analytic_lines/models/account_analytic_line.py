@@ -3,6 +3,7 @@
 
 from odoo import api, fields, models, _
 from odoo.exceptions import ValidationError
+import re
 
 
 class AnalyticLine(models.Model):
@@ -13,6 +14,32 @@ class AnalyticLine(models.Model):
     origin_task_id = fields.Many2one(
         "project.task", "Origin Task", ondelete="restrict", index=True
     )
+
+    @api.model
+    def search(self, args, offset=0, limit=None, order=None, count=False):
+        args = args or []
+        new_args = []
+
+        for arg in args:
+            if (isinstance(arg, (list, tuple))
+                    and len(arg) == 3
+                    and arg[0] == 'origin_task_id'
+                    and arg[1] == 'ilike'):
+                raw_value = str(arg[2])
+                value = raw_value.strip()
+                record_id = False
+                if value.isdigit():
+                    record_id = int(value)
+                else:
+                    match = re.search(r'^\[?(\d+)\]', value)
+                    if match:
+                        record_id = int(match.group(1))
+                if record_id:
+                    new_args.append(('origin_task_id', '=', record_id))
+                    continue
+            new_args.append(arg)
+
+        return super(AnalyticLine, self).search(new_args, offset, limit, order, count)
 
     @api.onchange("account_id")
     def _onchange_analytic_account_empty_task(self):

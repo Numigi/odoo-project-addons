@@ -3,16 +3,17 @@
 
 {
     'name': 'Project Task Analytic Lines',
-    'version': '14.0.1.1.1',
+    'version': '14.0.1.2.1',
     'author': 'Numigi',
     'maintainer': 'Numigi',
-    'website': 'https://numigi.com/r/home',
+    'website': 'https://numigi.com/',
     'license': 'LGPL-3',
     'category': 'Project',
     'summary': 'Add a task on journal entries and vendor bills',
     'depends': [
         'account',
         'hr_timesheet',
+        'project_task_id_in_display_name',
     ],
     'data': [
         'views/account_analytic_line.xml',
