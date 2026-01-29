@@ -21,7 +21,10 @@ class AnalyticLine(models.Model):
         new_args = []
 
         for arg in args:
-            if isinstance(arg, (list, tuple)) and len(arg) == 3 and arg[0] == 'origin_task_id' and arg[1] == 'ilike':
+            if (isinstance(arg, (list, tuple))
+                    and len(arg) == 3
+                    and arg[0] == 'origin_task_id'
+                    and arg[1] == 'ilike'):
                 raw_value = str(arg[2])
                 value = raw_value.strip()
                 record_id = False

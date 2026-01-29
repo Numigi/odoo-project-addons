@@ -1,11 +1,10 @@
 # © Numigi (tm) and all its contributors (https://numigi.com/r/home)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
-from odoo import models, api, _
+from odoo import models, _
 from odoo.exceptions import ValidationError
-import logging
-import re
-_logger = logging.getLogger(__name__)
+
+
 class Task(models.Model):
     """Prevent moving the task when used on journal entries.
 
@@ -17,7 +16,6 @@ class Task(models.Model):
     """
 
     _inherit = "project.task"
-
 
     def write(self, vals):
         if "project_id" in vals:
