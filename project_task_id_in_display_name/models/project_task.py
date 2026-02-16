@@ -21,7 +21,6 @@ class ProjectTaskWithCode(models.Model):
 
     @api.model
     def name_search(self, name, args=None, operator='ilike', limit=100):
-        print("""Search tasks using the code before searching for a name.""")
         args = args or []
         tasks = self.browse()
 
