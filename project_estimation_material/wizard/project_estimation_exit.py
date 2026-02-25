@@ -2,9 +2,6 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 from odoo import api, models, fields
-import logging
-
-_logger = logging.getLogger(__name__)
 
 
 class ProjectEstimationExit(models.TransientModel):
@@ -22,20 +19,15 @@ class ProjectEstimationExit(models.TransientModel):
         )
 
     def validate(self):
-        _logger.info("Project Estimation Exit: Start validation")
-        ctx = dict(self.env.context)
-        auto_assign_config = self.env["ir.config_parameter"].sudo().get_param(
-            "stock_auto_assign_disabled.config", "off"
-        )
-        if auto_assign_config == 'all':
-            ctx.update({
-                'stock_auto_assign_disable': True,  # Force the auto assign disable
-            })
-        res = super(ProjectEstimationExit, self.with_context(ctx)).validate()
-        self.with_context(ctx)._trigger_procurements()
-        return res
+        # Set the Context
+        self = self.with_context(disable_reservation=True, stock_auto_assign_disable=True)
+        super(ProjectEstimationExit, self).validate()
+        self._trigger_procurements()
 
     def _trigger_procurements(self):
         for line in self.project_id.material_line_ids:
             if line._should_generate_procurement():
-                line._run_procurements()
+                line.with_context(
+                    disable_reservation=True,
+                    stock_auto_assign_disable=True
+                )._run_procurements()
