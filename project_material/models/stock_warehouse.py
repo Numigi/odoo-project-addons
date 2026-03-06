@@ -60,7 +60,7 @@ class Warehouse(models.Model):
         check_company=True,
     )
 
-    @api.depends("company_id","company_id.project_consu_location_id")
+    @api.depends("company_id", "company_id.project_consu_location_id")
     def _compute_consu_location_id(self):
         for record in self:
             if record.company_id and record.company_id.project_consu_location_id:
