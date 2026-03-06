@@ -7,6 +7,7 @@ from . import (
     project_select_mixin,
     project_task,
     project_task_material,
+    res_company,
     stock_move,
     stock_move_line,
     stock_picking,

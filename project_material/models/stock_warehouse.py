@@ -60,20 +60,29 @@ class Warehouse(models.Model):
         check_company=True,
     )
 
-    @api.depends("company_id")
+    @api.depends("company_id", "company_id.project_consu_location_id")
     def _compute_consu_location_id(self):
         for record in self:
-            Proprerty = self.env["ir.property"].with_company(record.company_id)
-            record.consu_location_id = Proprerty._get(
-                "property_stock_production", "product.template"
-            ).id
+            if record.company_id and record.company_id.project_consu_location_id:
+                record.consu_location_id = record.company_id.project_consu_location_id.id
+            else:
+                Proprerty = self.env["ir.property"].with_company(record.company_id)
+                record.consu_location_id = Proprerty._get(
+                    "property_stock_production", "product.template"
+                ).id
 
     @api.model
     def create(self, vals):
-        """When creating a new warehouse, create the consumption route.
+        """When creating a new warehouse, ensure the company has a dedicated
+        project consumption location, then create the consumption route.
 
         Use sudo to prevent errors related to access rights.
         """
+        # 1. Ensure the dedicated project location exists for the warehouse's company
+        company_id = vals.get("company_id") or self.env.company.id
+        self._set_project_consu_location(company_id)
+
+        # 2. Standard creation and route generation
         warehouse = super().create(vals)
         warehouse.sudo()._create_consumption_picking_types()
         warehouse.sudo()._create_consumption_route()
@@ -88,6 +97,9 @@ class Warehouse(models.Model):
         super().write(vals)
         if "consu_steps" in vals:
             for warehouse in self:
+                warehouse._set_project_consu_location(warehouse.company_id.id)
+                # Force recomputation in case the location was just recreated
+                warehouse._compute_consu_location_id()
                 warehouse.sudo()._create_or_update_consumption_picking_types()
                 warehouse.sudo()._create_or_update_consumption_route()
                 warehouse.sudo()._create_or_update_consumption_mto_pull()
@@ -98,6 +110,27 @@ class Warehouse(models.Model):
             self._update_consumption_picking_types()
         else:
             self._create_consumption_picking_types()
+
+    @api.model
+    def _set_project_consu_location(self, company_id):
+        """
+        Ensure that the given company has a dedicated project consumption location.
+        If it does not exist, create it and link it to the company.
+        """
+        company = self.env["res.company"].browse(company_id)
+
+        if not company.project_consu_location_id:
+            virtual_locations_parent = self.env.ref(
+                "stock.stock_location_locations_virtual"
+            )
+            # Use sudo() to prevent access rights errors during location creation
+            new_location = self.env["stock.location"].sudo().create({
+                "name": "Projects",
+                "usage": "production",
+                "company_id": company.id,
+                "location_id": virtual_locations_parent.id,
+            })
+            company.sudo().project_consu_location_id = new_location.id
 
     def _create_consumption_picking_types(self):
         vals = self._get_consumption_picking_type_create_values()

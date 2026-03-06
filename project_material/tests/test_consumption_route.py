@@ -20,14 +20,35 @@ class ConsumptionRouteCase(common.SavepointCase):
 
 
 class TestConsumptionStep(ConsumptionRouteCase):
+
     def test_default_consumption_location(self):
-        consu_location_id = (
+        project_location = self.new_company.project_consu_location_id
+
+        # Verify the location exists and has the correct configuration
+        self.assertTrue(project_location.exists())
+        self.assertEqual(project_location.name, "Projects")
+        self.assertEqual(project_location.usage, "production")
+        self.assertEqual(
+            self.new_warehouse.consu_location_id.id,
+            project_location.id
+        )
+
+    def test_fallback_consumption_location(self):
+        """
+        Test that the warehouse fallbacks to the standard production location
+        if the company's dedicated project location is removed.
+        """
+        self.new_company.project_consu_location_id = False
+        self.new_warehouse._compute_consu_location_id()
+        standard_production_loc = (
             self.env["ir.property"]
             .with_company(self.new_company.id)
             ._get("property_stock_production", "product.template")
         )
-        self.assertTrue(consu_location_id.exists())
-        assert self.new_warehouse.consu_location_id.id == consu_location_id.id
+        self.assertEqual(
+            self.new_warehouse.consu_location_id.id,
+            standard_production_loc.id
+        )
 
     def test_main_warehouse_has_consumption_route(self):
         assert self.main_warehouse.consu_route_id
