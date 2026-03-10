@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # © Numigi (tm) and all its contributors (https://numigi.com/r/home)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
@@ -14,7 +15,11 @@ class AccountCase(common.SavepointCase):
                 "login": "account_user",
                 "email": "account_user@test.com",
                 "groups_id": [
-                    (4, cls.env.ref("account.group_account_invoice").id)],
+                    (4, cls.env.ref("account.group_account_invoice").id),
+                    (4, cls.env.ref("analytic.group_analytic_accounting").id),
+                    (4, cls.env.ref("project.group_project_manager").id),
+                    (4, cls.env.ref("hr_timesheet.group_timesheet_manager").id),
+                ],
             }
         )
 
@@ -110,4 +115,5 @@ class InvoiceCase(AccountCase):
 
     def _validate_invoice(self):
         self.invoice.invoice_date = '2023-01-01'
-        self.invoice.sudo(self.account_user).action_post()
+        # In Odoo 14, use .with_user(user) instead of the deprecated .sudo(user)
+        self.invoice.with_user(self.account_user).action_post()
