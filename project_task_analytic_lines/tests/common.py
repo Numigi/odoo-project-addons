@@ -14,7 +14,9 @@ class AccountCase(common.SavepointCase):
                 "login": "account_user",
                 "email": "account_user@test.com",
                 "groups_id": [
-                    (4, cls.env.ref("account.group_account_invoice").id)],
+                    (4, cls.env.ref("account.group_account_invoice").id),
+                    (4, cls.env.ref("analytic.group_analytic_accounting").id)
+                ],
             }
         )
 
