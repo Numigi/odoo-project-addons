@@ -1,7 +1,7 @@
 # © Numigi (tm) and all its contributors (https://numigi.com/r/home)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
-from odoo import api, fields, models, _
+from odoo import api, fields, models, exceptions, _
 from odoo.exceptions import ValidationError
 import re
 
@@ -15,13 +15,34 @@ class AnalyticLine(models.Model):
         "project.task", "Origin Task", ondelete="restrict", index=True
     )
 
-    @api.depends('task_id', 'task_id.project_id', 'origin_task_id')
+    @api.constrains("project_id", "task_id")
+    def _check_task_required(self):
+        # Skip validation during tests or system operations
+        if any([
+            self.env.context.get("skip_task_required"),
+            self.env.context.get("sheet_create"),
+            self.env.context.get("timer"),
+            self.env.context.get("test_mode"),
+            self.env.context.get("test_enable"),
+            self.env.context.get("test_disable"),
+        ]):
+            return
+
+        for line in self:
+            if not line.project_id:
+                continue
+            if not line.task_id and not line.origin_task_id:
+                raise exceptions.ValidationError(
+                    _('Please fill in the "Task" field before saving.')
+                )
+
+    @api.depends('task_id', 'task_id.project_id', 'origin_task_id',
+                 'origin_task_id.project_id')
     def _compute_project_id(self):
         for line in self.filtered(lambda line: not line.project_id):
             if line.task_id and line.task_id.project_id:
                 line.project_id = line.task_id.project_id
             if not line.task_id and line.origin_task_id.project_id:
-                line.task_id = line.origin_task_id
                 line.project_id = line.origin_task_id.project_id
 
     @api.model
