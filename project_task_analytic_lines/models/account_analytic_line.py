@@ -18,7 +18,7 @@ class AnalyticLine(models.Model):
     @api.depends('task_id', 'task_id.project_id', 'origin_task_id')
     def _compute_project_id(self):
         for line in self.filtered(lambda line: not line.project_id):
-            if line.task_id and  line.task_id.project_id:
+            if line.task_id and line.task_id.project_id:
                 line.project_id = line.task_id.project_id
             if not line.task_id and line.origin_task_id.project_id:
                 line.task_id = line.origin_task_id
