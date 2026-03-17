@@ -15,13 +15,13 @@ class AnalyticLine(models.Model):
         "project.task", "Origin Task", ondelete="restrict", index=True
     )
 
-    @api.depends('task_id', 'task_id.project_id', 'origin_task_id')
+    @api.depends('task_id', 'task_id.project_id', 'origin_task_id',
+                 'origin_task_id.project_id')
     def _compute_project_id(self):
         for line in self.filtered(lambda line: not line.project_id):
-            if line.task_id and line.task_id.project_id:
+            if line.task_id.project_id:
                 line.project_id = line.task_id.project_id
-            if not line.task_id and line.origin_task_id.project_id:
-                line.task_id = line.origin_task_id
+            if not line.task_id.project_id and line.origin_task_id.project_id:
                 line.project_id = line.origin_task_id.project_id
 
     @api.model
@@ -79,6 +79,7 @@ class AnalyticLine(models.Model):
     @api.model_create_multi
     def create(self, vals_list):
         lines = super(AnalyticLine, self).create(vals_list)
+
         for line in lines:
             if line.task_id:
                 line.origin_task_id = line.task_id
