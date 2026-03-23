@@ -24,6 +24,7 @@
                                     <create string="Add a section" context="{'default_display_type': 'line_section'}" />
                                     <create string="Add a note" context="{'default_display_type': 'line_note'}" />
                                 </control>
+                                <field name="sequence" widget="handle" />
                                 <field name="display_type" invisible="1" />
                                 <field name="name" string="Project Name" />
                                 <field name="project_id" invisible="1" />
