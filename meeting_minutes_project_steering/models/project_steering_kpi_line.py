@@ -7,6 +7,7 @@ from odoo import fields, models
 class ProjectSteeringKpiLine(models.Model):
     _name = "project.steering.kpi.line"
     _description = "Project Steering KPI Line"
+    _order = "sequence, id"
 
     name = fields.Char(string="Name")
     meeting_minutes_id = fields.Many2one(
@@ -27,3 +28,8 @@ class ProjectSteeringKpiLine(models.Model):
         related="task_id.date_deadline", string="Task Deadline"
     )
     notes = fields.Text(string="Notes")
+    _order = "sequence, id"
+    sequence = fields.Integer(
+        string="Sequence",
+        default=10,
+    )
