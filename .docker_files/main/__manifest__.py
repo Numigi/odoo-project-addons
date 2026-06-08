@@ -73,6 +73,7 @@
         "project_time_control_wizard_group",
         "project_time_range",
         "project_timesheet_analytic_update",
+        "project_timesheet_hours_only",
         "project_type",
         "project_wip",
         "project_wip_batch_closing",
