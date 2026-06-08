@@ -8,42 +8,60 @@ jobs:
   tests:
     machine: true
     steps:
-       - checkout
-       - run:
-           <<: *quay_io_login
+      - checkout
 
-       - run:
+      - run:
+          <<: *quay_io_login
+
+      - run:
           name: Build -- Init Database
           command: docker-compose run --rm odoo odoo --stop-after-init -i main
 
-       - run:
+      - run:
           name: Setup Log Folder For Reports
           command: sudo mkdir -p .log && sudo chmod 777 .log
 
-       - run:
-          name: Run Test
-          command: docker-compose run --rm odoo run_pytest.sh
+      - run:
+          name: Run Test and Generate Coverage
+          # Add the --junitxml parameter to generate test results in a specific subfolder.
+          # This prevents CircleCI from confusing coverage.xml with JUnit test results.
+          command: |
+            docker-compose run --rm odoo bash -c "mkdir -p /var/log/odoo/test-results && cd /var/log/odoo && pytest /mnt/extra-addons -v --disable-warnings --cov=/mnt/extra-addons --cov-branch --cov-report=xml --junitxml=/var/log/odoo/test-results/junit.xml"
 
-       - run:
+      - run:
           name: Codacy Coverage
-          command: bash <(curl -Ls https://coverage.codacy.com/get.sh) report -l python -r .log/coverage.xml
+          # Always run this step to upload coverage even if tests fail
+          when: always
+          command: |
+            # Verify the file is successfully passed to the host machine
+            if [ -f ".log/coverage.xml" ]; then
+                bash <(curl -Ls https://coverage.codacy.com/get.sh) report -l python -r .log/coverage.xml
+            else
+                echo "Error: coverage.xml not found in .log directory."
+                exit 1
+            fi
 
-       - store_test_results:
-          path: .log
+      - store_test_results:
+          # Point strictly to the subfolder containing the JUnit XML
+          # so CircleCI ignores the coverage.xml file.
+          path: .log/test-results
 
-  # job that find the next tag for the current branch/repo and push the tag to github.
-  # it will trigger the publish of a new docker image.
+  # Job that finds the next tag for the current branch/repo and pushes the tag to github.
+  # It will trigger the publish of a new docker image.
   auto-tag:
     machine: true
     steps:
       - checkout
+
       - run:
           <<: *quay_io_login
+
       - run:
           name: Get nws
           command: |
             curl -L $NWS_BIN_LOCATION > ./nws
             chmod +x ./nws
+
       - run:
           name: Set tag
           command: |
@@ -55,6 +73,7 @@ workflows:
     jobs:
       - tests:
           context: quay.io
+
       - auto-tag:
           context: nws
           requires:
