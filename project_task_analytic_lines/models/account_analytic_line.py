@@ -86,7 +86,7 @@ class AnalyticLine(models.Model):
         return True
 
     def _propagate_origin_task_to_timesheet_lines(self):
-        """Backward propagation of origin_task_id to task_id.
+        """Backward propagation of origin_task_id to task_id.w
 
         This allows the system to behave in a more transparent way
         when manually changing the value of origin_task_id

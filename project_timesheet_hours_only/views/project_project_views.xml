@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="hr_timesheet.act_hr_timesheet_line_by_project" model="ir.actions.act_window">
+        <field name="domain">[('project_id', '!=', False), ('task_id', '!=', False)]</field>
+    </record>
+</odoo>

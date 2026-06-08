@@ -74,6 +74,7 @@ COPY project_time_budget /mnt/extra-addons/project_time_budget
 COPY project_time_control_wizard_group /mnt/extra-addons/project_time_control_wizard_group
 COPY project_time_range /mnt/extra-addons/project_time_range
 COPY project_timesheet_analytic_update  /mnt/extra-addons/project_timesheet_analytic_update
+COPY project_timesheet_hours_only /mnt/extra-addons/project_timesheet_hours_only
 COPY project_type  /mnt/extra-addons/project_type
 COPY project_wip /mnt/extra-addons/project_wip
 COPY project_wip_batch_closing  /mnt/extra-addons/project_wip_batch_closing
