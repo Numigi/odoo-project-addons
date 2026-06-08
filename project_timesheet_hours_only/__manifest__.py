@@ -3,7 +3,8 @@
 
 {
     "name": "Project Timesheet Hours Only",
-    "summary": "Filter project timesheet smart button to exclude material consumption and show hours only",
+    "summary": "Filter project timesheet smart button to "
+               "exclude material consumption and show hours only",
     "version": "1.0.0",
     "category": "Project",
     "author": "Numigi",

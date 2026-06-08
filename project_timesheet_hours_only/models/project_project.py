@@ -16,7 +16,6 @@ class ProjectProject(models.Model):
         total_time = self._calculate_timesheet_total(project_timesheets)
         self.total_timesheet_time = int(round(total_time))
 
-
     def _calculate_timesheet_total(self, timesheets):
         total = sum(t.unit_amount * t.product_uom_id.factor_inv for t in timesheets)
         return total * self.timesheet_encode_uom_id.factor
