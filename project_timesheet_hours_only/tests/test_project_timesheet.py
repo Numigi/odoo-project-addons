@@ -5,7 +5,7 @@
 from odoo.tests import common
 
 
-class TestProjectTimesheetHoursOnly(common.TransactionCase):
+class TestProjectTimesheetHoursOnly(common.SavepointCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -16,7 +16,6 @@ class TestProjectTimesheetHoursOnly(common.TransactionCase):
         })
 
     def test_compute_timesheet_excludes_material(self):
-        # Création d'une ligne sans tâche (ex: consommation de matériel)
         self.env["account.analytic.line"].create({
             "project_id": self.project.id,
             "name": "Material",
@@ -25,7 +24,6 @@ class TestProjectTimesheetHoursOnly(common.TransactionCase):
         self.assertEqual(self.project.total_timesheet_time, 0)
 
     def test_compute_timesheet_includes_hours(self):
-        # Création d'une ligne avec tâche (feuille de temps classique)
         self.env["account.analytic.line"].create({
             "project_id": self.project.id,
             "task_id": self.task.id,
