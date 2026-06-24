@@ -14,7 +14,7 @@
         "hr_timesheet",
         "project",
         "sale_timesheet"
-                ],
+    ],
     "data": [
         "views/project_project_views.xml",
     ],
