@@ -5,7 +5,7 @@
     "name": "Project Timesheet Hours Only",
     "summary": "Filter project timesheet smart button to "
                "exclude material consumption and show hours only",
-    "version": "14.0.1.1.0",
+    "version": "14.0.1.2.0",
     "category": "Project",
     "author": "Numigi",
     "website": "https://www.numigi.com",

@@ -10,27 +10,19 @@ class SaleOrder(models.Model):
 
     @api.depends('analytic_account_id.line_ids')
     def _compute_timesheet_ids(self):
-        # Call the original method to retrieve the standard timesheets.
         super(SaleOrder, self)._compute_timesheet_ids()
-
         for order in self:
-            # Filter the results using the same logic (t.task_id) to keep
-            # actual labor hours only and exclude material consumption.
-            order.timesheet_ids = order.timesheet_ids.filtered(lambda t: t.task_id)
-
-            # Update the counter displayed on the smart button.
+            order.timesheet_ids = order.timesheet_ids.filtered(
+                lambda t: t.task_id and t.project_id in order.project_ids
+            )
             order.timesheet_count = len(order.timesheet_ids)
 
-            # Note: the 'timesheet_total_duration' field updates by itself
-            # since it depends on the 'timesheet_ids' we just filtered.
-
     def action_view_timesheet(self):
-        # Get the action from the original smart button.
         action = super(SaleOrder, self).action_view_timesheet()
-
         # Restrict the displayed lines to those linked to a task.
         if isinstance(action, dict) and action.get('domain'):
             action['domain'].append(('task_id', '!=', False))
+            action['domain'].append(('project_id', 'in', self.project_ids.ids))
 
         return action
 

@@ -43,6 +43,7 @@ class TestSaleOrderLineQtyDelivered(common.SavepointCase):
 
         cls.order = cls.env["sale.order"].create({
             "partner_id": cls.partner.id,
+            "analytic_account_id": cls.analytic_account.id,
             "order_line": [(0, 0, {
                 "product_id": cls.service_product.id,
                 "product_uom_qty": 20.0,
@@ -50,6 +51,14 @@ class TestSaleOrderLineQtyDelivered(common.SavepointCase):
             })],
         })
         cls.order_line = cls.order.order_line
+        cls.project.write({
+            "sale_line_id": cls.order_line.id,
+            "sale_order_id": cls.order.id,
+        })
+        cls.task.write({
+            "sale_line_id": cls.order_line.id,
+            "sale_order_id": cls.order.id,
+        })
 
     def _create_analytic_line(self, unit_amount, task=None):
         return self.env["account.analytic.line"].create({
