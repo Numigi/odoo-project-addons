@@ -35,7 +35,4 @@ class SaleOrderLine(models.Model):
         # analytic lines linked to a task (actual timesheets) are counted,
         # material consumption (task_id == False) is excluded.
         domain = super()._timesheet_compute_delivered_quantity_domain()
-        project_ids = self.order_id.project_ids.ids
-        domain = expression.AND([domain, [('task_id', '!=', False)]])
-        domain = expression.AND([domain, [('project_id', 'in', project_ids)]])
-        return domain
+        return expression.AND([domain, [('task_id', '!=', False)]])
