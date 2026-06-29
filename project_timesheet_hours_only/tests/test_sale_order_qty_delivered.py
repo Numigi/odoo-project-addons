@@ -51,8 +51,14 @@ class TestSaleOrderLineQtyDelivered(common.SavepointCase):
             })],
         })
         cls.order_line = cls.order.order_line
-        cls.project.write({"sale_line_id": cls.order_line.id})
-        cls.task.write({"sale_line_id": cls.order_line.id})
+        cls.project.write({
+            "sale_line_id": cls.order_line.id,
+            "sale_order_id": cls.order.id,
+        })
+        cls.task.write({
+            "sale_line_id": cls.order_line.id,
+            "sale_order_id": cls.order.id,
+        })
 
     def _create_analytic_line(self, unit_amount, task=None):
         return self.env["account.analytic.line"].create({
