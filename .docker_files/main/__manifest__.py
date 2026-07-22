@@ -17,6 +17,7 @@
         "analytic_line_revenue",
         "analytic_line_employee",
         "project_advanced_checklist",
+        "project_analytic_billing_visibility",
         "project_analytic_group",
         "project_chatter",
         "project_closed",
