@@ -81,6 +81,7 @@ COPY project_wip /mnt/extra-addons/project_wip
 COPY project_wip_batch_closing  /mnt/extra-addons/project_wip_batch_closing
 COPY project_wip_material  /mnt/extra-addons/project_wip_material
 COPY project_wip_supply_cost  /mnt/extra-addons/project_wip_supply_cost
+COPY project_wip_timesheet  /mnt/extra-addons/project_wip_timesheet
 COPY timesheet_task_project_no_change  /mnt/extra-addons/timesheet_task_project_no_change
 
 COPY .docker_files/main /mnt/extra-addons/main
