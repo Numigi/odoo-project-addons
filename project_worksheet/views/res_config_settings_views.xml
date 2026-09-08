@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Config Settings View -->
+    <record id="res_config_settings_view_form_project_worksheet" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.project.worksheet</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[hasclass('settings')]" position="inside">
+                <div class="app_settings_block" data-string="Worksheets" string="Worksheets" data-key="project_worksheet">
+                    <h2>Manager Approval Rules</h2>
+                    <div class="row mt16 o_settings_container" id="project_worksheet_approval_settings">
+                        <div class="col-12 col-lg-6 o_setting_box" id="manager_approval_delay_setting">
+                            <div class="o_setting_right_pane">
+                                <label for="worksheet_approval_delay" string="Manager Approval Delay"/>
+                                <div class="text-muted">
+                                    Days required before a manager can force the worksheet validation.
+                                </div>
+                                <div class="mt8">
+                                    <field name="worksheet_approval_delay" class="oe_inline"/> days
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Config Settings Action -->
+    <record id="project_worksheet_config_settings_action" model="ir.actions.act_window">
+        <field name="name">Settings</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">res.config.settings</field>
+        <field name="view_mode">form</field>
+        <field name="target">inline</field>
+        <field name="context">{'module': 'project_worksheet', 'bin_size': False}</field>
+    </record>
+
+    <!-- Configuration Parent Menu -->
+    <menuitem id="menu_project_worksheet_config"
+              name="Configuration"
+              parent="menu_project_worksheet_root"
+              sequence="100"/>
+
+    <!-- Settings Sub-Menu -->
+    <menuitem id="menu_project_worksheet_settings"
+              name="Settings"
+              parent="menu_project_worksheet_config"
+              action="project_worksheet_config_settings_action"
+              sequence="10"/>
+</odoo>

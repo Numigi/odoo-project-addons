@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="portal_worksheet_template" name="Worksheet Portal View">
+        <t t-call="portal.portal_layout">
+            <div class="container mt-4 mb-4">
+                <div class="card">
+                    <div class="card-header bg-warning text-white">
+                        <h4>Worksheet Approval <t t-esc="worksheet.name"/></h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row mb-4">
+                            <div class="col-6">
+                                <strong>Project:</strong> <t t-esc="worksheet.project_id.name"/><br/>
+                                <strong>Period Start:</strong> <t t-esc="worksheet.date_start"/><br/>
+                                <strong>Supervisor:</strong> <t t-esc="worksheet.supervisor_id.name"/>
+                            </div>
+                        </div>
+                        <table class="table table-sm">
+                            <thead>
+                                <tr>
+                                    <th>Employee</th>
+                                    <th>Task</th>
+                                    <th>Description</th>
+                                    <th>Hours</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="worksheet.line_ids" t-as="line">
+                                    <tr>
+                                        <td><t t-esc="line.employee_id.name"/></td>
+                                        <td><t t-esc="line.task_id.name"/></td>
+                                        <td><t t-esc="line.name"/></td>
+                                        <td><t t-esc="line.unit_amount" t-options="{'widget': 'float_time'}"/></td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+
+                        <t t-if="worksheet.state == 'pending'">
+                            <form t-attf-action="/my/worksheet/#{worksheet.id}/accept" method="post">
+                                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                <input type="hidden" name="access_token" t-att-value="worksheet.access_token"/>
+
+                                <div t-if="error == 'missing_confirmation'" class="alert alert-danger mt-2">
+                                    You must check the confirmation box to proceed.
+                                </div>
+
+                                <div class="form-check mt-4 mb-4">
+                                    <input class="form-check-input" type="checkbox" name="confirm_checkbox" id="confirm_checkbox"/>
+                                    <label class="form-check-label" for="confirm_checkbox">
+                                        I confirm that the installation hours presented above have been completed.
+                                    </label>
+                                </div>
+                                <button type="submit" class="btn btn-success">Approve</button>
+                            </form>
+                        </t>
+
+                        <t t-if="worksheet.state == 'confirmed'">
+                            <div class="alert alert-success mt-4">
+                                Worksheet approved by the client.
+                            </div>
+                        </t>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+</odoo>

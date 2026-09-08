@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_project_worksheet_user,project.worksheet.user,model_project_worksheet,project.group_project_user,1,1,1,0
+access_project_worksheet_manager,project.worksheet.manager,model_project_worksheet,project.group_project_manager,1,1,1,1
+access_project_worksheet_line_user,project.worksheet.line.user,model_project_worksheet_line,project.group_project_user,1,1,1,0
+access_project_worksheet_line_manager,project.worksheet.line.manager,model_project_worksheet_line,project.group_project_manager,1,1,1,1
+access_project_worksheet_complement_user,project.worksheet.complement.user,model_project_worksheet_complement,project.group_project_user,1,1,1,1
+access_project_worksheet_complement_manager,project.worksheet.complement.manager,model_project_worksheet_complement,project.group_project_manager,1,1,1,1

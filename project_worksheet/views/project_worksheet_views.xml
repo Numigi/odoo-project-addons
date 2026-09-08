@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Search View -->
+    <record id="project_worksheet_view_search" model="ir.ui.view">
+        <field name="name">project.worksheet.search</field>
+        <field name="model">project.worksheet</field>
+        <field name="arch" type="xml">
+            <search string="Search Worksheets">
+                <field name="name"/>
+                <field name="project_id"/>
+                <field name="supervisor_id"/>
+                <field name="partner_id"/>
+
+                <filter string="New" name="state_new" domain="[('state', '=', 'new')]"/>
+                <filter string="Open" name="state_open" domain="[('state', '=', 'open')]"/>
+                <filter string="Pending Approval" name="state_pending" domain="[('state', '=', 'pending')]"/>
+                <filter string="Confirmed" name="state_confirmed" domain="[('state', '=', 'confirmed')]"/>
+
+                <separator/>
+                <group expand="0" string="Group By">
+                    <filter string="Project" name="group_by_project" context="{'group_by': 'project_id'}"/>
+                    <filter string="Supervisor" name="group_by_supervisor" context="{'group_by': 'supervisor_id'}"/>
+                    <filter string="Status" name="group_by_state" context="{'group_by': 'state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Tree View -->
+    <record id="project_worksheet_view_tree" model="ir.ui.view">
+        <field name="name">project.worksheet.tree</field>
+        <field name="model">project.worksheet</field>
+        <field name="arch" type="xml">
+            <tree string="Worksheets">
+                <field name="name"/>
+                <field name="date_start"/>
+                <field name="project_id"/>
+                <field name="partner_id"/>
+                <field name="supervisor_id"/>
+                <field name="state"
+                       widget="badge"
+                       decoration-info="state == 'open'"
+                       decoration-warning="state == 'pending'"
+                       decoration-success="state == 'confirmed'"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="project_worksheet_view_form" model="ir.ui.view">
+        <field name="name">project.worksheet.form</field>
+        <field name="model">project.worksheet</field>
+        <field name="arch" type="xml">
+            <form string="Worksheet">
+                <header>
+                    <button name="action_open"
+                            type="object"
+                            string="Open"
+                            states="new"
+                            class="oe_highlight"/>
+                    <button name="action_send_to_client"
+                            type="object"
+                            string="Submit to Client"
+                            states="open"
+                            class="oe_highlight"/>
+                    <button name="action_manager_confirm"
+                            type="object"
+                            string="Approve"
+                            states="pending"
+                            class="oe_highlight"/>
+                    <field name="state" widget="statusbar" statusbar_visible="new,open,pending,confirmed"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="supervisor_id" attrs="{'readonly': [('state', '=', 'confirmed')]}"/>
+                            <field name="date_start" attrs="{'readonly': [('state', '=', 'confirmed')]}"/>
+                            <field name="date_end" attrs="{'readonly': [('state', '=', 'confirmed')]}"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group>
+                            <field name="project_id" attrs="{'readonly': [('state', '=', 'confirmed')]}"/>
+                            <field name="partner_id"/>
+                            <field name="partner_approver_id" attrs="{'readonly': [('state', '=', 'confirmed')]}"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Details" name="details">
+                            <field name="line_ids" attrs="{'readonly': [('state', '=', 'confirmed')]}">
+                                <tree editable="bottom">
+                                    <field name="date"/>
+                                    <field name="employee_id"/>
+                                    <field name="project_id" invisible="1"/>
+                                    <field name="task_id" domain="[('project_id', '=', parent.project_id),('child_ids', '=', False),('stage_id.allow_timesheet', '=', True)]"/>
+
+                                    <field name="name"/>
+                                    <field name="unit_amount" widget="timesheet_uom" sum="Total Hours"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Generated Timesheets" name="generated_timesheets" attrs="{'invisible': [('state', '!=', 'confirmed')]}">
+                            <field name="timesheet_ids" readonly="1">
+                                <tree>
+                                    <field name="date"/>
+                                    <field name="employee_id"/>
+                                    <field name="task_id"/>
+                                    <field name="name"/>
+                                    <field name="unit_amount" widget="timesheet_uom"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- Actions & Menus (keep them as they were) -->
+    <record id="project_worksheet_action" model="ir.actions.act_window">
+        <field name="name">Worksheets</field>
+        <field name="res_model">project.worksheet</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="project_worksheet_view_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new project worksheet.
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="menu_project_worksheet_root"
+              name="Worksheets"
+              web_icon="project_worksheet,static/description/icon.png"
+              sequence="50"/>
+
+    <menuitem id="menu_project_worksheet_main"
+              name="My Worksheets"
+              parent="menu_project_worksheet_root"
+              action="project_worksheet_action"
+              sequence="10"/>
+</odoo>
