@@ -80,6 +80,7 @@
         "project_wip_batch_closing",
         "project_wip_material",
         "project_wip_supply_cost",
+        "project_worksheet",
         "timesheet_task_project_no_change",
     ],
     "installable": True,

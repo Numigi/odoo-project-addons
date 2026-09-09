@@ -24,6 +24,7 @@
         "views/project_worksheet_views.xml",
         "views/project_project_views.xml",
         "views/portal_worksheet_templates.xml",
-        "views/res_config_settings_views.xml"
+        "views/res_config_settings_views.xml",
+        "reports/project_worksheet_report.xml",
     ],
 }

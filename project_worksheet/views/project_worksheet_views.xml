@@ -63,6 +63,10 @@
                             string="Submit to Client"
                             states="open"
                             class="oe_highlight"/>
+                    <button name="action_remind_client"
+                            type="object"
+                            string="Remind Client"
+                            states="pending"/>
                     <button name="action_manager_confirm"
                             type="object"
                             string="Approve"
@@ -84,9 +88,12 @@
                             <field name="company_id" groups="base.group_multi_company"/>
                         </group>
                         <group>
-                            <field name="project_id" attrs="{'readonly': [('state', '=', 'confirmed')]}"/>
+                            <field name="project_id" attrs="{'readonly': [('state', '=', 'confirmed')]}"
+                                   domain="[('stage_id.allow_timesheet', '=', True)]"/>
                             <field name="partner_id"/>
                             <field name="partner_approver_id" attrs="{'readonly': [('state', '=', 'confirmed')]}"/>
+                            <field name="create_date" readonly="0" force_save="1" attrs="{'readonly': [('state', '=', 'confirmed')]}"/>
+                            <field name="date_approve" attrs="{'invisible': [('state', '!=', 'confirmed')]}"/>
                         </group>
                     </group>
                     <notebook>
@@ -96,8 +103,11 @@
                                     <field name="date"/>
                                     <field name="employee_id"/>
                                     <field name="project_id" invisible="1"/>
-                                    <field name="task_id" domain="[('project_id', '=', parent.project_id),('child_ids', '=', False),('stage_id.allow_timesheet', '=', True)]"/>
-
+                                    <field name="task_id" domain="[
+                                        ('project_id', '=', parent.project_id),
+                                        ('child_ids', '=', False),
+                                        ('stage_id.allow_timesheet', '=', True)
+                                    ]"/>
                                     <field name="name"/>
                                     <field name="unit_amount" widget="timesheet_uom" sum="Total Hours"/>
                                 </tree>
@@ -125,7 +135,7 @@
         </field>
     </record>
 
-    <!-- Actions & Menus (keep them as they were) -->
+    <!-- Actions & Menus -->
     <record id="project_worksheet_action" model="ir.actions.act_window">
         <field name="name">Worksheets</field>
         <field name="res_model">project.worksheet</field>

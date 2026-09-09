@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_report_project_worksheet" model="ir.actions.report">
+        <field name="name">Worksheet</field>
+        <field name="model">project.worksheet</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">project_worksheet.report_worksheet</field>
+        <field name="report_file">project_worksheet.report_worksheet</field>
+        <field name="print_report_name">'Worksheet - %s' % (object.name)</field>
+        <field name="binding_model_id" ref="project_worksheet.model_project_worksheet"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <template id="report_worksheet_document">
+        <t t-call="web.external_layout">
+            <t t-set="doc" t-value="doc.with_context(lang=doc.partner_id.lang)"/>
+            <div class="page">
+                <div class="row mb-4">
+                    <div class="col-12 text-right">
+                        <h2 class="text-uppercase font-weight-bold" style="letter-spacing: 2px;">Worksheet</h2>
+                        <span class="text-muted">N° <t t-esc="doc.name"/></span>
+                    </div>
+                </div>
+
+                <div class="row mb-5 mt-4">
+                    <div class="col-6">
+                        <table class="table table-borderless table-sm">
+                            <tr>
+                                <td class="text-muted" style="width: 30%;">Client</td>
+                                <td><span t-field="doc.partner_id.name"/></td>
+                            </tr>
+                            <tr>
+                                <td class="text-muted">Site</td>
+                                <td><span t-field="doc.partner_id.city"/></td>
+                            </tr>
+                            <tr>
+                                <td class="text-muted">Supervisor</td>
+                                <td><span t-field="doc.supervisor_id.name"/></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-6">
+                        <table class="table table-borderless table-sm">
+                            <tr>
+                                <td class="text-muted" style="width: 30%;">Project</td>
+                                <td><span t-field="doc.project_id.name"/></td>
+                            </tr>
+                            <tr>
+                                <td class="text-muted">Period</td>
+                                <td><span t-field="doc.date_start"/> to <span t-field="doc.date_end"/></td>
+                            </tr>
+                            <tr>
+                                <td class="text-muted">Issued on</td>
+                                <td><span t-field="doc.create_date" t-options='{"widget": "date"}'/></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <table class="table table-sm o_main_table border-bottom">
+                    <thead style="border-top: 2px solid black; border-bottom: 2px solid black;">
+                        <tr>
+                            <th class="text-uppercase">Date</th>
+                            <th class="text-uppercase">Employee</th>
+                            <th class="text-uppercase">Task</th>
+                            <th class="text-uppercase">Description</th>
+                            <th class="text-right text-uppercase">Hours</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-foreach="doc.line_ids" t-as="line">
+                            <tr>
+                                <td><span t-field="line.date"/></td>
+                                <td><span t-field="line.employee_id.name"/></td>
+                                <td><span t-field="line.task_id.name"/></td>
+                                <td><span t-field="line.name"/></td>
+                                <td class="text-right"><span t-field="line.unit_amount" t-options="{'widget': 'float_time'}"/></td>
+                            </tr>
+                        </t>
+                    </tbody>
+                </table>
+
+                <div class="row mt-4">
+                    <div class="col-7"></div>
+                    <div class="col-5">
+                        <table class="table table-sm table-borderless">
+                            <tr class="border-black o_total" style="border-top: 2px solid black; border-bottom: 2px solid black;">
+                                <td><strong>Total Hours</strong></td>
+                                <td class="text-right">
+                                    <strong><span t-field="doc.total_hours" t-options="{'widget': 'float_time'}"/></strong>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="mt-5" style="border: 1px solid #000; padding: 20px;">
+                    <h5 class="font-weight-bold text-uppercase" style="letter-spacing: 1px;">Client Approval</h5>
+                    <p class="text-muted" style="font-size: 12px;">The approval only covers the installation hours performed on site.</p>
+
+                    <div class="row mt-5 pt-3">
+                        <div class="col-6">
+                            <div style="border-bottom: 1px solid #000; width: 90%;"></div>
+                            <span style="font-size: 12px;" class="text-muted">Printed Name</span>
+                        </div>
+                        <div class="col-6">
+                            <div style="border-bottom: 1px solid #000; width: 90%;"></div>
+                            <span style="font-size: 12px;" class="text-muted">Date and Time</span>
+                        </div>
+                    </div>
+                </div>
+
+                <p class="text-center text-muted mt-4" style="font-size: 11px;">
+                    No amount appears on this document. Invoicing is established separately by the administration.
+                </p>
+            </div>
+        </t>
+    </template>
+
+    <template id="report_worksheet">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="project_worksheet.report_worksheet_document" t-lang="doc.partner_id.lang"/>
+            </t>
+        </t>
+    </template>
+</odoo>

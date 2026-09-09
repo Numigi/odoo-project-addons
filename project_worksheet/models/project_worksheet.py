@@ -2,7 +2,7 @@
 
 from datetime import timedelta
 from odoo import api, fields, models
-from odoo.exceptions import UserError
+from odoo.exceptions import UserError, ValidationError
 from odoo.tools.translate import _
 
 
@@ -54,6 +54,11 @@ class ProjectWorksheet(models.Model):
         required=True,
         tracking=True,
     )
+    date_approve = fields.Datetime(
+        string="Approval Date",
+        readonly=True,
+        copy=False,
+    )
     partner_approver_id = fields.Many2one(
         comodel_name="res.partner",
         string="Client Approver",
@@ -92,6 +97,23 @@ class ProjectWorksheet(models.Model):
         for worksheet in self:
             worksheet.total_hours = sum(worksheet.line_ids.mapped("unit_amount"))
 
+    @api.constrains("date_start", "date_end")
+    def _check_date_range(self):
+        for worksheet in self:
+            worksheet._validate_date_chronology()
+
+    def _validate_date_chronology(self):
+        if self._is_date_range_invalid():
+            self._raise_date_range_error()
+
+    def _is_date_range_invalid(self):
+        if not self.date_start or not self.date_end:
+            return False
+        return self.date_start > self.date_end
+
+    def _raise_date_range_error(self):
+        raise ValidationError(_("Period Start cannot be strictly greater than Period End."))
+
     def action_open(self):
         self.ensure_one()
         self.write({"state": "open"})
@@ -101,6 +123,11 @@ class ProjectWorksheet(models.Model):
         self._portal_ensure_token()
         self._send_approval_email()
         self.write({"state": "pending"})
+
+    def action_remind_client(self):
+        self.ensure_one()
+        self._portal_ensure_token()
+        return self._get_remind_client_action()
 
     def action_manager_confirm(self):
         self.ensure_one()
@@ -126,10 +153,33 @@ class ProjectWorksheet(models.Model):
         template = self.env.ref("project_worksheet.email_template_worksheet_approval")
         template.send_mail(self.id, force_send=True)
 
+    def _get_remind_client_action(self):
+        template = self.env.ref("project_worksheet.email_template_worksheet_approval")
+        return {
+            "name": _("Remind Client"),
+            "type": "ir.actions.act_window",
+            "view_mode": "form",
+            "res_model": "mail.compose.message",
+            "views": [(False, "form")],
+            "view_id": False,
+            "target": "new",
+            "context": self._get_remind_client_context(template),
+        }
+
+    def _get_remind_client_context(self, template):
+        return {
+            "default_model": self._name,
+            "default_res_id": self.id,
+            "default_use_template": True,
+            "default_template_id": template.id,
+            "default_composition_mode": "comment",
+            "force_email": True,
+        }
+
     def _check_manager_approval_delay(self):
         delay = self.company_id.worksheet_approval_delay
         allowed_date = self.create_date + timedelta(days=delay)
-        if fields.Datetime.now() < allowed_date:
+        if fields.Datetime.now() <= allowed_date:
             self._raise_delay_error(delay)
 
     def _raise_delay_error(self, delay):
@@ -139,7 +189,10 @@ class ProjectWorksheet(models.Model):
 
     def _confirm_worksheet(self):
         self._generate_timesheets()
-        self.write({"state": "confirmed"})
+        self.write({
+            "state": "confirmed",
+            "date_approve": fields.Datetime.now(),
+        })
 
     def _generate_timesheets(self):
         timesheet_model = self.env["account.analytic.line"]
