@@ -91,7 +91,12 @@
                             <field name="project_id" attrs="{'readonly': [('state', '=', 'confirmed')]}"
                                    domain="[('stage_id.allow_timesheet', '=', True)]"/>
                             <field name="partner_id"/>
-                            <field name="partner_approver_id" attrs="{'readonly': [('state', '=', 'confirmed')]}"/>
+                           <field name="partner_approver_id"
+                                  domain="[('commercial_partner_id', '=', partner_id),('is_company', '=', False)]"
+                                  context="{'default_parent_id': partner_id,
+                                   'default_company_type': 'person',
+                                   'default_is_company': False}"
+                                  attrs="{'readonly': [('state', '=', 'confirmed')]}"/>
                             <field name="create_date" readonly="0" force_save="1" attrs="{'readonly': [('state', '=', 'confirmed')]}"/>
                             <field name="date_approve" attrs="{'invisible': [('state', '!=', 'confirmed')]}"/>
                         </group>

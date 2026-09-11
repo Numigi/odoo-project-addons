@@ -28,7 +28,7 @@ class ProjectWorksheet(models.Model):
     partner_id = fields.Many2one(
         comodel_name="res.partner",
         string="Client",
-        related="project_id.partner_id",
+        compute="_compute_partner_id",
         store=True,
         readonly=True,
     )
@@ -92,10 +92,22 @@ class ProjectWorksheet(models.Model):
         store=True,
     )
 
+
+
     @api.depends("line_ids.unit_amount")
     def _compute_total_hours(self):
         for worksheet in self:
             worksheet.total_hours = sum(worksheet.line_ids.mapped("unit_amount"))
+
+    @api.depends("project_id.partner_id")
+    def _compute_partner_id(self):
+        for worksheet in self:
+            worksheet.partner_id = worksheet._get_parent_company()
+
+    def _get_parent_company(self):
+        if not self.project_id.partner_id:
+            return False
+        return self.project_id.partner_id.commercial_partner_id
 
     @api.constrains("date_start", "date_end")
     def _check_date_range(self):
