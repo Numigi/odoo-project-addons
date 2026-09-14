@@ -10,3 +10,7 @@ class ResConfigSettings(models.TransientModel):
         related="company_id.worksheet_approval_delay",
         readonly=False,
     )
+    worksheet_reminder_delay = fields.Integer(
+        related="company_id.worksheet_reminder_delay",
+        readonly=False,
+    )

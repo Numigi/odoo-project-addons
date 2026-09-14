@@ -1,15 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <!-- Config Settings View -->
+    <!-- Settings View -->
     <record id="res_config_settings_view_form_project_worksheet" model="ir.ui.view">
         <field name="name">res.config.settings.view.form.inherit.project.worksheet</field>
         <field name="model">res.config.settings</field>
         <field name="inherit_id" ref="base.res_config_settings_view_form"/>
         <field name="arch" type="xml">
             <xpath expr="//div[hasclass('settings')]" position="inside">
-                <div class="app_settings_block" data-string="Worksheets" string="Worksheets" data-key="project_worksheet">
+
+                <!-- Dedicated Worksheets Settings Block -->
+                <div class="app_settings_block" data-string="Worksheets" string="Worksheets" data-key="project_worksheet" groups="project_worksheet.group_project_worksheet_manager">
                     <h2>Manager Approval Rules</h2>
+
                     <div class="row mt16 o_settings_container" id="project_worksheet_approval_settings">
+
                         <div class="col-12 col-lg-6 o_setting_box" id="manager_approval_delay_setting">
                             <div class="o_setting_right_pane">
                                 <label for="worksheet_approval_delay" string="Manager Approval Delay"/>
@@ -21,13 +25,27 @@
                                 </div>
                             </div>
                         </div>
+
+                        <div class="col-12 col-lg-6 o_setting_box" id="manager_reminder_delay_setting">
+                            <div class="o_setting_right_pane">
+                                <label for="worksheet_reminder_delay" string="Client Reminder Delay"/>
+                                <div class="text-muted">
+                                    Days required after sending before creating a reminder activity.
+                                </div>
+                                <div class="mt8">
+                                    <field name="worksheet_reminder_delay" class="oe_inline"/> days
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
+
             </xpath>
         </field>
     </record>
 
-    <!-- Config Settings Action -->
+    <!-- Action -->
     <record id="project_worksheet_config_settings_action" model="ir.actions.act_window">
         <field name="name">Settings</field>
         <field name="type">ir.actions.act_window</field>
@@ -37,14 +55,13 @@
         <field name="context">{'module': 'project_worksheet', 'bin_size': False}</field>
     </record>
 
-    <!-- Configuration Parent Menu -->
+    <!-- Menus -->
     <menuitem id="menu_project_worksheet_config"
-          name="Configuration"
-          parent="menu_project_worksheet_root"
-          groups="project_worksheet.group_project_worksheet_manager"
-          sequence="100"/>
+              name="Configuration"
+              parent="menu_project_worksheet_root"
+              groups="project_worksheet.group_project_worksheet_manager"
+              sequence="100"/>
 
-    <!-- Settings Sub-Menu -->
     <menuitem id="menu_project_worksheet_settings"
               name="Settings"
               parent="menu_project_worksheet_config"

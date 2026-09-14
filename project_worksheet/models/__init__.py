@@ -7,4 +7,3 @@ from . import project_worksheet
 from . import project_worksheet_line
 from . import res_company
 from . import res_config_settings
-

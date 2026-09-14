@@ -8,6 +8,12 @@ class ResCompany(models.Model):
 
     worksheet_approval_delay = fields.Integer(
         string="Worksheet Approval Delay (Days)",
-        default=7,
+        default=0,
         help="Number of days before a manager can force approval.",
+    )
+
+    worksheet_reminder_delay = fields.Integer(
+        string="Worksheet Reminder Delay (Days)",
+        default=2,
+        help="Number of days after sending before creating a reminder activity.",
     )

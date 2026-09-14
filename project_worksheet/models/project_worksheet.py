@@ -54,6 +54,11 @@ class ProjectWorksheet(models.Model):
         required=True,
         tracking=True,
     )
+    date_sent = fields.Datetime(
+        string="Date Sent",
+        readonly=False,
+        copy=False,
+    )
     date_approve = fields.Datetime(
         string="Approval Date",
         readonly=True,
@@ -90,11 +95,6 @@ class ProjectWorksheet(models.Model):
         string="Total Hours",
         compute="_compute_total_hours",
         store=True,
-    )
-    date_sent = fields.Datetime(
-        string="Date Sent",
-        readonly=True,
-        copy=False,
     )
 
     @api.depends("line_ids.unit_amount")
@@ -249,7 +249,7 @@ class ProjectWorksheet(models.Model):
     def _is_reminder_needed(self):
         if not self.date_sent:
             return False
-        delay = self.company_id.worksheet_approval_delay
+        delay = self.company_id.worksheet_reminder_delay
         limit_date = self.date_sent + timedelta(days=delay)
         return fields.Datetime.now() >= limit_date
 

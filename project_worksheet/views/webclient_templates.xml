@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="assets_backend" name="worksheet settings assets" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/project_worksheet/static/src/js/res_config_settings.js"></script>
+        </xpath>
+    </template>
+</odoo>
