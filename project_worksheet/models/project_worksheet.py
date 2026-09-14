@@ -91,8 +91,11 @@ class ProjectWorksheet(models.Model):
         compute="_compute_total_hours",
         store=True,
     )
-
-
+    date_sent = fields.Datetime(
+        string="Date Sent",
+        readonly=True,
+        copy=False,
+    )
 
     @api.depends("line_ids.unit_amount")
     def _compute_total_hours(self):
@@ -114,18 +117,6 @@ class ProjectWorksheet(models.Model):
         for worksheet in self:
             worksheet._validate_date_chronology()
 
-    def _validate_date_chronology(self):
-        if self._is_date_range_invalid():
-            self._raise_date_range_error()
-
-    def _is_date_range_invalid(self):
-        if not self.date_start or not self.date_end:
-            return False
-        return self.date_start > self.date_end
-
-    def _raise_date_range_error(self):
-        raise ValidationError(_("Period Start cannot be strictly greater than Period End."))
-
     def action_open(self):
         self.ensure_one()
         self.write({"state": "open"})
@@ -133,8 +124,12 @@ class ProjectWorksheet(models.Model):
     def action_send_to_client(self):
         self.ensure_one()
         self._portal_ensure_token()
+        self._generate_timesheets_if_empty()
         self._send_approval_email()
-        self.write({"state": "pending"})
+        self.write({
+            "state": "pending",
+            "date_sent": fields.Datetime.now(),
+        })
 
     def action_remind_client(self):
         self.ensure_one()
@@ -160,6 +155,22 @@ class ProjectWorksheet(models.Model):
                 worksheet.id,
                 worksheet.access_token,
             )
+
+    def _validate_date_chronology(self):
+        if self._is_date_range_invalid():
+            self._raise_date_range_error()
+
+    def _is_date_range_invalid(self):
+        if not self.date_start or not self.date_end:
+            return False
+        return self.date_start > self.date_end
+
+    def _raise_date_range_error(self):
+        raise ValidationError(_("Period Start cannot be strictly greater than Period End."))
+
+    def _generate_timesheets_if_empty(self):
+        if not self.timesheet_ids:
+            self._generate_timesheets()
 
     def _send_approval_email(self):
         template = self.env.ref("project_worksheet.email_template_worksheet_approval")
@@ -200,7 +211,6 @@ class ProjectWorksheet(models.Model):
         )
 
     def _confirm_worksheet(self):
-        self._generate_timesheets()
         self.write({
             "state": "confirmed",
             "date_approve": fields.Datetime.now(),
@@ -225,3 +235,49 @@ class ProjectWorksheet(models.Model):
             "name": line.name,
             "unit_amount": line.unit_amount,
         }
+
+    @api.model
+    def _cron_remind_pending_worksheets(self):
+        worksheets = self.search([("state", "=", "pending")])
+        for worksheet in worksheets:
+            worksheet._process_reminder_if_needed()
+
+    def _process_reminder_if_needed(self):
+        if self._is_reminder_needed():
+            self._create_reminder_activity()
+
+    def _is_reminder_needed(self):
+        if not self.date_sent:
+            return False
+        delay = self.company_id.worksheet_approval_delay
+        limit_date = self.date_sent + timedelta(days=delay)
+        return fields.Datetime.now() >= limit_date
+
+    def _create_reminder_activity(self):
+        if not self._has_reminder_activity():
+            self._schedule_new_reminder()
+
+    def _has_reminder_activity(self):
+        domain = self._get_existing_activity_domain()
+        return bool(self.env["mail.activity"].search_count(domain))
+
+    def _get_existing_activity_domain(self):
+        return [
+            ("res_model", "=", self._name),
+            ("res_id", "=", self.id),
+            ("summary", "=", "Follow up on client approval"),
+        ]
+
+    def _schedule_new_reminder(self):
+        user_id = self._get_reminder_user_id()
+        self.activity_schedule(
+            "mail.mail_activity_data_todo",
+            summary=_("Follow up on client approval"),
+            note=_("This worksheet has been pending for more than the allowed delay."),
+            user_id=user_id,
+        )
+
+    def _get_reminder_user_id(self):
+        if self.supervisor_id.user_id:
+            return self.supervisor_id.user_id.id
+        return self.create_uid.id

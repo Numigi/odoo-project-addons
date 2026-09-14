@@ -67,11 +67,12 @@
                             type="object"
                             string="Remind Client"
                             states="pending"/>
-                    <button name="action_manager_confirm"
-                            type="object"
-                            string="Approve"
-                            states="pending"
-                            class="oe_highlight"/>
+                  <button name="action_manager_confirm"
+                    type="object"
+                    string="Approve"
+                    states="pending"
+                    class="oe_highlight"
+                    groups="project_worksheet.group_project_worksheet_manager"/>
                     <field name="state" widget="statusbar" statusbar_visible="new,open,pending,confirmed"/>
                 </header>
                 <sheet>

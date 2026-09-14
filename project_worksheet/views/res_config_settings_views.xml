@@ -39,9 +39,10 @@
 
     <!-- Configuration Parent Menu -->
     <menuitem id="menu_project_worksheet_config"
-              name="Configuration"
-              parent="menu_project_worksheet_root"
-              sequence="100"/>
+          name="Configuration"
+          parent="menu_project_worksheet_root"
+          groups="project_worksheet.group_project_worksheet_manager"
+          sequence="100"/>
 
     <!-- Settings Sub-Menu -->
     <menuitem id="menu_project_worksheet_settings"

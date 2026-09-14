@@ -17,10 +17,11 @@
         "project_stage_allow_timesheet",
     ],
     "data": [
+        "security/project_worksheet_security.xml",
         "security/ir.model.access.csv",
         "data/project_worksheet_sequence.xml",
         "data/mail_template_data.xml",
-        "wizards/project_worksheet_complement_views.xml",
+        "data/project_worksheet_cron.xml",
         "views/project_worksheet_views.xml",
         "views/project_project_views.xml",
         "views/portal_worksheet_templates.xml",
