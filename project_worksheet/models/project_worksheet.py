@@ -1,8 +1,9 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
 from datetime import timedelta
+
 from odoo import api, fields, models
-from odoo.exceptions import UserError, ValidationError
+from odoo.exceptions import ValidationError
 from odoo.tools.translate import _
 
 
@@ -43,6 +44,7 @@ class ProjectWorksheet(models.Model):
         string="Supervisor",
         required=True,
         tracking=True,
+        default=lambda self: self._default_supervisor_id(),
     )
     date_start = fields.Date(
         string="Period Start",
@@ -68,6 +70,15 @@ class ProjectWorksheet(models.Model):
         comodel_name="res.partner",
         string="Client Approver",
         tracking=True,
+    )
+    approval_source = fields.Selection(
+        selection=[
+            ("client", "Client"),
+            ("manager", "Manager"),
+        ],
+        string="Approval Source",
+        readonly=True,
+        copy=False,
     )
     state = fields.Selection(
         selection=[
@@ -96,6 +107,9 @@ class ProjectWorksheet(models.Model):
         compute="_compute_total_hours",
         store=True,
     )
+
+    def _default_supervisor_id(self):
+        return self.env["hr.employee"].search([("user_id", "=", self.env.uid)], limit=1)
 
     @api.depends("line_ids.unit_amount")
     def _compute_total_hours(self):
@@ -138,12 +152,11 @@ class ProjectWorksheet(models.Model):
 
     def action_manager_confirm(self):
         self.ensure_one()
-        self._check_manager_approval_delay()
-        self._confirm_worksheet()
+        self._confirm_worksheet("manager")
 
     def action_client_confirm(self):
         self.ensure_one()
-        self._confirm_worksheet()
+        self._confirm_worksheet("client")
 
     def _default_name(self):
         return self.env["ir.sequence"].next_by_code("project.worksheet") or _("New")
@@ -199,21 +212,11 @@ class ProjectWorksheet(models.Model):
             "force_email": True,
         }
 
-    def _check_manager_approval_delay(self):
-        delay = self.company_id.worksheet_approval_delay
-        allowed_date = self.create_date + timedelta(days=delay)
-        if fields.Datetime.now() <= allowed_date:
-            self._raise_delay_error(delay)
-
-    def _raise_delay_error(self, delay):
-        raise UserError(
-            _("You cannot approve this worksheet yet. A delay of %s days is required.") % delay
-        )
-
-    def _confirm_worksheet(self):
+    def _confirm_worksheet(self, source):
         self.write({
             "state": "confirmed",
             "date_approve": fields.Datetime.now(),
+            "approval_source": source,
         })
 
     def _generate_timesheets(self):

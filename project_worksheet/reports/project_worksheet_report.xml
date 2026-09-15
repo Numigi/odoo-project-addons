@@ -8,7 +8,9 @@
         <field name="report_file">project_worksheet.report_worksheet</field>
         <field name="print_report_name">'Worksheet - %s' % (object.name)</field>
         <field name="binding_model_id" ref="project_worksheet.model_project_worksheet"/>
-        <field name="binding_type">report</field>
+       <field name="binding_type">report</field>
+        <field name="attachment_use">True</field>
+        <field name="attachment">(object.state == 'confirmed') and (str(object.name or 'Worksheet').replace('/','_') + '.pdf')</field>
     </record>
 
     <template id="report_worksheet_document">
@@ -100,11 +102,30 @@
 
                     <div class="row mt-5 pt-3">
                         <div class="col-6">
-                            <div style="border-bottom: 1px solid #000; width: 90%;"></div>
+                            <t t-if="doc.approval_source == 'client'">
+                                <div style="font-weight: bold; font-size: 14px;">
+                                    <span t-field="doc.partner_approver_id.name"/>
+                                </div>
+                            </t>
+                            <t t-elif="doc.approval_source == 'manager'">
+                                <div style="font-weight: bold; font-size: 14px;">
+                                    <span t-field="doc.supervisor_id.name"/>
+                                </div>
+                            </t>
+                            <t t-else="">
+                                <div style="border-bottom: 1px solid #000; width: 90%; height: 20px;"></div>
+                            </t>
                             <span style="font-size: 12px;" class="text-muted">Printed Name</span>
                         </div>
                         <div class="col-6">
-                            <div style="border-bottom: 1px solid #000; width: 90%;"></div>
+                            <t t-if="doc.date_approve">
+                                <div style="font-weight: bold; font-size: 14px;">
+                                    <span t-field="doc.date_approve" t-options='{"widget": "datetime"}'/>
+                                </div>
+                            </t>
+                            <t t-else="">
+                                <div style="border-bottom: 1px solid #000; width: 90%; height: 20px;"></div>
+                            </t>
                             <span style="font-size: 12px;" class="text-muted">Date and Time</span>
                         </div>
                     </div>
