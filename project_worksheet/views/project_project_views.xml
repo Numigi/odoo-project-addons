@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="edit_project_inherit_worksheet" model="ir.ui.view">
+        <field name="name">project.project.form.inherit.worksheet</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.edit_project"/>
+        <field name="arch" type="xml">
+            <div name="button_box" position="inside">
+                <button class="oe_stat_button"
+                        name="action_view_worksheets"
+                        type="object"
+                        icon="fa-file-text-o">
+                    <field string="Worksheets" name="worksheet_count" widget="statinfo"/>
+                </button>
+            </div>
+        </field>
+    </record>
+</odoo>
