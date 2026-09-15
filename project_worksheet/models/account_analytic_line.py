@@ -15,22 +15,6 @@ class AccountAnalyticLine(models.Model):
         help="Worksheet associated with this timesheet entry.",
     )
 
-    @api.constrains("task_id")
-    def _check_task_is_not_parent(self):
-        # Validate that no timesheet is recorded on a parent task
-        lines_with_tasks = (line for line in self if line.task_id)
-        for line in lines_with_tasks:
-            self._validate_child_task(line.task_id)
-
-    def _validate_child_task(self, task):
-        # Raise an error if the task has child tasks
-        if task.child_ids:
-            self._raise_parent_task_error()
-
-    def _raise_parent_task_error(self):
-        # Centralized exception raising for parent tasks
-        raise UserError(_("You cannot record timesheets on a parent task."))
-
     @api.constrains("worksheet_id", "unit_amount", "task_id")
     def _check_locked_worksheet(self):
         # Prevent modification if the associated worksheet is approved

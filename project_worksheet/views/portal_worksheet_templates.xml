@@ -15,13 +15,14 @@
                                 <strong>Supervisor:</strong> <t t-esc="worksheet.supervisor_id.name"/>
                             </div>
                         </div>
+
                         <table class="table table-sm">
                             <thead>
                                 <tr>
                                     <th>Employee</th>
                                     <th>Task</th>
                                     <th>Description</th>
-                                    <th>Hours</th>
+                                    <th class="text-right">Hours</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -30,11 +31,18 @@
                                         <td><t t-esc="line.employee_id.name"/></td>
                                         <td><t t-esc="line.task_id.name"/></td>
                                         <td><t t-esc="line.name"/></td>
-                                        <td><t t-esc="line.unit_amount" t-options="{'widget': 'float_time'}"/></td>
+                                        <td class="text-right"><t t-esc="line.unit_amount" t-options="{'widget': 'float_time'}"/></td>
                                     </tr>
                                 </t>
                             </tbody>
                         </table>
+
+                        <!-- Total Hours Block -->
+                        <div class="row mt-3 mb-4 border-top pt-2">
+                            <div class="col-12 text-right">
+                                <h5><strong>Total Hours:</strong> <span t-esc="worksheet.total_hours" t-options="{'widget': 'float_time'}"/></h5>
+                            </div>
+                        </div>
 
                         <t t-if="worksheet.state == 'pending'">
                             <form t-attf-action="/my/worksheet/#{worksheet.id}/accept" method="post">
@@ -51,6 +59,7 @@
                                         I confirm that the installation hours presented above have been completed.
                                     </label>
                                 </div>
+
                                 <button type="submit" class="btn btn-success">Approve</button>
                             </form>
                         </t>
