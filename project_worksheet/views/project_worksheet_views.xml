@@ -86,7 +86,7 @@
                             <field name="supervisor_id" attrs="{'readonly': [('state', '=', 'confirmed')]}"/>
                             <field name="date_start" attrs="{'readonly': [('state', '=', 'confirmed')]}"/>
                             <field name="date_end" attrs="{'readonly': [('state', '=', 'confirmed')]}"/>
-                            <field name="company_id" groups="base.group_multi_company"/>
+                            <field name="company_id" attrs="{'readonly': [('state', '=', 'confirmed')]}"  groups="base.group_multi_company"/>
                         </group>
                         <group>
                             <field name="project_id" attrs="{'readonly': [('state', '=', 'confirmed')]}"
@@ -98,8 +98,8 @@
                                    'default_company_type': 'person',
                                    'default_is_company': False}"
                                   attrs="{'readonly': [('state', '=', 'confirmed')]}"/>
-                            <field name="create_date" readonly="0" force_save="1" attrs="{'readonly': [('state', '=', 'confirmed')]}"/>
-                             <field name="date_sent" />
+                            <field name="create_date" readonly="1" force_save="1"/>
+                             <field name="date_sent"  readonly="1" attrs="{'invisible': [('state', 'not in', ['pending','confirmed'])]}" />
                             <field name="date_approve" attrs="{'invisible': [('state', '!=', 'confirmed')]}"/>
                         </group>
                     </group>
