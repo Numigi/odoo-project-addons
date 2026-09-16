@@ -3,7 +3,7 @@
 from datetime import timedelta
 
 from odoo import api, fields, models
-from odoo.exceptions import ValidationError
+from odoo.exceptions import UserError, ValidationError
 from odoo.tools.translate import _
 
 
@@ -139,7 +139,19 @@ class ProjectWorksheet(models.Model):
 
     def action_open(self):
         self.ensure_one()
+        self._validate_approval_conditions()
         self.write({"state": "open"})
+
+    def _validate_approval_conditions(self):
+        for worksheet in self:
+            worksheet._check_has_lines_and_hours()
+
+    def _check_has_lines_and_hours(self):
+        if not self.line_ids or self.total_hours <= 0.0:
+            self._raise_empty_worksheet_error()
+
+    def _raise_empty_worksheet_error(self):
+        raise UserError(_("You cannot approve a worksheet with no lines or zero total hours."))
 
     def action_send_to_client(self):
         self.ensure_one()

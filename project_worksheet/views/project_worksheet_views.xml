@@ -114,7 +114,6 @@
                                        'default_is_company': False
                                    }"
                                    attrs="{'readonly': [('state', '!=', 'new')]}"/>
-                            <field name="create_date" readonly="1" force_save="1"/>
                             <field name="date_sent"
                                    readonly="1"
                                    attrs="{'invisible': [('state', 'not in', ['pending','confirmed'])]}"/>
