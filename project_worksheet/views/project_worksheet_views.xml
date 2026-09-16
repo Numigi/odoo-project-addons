@@ -67,45 +67,68 @@
                             type="object"
                             string="Remind Client"
                             states="pending"/>
-                  <button name="action_manager_confirm"
-                    type="object"
-                    string="Approve"
-                    states="pending"
-                    class="oe_highlight"
-                    groups="project_worksheet.group_project_worksheet_manager"/>
+                    <button name="action_manager_confirm"
+                            type="object"
+                            string="Approve"
+                            states="pending"
+                            class="oe_highlight"
+                            groups="project_worksheet.group_project_worksheet_manager"/>
+                    <button name="action_reset_to_draft"
+                            string="Reset to draft"
+                            type="object"
+                            states="open"
+                            groups="project_worksheet.group_project_worksheet_manager"/>
+
                     <field name="state" widget="statusbar" statusbar_visible="new,open,pending,confirmed"/>
                 </header>
                 <sheet>
                     <div class="oe_title">
                         <h1>
-                            <field name="name"/>
+                            <!-- Lock field when state is not new -->
+                            <field name="name" attrs="{'readonly': [('state', '!=', 'new')]}"/>
                         </h1>
                     </div>
                     <group>
                         <group>
-                            <field name="supervisor_id" attrs="{'readonly': [('state', '=', 'confirmed')]}"/>
-                            <field name="date_start" attrs="{'readonly': [('state', '=', 'confirmed')]}"/>
-                            <field name="date_end" attrs="{'readonly': [('state', '=', 'confirmed')]}"/>
-                            <field name="company_id" attrs="{'readonly': [('state', '=', 'confirmed')]}"  groups="base.group_multi_company"/>
+                            <!-- Apply readonly constraint based on state -->
+                            <field name="supervisor_id" attrs="{'readonly': [('state', '!=', 'new')]}"/>
+                            <field name="date_start" attrs="{'readonly': [('state', '!=', 'new')]}"/>
+                            <field name="date_end" attrs="{'readonly': [('state', '!=', 'new')]}"/>
+                            <field name="company_id"
+                                   attrs="{'readonly': [('state', '!=', 'new')]}"
+                                   groups="base.group_multi_company"/>
                         </group>
                         <group>
-                            <field name="project_id" attrs="{'readonly': [('state', '=', 'confirmed')]}"
+                            <field name="project_id"
+                                   attrs="{'readonly': [('state', '!=', 'new')]}"
                                    domain="[('stage_id.allow_timesheet', '=', True)]"/>
-                            <field name="partner_id"/>
-                           <field name="partner_approver_id"
-                                  domain="[('commercial_partner_id', '=', partner_id),('is_company', '=', False)]"
-                                  context="{'default_parent_id': partner_id,
-                                   'default_company_type': 'person',
-                                   'default_is_company': False}"
-                                  attrs="{'readonly': [('state', '=', 'confirmed')]}"/>
+                            <field name="partner_id" attrs="{'readonly': [('state', '!=', 'new')]}"/>
+                            <field name="partner_approver_id"
+                                   domain="[
+                                       ('commercial_partner_id', '=', partner_id),
+                                       ('is_company', '=', False)
+                                   ]"
+                                   context="{
+                                       'default_parent_id': partner_id,
+                                       'default_company_type': 'person',
+                                       'default_is_company': False
+                                   }"
+                                   attrs="{'readonly': [('state', '!=', 'new')]}"/>
                             <field name="create_date" readonly="1" force_save="1"/>
-                             <field name="date_sent"  readonly="1" attrs="{'invisible': [('state', 'not in', ['pending','confirmed'])]}" />
-                            <field name="date_approve" attrs="{'invisible': [('state', '!=', 'confirmed')]}"/>
+                            <field name="date_sent"
+                                   readonly="1"
+                                   attrs="{'invisible': [('state', 'not in', ['pending','confirmed'])]}"/>
+                            <field name="date_approve"
+                                   attrs="{
+                                       'invisible': [('state', '!=', 'confirmed')],
+                                       'readonly': [('state', '!=', 'new')]
+                                   }"/>
                         </group>
                     </group>
                     <notebook>
                         <page string="Details" name="details">
-                            <field name="line_ids" attrs="{'readonly': [('state', '=', 'confirmed')]}">
+                            <!-- Lock the whole lines relation when state is not new -->
+                            <field name="line_ids" attrs="{'readonly': [('state', '!=', 'new')]}">
                                 <tree editable="bottom">
                                     <field name="date"/>
                                     <field name="employee_id"/>
@@ -119,7 +142,9 @@
                                 </tree>
                             </field>
                         </page>
-                        <page string="Generated Timesheets" name="generated_timesheets" attrs="{'invisible': [('state', 'not in', ('pending', 'confirmed'))]}">
+                        <page string="Generated Timesheets"
+                              name="generated_timesheets"
+                              attrs="{'invisible': [('state', 'not in', ('pending', 'confirmed'))]}">
                             <field name="timesheet_ids" readonly="1">
                                 <tree>
                                     <field name="date"/>

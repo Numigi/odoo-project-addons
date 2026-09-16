@@ -131,6 +131,12 @@ class ProjectWorksheet(models.Model):
         for worksheet in self:
             worksheet._validate_date_chronology()
 
+    def action_reset_to_draft(self):
+        """ Allow supervisor to reset the worksheet to waiting approval state. """
+        self.ensure_one()
+        if self.state == 'open':
+            self.state = 'new'
+
     def action_open(self):
         self.ensure_one()
         self.write({"state": "open"})
@@ -218,6 +224,12 @@ class ProjectWorksheet(models.Model):
             "date_approve": fields.Datetime.now(),
             "approval_source": source,
         })
+        self._send_confirmation_email()
+
+    def _send_confirmation_email(self):
+        template = self.env.ref("project_worksheet.email_template_worksheet_confirmed")
+        for worksheet in self:
+            template.send_mail(worksheet.id, force_send=True)
 
     def _generate_timesheets(self):
         timesheet_model = self.env["account.analytic.line"]

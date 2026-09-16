@@ -32,6 +32,7 @@ class ProjectWorksheetLine(models.Model):
     task_id = fields.Many2one(
         comodel_name="project.task",
         string="Task",
+        required=True,
     )
     name = fields.Char(
         string="Description",
