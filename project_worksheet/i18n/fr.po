@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-14 14:53+0000\n"
-"PO-Revision-Date: 2026-09-14 14:53+0000\n"
+"POT-Creation-Date: 2026-09-16 08:53+0000\n"
+"PO-Revision-Date: 2026-09-16 08:53+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -42,42 +42,42 @@ msgstr ""
 #: model:mail.template,body_html:project_worksheet.email_template_worksheet_approval
 msgid ""
 "<div style=\"margin: 0px; padding: 0px; font-size: 13px; color: #444444;\">\n"
-"    <p style=\"margin: 0px 0px 16px 0px;\">\n"
-"        Hello ${object.partner_approver_id.name or 'Client'},\n"
-"    </p>\n"
-"    <p style=\"margin: 0px 0px 16px 0px;\">\n"
-"        The installation hours performed on your site on ${object.date_start} are ready for approval. The details can be found in the attached worksheet.\n"
-"    </p>\n"
+"                    <p style=\"margin: 0px 0px 16px 0px;\">\n"
+"                        Hello ${object.partner_approver_id.name or 'Client'},\n"
+"                    </p>\n"
+"                    <p style=\"margin: 0px 0px 16px 0px;\">\n"
+"                        The installation hours performed on your site on ${object.date_start} are ready for approval. The details can be found in the attached worksheet.\n"
+"                    </p>\n"
 "\n"
-"    <table border=\"0\" cellpadding=\"4\" cellspacing=\"0\" style=\"margin-top: 16px; margin-bottom: 24px; width: 100%; max-width: 400px;\">\n"
-"        <tr>\n"
-"            <td style=\"color: #888888; width: 120px;\">Worksheet</td>\n"
-"            <td><strong>${object.name}</strong></td>\n"
-"        </tr>\n"
-"        <tr>\n"
-"            <td style=\"color: #888888;\">Project</td>\n"
-"            <td>${object.project_id.name}</td>\n"
-"        </tr>\n"
-"        <tr>\n"
-"            <td style=\"color: #888888;\">Supervisor</td>\n"
-"            <td>${object.supervisor_id.name}</td>\n"
-"        </tr>\n"
-"        <tr>\n"
-"            <td style=\"color: #888888;\">Total Hours</td>\n"
-"            <td><strong>${object.total_hours}</strong></td>\n"
-"        </tr>\n"
-"    </table>\n"
+"                    <table border=\"0\" cellpadding=\"4\" cellspacing=\"0\" style=\"margin-top: 16px; margin-bottom: 24px; width: 100%; max-width: 400px;\">\n"
+"                        <tr>\n"
+"                            <td style=\"color: #888888; width: 120px;\">Worksheet</td>\n"
+"                            <td><strong>${object.name}</strong></td>\n"
+"                        </tr>\n"
+"                        <tr>\n"
+"                            <td style=\"color: #888888;\">Project</td>\n"
+"                            <td>${object.project_id.name}</td>\n"
+"                        </tr>\n"
+"                        <tr>\n"
+"                            <td style=\"color: #888888;\">Supervisor</td>\n"
+"                            <td>${object.supervisor_id.name}</td>\n"
+"                        </tr>\n"
+"                        <tr>\n"
+"                            <td style=\"color: #888888;\">Total Hours</td>\n"
+"                            <td><strong>${object.total_hours}</strong></td>\n"
+"                        </tr>\n"
+"                    </table>\n"
 "\n"
-"    <div style=\"margin: 24px 0px 24px 0px;\">\n"
-"        <a href=\"${object.get_base_url()}/my/worksheet/${object.id}/${object.access_token}\" target=\"_blank\" style=\"background-color: #F89406; padding: 10px 20px; text-decoration: none; color: #ffffff; border-radius: 3px; font-size: 14px; font-weight: bold;\">\n"
-"            Review and approve the worksheet\n"
-"        </a>\n"
-"    </div>\n"
+"                    <div style=\"margin: 24px 0px 24px 0px;\">\n"
+"                        <a href=\"${object.get_base_url()}/my/worksheet/${object.id}/${object.access_token}\" target=\"_blank\" style=\"background-color: #F89406; padding: 10px 20px; text-decoration: none; color: #ffffff; border-radius: 3px; font-size: 14px; font-weight: bold;\">\n"
+"                            Review and approve the worksheet\n"
+"                        </a>\n"
+"                    </div>\n"
 "\n"
-"    <p style=\"color: #888888; font-size: 11px; margin-top: 32px;\">\n"
-"        This link is personal and remains valid for 14 days. The approval only covers the installation hours performed on site.\n"
-"    </p>\n"
-"</div>\n"
+"                    <p style=\"color: #888888; font-size: 11px; margin-top: 32px;\">\n"
+"                        This link is personal and remains valid for 14 days\n"
+"                    </p>\n"
+"                </div>\n"
 "            "
 msgstr ""
 "<div style=\"margin: 0px; padding: 0px; font-size: 13px; color: #444444;\">\n"
@@ -120,6 +120,35 @@ msgstr ""
 "            "
 
 #. module: project_worksheet
+#: model:mail.template,body_html:project_worksheet.email_template_worksheet_confirmed
+msgid ""
+"<div style=\"margin: 0px; padding: 0px; font-size: 13px; color: #444444;\">\n"
+"                    <p style=\"margin: 0px 0px 16px 0px;\">\n"
+"                        Hello,\n"
+"                    </p>\n"
+"                    <p style=\"margin: 0px 0px 16px 0px;\">\n"
+"                        The worksheet <strong>${object.name}</strong> for the project <strong>${object.project_id.name}</strong> has been successfully confirmed.\n"
+"                    </p>\n"
+"                    <p style=\"margin: 0px 0px 16px 0px;\">\n"
+"                        Please find the signed report attached to this email.\n"
+"                    </p>\n"
+"                </div>\n"
+"            "
+msgstr ""
+"<div style=\"margin: 0px; padding: 0px; font-size: 13px; color: #444444;\">\n"
+"                    <p style=\"margin: 0px 0px 16px 0px;\">\n"
+"                        Bonjour,\n"
+"                    </p>\n"
+"                    <p style=\"margin: 0px 0px 16px 0px;\">\n"
+"                        La feuille d'installation <strong>${object.name}</strong> pour le projet <strong>${object.project_id.name}</strong> a été confirmée avec succès.\n"
+"                    </p>\n"
+"                    <p style=\"margin: 0px 0px 16px 0px;\">\n"
+"                        Veuillez trouver le rapport signé en pièce jointe à cet e-mail.\n"
+"                    </p>\n"
+"                </div>\n"
+"            "
+
+#. module: project_worksheet
 #: model_terms:ir.ui.view,arch_db:project_worksheet.report_worksheet_document
 msgid "<span style=\"font-size: 12px;\" class=\"text-muted\">Date and Time</span>"
 msgstr "<span style=\"font-size: 12px;\" class=\"text-muted\">Date et Heure</span>"
@@ -133,6 +162,11 @@ msgstr "<span style=\"font-size: 12px;\" class=\"text-muted\">Nom imprimé</span
 #: model_terms:ir.ui.view,arch_db:project_worksheet.portal_worksheet_template
 msgid "<strong>Project:</strong>"
 msgstr "<strong>Projet :</strong>"
+
+#. module: project_worksheet
+#: model_terms:ir.ui.view,arch_db:project_worksheet.portal_worksheet_template
+msgid "<strong>Total Hours:</strong>"
+msgstr "<strong>Heures totales :</strong>"
 
 #. module: project_worksheet
 #: model_terms:ir.ui.view,arch_db:project_worksheet.report_worksheet_document
@@ -180,6 +214,11 @@ msgid "Approval Date"
 msgstr "Date d'approbation"
 
 #. module: project_worksheet
+#: model:ir.model.fields,field_description:project_worksheet.field_project_worksheet__approval_source
+msgid "Approval Source"
+msgstr "Source d'approbation"
+
+#. module: project_worksheet
 #: model_terms:ir.ui.view,arch_db:project_worksheet.portal_worksheet_template
 #: model_terms:ir.ui.view,arch_db:project_worksheet.project_worksheet_view_form
 msgid "Approve"
@@ -192,6 +231,7 @@ msgstr "Nombre de pièces jointes"
 
 #. module: project_worksheet
 #: model:ir.model.fields,field_description:project_worksheet.field_project_worksheet__partner_id
+#: model:ir.model.fields.selection,name:project_worksheet.selection__project_worksheet__approval_source__client
 #: model_terms:ir.ui.view,arch_db:project_worksheet.report_worksheet_document
 msgid "Client"
 msgstr "Client"
@@ -278,7 +318,9 @@ msgstr "Jours requis après l'envoi avant de créer une activité de relance."
 #. module: project_worksheet
 #: model_terms:ir.ui.view,arch_db:project_worksheet.res_config_settings_view_form_project_worksheet
 msgid "Days required before a manager can force the worksheet validation."
-msgstr "Jours requis avant qu'un responsable puisse forcer la validation de la feuille d'installation."
+msgstr ""
+"Jours requis avant qu'un responsable puisse forcer la validation de la "
+"feuille d'installation."
 
 #. module: project_worksheet
 #: model:ir.model.fields,field_description:project_worksheet.field_project_worksheet_line__name
@@ -362,7 +404,9 @@ msgstr "Heures"
 #: model_terms:ir.ui.view,arch_db:project_worksheet.portal_worksheet_template
 msgid ""
 "I confirm that the installation hours presented above have been completed."
-msgstr "Je confirme que les heures d'installation présentées ci-dessus ont été réalisées."
+msgstr ""
+"Je confirme que les heures d'installation présentées ci-dessus ont été "
+"réalisées."
 
 #. module: project_worksheet
 #: model:ir.model.fields,field_description:project_worksheet.field_account_analytic_line__id
@@ -434,6 +478,7 @@ msgid "Main Attachment"
 msgstr "Pièce jointe principale"
 
 #. module: project_worksheet
+#: model:ir.model.fields.selection,name:project_worksheet.selection__project_worksheet__approval_source__manager
 #: model:res.groups,name:project_worksheet.group_project_worksheet_manager
 msgid "Manager"
 msgstr "Responsable"
@@ -496,7 +541,9 @@ msgstr "Type de l'activité suivante"
 msgid ""
 "No amount appears on this document. Invoicing is established separately by "
 "the administration."
-msgstr "Aucun montant n'apparaît sur ce document. La facturation est établie séparément par l'administration."
+msgstr ""
+"Aucun montant n'apparaît sur ce document. La facturation est établie "
+"séparément par l'administration."
 
 #. module: project_worksheet
 #: model:ir.model.fields,field_description:project_worksheet.field_project_worksheet__message_needaction_counter
@@ -567,7 +614,9 @@ msgstr "Début de période"
 #: code:addons/project_worksheet/models/project_worksheet.py:0
 #, python-format
 msgid "Period Start cannot be strictly greater than Period End."
-msgstr "Le début de la période ne peut pas être strictement supérieur à la fin de la période."
+msgstr ""
+"Le début de la période ne peut pas être strictement supérieur à la fin de la"
+" période."
 
 #. module: project_worksheet
 #: model:ir.model.fields,field_description:project_worksheet.field_project_worksheet__access_url
@@ -604,6 +653,11 @@ msgstr "Référence"
 #, python-format
 msgid "Remind Client"
 msgstr "Relancer le client"
+
+#. module: project_worksheet
+#: model_terms:ir.ui.view,arch_db:project_worksheet.project_worksheet_view_form
+msgid "Reset to draft"
+msgstr "Remettre en brouillon"
 
 #. module: project_worksheet
 #: model:ir.model.fields,field_description:project_worksheet.field_project_worksheet__activity_user_id
@@ -675,10 +729,18 @@ msgid "Task"
 msgstr "Tâche"
 
 #. module: project_worksheet
+#: code:addons/project_worksheet/models/project_worksheet_line.py:0
+#, python-format
+msgid "The date of a worksheet line must fall within the worksheet period."
+msgstr "La date d'une ligne de feuille d'installation doit être comprise dans la période de la feuille."
+
+#. module: project_worksheet
 #: code:addons/project_worksheet/models/project_worksheet.py:0
 #, python-format
 msgid "This worksheet has been pending for more than the allowed delay."
-msgstr "Cette feuille d'installation est en attente depuis plus longtemps que le délai autorisé."
+msgstr ""
+"Cette feuille d'installation est en attente depuis plus longtemps que le "
+"délai autorisé."
 
 #. module: project_worksheet
 #: model:ir.model.fields,field_description:project_worksheet.field_project_worksheet__total_hours
@@ -726,11 +788,18 @@ msgid "Worksheet"
 msgstr "Feuille d'installation"
 
 #. module: project_worksheet
+#: model:mail.template,subject:project_worksheet.email_template_worksheet_confirmed
+msgid "Worksheet ${object.name} - Confirmed"
+msgstr "Feuille d'installation ${object.name} - Confirmée"
+
+#. module: project_worksheet
 #: model:mail.template,subject:project_worksheet.email_template_worksheet_approval
 msgid ""
 "Worksheet ${object.name} - project ${object.project_id.name} - approval "
 "required"
-msgstr "Feuille d'installation ${object.name} - projet ${object.project_id.name} - approbation requise"
+msgstr ""
+"Feuille d'installation ${object.name} - projet ${object.project_id.name} - "
+"approbation requise"
 
 #. module: project_worksheet
 #: model_terms:ir.ui.view,arch_db:project_worksheet.portal_worksheet_template
@@ -776,6 +845,11 @@ msgid "Worksheet associated with this timesheet entry."
 msgstr "Feuille d'installation associée à cette entrée de feuille de temps."
 
 #. module: project_worksheet
+#: model:mail.template,report_name:project_worksheet.email_template_worksheet_confirmed
+msgid "Worksheet_${object.name}"
+msgstr "Feuille_installation_${object.name}"
+
+#. module: project_worksheet
 #: model:ir.actions.act_window,name:project_worksheet.project_worksheet_action
 #: model:ir.module.category,name:project_worksheet.module_category_project_worksheet
 #: model:ir.ui.menu,name:project_worksheet.menu_project_worksheet_root
@@ -795,17 +869,24 @@ msgstr "Feuilles d'installation : Relancer les approbations clients en attente"
 #. module: project_worksheet
 #: code:addons/project_worksheet/models/project_worksheet.py:0
 #, python-format
-msgid "You cannot approve this worksheet yet. A delay of %s days is required."
-msgstr "Vous ne pouvez pas encore approuver cette feuille d'installation. Un délai de %s jours est requis."
+msgid "You cannot approve a worksheet with no lines or zero total hours."
+msgstr "Vous ne pouvez pas approuver une feuille d'installation sans lignes ou avec un total d'heures à zéro."
+
+#. module: project_worksheet
+#: code:addons/project_worksheet/models/account_analytic_line.py:0
+#, python-format
+msgid "You cannot delete a timesheet line linked to a worksheet."
+msgstr "Vous ne pouvez pas supprimer une ligne de feuille de temps liée à une feuille d'installation."
 
 #. module: project_worksheet
 #: code:addons/project_worksheet/models/account_analytic_line.py:0
 #, python-format
 msgid "You cannot modify timesheets linked to an approved worksheet."
-msgstr "Vous ne pouvez pas modifier les feuilles de temps liées à une feuille d'installation approuvée."
+msgstr ""
+"Vous ne pouvez pas modifier les feuilles de temps liées à une feuille "
+"d'installation approuvée."
 
 #. module: project_worksheet
-#: code:addons/project_worksheet/models/account_analytic_line.py:0
 #: code:addons/project_worksheet/models/project_worksheet_line.py:0
 #, python-format
 msgid "You cannot record timesheets on a parent task."
