@@ -33,3 +33,17 @@ class AccountAnalyticLine(models.Model):
         raise UserError(
             _("You cannot modify timesheets linked to an approved worksheet.")
         )
+
+    def unlink(self):
+        self._check_unlink_conditions()
+        return super().unlink()
+
+    def _check_unlink_conditions(self):
+        linked_lines = (line for line in self if line.worksheet_id)
+        for _line in linked_lines:
+            self._raise_unlink_linked_line_error()
+
+    def _raise_unlink_linked_line_error(self):
+        raise UserError(
+            _("You cannot delete a timesheet line linked to a worksheet.")
+        )

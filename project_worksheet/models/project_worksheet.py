@@ -3,7 +3,7 @@
 from datetime import timedelta
 
 from odoo import api, fields, models
-from odoo.exceptions import ValidationError
+from odoo.exceptions import UserError, ValidationError
 from odoo.tools.translate import _
 
 
@@ -131,9 +131,27 @@ class ProjectWorksheet(models.Model):
         for worksheet in self:
             worksheet._validate_date_chronology()
 
+    def action_reset_to_draft(self):
+        """ Allow supervisor to reset the worksheet to waiting approval state. """
+        self.ensure_one()
+        if self.state == 'open':
+            self.state = 'new'
+
     def action_open(self):
         self.ensure_one()
+        self._validate_approval_conditions()
         self.write({"state": "open"})
+
+    def _validate_approval_conditions(self):
+        for worksheet in self:
+            worksheet._check_has_lines_and_hours()
+
+    def _check_has_lines_and_hours(self):
+        if not self.line_ids or self.total_hours <= 0.0:
+            self._raise_empty_worksheet_error()
+
+    def _raise_empty_worksheet_error(self):
+        raise UserError(_("You cannot approve a worksheet with no lines or zero total hours."))
 
     def action_send_to_client(self):
         self.ensure_one()
@@ -218,6 +236,12 @@ class ProjectWorksheet(models.Model):
             "date_approve": fields.Datetime.now(),
             "approval_source": source,
         })
+        self._send_confirmation_email()
+
+    def _send_confirmation_email(self):
+        template = self.env.ref("project_worksheet.email_template_worksheet_confirmed")
+        for worksheet in self:
+            template.send_mail(worksheet.id, force_send=True)
 
     def _generate_timesheets(self):
         timesheet_model = self.env["account.analytic.line"]
