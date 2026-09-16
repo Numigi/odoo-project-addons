@@ -204,8 +204,12 @@ class ProjectWorksheet(models.Model):
             self._generate_timesheets()
 
     def _send_approval_email(self):
-        template = self.env.ref("project_worksheet.email_template_worksheet_approval")
-        template.send_mail(self.id, force_send=True)
+        template_id = self.env.ref("project_worksheet.email_template_worksheet_approval").id
+        self.message_post_with_template(
+            template_id,
+            composition_mode="comment",
+            message_type="comment",
+        )
 
     def _get_remind_client_action(self):
         template = self.env.ref("project_worksheet.email_template_worksheet_approval")
@@ -239,9 +243,13 @@ class ProjectWorksheet(models.Model):
         self._send_confirmation_email()
 
     def _send_confirmation_email(self):
-        template = self.env.ref("project_worksheet.email_template_worksheet_confirmed")
+        template_id = self.env.ref("project_worksheet.email_template_worksheet_confirmed").id
         for worksheet in self:
-            template.send_mail(worksheet.id, force_send=True)
+            worksheet.message_post_with_template(
+                template_id,
+                composition_mode="comment",
+                message_type="comment",
+            )
 
     def _generate_timesheets(self):
         timesheet_model = self.env["account.analytic.line"]
