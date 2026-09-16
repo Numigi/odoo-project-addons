@@ -19,6 +19,7 @@
     "data": [
         "security/project_worksheet_security.xml",
         "security/ir.model.access.csv",
+        "reports/project_worksheet_report.xml",
         "data/project_worksheet_sequence.xml",
         "data/mail_template_data.xml",
         "data/project_worksheet_cron.xml",
@@ -26,7 +27,6 @@
         "views/project_project_views.xml",
         "views/portal_worksheet_templates.xml",
         "views/res_config_settings_views.xml",
-        "reports/project_worksheet_report.xml",
         "views/webclient_templates.xml",
     ],
 }
