@@ -5,7 +5,7 @@
             <field name="name">Worksheet: Approval Request</field>
             <field name="model_id" ref="project_worksheet.model_project_worksheet"/>
             <field name="subject">Worksheet ${object.name} - project ${object.project_id.name} - approval required</field>
-            <field name="email_to">${object.partner_approver_id.email}</field>
+           <field name="email_to">${object.partner_approver_id.email},${object.supervisor_id.work_email}</field>
             <field name="body_html" type="html">
                 <div style="margin: 0px; padding: 0px; font-size: 13px; color: #444444;">
                     <p style="margin: 0px 0px 16px 0px;">

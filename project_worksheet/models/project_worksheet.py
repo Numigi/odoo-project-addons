@@ -243,13 +243,31 @@ class ProjectWorksheet(models.Model):
         self._send_confirmation_email()
 
     def _send_confirmation_email(self):
-        template_id = self.env.ref("project_worksheet.email_template_worksheet_confirmed").id
+        template_id = self._get_confirmation_template_id()
         for worksheet in self:
-            worksheet.message_post_with_template(
-                template_id,
-                composition_mode="comment",
-                message_type="comment",
-            )
+            worksheet._post_confirmation_message(template_id)
+
+    def _get_confirmation_template_id(self):
+        return self.env.ref("project_worksheet.email_template_worksheet_confirmed").id
+
+    def _post_confirmation_message(self, template_id):
+        # Post the message using the appropriate user context
+        record = self._get_mail_sender_record()
+        record.message_post_with_template(
+            template_id,
+            composition_mode="comment",
+            message_type="comment",
+        )
+
+    def _get_mail_sender_record(self):
+        # Use root user (OdooBot) if the client is the one confirming the worksheet
+        if self.approval_source == "client":
+            return self._get_root_user_record()
+        return self
+
+    def _get_root_user_record(self):
+        root_user = self.env.ref("base.user_root")
+        return self.with_user(root_user)
 
     def _generate_timesheets(self):
         timesheet_model = self.env["account.analytic.line"]
