@@ -43,19 +43,6 @@ class ProjectWorksheetLine(models.Model):
         required=True,
     )
 
-    @api.constrains("task_id")
-    def _check_task_is_not_parent(self):
-        lines_with_tasks = (line for line in self if line.task_id)
-        for line in lines_with_tasks:
-            self._validate_child_task(line.task_id)
-
-    def _validate_child_task(self, task):
-        if task.child_ids:
-            self._raise_parent_task_error()
-
-    def _raise_parent_task_error(self):
-        raise UserError(_("You cannot record timesheets on a parent task."))
-
     @api.constrains("date", "worksheet_id")
     def _check_date_in_worksheet_period(self):
         invalid_lines = (line for line in self if line._is_date_out_of_period())

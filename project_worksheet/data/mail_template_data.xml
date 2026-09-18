@@ -71,7 +71,7 @@
                 </div>
             </field>
             <field name="report_template" ref="project_worksheet.action_report_project_worksheet"/>
-            <field name="report_name">Worksheet_${object.name}</field>
+            <field name="report_name">${object.name}</field>
             <field name="lang">${object.partner_approver_id.lang}</field>
             <field name="auto_delete" eval="True"/>
         </record>
