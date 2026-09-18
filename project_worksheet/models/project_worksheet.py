@@ -70,7 +70,6 @@ class ProjectWorksheet(models.Model):
         comodel_name="res.partner",
         string="Client Approver",
         tracking=True,
-        required=True,
     )
     approval_source = fields.Selection(
         selection=[

@@ -113,7 +113,8 @@
                                        'default_company_type': 'person',
                                        'default_is_company': False
                                    }"
-                                   attrs="{'readonly': [('state', '!=', 'new')]}"/>
+                                   attrs="{'readonly': [('state', '!=', 'new')]}"
+                                    required = "1"/>
                             <field name="date_sent"
                                    readonly="1"
                                    attrs="{'invisible': [('state', 'not in', ['pending','confirmed'])]}"/>
