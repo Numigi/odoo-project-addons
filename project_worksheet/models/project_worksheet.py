@@ -270,7 +270,7 @@ class ProjectWorksheet(models.Model):
         return self.with_user(root_user)
 
     def _generate_timesheets(self):
-        timesheet_model = self.env["account.analytic.line"]
+        timesheet_model = self.env["account.analytic.line"].sudo()
         for line in self.line_ids:
             self._create_single_timesheet(timesheet_model, line)
 

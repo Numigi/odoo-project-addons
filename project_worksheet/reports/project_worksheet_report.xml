@@ -10,16 +10,15 @@
         <field name="binding_model_id" ref="project_worksheet.model_project_worksheet"/>
         <field name="binding_type">report</field>
         <field name="attachment_use">True</field>
-        <field name="attachment">(object.state == 'confirmed') and (str(object.name or 'Worksheet').replace('/','_') + '.pdf')</field>
     </record>
 
-    <template id="report_worksheet_document">
+   <template id="report_worksheet_document">
         <t t-call="web.external_layout">
             <t t-set="doc" t-value="doc.with_context(lang=doc.partner_id.lang)"/>
             <div class="page">
                 <div class="row mb-4">
                     <div class="col-12 text-right">
-                        <h2 class="text-uppercase font-weight-bold" style="letter-spacing: 2px;">Worksheet</h2>
+                        <h3 class="text-uppercase font-weight-bold">Worksheet</h3>
                         <span class="text-muted">N° <t t-esc="doc.name"/></span>
                     </div>
                 </div>
