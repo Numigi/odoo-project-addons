@@ -14,7 +14,6 @@ class ProjectWorksheetPortal(http.Controller):
         website=True,
     )
     def portal_worksheet_view(self, worksheet_id, access_token=None, **kw):
-        # Render the worksheet portal view
         worksheet = self._get_worksheet(worksheet_id, access_token)
         return request.render(
             "project_worksheet.portal_worksheet_template",
@@ -30,30 +29,43 @@ class ProjectWorksheetPortal(http.Controller):
     )
     def portal_worksheet_accept(self, worksheet_id, access_token=None, **kw):
         worksheet = self._get_worksheet(worksheet_id, access_token)
+        self._check_approval_access_rights(worksheet)
         self._validate_acceptance(worksheet, kw.get("confirm_checkbox"))
         worksheet.action_client_confirm()
         self._log_client_confirmation(worksheet)
         return request.redirect(worksheet.get_portal_url())
 
     def _get_worksheet(self, worksheet_id, access_token):
-        # Retrieve and validate worksheet access
         worksheet = request.env["project.worksheet"].sudo().browse(worksheet_id)
         self._check_worksheet_access(worksheet, access_token)
         return worksheet
 
     def _check_worksheet_access(self, worksheet, access_token):
-        # Raise 404 if token is invalid or worksheet does not exist
         if not worksheet.exists() or worksheet.access_token != access_token:
             raise request.not_found()
 
+    def _check_approval_access_rights(self, worksheet):
+        user = request.env.user
+        if user.has_group("base.group_user"):
+            self._check_manager_group(user, worksheet)
+
+    def _check_manager_group(self, user, worksheet):
+        if not user.has_group("project_worksheet.group_project_worksheet_manager"):
+            self._redirect_unauthorized(worksheet)
+
+    def _redirect_unauthorized(self, worksheet):
+        error_url = worksheet.get_portal_url(query_string="&error=unauthorized")
+        raise request.redirect(error_url)
+
     def _validate_acceptance(self, worksheet, confirm_checkbox):
-        # Redirect back with error if the checkbox was not checked
         if not confirm_checkbox:
-            error_url = worksheet.get_portal_url(query_string="&error=missing_confirmation")
-            raise request.redirect(error_url)
+            self._redirect_missing_confirmation(worksheet)
+
+    def _redirect_missing_confirmation(self, worksheet):
+        error_url = worksheet.get_portal_url(query_string="&error=missing_confirmation")
+        raise request.redirect(error_url)
 
     def _log_client_confirmation(self, worksheet):
-        # Log the signature/confirmation footprint in the chatter
         client_ip = request.httprequest.remote_addr
         message = _("Worksheet approved by client from IP: %s") % client_ip
         worksheet.message_post(body=message)

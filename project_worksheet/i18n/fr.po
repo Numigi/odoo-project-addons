@@ -906,3 +906,8 @@ msgstr "jours"
 #: model_terms:ir.ui.view,arch_db:project_worksheet.report_worksheet_document
 msgid "to"
 msgstr "au"
+
+#. module: project_worksheet
+#: model_terms:ir.ui.view,arch_db:project_worksheet.portal_worksheet_template
+msgid "You are not authorized to approve this worksheet."
+msgstr "Vous n'êtes pas autorisé à approuver cette feuille d'installation."

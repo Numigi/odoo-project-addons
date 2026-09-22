@@ -285,7 +285,7 @@ class ProjectWorksheet(models.Model):
             "employee_id": line.employee_id.id,
             "project_id": self.project_id.id,
             "task_id": line.task_id.id,
-            "name": line.name,
+            "name": line.name or "/",
             "unit_amount": line.unit_amount,
         }
 

@@ -74,7 +74,7 @@
                                 <td><span t-field="line.date"/></td>
                                 <td><span t-field="line.employee_id.name"/></td>
                                 <td><span t-field="line.task_id.name"/></td>
-                                <td><span t-field="line.name"/></td>
+                                <td class="text-break"><span t-field="line.name"/></td>
                                 <td class="text-right"><span t-field="line.unit_amount" t-options="{'widget': 'float_time'}"/></td>
                             </tr>
                         </t>
