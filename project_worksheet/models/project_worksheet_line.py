@@ -36,7 +36,7 @@ class ProjectWorksheetLine(models.Model):
     )
     name = fields.Char(
         string="Description",
-        required=True,
+        required=False,
     )
     unit_amount = fields.Float(
         string="Hours",

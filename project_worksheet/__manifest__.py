@@ -4,7 +4,7 @@
 {
     "name": "Project Worksheet",
     "summary": "Manage field worksheets for project interventions",
-    "version": "14.0.2.0.0",
+    "version": "14.0.2.1.0",
     "category": "Project Management",
     "website": "https://github.com/OCA/project",
     "author": "Numigi, Odoo Community Association (OCA)",
