@@ -15,11 +15,19 @@ class AccountAnalyticLine(models.Model):
         help="Worksheet associated with this timesheet entry.",
     )
 
-    @api.constrains("worksheet_id", "unit_amount", "task_id")
+    @api.constrains("worksheet_id", "unit_amount", "task_id", "date", "employee_id", "name")
     def _check_locked_worksheet(self):
-        # Prevent modification if the associated worksheet is approved
-        locked_lines = (line for line in self if self._is_worksheet_approved(line))
-        for _line in locked_lines:
+        if self._is_worksheet_lock_bypassed():
+            return
+        for line in self:
+            line._validate_not_linked_to_worksheet()
+
+    def _is_worksheet_lock_bypassed(self):
+        # Verify if the action is triggered internally by the worksheet synchronization
+        return self.env.context.get("bypass_worksheet_lock")
+
+    def _validate_not_linked_to_worksheet(self):
+        if self.worksheet_id:
             self._raise_locked_worksheet_error()
 
     def _is_worksheet_approved(self, line):
@@ -35,15 +43,19 @@ class AccountAnalyticLine(models.Model):
         )
 
     def unlink(self):
-        self._check_unlink_conditions()
+        if not self._is_worksheet_lock_bypassed():
+            self._check_unlink_conditions()
         return super().unlink()
 
     def _check_unlink_conditions(self):
-        linked_lines = (line for line in self if line.worksheet_id)
-        for _line in linked_lines:
+        for line in self:
+            line._validate_unlink_allowed()
+
+    def _validate_unlink_allowed(self):
+        if self.worksheet_id:
             self._raise_unlink_linked_line_error()
 
     def _raise_unlink_linked_line_error(self):
         raise UserError(
-            _("You cannot delete a timesheet line linked to a worksheet.")
+            "You cannot delete a timesheet line linked to a worksheet."
         )

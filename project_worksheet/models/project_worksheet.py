@@ -46,6 +46,12 @@ class ProjectWorksheet(models.Model):
         tracking=True,
         default=lambda self: self._default_supervisor_id(),
     )
+    manager_approver_id = fields.Many2one(
+        comodel_name="res.users",
+        string="Manager Approver",
+        readonly=True,
+        copy=False,
+    )
     date_start = fields.Date(
         string="Period Start",
         required=True,
@@ -107,6 +113,9 @@ class ProjectWorksheet(models.Model):
         compute="_compute_total_hours",
         store=True,
     )
+    internal_notes = fields.Text(
+        string="Notes",
+    )
 
     def _default_supervisor_id(self):
         return self.env["hr.employee"].search([("user_id", "=", self.env.uid)], limit=1)
@@ -126,20 +135,133 @@ class ProjectWorksheet(models.Model):
             return False
         return self.project_id.partner_id.commercial_partner_id
 
-    @api.constrains("date_start", "date_end")
-    def _check_date_range(self):
+    @api.constrains("date_start", "date_end", "project_id", "supervisor_id")
+    def _check_period_and_overlap(self):
         for worksheet in self:
             worksheet._validate_date_chronology()
+            worksheet._validate_same_week()
+            worksheet._validate_no_overlap()
+
+    def _validate_date_chronology(self):
+        if self._is_date_range_invalid():
+            self._raise_date_range_error()
+
+    def _is_date_range_invalid(self):
+        if not self.date_start or not self.date_end:
+            return False
+        return self.date_start > self.date_end
+
+    def _raise_date_range_error(self):
+        raise ValidationError(_("Period Start cannot be strictly greater than Period End."))
+
+    def _validate_same_week(self):
+        if self._has_both_dates() and not self._is_same_week():
+            self._raise_same_week_error()
+
+    def _has_both_dates(self):
+        # Ensure both dates are set before performing calendar calculations
+        return bool(self.date_start and self.date_end)
+
+    def _is_same_week(self):
+        # Extract ISO year and ISO week number to compare calendar weeks
+        start_iso = self.date_start.isocalendar()
+        end_iso = self.date_end.isocalendar()
+        return start_iso[0] == end_iso[0] and start_iso[1] == end_iso[1]
+
+    def _raise_same_week_error(self):
+        raise ValidationError(
+            _("The period start and end dates must fall within the same "
+              "calendar week (Monday to Sunday).")
+        )
+
+    def _validate_no_overlap(self):
+        if self._has_overlapping_worksheet():
+            self._raise_overlap_error()
+
+    def _has_overlapping_worksheet(self):
+        # Query the database to find any overlapping worksheet for the same context
+        domain = self._get_overlap_domain()
+        return bool(self.search_count(domain))
+
+    def _get_overlap_domain(self):
+        return [
+            ("id", "!=", self.id),
+            ("project_id", "=", self.project_id.id),
+            ("supervisor_id", "=", self.supervisor_id.id),
+            ("date_start", "<=", self.date_end),
+            ("date_end", ">=", self.date_start),
+        ]
+
+    def _raise_overlap_error(self):
+        raise ValidationError(
+            _("You cannot have overlapping worksheets for the same project and supervisor.")
+        )
 
     def action_reset_to_draft(self):
         """ Allow supervisor to reset the worksheet to waiting approval state. """
         self.ensure_one()
-        if self.state == 'open':
-            self.state = 'new'
+        self._check_reset_rights()
+        self._process_timesheets_for_reset()
+        self._invalidate_access_token()
+        self.write({"state": "new"})
+
+    def _check_reset_rights(self):
+        if self._is_worksheet_confirmed():
+            self._check_user_is_manager()
+
+    def _is_worksheet_confirmed(self):
+        return self.state == "confirmed"
+
+    def _check_user_is_manager(self):
+        if not self._is_user_manager():
+            self._raise_manager_access_error()
+
+    def _is_user_manager(self):
+        return self.env.user.has_group("project_worksheet.group_project_worksheet_manager")
+
+    def _raise_manager_access_error(self):
+        raise UserError(
+            _("Only a worksheet manager can reset a confirmed worksheet to draft.")
+        )
+
+    def _process_timesheets_for_reset(self):
+        if self.timesheet_ids:
+            self._check_and_unlink_timesheets()
+
+    def _check_and_unlink_timesheets(self):
+        self._validate_no_locked_timesheets()
+        self._unlink_timesheets()
+
+    def _validate_no_locked_timesheets(self):
+        if self._has_locked_timesheets():
+            self._raise_locked_timesheet_error()
+
+    def _has_locked_timesheets(self):
+        locked_timesheets = (t for t in self.timesheet_ids if self._is_timesheet_locked(t))
+        return any(locked_timesheets)
+
+    def _is_timesheet_locked(self, timesheet):
+        # A timesheet is locked if its state has progressed past draft or new
+        return timesheet.sheet_id.state in ("confirm", "done")
+
+    def _raise_locked_timesheet_error(self):
+        raise UserError(
+            _("Some timesheets are already locked. "
+              "A timesheet administrator must unlock them first.")
+        )
+
+    def _unlink_timesheets(self):
+        # Bypass timesheet deletion restrictions during worksheet reset
+        self.timesheet_ids.with_context(bypass_worksheet_lock=True).unlink()
+
+    def _invalidate_access_token(self):
+        # Clear token so previously sent client links become invalid
+        self.access_token = False
 
     def action_open(self):
         self.ensure_one()
         self._validate_approval_conditions()
+        self._generate_timesheets_if_empty()
         self.write({"state": "open"})
 
     def _validate_approval_conditions(self):
@@ -170,7 +292,10 @@ class ProjectWorksheet(models.Model):
 
     def action_manager_confirm(self):
         self.ensure_one()
+        self.manager_approver_id = self.env.user
         self._confirm_worksheet("manager")
+        message = _("Worksheet approved internally by manager: %s") % self.env.user.name
+        self.message_post(body=message)
 
     def action_client_confirm(self):
         self.ensure_one()
@@ -186,18 +311,6 @@ class ProjectWorksheet(models.Model):
                 worksheet.id,
                 worksheet.access_token,
             )
-
-    def _validate_date_chronology(self):
-        if self._is_date_range_invalid():
-            self._raise_date_range_error()
-
-    def _is_date_range_invalid(self):
-        if not self.date_start or not self.date_end:
-            return False
-        return self.date_start > self.date_end
-
-    def _raise_date_range_error(self):
-        raise ValidationError(_("Period Start cannot be strictly greater than Period End."))
 
     def _generate_timesheets_if_empty(self):
         if not self.timesheet_ids:
@@ -270,7 +383,9 @@ class ProjectWorksheet(models.Model):
         return self.with_user(root_user)
 
     def _generate_timesheets(self):
-        timesheet_model = self.env["account.analytic.line"].sudo()
+        timesheet_model = self.env["account.analytic.line"].sudo().with_context(
+            bypass_worksheet_lock=True
+        )
         for line in self.line_ids:
             self._create_single_timesheet(timesheet_model, line)
 
@@ -334,3 +449,17 @@ class ProjectWorksheet(models.Model):
         if self.supervisor_id.user_id:
             return self.supervisor_id.user_id.id
         return self.create_uid.id
+
+    def unlink(self):
+        self._check_unlink_allowed()
+        return super().unlink()
+
+    def _check_unlink_allowed(self):
+        for worksheet in self:
+            worksheet._validate_state_for_unlink()
+
+    def _validate_state_for_unlink(self):
+        if not self.state == "new":
+            raise UserError(
+                _("You can only delete a worksheet in the 'New' state")
+            )

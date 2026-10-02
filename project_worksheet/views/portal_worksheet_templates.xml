@@ -44,6 +44,14 @@
                                 <h5><strong>Total Hours:</strong> <span t-esc="worksheet.total_hours" t-options="{'widget': 'float_time'}"/></h5>
                             </div>
                         </div>
+                        <t t-if="worksheet.internal_notes">
+                            <div class="row mt-3 mb-4">
+                                <div class="col-12">
+                                    <h5><strong>Notes:</strong></h5>
+                                    <p t-field="worksheet.internal_notes" class="text-break"/>
+                                </div>
+                            </div>
+                        </t>
 
                         <t t-if="worksheet.state == 'pending'">
                             <form t-attf-action="/my/worksheet/#{worksheet.id}/accept" method="post">

@@ -15,10 +15,25 @@ class ProjectWorksheetPortal(http.Controller):
     )
     def portal_worksheet_view(self, worksheet_id, access_token=None, **kw):
         worksheet = self._get_worksheet(worksheet_id, access_token)
+        backend_redirect = self._redirect_internal_user_to_backend(worksheet)
+        if backend_redirect:
+            return backend_redirect
         return request.render(
             "project_worksheet.portal_worksheet_template",
             {"worksheet": worksheet, "error": kw.get("error")}
         )
+
+    def _redirect_internal_user_to_backend(self, worksheet):
+        # The portal link shared with the client must not expose the client
+        # portal page to internal Odoo users: send them to the backend form
+        # instead (same behaviour as a sale order).
+        user = request.env.user
+        if user.has_group("base.group_user"):
+            return request.redirect(self._get_backend_form_url(worksheet))
+        return None
+
+    def _get_backend_form_url(self, worksheet):
+        return "/web#id=%s&model=%s&view_type=form" % (worksheet.id, worksheet._name)
 
     @http.route(
         ["/my/worksheet/<int:worksheet_id>/accept"],

@@ -107,7 +107,7 @@
                             </t>
                             <t t-elif="doc.approval_source == 'manager'">
                                 <div style="font-weight: bold; font-size: 14px;">
-                                    <span t-field="doc.supervisor_id.name"/>
+                                    <span t-field="doc.manager_approver_id.name"/>
                                 </div>
                             </t>
                             <t t-else="">

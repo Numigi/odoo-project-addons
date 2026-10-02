@@ -30,5 +30,25 @@
             <field name="model_id" ref="model_project_worksheet_line"/>
             <field name="domain_force">['|', ('worksheet_id.company_id', '=', False), ('worksheet_id.company_id', 'in', company_ids)]</field>
         </record>
+
+        <record id="project_worksheet_supervisor_rule" model="ir.rule">
+            <field name="name">Worksheet: Supervisor Visibility</field>
+            <field name="model_id" ref="model_project_worksheet"/>
+            <field name="domain_force">
+                ['|',
+                    ('supervisor_id.user_id', '=', user.id),
+                    ('supervisor_id.parent_id.user_id', '=', user.id)
+                ]
+            </field>
+            <field name="groups" eval="[(4, ref('project_worksheet.group_project_worksheet_user'))]"/>
+        </record>
+
+        <!-- Rule for Managers: See all worksheets -->
+        <record id="project_worksheet_manager_rule" model="ir.rule">
+            <field name="name">Worksheet: Manager Visibility</field>
+            <field name="model_id" ref="model_project_worksheet"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('project_worksheet.group_project_worksheet_manager'))]"/>
+        </record>
     </data>
 </odoo>
