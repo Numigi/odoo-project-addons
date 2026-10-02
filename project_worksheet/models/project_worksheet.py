@@ -278,6 +278,7 @@ class ProjectWorksheet(models.Model):
     def action_send_to_client(self):
         self.ensure_one()
         self._portal_ensure_token()
+        self._generate_timesheets_if_empty()
         self._send_approval_email()
         self.write({
             "state": "pending",
