@@ -6,14 +6,19 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-16 08:53+0000\n"
-"PO-Revision-Date: 2026-09-16 08:53+0000\n"
+"POT-Creation-Date: 2026-10-02 09:10+0000\n"
+"PO-Revision-Date: 2026-10-02 09:10+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
+
+#. module: project_worksheet
+#: model:mail.template,report_name:project_worksheet.email_template_worksheet_confirmed
+msgid "${object.name}"
+msgstr "Feuille_installation_${object.name}"
 
 #. module: project_worksheet
 #: model:ir.actions.report,print_report_name:project_worksheet.action_report_project_worksheet
@@ -160,6 +165,11 @@ msgstr "<span style=\"font-size: 12px;\" class=\"text-muted\">Nom imprimé</span
 
 #. module: project_worksheet
 #: model_terms:ir.ui.view,arch_db:project_worksheet.portal_worksheet_template
+msgid "<strong>Notes:</strong>"
+msgstr "<strong>Notes :</strong>"
+
+#. module: project_worksheet
+#: model_terms:ir.ui.view,arch_db:project_worksheet.portal_worksheet_template
 msgid "<strong>Project:</strong>"
 msgstr "<strong>Projet :</strong>"
 
@@ -202,6 +212,11 @@ msgstr "Statut de l'activité"
 #: model:ir.model.fields,field_description:project_worksheet.field_project_worksheet__activity_type_icon
 msgid "Activity Type Icon"
 msgstr "Icône de type d'activité"
+
+#. module: project_worksheet
+#: model_terms:ir.ui.view,arch_db:project_worksheet.project_worksheet_view_form
+msgid "Add internal notes here..."
+msgstr "Ajouter des notes internes ici..."
 
 #. module: project_worksheet
 #: model:ir.model,name:project_worksheet.model_account_analytic_line
@@ -301,6 +316,7 @@ msgstr "URL du portail client"
 
 #. module: project_worksheet
 #: model:ir.model.fields,field_description:project_worksheet.field_project_worksheet_line__date
+#: model_terms:ir.ui.view,arch_db:project_worksheet.portal_worksheet_template
 #: model_terms:ir.ui.view,arch_db:project_worksheet.report_worksheet_document
 msgid "Date"
 msgstr "Date"
@@ -494,6 +510,11 @@ msgid "Manager Approval Rules"
 msgstr "Règles d'approbation responsable"
 
 #. module: project_worksheet
+#: model:ir.model.fields,field_description:project_worksheet.field_project_worksheet__manager_approver_id
+msgid "Manager Approver"
+msgstr "Approbateur responsable"
+
+#. module: project_worksheet
 #: model:ir.model.fields,field_description:project_worksheet.field_project_worksheet__message_has_error
 msgid "Message Delivery error"
 msgstr "Erreur d'envoi du message"
@@ -546,6 +567,12 @@ msgstr ""
 "séparément par l'administration."
 
 #. module: project_worksheet
+#: model:ir.model.fields,field_description:project_worksheet.field_project_worksheet__internal_notes
+#: model_terms:ir.ui.view,arch_db:project_worksheet.project_worksheet_view_form
+msgid "Notes"
+msgstr "Notes"
+
+#. module: project_worksheet
 #: model:ir.model.fields,field_description:project_worksheet.field_project_worksheet__message_needaction_counter
 msgid "Number of Actions"
 msgstr "Nombre d'actions"
@@ -581,6 +608,14 @@ msgstr "Nombre de messages avec erreur d'envoi"
 #: model:ir.model.fields,help:project_worksheet.field_project_worksheet__message_unread_counter
 msgid "Number of unread messages"
 msgstr "Nombre de messages non lus"
+
+#. module: project_worksheet
+#: code:addons/project_worksheet/models/project_worksheet.py:0
+#, python-format
+msgid "Only a worksheet manager can reset a confirmed worksheet to draft."
+msgstr ""
+"Seul un responsable des feuilles d'installation peut remettre en brouillon "
+"une feuille confirmée."
 
 #. module: project_worksheet
 #: model:ir.model.fields.selection,name:project_worksheet.selection__project_worksheet__state__open
@@ -680,6 +715,11 @@ msgid "Security Token"
 msgstr "Jeton de sécurité"
 
 #. module: project_worksheet
+#: model:ir.model.fields,field_description:project_worksheet.field_project_worksheet_line__sequence
+msgid "Sequence"
+msgstr "Séquence"
+
+#. module: project_worksheet
 #: model:ir.actions.act_window,name:project_worksheet.project_worksheet_config_settings_action
 #: model:ir.ui.menu,name:project_worksheet.menu_project_worksheet_settings
 msgid "Settings"
@@ -689,6 +729,16 @@ msgstr "Paramètres"
 #: model_terms:ir.ui.view,arch_db:project_worksheet.report_worksheet_document
 msgid "Site"
 msgstr "Site"
+
+#. module: project_worksheet
+#: code:addons/project_worksheet/models/project_worksheet.py:0
+#, python-format
+msgid ""
+"Some timesheets are already locked. A timesheet administrator must unlock "
+"them first."
+msgstr ""
+"Certaines feuilles de temps sont déjà verrouillées. Un administrateur des "
+"feuilles de temps doit d'abord les déverrouiller."
 
 #. module: project_worksheet
 #: model:ir.model.fields,field_description:project_worksheet.field_project_worksheet__state
@@ -732,7 +782,19 @@ msgstr "Tâche"
 #: code:addons/project_worksheet/models/project_worksheet_line.py:0
 #, python-format
 msgid "The date of a worksheet line must fall within the worksheet period."
-msgstr "La date d'une ligne de feuille d'installation doit être comprise dans la période de la feuille."
+msgstr ""
+"La date d'une ligne de feuille d'installation doit être comprise dans la "
+"période de la feuille."
+
+#. module: project_worksheet
+#: code:addons/project_worksheet/models/project_worksheet.py:0
+#, python-format
+msgid ""
+"The period start and end dates must fall within the same calendar week "
+"(Monday to Sunday)."
+msgstr ""
+"Les dates de début et de fin de période doivent se situer dans la même "
+"semaine calendaire (du lundi au dimanche)."
 
 #. module: project_worksheet
 #: code:addons/project_worksheet/models/project_worksheet.py:0
@@ -840,14 +902,15 @@ msgid "Worksheet approved by the client."
 msgstr "Feuille d'installation approuvée par le client."
 
 #. module: project_worksheet
+#: code:addons/project_worksheet/models/project_worksheet.py:0
+#, python-format
+msgid "Worksheet approved internally by manager: %s"
+msgstr "Feuille d'installation approuvée en interne par le responsable : %s"
+
+#. module: project_worksheet
 #: model:ir.model.fields,help:project_worksheet.field_account_analytic_line__worksheet_id
 msgid "Worksheet associated with this timesheet entry."
 msgstr "Feuille d'installation associée à cette entrée de feuille de temps."
-
-#. module: project_worksheet
-#: model:mail.template,report_name:project_worksheet.email_template_worksheet_confirmed
-msgid "Worksheet_${object.name}"
-msgstr "Feuille_installation_${object.name}"
 
 #. module: project_worksheet
 #: model:ir.actions.act_window,name:project_worksheet.project_worksheet_action
@@ -864,19 +927,37 @@ msgstr "Feuilles d'installation"
 #: model:ir.cron,cron_name:project_worksheet.ir_cron_remind_pending_worksheets
 #: model:ir.cron,name:project_worksheet.ir_cron_remind_pending_worksheets
 msgid "Worksheets: Remind pending client approvals"
-msgstr "Feuilles d'installation : Relancer les approbations clients en attente"
+msgstr "Feuilles de chantier : Relancer les approbations clients en attente"
+
+#. module: project_worksheet
+#: model_terms:ir.ui.view,arch_db:project_worksheet.portal_worksheet_template
+msgid "You are not authorized to approve this worksheet."
+msgstr "Vous n'êtes pas autorisé à approuver cette feuille d'installation."
+
+#. module: project_worksheet
+#: code:addons/project_worksheet/models/project_worksheet.py:0
+#, python-format
+msgid "You can only delete a worksheet in the 'New' state"
+msgstr ""
+"Vous ne pouvez supprimer une feuille d'installation que lorsqu'elle est à "
+"l'état « Nouveau »."
 
 #. module: project_worksheet
 #: code:addons/project_worksheet/models/project_worksheet.py:0
 #, python-format
 msgid "You cannot approve a worksheet with no lines or zero total hours."
-msgstr "Vous ne pouvez pas approuver une feuille d'installation sans lignes ou avec un total d'heures à zéro."
+msgstr ""
+"Vous ne pouvez pas approuver une feuille d'installation sans lignes ou avec "
+"un total d'heures à zéro."
 
 #. module: project_worksheet
-#: code:addons/project_worksheet/models/account_analytic_line.py:0
+#: code:addons/project_worksheet/models/project_worksheet.py:0
 #, python-format
-msgid "You cannot delete a timesheet line linked to a worksheet."
-msgstr "Vous ne pouvez pas supprimer une ligne de feuille de temps liée à une feuille d'installation."
+msgid ""
+"You cannot have overlapping worksheets for the same project and supervisor."
+msgstr ""
+"Vous ne pouvez pas avoir de feuilles d'installation qui se chevauchent pour "
+"le même projet et le même superviseur."
 
 #. module: project_worksheet
 #: code:addons/project_worksheet/models/account_analytic_line.py:0
@@ -885,12 +966,6 @@ msgid "You cannot modify timesheets linked to an approved worksheet."
 msgstr ""
 "Vous ne pouvez pas modifier les feuilles de temps liées à une feuille "
 "d'installation approuvée."
-
-#. module: project_worksheet
-#: code:addons/project_worksheet/models/project_worksheet_line.py:0
-#, python-format
-msgid "You cannot record timesheets on a parent task."
-msgstr "Vous ne pouvez pas enregistrer de feuilles de temps sur une tâche parente."
 
 #. module: project_worksheet
 #: model_terms:ir.ui.view,arch_db:project_worksheet.portal_worksheet_template
@@ -906,8 +981,3 @@ msgstr "jours"
 #: model_terms:ir.ui.view,arch_db:project_worksheet.report_worksheet_document
 msgid "to"
 msgstr "au"
-
-#. module: project_worksheet
-#: model_terms:ir.ui.view,arch_db:project_worksheet.portal_worksheet_template
-msgid "You are not authorized to approve this worksheet."
-msgstr "Vous n'êtes pas autorisé à approuver cette feuille d'installation."

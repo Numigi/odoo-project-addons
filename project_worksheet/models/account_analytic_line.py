@@ -59,4 +59,3 @@ class AccountAnalyticLine(models.Model):
         raise UserError(
             "You cannot delete a timesheet line linked to a worksheet."
         )
-

@@ -170,7 +170,8 @@ class ProjectWorksheet(models.Model):
 
     def _raise_same_week_error(self):
         raise ValidationError(
-            _("The period start and end dates must fall within the same calendar week (Monday to Sunday).")
+            _("The period start and end dates must fall within the same "
+              "calendar week (Monday to Sunday).")
         )
 
     def _validate_no_overlap(self):
@@ -245,7 +246,8 @@ class ProjectWorksheet(models.Model):
 
     def _raise_locked_timesheet_error(self):
         raise UserError(
-            _("Some timesheets are already locked. A timesheet administrator must unlock them first.")
+            _("Some timesheets are already locked. "
+              "A timesheet administrator must unlock them first.")
         )
 
     def _unlink_timesheets(self):
