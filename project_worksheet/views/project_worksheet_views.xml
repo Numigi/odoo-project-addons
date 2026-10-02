@@ -76,7 +76,7 @@
                     <button name="action_reset_to_draft"
                             string="Reset to draft"
                             type="object"
-                            states="open"
+                            states="open,pending,confirmed"
                             groups="project_worksheet.group_project_worksheet_manager"/>
 
                     <field name="state" widget="statusbar" statusbar_visible="new,open,pending,confirmed"/>
@@ -130,6 +130,7 @@
                             <!-- Lock the whole lines relation when state is not new -->
                             <field name="line_ids" attrs="{'readonly': [('state', '!=', 'new')]}">
                                 <tree editable="bottom">
+                                    <field name="sequence" widget="handle"/>
                                     <field name="date"/>
                                     <field name="employee_id"/>
                                     <field name="project_id" invisible="1"/>
@@ -141,10 +142,12 @@
                                     <field name="unit_amount" widget="timesheet_uom" sum="Total Hours"/>
                                 </tree>
                             </field>
+
                         </page>
+
                         <page string="Generated Timesheets"
                               name="generated_timesheets"
-                              attrs="{'invisible': [('state', 'not in', ('pending', 'confirmed'))]}">
+                              attrs="{'invisible': [('state', 'not in', ('open','pending', 'confirmed'))]}">
                             <field name="timesheet_ids" readonly="1">
                                 <tree>
                                     <field name="date"/>
@@ -155,6 +158,9 @@
                                 </tree>
                             </field>
                         </page>
+                         <page string="Notes" name="note">
+                              <field name="internal_notes" nolabel="1" placeholder="Add internal notes here..."/>
+                         </page>
                     </notebook>
                 </sheet>
                 <div class="oe_chatter">

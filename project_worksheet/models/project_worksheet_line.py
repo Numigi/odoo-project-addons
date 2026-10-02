@@ -8,6 +8,11 @@ from odoo.tools.translate import _
 class ProjectWorksheetLine(models.Model):
     _name = "project.worksheet.line"
     _description = "Project Worksheet Line"
+    _order = "sequence, date, id"
+
+    sequence = fields.Integer(
+        default=10,
+    )
 
     worksheet_id = fields.Many2one(
         comodel_name="project.worksheet",
