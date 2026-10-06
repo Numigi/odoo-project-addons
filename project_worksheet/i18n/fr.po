@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-02 09:10+0000\n"
-"PO-Revision-Date: 2026-10-02 09:10+0000\n"
+"POT-Creation-Date: 2026-10-06 10:30+0000\n"
+"PO-Revision-Date: 2026-10-06 10:30+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -42,7 +42,6 @@ msgid ""
 msgstr ""
 "<br/>\n"
 "                                <strong>Superviseur :</strong>"
-
 #. module: project_worksheet
 #: model:mail.template,body_html:project_worksheet.email_template_worksheet_approval
 msgid ""
@@ -51,7 +50,7 @@ msgid ""
 "                        Hello ${object.partner_approver_id.name or 'Client'},\n"
 "                    </p>\n"
 "                    <p style=\"margin: 0px 0px 16px 0px;\">\n"
-"                        The installation hours performed on your site on ${object.date_start} are ready for approval. The details can be found in the attached worksheet.\n"
+"                        The installation hours performed on your site for the period from <strong>${object.date_start}</strong> to <strong>${object.date_end}</strong> are ready for approval. The details can be found in the attached worksheet.\n"
 "                    </p>\n"
 "\n"
 "                    <table border=\"0\" cellpadding=\"4\" cellspacing=\"0\" style=\"margin-top: 16px; margin-bottom: 24px; width: 100%; max-width: 400px;\">\n"
@@ -90,12 +89,12 @@ msgstr ""
 "        Bonjour ${object.partner_approver_id.name or 'Client'},\n"
 "    </p>\n"
 "    <p style=\"margin: 0px 0px 16px 0px;\">\n"
-"        Les heures d'installation effectuées sur votre site le ${object.date_start} sont prêtes pour approbation. Les détails se trouvent dans la feuille d'installation en pièce jointe.\n"
+"        Les heures d'installation effectuées sur votre site pour la période du <strong>${object.date_start}</strong> au <strong>${object.date_end}</strong> sont prêtes pour approbation. Les détails se trouvent dans la feuille d'installation en pièce jointe.\n"
 "    </p>\n"
 "\n"
 "    <table border=\"0\" cellpadding=\"4\" cellspacing=\"0\" style=\"margin-top: 16px; margin-bottom: 24px; width: 100%; max-width: 400px;\">\n"
 "        <tr>\n"
-"            <td style=\"color: #888888; width: 120px;\">Feuille d'installation</td>\n"
+"            <td style=\"color: #888888; width: 160px;\">Feuille d'installation</td>\n"
 "            <td><strong>${object.name}</strong></td>\n"
 "        </tr>\n"
 "        <tr>\n"
@@ -119,7 +118,7 @@ msgstr ""
 "    </div>\n"
 "\n"
 "    <p style=\"color: #888888; font-size: 11px; margin-top: 32px;\">\n"
-"        Ce lien est personnel et reste valide pendant 14 jours. L'approbation couvre uniquement les heures d'installation effectuées sur site.\n"
+"        Ce lien est personnel et reste valide pendant 14 jours.\n"
 "    </p>\n"
 "</div>\n"
 "            "
@@ -152,6 +151,11 @@ msgstr ""
 "                    </p>\n"
 "                </div>\n"
 "            "
+
+#. module: project_worksheet
+#: model_terms:ir.ui.view,arch_db:project_worksheet.report_worksheet_document
+msgid "<i>INTERNAL VALIDATION - In absence of client feedback</i>"
+msgstr "<i>VALIDATION INTERNE - À défaut de retour du client</i>"
 
 #. module: project_worksheet
 #: model_terms:ir.ui.view,arch_db:project_worksheet.report_worksheet_document
@@ -249,7 +253,7 @@ msgstr "Nombre de pièces jointes"
 #: model:ir.model.fields.selection,name:project_worksheet.selection__project_worksheet__approval_source__client
 #: model_terms:ir.ui.view,arch_db:project_worksheet.report_worksheet_document
 msgid "Client"
-msgstr "Client"
+msgstr ""
 
 #. module: project_worksheet
 #: model_terms:ir.ui.view,arch_db:project_worksheet.report_worksheet_document
@@ -284,7 +288,7 @@ msgstr "Paramètres de config"
 #. module: project_worksheet
 #: model:ir.ui.menu,name:project_worksheet.menu_project_worksheet_config
 msgid "Configuration"
-msgstr "Configuration"
+msgstr ""
 
 #. module: project_worksheet
 #: model:ir.model.fields.selection,name:project_worksheet.selection__project_worksheet__state__confirmed
@@ -319,7 +323,7 @@ msgstr "URL du portail client"
 #: model_terms:ir.ui.view,arch_db:project_worksheet.portal_worksheet_template
 #: model_terms:ir.ui.view,arch_db:project_worksheet.report_worksheet_document
 msgid "Date"
-msgstr "Date"
+msgstr ""
 
 #. module: project_worksheet
 #: model:ir.model.fields,field_description:project_worksheet.field_project_worksheet__date_sent
@@ -343,7 +347,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:project_worksheet.portal_worksheet_template
 #: model_terms:ir.ui.view,arch_db:project_worksheet.report_worksheet_document
 msgid "Description"
-msgstr "Description"
+msgstr ""
 
 #. module: project_worksheet
 #: model_terms:ir.ui.view,arch_db:project_worksheet.project_worksheet_view_form
@@ -432,7 +436,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:project_worksheet.field_res_company__id
 #: model:ir.model.fields,field_description:project_worksheet.field_res_config_settings__id
 msgid "ID"
-msgstr "ID"
+msgstr ""
 
 #. module: project_worksheet
 #: model:ir.model.fields,field_description:project_worksheet.field_project_worksheet__activity_exception_icon
@@ -455,6 +459,11 @@ msgstr "Si coché, de nouveaux messages demandent votre attention."
 #: model:ir.model.fields,help:project_worksheet.field_project_worksheet__message_has_sms_error
 msgid "If checked, some messages have a delivery error."
 msgstr "Si coché, certains messages ont une erreur de livraison."
+
+#. module: project_worksheet
+#: model_terms:ir.ui.view,arch_db:project_worksheet.report_worksheet_document
+msgid "Internal Validation"
+msgstr "Validation Interne"
 
 #. module: project_worksheet
 #: model:ir.model.fields,field_description:project_worksheet.field_project_worksheet__message_is_follower
@@ -522,7 +531,7 @@ msgstr "Erreur d'envoi du message"
 #. module: project_worksheet
 #: model:ir.model.fields,field_description:project_worksheet.field_project_worksheet__message_ids
 msgid "Messages"
-msgstr "Messages"
+msgstr ""
 
 #. module: project_worksheet
 #: model:ir.model.fields,field_description:project_worksheet.field_project_worksheet__my_activity_date_deadline
@@ -570,7 +579,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:project_worksheet.field_project_worksheet__internal_notes
 #: model_terms:ir.ui.view,arch_db:project_worksheet.project_worksheet_view_form
 msgid "Notes"
-msgstr "Notes"
+msgstr ""
 
 #. module: project_worksheet
 #: model:ir.model.fields,field_description:project_worksheet.field_project_worksheet__message_needaction_counter
@@ -616,6 +625,13 @@ msgid "Only a worksheet manager can reset a confirmed worksheet to draft."
 msgstr ""
 "Seul un responsable des feuilles d'installation peut remettre en brouillon "
 "une feuille confirmée."
+
+#. module: project_worksheet
+#: code:addons/project_worksheet/models/project_worksheet.py:0
+#, python-format
+msgid "Only the assigned supervisor or a manager can perform this action."
+msgstr "Seul le superviseur assigné ou un responsable peut effectuer cette action. "
+
 
 #. module: project_worksheet
 #: model:ir.model.fields.selection,name:project_worksheet.selection__project_worksheet__state__open
@@ -728,7 +744,7 @@ msgstr "Paramètres"
 #. module: project_worksheet
 #: model_terms:ir.ui.view,arch_db:project_worksheet.report_worksheet_document
 msgid "Site"
-msgstr "Site"
+msgstr ""
 
 #. module: project_worksheet
 #: code:addons/project_worksheet/models/project_worksheet.py:0
@@ -966,6 +982,17 @@ msgid "You cannot modify timesheets linked to an approved worksheet."
 msgstr ""
 "Vous ne pouvez pas modifier les feuilles de temps liées à une feuille "
 "d'installation approuvée."
+
+
+
+#. module: project_worksheet
+#: code:addons/project_worksheet/models/account_analytic_line.py:0
+#, python-format
+msgid "You cannot delete a timesheet line linked to a worksheet."
+msgstr ""
+"Vous ne pouvez pas supprimer une ligne de feuille de temps liée à une feuille "
+"d'installation."
+
 
 #. module: project_worksheet
 #: model_terms:ir.ui.view,arch_db:project_worksheet.portal_worksheet_template

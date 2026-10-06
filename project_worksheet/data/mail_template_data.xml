@@ -4,17 +4,18 @@
         <record id="email_template_worksheet_approval" model="mail.template">
             <field name="name">Worksheet: Approval Request</field>
             <field name="model_id" ref="project_worksheet.model_project_worksheet"/>
-            <field name="subject">Worksheet ${object.name} - project ${object.project_id.name} - approval required</field>
-           <field name="email_to">${object.partner_approver_id.email},${object.supervisor_id.work_email}</field>
+            <!-- Include both start and end dates in the subject -->
+            <field name="subject">Worksheet ${object.name} - project ${object.project_id.name} - period ${object.date_start} to ${object.date_end} - approval required</field>
+            <field name="email_to">${object.partner_approver_id.email},${object.supervisor_id.work_email}</field>
             <field name="body_html" type="html">
                 <div style="margin: 0px; padding: 0px; font-size: 13px; color: #444444;">
                     <p style="margin: 0px 0px 16px 0px;">
                         Hello ${object.partner_approver_id.name or 'Client'},
                     </p>
                     <p style="margin: 0px 0px 16px 0px;">
-                        The installation hours performed on your site on ${object.date_start} are ready for approval. The details can be found in the attached worksheet.
+                        <!-- Display the full period instead of just the start date -->
+                        The installation hours performed on your site for the period from <strong>${object.date_start}</strong> to <strong>${object.date_end}</strong> are ready for approval. The details can be found in the attached worksheet.
                     </p>
-
                     <table border="0" cellpadding="4" cellspacing="0" style="margin-top: 16px; margin-bottom: 24px; width: 100%; max-width: 400px;">
                         <tr>
                             <td style="color: #888888; width: 120px;">Worksheet</td>
@@ -33,7 +34,6 @@
                             <td><strong>${object.total_hours}</strong></td>
                         </tr>
                     </table>
-
                     <div style="margin: 24px 0px 24px 0px;">
                         <a href="${object.get_base_url()}/my/worksheet/${object.id}/${object.access_token}"
                            target="_blank"
@@ -41,7 +41,6 @@
                             Review and approve the worksheet
                         </a>
                     </div>
-
                     <p style="color: #888888; font-size: 11px; margin-top: 32px;">
                         This link is personal and remains valid for 14 days
                     </p>
@@ -50,7 +49,6 @@
             <field name="lang">${object.partner_approver_id.lang}</field>
             <field name="auto_delete" eval="True"/>
         </record>
-
 
         <record id="email_template_worksheet_confirmed" model="mail.template">
             <field name="name">Worksheet: Confirmation Notification</field>
