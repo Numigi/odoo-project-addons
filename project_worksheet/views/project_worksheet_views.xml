@@ -166,7 +166,8 @@
                             </field>
                         </page>
                          <page string="Notes" name="note">
-                              <field name="internal_notes" nolabel="1" placeholder="Add internal notes here..."/>
+                              <field name="internal_notes" nolabel="1"  attrs="{'readonly': [('state', '!=', 'new')]}"
+                                     placeholder="Add internal notes here..."/>
                          </page>
                     </notebook>
                 </sheet>

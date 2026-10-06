@@ -72,8 +72,21 @@
                                     </label>
                                 </div>
 
-                                <button type="submit" class="btn btn-success">Approve</button>
+                                <!-- Button stays disabled (greyed out) until the client checks the box -->
+                                <button type="submit" id="worksheet_approve_btn" class="btn btn-success" disabled="disabled">Approve</button>
                             </form>
+
+                            <script type="text/javascript">
+                                document.addEventListener("DOMContentLoaded", function () {
+                                    var checkbox = document.getElementById("confirm_checkbox");
+                                    var button = document.getElementById("worksheet_approve_btn");
+                                    if (checkbox &amp;&amp; button) {
+                                        checkbox.addEventListener("change", function () {
+                                            button.disabled = !checkbox.checked;
+                                        });
+                                    }
+                                });
+                            </script>
                         </t>
 
                         <t t-if="worksheet.state == 'confirmed'">
