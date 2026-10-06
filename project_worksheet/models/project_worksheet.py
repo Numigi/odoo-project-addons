@@ -206,8 +206,10 @@ class ProjectWorksheet(models.Model):
         self.write({"state": "new"})
 
     def _check_reset_rights(self):
-        if self._is_worksheet_confirmed():
+        if self.state in ("pending", "confirmed"):
             self._check_user_is_manager()
+        else:
+            self._check_supervisor_or_manager_rights()
 
     def _is_worksheet_confirmed(self):
         return self.state == "confirmed"
@@ -218,6 +220,11 @@ class ProjectWorksheet(models.Model):
 
     def _is_user_manager(self):
         return self.env.user.has_group("project_worksheet.group_project_worksheet_manager")
+
+    def _raise_supervisor_access_error(self):
+        raise UserError(
+            _("Only the assigned supervisor or a manager can perform this action.")
+        )
 
     def _raise_manager_access_error(self):
         raise UserError(
@@ -260,9 +267,18 @@ class ProjectWorksheet(models.Model):
 
     def action_open(self):
         self.ensure_one()
+        self._check_supervisor_or_manager_rights()
         self._validate_approval_conditions()
         self._generate_timesheets_if_empty()
         self.write({"state": "open"})
+
+    def _check_supervisor_or_manager_rights(self):
+        # Ensure the action is only performed by the assigned supervisor or a manager
+        if not self._is_user_manager() and not self._is_current_user_supervisor():
+            self._raise_supervisor_access_error()
+
+    def _is_current_user_supervisor(self):
+        return self.env.user == self.supervisor_id.user_id
 
     def _validate_approval_conditions(self):
         for worksheet in self:
