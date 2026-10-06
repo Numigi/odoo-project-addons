@@ -57,5 +57,5 @@ class AccountAnalyticLine(models.Model):
 
     def _raise_unlink_linked_line_error(self):
         raise UserError(
-            "You cannot delete a timesheet line linked to a worksheet."
+            _("You cannot delete a timesheet line linked to a worksheet.")
         )

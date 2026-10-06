@@ -95,6 +95,16 @@
                     </div>
                 </div>
 
+                <t t-if="doc.internal_notes">
+                    <div class="row mt-4 mb-2">
+                        <div class="col-12">
+                            <strong>Notes:</strong>
+                            <!-- Use text-break to prevent long words from overflowing the PDF layout -->
+                            <p t-field="doc.internal_notes" class="text-break"/>
+                        </div>
+                    </div>
+                </t>
+
                 <div class="mt-5" style="border: 1px solid #000; padding: 20px;">
 
                     <!-- Dynamically change the title based on the approval source -->
