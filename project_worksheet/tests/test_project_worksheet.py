@@ -83,6 +83,7 @@ class TestProjectWorksheet(TransactionCase):
 
     def test_supervisor_can_reset_pending_worksheet(self):
         # Before client approval, a pending worksheet can be reset to correct hours
+        self.employee.user_id = self.env.user
         self.worksheet.action_send_to_client()
         self.worksheet.action_reset_to_draft()
         assert self.worksheet.state == "new"
