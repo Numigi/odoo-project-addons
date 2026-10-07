@@ -206,7 +206,10 @@ class ProjectWorksheet(models.Model):
         self.write({"state": "new"})
 
     def _check_reset_rights(self):
-        if self.state in ("pending", "confirmed"):
+        # Before client approval (new/open/pending), the supervisor may still
+        # reset the worksheet to correct the hours, even once transmitted.
+        # Once approved (confirmed), the action is reserved to a manager.
+        if self._is_worksheet_confirmed():
             self._check_user_is_manager()
         else:
             self._check_supervisor_or_manager_rights()

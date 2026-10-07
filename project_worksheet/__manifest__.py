@@ -4,7 +4,7 @@
 {
     "name": "Project Worksheet",
     "summary": "Manage field worksheets for project interventions",
-    "version": "14.0.4.1.0",
+    "version": "14.0.4.21.0",
     "category": "Project Management",
     "website": "https://numigi.com/r/home",
     "author": "Numigi",
