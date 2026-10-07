@@ -4,7 +4,7 @@
 {
     "name": "Project Worksheet",
     "summary": "Manage field worksheets for project interventions",
-    "version": "14.0.4.1.0",
+    "version": "14.0.4.2.0",
     "category": "Project Management",
     "website": "https://numigi.com/r/home",
     "author": "Numigi",
@@ -14,6 +14,7 @@
     "depends": [
         "project",
         "hr_timesheet",
+        "hr_timesheet_sheet",
         "project_stage_allow_timesheet",
     ],
     "data": [

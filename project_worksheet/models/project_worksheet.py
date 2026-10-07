@@ -206,7 +206,10 @@ class ProjectWorksheet(models.Model):
         self.write({"state": "new"})
 
     def _check_reset_rights(self):
-        if self.state in ("pending", "confirmed"):
+        # Before client approval (new/open/pending), the supervisor may still
+        # reset the worksheet to correct the hours, even once transmitted.
+        # Once approved (confirmed), the action is reserved to a manager.
+        if self._is_worksheet_confirmed():
             self._check_user_is_manager()
         else:
             self._check_supervisor_or_manager_rights()
@@ -248,7 +251,6 @@ class ProjectWorksheet(models.Model):
         return any(locked_timesheets)
 
     def _is_timesheet_locked(self, timesheet):
-        # A timesheet is locked if its state has progressed past draft or new
         return timesheet.sheet_id.state in ("confirm", "done")
 
     def _raise_locked_timesheet_error(self):

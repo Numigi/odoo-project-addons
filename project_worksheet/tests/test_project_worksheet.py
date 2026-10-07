@@ -3,7 +3,7 @@
 import pytest
 from datetime import timedelta
 from odoo import fields
-from odoo.exceptions import ValidationError
+from odoo.exceptions import UserError, ValidationError
 from odoo.tests.common import TransactionCase
 
 
@@ -80,6 +80,30 @@ class TestProjectWorksheet(TransactionCase):
     def test_manager_confirm_sets_date_approve(self):
         self.worksheet.action_manager_confirm()
         assert self.worksheet.date_approve
+
+    def test_supervisor_can_reset_pending_worksheet(self):
+        # Before client approval, a pending worksheet can be reset to correct hours
+        self.employee.user_id = self.env.user
+        self.worksheet.action_send_to_client()
+        self.worksheet.action_reset_to_draft()
+        assert self.worksheet.state == "new"
+
+    def test_non_manager_cannot_reset_confirmed_worksheet(self):
+        self.worksheet.action_manager_confirm()
+        user = self._create_non_manager_supervisor_user()
+        with pytest.raises(UserError):
+            self.worksheet.with_user(user).action_reset_to_draft()
+
+    def _create_non_manager_supervisor_user(self):
+        user = self.env["res.users"].create({
+            "name": "Supervisor User",
+            "login": "supervisor_user",
+            "groups_id": [
+                (4, self.env.ref("project_worksheet.group_project_worksheet_user").id)
+            ],
+        })
+        self.employee.user_id = user
+        return user
 
     def test_reminder_needed_when_delay_exceeded(self):
         self.worksheet.company_id.worksheet_reminder_delay = 2

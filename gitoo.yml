@@ -42,12 +42,14 @@
 - url: https://github.com/OCA/timesheet
   branch: "14.0"
   includes:
+   - hr_timesheet_sheet
    - hr_timesheet_task_domain
    - hr_timesheet_task_stage
 
 - url: https://github.com/OCA/web
   branch: "14.0"
   includes:
+    - web_widget_x2many_2d_matrix
     - web_ir_actions_act_multi
     - web_ir_actions_act_view_reload
 
