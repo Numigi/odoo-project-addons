@@ -251,9 +251,6 @@ class ProjectWorksheet(models.Model):
         return any(locked_timesheets)
 
     def _is_timesheet_locked(self, timesheet):
-        # A timesheet is locked if its sheet (hr_timesheet_sheet) has progressed
-        # past draft. That module is optional, so when it is not installed the
-        # sheet_id field is absent and no timesheet can be locked.
         return timesheet.sheet_id.state in ("confirm", "done")
 
     def _raise_locked_timesheet_error(self):

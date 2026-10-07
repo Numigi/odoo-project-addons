@@ -42,6 +42,7 @@
 - url: https://github.com/OCA/timesheet
   branch: "14.0"
   includes:
+   - hr_timesheet_sheet
    - hr_timesheet_task_domain
    - hr_timesheet_task_stage
 
