@@ -14,6 +14,7 @@
     "depends": [
         "project",
         "hr_timesheet",
+        "hr_timesheet_sheet",
         "project_stage_allow_timesheet",
     ],
     "data": [
