@@ -125,6 +125,12 @@ class ProjectWorksheet(models.Model):
         for worksheet in self:
             worksheet.total_hours = sum(worksheet.line_ids.mapped("unit_amount"))
 
+    @api.onchange("project_id")
+    def _onchange_project_id(self):
+        # Clear project-dependent fields when the project changes
+        self.line_ids = False
+        self.partner_approver_id = False
+
     @api.depends("project_id.partner_id")
     def _compute_partner_id(self):
         for worksheet in self:
