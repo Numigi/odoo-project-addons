@@ -105,7 +105,7 @@
                     </div>
                 </t>
 
-                <div class="mt-5" style="border: 1px solid #000; padding: 20px;">
+                <div class="mt-5" style="border: 1px solid #000; padding: 20px; page-break-inside: avoid;">
 
                     <!-- Dynamically change the title based on the approval source -->
                     <h5 class="font-weight-bold text-uppercase" style="letter-spacing: 1px;">
