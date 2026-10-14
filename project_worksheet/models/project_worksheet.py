@@ -1,6 +1,9 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
+import json
 from datetime import timedelta
+
+from lxml import etree
 
 from odoo import api, fields, models
 from odoo.exceptions import UserError, ValidationError
@@ -116,6 +119,30 @@ class ProjectWorksheet(models.Model):
     internal_notes = fields.Text(
         string="Notes",
     )
+
+    @api.model
+    def fields_view_get(
+        self, view_id=None, view_type="form", toolbar=False, submenu=False
+    ):
+        result = super().fields_view_get(
+            view_id=view_id,
+            view_type=view_type,
+            toolbar=toolbar,
+            submenu=submenu,
+        )
+        if view_type == "form" and not self.env.user.has_group(
+            "project_worksheet.group_project_worksheet_manager"
+        ):
+            # Only managers may create a contact inline: forbid the inline
+            # creation of a client approver for regular worksheet users.
+            doc = etree.XML(result["arch"])
+            for node in doc.xpath("//field[@name='partner_approver_id']"):
+                options = json.loads(node.get("options") or "{}")
+                options["no_create"] = True
+                options["no_create_edit"] = True
+                node.set("options", json.dumps(options))
+            result["arch"] = etree.tostring(doc, encoding="unicode")
+        return result
 
     def _default_supervisor_id(self):
         return self.env["hr.employee"].search([("user_id", "=", self.env.uid)], limit=1)
@@ -303,11 +330,23 @@ class ProjectWorksheet(models.Model):
         self.ensure_one()
         self._portal_ensure_token()
         self._generate_timesheets_if_empty()
+        self._subscribe_worksheet_followers()
         self._send_approval_email()
         self.write({
             "state": "pending",
             "date_sent": fields.Datetime.now(),
         })
+
+    def _subscribe_worksheet_followers(self):
+        # When submitting for approval, add the client, the supervisor and
+        # the approver as followers of the worksheet.
+        self.ensure_one()
+        partners = self.partner_id | self.partner_approver_id
+        supervisor_partner = self.supervisor_id.user_id.partner_id
+        if supervisor_partner:
+            partners |= supervisor_partner
+        if partners:
+            self.message_subscribe(partner_ids=partners.ids)
 
     def action_remind_client(self):
         self.ensure_one()
