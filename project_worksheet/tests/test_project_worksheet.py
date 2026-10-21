@@ -114,3 +114,31 @@ class TestProjectWorksheet(TransactionCase):
         self.worksheet.company_id.worksheet_reminder_delay = 2
         self.worksheet.date_sent = fields.Datetime.now() - timedelta(days=1)
         assert not self.worksheet._is_reminder_needed()
+
+    def _create_timesheet_sheet(self, state="draft"):
+        sheet = self.env["hr_timesheet.sheet"].create({
+            "employee_id": self.employee.id,
+            "date_start": self.worksheet.date_start,
+            "date_end": self.worksheet.date_end,
+            "company_id": self.worksheet.company_id.id,
+        })
+        if state != "draft":
+            sheet.write({"state": state})
+        return sheet
+
+    def test_create_line_on_confirmed_timesheet_sheet_raises_error(self):
+        self._create_timesheet_sheet(state="confirm")
+        with pytest.raises(ValidationError):
+            self._create_worksheet_line()
+
+    def test_open_worksheet_with_confirmed_timesheet_sheet_raises_error(self):
+        # Worksheet line is created while sheet is not locked yet,
+        # then the sheet is confirmed before the supervisor opens the worksheet.
+        self._create_timesheet_sheet(state="confirm")
+        with pytest.raises(ValidationError):
+            self.worksheet.action_open()
+
+    def test_send_to_client_with_approved_timesheet_sheet_raises_error(self):
+        self._create_timesheet_sheet(state="done")
+        with pytest.raises(ValidationError):
+            self.worksheet.action_send_to_client()
