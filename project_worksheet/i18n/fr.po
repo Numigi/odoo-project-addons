@@ -1008,3 +1008,16 @@ msgstr "jours"
 #: model_terms:ir.ui.view,arch_db:project_worksheet.report_worksheet_document
 msgid "to"
 msgstr "au"
+
+
+#. module: project_worksheet
+#: code:addons/project_worksheet/models/project_worksheet_line.py:0
+#, python-format
+msgid ""
+"You cannot add or modify hours for employee %(employee)s on %(date)s "
+"because their timesheet sheet for this period is already confirmed or "
+"approved."
+msgstr ""
+"Vous ne pouvez pas ajouter ou modifier des heures pour l'employé %(employee)s "
+"le %(date)s car sa feuille de temps pour cette période est déjà confirmée "
+"ou approuvée."
