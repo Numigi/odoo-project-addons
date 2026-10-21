@@ -116,12 +116,17 @@ class TestProjectWorksheet(TransactionCase):
         assert not self.worksheet._is_reminder_needed()
 
     def _create_timesheet_sheet(self, state="draft"):
-        sheet = self.env["hr_timesheet.sheet"].create({
-            "employee_id": self.employee.id,
-            "date_start": self.worksheet.date_start,
-            "date_end": self.worksheet.date_end,
-            "company_id": self.worksheet.company_id.id,
-        })
+        # hr_timesheet_sheet requires the employee to be linked to a user
+        if not self.employee.user_id:
+            self.employee.user_id = self.env.user
+        sheet = self.env["hr_timesheet.sheet"].create(
+            {
+                "employee_id": self.employee.id,
+                "date_start": self.worksheet.date_start,
+                "date_end": self.worksheet.date_end,
+                "company_id": self.worksheet.company_id.id,
+            }
+        )
         if state != "draft":
             sheet.write({"state": state})
         return sheet
@@ -132,7 +137,7 @@ class TestProjectWorksheet(TransactionCase):
             self._create_worksheet_line()
 
     def test_open_worksheet_with_confirmed_timesheet_sheet_raises_error(self):
-        # Worksheet line is created while sheet is not locked yet,
+        # Worksheet line is created in setUp() while sheet is not locked yet,
         # then the sheet is confirmed before the supervisor opens the worksheet.
         self._create_timesheet_sheet(state="confirm")
         with pytest.raises(ValidationError):
