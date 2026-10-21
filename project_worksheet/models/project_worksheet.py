@@ -318,6 +318,7 @@ class ProjectWorksheet(models.Model):
     def _validate_approval_conditions(self):
         for worksheet in self:
             worksheet._check_has_lines_and_hours()
+            worksheet.line_ids._check_timesheet_sheet_not_locked()
 
     def _check_has_lines_and_hours(self):
         if not self.line_ids or self.total_hours <= 0.0:
@@ -446,8 +447,11 @@ class ProjectWorksheet(models.Model):
         return self.with_user(root_user)
 
     def _generate_timesheets(self):
-        timesheet_model = self.env["account.analytic.line"].sudo().with_context(
-            bypass_worksheet_lock=True
+        self.line_ids._check_timesheet_sheet_not_locked()
+        timesheet_model = (
+            self.env["account.analytic.line"]
+            .sudo()
+            .with_context(bypass_worksheet_lock=True)
         )
         for line in self.line_ids:
             self._create_single_timesheet(timesheet_model, line)
