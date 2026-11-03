@@ -120,6 +120,26 @@ class ProjectWorksheet(models.Model):
         string="Notes",
     )
 
+    shipping_partner_id = fields.Many2one(
+        comodel_name="res.partner",
+        string="Delivery Address",
+        compute="_compute_shipping_partner_id",
+        store=True,
+    )
+
+    @api.depends("project_id.sale_order_id.partner_shipping_id")
+    def _compute_shipping_partner_id(self):
+        for worksheet in self:
+            worksheet.shipping_partner_id = worksheet._get_shipping_partner()
+
+    def _get_shipping_partner(self):
+        if self._has_sale_order():
+            return self.project_id.sale_order_id.partner_shipping_id
+        return False
+
+    def _has_sale_order(self):
+        return bool(self.project_id.sale_order_id)
+
     @api.model
     def fields_view_get(
         self, view_id=None, view_type="form", toolbar=False, submenu=False

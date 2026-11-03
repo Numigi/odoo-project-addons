@@ -32,7 +32,18 @@
                             </tr>
                             <tr>
                                 <td class="text-muted">Site</td>
-                                <td><span t-field="doc.partner_id.city"/></td>
+                                <td>
+                                    <t t-set="site" t-value="doc.shipping_partner_id or doc.partner_id"/>
+                                    <div t-if="site.name" t-esc="site.name" class="font-weight-bold"/>
+                                    <div t-if="site.street" t-esc="site.street"/>
+                                    <div t-if="site.street2" t-esc="site.street2"/>
+                                    <div>
+                                        <span t-if="site.city" t-esc="site.city + ' '"/>
+                                        <span t-if="site.state_id" t-esc="site.state_id.name + ' '"/>
+                                        <span t-if="site.zip" t-esc="site.zip"/>
+                                    </div>
+                                    <div t-if="site.country_id" t-esc="site.country_id.name"/>
+                                </td>
                             </tr>
                             <tr>
                                 <td class="text-muted">Supervisor</td>
