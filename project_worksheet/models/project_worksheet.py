@@ -314,7 +314,7 @@ class ProjectWorksheet(models.Model):
 
     def _unlink_timesheets(self):
         # Bypass timesheet deletion restrictions during worksheet reset
-        self.timesheet_ids.with_context(bypass_worksheet_lock=True).unlink()
+        self.timesheet_ids.sudo().with_context(bypass_worksheet_lock=True).unlink()
 
     def _invalidate_access_token(self):
         # Clear token so previously sent client links become invalid
