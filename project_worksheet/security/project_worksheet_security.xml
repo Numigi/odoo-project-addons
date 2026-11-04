@@ -41,7 +41,12 @@
                 ]
             </field>
             <field name="groups" eval="[(4, ref('project_worksheet.group_project_worksheet_user'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="True"/>
         </record>
+
 
         <!-- Rule for Managers: See all worksheets -->
         <record id="project_worksheet_manager_rule" model="ir.rule">
@@ -49,6 +54,22 @@
             <field name="model_id" ref="model_project_worksheet"/>
             <field name="domain_force">[(1, '=', 1)]</field>
             <field name="groups" eval="[(4, ref('project_worksheet.group_project_worksheet_manager'))]"/>
+        </record>
+
+       <record id="project_worksheet_timesheet_user_rule" model="ir.rule">
+            <field name="name">Worksheet Timesheet: Supervisor Visibility</field>
+            <field name="model_id" ref="analytic.model_account_analytic_line"/>
+            <field name="domain_force">
+                ['|',
+                    ('user_id', '=', user.id),
+                    ('worksheet_id.supervisor_id.user_id', '=', user.id)
+                ]
+            </field>
+            <field name="groups" eval="[(4, ref('project_worksheet.group_project_worksheet_user'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
         </record>
     </data>
 </odoo>
