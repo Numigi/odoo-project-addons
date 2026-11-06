@@ -1,11 +1,11 @@
 - url: https://github.com/Numigi/odoo-base-addons
-  branch: "16.0"
+  branch: "18.0"
   includes:
     - base_extended_security
     - test_http_request
 
 - url: https://github.com/OCA/project
-  branch: "16.0"
+  branch: "18.0"
   includes:
     - project_task_dependency
     - project_timeline
@@ -14,20 +14,20 @@
     - project_parent
 
 - url: https://github.com/OCA/timesheet
-  branch: "16.0"
+  branch: "18.0"
   includes:
    - hr_timesheet_task_domain
    - hr_timesheet_task_stage
    - project_task_stage_allow_timesheet
 
 - url: https://github.com/OCA/web
-  branch: "16.0"
+  branch: "18.0"
   includes:
     - web_ir_actions_act_multi
     - web_timeline
 
 - url: https://github.com/OCA/account-analytic
-  branch: "16.0"
+  branch: "18.0"
   includes:
     - account_analytic_parent
     - account_analytic_root
