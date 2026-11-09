@@ -8,13 +8,22 @@
         <xpath expr="//a[@href='#task_timesheets']" position="replace">
             <t t-esc="False"/>
         </xpath>
-        <xpath expr="//div[@class='container']" position="replace">
+        <xpath expr="//div[hasclass('container')][@t-if='timesheets and allow_timesheets']" position="replace">
             <t t-esc="False"/>
         </xpath>
         <xpath expr="//div[@t-if='task.allocated_hours > 0 and allow_timesheets']" position="replace">
             <t t-esc="False"/>
         </xpath>
         <xpath expr="//t[@t-call='hr_timesheet.portal_my_task_allocated_hours_template']" position="replace">
+            <t t-esc="False"/>
+        </xpath>
+    </template>
+
+    <template id="portal_tasks_list_inherit" inherit_id="hr_timesheet.portal_tasks_list_inherit" priority="100">
+        <xpath expr="//th[contains(text(), 'Time Spent')]" position="replace">
+            <t t-esc="False"/>
+        </xpath>
+        <xpath expr="//td[@t-if='not project or project.allow_timesheets'][hasclass('text-end')]" position="replace">
             <t t-esc="False"/>
         </xpath>
     </template>
