@@ -19,4 +19,13 @@
         </xpath>
     </template>
 
+    <template id="portal_tasks_list_inherit" inherit_id="hr_timesheet.portal_tasks_list_inherit" priority="100">
+        <xpath expr="//th[contains(text(), 'Time Spent')]" position="replace">
+            <t t-esc="False"/>
+        </xpath>
+        <xpath expr="//td[@t-if='not project or project.allow_timesheets'][@class='text-end']" position="replace">
+            <t t-esc="False"/>
+        </xpath>
+    </template>
+
 </odoo>
