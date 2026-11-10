@@ -8,12 +8,17 @@
         </xpath>
 
         <!-- Hide timesheets navigation link -->
-        <xpath expr="//a[@href='#task_timesheets']" position="attributes">
+        <xpath expr="//div[hasclass('nav-item')]/a[@href='#task_timesheets']" position="attributes">
             <attribute name="t-if">False</attribute>
         </xpath>
 
         <!-- Hide timesheets content section -->
-        <xpath expr="//h5[@id='task_timesheets']" position="attributes">
+        <xpath expr="//div[hasclass('container')]/h5[@id='task_timesheets']" position="attributes">
+            <attribute name="t-if">False</attribute>
+        </xpath>
+
+        <!-- Hide timesheet table -->
+        <xpath expr="//div[hasclass('container')][@t-if='timesheets and allow_timesheets']" position="attributes">
             <attribute name="t-if">False</attribute>
         </xpath>
 
@@ -25,7 +30,7 @@
 
     <template id="portal_tasks_list" inherit_id="hr_timesheet.portal_tasks_list_inherit" priority="100">
         <!-- Hide Time Spent column header -->
-        <xpath expr="//th[contains(text(), 'Time Spent')]" position="attributes">
+        <xpath expr="//th[hasclass('text-end')][contains(text(), 'Time Spent')]" position="attributes">
             <attribute name="t-if">False</attribute>
         </xpath>
 
