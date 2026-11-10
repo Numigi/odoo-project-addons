@@ -9,7 +9,7 @@ from odoo.addons.hr_timesheet.controllers.portal import TimesheetCustomerPortal
 class TimesheetPortalBlock(TimesheetCustomerPortal):
     """Block access to timesheet portal routes for portal users."""
 
-    @http.route()
-    def portal_my_timesheets(self, *args, **kwargs):
+    @http.route(['/my/timesheets', '/my/timesheets/page/<int:page>'], type='http', auth="user", website=True)
+    def portal_my_timesheets(self, page=1, sortby=None, filterby=None, search=None, search_in='all', groupby='none', **kw):
         """Block access to /my/timesheets route."""
-        return request.render("website.403")
+        return request.render("http_routing.403")
