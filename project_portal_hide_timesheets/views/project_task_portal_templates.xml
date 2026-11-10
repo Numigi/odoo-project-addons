@@ -2,24 +2,34 @@
 <odoo>
 
     <template id="portal_my_task" inherit_id="hr_timesheet.portal_my_task" priority="100">
+        <!-- Hide print/download button -->
         <xpath expr="//div[@id='nav-report']" position="attributes">
             <attribute name="t-if">False</attribute>
         </xpath>
-        <xpath expr="//div[@class='nav-item']//a[@href='#task_timesheets']" position="attributes">
+
+        <!-- Hide timesheets navigation link -->
+        <xpath expr="//a[@href='#task_timesheets']" position="attributes">
             <attribute name="t-if">False</attribute>
         </xpath>
-        <xpath expr="//div[@id='task_timesheets']" position="attributes">
+
+        <!-- Hide timesheets content section -->
+        <xpath expr="//h5[@id='task_timesheets']" position="attributes">
             <attribute name="t-if">False</attribute>
         </xpath>
+
+        <!-- Hide progress display -->
         <xpath expr="//div[@t-if='task.allocated_hours > 0 and allow_timesheets']" position="attributes">
             <attribute name="t-if">False</attribute>
         </xpath>
     </template>
 
     <template id="portal_tasks_list" inherit_id="hr_timesheet.portal_tasks_list_inherit" priority="100">
+        <!-- Hide Time Spent column header -->
         <xpath expr="//th[contains(text(), 'Time Spent')]" position="attributes">
             <attribute name="t-if">False</attribute>
         </xpath>
+
+        <!-- Hide Time Spent column data -->
         <xpath expr="//td[@t-if='not project or project.allow_timesheets'][hasclass('text-end')]" position="attributes">
             <attribute name="t-if">False</attribute>
         </xpath>
