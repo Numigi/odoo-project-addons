@@ -26,21 +26,18 @@
         <xpath expr="//div[@t-if='task.allocated_hours > 0 and allow_timesheets']" position="attributes">
             <attribute name="t-if">False</attribute>
         </xpath>
-    </template>
 
-    <template id="portal_tasks_list" inherit_id="hr_timesheet.portal_tasks_list_inherit" priority="100">
-        <!-- Hide Time Spent column header -->
-        <xpath expr="//th[hasclass('text-end')][contains(text(), 'Time Spent')]" position="attributes">
-            <attribute name="t-if">False</attribute>
-        </xpath>
-
-        <!-- Hide Time Spent column data -->
-        <xpath expr="//td[@t-if='not project or project.allow_timesheets'][hasclass('text-end')]" position="attributes">
+        <!-- Hide allocated hours field -->
+        <xpath expr="//div[@name='portal_my_task_allocated_hours']" position="attributes">
             <attribute name="t-if">False</attribute>
         </xpath>
     </template>
 
-    <!-- Disable the Timesheets portal home menu entry template -->
+    <!-- Disable templates that add timesheet columns and menu -->
+    <record id="hr_timesheet.portal_tasks_list_inherit" model="ir.ui.view">
+        <field name="active" eval="False"/>
+    </record>
+
     <record id="hr_timesheet.portal_my_home_timesheet" model="ir.ui.view">
         <field name="active" eval="False"/>
     </record>
