@@ -8,17 +8,20 @@ Features
 * Hides buttons that allow to print or download the timesheet lines
 * Removes the `Timesheets` anchor link from the portal navigation
 * Hides the `Time Spent` column from the task list view
-* Blocks access to the `/my/timesheets` portal route
+* Hides the `Allocated Hours` field from task portal views
+* Hides the `Timesheets` menu entry from the portal home page (`/my`)
+* Blocks access to the `/my/timesheets` portal route (returns 403 Forbidden)
 * Prevents timesheet report generation for portal users
 
-Security
---------
-This module provides both template-level (XML) and controller-level (Python) hiding:
+Implementation
+--------------
+This module uses a combination of techniques:
 
-* **Python controllers**: Block data at the source - timesheet data is never sent to the template
-* **XML templates**: Additional layer to hide any remaining UI elements
+* **Python controllers**: Block access to timesheet routes with Forbidden exceptions
+* **XML templates**: Hide timesheet UI elements by setting `t-if="False"` or disabling templates entirely
+* **Model overrides**: Filter timesheet data to prevent it from being sent to portal users
 
-Even with web editor access, portal users cannot view timesheet data as it's filtered at the controller level.
+This layered approach ensures timesheet information remains hidden even if portal users have web editor access.
 
 *Before installing the module*
 
