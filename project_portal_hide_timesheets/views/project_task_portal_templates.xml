@@ -26,6 +26,11 @@
         <xpath expr="//div[@t-if='task.allocated_hours > 0 and allow_timesheets']" position="attributes">
             <attribute name="t-if">False</attribute>
         </xpath>
+
+        <!-- Hide allocated hours field -->
+        <xpath expr="//div[@name='portal_my_task_allocated_hours']" position="attributes">
+            <attribute name="t-if">False</attribute>
+        </xpath>
     </template>
 
     <!-- Disable templates that add timesheet columns and menu -->
